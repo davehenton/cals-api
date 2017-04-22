@@ -1,0 +1,4 @@
+rootProject.name = 'cals-api'
+include 'cals-model'
+include 'cals-rest'
+

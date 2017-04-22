@@ -1,0 +1,64 @@
+project.ext {
+    projectGroup = 'gov.ca.cwds.cals'
+    projectVersion = '1.0-SNAPSHOT'
+    dropwizardVersion = "1.1.0"
+    mainClass = "gov.ca.cwds.cals.ApiApplication"
+}
+
+group projectGroup
+version projectVersion
+
+subprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+
+    group projectGroup
+    version projectVersion
+
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://maven2.cwds.tabordasolutions.net"
+        }
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
+
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = mainClass
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project (':cals-rest')
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+    }
+}
+
+run {
+    args 'server', './config/cals-api.yml'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClass
+    }
+}
+
+
+
