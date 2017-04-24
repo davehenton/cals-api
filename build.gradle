@@ -1,5 +1,7 @@
 project.ext {
     projectGroup = 'gov.ca.cwds.cals'
+    projectDockerGroup = 'cwds'
+    projectDockerAppName = 'cals-api'
     projectVersion = '1.0-SNAPSHOT'
     dropwizardVersion = "1.1.0"
     mainClass = "gov.ca.cwds.cals.ApiApplication"
@@ -30,6 +32,8 @@ subprojects {
 
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'docker'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 mainClassName = mainClass
 
@@ -47,7 +51,18 @@ buildscript {
     }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
     }
+}
+
+shadowJar {
+    classifier = 'dist'
+    baseName = 'cals-api'
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    version = ''
 }
 
 run {
@@ -56,7 +71,48 @@ run {
 
 jar {
     manifest {
-        attributes 'Main-Class': mainClass
+        attributes 'Main-Class': mainClassName
+    }
+}
+
+def dockerTag = projectVersion + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
+
+task copyConfig(type: Copy) {
+    from 'config'
+    into 'build/docker/config'
+}
+
+task copyDist(type: Copy, dependsOn: shadowJar) {
+    from 'build/libs'
+    into 'build/docker/libs'
+}
+
+task apidocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
+    dockerfile = "Dockerfile"
+    project.group = projectDockerGroup
+    applicationName = projectDockerAppName
+    tagVersion = version + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
+}
+
+task createDockerImage(type:Exec, dependsOn: shadowJar) {
+    commandLine 'docker',  'build',  '-t',  'cwds/cals-api', '.'
+}
+
+task tagDockerImage(type:Exec, dependsOn: createDockerImage) {
+    commandLine 'docker',  'tag',  'cwds/cals-api',  "cwds/cals-api:$dockerTag"
+}
+
+task pushDockerLatest(type:Exec, dependsOn: createDockerImage) {
+    commandLine 'docker',  'push',  'cwds/cals-api:latest'
+}
+
+task pushDockerVersionTagged(type:Exec, dependsOn: tagDockerImage) {
+    commandLine 'docker',  'push',  "cwds/cals-api:$dockerTag"
+}
+
+task publishDocker(dependsOn: [pushDockerVersionTagged, pushDockerLatest]) {
+    doLast {
+        println 'Published'
     }
 }
 
