@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.services;
+package gov.ca.cwds.cals.rest.resources;
 
 
 import javax.ws.rs.GET;
@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/ping")
 @Produces(MediaType.TEXT_PLAIN)
-public class PingService {
+public class PingResource {
     
     @GET
     public String ping() {

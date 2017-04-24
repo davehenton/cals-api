@@ -4,7 +4,8 @@ project.ext {
 
 dependencies {
     compile (
-            'io.dropwizard:dropwizard-core:' + dropwizardVersion
+            'io.dropwizard:dropwizard-core:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-testing:' + dropwizardVersion
             // 'io.dropwizard:dropwizard-hibernate:' + dropwizardVersion,
             // 'io.dropwizard:dropwizard-migrations:' + dropwizardVersion,
             // 'io.dropwizard:dropwizard-auth:' + dropwizardVersion
