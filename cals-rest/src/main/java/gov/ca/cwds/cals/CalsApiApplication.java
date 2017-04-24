@@ -5,10 +5,10 @@ import gov.ca.cwds.cals.rest.resources.PingResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 
-public class ApiApplication extends Application<ApiConfiguration> {
+public class CalsApiApplication extends Application<ApiConfiguration> {
 
     public static void main(String[] args) throws Exception{
-        new ApiApplication().run(args);
+        new CalsApiApplication().run(args);
     }
 
     @Override

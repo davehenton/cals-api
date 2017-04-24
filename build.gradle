@@ -2,7 +2,7 @@ project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectVersion = '1.0-SNAPSHOT'
     dropwizardVersion = "1.1.0"
-    mainClass = "gov.ca.cwds.cals.ApiApplication"
+    mainClass = "gov.ca.cwds.cals.CalsApiApplication"
 }
 
 group projectGroup
