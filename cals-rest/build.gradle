@@ -1,16 +1,10 @@
 apply plugin: 'com.github.johnrengelman.shadow'
 
-project.ext {
-    dropwizardVersion = "1.1.0"
-}
-
 dependencies {
     compile (
+            'gov.ca.cwds.api:api-core:'+ coreApiVersion,
             'io.dropwizard:dropwizard-core:' + dropwizardVersion,
             'io.dropwizard:dropwizard-testing:' + dropwizardVersion
-            // 'io.dropwizard:dropwizard-hibernate:' + dropwizardVersion,
-            // 'io.dropwizard:dropwizard-migrations:' + dropwizardVersion,
-            // 'io.dropwizard:dropwizard-auth:' + dropwizardVersion
     )
 
     // modules

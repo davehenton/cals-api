@@ -1,17 +1,17 @@
 project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectVersion = '1.0-SNAPSHOT'
-    dropwizardVersion = "1.1.0"
-    mainClass = "gov.ca.cwds.cals.CalsApiApplication"
+    dropwizardVersion = '1.1.0'
+    coreApiVersion = '0.20.173'
+    mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
 }
 
 group projectGroup
 version projectVersion
 
-subprojects {
+allprojects {
     apply plugin: 'java'
     sourceCompatibility = 1.8
-
     group projectGroup
     version projectVersion
 
@@ -21,6 +21,9 @@ subprojects {
             url "http://maven2.cwds.tabordasolutions.net"
         }
     }
+}
+
+subprojects {
 
     dependencies {
         testCompile group: 'junit', name: 'junit', version: '4.12'
@@ -28,7 +31,6 @@ subprojects {
 
 }
 
-apply plugin: 'java'
 apply plugin: 'application'
 
 mainClassName = mainClass
