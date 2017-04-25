@@ -1,5 +1,3 @@
-apply plugin: 'com.github.johnrengelman.shadow'
-
 dependencies {
     compile (
             'gov.ca.cwds.api:api-core:'+ coreApiVersion,
