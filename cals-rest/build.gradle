@@ -1,6 +1,14 @@
 dependencies {
+
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+
+    // Dropwizard-guice 1.0.0.2 conflicts with jersey-client 2.25.
+    // Exclude transitive dependencies.
+    compile ('gov.ca.cwds.api:api-core:' + coreApiVersion) {
+        exclude group: 'org.glassfish.jersey.core'
+    }
+
     compile (
-            'gov.ca.cwds.api:api-core:'+ coreApiVersion,
             'io.dropwizard:dropwizard-core:' + dropwizardVersion,
             'io.dropwizard:dropwizard-testing:' + dropwizardVersion
     )

@@ -1,18 +1,18 @@
 package gov.ca.cwds.cals;
 
+import com.google.inject.Module;
+import gov.ca.cwds.cals.inject.ApplicationModule;
+import gov.ca.cwds.rest.BaseApiApplication;
+import io.dropwizard.setup.Bootstrap;
 
-import gov.ca.cwds.cals.rest.resources.PingResource;
-import io.dropwizard.Application;
-import io.dropwizard.setup.Environment;
-
-public class CalsApiApplication extends Application<ApiConfiguration> {
+public class CalsApiApplication extends BaseApiApplication<CalcApiConfiguration> {
 
     public static void main(String[] args) throws Exception{
         new CalsApiApplication().run(args);
     }
 
     @Override
-    public void run(ApiConfiguration configuration, Environment environment) throws Exception {
-        environment.jersey().register(new PingResource());
+    public Module applicationModule(Bootstrap<CalcApiConfiguration> bootstrap) {
+        return new ApplicationModule(bootstrap);
     }
 }
