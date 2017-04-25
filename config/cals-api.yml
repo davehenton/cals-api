@@ -15,11 +15,11 @@ shiro:
 swagger:
   templateName: swagger.mustache
   assetsPath: /static
-  resourcePackage: gov.ca.cwds.rest.resources
-  title: CWDS API
+  resourcePackage: gov.ca.cwds.cals.rest.resources
+  title: CWDS CALC API
   description: RESTful API definitions for the CWS New System.
   logo: images/CWDS-API-Logo-Horizontal.png
   loginUrl: ${LOGIN_URL:-http://localhost:8090/authn/login}
-  showSwagger: ${SHOW_SWAGGER:-false}
+  showSwagger: ${SHOW_SWAGGER:-true}
 
 
