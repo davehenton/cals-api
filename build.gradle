@@ -89,7 +89,7 @@ task copyDist(type: Copy, dependsOn: shadowJar) {
     into 'build/docker/libs'
 }
 
-task apidocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
+task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
     dockerfile = "Dockerfile"
     project.group = projectDockerGroup
     applicationName = projectDockerAppName
