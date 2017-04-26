@@ -18,7 +18,7 @@ public class PingResourceTest {
             .build();
 
     @Test
-    public void testGetPerson() {
+    public void testPing() {
         assertEquals("pong", resources.target("/ping").request().get(String.class));
     }
 
