@@ -18,69 +18,59 @@ public class Facility extends DomainObject implements Request, Response {
 
     private static final long serialVersionUID = 3090955786152575097L;
 
-    //"id": 10,
-    @ApiModelProperty(required = false, readOnly = false, value = "", example = "ABC1234567")
+    @ApiModelProperty(example = "ABC1234567")
     private String id;
 
-    //"type": "get",
-    @ApiModelProperty(required = false, readOnly = false, value = "get", example = "get")
+    @ApiModelProperty(value = "get", example = "get")
     private String type;
 
-    //"name": fac_name,
-    @ApiModelProperty(required = false, readOnly = false, value = "", example = "Facility Name")
+    @ApiModelProperty(example = "Facility Name")
     private String name;
 
-    //"licensee_name": fac_licensee_name,
     @JsonProperty(value = "licensee_name")
-    @ApiModelProperty(required = false, readOnly = false, value = "", example = "get")
+    @ApiModelProperty(example = "get")
     private String licenseeName;
 
-    //"assigned_worker": assigned_worker,
     @JsonProperty(value = "assigned_worker")
-    @ApiModelProperty(required = false, readOnly = false, value = "", example = "John Doh")
+    @ApiModelProperty(example = "John Doh")
     private String assignedWorker;
 
-    //"district_office": district_office,
     @JsonProperty(value = "district_office")
-    @ApiModelProperty(required = false, readOnly = false, value = "", example = "")
+    @ApiModelProperty(example = "")
     private String districtOffice;
 
-    //"license_type": type,
     @JsonProperty(value = "license_type")
-    @ApiModelProperty(required = false, readOnly = false, value = "", example = "")
+    @ApiModelProperty
     private String liceneeType;
 
-    //"license_number": fac_nbr,
     @JsonProperty(value = "license_number")
-    @ApiModelProperty(required = false, readOnly = false, value = "", example = "")
+    @ApiModelProperty
     private String licenseNumber;
 
-    //"license_status": status,
     @JsonProperty(value = "license_status")
-    @ApiModelProperty(required = false, readOnly = false, value = "", example = "")
+    @ApiModelProperty
     private String licenseStatus;
 
-    //"capacity": fac_capacity,
-    @ApiModelProperty(required = false, readOnly = false, value = "", example = "")
+    @ApiModelProperty
     private int capacity;
 
-
-    //"license_effective_date": fac_lic_eff_date,
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @JsonProperty(value = "license_effective_date")
-    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = true)
+    @gov.ca.cwds.rest.validation.Date(required = true)
     @ApiModelProperty(required = true, readOnly = true, value = "yyyy-MM-dd", example = "2016-01-01")
     private String licenseEffectiveDate;
 
 
-    //"original_application_recieved_date":fac_orig_appl_rec_date
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @JsonProperty(value = "original_application_recieved_date")
-    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = true)
+    @gov.ca.cwds.rest.validation.Date(required = true)
     @ApiModelProperty(required = true, readOnly = true, value = "yyyy-MM-dd", example = "2016-01-01")
     private String originalApplicationRecievedDate;
 
-
+    /**
+     *
+     * @return id
+     */
     public String getId() {
         return id;
     }
@@ -89,6 +79,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.id = id;
     }
 
+    /**
+     *
+     * @return facility type
+     */
     public String getType() {
         return type;
     }
@@ -97,6 +91,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.type = type;
     }
 
+    /**
+     *
+     * @return facility name
+     */
     public String getName() {
         return name;
     }
@@ -105,6 +103,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.name = name;
     }
 
+    /**
+     *
+     * @return licensee name
+     */
     public String getLicenseeName() {
         return licenseeName;
     }
@@ -113,6 +115,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.licenseeName = licenseeName;
     }
 
+    /**
+     *
+     * @return assigned worker
+     */
     public String getAssignedWorker() {
         return assignedWorker;
     }
@@ -121,6 +127,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.assignedWorker = assignedWorker;
     }
 
+    /**
+     *
+     * @return office district
+     */
     public String getDistrictOffice() {
         return districtOffice;
     }
@@ -129,6 +139,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.districtOffice = districtOffice;
     }
 
+    /**
+     *
+     * @return license name
+     */
     public String getLiceneeType() {
         return liceneeType;
     }
@@ -137,6 +151,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.liceneeType = liceneeType;
     }
 
+    /**
+     *
+     * @return license number
+     */
     public String getLicenseNumber() {
         return licenseNumber;
     }
@@ -145,6 +163,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.licenseNumber = licenseNumber;
     }
 
+    /**
+     *
+     * @return license status
+     */
     public String getLicenseStatus() {
         return licenseStatus;
     }
@@ -153,6 +175,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.licenseStatus = licenseStatus;
     }
 
+    /**
+     *
+     * @return facility capacity
+     */
     public int getCapacity() {
         return capacity;
     }
@@ -161,6 +187,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.capacity = capacity;
     }
 
+    /**
+     *
+     * @return license effective date
+     */
     public String getLicenseEffectiveDate() {
         return licenseEffectiveDate;
     }
@@ -169,6 +199,10 @@ public class Facility extends DomainObject implements Request, Response {
         this.licenseEffectiveDate = licenseEffectiveDate;
     }
 
+    /**
+     *
+     * @return original application received date
+     */
     public String getOriginalApplicationRecievedDate() {
         return originalApplicationRecievedDate;
     }
