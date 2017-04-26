@@ -7,10 +7,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class NsDataSourceHealthCheck extends HealthCheck {
+public class DataSourceHealthCheck extends HealthCheck {
     private final DataSourceFactory dataSourceFactory;
 
-    public NsDataSourceHealthCheck(DataSourceFactory dataSourceFactory) {
+    public DataSourceHealthCheck(DataSourceFactory dataSourceFactory) {
         this.dataSourceFactory = dataSourceFactory;
     }
 

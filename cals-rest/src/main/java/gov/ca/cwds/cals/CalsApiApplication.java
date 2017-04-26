@@ -1,8 +1,9 @@
 package gov.ca.cwds.cals;
 
 import com.codahale.metrics.health.HealthCheck;
+import com.codahale.metrics.health.HealthCheckRegistry;
 import com.google.inject.Module;
-import gov.ca.cwds.cals.health.NsDataSourceHealthCheck;
+import gov.ca.cwds.cals.health.DataSourceHealthCheck;
 import gov.ca.cwds.cals.inject.ApplicationModule;
 import gov.ca.cwds.rest.BaseApiApplication;
 import io.dropwizard.setup.Bootstrap;
@@ -26,7 +27,9 @@ public class CalsApiApplication extends BaseApiApplication<CalcApiConfiguration>
 
     @Override
     public void runInternal(CalcApiConfiguration configuration, Environment environment) {
-        environment.healthChecks().register("nsDataSource", new NsDataSourceHealthCheck(configuration.getNsDataSourceFactory()));
+        HealthCheckRegistry healthCheckRegistry = environment.healthChecks();
+        healthCheckRegistry.register("nsDataSource", new DataSourceHealthCheck(configuration.getNsDataSourceFactory()));
+        healthCheckRegistry.register("cmsDataSource", new DataSourceHealthCheck(configuration.getCmsDataSourceFactory()));
 
         runHealthChecks(environment);
     }
