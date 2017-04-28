@@ -16,21 +16,15 @@ public class DataSourceHealthCheck extends HealthCheck {
 
     @Override
     protected Result check() throws Exception {
-        Connection connection = null;
         String url = dataSourceFactory.getUrl();
         String user = dataSourceFactory.getUser();
         String password = dataSourceFactory.getPassword();
 
-        try {
-            connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(url, user, password);) {
+            return Result.healthy();
         } catch (SQLException e) {
             return HealthCheck.Result.unhealthy(e.getMessage());
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
 
-        return Result.healthy();
     }
 }
