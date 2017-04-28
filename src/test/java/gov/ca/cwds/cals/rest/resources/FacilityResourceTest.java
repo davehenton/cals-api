@@ -14,7 +14,7 @@ import org.mockito.Mockito;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.rest.core.Api.FACILITY;
+import static gov.ca.cwds.cals.Constants.API.FACILITY;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 

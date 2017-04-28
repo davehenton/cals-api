@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.rest.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.inject.FacilityServiceBackendResource;
 import gov.ca.cwds.cals.rest.api.domain.Facility;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -18,8 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.rest.core.Api.FACILITY;
-
+import static gov.ca.cwds.cals.Constants.API.FACILITY;
 
 /**
  *

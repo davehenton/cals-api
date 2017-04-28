@@ -4,6 +4,18 @@ public final class Constants {
 
     private Constants() {}
 
-    public static final String PING = "ping";
+    public static class API {
+
+        /**
+         * A {@code String} constant representing {@value #FACILITY} API..
+         */
+        public static final String FACILITY = "facility";
+
+        /**
+         * A {@code String} constant representing {@value #RESOURCE_APPLICATION} API..
+         */
+        public static final String RESOURCE_APPLICATION = "application";
+
+    }
 
 }

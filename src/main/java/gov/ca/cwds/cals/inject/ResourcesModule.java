@@ -3,6 +3,9 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
+import com.google.inject.name.Named;
+import gov.ca.cwds.cals.CalcApiConfiguration;
+import gov.ca.cwds.cals.rest.resources.ApplicationResource;
 import gov.ca.cwds.cals.rest.resources.FacilityResource;
 import gov.ca.cwds.cals.rest.services.FacilityService;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -25,9 +28,21 @@ public class ResourcesModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(ApplicationResource.class);
         bind(FacilityResource.class);
     }
 
+    @Provides
+    @Named("app.name")
+    public String appName(CalcApiConfiguration calsApiConfiguration) {
+        return calsApiConfiguration.getApplicationName();
+    }
+
+    @Provides
+    @Named("app.version")
+    public String appVersion(CalcApiConfiguration calsApiConfiguration) {
+        return calsApiConfiguration.getVersion();
+    }
 
     @Provides
     @FacilityServiceBackendResource
