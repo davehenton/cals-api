@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.FacilityServiceBackendResource;
-import gov.ca.cwds.cals.service.dto.Facility;
+import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,7 +46,7 @@ public class FacilityResource {
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
-    @ApiOperation(value = "Returns Facility by id ", response = Facility.class)
+    @ApiOperation(value = "Returns Facility by id ", response = FacilityDTO.class)
     public Response get(@PathParam("id")  @ApiParam(required = true, name = "id",
             value = "The id of the Facility to find") String id) {
         return resourceDelegate.get(id);
