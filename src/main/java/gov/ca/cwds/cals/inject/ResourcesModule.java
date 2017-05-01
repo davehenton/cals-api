@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import gov.ca.cwds.cals.config.CalcApiConfiguration;
+import gov.ca.cwds.cals.CalcApiConfiguration;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.service.FacilityService;

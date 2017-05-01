@@ -1,10 +1,15 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.config.CalcApiConfiguration;
+import gov.ca.cwds.cals.CalcApiConfiguration;
 import gov.ca.cwds.inject.AuditingModule;
 import io.dropwizard.setup.Bootstrap;
 
+/**
+ * Bootstraps and configures the CWDS RESTful CALS-API application.
+ *
+ * @author CWDS CALS-API Team
+ */
 public class ApplicationModule extends AbstractModule {
 
     private Bootstrap<CalcApiConfiguration> bootstrap;
@@ -25,6 +30,7 @@ public class ApplicationModule extends AbstractModule {
         install(new ServicesModule());
         install(new ResourcesModule());
         install(new AuditingModule());
+        install(new MappingModule());
     }
 
 }

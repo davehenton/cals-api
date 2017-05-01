@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.config;
+package gov.ca.cwds.cals;
 
 import gov.ca.cwds.rest.BaseApiConfiguration;
 
