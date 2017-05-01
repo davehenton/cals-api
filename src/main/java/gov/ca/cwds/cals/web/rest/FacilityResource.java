@@ -1,9 +1,9 @@
-package gov.ca.cwds.cals.web.resources;
+package gov.ca.cwds.cals.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.FacilityServiceBackendResource;
-import gov.ca.cwds.cals.domain.Facility;
+import gov.ca.cwds.cals.service.dto.Facility;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

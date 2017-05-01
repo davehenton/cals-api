@@ -3,6 +3,7 @@ package gov.ca.cwds.cals;
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.google.inject.Module;
+import gov.ca.cwds.cals.config.CalcApiConfiguration;
 import gov.ca.cwds.cals.health.DataSourceHealthCheck;
 import gov.ca.cwds.cals.inject.ApplicationModule;
 import gov.ca.cwds.rest.BaseApiApplication;

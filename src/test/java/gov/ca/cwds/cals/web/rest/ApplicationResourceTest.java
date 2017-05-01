@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.web.resources;
+package gov.ca.cwds.cals.web.rest;
 
 import gov.ca.cwds.cals.rest.JerseyGuiceRule;
 import io.dropwizard.testing.junit.ResourceTestRule;

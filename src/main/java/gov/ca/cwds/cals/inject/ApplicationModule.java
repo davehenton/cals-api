@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.CalcApiConfiguration;
+import gov.ca.cwds.cals.config.CalcApiConfiguration;
 import gov.ca.cwds.inject.AuditingModule;
 import io.dropwizard.setup.Bootstrap;
 
@@ -15,7 +15,7 @@ public class ApplicationModule extends AbstractModule {
     }
 
     /**
-     * Configure and initialize API components, including services, resources, data access objects
+     * Configure and initialize API components, including services, rest, data access objects
      * (DAO), web service filters, and auditing.
      *
      * {@inheritDoc}

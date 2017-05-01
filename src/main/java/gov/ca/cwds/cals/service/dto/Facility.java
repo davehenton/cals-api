@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.domain;
+package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

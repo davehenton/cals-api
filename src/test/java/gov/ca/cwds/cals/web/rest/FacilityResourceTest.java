@@ -1,7 +1,7 @@
-package gov.ca.cwds.cals.web.resources;
+package gov.ca.cwds.cals.web.rest;
 
 import gov.ca.cwds.cals.rest.JerseyGuiceRule;
-import gov.ca.cwds.cals.domain.Facility;
+import gov.ca.cwds.cals.service.dto.Facility;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Before;

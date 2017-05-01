@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service;
 
-import gov.ca.cwds.cals.domain.Facility;
+import gov.ca.cwds.cals.service.dto.Facility;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
