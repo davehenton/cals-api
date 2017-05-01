@@ -27,6 +27,7 @@ public class ApplicationModule extends AbstractModule {
      */
     @Override
     protected void configure() {
+        install(new DataAccessModule(bootstrap));
         install(new ServicesModule());
         install(new ResourcesModule());
         install(new AuditingModule());
