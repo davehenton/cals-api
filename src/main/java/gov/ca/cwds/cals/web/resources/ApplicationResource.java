@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.rest.resources;
+package gov.ca.cwds.cals.web.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

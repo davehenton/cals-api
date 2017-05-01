@@ -15,7 +15,7 @@ shiro:
 swagger:
   templateName: swagger.mustache
   assetsPath: /static
-  resourcePackage: gov.ca.cwds.cals.rest.resources
+  resourcePackage: gov.ca.cwds.cals.web.resources
   title: CWDS CALC API
   description: RESTful API definitions for the CWS New System.
   logo: images/CWDS-API-Logo-Horizontal.png

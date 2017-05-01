@@ -1,6 +1,6 @@
-package gov.ca.cwds.cals.rest.services;
+package gov.ca.cwds.cals.service;
 
-import gov.ca.cwds.cals.rest.api.domain.Facility;
+import gov.ca.cwds.cals.domain.Facility;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
@@ -15,7 +15,6 @@ import java.io.Serializable;
  *
  */
 
-//TODO: implement the service
 public class FacilityService implements CrudsService {
 
     @Override
@@ -25,17 +24,17 @@ public class FacilityService implements CrudsService {
 
     @Override
     public Response delete(Serializable serializable) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Response create(Request request) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Response update(Serializable serializable, Request request) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -5,9 +5,9 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import gov.ca.cwds.cals.CalcApiConfiguration;
-import gov.ca.cwds.cals.rest.resources.ApplicationResource;
-import gov.ca.cwds.cals.rest.resources.FacilityResource;
-import gov.ca.cwds.cals.rest.services.FacilityService;
+import gov.ca.cwds.cals.web.resources.ApplicationResource;
+import gov.ca.cwds.cals.web.resources.FacilityResource;
+import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
 
