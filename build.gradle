@@ -1,6 +1,8 @@
 buildscript {
     repositories {
+        mavenLocal()
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
@@ -27,6 +29,7 @@ group projectGroup
 version projectVersion
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         url "http://maven2.cwds.tabordasolutions.net"
@@ -49,6 +52,10 @@ dependencies {
     compile ('gov.ca.cwds.api:api-core:' + coreApiVersion) {
         exclude group: 'org.glassfish.jersey.core'
     }
+
+    compile ('gov.ca.cwds.cals.model:fas:'+ projectVersion)
+    compile ('gov.ca.cwds.cals.model:lis:'+ projectVersion)
+    compile ('gov.ca.cwds.cals.model:cwsns:'+ projectVersion)
 
     compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
     compile group: 'org.slf4j', name: 'slf4j-ext', version: '1.7.22'
