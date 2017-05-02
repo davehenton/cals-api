@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.FacilityServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
+import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -40,6 +41,7 @@ public class FacilityResource {
         this.resourceDelegate = resourceDelegate;
     }
 
+    @UnitOfWork(value = "fas")
     @GET
     @Timed
     @Path("/{id}")
@@ -48,7 +50,7 @@ public class FacilityResource {
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Facility by id ", response = FacilityDTO.class)
     public Response get(@PathParam("id")  @ApiParam(required = true, name = "id",
-            value = "The id of the Facility to find") String id) {
+            value = "The id of the Facility to find") Integer id) {
         return resourceDelegate.get(id);
     }
 

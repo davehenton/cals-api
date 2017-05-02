@@ -96,6 +96,10 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @JsonProperty("address")
     private Set<PersonPhoneDTO> phone;
 
+    public FacilityDTO() {
+        super();
+    }
+
     /**
      * Constructor
      *
@@ -136,7 +140,7 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
                        @JsonProperty("county") String county,
                        @JsonProperty("addresses") Set<PersonAddressDTO> address,
                        @JsonProperty("phones") Set<PersonPhoneDTO> phone) {
-        super();
+        this();
         this.id = id;
         this.type = type;
         this.name = name;

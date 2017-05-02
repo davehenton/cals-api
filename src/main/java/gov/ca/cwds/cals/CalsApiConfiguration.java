@@ -4,20 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.rest.BaseApiConfiguration;
 import io.dropwizard.db.DataSourceFactory;
 
-import javax.annotation.Nullable;
-
 public class CalsApiConfiguration extends BaseApiConfiguration {
 
-    @Nullable
-    private DataSourceFactory lisDataSourceFactory;
+    private DataSourceFactory fasDataSourceFactory;
 
     @JsonProperty
-    public DataSourceFactory getLisDataSourceFactory() {
-        return lisDataSourceFactory;
+    public DataSourceFactory getFasDataSourceFactory() {
+        return fasDataSourceFactory;
     }
 
     @JsonProperty
-    public void setLisDataSourceFactory(@Nullable DataSourceFactory lisDataSourceFactory) {
-        this.lisDataSourceFactory = lisDataSourceFactory;
+    public void setFasDataSourceFactory(DataSourceFactory fasDataSourceFactory) {
+        this.fasDataSourceFactory = fasDataSourceFactory;
     }
 }

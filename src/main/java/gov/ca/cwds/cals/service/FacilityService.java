@@ -7,7 +7,6 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
-import io.dropwizard.logging.SyslogAppenderFactory;
 
 import java.io.Serializable;
 
@@ -18,7 +17,6 @@ import java.io.Serializable;
  *  @author CALS API Team
  *
  */
-
 public class FacilityService implements CrudsService {
 
     private LisFacFileDao lisFacFileDao;

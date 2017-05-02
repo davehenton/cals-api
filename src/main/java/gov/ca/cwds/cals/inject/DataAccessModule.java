@@ -16,7 +16,7 @@ public class DataAccessModule extends AbstractModule {
             new HibernateBundle<CalsApiConfiguration>(LisFacFile.class) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
-                    return configuration.getLisDataSourceFactory();
+                    return configuration.getFasDataSourceFactory();
                 }
 
                 @Override

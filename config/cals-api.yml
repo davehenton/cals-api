@@ -38,7 +38,7 @@ nsDataSourceFactory:
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: true
 
-lisDataSourceFactory:
+fasDataSourceFactory:
   driverClass: org.postgresql.Driver
   user: ${DB_NS_USER:-postgres}
   password: ${DB_NS_PASSWORD:-postgres}
