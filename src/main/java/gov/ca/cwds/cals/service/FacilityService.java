@@ -1,11 +1,13 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.domain.Facility;
+import gov.ca.cwds.cals.model.fas.LisFacFile;
+import gov.ca.cwds.cals.persistence.dao.LisFacFileDao;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
+import io.dropwizard.logging.SyslogAppenderFactory;
 
 import java.io.Serializable;
 
@@ -19,21 +21,19 @@ import java.io.Serializable;
 
 public class FacilityService implements CrudsService {
 
+    private LisFacFileDao lisFacFileDao;
     private FacilityMapper facilityMapper;
 
     @Inject
-    public FacilityService(FacilityMapper facilityMapper) {
-       this.facilityMapper = facilityMapper;
+    public FacilityService(LisFacFileDao lisFacFileDao, FacilityMapper facilityMapper) {
+        this.lisFacFileDao = lisFacFileDao;
+        this.facilityMapper = facilityMapper;
     }
 
     @Override
     public Response find(Serializable id) {
-        //facilityDao find by id
-        Facility facility = new Facility();
-        facility.setId(212521l);
-        //end of facilityDao
-
-        return facilityMapper.facilityToFacilityDTO(facility);
+        LisFacFile lisFacFile = lisFacFileDao.find(id);
+        return facilityMapper.facilityToFacilityDTO(lisFacFile);
     }
 
     @Override

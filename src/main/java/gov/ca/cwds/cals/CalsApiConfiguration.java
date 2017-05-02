@@ -6,7 +6,7 @@ import io.dropwizard.db.DataSourceFactory;
 
 import javax.annotation.Nullable;
 
-public class CalcApiConfiguration extends BaseApiConfiguration {
+public class CalsApiConfiguration extends BaseApiConfiguration {
 
     @Nullable
     private DataSourceFactory lisDataSourceFactory;

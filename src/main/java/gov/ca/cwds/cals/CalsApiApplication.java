@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class CalsApiApplication extends BaseApiApplication<CalcApiConfiguration> {
+public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration> {
     private static final Logger LOG = LoggerFactory.getLogger(CalsApiApplication.class);
 
     public static void main(String[] args) throws Exception{
@@ -21,12 +21,12 @@ public class CalsApiApplication extends BaseApiApplication<CalcApiConfiguration>
     }
 
     @Override
-    public Module applicationModule(Bootstrap<CalcApiConfiguration> bootstrap) {
+    public Module applicationModule(Bootstrap<CalsApiConfiguration> bootstrap) {
         return new ApplicationModule(bootstrap);
     }
 
     @Override
-    public void runInternal(CalcApiConfiguration configuration, Environment environment) {
+    public void runInternal(CalsApiConfiguration configuration, Environment environment) {
         HealthCheckRegistry healthCheckRegistry = environment.healthChecks();
         healthCheckRegistry.register("nsDataSource", new DataSourceHealthCheck(configuration.getNsDataSourceFactory()));
         healthCheckRegistry.register("cmsDataSource", new DataSourceHealthCheck(configuration.getCmsDataSourceFactory()));
