@@ -8,7 +8,7 @@ public class FacilityMapperImpl implements FacilityMapper {
     @Override
     public FacilityDTO facilityToFacilityDTO(LisFacFile lisFacFile) {
         FacilityDTO facilityDTO = new FacilityDTO();
-        facilityDTO.setId(125454l);
+        facilityDTO.setId(lisFacFile.getFacNbr().longValue());
         return facilityDTO;
     }
 

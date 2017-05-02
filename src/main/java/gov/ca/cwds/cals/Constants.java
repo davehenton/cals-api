@@ -7,9 +7,9 @@ public final class Constants {
     public static class API {
 
         /**
-         * A {@code String} constant representing {@value #FACILITY} API..
+         * A {@code String} constant representing {@value #FACILITIES} API..
          */
-        public static final String FACILITY = "facility";
+        public static final String FACILITIES = "facilities";
 
         /**
          * A {@code String} constant representing {@value #RESOURCE_APPLICATION} API..

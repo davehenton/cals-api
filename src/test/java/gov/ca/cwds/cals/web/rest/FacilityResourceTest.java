@@ -14,7 +14,7 @@ import org.mockito.Mockito;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.Constants.API.FACILITY;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
  */
 public class FacilityResourceTest {
 
-    private static final String ROOT_RESOURCE = "/" + FACILITY;
+    private static final String ROOT_RESOURCE = "/" + FACILITIES;
     private static final String FOUND_RESOURCE = ROOT_RESOURCE + "/1";
 
     @Rule

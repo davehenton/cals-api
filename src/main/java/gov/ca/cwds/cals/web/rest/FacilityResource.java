@@ -18,7 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.Constants.API.FACILITY;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 
 /**
  *
@@ -28,8 +28,8 @@ import static gov.ca.cwds.cals.Constants.API.FACILITY;
  *
  */
 
-@Api(value = FACILITY, tags = FACILITY)
-@Path(FACILITY)
+@Api(value = FACILITIES, tags = FACILITIES)
+@Path(FACILITIES)
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityResource {
 
