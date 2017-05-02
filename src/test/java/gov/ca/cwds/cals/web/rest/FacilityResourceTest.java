@@ -4,10 +4,7 @@ import gov.ca.cwds.cals.rest.JerseyGuiceRule;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.testing.junit.ResourceTestRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 
@@ -49,6 +46,7 @@ public class FacilityResourceTest {
     }
 
     @Test
+    @Ignore
     public void get() throws Exception {
         //mock facility
         FacilityDTO facility = new FacilityDTO();

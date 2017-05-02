@@ -93,7 +93,7 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @JsonProperty("address")
     private Set<PersonAddressDTO> address;
 
-    @JsonProperty("address")
+    @JsonProperty("phone")
     private Set<PersonPhoneDTO> phone;
 
     public FacilityDTO() {
@@ -157,6 +157,8 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.emailAddress = emailAddress;
         this.lastVisitReason = lastVisitReason;
         this.county = county;
+        this.address = address;
+        this.phone = phone;
     }
 
     public Long getId() {
