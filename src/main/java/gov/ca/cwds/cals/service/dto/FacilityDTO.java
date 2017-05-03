@@ -126,47 +126,6 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @JsonProperty("phones")
     private Set<PersonPhoneDTO> phone;
 
-    /**
-     * Constructor
-     */
-    public FacilityDTO(@JsonProperty("id") Long id,
-                       @JsonProperty("type") String type,
-                       @JsonProperty("name") String name,
-                       @JsonProperty("licensee_name") String licenseeName,
-                       @JsonProperty("licensee_type") String licenseeType,
-                       @JsonProperty("assigned_worker") String assignedWorker,
-                       @JsonProperty("district_office") String districtOffice,
-                       @JsonProperty("license_number") Long licenseNumber,
-                       @JsonProperty("license_status") String licenseStatus,
-                       @JsonProperty("capacity") Integer capacity,
-                       @JsonProperty("license_effective_date") LocalDate licenseEffectiveDate,
-                       @JsonProperty("original_application_recieved_date") LocalDate originalApplicationRecievedDate,
-                       @JsonProperty("last_visit_date") LocalDate lastVisitDate,
-                       @JsonProperty("email_address") String emailAddress,
-                       @JsonProperty("last_visit_reason") String lastVisitReason,
-                       @JsonProperty("county") String county,
-                       @JsonProperty("addresses") Set<PersonAddressDTO> address,
-                       @JsonProperty("phones") Set<PersonPhoneDTO> phone) {
-        this.id = id;
-        this.type = type;
-        this.name = name;
-        this.licenseeName = licenseeName;
-        this.licenseeType = licenseeType;
-        this.assignedWorker = assignedWorker;
-        this.districtOffice = districtOffice;
-        this.licenseNumber = licenseNumber;
-        this.licenseStatus = licenseStatus;
-        this.capacity = capacity;
-        this.licenseEffectiveDate = licenseEffectiveDate;
-        this.originalApplicationRecievedDate = originalApplicationRecievedDate;
-        this.lastVisitDate = lastVisitDate;
-        this.emailAddress = emailAddress;
-        this.lastVisitReason = lastVisitReason;
-        this.county = county;
-        this.address = address;
-        this.phone = phone;
-    }
-
     public URI getHref() {
         return href;
     }

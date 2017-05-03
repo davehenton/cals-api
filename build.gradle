@@ -13,6 +13,7 @@ buildscript {
 plugins {
     id 'net.saliman.cobertura' version '2.4.0'
     id "org.sonarqube" version "2.2.1"
+    id 'net.ltgt.apt' version '0.9'
 }
 
 project.ext {
@@ -37,7 +38,7 @@ repositories {
     }
 }
 
-sourceCompatibility = 1.8
+sourceCompatibility = JavaVersion.VERSION_1_8
 apply plugin: "cobertura"
 apply plugin: 'java'
 apply plugin: 'application'
@@ -65,6 +66,7 @@ dependencies {
             'org.postgresql:postgresql:9.4.1208.jre7',
             'io.dropwizard:dropwizard-testing:' + dropwizardVersion
     )
+    compile "org.mapstruct:mapstruct-jdk8:1.1.0.Final"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'org.mockito:mockito-core:2.0.54-beta'
@@ -75,6 +77,8 @@ dependencies {
         exclude group: 'javax.servlet', module: 'javax.servlet-api'
         exclude group: 'junit', module: 'junit'
     }
+
+    apt "org.mapstruct:mapstruct-processor:1.1.0.Final"
 }
 
 mainClassName = mainClass
@@ -138,6 +142,12 @@ task publishDocker(dependsOn: [pushDockerVersionTagged, pushDockerLatest]) {
     doLast {
         println 'Published'
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs = [
+            '-Amapstruct.suppressGeneratorTimestamp=true'
+    ]
 }
 
 

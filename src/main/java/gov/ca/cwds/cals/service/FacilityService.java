@@ -31,7 +31,7 @@ public class FacilityService implements CrudsService {
     @Override
     public Response find(Serializable id) {
         LisFacFile lisFacFile = lisFacFileDao.find(id);
-        return facilityMapper.facilityToFacilityDTO(lisFacFile);
+        return facilityMapper.lisFacilityToFacilityDTO(lisFacFile);
     }
 
     @Override
