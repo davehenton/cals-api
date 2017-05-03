@@ -10,7 +10,7 @@ public final class Constants {
 
     public static class API {
 
-        public static final String CURRENT_VERSION = "v1";
+        public static final String CURRENT_VERSION = "/v1";
 
         /**
          * A {@code String} constant representing {@value #FACILITIES} API..

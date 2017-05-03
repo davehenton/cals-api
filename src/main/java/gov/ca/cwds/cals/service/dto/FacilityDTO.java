@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.api.domain.DomainObject;
@@ -28,8 +29,8 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("href")
-    @InjectLink(value="/facilities/${instance.id}", style=RELATIVE_PATH)
-    @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example = "")
+    @InjectLink(value= Constants.API.CURRENT_VERSION + "/facilities/${instance.id}", style=RELATIVE_PATH)
+    @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example = "/v1/facilities/349401")
     URI href;
 
     @JsonProperty("id")
@@ -37,15 +38,15 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @ApiModelProperty(required = true, readOnly = false, value = "Facility ID", example = "349401")
     private Long id;
 
-    @JsonProperty("number")
-    @NotNull
-    @ApiModelProperty(required = true, readOnly = false, value = "Facility Number", example = "193600161")
-    private Long number;
-
     @JsonProperty("type")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Facility Type", example = "FAMILY DAY CARE")
     private String type;
+
+    @JsonProperty("number")
+    @NotNull
+    @ApiModelProperty(required = true, readOnly = false, value = "Facility Number", example = "193600161")
+    private Long number;
 
     @JsonProperty("name")
     @NotNull

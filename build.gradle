@@ -24,6 +24,7 @@ project.ext {
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.20.173'
     calsModelVersion = '1.0-SNAPSHOT'
+    mapstructVersion = '1.1.0.Final'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
 }
 
@@ -66,7 +67,7 @@ dependencies {
             'org.postgresql:postgresql:9.4.1208.jre7',
             'io.dropwizard:dropwizard-testing:' + dropwizardVersion
     )
-    compile "org.mapstruct:mapstruct-jdk8:1.1.0.Final"
+    compile 'org.mapstruct:mapstruct-jdk8:' + mapstructVersion
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'org.mockito:mockito-core:2.0.54-beta'
@@ -78,7 +79,7 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
 
-    apt "org.mapstruct:mapstruct-processor:1.1.0.Final"
+    apt '"org.mapstruct:mapstruct-processor:' + mapstructVersion
 }
 
 mainClassName = mainClass
