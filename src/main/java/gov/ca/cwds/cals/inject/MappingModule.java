@@ -7,8 +7,9 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapperImpl;
 /**
  * DI (dependency injection) setup for mapping classes.
  *
- * @author CWDS API Team
+ * @author CWDS CALS API Team
  */
+
 public class MappingModule extends AbstractModule {
 
     @Override

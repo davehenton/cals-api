@@ -6,6 +6,10 @@ import gov.ca.cwds.cals.model.fas.LisFacFile;
 import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.SessionFactory;
 
+/**
+ * @author CWDS CALS API Team
+ */
+
 public class LisFacFileDao extends BaseDaoImpl<LisFacFile> {
 
     @Inject

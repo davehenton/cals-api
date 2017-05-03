@@ -7,6 +7,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+/**
+ * @author CWDS CALS API Team
+ */
+
 @Mapper
 public interface FacilityMapper {
 

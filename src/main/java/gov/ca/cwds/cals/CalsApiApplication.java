@@ -14,6 +14,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
+/**
+ * @author CWDS CALS API Team
+ */
+
 public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration> {
     private static final Logger LOG = LoggerFactory.getLogger(CalsApiApplication.class);
 

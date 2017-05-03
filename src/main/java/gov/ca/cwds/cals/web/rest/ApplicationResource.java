@@ -15,6 +15,10 @@ import javax.ws.rs.core.MediaType;
 
 import static gov.ca.cwds.cals.Constants.API.RESOURCE_APPLICATION;
 
+/**
+ * @author CWDS CALS API Team
+ */
+
 @Api(value = RESOURCE_APPLICATION/*, hidden = true*/)
 @Path(RESOURCE_APPLICATION)
 @Produces(MediaType.APPLICATION_JSON)

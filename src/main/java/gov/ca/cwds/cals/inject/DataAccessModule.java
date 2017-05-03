@@ -10,6 +10,10 @@ import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
+/**
+ * @author CWDS CALS API Team
+ */
+
 public class DataAccessModule extends AbstractModule {
 
     private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =

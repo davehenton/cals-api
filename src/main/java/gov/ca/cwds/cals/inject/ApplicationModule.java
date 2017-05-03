@@ -8,8 +8,9 @@ import io.dropwizard.setup.Bootstrap;
 /**
  * Bootstraps and configures the CWDS RESTful CALS-API application.
  *
- * @author CWDS CALS-API Team
+ * @author CWDS CALS API Team
  */
+
 public class ApplicationModule extends AbstractModule {
 
     private Bootstrap<CalsApiConfiguration> bootstrap;
