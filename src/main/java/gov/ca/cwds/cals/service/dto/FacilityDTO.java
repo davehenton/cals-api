@@ -2,7 +2,6 @@ package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.api.domain.DomainObject;
@@ -17,7 +16,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.glassfish.jersey.linking.InjectLink.Style.ABSOLUTE;
+import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
 
 /**
  * {@link DomainObject} representing a facility.
@@ -29,7 +28,7 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("href")
-    @InjectLink(value="facilities/${instance.id}", style=ABSOLUTE)
+    @InjectLink(value="/facilities/${instance.id}", style=RELATIVE_PATH)
     @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example = "")
     URI href;
 
