@@ -46,7 +46,6 @@ public class FacilityResourceTest {
     }
 
     @Test
-    @Ignore
     public void get() throws Exception {
         //mock facility
         FacilityDTO facility = new FacilityDTO();
