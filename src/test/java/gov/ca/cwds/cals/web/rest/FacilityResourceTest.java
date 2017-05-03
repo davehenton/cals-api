@@ -48,7 +48,8 @@ public class FacilityResourceTest {
     @Test
     @Ignore
     public void get() throws Exception {
-        //mock facility
+/*
+
         FacilityDTO facility = new FacilityDTO();
         facility.setId(1l);
         facility.setAssignedWorker("Assigned Worker");
@@ -67,6 +68,7 @@ public class FacilityResourceTest {
                 .accept(MediaType.APPLICATION_JSON).get();
         
         verify(resourceDelegate).get("1");
+*/
     }
 
 }

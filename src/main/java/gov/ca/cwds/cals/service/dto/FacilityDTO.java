@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.api.domain.DomainObject;
-import gov.ca.cwds.rest.validation.Date;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
@@ -96,31 +95,8 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @JsonProperty("phone")
     private Set<PersonPhoneDTO> phone;
 
-    public FacilityDTO() {
-        super();
-    }
-
     /**
      * Constructor
-     *
-     * @param id
-     * @param type
-     * @param name
-     * @param licenseeName
-     * @param licenseeType
-     * @param assignedWorker
-     * @param districtOffice
-     * @param licenseNumber
-     * @param licenseStatus
-     * @param capacity
-     * @param licenseEffectiveDate
-     * @param originalApplicationRecievedDate
-     * @param lastVisitDate
-     * @param emailAddress
-     * @param lastVisitReason
-     * @param county
-     * @param address
-     * @param phone
      */
     public FacilityDTO(@JsonProperty("id") Long id,
                        @JsonProperty("type") String type,
@@ -140,7 +116,6 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
                        @JsonProperty("county") String county,
                        @JsonProperty("addresses") Set<PersonAddressDTO> address,
                        @JsonProperty("phones") Set<PersonPhoneDTO> phone) {
-        this();
         this.id = id;
         this.type = type;
         this.name = name;
@@ -165,129 +140,72 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
     public String getLicenseeName() {
         return licenseeName;
     }
 
-    public void setLicenseeName(String licenseeName) {
-        this.licenseeName = licenseeName;
-    }
     public String getLicenseeType() {
         return licenseeType;
     }
 
-    public void setLicenseeType(String licenseeType) {
-        this.licenseeType = licenseeType;
-    }
     public String getAssignedWorker() {
         return assignedWorker;
     }
 
-    public void setAssignedWorker(String assignedWorker) {
-        this.assignedWorker = assignedWorker;
-    }
     public String getDistrictOffice() {
         return districtOffice;
     }
 
-    public void setDistrictOffice(String districtOffice) {
-        this.districtOffice = districtOffice;
-    }
     public Long getLicenseNumber() {
         return licenseNumber;
     }
 
-    public void setLicenseNumber(Long licenseNumber) {
-        this.licenseNumber = licenseNumber;
-    }
     public String getLicenseStatus() {
         return licenseStatus;
     }
 
-    public void setLicenseStatus(String licenseStatus) {
-        this.licenseStatus = licenseStatus;
-    }
     public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
-    }
     public LocalDate getLicenseEffectiveDate() {
         return licenseEffectiveDate;
     }
 
-    public void setLicenseEffectiveDate(LocalDate licenseEffectiveDate) {
-        this.licenseEffectiveDate = licenseEffectiveDate;
-    }
     public LocalDate getOriginalApplicationRecievedDate() {
         return originalApplicationRecievedDate;
     }
 
-    public void setOriginalApplicationRecievedDate(LocalDate originalApplicationRecievedDate) {
-        this.originalApplicationRecievedDate = originalApplicationRecievedDate;
-    }
     public LocalDate getLastVisitDate() {
         return lastVisitDate;
     }
 
-    public void setLastVisitDate(LocalDate lastVisitDate) {
-        this.lastVisitDate = lastVisitDate;
-    }
     public String getEmailAddress() {
         return emailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
     public String getLastVisitReason() {
         return lastVisitReason;
     }
 
-    public void setLastVisitReason(String lastVisitReason) {
-        this.lastVisitReason = lastVisitReason;
-    }
     public String getCounty() {
         return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
     }
 
     public Set<PersonAddressDTO> getAddress() {
         return address;
     }
 
-    public void setAddress(Set<PersonAddressDTO> address) {
-        this.address = address;
-    }
-
     public Set<PersonPhoneDTO> getPhone() {
         return phone;
-    }
-
-    public void setPhone(Set<PersonPhoneDTO> phone) {
-        this.phone = phone;
     }
 
     @Override
@@ -312,22 +230,22 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @Override
     public String toString() {
         return "FacilityDTO{" +
-            "id=" + id +
-            ", type='" + type + "'" +
-            ", name='" + name + "'" +
-            ", licenseeName='" + licenseeName + "'" +
-            ", licenseeType='" + licenseeType + "'" +
-            ", assignedWorker='" + assignedWorker + "'" +
-            ", districtOffice='" + districtOffice + "'" +
-            ", licenseNumber='" + licenseNumber + "'" +
-            ", licenseStatus='" + licenseStatus + "'" +
-            ", capacity='" + capacity + "'" +
-            ", licenseEffectiveDate='" + licenseEffectiveDate + "'" +
-            ", originalApplicationRecievedDate='" + originalApplicationRecievedDate + "'" +
-            ", lastVisitDate='" + lastVisitDate + "'" +
-            ", emailAddress='" + emailAddress + "'" +
-            ", lastVisitReason='" + lastVisitReason + "'" +
-            ", county='" + county + "'" +
-            '}';
+                "id=" + id +
+                ", type='" + type + "'" +
+                ", name='" + name + "'" +
+                ", licenseeName='" + licenseeName + "'" +
+                ", licenseeType='" + licenseeType + "'" +
+                ", assignedWorker='" + assignedWorker + "'" +
+                ", districtOffice='" + districtOffice + "'" +
+                ", licenseNumber='" + licenseNumber + "'" +
+                ", licenseStatus='" + licenseStatus + "'" +
+                ", capacity='" + capacity + "'" +
+                ", licenseEffectiveDate='" + licenseEffectiveDate + "'" +
+                ", originalApplicationRecievedDate='" + originalApplicationRecievedDate + "'" +
+                ", lastVisitDate='" + lastVisitDate + "'" +
+                ", emailAddress='" + emailAddress + "'" +
+                ", lastVisitReason='" + lastVisitReason + "'" +
+                ", county='" + county + "'" +
+                '}';
     }
 }
