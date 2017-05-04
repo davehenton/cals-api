@@ -9,7 +9,7 @@ node {
 
    
    stage('Preparation') {
-		  git url: 'git@github.com:ca-cwds/cals-api.git'
+		  git url: 'https://github.com/ca-cwds/cals-api.git'
 		  rtGradle.tool = "Gradle_35"
 		  rtGradle.resolver repo:'repo', server: serverArti
 		  rtGradle.deployer repo:'libs-snapshot', server: serverArti
