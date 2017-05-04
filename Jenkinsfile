@@ -12,8 +12,7 @@ node {
 		  git url: 'https://github.com/ca-cwds/cals-api.git'
 		  rtGradle.tool = "Gradle_35"
 		  rtGradle.resolver repo:'repo', server: serverArti
-		  rtGradle.deployer repo:'libs-snapshot', server: serverArti
-		  rtGradle.deployer.deployArtifacts = false
+
 		  
    }
    stage('Build'){
@@ -23,11 +22,12 @@ node {
 		buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test'
     }
    stage('SonarQube analysis'){
-		withSonarQubeEnv('jenkins') {
+		withSonarQubeEnv('Core-SonarQube') {
 			buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'sonarqube'
 		}
     }
 	stage ('Push to artifactory'){
+	    rtGradle.deployer repo:'libs-snapshot', server: serverArti
 	    rtGradle.deployer.deployArtifacts = true
 		buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'artifactoryPublish'
 	}
