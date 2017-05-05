@@ -17,6 +17,8 @@ public interface FacilityMapper {
     FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
 
     @Mapping(source = "isnLisFacFile", target = "id")
+    @Mapping(source = "facType.tblFacTypeCode", target = "type.code")
+    @Mapping(source = "facType.tblFacTypeDesc", target = "type.description")
     @Mapping(source = "facNbr", target = "number")
     @Mapping(source = "facName", target = "name")
     @Mapping(source = "facLicenseeName", target = "licenseeName")
@@ -30,7 +32,9 @@ public interface FacilityMapper {
 
     FacilityDTO lisFacilityToFacilityDTO(LisFacFile lisFacFile);
 
+/*
     @InheritInverseConfiguration
     LisFacFile facilityDTOToLisFacility(FacilityDTO target);
+*/
 
 }

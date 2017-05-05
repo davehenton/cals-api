@@ -40,8 +40,8 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
 
     @JsonProperty("type")
     @NotNull
-    @ApiModelProperty(required = true, readOnly = false, value = "Facility Type", example = "FAMILY DAY CARE")
-    private String type;
+    @ApiModelProperty(required = true, readOnly = false, value = "Facility Type")
+    private FacilityTypeDTO type;
 
     @JsonProperty("number")
     @NotNull
@@ -150,11 +150,11 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.number = number;
     }
 
-    public String getType() {
+    public FacilityTypeDTO getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(FacilityTypeDTO type) {
         this.type = type;
     }
 
