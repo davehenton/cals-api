@@ -41,27 +41,6 @@ public class FacilityTypeDTO implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        FacilityTypeDTO that = (FacilityTypeDTO) o;
-
-        if (!code.equals(that.code)) {
-            return false;
-        }
-        if (!description.equals(that.description)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
     public String toString() {
         return "FacilityTypeDTO{" +
                 "code='" + code + '\'' +

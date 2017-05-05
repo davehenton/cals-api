@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.model.fas.FacilityType;
+import gov.ca.cwds.cals.model.fas.LisDoFile;
 import gov.ca.cwds.cals.model.fas.LisFacFile;
 import gov.ca.cwds.cals.model.fas.LisTableFile;
 import gov.ca.cwds.cals.persistence.dao.LisFacFileDao;
@@ -22,7 +23,8 @@ public class DataAccessModule extends AbstractModule {
             new HibernateBundle<CalsApiConfiguration>(
                     LisFacFile.class,
                     LisTableFile.class,
-                    FacilityType.class
+                    FacilityType.class,
+                    LisDoFile.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {

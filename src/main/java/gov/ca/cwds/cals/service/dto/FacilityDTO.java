@@ -30,23 +30,18 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
 
     @JsonProperty("href")
     @InjectLink(value= Constants.API.CURRENT_VERSION + "/facilities/${instance.id}", style=RELATIVE_PATH)
-    @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example = "/v1/facilities/349401")
+    @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example = "/v1/facilities/193600010")
     URI href;
 
     @JsonProperty("id")
     @NotNull
-    @ApiModelProperty(required = true, readOnly = false, value = "Facility ID", example = "349401")
+    @ApiModelProperty(required = true, readOnly = false, value = "Facility ID", example = "193600010")
     private Long id;
 
     @JsonProperty("type")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Facility Type")
     private FacilityTypeDTO type;
-
-    @JsonProperty("number")
-    @NotNull
-    @ApiModelProperty(required = true, readOnly = false, value = "Facility Number", example = "193600161")
-    private Long number;
 
     @JsonProperty("name")
     @NotNull
@@ -70,7 +65,7 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
 
     @JsonProperty("district_office")
     @ApiModelProperty(required = false, readOnly = false, value = "District Office", example = "MISSION VALLEY")
-    private String districtOffice;
+    private DistrictOfficeDTO districtOffice;
 
     @JsonProperty("license_number")
     @NotNull
@@ -142,14 +137,6 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.id = id;
     }
 
-    public Long getNumber() {
-        return number;
-    }
-
-    public void setNumber(Long number) {
-        this.number = number;
-    }
-
     public FacilityTypeDTO getType() {
         return type;
     }
@@ -190,11 +177,11 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.assignedWorker = assignedWorker;
     }
 
-    public String getDistrictOffice() {
+    public DistrictOfficeDTO getDistrictOffice() {
         return districtOffice;
     }
 
-    public void setDistrictOffice(String districtOffice) {
+    public void setDistrictOffice(DistrictOfficeDTO districtOffice) {
         this.districtOffice = districtOffice;
     }
 
@@ -311,7 +298,6 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         return "FacilityDTO{" +
                 "href=" + href +
                 ", id=" + id +
-                ", number=" + number +
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", licenseeName='" + licenseeName + '\'' +
