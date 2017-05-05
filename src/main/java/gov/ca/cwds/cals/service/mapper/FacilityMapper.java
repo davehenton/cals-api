@@ -26,6 +26,8 @@ public interface FacilityMapper {
     @Mapping(source = "facDoNbr.doNbr", target = "districtOffice.number")
     @Mapping(source = "facDoNbr.doName", target = "districtOffice.name")
     @Mapping(source = "facNbr", target = "licenseNumber")
+    @Mapping(source = "facStatus.tblFacStatusCode", target = "status.code")
+    @Mapping(source = "facStatus.tblFacStatusDesc", target = "status.description")
     @Mapping(source = "facCapacity", target = "capacity")
     @Mapping(source = "facLicEffDate", target = "licenseEffectiveDate")
     @Mapping(source = "facOrigApplRecDate", target = "originalApplicationRecievedDate")

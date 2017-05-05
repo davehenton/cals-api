@@ -72,9 +72,10 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @ApiModelProperty(required = false, readOnly = false, value = "License Number", example = "193600161")
     private Long licenseNumber;
 
-    @JsonProperty("license_status")
-    @ApiModelProperty(required = false, readOnly = false, value = "License Status", example = "CLOSED, AGY INIT.")
-    private String licenseStatus;
+    @JsonProperty("status")
+    @NotNull
+    @ApiModelProperty(required = false, readOnly = false, value = "Facility Status")
+    private FacilityStatusDTO status;
 
     @JsonProperty("capacity")
     @NotNull
@@ -185,20 +186,20 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.districtOffice = districtOffice;
     }
 
+    public FacilityStatusDTO getStatus() {
+        return status;
+    }
+
+    public void setStatus(FacilityStatusDTO status) {
+        this.status = status;
+    }
+
     public Long getLicenseNumber() {
         return licenseNumber;
     }
 
     public void setLicenseNumber(Long licenseNumber) {
         this.licenseNumber = licenseNumber;
-    }
-
-    public String getLicenseStatus() {
-        return licenseStatus;
-    }
-
-    public void setLicenseStatus(String licenseStatus) {
-        this.licenseStatus = licenseStatus;
     }
 
     public Integer getCapacity() {
@@ -304,8 +305,8 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
                 ", licenseeType='" + licenseeType + '\'' +
                 ", assignedWorker='" + assignedWorker + '\'' +
                 ", districtOffice='" + districtOffice + '\'' +
-                ", licenseNumber=" + licenseNumber +
-                ", licenseStatus='" + licenseStatus + '\'' +
+                ", licenseNumber='" + licenseNumber + '\'' +
+                ", status=" + status +
                 ", capacity=" + capacity +
                 ", licenseEffectiveDate=" + licenseEffectiveDate +
                 ", originalApplicationRecievedDate=" + originalApplicationRecievedDate +
