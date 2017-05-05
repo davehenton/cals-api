@@ -16,6 +16,9 @@ import javax.ws.rs.core.MediaType;
 import static io.dropwizard.testing.FixtureHelpers.*;
 import static org.assertj.core.api.Assertions.*;
 
+/**
+ * @author CWDS CALS API Team
+ */
 public class ApplicationTest {
     private static DatabaseHelper fasDatabaseHelper;
 

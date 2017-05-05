@@ -9,6 +9,9 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * @author CWDS CALS API Team
+ */
 public class DatabaseHelper {
     public Database database;
     private String url;
