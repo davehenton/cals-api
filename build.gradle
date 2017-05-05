@@ -79,7 +79,7 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
 
-    apt '"org.mapstruct:mapstruct-processor:' + mapstructVersion
+    apt 'org.mapstruct:mapstruct-processor:' + mapstructVersion
 }
 
 mainClassName = mainClass

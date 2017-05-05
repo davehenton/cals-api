@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+    <changeSet author="leonid.marushevskiy (generated)" id="1493269173453-1" >
+        <insert tableName="lis_fac_file">
+            <column name="isn_lis_fac_file" valueNumeric="1"/>
+            <column name="fac_nbr" valueNumeric="193600001"/>
+            <column name="fac_name" value="BACKYARDIGAN FOSTER FAMILY HOME                   "/>
+            <column name="fac_do_eval_code" value="A106"/>
+            <column name="fac_do_nbr" valueNumeric="2"/>
+            <column name="fac_co_nbr" valueNumeric="7"/>
+            <column name="fac_fm_region_nbr" valueNumeric="0"/>
+            <column name="fac_cfirs_id_nbr" valueNumeric="0"/>
+            <column name="fac_street_search" value="ISABEL              "/>
+            <column name="fac_type" valueNumeric="810"/>
+            <column name="fac_status" valueNumeric="15"/>
+            <column name="fac_res_street_addr" value="485 PILGRIM AVE.              "/>
+            <column name="fac_res_city" value="MODESTO             "/>
+            <column name="fac_res_state" value="CA"/>
+            <column name="fac_res_zip_code" value="95650    "/>
+            <column name="fac_mail_street_addr" value="485 PILGRIM AVE.              "/>
+            <column name="fac_mail_city" value="MODESTO             "/>
+            <column name="fac_mail_state" value="CA"/>
+            <column name="fac_mail_zip_code" value="95650    "/>
+            <column name="fac_licensee_name" value="PROMESA BEHAVIORAL HEALTH                         "/>
+            <column name="fac_licensee_type" value="A"/>
+            <column name="fac_lic_comments" value="MAX. CAPACITY: 12 CHILDREN WITH NO MORE THAN 4 INFANTS, OR CAPACITY   14 CHILDREN WHEN 2 ARE AT LEAST 6 YEARS OF AGE WITH A MAXIMUM OF 3    INFANTS: PROPERTY/OWNER LANDLORD CONSENT IS REQUIRED.                 "/>
+            <column name="fac_lic_eff_date" valueDate="2004-05-10"/>
+            <column name="fac_lic_expir_date"/>
+            <column name="fac_lic_first_date" valueDate="2004-05-10"/>
+            <column name="fac_lic_last_change_date" valueDate="2006-10-13"/>
+            <column name="fac_lic_mail_street_addr" value="4147 MOUNT ISABEL ROAD        "/>
+            <column name="fac_lic_mail_city" value="ANTIOCH             "/>
+            <column name="fac_lic_mail_state" value="CA"/>
+            <column name="fac_lic_mail_zip_code" value="94531    "/>
+            <column name="fac_admin" value="THORNTON, SHELIA          "/>
+            <column name="fac_capacity" valueNumeric="14"/>
+            <column name="fac_client_served" valueNumeric="960"/>
+            <column name="fac_closed_date" valueDate="2012-06-12"/>
+            <column name="fac_orig_appl_rec_date" valueDate="2004-01-28"/>
+            <column name="fac_phone_nbr" value="9255220001"/>
+            <column name="fac_annual_10_mo_defer_date"/>
+            <column name="fac_annual_22_mo_defer_date"/>
+            <column name="fac_annual_10_mo_visit_appr"/>
+            <column name="fac_annual_22_mo_visit_appr"/>
+            <column name="fac_annual_10_mo_visit_date" valueDate="2011-08-18"/>
+            <column name="fac_annual_22_mo_visit_date"/>
+            <column name="fac_last_visit_date" valueDate="2011-08-18"/>
+            <column name="fac_last_visit_reason" valueNumeric="4"/>
+            <column name="fac_mid_yr_defer_date"/>
+            <column name="fac_mid_yr_visit_appr"/>
+            <column name="fac_mid_yr_visit_date"/>
+            <column name="fac_post_lic_defer_date"/>
+            <column name="fac_post_lic_visit_appr"/>
+            <column name="fac_post_lic_visit_date"/>
+            <column name="fac_renewal_defer_date"/>
+            <column name="fac_renewal_visit_appr"/>
+            <column name="fac_renewal_visit_date"/>
+            <column name="fac_last_fire_clear_date" valueDate="2006-08-29"/>
+            <column name="fac_sfm_id_nbr"/>
+            <column name="fac_amb_1_17_nbr"/>
+            <column name="fac_amb_18_64_nbr"/>
+            <column name="fac_amb_65_plus_nbr"/>
+            <column name="fac_nonamb_1_17_nbr"/>
+            <column name="fac_nonamb_18_64_nbr"/>
+            <column name="fac_nonamb_65_plus_nbr"/>
+            <column name="fac_unlic_orig_input_date"/>
+            <column name="fac_closed_process_date" valueDate="2012-06-12"/>
+            <column name="fac_cap_inc_rec_date" valueDate="2006-06-27"/>
+            <column name="fac_region_nbr" valueNumeric="40"/>
+            <column name="fac_last_defer_visit_date"/>
+            <column name="fac_last_defer_visit_reason"/>
+            <column name="fac_annual_visit_year" valueNumeric="12"/>
+            <column name="fac_last_upd_date" valueDate="2015-08-04"/>
+            <column name="fac_cap_inc_closed_date"/>
+            <column name="fac_action_code" value="M"/>
+            <column name="fac_inc_cap_eff_date" valueDate="2006-10-13"/>
+            <column name="fac_lic_comments_2"/>
+            <column name="fac_client_served_appr_date"/>
+            <column name="fac_legal_action_indicator"/>
+            <column name="fac_agg_status"/>
+            <column name="fac_primary_nbr"/>
+            <column name="fac_billing_date" valueDate="2004-05-10"/>
+            <column name="fac_dual_id" value="N"/>
+            <column name="fac_dual_nbr"/>
+            <column name="fac_fcrb_prgm_nbr"/>
+            <column name="fac_gh_indicator"/>
+            <column name="fac_complaint"/>
+            <column name="fac_deficiency"/>
+            <column name="fac_nbr_new" valueNumeric="73407549"/>
+            <column name="fac_email_address"/>
+            <column name="fac_pre_lic_visit_date" valueDate="2006-09-28"/>
+            <column name="fac_placement_ready"/>
+            <column name="fac_placement_date"/>
+            <column name="fac_required_visit" value="N"/>
+            <column name="fac_pin" valueNumeric="511355"/>
+            <column name="fac_old_ffa_nbr"/>
+            <column name="fac_inactive_notice_date"/>
+            <column name="fac_inactive_start_date"/>
+            <column name="fac_sod_match_date"/>
+            <column name="fac_addr_key" value="MTISABEL4147       "/>
+            <column name="fac_loc_indicator"/>
+            <column name="fac_type999_caci_indicator"/>
+            <column name="fac_bilingual"/>
+            <column name="fac_region_do" valueNumeric="-185536270"/>
+            <column name="fac_region_co" valueNumeric="-185536265"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
