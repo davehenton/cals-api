@@ -2,7 +2,6 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.model.fas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -33,7 +32,8 @@ public interface FacilityMapper {
     @Mapping(source = "facOrigApplRecDate", target = "originalApplicationRecievedDate")
     @Mapping(source = "facLastVisitDate", target = "lastVisitDate")
     @Mapping(source = "facEmailAddress", target = "emailAddress")
-    @Mapping(source = "facLastVisitReason", target = "lastVisitReason")
+    @Mapping(source = "facLastVisitReason.tblVisitReasonCode", target = "lastVisitReason.code")
+    @Mapping(source = "facLastVisitReason.tblVisitReasonDesc", target = "lastVisitReason.description")
 
     FacilityDTO lisFacilityToFacilityDTO(LisFacFile lisFacFile);
 

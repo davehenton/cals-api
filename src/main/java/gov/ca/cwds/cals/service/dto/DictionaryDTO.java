@@ -10,18 +10,18 @@ import java.io.Serializable;
  * @author CWDS CALS API Team
  */
 
-public class FacilityTypeDTO implements Serializable {
+public class DictionaryDTO implements Serializable {
 
-    public FacilityTypeDTO() {}
+    public DictionaryDTO() {}
 
     @JsonProperty("code")
     @NotNull
-    @ApiModelProperty(required = true, readOnly = false, value = "Facility Type Code", example = "810")
+    @ApiModelProperty(required = true, readOnly = false, value = "Dictionary Status Code", example = "1")
     private String code;
 
     @JsonProperty("description")
     @NotNull
-    @ApiModelProperty(required = true, readOnly = false, value = "Facility Type Description", example = "FAMILY DAY CARE")
+    @ApiModelProperty(required = true, readOnly = false, value = "Dictionary Status Description", example = "Some dictionary item description")
     private String description;
 
     public String getCode() {
@@ -42,9 +42,11 @@ public class FacilityTypeDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "FacilityTypeDTO{" +
+        return getClass().getSimpleName() + "{" +
                 "code='" + code + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
+
+
 }

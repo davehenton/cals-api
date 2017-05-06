@@ -41,7 +41,7 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @JsonProperty("type")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Facility Type")
-    private FacilityTypeDTO type;
+    private DictionaryDTO type;
 
     @JsonProperty("name")
     @NotNull
@@ -75,7 +75,7 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @JsonProperty("status")
     @NotNull
     @ApiModelProperty(required = false, readOnly = false, value = "Facility Status")
-    private FacilityStatusDTO status;
+    private DictionaryDTO status;
 
     @JsonProperty("capacity")
     @NotNull
@@ -109,7 +109,7 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
 
     @JsonProperty("last_visit_reason")
     @ApiModelProperty(required = false, readOnly = false, value = "Last Visit Reason", example = "Post Licensing")
-    private String lastVisitReason;
+    private DictionaryDTO lastVisitReason;
 
     @JsonProperty("county")
     @NotNull
@@ -138,11 +138,11 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.id = id;
     }
 
-    public FacilityTypeDTO getType() {
+    public DictionaryDTO getType() {
         return type;
     }
 
-    public void setType(FacilityTypeDTO type) {
+    public void setType(DictionaryDTO type) {
         this.type = type;
     }
 
@@ -186,11 +186,11 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.districtOffice = districtOffice;
     }
 
-    public FacilityStatusDTO getStatus() {
+    public DictionaryDTO getStatus() {
         return status;
     }
 
-    public void setStatus(FacilityStatusDTO status) {
+    public void setStatus(DictionaryDTO status) {
         this.status = status;
     }
 
@@ -242,11 +242,11 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.emailAddress = emailAddress;
     }
 
-    public String getLastVisitReason() {
+    public DictionaryDTO getLastVisitReason() {
         return lastVisitReason;
     }
 
-    public void setLastVisitReason(String lastVisitReason) {
+    public void setLastVisitReason(DictionaryDTO lastVisitReason) {
         this.lastVisitReason = lastVisitReason;
     }
 
@@ -299,20 +299,20 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         return "FacilityDTO{" +
                 "href=" + href +
                 ", id=" + id +
-                ", type='" + type + '\'' +
+                ", type=" + type +
                 ", name='" + name + '\'' +
                 ", licenseeName='" + licenseeName + '\'' +
                 ", licenseeType='" + licenseeType + '\'' +
                 ", assignedWorker='" + assignedWorker + '\'' +
-                ", districtOffice='" + districtOffice + '\'' +
-                ", licenseNumber='" + licenseNumber + '\'' +
+                ", districtOffice=" + districtOffice +
+                ", licenseNumber=" + licenseNumber +
                 ", status=" + status +
                 ", capacity=" + capacity +
                 ", licenseEffectiveDate=" + licenseEffectiveDate +
                 ", originalApplicationRecievedDate=" + originalApplicationRecievedDate +
                 ", lastVisitDate=" + lastVisitDate +
                 ", emailAddress='" + emailAddress + '\'' +
-                ", lastVisitReason='" + lastVisitReason + '\'' +
+                ", lastVisitReason=" + lastVisitReason +
                 ", county='" + county + '\'' +
                 ", address=" + address +
                 ", phone=" + phone +
