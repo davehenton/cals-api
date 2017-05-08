@@ -34,6 +34,8 @@ public interface FacilityMapper {
     @Mapping(source = "facEmailAddress", target = "emailAddress")
     @Mapping(source = "facLastVisitReason.tblVisitReasonCode", target = "lastVisitReason.code")
     @Mapping(source = "facLastVisitReason.tblVisitReasonDesc", target = "lastVisitReason.description")
+    @Mapping(source = "facCoNbr.tblCoNbr", target = "county.code")
+    @Mapping(source = "facCoNbr.tblCoDesc", target = "county.description")
 
     FacilityDTO lisFacilityToFacilityDTO(LisFacFile lisFacFile);
 

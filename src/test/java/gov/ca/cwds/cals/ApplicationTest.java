@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 /**
  * @author CWDS CALS API Team
  */
+
 public class ApplicationTest {
     private static DatabaseHelper fasDatabaseHelper;
 

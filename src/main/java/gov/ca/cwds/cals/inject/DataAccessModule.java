@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.model.fas.County;
 import gov.ca.cwds.cals.model.fas.FacilityStatusType;
 import gov.ca.cwds.cals.model.fas.FacilityType;
 import gov.ca.cwds.cals.model.fas.LisDoFile;
@@ -28,7 +29,8 @@ public class DataAccessModule extends AbstractModule {
                     FacilityType.class,
                     LisDoFile.class,
                     FacilityStatusType.class,
-                    VisitReasonType.class
+                    VisitReasonType.class,
+                    County.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {

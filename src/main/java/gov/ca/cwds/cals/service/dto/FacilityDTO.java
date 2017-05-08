@@ -29,8 +29,8 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("href")
-    @InjectLink(value= Constants.API.CURRENT_VERSION + "/facilities/${instance.id}", style=RELATIVE_PATH)
-    @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example = "/v1/facilities/193600010")
+    @InjectLink(value = Constants.API.FACILITIES + "/${instance.id}", style=RELATIVE_PATH)
+    @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example = Constants.API.FACILITIES + "/193600010")
     URI href;
 
     @JsonProperty("id")
@@ -108,13 +108,13 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     private String emailAddress;
 
     @JsonProperty("last_visit_reason")
-    @ApiModelProperty(required = false, readOnly = false, value = "Last Visit Reason", example = "Post Licensing")
+    @ApiModelProperty(required = false, readOnly = false, value = "Last Visit Reason")
     private DictionaryDTO lastVisitReason;
 
     @JsonProperty("county")
     @NotNull
-    @ApiModelProperty(required = false, readOnly = false, value = "County", example = "SAN DIEGO")
-    private String county;
+    @ApiModelProperty(required = false, readOnly = false, value = "County")
+    private DictionaryDTO county;
 
     @JsonProperty("addresses")
     private Set<PersonAddressDTO> address;
@@ -250,11 +250,11 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.lastVisitReason = lastVisitReason;
     }
 
-    public String getCounty() {
+    public DictionaryDTO getCounty() {
         return county;
     }
 
-    public void setCounty(String county) {
+    public void setCounty(DictionaryDTO county) {
         this.county = county;
     }
 
