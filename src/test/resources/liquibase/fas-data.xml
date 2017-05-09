@@ -107,5 +107,333 @@
             <column name="fac_region_do" valueNumeric="-185536270"/>
             <column name="fac_region_co" valueNumeric="-185536265"/>
         </insert>
+
+        <insert tableName="lis_table_file">
+            <column name="ISN_LIS_TABLE_FILE" valueNumeric="10297"/>
+            <column name="TBL_AA_STATUS_CODE"/>
+            <column name="TBL_AA_STATUS_DESC"/>
+            <column name="TBL_ED_STATUS_CODE"/>
+            <column name="TBL_ED_STATUS_DESC"/>
+            <column name="TBL_FA_PER_TYPE_CODE"/>
+            <column name="TBL_FA_PER_TYPE_DESC"/>
+            <column name="TBL_FAC_TYPE_CODE" valueNumeric="810"/>
+            <column name="TBL_FAC_TYPE_DESC" value="FAMILY DAY CARE                                                       "/>
+            <column name="TBL_ACT_STATUS_CODE"/>
+            <column name="TBL_ACT_STATUS_DESC"/>
+            <column name="TBL_CARI_STATUS"/>
+            <column name="TBL_CARI_DESC"/>
+            <column name="TBL_CRCS_CODE"/>
+            <column name="TBL_CRCS_DESC"/>
+            <column name="TBL_SSV_CATEGORY_CODE"/>
+            <column name="TBL_SSV_CATEGORY_DESC"/>
+            <column name="TBL_LOG_ID"/>
+            <column name="TBL_OLD_LOG_PASS"/>
+            <column name="TBL_CO_NBR"/>
+            <column name="TBL_CO_DESC"/>
+            <column name="TBL_FAC_STATUS_CODE"/>
+            <column name="TBL_FAC_STATUS_DESC"/>
+            <column name="TBL_VISIT_REASON_CODE"/>
+            <column name="TBL_VISIT_REASON_DESC"/>
+            <column name="TBL_CLIENTS_SERVED_CODE"/>
+            <column name="TBL_CLIENTS_SERVED_DESC"/>
+            <column name="TBL_FM_REGION_NBR"/>
+            <column name="TBL_FM_REGION_NAME"/>
+            <column name="TBL_FM_REGION_STREET_ADDR"/>
+            <column name="TBL_FM_REGION_CITY"/>
+            <column name="TBL_FM_REGION_STATE"/>
+            <column name="TBL_FM_REGION_ZIP_CODE"/>
+            <column name="TBL_CO_COM_COPIES"/>
+            <column name="CFIRS_NBR"/>
+            <column name="CFIRS_FM_NAME"/>
+            <column name="CFIRS_FM_STREET_ADDR"/>
+            <column name="CFIRS_FM_CITY"/>
+            <column name="CFIRS_FM_STATE"/>
+            <column name="CFIRS_FM_ZIP_CODE"/>
+            <column name="TBL_FAC_TYPE_ACRONYM" value="FDC     "/>
+            <column name="TBL_MONTH_CODE"/>
+            <column name="TBL_MONTH_DESC"/>
+            <column name="TBL_LOG_PASS_DATE"/>
+            <column name="TBL_WV_CODE"/>
+            <column name="TBL_WV_DESC"/>
+            <column name="TBL_WV_SUM_DESC"/>
+            <column name="TBL_PHONE_AREA_CODE"/>
+            <column name="TBL_REPORT_PASS"/>
+            <column name="TBL_PER_ID"/>
+            <column name="TBL_SHUT_DOWN_TIME"/>
+            <column name="TBL_PER_ID_CONTROL"/>
+            <column name="TBL_CWS_CODE"/>
+            <column name="TBL_LAST_CWS_TRANS_DATE"/>
+            <column name="TBL_PALS_LAST_TRANS_DATE"/>
+            <column name="TBL_PALS_CODE"/>
+            <column name="TBL_CLF_PAGE_CODE"/>
+            <column name="TBL_FEE_TYPE_CODE"/>
+            <column name="TBL_FEE_TYPE_DESC"/>
+            <column name="TBL_FAC_LICENSEE_CODE"/>
+            <column name="TBL_FAC_LICENSEE_DESC"/>
+            <column name="TBL_AA_VIOLATION_DESC"/>
+            <column name="TBL_LCTS_ACTION_DESC"/>
+            <column name="TBL_FEE_PMT_PRTY"/>
+            <column name="TBL_FEE_TYPE_PRINT_DESC"/>
+            <column name="TBL_AA_FLAG"/>
+            <column name="TBL_AA_FLAG_DESC"/>
+            <column name="TBL_FEE_TYPE_FPB" value=" "/>
+            <column name="TBL_PONDERA_LAST_RUN_DATE"/>
+            <column name="TBL_AA_VIOLATION_CODE"/>
+            <column name="TBL_LCTS_ACTION_CODE"/>
+            <column name="TBL_FEE_PMT_TYPE"/>
+            <column name="TBL_FEE_PMT_TYPE_DESC"/>
+            <column name="TBL_FEE_PRTY_TYPE" value="00 "/>
+        </insert>
+
+        <insert tableName="lis_table_file">
+            <column name="ISN_LIS_TABLE_FILE" valueNumeric="2356"/>
+            <column name="TBL_AA_STATUS_CODE"/>
+            <column name="TBL_AA_STATUS_DESC"/>
+            <column name="TBL_ED_STATUS_CODE"/>
+            <column name="TBL_ED_STATUS_DESC"/>
+            <column name="TBL_FA_PER_TYPE_CODE"/>
+            <column name="TBL_FA_PER_TYPE_DESC"/>
+            <column name="TBL_FAC_TYPE_CODE"/>
+            <column name="TBL_FAC_TYPE_DESC"/>
+            <column name="TBL_ACT_STATUS_CODE"/>
+            <column name="TBL_ACT_STATUS_DESC"/>
+            <column name="TBL_CARI_STATUS"/>
+            <column name="TBL_CARI_DESC"/>
+            <column name="TBL_CRCS_CODE"/>
+            <column name="TBL_CRCS_DESC"/>
+            <column name="TBL_SSV_CATEGORY_CODE"/>
+            <column name="TBL_SSV_CATEGORY_DESC"/>
+            <column name="TBL_LOG_ID"/>
+            <column name="TBL_OLD_LOG_PASS"/>
+            <column name="TBL_CO_NBR"/>
+            <column name="TBL_CO_DESC"/>
+            <column name="TBL_FAC_STATUS_CODE" valueNumeric="15"/>
+            <column name="TBL_FAC_STATUS_DESC" value="CLOSED, CHG LOCATION                                                  "/>
+            <column name="TBL_VISIT_REASON_CODE"/>
+            <column name="TBL_VISIT_REASON_DESC"/>
+            <column name="TBL_CLIENTS_SERVED_CODE"/>
+            <column name="TBL_CLIENTS_SERVED_DESC"/>
+            <column name="TBL_FM_REGION_NBR"/>
+            <column name="TBL_FM_REGION_NAME"/>
+            <column name="TBL_FM_REGION_STREET_ADDR"/>
+            <column name="TBL_FM_REGION_CITY"/>
+            <column name="TBL_FM_REGION_STATE"/>
+            <column name="TBL_FM_REGION_ZIP_CODE"/>
+            <column name="TBL_CO_COM_COPIES"/>
+            <column name="CFIRS_NBR"/>
+            <column name="CFIRS_FM_NAME"/>
+            <column name="CFIRS_FM_STREET_ADDR"/>
+            <column name="CFIRS_FM_CITY"/>
+            <column name="CFIRS_FM_STATE"/>
+            <column name="CFIRS_FM_ZIP_CODE"/>
+            <column name="TBL_FAC_TYPE_ACRONYM"/>
+            <column name="TBL_MONTH_CODE"/>
+            <column name="TBL_MONTH_DESC"/>
+            <column name="TBL_LOG_PASS_DATE"/>
+            <column name="TBL_WV_CODE"/>
+            <column name="TBL_WV_DESC"/>
+            <column name="TBL_WV_SUM_DESC"/>
+            <column name="TBL_PHONE_AREA_CODE"/>
+            <column name="TBL_REPORT_PASS"/>
+            <column name="TBL_PER_ID"/>
+            <column name="TBL_SHUT_DOWN_TIME"/>
+            <column name="TBL_PER_ID_CONTROL"/>
+            <column name="TBL_CWS_CODE"/>
+            <column name="TBL_LAST_CWS_TRANS_DATE"/>
+            <column name="TBL_PALS_LAST_TRANS_DATE"/>
+            <column name="TBL_PALS_CODE"/>
+            <column name="TBL_CLF_PAGE_CODE"/>
+            <column name="TBL_FEE_TYPE_CODE"/>
+            <column name="TBL_FEE_TYPE_DESC"/>
+            <column name="TBL_FAC_LICENSEE_CODE"/>
+            <column name="TBL_FAC_LICENSEE_DESC"/>
+            <column name="TBL_AA_VIOLATION_DESC"/>
+            <column name="TBL_LCTS_ACTION_DESC"/>
+            <column name="TBL_FEE_PMT_PRTY"/>
+            <column name="TBL_FEE_TYPE_PRINT_DESC"/>
+            <column name="TBL_AA_FLAG"/>
+            <column name="TBL_AA_FLAG_DESC"/>
+            <column name="TBL_FEE_TYPE_FPB" value=" "/>
+            <column name="TBL_PONDERA_LAST_RUN_DATE"/>
+            <column name="TBL_AA_VIOLATION_CODE"/>
+            <column name="TBL_LCTS_ACTION_CODE"/>
+            <column name="TBL_FEE_PMT_TYPE"/>
+            <column name="TBL_FEE_PMT_TYPE_DESC"/>
+            <column name="TBL_FEE_PRTY_TYPE" value="00 "/>
+        </insert>
+
+        <insert tableName="lis_do_file">
+            <column name="isn_lis_do_file" valueNumeric="7"/>
+            <column name="do_nbr" valueNumeric="2"/>
+            <column name="do_name" value="BAY AREA-CC OAKLAND "/>
+            <column name="do_street_addr" value="1515 CLAY STREET, SUITE 1102  "/>
+            <column name="do_city" value="OAKLAND             "/>
+            <column name="do_state" value="CA"/>
+            <column name="do_zip_code" value="94612    "/>
+            <column name="do_phone_nbr" value="5106222602"/>
+            <column name="do_calstars_nbr" valueNumeric="3844"/>
+            <column name="do_unit_code" valueNumeric="844"/>
+            <column name="do_print_dest" value="U11866"/>
+            <column name="do_region_nbr" valueNumeric="40"/>
+            <column name="do_access_code" valueNumeric="1"/>
+            <column name="do_block_begin" valueNumeric="3400001"/>
+            <column name="do_block_end" valueNumeric="3500000"/>
+            <column name="do_next_fac_nbr"/>
+        </insert>
+
+        <insert tableName="lis_table_file">
+            <column name="ISN_LIS_TABLE_FILE" valueNumeric="175"/>
+            <column name="TBL_AA_STATUS_CODE"/>
+            <column name="TBL_AA_STATUS_DESC"/>
+            <column name="TBL_ED_STATUS_CODE"/>
+            <column name="TBL_ED_STATUS_DESC"/>
+            <column name="TBL_FA_PER_TYPE_CODE"/>
+            <column name="TBL_FA_PER_TYPE_DESC"/>
+            <column name="TBL_FAC_TYPE_CODE"/>
+            <column name="TBL_FAC_TYPE_DESC"/>
+            <column name="TBL_ACT_STATUS_CODE"/>
+            <column name="TBL_ACT_STATUS_DESC"/>
+            <column name="TBL_CARI_STATUS"/>
+            <column name="TBL_CARI_DESC"/>
+            <column name="TBL_CRCS_CODE"/>
+            <column name="TBL_CRCS_DESC"/>
+            <column name="TBL_SSV_CATEGORY_CODE"/>
+            <column name="TBL_SSV_CATEGORY_DESC"/>
+            <column name="TBL_LOG_ID"/>
+            <column name="TBL_OLD_LOG_PASS"/>
+            <column name="TBL_CO_NBR"/>
+            <column name="TBL_CO_DESC"/>
+            <column name="TBL_FAC_STATUS_CODE"/>
+            <column name="TBL_FAC_STATUS_DESC"/>
+            <column name="TBL_VISIT_REASON_CODE" valueNumeric="4"/>
+            <column name="TBL_VISIT_REASON_DESC" value="ANNUAL                                                                "/>
+            <column name="TBL_CLIENTS_SERVED_CODE"/>
+            <column name="TBL_CLIENTS_SERVED_DESC"/>
+            <column name="TBL_FM_REGION_NBR"/>
+            <column name="TBL_FM_REGION_NAME"/>
+            <column name="TBL_FM_REGION_STREET_ADDR"/>
+            <column name="TBL_FM_REGION_CITY"/>
+            <column name="TBL_FM_REGION_STATE"/>
+            <column name="TBL_FM_REGION_ZIP_CODE"/>
+            <column name="TBL_CO_COM_COPIES"/>
+            <column name="CFIRS_NBR"/>
+            <column name="CFIRS_FM_NAME"/>
+            <column name="CFIRS_FM_STREET_ADDR"/>
+            <column name="CFIRS_FM_CITY"/>
+            <column name="CFIRS_FM_STATE"/>
+            <column name="CFIRS_FM_ZIP_CODE"/>
+            <column name="TBL_FAC_TYPE_ACRONYM"/>
+            <column name="TBL_MONTH_CODE"/>
+            <column name="TBL_MONTH_DESC"/>
+            <column name="TBL_LOG_PASS_DATE"/>
+            <column name="TBL_WV_CODE"/>
+            <column name="TBL_WV_DESC"/>
+            <column name="TBL_WV_SUM_DESC"/>
+            <column name="TBL_PHONE_AREA_CODE"/>
+            <column name="TBL_REPORT_PASS"/>
+            <column name="TBL_PER_ID"/>
+            <column name="TBL_SHUT_DOWN_TIME"/>
+            <column name="TBL_PER_ID_CONTROL"/>
+            <column name="TBL_CWS_CODE"/>
+            <column name="TBL_LAST_CWS_TRANS_DATE"/>
+            <column name="TBL_PALS_LAST_TRANS_DATE"/>
+            <column name="TBL_PALS_CODE"/>
+            <column name="TBL_CLF_PAGE_CODE"/>
+            <column name="TBL_FEE_TYPE_CODE" value="0"/>
+            <column name="TBL_FEE_TYPE_DESC"/>
+            <column name="TBL_FAC_LICENSEE_CODE"/>
+            <column name="TBL_FAC_LICENSEE_DESC"/>
+            <column name="TBL_AA_VIOLATION_DESC"/>
+            <column name="TBL_LCTS_ACTION_DESC"/>
+            <column name="TBL_FEE_PMT_PRTY"/>
+            <column name="TBL_FEE_TYPE_PRINT_DESC"/>
+            <column name="TBL_AA_FLAG"/>
+            <column name="TBL_AA_FLAG_DESC"/>
+            <column name="TBL_FEE_TYPE_FPB" value=" "/>
+            <column name="TBL_PONDERA_LAST_RUN_DATE"/>
+            <column name="TBL_AA_VIOLATION_CODE"/>
+            <column name="TBL_LCTS_ACTION_CODE"/>
+            <column name="TBL_FEE_PMT_TYPE"/>
+            <column name="TBL_FEE_PMT_TYPE_DESC"/>
+            <column name="TBL_FEE_PRTY_TYPE" value="000"/>
+        </insert>
+
+        <insert tableName="lis_table_file">
+            <column name="ISN_LIS_TABLE_FILE" valueNumeric="105"/>
+            <column name="TBL_AA_STATUS_CODE"/>
+            <column name="TBL_AA_STATUS_DESC"/>
+            <column name="TBL_ED_STATUS_CODE"/>
+            <column name="TBL_ED_STATUS_DESC"/>
+            <column name="TBL_FA_PER_TYPE_CODE"/>
+            <column name="TBL_FA_PER_TYPE_DESC"/>
+            <column name="TBL_FAC_TYPE_CODE"/>
+            <column name="TBL_FAC_TYPE_DESC"/>
+            <column name="TBL_ACT_STATUS_CODE"/>
+            <column name="TBL_ACT_STATUS_DESC"/>
+            <column name="TBL_CARI_STATUS"/>
+            <column name="TBL_CARI_DESC"/>
+            <column name="TBL_CRCS_CODE"/>
+            <column name="TBL_CRCS_DESC"/>
+            <column name="TBL_SSV_CATEGORY_CODE"/>
+            <column name="TBL_SSV_CATEGORY_DESC"/>
+            <column name="TBL_LOG_ID"/>
+            <column name="TBL_OLD_LOG_PASS"/>
+            <column name="TBL_CO_NBR" valueNumeric="7"/>
+            <column name="TBL_CO_DESC" value="CONTRA COSTA        "/>
+            <column name="TBL_FAC_STATUS_CODE"/>
+            <column name="TBL_FAC_STATUS_DESC"/>
+            <column name="TBL_VISIT_REASON_CODE"/>
+            <column name="TBL_VISIT_REASON_DESC"/>
+            <column name="TBL_CLIENTS_SERVED_CODE"/>
+            <column name="TBL_CLIENTS_SERVED_DESC"/>
+            <column name="TBL_FM_REGION_NBR"/>
+            <column name="TBL_FM_REGION_NAME"/>
+            <column name="TBL_FM_REGION_STREET_ADDR"/>
+            <column name="TBL_FM_REGION_CITY"/>
+            <column name="TBL_FM_REGION_STATE"/>
+            <column name="TBL_FM_REGION_ZIP_CODE"/>
+            <column name="TBL_CO_COM_COPIES" valueNumeric="1"/>
+            <column name="CFIRS_NBR"/>
+            <column name="CFIRS_FM_NAME"/>
+            <column name="CFIRS_FM_STREET_ADDR"/>
+            <column name="CFIRS_FM_CITY"/>
+            <column name="CFIRS_FM_STATE"/>
+            <column name="CFIRS_FM_ZIP_CODE"/>
+            <column name="TBL_FAC_TYPE_ACRONYM"/>
+            <column name="TBL_MONTH_CODE"/>
+            <column name="TBL_MONTH_DESC"/>
+            <column name="TBL_LOG_PASS_DATE"/>
+            <column name="TBL_WV_CODE"/>
+            <column name="TBL_WV_DESC"/>
+            <column name="TBL_WV_SUM_DESC"/>
+            <column name="TBL_PHONE_AREA_CODE"/>
+            <column name="TBL_REPORT_PASS"/>
+            <column name="TBL_PER_ID"/>
+            <column name="TBL_SHUT_DOWN_TIME"/>
+            <column name="TBL_PER_ID_CONTROL"/>
+            <column name="TBL_CWS_CODE"/>
+            <column name="TBL_LAST_CWS_TRANS_DATE"/>
+            <column name="TBL_PALS_LAST_TRANS_DATE"/>
+            <column name="TBL_PALS_CODE"/>
+            <column name="TBL_CLF_PAGE_CODE"/>
+            <column name="TBL_FEE_TYPE_CODE" value="0"/>
+            <column name="TBL_FEE_TYPE_DESC"/>
+            <column name="TBL_FAC_LICENSEE_CODE"/>
+            <column name="TBL_FAC_LICENSEE_DESC"/>
+            <column name="TBL_AA_VIOLATION_DESC"/>
+            <column name="TBL_LCTS_ACTION_DESC"/>
+            <column name="TBL_FEE_PMT_PRTY"/>
+            <column name="TBL_FEE_TYPE_PRINT_DESC"/>
+            <column name="TBL_AA_FLAG"/>
+            <column name="TBL_AA_FLAG_DESC"/>
+            <column name="TBL_FEE_TYPE_FPB" value=" "/>
+            <column name="TBL_PONDERA_LAST_RUN_DATE"/>
+            <column name="TBL_AA_VIOLATION_CODE"/>
+            <column name="TBL_LCTS_ACTION_CODE"/>
+            <column name="TBL_FEE_PMT_TYPE"/>
+            <column name="TBL_FEE_PMT_TYPE_DESC"/>
+            <column name="TBL_FEE_PRTY_TYPE" value="000"/>
+        </insert>
+
     </changeSet>
 </databaseChangeLog>

@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 public class HyperlinkDTO implements Serializable {
 
+    public HyperlinkDTO() {}
+
     public HyperlinkDTO(String href) {
         this.href = href;
     }
