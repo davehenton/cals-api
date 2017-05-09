@@ -1,6 +1,9 @@
 package gov.ca.cwds.cals.service.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -9,13 +12,15 @@ import java.util.Objects;
  */
 public class FacilityAddressDTO implements Serializable {
 
+    @JsonProperty("type")
+    @ApiModelProperty(required = true, readOnly = true, value = "Address Type", example = "mail")
+    private String type;
+
     private Long id;
 
-    private Long facilityId;
-
-    private Long addressId;
-
-    private Long typeId;
+    @JsonProperty("address")
+    @ApiModelProperty(required = true, readOnly = true, value = "Address Object")
+    private AddressDTO address;
 
     public Long getId() {
         return id;
@@ -25,28 +30,20 @@ public class FacilityAddressDTO implements Serializable {
         this.id = id;
     }
 
-    public Long getFacilityId() {
-        return facilityId;
+    public AddressDTO getAddress() {
+        return address;
     }
 
-    public void setFacilityId(Long facilityId) {
-        this.facilityId = facilityId;
+    public void setAddress(AddressDTO address) {
+        this.address = address;
     }
 
-    public Long getAddressId() {
-        return addressId;
+    public String getType() {
+        return type;
     }
 
-    public void setAddressId(Long addressId) {
-        this.addressId = addressId;
-    }
-
-    public Long getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(Long addressTypeId) {
-        this.typeId = addressTypeId;
+    public void setType(String addressTypeId) {
+        this.type = addressTypeId;
     }
 
     @Override
@@ -70,10 +67,4 @@ public class FacilityAddressDTO implements Serializable {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "FacilityAddressDTO{" +
-            "id=" + id +
-            '}';
-    }
 }

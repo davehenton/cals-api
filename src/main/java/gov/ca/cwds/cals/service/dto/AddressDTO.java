@@ -1,6 +1,9 @@
 package gov.ca.cwds.cals.service.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -14,20 +17,28 @@ public class AddressDTO implements Serializable {
 
     private Long id;
 
+    @JsonProperty("street_address")
     @NotNull
     @Size(max = 100)
+    @ApiModelProperty(required = true, readOnly = true, value = "Street Address", example = "609 WOODSMAN DR")
     private String streetAddress;
 
+    @JsonProperty("city")
     @NotNull
     @Size(max = 50)
+    @ApiModelProperty(required = true, readOnly = true, value = "City", example = "BAKERSFIELD")
     private String city;
 
+    @JsonProperty("state")
     @NotNull
     @Size(min = 2, max = 2)
+    @ApiModelProperty(required = true, readOnly = true, value = "State", example = "CA")
     private String state;
 
+    @JsonProperty("zip_code")
     @NotNull
     @Size(min = 5, max = 5)
+    @ApiModelProperty(required = true, readOnly = true, value = "Zipcode", example = "93306")
     private String zipCode;
 
     @Size(min = 4, max = 4)

@@ -14,8 +14,8 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
 
@@ -116,11 +116,23 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @ApiModelProperty(required = false, readOnly = false, value = "County")
     private DictionaryDTO county;
 
+    @JsonProperty("children")
+    @NotNull
+    @ApiModelProperty(required = true, readOnly = true, value = "Children hyperlink", example =
+            Constants.API.FACILITIES + "/193600010/" + Constants.API.CHILDREN)
+    private HyperlinkDTO children;
+
+    @JsonProperty("complains")
+    @NotNull
+    @ApiModelProperty(required = true, readOnly = true, value = "Complains hyperlink", example =
+            Constants.API.FACILITIES + "/193600010/" + Constants.API.COMPLAINS)
+    private HyperlinkDTO complains;
+
     @JsonProperty("addresses")
-    private Set<PersonAddressDTO> address;
+    private List<FacilityAddressDTO> address;
 
     @JsonProperty("phones")
-    private Set<PersonPhoneDTO> phone;
+    private List<PhoneDTO> phone;
 
     public URI getHref() {
         return href;
@@ -258,19 +270,35 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         this.county = county;
     }
 
-    public Set<PersonAddressDTO> getAddress() {
+    public HyperlinkDTO getChildren() {
+        return children;
+    }
+
+    public void setChildren(HyperlinkDTO children) {
+        this.children = children;
+    }
+
+    public HyperlinkDTO getComplains() {
+        return complains;
+    }
+
+    public void setComplains(HyperlinkDTO complains) {
+        this.complains = complains;
+    }
+
+    public List<FacilityAddressDTO> getAddress() {
         return address;
     }
 
-    public void setAddress(Set<PersonAddressDTO> address) {
+    public void setAddress(List<FacilityAddressDTO> address) {
         this.address = address;
     }
 
-    public Set<PersonPhoneDTO> getPhone() {
+    public List<PhoneDTO> getPhone() {
         return phone;
     }
 
-    public void setPhone(Set<PersonPhoneDTO> phone) {
+    public void setPhone(List<PhoneDTO> phone) {
         this.phone = phone;
     }
 
@@ -293,7 +321,6 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         return Objects.hashCode(id);
     }
 
-
     @Override
     public String toString() {
         return "FacilityDTO{" +
@@ -313,7 +340,9 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
                 ", lastVisitDate=" + lastVisitDate +
                 ", emailAddress='" + emailAddress + '\'' +
                 ", lastVisitReason=" + lastVisitReason +
-                ", county='" + county + '\'' +
+                ", county=" + county +
+                ", children=" + children +
+                ", complains=" + complains +
                 ", address=" + address +
                 ", phone=" + phone +
                 '}';
