@@ -1,6 +1,9 @@
 package gov.ca.cwds.cals.service.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -13,9 +16,35 @@ public class PhoneDTO implements Serializable {
 
     private Long id;
 
+    @JsonProperty("relation")
+    @ApiModelProperty(required = false, value = "Phone Relation", example = "Alternative")
+    private String relation;
+
+    @JsonProperty("type")
+    @ApiModelProperty(required = false, value = "Phone type", example = "Cell")
+    private String type;
+
     @NotNull
     @Size(max = 16)
+    @JsonProperty("number")
+    @ApiModelProperty(required = true, value = "Phone number", example = "(494) 823-8588")
     private String number;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
 
     public Long getId() {
         return id;
@@ -56,8 +85,11 @@ public class PhoneDTO implements Serializable {
     @Override
     public String toString() {
         return "PhoneDTO{" +
-            "id=" + id +
-            ", number='" + number + "'" +
-            '}';
+                "id=" + id +
+                ", relation='" + relation + '\'' +
+                ", type='" + type + '\'' +
+                ", number='" + number + '\'' +
+                '}';
     }
+
 }

@@ -128,11 +128,13 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
             Constants.API.FACILITIES + "/193600010/" + Constants.API.COMPLAINS)
     private HyperlinkDTO complains;
 
-    @JsonProperty("addresses")
-    private List<FacilityAddressDTO> address;
-
     @JsonProperty("phones")
+    @ApiModelProperty(required = true, readOnly = true, value = "Facility Phones")
     private List<PhoneDTO> phone;
+
+    @JsonProperty("addresses")
+    @ApiModelProperty(required = true, readOnly = true, value = "Facility Addresses")
+    private List<FacilityAddressDTO> address;
 
     public URI getHref() {
         return href;
