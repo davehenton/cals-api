@@ -163,12 +163,6 @@ task dropDockerImage(type:Exec) {
 
 }
 
-task dropDockerImage(type:Exec) {
-    commandLine 'docker',  'rmi',  "cwds/cals-api:$dockerTag"
-    commandLine 'docker',  'rmi',  "cwds/cals-api:latest"
-
-}
-
 task publishDocker(dependsOn: [pushDockerVersionTagged, pushDockerLatest]) {
     doLast {
         println 'Published'
