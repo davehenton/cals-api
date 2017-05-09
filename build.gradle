@@ -35,7 +35,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven {
-        url "http://maven2.cwds.tabordasolutions.net"
+        url "http://sonar.dev.cwds.io:8081/artifactory/repo"
     }
 }
 
@@ -45,6 +45,23 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'docker'
 apply plugin: 'com.github.johnrengelman.shadow'
+
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "${name}"
+        property "sonar.projectKey", "${group}:${name}"
+        property "sonar.cobertura.reportPath","$buildDir/reports/cobertura/coverage.xml"
+    }
+}
+
+cobertura {
+    coverageFormats = ['html', 'xml']
+    coverageIgnoreTrivial = true
+    coverageIgnores = ['org.slf4j.Logger.*']
+    coverageReportDir = new File("$buildDir/reports/cobertura")
+}
+
 
 dependencies {
 
@@ -120,7 +137,7 @@ task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
     dockerfile = "Dockerfile"
     project.group = projectDockerGroup
     applicationName = projectDockerAppName
-    tagVersion = version + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
+    tagVersion = version + ((System.properties.getProperty('BUILD_ID') != null ) ? '.' + System.properties.getProperty('BUILD_ID') : '')
 }
 
 task createDockerImage(type:Exec, dependsOn: shadowJar) {
@@ -137,6 +154,12 @@ task pushDockerLatest(type:Exec, dependsOn: createDockerImage) {
 
 task pushDockerVersionTagged(type:Exec, dependsOn: tagDockerImage) {
     commandLine 'docker',  'push',  "cwds/cals-api:$dockerTag"
+}
+
+task dropDockerImage(type:Exec) {
+    commandLine 'docker',  'rmi',  "cwds/cals-api:$dockerTag"
+    commandLine 'docker',  'rmi',  "cwds/cals-api:latest"
+
 }
 
 task publishDocker(dependsOn: [pushDockerVersionTagged, pushDockerLatest]) {
