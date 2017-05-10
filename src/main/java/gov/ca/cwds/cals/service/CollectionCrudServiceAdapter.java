@@ -9,29 +9,29 @@ import java.util.Collection;
 /**
  * @author CWDS CALS API Team
  */
-public class CollectionCrudServiceAdapter<P extends Serializable, Q extends Request> implements CollectionCrudService<P, Q> {
+public class CollectionCrudServiceAdapter implements CollectionCrudService {
     @Override
-    public Response find(P params) {
+    public Response find(Serializable params) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Response delete(P params) {
+    public Response delete(Serializable params) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Response create(P params, Q request) {
+    public Response create(Serializable params, Request request) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Response update(P params, Q request) {
+    public Response update(Serializable params, Request request) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Collection<Response> getAll(P params) {
+    public Collection<Response> getAll(Serializable params) {
         throw new UnsupportedOperationException();
     }
 }

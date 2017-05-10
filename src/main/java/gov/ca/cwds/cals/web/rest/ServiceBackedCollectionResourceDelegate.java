@@ -19,7 +19,7 @@ import java.util.Collection;
 /**
  * @author CWDS CALS API Team
  */
-public class ServiceBackedCollectionResourceDelegate<P extends Serializable, Q extends Request> implements CollectionResourceDelegate<P, Q> {
+public class ServiceBackedCollectionResourceDelegate implements CollectionResourceDelegate {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceBackedCollectionResourceDelegate.class);
     private CollectionCrudService service;
 
@@ -28,17 +28,17 @@ public class ServiceBackedCollectionResourceDelegate<P extends Serializable, Q e
         this.service = service;
     }
 
-    public Response get(P params) {
+    public Response get(Serializable params) {
         gov.ca.cwds.rest.api.Response response = this.service.find(params);
         return response != null ? Response.ok(response).build() : Response.status(Response.Status.NOT_FOUND).entity(null).build();
     }
 
-    public Response delete(P params) {
+    public Response delete(Serializable params) {
         gov.ca.cwds.rest.api.Response response = this.service.delete(params);
         return response != null ? Response.status(Response.Status.OK).build() : Response.status(Response.Status.NOT_FOUND).entity(null).build();
     }
 
-    public Response create(P params, Q request) {
+    public Response create(Serializable params, Request request) {
         Response response;
 
         try {
@@ -55,11 +55,11 @@ public class ServiceBackedCollectionResourceDelegate<P extends Serializable, Q e
         return response;
     }
 
-    public Response update(Serializable id, Request request) {
+    public Response update(Serializable params, Request request) {
         Response response;
 
         try {
-            response = Response.ok().entity(this.service.update(id, request)).build();
+            response = Response.ok().entity(this.service.update(params, request)).build();
         } catch (ServiceException se) {
             ImmutableMap entity = null;
             if(se.getCause() instanceof EntityNotFoundException) {
@@ -79,7 +79,7 @@ public class ServiceBackedCollectionResourceDelegate<P extends Serializable, Q e
     }
 
     @Override
-    public Response getAll(P params) {
+    public Response getAll(Serializable params) {
         Collection<gov.ca.cwds.rest.api.Response> entities = this.service.getAll(params);
         GenericEntity<Collection<gov.ca.cwds.rest.api.Response>> response = new GenericEntity<Collection<gov.ca.cwds.rest.api.Response>>(entities) {};
 

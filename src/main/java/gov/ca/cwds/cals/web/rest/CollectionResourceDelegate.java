@@ -8,14 +8,14 @@ import java.io.Serializable;
 /**
  * @author CWDS CALS API Team
  */
-public interface CollectionResourceDelegate<P extends Serializable, Q extends Request> {
-    Response get(P params);
+public interface CollectionResourceDelegate {
+    Response get(Serializable params);
 
-    Response delete(P params);
+    Response delete(Serializable params);
 
-    Response create(P params, Q request);
+    Response create(Serializable params, Request request);
 
-    Response update(P params, Q request);
+    Response update(Serializable params, Request request);
 
-    Response getAll(P params);
+    Response getAll(Serializable params);
 }
