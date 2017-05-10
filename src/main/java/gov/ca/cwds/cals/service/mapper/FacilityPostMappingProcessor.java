@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 @Mapper
-public abstract class PostMappingProcessor {
+public abstract class FacilityPostMappingProcessor {
 
     @AfterMapping
     protected void fillAddresses(LisFacFile lisFacFile, @MappingTarget FacilityDTO facilityDTO) {
