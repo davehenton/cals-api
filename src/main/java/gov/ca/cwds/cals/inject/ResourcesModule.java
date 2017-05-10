@@ -4,10 +4,10 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import gov.ca.cwds.cals.CalcApiConfiguration;
-import gov.ca.cwds.cals.rest.resources.ApplicationResource;
-import gov.ca.cwds.cals.rest.resources.FacilityResource;
-import gov.ca.cwds.cals.rest.services.FacilityService;
+import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.web.rest.ApplicationResource;
+import gov.ca.cwds.cals.web.rest.FacilityResource;
+import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
 
@@ -34,13 +34,13 @@ public class ResourcesModule extends AbstractModule {
 
     @Provides
     @Named("app.name")
-    public String appName(CalcApiConfiguration calsApiConfiguration) {
+    public String appName(CalsApiConfiguration calsApiConfiguration) {
         return calsApiConfiguration.getApplicationName();
     }
 
     @Provides
     @Named("app.version")
-    public String appVersion(CalcApiConfiguration calsApiConfiguration) {
+    public String appVersion(CalsApiConfiguration calsApiConfiguration) {
         return calsApiConfiguration.getVersion();
     }
 

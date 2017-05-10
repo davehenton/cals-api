@@ -7,6 +7,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * @author CWDS CALS API Team
+ */
+
 public class DataSourceHealthCheck extends HealthCheck {
     private final DataSourceFactory dataSourceFactory;
 

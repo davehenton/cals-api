@@ -1,20 +1,29 @@
 package gov.ca.cwds.cals;
 
+/**
+ * @author CWDS CALS API Team
+ */
+
 public final class Constants {
 
     private Constants() {}
 
     public static class API {
 
-        /**
-         * A {@code String} constant representing {@value #FACILITY} API..
-         */
-        public static final String FACILITY = "facility";
+        public static final String FACILITIES = "facilities";
 
-        /**
-         * A {@code String} constant representing {@value #RESOURCE_APPLICATION} API..
-         */
         public static final String RESOURCE_APPLICATION = "application";
+
+        public static final String CHILDREN = "children";
+
+        public static final String COMPLAINS = "complains";
+    }
+
+    public static class ADDRESS_TYPES {
+
+        public static final String RESIDENTIAL = "residential";
+
+        public static final String MAIL = "mail";
 
     }
 
