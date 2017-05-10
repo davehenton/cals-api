@@ -3,11 +3,7 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
-import gov.ca.cwds.cals.model.cms.ChldClt;
-import gov.ca.cwds.cals.model.cms.OHmPlt;
-import gov.ca.cwds.cals.model.cms.PlcEpst;
-import gov.ca.cwds.cals.model.cms.PlcHmT;
-import gov.ca.cwds.cals.model.cms.Stfperst;
+import gov.ca.cwds.cals.model.cms.*;
 import gov.ca.cwds.cals.model.fas.County;
 import gov.ca.cwds.cals.model.fas.FacilityStatusType;
 import gov.ca.cwds.cals.model.fas.FacilityType;
@@ -52,11 +48,11 @@ public class DataAccessModule extends AbstractModule {
 
     private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
             new HibernateBundle<CalsApiConfiguration>(
-                    ChldClt.class,
-                    OHmPlt.class,
-                    PlcEpst.class,
-                    PlcHmT.class,
-                    Stfperst.class
+                    ChildClient.class,
+                    OutOfHomePlacement.class,
+                    PlacementEpisode.class,
+                    PlcacementHome.class,
+                    StaffPerson.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {

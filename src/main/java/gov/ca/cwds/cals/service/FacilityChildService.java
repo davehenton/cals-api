@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * @author CWDS CALS API Team
  */
-public class FacilityChildService extends CollectionCrudServiceAdapter<Serializable, Request> {
+public class FacilityChildService extends CollectionCrudServiceAdapter {
     private LisFacFileDao lisFacFileDao;
     private FacilityMapper facilityMapper;
 

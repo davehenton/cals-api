@@ -60,7 +60,7 @@ cmsDataSourceFactory:
   user: sa
   password:
   url: jdbc:h2:mem:cms
-  validationQuery: "/* MyService Health Check */ SELECT 1 FROM sysibm.sysdummy1 for read only"
+  validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
   minSize: ${DB_CMS_CP_MIN_SIZE:-2}
