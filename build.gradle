@@ -22,7 +22,7 @@ project.ext {
     projectDockerAppName = 'cals-api'
     projectVersion = '1.0-SNAPSHOT'
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.21'
+    coreApiVersion = '0.21.216'
     calsModelVersion = '1.0-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
@@ -73,7 +73,7 @@ dependencies {
         exclude group: 'org.glassfish.jersey.core'
     }
 
-    compile (group: 'gov.ca.cwds.cals', name: 'fas-model', version: calsModelVersion)
+    compile (group: 'gov.ca.cwds.cals', name: 'fas', version: calsModelVersion)
 
     compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
     compile group: 'org.slf4j', name: 'slf4j-ext', version: '1.7.22'
