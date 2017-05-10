@@ -41,6 +41,7 @@ public class AddressDTO implements Serializable {
     @ApiModelProperty(required = true, readOnly = true, value = "Zipcode", example = "93306")
     private String zipCode;
 
+    @JsonProperty("zip_suffix_code")
     @Size(min = 4, max = 4)
     private String zipSuffixCode;
 
@@ -125,9 +126,7 @@ public class AddressDTO implements Serializable {
 
         AddressDTO addressDTO = (AddressDTO) o;
 
-        if ( ! Objects.equals(id, addressDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, addressDTO.id);
     }
 
     @Override
