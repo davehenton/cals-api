@@ -1,11 +1,11 @@
-package gov.ca.cwds.cals.rest.resources;
+package gov.ca.cwds.cals.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.inject.FacilityServiceBackendResource;
-import gov.ca.cwds.cals.rest.api.domain.Facility;
+import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
+import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -19,7 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.Constants.API.FACILITY;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 
 /**
  *
@@ -29,8 +29,8 @@ import static gov.ca.cwds.cals.Constants.API.FACILITY;
  *
  */
 
-@Api(value = FACILITY, tags = FACILITY)
-@Path(FACILITY)
+@Api(value = FACILITIES, tags = FACILITIES)
+@Path(FACILITIES)
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityResource {
 
@@ -41,6 +41,7 @@ public class FacilityResource {
         this.resourceDelegate = resourceDelegate;
     }
 
+    @UnitOfWork(value = "fas")
     @GET
     @Timed
     @Path("/{facility_id}")
@@ -61,9 +62,9 @@ public class FacilityResource {
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
-    @ApiOperation(value = "Returns Facility by id ", response = Facility.class)
+    @ApiOperation(value = "Returns Facility by id ", response = FacilityDTO.class)
     public Response get(@PathParam("id")  @ApiParam(required = true, name = "id",
-            value = "The id of the Facility to find") String id) {
+            value = "The id of the Facility to find") Integer id) {
         return resourceDelegate.get(id);
     }
 */

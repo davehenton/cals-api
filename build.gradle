@@ -1,6 +1,8 @@
 buildscript {
     repositories {
+        mavenLocal()
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
@@ -11,6 +13,7 @@ buildscript {
 plugins {
     id 'net.saliman.cobertura' version '2.4.0'
     id "org.sonarqube" version "2.2.1"
+    id 'net.ltgt.apt' version '0.9'
 }
 
 project.ext {
@@ -20,6 +23,8 @@ project.ext {
     projectVersion = '1.0-SNAPSHOT'
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.20.173'
+    calsModelVersion = '1.0-SNAPSHOT'
+    mapstructVersion = '1.1.0.Final'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
 }
 
@@ -27,18 +32,36 @@ group projectGroup
 version projectVersion
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
-        url "http://maven2.cwds.tabordasolutions.net"
+        url "http://sonar.dev.cwds.io:8081/artifactory/repo"
     }
 }
 
-sourceCompatibility = 1.8
+sourceCompatibility = JavaVersion.VERSION_1_8
 apply plugin: "cobertura"
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'docker'
 apply plugin: 'com.github.johnrengelman.shadow'
+
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "${name}"
+        property "sonar.projectKey", "${group}:${name}"
+        property "sonar.cobertura.reportPath","$buildDir/reports/cobertura/coverage.xml"
+    }
+}
+
+cobertura {
+    coverageFormats = ['html', 'xml']
+    coverageIgnoreTrivial = true
+    coverageIgnores = ['org.slf4j.Logger.*']
+    coverageReportDir = new File("$buildDir/reports/cobertura")
+}
+
 
 dependencies {
 
@@ -62,14 +85,19 @@ dependencies {
             'org.postgresql:postgresql:9.4.1208.jre7',
             'io.dropwizard:dropwizard-testing:' + dropwizardVersion
     )
+    compile 'org.mapstruct:mapstruct-jdk8:' + mapstructVersion
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'org.mockito:mockito-core:2.0.54-beta'
     testCompile group: 'org.hamcrest', name: 'hamcrest-junit', version: '2.0.0.0'
+    testCompile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.194'
     testCompile('org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:2.23.2') {
         exclude group: 'javax.servlet', module: 'javax.servlet-api'
         exclude group: 'junit', module: 'junit'
     }
+
+    apt 'org.mapstruct:mapstruct-processor:' + mapstructVersion
 }
 
 mainClassName = mainClass
@@ -106,11 +134,12 @@ task copyDist(type: Copy, dependsOn: shadowJar) {
     into 'build/docker/libs'
 }
 
+
 task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
     dockerfile = "Dockerfile"
     project.group = projectDockerGroup
     applicationName = projectDockerAppName
-    tagVersion = version + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
+    tagVersion = version + ((System.properties.getProperty('BUILD_ID') != null ) ? '.' + System.properties.getProperty('BUILD_ID') : '')
 }
 
 task createDockerImage(type:Exec, dependsOn: shadowJar) {
@@ -129,10 +158,22 @@ task pushDockerVersionTagged(type:Exec, dependsOn: tagDockerImage) {
     commandLine 'docker',  'push',  "cwds/cals-api:$dockerTag"
 }
 
+task dropDockerImage(type:Exec) {
+    commandLine 'docker',  'rmi',  "cwds/cals-api:$dockerTag"
+    commandLine 'docker',  'rmi',  "cwds/cals-api:latest"
+
+}
+
 task publishDocker(dependsOn: [pushDockerVersionTagged, pushDockerLatest]) {
     doLast {
         println 'Published'
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs = [
+            '-Amapstruct.suppressGeneratorTimestamp=true'
+    ]
 }
 
 

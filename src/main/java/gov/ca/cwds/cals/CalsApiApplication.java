@@ -8,12 +8,17 @@ import gov.ca.cwds.cals.inject.ApplicationModule;
 import gov.ca.cwds.rest.BaseApiApplication;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class CalsApiApplication extends BaseApiApplication<CalcApiConfiguration> {
+/**
+ * @author CWDS CALS API Team
+ */
+
+public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration> {
     private static final Logger LOG = LoggerFactory.getLogger(CalsApiApplication.class);
 
     public static void main(String[] args) throws Exception{
@@ -21,15 +26,16 @@ public class CalsApiApplication extends BaseApiApplication<CalcApiConfiguration>
     }
 
     @Override
-    public Module applicationModule(Bootstrap<CalcApiConfiguration> bootstrap) {
+    public Module applicationModule(Bootstrap<CalsApiConfiguration> bootstrap) {
         return new ApplicationModule(bootstrap);
     }
 
     @Override
-    public void runInternal(CalcApiConfiguration configuration, Environment environment) {
+    public void runInternal(CalsApiConfiguration configuration, Environment environment) {
         HealthCheckRegistry healthCheckRegistry = environment.healthChecks();
         healthCheckRegistry.register("nsDataSource", new DataSourceHealthCheck(configuration.getNsDataSourceFactory()));
         healthCheckRegistry.register("cmsDataSource", new DataSourceHealthCheck(configuration.getCmsDataSourceFactory()));
+        environment.jersey().getResourceConfig().packages(getClass().getPackage().getName()).register(DeclarativeLinkingFeature.class);
 
         runHealthChecks(environment);
     }

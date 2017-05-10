@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.rest.services.FacilityService;
+import gov.ca.cwds.cals.service.FacilityService;
 
 /**
  * Identifies all CALS API business layer (services) classes available for dependency injection by Guice.

@@ -3,13 +3,14 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
-import gov.ca.cwds.cals.model.cms.*;
+import gov.ca.cwds.cals.model.fas.County;
+import gov.ca.cwds.cals.model.fas.FacilityStatusType;
 import gov.ca.cwds.cals.model.fas.FacilityType;
+import gov.ca.cwds.cals.model.fas.LisDoFile;
 import gov.ca.cwds.cals.model.fas.LisFacFile;
 import gov.ca.cwds.cals.model.fas.LisTableFile;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
-import gov.ca.cwds.inject.CmsHibernateBundle;
-import gov.ca.cwds.inject.CmsSessionFactory;
+import gov.ca.cwds.cals.model.fas.VisitReasonType;
+import gov.ca.cwds.cals.persistence.dao.LisFacFileDao;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -25,7 +26,11 @@ public class DataAccessModule extends AbstractModule {
             new HibernateBundle<CalsApiConfiguration>(
                     LisFacFile.class,
                     LisTableFile.class,
-                    FacilityType.class
+                    FacilityType.class,
+                    LisDoFile.class,
+                    FacilityStatusType.class,
+                    VisitReasonType.class,
+                    County.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {

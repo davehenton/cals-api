@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.rest;
+package gov.ca.cwds.cals;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

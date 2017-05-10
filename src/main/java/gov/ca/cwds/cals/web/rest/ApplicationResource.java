@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.rest.resources;
+package gov.ca.cwds.cals.web.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +14,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import static gov.ca.cwds.cals.Constants.API.RESOURCE_APPLICATION;
+
+/**
+ * @author CWDS CALS API Team
+ */
 
 @Api(value = RESOURCE_APPLICATION/*, hidden = true*/)
 @Path(RESOURCE_APPLICATION)
