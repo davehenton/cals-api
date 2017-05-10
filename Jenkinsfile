@@ -4,9 +4,9 @@ node ('tpt2-slave'){
    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '3')), disableConcurrentBuilds(), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], pipelineTriggers([pollSCM('H/5 * * * *')])])
 
    catchError {
+        emailext attachLog: true, body: 'See log', recipientProviders: [[$class: 'DevelopersRecipientProvider']], subject: 'Cals-api unstable', to: 'Leonid.Marushevskiy@osi.ca.gov, Alex.Kuznetsov@osi.ca.gov'
         cleanWs()
-
-   } 
+   }
 
    
    stage('Preparation') {
