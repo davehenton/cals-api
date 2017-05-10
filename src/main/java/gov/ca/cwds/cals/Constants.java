@@ -11,6 +11,8 @@ public final class Constants {
          */
         public static final String FACILITY = "facility";
 
+        public static final String FACILITY_CHILD = FACILITIES + "/{facility_id}/children";
+
         /**
          * A {@code String} constant representing {@value #RESOURCE_APPLICATION} API..
          */

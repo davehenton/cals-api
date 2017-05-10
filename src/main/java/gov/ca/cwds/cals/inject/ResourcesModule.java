@@ -8,6 +8,7 @@ import gov.ca.cwds.cals.CalcApiConfiguration;
 import gov.ca.cwds.cals.rest.resources.ApplicationResource;
 import gov.ca.cwds.cals.rest.resources.FacilityResource;
 import gov.ca.cwds.cals.rest.services.FacilityService;
+import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
 
@@ -30,6 +31,7 @@ public class ResourcesModule extends AbstractModule {
     protected void configure() {
         bind(ApplicationResource.class);
         bind(FacilityResource.class);
+        bind(FacilityChildResource.class);
     }
 
     @Provides
@@ -48,6 +50,12 @@ public class ResourcesModule extends AbstractModule {
     @FacilityServiceBackendResource
     public ResourceDelegate facilityServiceBackendResource(Injector injector) {
         return new ServiceBackedResourceDelegate(injector.getInstance(FacilityService.class));
+    }
+
+    @Provides
+    @FacilityChildServiceBackendResource
+    public CollectionResourceDelegate facilityChildServiceBackendResource(Injector injector) {
+        return new ServiceBackedCollectionResourceDelegate(injector.getInstance(FacilityChildService.class));
     }
 
 }

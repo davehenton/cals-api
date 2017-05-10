@@ -43,6 +43,20 @@ public class FacilityResource {
 
     @GET
     @Timed
+    @Path("/{facility_id}")
+    @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 406, message = "Accept Header not supported")})
+    @ApiOperation(value = "Returns Facility by id ", response = FacilityDTO.class)
+    public Response get(@PathParam("facility_id")  @ApiParam(required = true, name = "facility_id",
+            value = "The id of the Facility to find") Integer facility_id) {
+        return resourceDelegate.get(facility_id);
+    }
+
+/*
+    @UnitOfWork(value = "fas")
+    @GET
+    @Timed
     @Path("/{id}")
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
@@ -52,5 +66,6 @@ public class FacilityResource {
             value = "The id of the Facility to find") String id) {
         return resourceDelegate.get(id);
     }
+*/
 
 }
