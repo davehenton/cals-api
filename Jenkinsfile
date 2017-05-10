@@ -4,11 +4,7 @@ node ('tpt2-slave'){
    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '3')), disableConcurrentBuilds(), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], pipelineTriggers([pollSCM('H/5 * * * *')])])
 
    catchError {
-        emailext attachLog: true, body: 'See log', recipientProviders: [[$class: 'DevelopersRecipientProvider']], subject: 'Cals-api unstable', to: 'Leonid.Marushevskiy@osi.ca.gov, Alex.Kuznetsov@osi.ca.gov'
-        cleanWs()
-   }
 
-   
    stage('Preparation') {
 		  git branch: 'development', url: 'https://github.com/ca-cwds/cals-api.git'
 		  rtGradle.tool = "Gradle_35"
@@ -45,4 +41,10 @@ node ('tpt2-slave'){
 		archiveArtifacts artifacts: '**/cals-api-*.jar,readme.txt', fingerprint: true
 		cleanWs()
 	}
+	}
+	step {
+	    emailext attachLog: true, body: 'For detail see log', recipientProviders: [[$class: 'DevelopersRecipientProvider']], subject: 'Cals-api unstable', to: 'Leonid.Marushevskiy@osi.ca.gov, Alex.Kuznetsov@osi.ca.gov'
+	    cleanWs()
+	    }
 }
+
