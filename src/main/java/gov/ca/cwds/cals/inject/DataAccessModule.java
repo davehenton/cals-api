@@ -3,6 +3,11 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.model.cms.ChldClt;
+import gov.ca.cwds.cals.model.cms.OHmPlt;
+import gov.ca.cwds.cals.model.cms.PlcEpst;
+import gov.ca.cwds.cals.model.cms.PlcHmT;
+import gov.ca.cwds.cals.model.cms.Stfperst;
 import gov.ca.cwds.cals.model.fas.County;
 import gov.ca.cwds.cals.model.fas.FacilityStatusType;
 import gov.ca.cwds.cals.model.fas.FacilityType;
@@ -10,7 +15,9 @@ import gov.ca.cwds.cals.model.fas.LisDoFile;
 import gov.ca.cwds.cals.model.fas.LisFacFile;
 import gov.ca.cwds.cals.model.fas.LisTableFile;
 import gov.ca.cwds.cals.model.fas.VisitReasonType;
-import gov.ca.cwds.cals.persistence.dao.LisFacFileDao;
+import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
+import gov.ca.cwds.inject.CmsHibernateBundle;
+import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -43,7 +50,6 @@ public class DataAccessModule extends AbstractModule {
                 }
             };
 
-    //todo: define classes
     private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
             new HibernateBundle<CalsApiConfiguration>(
                     ChldClt.class,

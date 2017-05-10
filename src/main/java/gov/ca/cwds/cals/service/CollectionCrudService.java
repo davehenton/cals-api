@@ -10,14 +10,14 @@ import java.util.Collection;
 /**
  * @author CWDS CALS API Team
  */
-public interface CollectionCrudService<P extends Serializable, Q extends Request> extends Service {
-    Response find(P params);
+public interface CollectionCrudService<Serializable, Q extends Request> extends Service {
+    Response find(Serializable params);
 
-    Response delete(P params);
+    Response delete(Serializable params);
 
-    Response create(P params, Q request);
+    Response create(Serializable params, Q request);
 
-    Response update(P params, Q request);
+    Response update(Serializable params, Q request);
 
-    Collection<Response> getAll(P params);
+    Collection<Response> getAll(Serializable params);
 }

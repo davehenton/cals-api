@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
+import gov.ca.cwds.cals.service.mapper.FacilityChildMapperImpl;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapperImpl;
 

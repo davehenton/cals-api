@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.web.rest;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.service.CollectionCrudService;
 import gov.ca.cwds.rest.api.Request;
@@ -16,9 +15,8 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
-/**docke
+/**
  * @author CWDS CALS API Team
  */
 public class ServiceBackedCollectionResourceDelegate<P extends Serializable, Q extends Request> implements CollectionResourceDelegate<P, Q> {
