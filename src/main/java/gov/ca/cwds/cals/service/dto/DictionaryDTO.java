@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 /**
  * @author CWDS CALS API Team
  */
 
-public class DictionaryDTO implements Serializable {
+public class DictionaryDTO extends BaseDTO {
 
     public DictionaryDTO() {}
 
@@ -39,14 +38,5 @@ public class DictionaryDTO implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "{" +
-                "code='" + code + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
 
 }

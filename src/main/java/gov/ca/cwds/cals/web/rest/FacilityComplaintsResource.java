@@ -28,12 +28,9 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 @Path(FACILITIES + "/{"+ FACILITY_ID + "}/" + COMPLAINTS)
 public class FacilityComplaintsResource {
 
-
     private ResourceDelegate resourceDelegate;
 
-    public FacilityComplaintsResource() {
-    }
-
+    public FacilityComplaintsResource() {}
 
     @GET
     @Timed
@@ -46,7 +43,6 @@ public class FacilityComplaintsResource {
 
         return fixture("fixtures/complaints-response.json");
     }
-
 
     @GET
     @Timed
@@ -61,7 +57,6 @@ public class FacilityComplaintsResource {
 
         return fixture("fixtures/complaint-response.json");
     }
-
 
 }
 

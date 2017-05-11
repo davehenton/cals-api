@@ -11,12 +11,12 @@ import org.glassfish.jersey.linking.InjectLink;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
 
 /**
@@ -24,7 +24,7 @@ import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
  *
  * @author CWDS CALS API Team
  */
-public class FacilityDTO extends DomainObject implements Serializable, Request, Response {
+public class FacilityDTO extends BaseDTO implements Request, Response {
 
     private static final long serialVersionUID = 1L;
 
@@ -323,30 +323,4 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "FacilityDTO{" +
-                "href=" + href +
-                ", id=" + id +
-                ", type=" + type +
-                ", name='" + name + '\'' +
-                ", licenseeName='" + licenseeName + '\'' +
-                ", licenseeType='" + licenseeType + '\'' +
-                ", assignedWorker='" + assignedWorker + '\'' +
-                ", districtOffice=" + districtOffice +
-                ", licenseNumber=" + licenseNumber +
-                ", status=" + status +
-                ", capacity=" + capacity +
-                ", licenseEffectiveDate=" + licenseEffectiveDate +
-                ", originalApplicationRecievedDate=" + originalApplicationRecievedDate +
-                ", lastVisitDate=" + lastVisitDate +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", lastVisitReason=" + lastVisitReason +
-                ", county=" + county +
-                ", children=" + children +
-                ", complains=" + complains +
-                ", address=" + address +
-                ", phone=" + phone +
-                '}';
-    }
 }

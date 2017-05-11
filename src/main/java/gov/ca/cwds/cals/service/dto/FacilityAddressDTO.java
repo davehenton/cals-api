@@ -1,16 +1,15 @@
 package gov.ca.cwds.cals.service.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the FacilityAddress entity.
  */
-public class FacilityAddressDTO implements Serializable {
+
+public class FacilityAddressDTO extends BaseDTO {
 
     @JsonProperty("type")
     @ApiModelProperty(required = true, readOnly = true, value = "Address Type", example = "mail")
