@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
  * @author CWDS CALS API Team
  */
 
-@Mapper(imports = {Constants.class, HyperlinkDTO.class}, uses={PostMappingProcessor.class} )
+@Mapper(imports = {Constants.class, HyperlinkDTO.class}, uses={FacilityPostMappingProcessor.class} )
 public interface FacilityMapper {
 
     FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
