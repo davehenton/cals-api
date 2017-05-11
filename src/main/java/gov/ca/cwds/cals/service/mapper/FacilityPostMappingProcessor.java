@@ -25,7 +25,7 @@ public abstract class FacilityPostMappingProcessor {
     }
 
     private void mapPhones(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
-        List<PhoneDTO> phones = new ArrayList(1);
+        List<PhoneDTO> phones = new ArrayList<>(1);
         phones.add(new PhoneMapperImpl().lisFacilityToPhoneDTO(lisFacFile));
         facilityDTO.setPhone(phones);
     }

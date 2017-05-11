@@ -1,13 +1,12 @@
 package gov.ca.cwds.cals.service.dto;
 
-
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the PersonPhone entity.
  */
-public class PersonPhoneDTO implements Serializable {
+
+public class PersonPhoneDTO extends BaseDTO {
 
     private Long id;
 
@@ -70,10 +69,4 @@ public class PersonPhoneDTO implements Serializable {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "PersonPhoneDTO{" +
-            "id=" + id +
-            '}';
-    }
 }

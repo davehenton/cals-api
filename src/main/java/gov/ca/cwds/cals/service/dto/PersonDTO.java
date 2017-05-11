@@ -1,14 +1,14 @@
 package gov.ca.cwds.cals.service.dto;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 /**
  * A DTO for the Person entity.
  */
-public class PersonDTO implements Serializable {
+
+public class PersonDTO extends BaseDTO {
 
     private Long id;
 
@@ -107,16 +107,4 @@ public class PersonDTO implements Serializable {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "PersonDTO{" +
-            "id=" + id +
-            ", firstName='" + firstName + "'" +
-            ", lastName='" + lastName + "'" +
-            ", gender='" + gender + "'" +
-            ", age='" + age + "'" +
-            ", dateOfBirth='" + dateOfBirth + "'" +
-            ", ssn='" + ssn + "'" +
-            '}';
-    }
 }
