@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals;
 
+import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
@@ -7,6 +8,7 @@ import org.glassfish.jersey.client.JerseyClient;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Rule;
 
 import javax.ws.rs.client.Client;
 import java.net.URI;
@@ -34,6 +36,9 @@ public class BaseCalsApiIntegrationTest {
 
     };
 
+    @Rule
+    public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
+
     @BeforeClass
     public static void setUp() throws Exception {
         DataSourceFactory fasDataSourceFactory = appRule.getConfiguration()
@@ -48,7 +53,7 @@ public class BaseCalsApiIntegrationTest {
         fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", "fas");
     }
 
-    protected static URI getServerUri() {
+    protected static URI getServerUrl() {
         return appRule.getEnvironment().getApplicationContext().getServer().getURI();
     }
 
