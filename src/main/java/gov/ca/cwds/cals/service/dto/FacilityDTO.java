@@ -125,7 +125,7 @@ public class FacilityDTO extends DomainObject implements Serializable, Request, 
     @JsonProperty("complains")
     @NotNull
     @ApiModelProperty(required = true, readOnly = true, value = "Complains hyperlink", example =
-            Constants.API.FACILITIES + "/193600010/" + Constants.API.COMPLAINS)
+            Constants.API.FACILITIES + "/193600010/" + Constants.API.COMPLAINTS)
     private HyperlinkDTO complains;
 
     @JsonProperty("phones")
