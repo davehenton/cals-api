@@ -27,7 +27,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         ObjectMapper mapper = appRule.getObjectMapper();
         client.register(new JacksonJsonProvider(mapper));
 
-        String restUrl = appRule.getEnvironment().getApplicationContext().getServer().getURI() + Constants.API.FACILITIES + "/" + FACILITY_ID;
+        String restUrl = getServerUri() + Constants.API.FACILITIES + "/" + FACILITY_ID;
         WebTarget target = client.target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);

@@ -7,6 +7,8 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
+import java.net.URI;
+
 /**
  * @author CWDS CALS API Team
  */
@@ -17,11 +19,12 @@ public class BaseCalsApiIntegrationTest {
 
     @ClassRule
     public static final DropwizardAppRule<CalsApiConfiguration> appRule =
-            new DropwizardAppRule<CalsApiConfiguration>(CalsApiApplication.class, ResourceHelpers.resourceFilePath("config/test-cals-api.yml"));
+            new DropwizardAppRule<>(CalsApiApplication.class, ResourceHelpers.resourceFilePath("config/test-cals-api.yml"));
 
     @BeforeClass
     public static void setUp() throws Exception {
-        DataSourceFactory fasDataSourceFactory = appRule.getConfiguration().getFasDataSourceFactory();
+        DataSourceFactory fasDataSourceFactory = appRule.getConfiguration()
+                .getFasDataSourceFactory();
         fasDatabaseHelper = new DatabaseHelper(
                 fasDataSourceFactory.getUrl(),
                 fasDataSourceFactory.getUser(),
@@ -30,6 +33,10 @@ public class BaseCalsApiIntegrationTest {
         fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_schema.xml");
         fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", "fas");
         fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", "fas");
+    }
+
+    protected static URI getServerUri() {
+        return appRule.getEnvironment().getApplicationContext().getServer().getURI();
     }
 
     @After
