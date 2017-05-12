@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
  * @author CWDS CALS API Team
  */
 
-@Mapper(imports = {Constants.class, HyperlinkDTO.class}, uses={PostMappingProcessor.class} )
+@Mapper(imports = {Constants.class, HyperlinkDTO.class}, uses={FacilityPostMappingProcessor.class} )
 public interface FacilityMapper {
 
     FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
@@ -44,7 +44,7 @@ public interface FacilityMapper {
     @Mapping(target = "children", expression = "java(new HyperlinkDTO( String.format(Constants.API.FACILITIES + " +
             "\"/%s/\" + Constants.API.CHILDREN, lisFacFile.getFacNbr())))")
     @Mapping(target = "complains", expression = "java(new HyperlinkDTO( String.format(Constants.API.FACILITIES + " +
-            "\"/%s/\" + Constants.API.COMPLAINS, lisFacFile.getFacNbr())))")
+            "\"/%s/\" + Constants.API.COMPLAINTS, lisFacFile.getFacNbr())))")
 
     FacilityDTO lisFacilityToFacilityDTO(LisFacFile lisFacFile);
 

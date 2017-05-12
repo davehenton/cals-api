@@ -1,0 +1,22 @@
+{
+  "messages" : [ ],
+  "complaints" : [ {
+    "messages" : [ ],
+    "id" : 1234567,
+    "complaint_date" : "2004-02-13",
+    "assigned_worker" : "assigned_worker",
+    "control_number" : "123",
+    "priority_level" : 3,
+    "status" : "status1",
+    "approval_date" : "2004-03-15"
+  }, {
+    "messages" : [ ],
+    "id" : 1234567,
+    "complaint_date" : "2005-02-13",
+    "assigned_worker" : "assigned_worker2",
+    "control_number" : "456",
+    "priority_level" : 2,
+    "status" : "status2",
+    "approval_date" : "2005-05-11"
+  } ]
+}

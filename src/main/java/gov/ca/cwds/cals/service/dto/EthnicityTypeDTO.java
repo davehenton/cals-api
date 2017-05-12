@@ -1,15 +1,14 @@
 package gov.ca.cwds.cals.service.dto;
 
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the EthnicityType entity.
  */
-public class EthnicityTypeDTO implements Serializable {
+
+public class EthnicityTypeDTO extends BaseDTO {
 
     private Long id;
 
@@ -63,12 +62,4 @@ public class EthnicityTypeDTO implements Serializable {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "EthnicityTypeDTO{" +
-            "id=" + id +
-            ", code='" + code + "'" +
-            ", type='" + type + "'" +
-            '}';
-    }
 }

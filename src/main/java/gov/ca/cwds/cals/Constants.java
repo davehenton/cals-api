@@ -16,7 +16,15 @@ public final class Constants {
 
         public static final String CHILDREN = "children";
 
-        public static final String COMPLAINS = "complains";
+        public static final String COMPLAINTS = "complaints";
+
+        public static class PATH_PARAMS {
+
+            public static final String FACILITY_ID = "facilityId";
+
+            public static final String COMPLAINT_ID = "complaintId";
+
+        }
     }
 
     public static class ADDRESS_TYPES {
