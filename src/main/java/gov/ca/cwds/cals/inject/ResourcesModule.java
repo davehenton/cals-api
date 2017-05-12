@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.service.FacilityChildCollectionService;
 import gov.ca.cwds.cals.service.FacilityChildService;
 import gov.ca.cwds.cals.web.rest.*;
 import gov.ca.cwds.cals.service.FacilityService;
@@ -53,8 +54,14 @@ public class ResourcesModule extends AbstractModule {
 
     @Provides
     @FacilityChildServiceBackendResource
-    public CollectionResourceDelegate facilityChildServiceBackendResource(Injector injector) {
-        return new ServiceBackedCollectionResourceDelegate(injector.getInstance(FacilityChildService.class));
+    public ResourceDelegate facilityChildServiceBackendResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(FacilityChildService.class));
+    }
+
+    @Provides
+    @FacilityChildCollectionServiceBackendResource
+    public ResourceDelegate facilityChildServiceCollectionBackendResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(FacilityChildCollectionService.class));
     }
 
 }

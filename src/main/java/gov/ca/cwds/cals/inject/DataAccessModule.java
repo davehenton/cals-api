@@ -48,10 +48,10 @@ public class DataAccessModule extends AbstractModule {
 
     private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
             new HibernateBundle<CalsApiConfiguration>(
-                    ChildClient.class,
+                    Client.class,
                     OutOfHomePlacement.class,
                     PlacementEpisode.class,
-                    PlcacementHome.class,
+                    PlacementHome.class,
                     StaffPerson.class
                     ) {
                 @Override

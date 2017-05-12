@@ -2,14 +2,14 @@ package gov.ca.cwds.cals.service;
 
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
+import gov.ca.cwds.rest.services.CrudsService;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * @author CWDS CALS API Team
  */
-public class CollectionCrudServiceAdapter implements CollectionCrudService {
+public class CrudServiceAdapter implements CrudsService {
     @Override
     public Response find(Serializable params) {
         throw new UnsupportedOperationException();
@@ -21,17 +21,12 @@ public class CollectionCrudServiceAdapter implements CollectionCrudService {
     }
 
     @Override
-    public Response create(Serializable params, Request request) {
+    public Response create(Request request) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Response update(Serializable params, Request request) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Collection<Response> getAll(Serializable params) {
         throw new UnsupportedOperationException();
     }
 }

@@ -19,7 +19,7 @@ public class BaseCalsApiIntegrationTest {
     public static final DropwizardAppRule<CalsApiConfiguration> appRule =
             new DropwizardAppRule<CalsApiConfiguration>(CalsApiApplication.class, ResourceHelpers.resourceFilePath("config/test-cals-api.yml"));
 
-    @BeforeClass
+//    @BeforeClass
     public static void setUp() throws Exception {
         DataSourceFactory fasDataSourceFactory = appRule.getConfiguration().getFasDataSourceFactory();
         fasDatabaseHelper = new DatabaseHelper(

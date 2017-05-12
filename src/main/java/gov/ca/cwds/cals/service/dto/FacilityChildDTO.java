@@ -1,5 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
+import gov.ca.cwds.rest.api.Response;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +10,7 @@ import java.util.Objects;
 /**
  * A DTO for the FacilityChild entity.
  */
-public class FacilityChildDTO implements Serializable {
+public class FacilityChildDTO implements Serializable, Response {
 
     private Long id;
 
@@ -21,7 +23,7 @@ public class FacilityChildDTO implements Serializable {
 
     private Long facilityId;
 
-    private Long personId;
+    private PersonDTO person;
 
     public Long getId() {
         return id;
@@ -60,12 +62,12 @@ public class FacilityChildDTO implements Serializable {
         this.facilityId = facilityId;
     }
 
-    public Long getPersonId() {
-        return personId;
+    public PersonDTO getPerson() {
+        return person;
     }
 
-    public void setPersonId(Long personId) {
-        this.personId = personId;
+    public void setPerson(PersonDTO person) {
+        this.person = person;
     }
 
     @Override
