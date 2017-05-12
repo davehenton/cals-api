@@ -5,7 +5,10 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.service.ComplaintService;
+import gov.ca.cwds.cals.service.ComplaintsCollectionService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
+import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -30,6 +33,7 @@ public class ResourcesModule extends AbstractModule {
     protected void configure() {
         bind(ApplicationResource.class);
         bind(FacilityResource.class);
+        bind(FacilityComplaintResource.class);
     }
 
     @Provides
@@ -48,6 +52,18 @@ public class ResourcesModule extends AbstractModule {
     @FacilityServiceBackendResource
     public ResourceDelegate facilityServiceBackendResource(Injector injector) {
         return new ServiceBackedResourceDelegate(injector.getInstance(FacilityService.class));
+    }
+
+    @Provides
+    @ComplaintsCollectionServiceBackedResource
+    public ResourceDelegate complaintsCollectionServiceBackedResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(ComplaintsCollectionService.class));
+    }
+
+    @Provides
+    @ComplaintServiceBackedResource
+    public ResourceDelegate complaintServiceBackedResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(ComplaintService.class));
     }
 
 }

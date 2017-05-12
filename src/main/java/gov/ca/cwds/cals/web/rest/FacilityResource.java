@@ -2,7 +2,6 @@ package gov.ca.cwds.cals.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.inject.FacilityServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -24,9 +23,6 @@ import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
 
 /**
- *
- *  A resource provides get API
- *
  *  @author CALS API Team
  *
  */
@@ -51,7 +47,7 @@ public class FacilityResource {
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Facility by id ", response = FacilityDTO.class)
-    public Response get(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID,
+    public Response getFacilityById(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
             value = "The id of the Facility to find") Integer facilityId) {
         return resourceDelegate.get(facilityId);
     }

@@ -1,19 +1,25 @@
 package gov.ca.cwds.cals.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.rest.api.Response;
 
 import java.time.LocalDate;
 import java.util.Objects;
+
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 
 /**
  * @author CWDS CALS API Team
  */
 
-public class ComplaintDTO extends BaseDTO {
+public class ComplaintDTO extends BaseDTO implements Response {
 
     @JsonProperty("id")
     private Long id;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
+    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @JsonProperty("complaint_date")
     private LocalDate complaintDate;
 
@@ -29,6 +35,8 @@ public class ComplaintDTO extends BaseDTO {
     @JsonProperty("status")
     private String status;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
+    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @JsonProperty("approval_date")
     private LocalDate approvalDate;
 
