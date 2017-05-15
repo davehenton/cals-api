@@ -1,7 +1,5 @@
 package gov.ca.cwds.cals.service.dto;
 
-import gov.ca.cwds.rest.api.Response;
-import gov.ca.cwds.rest.api.domain.DomainObject;
 import gov.ca.cwds.rest.api.domain.DomainObject;
 
 import javax.validation.constraints.NotNull;
