@@ -14,8 +14,8 @@ import java.util.Set;
  * @author CWDS CALS API Team
  */
 @Mapper
-public interface PersonMapper {
-    PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
+public interface PersonDTOMapper {
+    PersonDTOMapper INSTANCE = Mappers.getMapper(PersonDTOMapper.class);
 
     List<PersonDTO> fromClient(Set<Client> clients);
 
