@@ -17,7 +17,7 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
 
     private LocalDate dateOfPlacement;
 
-    private String assignedWorker;
+    private PersonDTO assignedWorker;
 
     @NotNull
     private String countyOfOrigin;
@@ -40,13 +40,15 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
     public void setDateOfPlacement(LocalDate dateOfPlacement) {
         this.dateOfPlacement = dateOfPlacement;
     }
-    public String getAssignedWorker() {
+
+    public PersonDTO getAssignedWorker() {
         return assignedWorker;
     }
 
-    public void setAssignedWorker(String assignedWorker) {
+    public void setAssignedWorker(PersonDTO assignedWorker) {
         this.assignedWorker = assignedWorker;
     }
+
     public String getCountyOfOrigin() {
         return countyOfOrigin;
     }

@@ -1,10 +1,10 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
-import gov.ca.cwds.cals.service.mapper.FacilityChildMapperImpl;
+import gov.ca.cwds.cals.service.mapper.FacilityChildrenMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapperImpl;
+import gov.ca.cwds.cals.service.mapper.FacilityChildrenMapperImpl;
 
 /**
  * DI (dependency injection) setup for mapping classes.
@@ -17,7 +17,7 @@ public class MappingModule extends AbstractModule {
     @Override
     protected void configure() {
        bind(FacilityMapper.class).to(FacilityMapperImpl.class).asEagerSingleton();
-       bind(FacilityChildMapper.class).to(FacilityChildMapperImpl.class).asEagerSingleton();
+       bind(FacilityChildrenMapper.class).to(FacilityChildrenMapperImpl.class).asEagerSingleton();
     }
 
 }
