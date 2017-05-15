@@ -1,0 +1,10 @@
+{
+  "messages" : [ ],
+  "id" : 1234567,
+  "complaint_date" : "2004-02-13",
+  "assigned_worker" : "assigned_worker",
+  "control_number" : "123",
+  "priority_level" : 3,
+  "status" : "status1",
+  "approval_date" : "2004-03-15"
+}

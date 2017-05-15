@@ -1,18 +1,17 @@
 package gov.ca.cwds.cals.service.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the Phone entity.
  */
-public class PhoneDTO implements Serializable {
+
+public class PhoneDTO extends BaseDTO {
 
     private Long id;
 
@@ -80,16 +79,6 @@ public class PhoneDTO implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return "PhoneDTO{" +
-                "id=" + id +
-                ", relation='" + relation + '\'' +
-                ", type='" + type + '\'' +
-                ", number='" + number + '\'' +
-                '}';
     }
 
 }

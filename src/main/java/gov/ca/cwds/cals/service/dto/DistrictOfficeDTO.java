@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 /**
  * @author CWDS CALS API Team
  */
-public class DistrictOfficeDTO implements Serializable {
+public class DistrictOfficeDTO extends BaseDTO {
 
     public DistrictOfficeDTO() {}
 
@@ -39,11 +38,4 @@ public class DistrictOfficeDTO implements Serializable {
         this.number = number;
     }
 
-    @Override
-    public String toString() {
-        return "DistrictOfficeDTO{" +
-                "number='" + number + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

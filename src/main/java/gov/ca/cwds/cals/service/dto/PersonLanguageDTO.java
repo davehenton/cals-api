@@ -1,13 +1,12 @@
 package gov.ca.cwds.cals.service.dto;
 
-
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the PersonLanguage entity.
  */
-public class PersonLanguageDTO implements Serializable {
+
+public class PersonLanguageDTO extends BaseDTO {
 
     private Long id;
 
@@ -60,10 +59,4 @@ public class PersonLanguageDTO implements Serializable {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "PersonLanguageDTO{" +
-            "id=" + id +
-            '}';
-    }
 }

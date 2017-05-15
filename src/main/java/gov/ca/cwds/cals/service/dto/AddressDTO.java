@@ -1,19 +1,18 @@
 package gov.ca.cwds.cals.service.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
  * A DTO for the Address entity.
  */
-public class AddressDTO implements Serializable {
+
+public class AddressDTO extends BaseDTO {
 
     private Long id;
 
@@ -41,6 +40,7 @@ public class AddressDTO implements Serializable {
     @ApiModelProperty(required = true, readOnly = true, value = "Zipcode", example = "93306")
     private String zipCode;
 
+    @JsonProperty("zip_suffix_code")
     @Size(min = 4, max = 4)
     private String zipSuffixCode;
 
@@ -125,9 +125,7 @@ public class AddressDTO implements Serializable {
 
         AddressDTO addressDTO = (AddressDTO) o;
 
-        if ( ! Objects.equals(id, addressDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, addressDTO.id);
     }
 
     @Override
@@ -135,18 +133,4 @@ public class AddressDTO implements Serializable {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "AddressDTO{" +
-            "id=" + id +
-            ", streetAddress='" + streetAddress + "'" +
-            ", city='" + city + "'" +
-            ", state='" + state + "'" +
-            ", zipCode='" + zipCode + "'" +
-            ", zipSuffixCode='" + zipSuffixCode + "'" +
-            ", longitude='" + longitude + "'" +
-            ", lattitude='" + lattitude + "'" +
-            ", deliverable='" + deliverable + "'" +
-            '}';
-    }
 }
