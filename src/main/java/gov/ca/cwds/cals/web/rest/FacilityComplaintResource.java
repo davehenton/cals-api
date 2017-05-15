@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.inject.ComplaintServiceBackedResource;
 import gov.ca.cwds.cals.inject.ComplaintsCollectionServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
+import gov.ca.cwds.cals.web.rest.parameter.FacilityComplaintParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -73,7 +74,7 @@ public class FacilityComplaintResource {
             @PathParam(COMPLAINT_ID) @ApiParam(required = true, name = COMPLAINT_ID,
                     value = "The id of the Complaint") String complaintId) {
 
-        return resourceEntityDelegate.get(complaintId);
+        return resourceEntityDelegate.get(new FacilityComplaintParameterObject(facilityId, complaintId));
     }
 
 }

@@ -1,7 +1,9 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.model.fas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
+import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -26,5 +28,9 @@ public interface ComplaintMapper {
     @Mapping(source = "crStatus", target = "status")
     @Mapping(source = "dateSigned", target = "approvalDate")
     ComplaintDTO entityToDTO(ComplaintReportLic802 complaint);
+
+    @Mapping(target = "messages", ignore = true)
+    @Mapping(source = "complaints", target = "complaints")
+    ComplaintsDTO complaintsListToComplaintsDTOList(LisFacFile facility);
 
 }

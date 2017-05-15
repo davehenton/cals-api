@@ -1,58 +1,163 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
     <changeSet author="leonid.marushevskiy (generated)" id="1494538749559-1">
+
+        <insert tableName="lis_fac_file">
+            <column name="isn_lis_fac_file" valueNumeric="1"/>
+            <column name="fac_nbr" valueNumeric="107201149"/>
+            <column name="fac_name" value="BACKYARDIGAN FOSTER FAMILY HOME                   "/>
+            <column name="fac_do_eval_code" value="A106"/>
+            <column name="fac_do_nbr" valueNumeric="2"/>
+            <column name="fac_co_nbr" valueNumeric="7"/>
+            <column name="fac_fm_region_nbr" valueNumeric="0"/>
+            <column name="fac_cfirs_id_nbr" valueNumeric="0"/>
+            <column name="fac_street_search" value="ISABEL              "/>
+            <column name="fac_type" valueNumeric="810"/>
+            <column name="fac_status" valueNumeric="15"/>
+            <column name="fac_res_street_addr" value="485 PILGRIM AVE.              "/>
+            <column name="fac_res_city" value="MODESTO             "/>
+            <column name="fac_res_state" value="CA"/>
+            <column name="fac_res_zip_code" value="95650    "/>
+            <column name="fac_mail_street_addr" value="485 PILGRIM AVE.              "/>
+            <column name="fac_mail_city" value="MODESTO             "/>
+            <column name="fac_mail_state" value="CA"/>
+            <column name="fac_mail_zip_code" value="95650    "/>
+            <column name="fac_licensee_name" value="PROMESA BEHAVIORAL HEALTH                         "/>
+            <column name="fac_licensee_type" value="A"/>
+            <column name="fac_lic_comments" value="MAX. CAPACITY: 12 CHILDREN WITH NO MORE THAN 4 INFANTS, OR CAPACITY   14 CHILDREN WHEN 2 ARE AT LEAST 6 YEARS OF AGE WITH A MAXIMUM OF 3    INFANTS: PROPERTY/OWNER LANDLORD CONSENT IS REQUIRED.                 "/>
+            <column name="fac_lic_eff_date" valueDate="2004-05-10"/>
+            <column name="fac_lic_expir_date"/>
+            <column name="fac_lic_first_date" valueDate="2004-05-10"/>
+            <column name="fac_lic_last_change_date" valueDate="2006-10-13"/>
+            <column name="fac_lic_mail_street_addr" value="4147 MOUNT ISABEL ROAD        "/>
+            <column name="fac_lic_mail_city" value="ANTIOCH             "/>
+            <column name="fac_lic_mail_state" value="CA"/>
+            <column name="fac_lic_mail_zip_code" value="94531    "/>
+            <column name="fac_admin" value="THORNTON, SHELIA          "/>
+            <column name="fac_capacity" valueNumeric="14"/>
+            <column name="fac_client_served" valueNumeric="960"/>
+            <column name="fac_closed_date" valueDate="2012-06-12"/>
+            <column name="fac_orig_appl_rec_date" valueDate="2004-01-28"/>
+            <column name="fac_phone_nbr" value="9255220001"/>
+            <column name="fac_annual_10_mo_defer_date"/>
+            <column name="fac_annual_22_mo_defer_date"/>
+            <column name="fac_annual_10_mo_visit_appr"/>
+            <column name="fac_annual_22_mo_visit_appr"/>
+            <column name="fac_annual_10_mo_visit_date" valueDate="2011-08-18"/>
+            <column name="fac_annual_22_mo_visit_date"/>
+            <column name="fac_last_visit_date" valueDate="2011-08-18"/>
+            <column name="fac_last_visit_reason" valueNumeric="4"/>
+            <column name="fac_mid_yr_defer_date"/>
+            <column name="fac_mid_yr_visit_appr"/>
+            <column name="fac_mid_yr_visit_date"/>
+            <column name="fac_post_lic_defer_date"/>
+            <column name="fac_post_lic_visit_appr"/>
+            <column name="fac_post_lic_visit_date"/>
+            <column name="fac_renewal_defer_date"/>
+            <column name="fac_renewal_visit_appr"/>
+            <column name="fac_renewal_visit_date"/>
+            <column name="fac_last_fire_clear_date" valueDate="2006-08-29"/>
+            <column name="fac_sfm_id_nbr"/>
+            <column name="fac_amb_1_17_nbr"/>
+            <column name="fac_amb_18_64_nbr"/>
+            <column name="fac_amb_65_plus_nbr"/>
+            <column name="fac_nonamb_1_17_nbr"/>
+            <column name="fac_nonamb_18_64_nbr"/>
+            <column name="fac_nonamb_65_plus_nbr"/>
+            <column name="fac_unlic_orig_input_date"/>
+            <column name="fac_closed_process_date" valueDate="2012-06-12"/>
+            <column name="fac_cap_inc_rec_date" valueDate="2006-06-27"/>
+            <column name="fac_region_nbr" valueNumeric="40"/>
+            <column name="fac_last_defer_visit_date"/>
+            <column name="fac_last_defer_visit_reason"/>
+            <column name="fac_annual_visit_year" valueNumeric="12"/>
+            <column name="fac_last_upd_date" valueDate="2015-08-04"/>
+            <column name="fac_cap_inc_closed_date"/>
+            <column name="fac_action_code" value="M"/>
+            <column name="fac_inc_cap_eff_date" valueDate="2006-10-13"/>
+            <column name="fac_lic_comments_2"/>
+            <column name="fac_client_served_appr_date"/>
+            <column name="fac_legal_action_indicator"/>
+            <column name="fac_agg_status"/>
+            <column name="fac_primary_nbr"/>
+            <column name="fac_billing_date" valueDate="2004-05-10"/>
+            <column name="fac_dual_id" value="N"/>
+            <column name="fac_dual_nbr"/>
+            <column name="fac_fcrb_prgm_nbr"/>
+            <column name="fac_gh_indicator"/>
+            <column name="fac_complaint"/>
+            <column name="fac_deficiency"/>
+            <column name="fac_nbr_new" valueNumeric="73407549"/>
+            <column name="fac_email_address"/>
+            <column name="fac_pre_lic_visit_date" valueDate="2006-09-28"/>
+            <column name="fac_placement_ready"/>
+            <column name="fac_placement_date"/>
+            <column name="fac_required_visit" value="N"/>
+            <column name="fac_pin" valueNumeric="511355"/>
+            <column name="fac_old_ffa_nbr"/>
+            <column name="fac_inactive_notice_date"/>
+            <column name="fac_inactive_start_date"/>
+            <column name="fac_sod_match_date"/>
+            <column name="fac_addr_key" value="MTISABEL4147       "/>
+            <column name="fac_loc_indicator"/>
+            <column name="fac_type999_caci_indicator"/>
+            <column name="fac_bilingual"/>
+            <column name="fac_region_do" valueNumeric="-185536270"/>
+            <column name="fac_region_co" valueNumeric="-185536265"/>
+        </insert>
+
         <insert tableName="complaint_report_lic802">
-            <column name="response_description" value=""/>
-            <column name="dont_save_flag" value=""/>
-            <column name="audit_history" value="Signed!Pamela Ballard!04/24/2006 10:32:55 AM"/>
-            <column name="originalunidkey" value="34-CR-340302-20051129105102"/>
-            <column name="edit_history" value="Pamela Ballard!04/24/2006 10:33:00 AM"/>
-            <column name="dt_created"/>
-            <column name="creator_name" value="Andrea Palado"/>
+            <column name="response_description" value="LIC802 - CR - Received on 09/21/2007 - 3"/>
+            <column name="dont_save_flag" value="1"/>
+            <column name="audit_history" value="Signed!Duane Matsubara!10/17/2007 10:22:20 AM"/>
+            <column name="originalunidkey" value="24-CR-DCHN-779RZ4-20070921132110"/>
+            <column name="edit_history" value="Duane Matsubara!10/17/2007 10:22:25 AM"/>
+            <column name="dt_created" valueDate="2007-09-21"/>
+            <column name="creator_name" value="Diana Chapman"/>
             <column name="page_total" value="2"/>
             <column name="page_nr" value="2"/>
             <column name="crp2_formnumber" value="LIC802"/>
-            <column name="cr_lps_signdate"/>
-            <column name="cr_lps_signname" value="Pamela Ballard"/>
-            <column name="cr_lpa_signdate"/>
-            <column name="cr_lpa_signname" value="Regina Martin"/>
+            <column name="cr_lps_signdate" valueDate="2007-10-17"/>
+            <column name="cr_lps_signname" value="Duane Matsubara"/>
+            <column name="cr_lpa_signdate" valueDate="2007-10-15"/>
+            <column name="cr_lpa_signname" value="Tamara Melikian"/>
             <column name="crp2_followup" value=""/>
             <column name="z1_3" value="1&#10;2&#10;3&#10;4&#10;5&#10;6"/>
-            <column name="crp2_contactsummary" value="12/05/05-10 day visit completed by LPA Martin (LIC 9099)&#10;After physical and verbal evaluation, there is not evidence of unlicensed foster care obtained.&#10;Minors in home are described as either biological children or neighbor.&#10;&#10;LPA's finding is Unfounded"/>
+            <column name="crp2_contactsummary" value="9/24/07: Opened complaint at Group Home. Conducted case management visit.&#10;9/27/07: Interviewed client and staff. Closed complaint."/>
             <column name="z1_2" value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8"/>
-            <column name="crp2_postcomments" value=""/>
+            <column name="crp2_postcomments" value="Advised of outcome."/>
             <column name="z1_4" value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11"/>
-            <column name="crp2_precomments" value=""/>
+            <column name="crp2_precomments" value="Discussed allegations."/>
             <column name="z1_1" value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11"/>
-            <column name="p_posthowcontact" value=""/>
-            <column name="crp2_posthowcontact" value=""/>
-            <column name="p_prehowcontact" value=""/>
-            <column name="crp2_prehowcontact" value=""/>
-            <column name="crp2_postcontact" value=""/>
-            <column name="crp2_postdate"/>
-            <column name="crp2_precontact" value=""/>
-            <column name="crp2_predate"/>
-            <column name="crp2_detaildescription" value="This complaint came in &quot;anonymous&quot;, this is not a residential facility, however, the person providing care/supervision is being referred to as &quot;foster mother&quot; . Please see attached referral."/>
+            <column name="p_posthowcontact" value="IN PERSON"/>
+            <column name="crp2_posthowcontact" value="IN PERSON"/>
+            <column name="p_prehowcontact" value="IN PERSON"/>
+            <column name="crp2_prehowcontact" value="IN PERSON"/>
+            <column name="crp2_postcontact" value="Kodi Roberts"/>
+            <column name="crp2_postdate" valueDate="2007-09-27"/>
+            <column name="crp2_precontact" value="Kodi Roberts"/>
+            <column name="crp2_predate" valueDate="2007-09-27"/>
+            <column name="crp2_detaildescription" value="Message left on incident reporting line.  On Saturday, September 15, 2007, client Cody Roberts called to report that her son had a temperature of 101.3.  Staff would not give her tylenol.  She was told to wait for another staff to return to take him to the hospital.  "/>
             <column name="z1" value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11&#10;12&#10;13&#10;14"/>
-            <column name="crp2_facility_number" value="Unlicensed"/>
-            <column name="crp2_facility_type" value="UNLIC"/>
-            <column name="crp2_facility_name" value="Unlicensed"/>
-            <column name="crp2_controlnumber" value="34-CR-20051129105102"/>
-            <column name="crp2_visitduedate"/>
-            <column name="crp2_prioritynr" value="4"/>
-            <column name="crp2_priority" value="PRIORITY"/>
-            <column name="do_zip2" value="90230"/>
+            <column name="crp2_facility_number" value="107201149"/>
+            <column name="crp2_facility_type" value="730"/>
+            <column name="crp2_facility_name" value="GENESIS GROUP HOMES, INC."/>
+            <column name="crp2_controlnumber" value="24-CR-20070921132110"/>
+            <column name="crp2_visitduedate" valueDate="2007-10-01"/>
+            <column name="crp2_prioritynr" value="3"/>
+            <column name="crp2_priority" value=""/>
+            <column name="do_zip2" value="93710"/>
             <column name="do_state2" value="CA"/>
-            <column name="do_city2" value="Culver City"/>
-            <column name="do_address2" value="6167 Bristol Pkwy, #210"/>
-            <column name="do_name2" value="Culver City CCL"/>
+            <column name="do_city2" value="Fresno"/>
+            <column name="do_address2" value="770 E. Shaw Ave., #330"/>
+            <column name="do_name2" value="Fresno Residential"/>
             <column name="reportname2" value="COMPLAINT REPORT (Cont)"/>
             <column name="page_total1" value="2"/>
             <column name="page_nr1" value="1"/>
             <column name="form_number" value="LIC802"/>
             <column name="cr_time"/>
             <column name="cr_date" valueDate="2007-09-21"/>
-            <column name="cr_receivedby" value="Andrea Palado"/>
+            <column name="cr_receivedby" value="Diana Chapman"/>
             <column name="cr_allegation_7" value=""/>
             <column name="z_7" value=""/>
             <column name="undr_apl_7" value=""/>
@@ -92,7 +197,7 @@
             <column name="facility_name" value=""/>
             <column name="facility_number_text" value=""/>
             <column name="facility_type"/>
-            <column name="cr_controlnumber" value="32-CR-20100618091646"/>
+            <column name="cr_controlnumber" value="34-CR-20051129105102"/>
             <column name="cr_visitduedate"/>
             <column name="cr_doname" value=""/>
             <column name="cr_prioritynr" value="3"/>
@@ -105,82 +210,82 @@
             <column name="cr_complainantdayphone" value="U"/>
             <column name="cr_complainantzip" value=""/>
             <column name="cr_complainantcity" value=""/>
-            <column name="cr_complainantaddress" value="Unlicensed Care/Supervision"/>
+            <column name="cr_complainantaddress" value="Client told she needed to wait for another staff to take her son to the hospital"/>
             <column name="cr_complainantname" value="1&#10;2&#10;3"/>
             <column name="p_howreported" value="No"/>
-            <column name="cr_howreported" value="4"/>
-            <column name="do_zip" value=""/>
-            <column name="do_state" value="90057"/>
-            <column name="do_city" value="Los Angeles"/>
-            <column name="do_address" value="407 S Bonnie Brae"/>
-            <column name="do_name" value="Unlicensed"/>
-            <column name="report_title" value="Unlicensed"/>
-            <column name="reportname" value="UNLIC"/>
-            <column name="linked_pages" value="34-CR-20051129105102"/>
-            <column name="time_created" value="12/9/2005"/>
-            <column name="create_date" value="Culver City CCL"/>
-            <column name="created_by" value="4"/>
-            <column name="facility_num_new" value="PRIORITY"/>
+            <column name="cr_howreported" value="10"/>
+            <column name="do_zip" value="(559) 224-7968"/>
+            <column name="do_state" value="93726"/>
+            <column name="do_city" value="FRESNO"/>
+            <column name="do_address" value="4291 N. MILLBROOK"/>
+            <column name="do_name" value="GENESIS GROUP HOMES, INC."/>
+            <column name="report_title" value="107201149"/>
+            <column name="reportname" value="730"/>
+            <column name="linked_pages" value="24-CR-20070921132110"/>
+            <column name="time_created" value="2007-10-01"/>
+            <column name="create_date" value="Fresno Residential"/>
+            <column name="created_by" value="3"/>
+            <column name="facility_num_new" value=""/>
             <column name="orgtoamd_unid" value="YES"/>
             <column name="amend_printed" value="YES"/>
-            <column name="times_amended" value="YES"/>
-            <column name="amend_flag" value="YES"/>
-            <column name="proof" value="neighbor"/>
+            <column name="times_amended" value="NO"/>
+            <column name="amend_flag" value="NO"/>
+            <column name="proof" value="Client"/>
             <column name="program_code" value=""/>
-            <column name="do_number" value=""/>
-            <column name="create_date_time" value=""/>
-            <column name="link_count" value=""/>
-            <column name="show_linked_pages" value=""/>
-            <column name="fas_lpa_code" value="anonymous "/>
-            <column name="facility_number" value="BY LETTER"/>
-            <column name="allowableeditors" value="BY LETTER"/>
-            <column name="authornames" value="90230"/>
+            <column name="do_number" value="(559) 224-7967"/>
+            <column name="create_date_time" value="93726"/>
+            <column name="link_count" value="Fresno"/>
+            <column name="show_linked_pages" value="4291 N. Millbrook"/>
+            <column name="fas_lpa_code" value="Cody Roberts"/>
+            <column name="facility_number" value="BY TELEPHONE"/>
+            <column name="allowableeditors" value="BY TELEPHONE"/>
+            <column name="authornames" value="93710"/>
             <column name="lpa_code" value="CA"/>
-            <column name="delete_flag" value="Culver C"/>
-            <column name="signature" value="6167 Bristol Pkwy, #210"/>
-            <column name="form_abrievation" value="Culver City CCL"/>
-            <column name="sign_off_date" value="COMPLAINT REPORT"/>
-            <column name="ai_action_taken" value=" LIC9099 - CIR "/>
-            <column name="ai_total_hours" value="10:50:06 AM"/>
-            <column name="ai_num_visits" value="11/29/2005"/>
-            <column name="audit_acpt_date" value="Andrea Palado"/>
-            <column name="p_audit_accept" value=""/>
+            <column name="delete_flag" value="Fresno"/>
+            <column name="signature" value="770 E. Shaw Ave., #330"/>
+            <column name="form_abrievation" value="Fresno Residential"/>
+            <column name="sign_off_date" value=""/>
+            <column name="ai_action_taken" value="COMPLAINT REPORT"/>
+            <column name="ai_total_hours" value=""/>
+            <column name="ai_num_visits" value="1/0/1900  1:21:06 PM"/>
+            <column name="audit_acpt_date" value="2007-09-21"/>
+            <column name="p_audit_accept" value="Diana Chapman"/>
             <column name="audit_accept" value=""/>
             <column name="audit_rfr_date" value=""/>
-            <column name="p_audit_refer" value=""/>
-            <column name="audit_refer" value=""/>
-            <column name="why" value=""/>
-            <column name="p_follow_up" value=""/>
-            <column name="follow_up" value=""/>
-            <column name="admin_total_hours" value=""/>
-            <column name="action_taken" value=""/>
-            <column name="total_hours" value=""/>
-            <column name="num_of_visits" value=""/>
-            <column name="c_home_type" value=""/>
-            <column name="c_home_zip" value=""/>
-            <column name="c_home_telephone" value=""/>
-            <column name="c_home_city" value=""/>
-            <column name="c_home_licensee" value=""/>
+            <column name="p_audit_refer" value="No"/>
+            <column name="audit_refer" value="0"/>
+            <column name="why" value="0"/>
+            <column name="p_follow_up" value="Proof"/>
+            <column name="follow_up" value="CR"/>
+            <column name="admin_total_hours" value="24"/>
+            <column name="action_taken" value="2.00709E+13"/>
+            <column name="total_hours" value="0"/>
+            <column name="num_of_visits" value="No"/>
+            <column name="c_home_type" value="241206"/>
+            <column name="c_home_zip" value="107201149"/>
+            <column name="c_home_telephone" value="Diana Chapman"/>
+            <column name="c_home_city" value="CN=Diana Chapman/OU=CCLD/O=CDSS"/>
+            <column name="c_home_licensee" value="241214"/>
             <column name="c_home_address" value=""/>
-            <column name="c_home_name" value=""/>
-            <column name="c_home_number" value=""/>
+            <column name="c_home_name" value="Yes"/>
+            <column name="c_home_number" value="CR"/>
             <column name="cr_lps_appname" value=""/>
             <column name="cr_lps_appdate"/>
             <column name="cr_lps_name" value=""/>
             <column name="cr_lpa_subname" value=""/>
             <column name="cr_lpa_subdate"/>
             <column name="cr_lpa_name" value=""/>
-            <column name="cr_status" value="Open"/>
+            <column name="cr_status" value="Approved"/>
             <column name="date_assigned"/>
-            <column name="lpa_assigned" value="Pamela Ballard"/>
+            <column name="lpa_assigned" value="Regina Martin"/>
             <column name="date_signed" valueDate="2007-10-17 10:22:20.0"/>
-            <column name="cre_authornames" value="Pamela Ballard"/>
-            <column name="verified_by" value="Regina Martin"/>
-            <column name="verified_date" value="3/16/2006 12:13"/>
-            <column name="verified" value="Regina Martin"/>
-            <column name="agency_selection_1" value="Approved"/>
-            <column name="agency_selection" value="11/29/2005 11:11"/>
-            <column name="from_intake" value="Regina Martin"/>
+            <column name="cre_authornames" value=""/>
+            <column name="verified_by" value=""/>
+            <column name="verified_date" value=""/>
+            <column name="verified" value=""/>
+            <column name="agency_selection_1" value=""/>
+            <column name="agency_selection" value=""/>
+            <column name="from_intake" value=""/>
             <column name="fac_do_nbr"/>
             <column name="tendaymissed" value=""/>
             <column name="tendayvisit_flag" value=""/>
@@ -189,68 +294,68 @@
             <column name="reject_comments" value=""/>
             <column name="ancs" value=""/>
             <column name="complaintsumunid" value=""/>
-            <column name="complaintunid" value="No"/>
-            <column name="search_address" value="340302"/>
+            <column name="complaintunid" value=""/>
+            <column name="search_address" value=""/>
             <column name="search_name" value=""/>
-            <column name="search_number" value=""/>
-            <column name="createddbname" value="Regina Martin"/>
-            <column name="facility_state" value="3/16/2006 11:13"/>
-            <column name="facility_admin" value="Completed"/>
-            <column name="cr_visit_date"/>
-            <column name="form_name" value="Andrea Palado"/>
+            <column name="search_number" value="Duane Matsubara"/>
+            <column name="createddbname" value="2007-10-17"/>
+            <column name="facility_state" value="Duane Matsubara"/>
+            <column name="facility_admin" value="Tamara Melikian"/>
+            <column name="cr_visit_date" valueDate="2007-10-15"/>
+            <column name="form_name" value="Tamara Melikian"/>
         </insert>
         <insert tableName="complaint_report_lic802">
-            <column name="response_description" value=""/>
+            <column name="response_description" value="LIC802 - CR - Received on 06/18/2010  Handling  PRIORITY - 3 **Approved**  **Recorded**"/>
             <column name="dont_save_flag" value="1"/>
-            <column name="audit_history" value="Signed!Leon Wells!4/11/2013 9:29:27 AM"/>
-            <column name="originalunidkey" value="23-CR-JDAN-8DNN84-20110201091337"/>
-            <column name="edit_history" value="Leon Wells!04/11/2013 09:29:27 AM"/>
-            <column name="dt_created"/>
-            <column name="creator_name" value="Julie Darden"/>
+            <column name="audit_history" value="Signed!Yan Yeung!10/18/2010 4:07:10 PM"/>
+            <column name="originalunidkey" value="32-CR-SNGO-86JMJE-20100618091646"/>
+            <column name="edit_history" value="Yan Yeung!10/18/2010 04:07:10 PM"/>
+            <column name="dt_created" valueDate="2010-06-18"/>
+            <column name="creator_name" value="Suzanne Ngo"/>
             <column name="page_total" value="2"/>
             <column name="page_nr" value="2"/>
             <column name="crp2_formnumber" value="LIC802"/>
-            <column name="cr_lps_signdate"/>
-            <column name="cr_lps_signname" value="Leon Wells"/>
-            <column name="cr_lpa_signdate"/>
-            <column name="cr_lpa_signname" value="Julie Darden"/>
+            <column name="cr_lps_signdate" valueDate="2010-10-18"/>
+            <column name="cr_lps_signname" value="Yan Yeung"/>
+            <column name="cr_lpa_signdate" valueDate="2010-10-18"/>
+            <column name="cr_lpa_signname" value="Danny Ling"/>
             <column name="crp2_followup" value=""/>
             <column name="z1_3" value="1&#10;2&#10;3&#10;4&#10;5&#10;6"/>
             <column name="crp2_contactsummary" value=""/>
             <column name="z1_2" value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8"/>
-            <column name="crp2_postcomments" value=""/>
+            <column name="crp2_postcomments" value="LPA contacted Mr. Vahaken Depoyan &amp; investigative findings were provided.&#10;&#10;On 10/18/10 LPA contacted Vahaken Depoyan &amp; provided with re-investigative findings."/>
             <column name="z1_4" value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11"/>
-            <column name="crp2_precomments" value="Contact the LPM and Ms. Darden for supporting documents."/>
+            <column name="crp2_precomments" value="LPA contacted Mr. Vahaken Depoyan regarding complaint allegations."/>
             <column name="z1_1" value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11"/>
             <column name="p_posthowcontact" value="TELEPHONE"/>
             <column name="crp2_posthowcontact" value="TELEPHONE"/>
             <column name="p_prehowcontact" value="TELEPHONE"/>
             <column name="crp2_prehowcontact" value="TELEPHONE"/>
-            <column name="crp2_postcontact" value="Kathy Hargitt"/>
-            <column name="crp2_postdate"/>
-            <column name="crp2_precontact" value="J. Darden"/>
-            <column name="crp2_predate"/>
-            <column name="crp2_detaildescription" value="The reporting party has been doing research on the psychosocial rehabilitation of children victim/survors in the area of sex trafficking.  She ran across this program at a freedom summit.  She believes they should be licensed by our department.  She mentioned Children of the Night - a program that is licensed by our department.  The New Day program is the same type of operation.  She is concerned for the childrens safety in lack of proper Department of Social Services oversight.  &#10;&#10;She reports the name of the operation is New Day for Children.  The program serves females ages 10-17 who are victims of sex trafficking.  When asked where they were located, they told her they are at an undisclosed location in Northern Califonia.  After researched it was determined to be at the same location as Boarding school - Julian Academy.  This is based on photos on their website showing their property which is the same photos for the Julian academy.  New Day has a CEO by the name of John Blankmeyer - PO Box 439 Alamo 94507.   Their website is www.newdayforchildren.com.  They provide residential housing, counseling, etc.  When asked about their license, they reported they are operating under a boarding school license.  It appears they may be leasing a space on property where Julian Academy is operating.  It is unclear if they are operating under the Julian Academy Boarding School license. ***Note we previoulsy investigated Julian Academy as an unlicensed group home (see attached documents).   "/>
+            <column name="crp2_postcontact" value="Mr. Vahaken Depoyan"/>
+            <column name="crp2_postdate" valueDate="2010-10-05"/>
+            <column name="crp2_precontact" value="Mr. Vahaken Depoyan"/>
+            <column name="crp2_predate" valueDate="2010-06-28"/>
+            <column name="crp2_detaildescription" value="Other female clients in the GH pushed a water hose through the bathroom window and sprayed water on client#1 while client#1 was in the bathroom. THe GH staff allows clients in the GH fights with one another.  Client#1 complained to GH staff about the fighting, the GH staff responded &quot;If they are going to fight, they are going to fight.&quot;  RP had observed clients were allowed to call staff &quot;bitches&quot; and nothing was done about the behavior.  RP believes clients are running the operation of the GH instead of the staff.&#10;&#10;ALLEGED PERPRETRATOR(s) -  Other clients in the GH&#10;WHEN DID IT HAPPEN - ongoing&#10;ARE THERE BRUISES OR INJURIES - no&#10;CLIENT #1 - Yasmine Marqisha Beasley DOB: 5/19/97 CSW: Vahaken Depoyan (323) 290-8494&#10;SCHOOL INFORMATION � Edwin Markham Middle - 1650 E. 104th Street, Los Angeles, 90002&#10;CLIENT'S CURRENT PLACEMENT � at Wings of Refuge FFA (323) 251-5175&#10;CAHL# -0622-8774-1476-6002864&#10;"/>
             <column name="z1" value="1&#10;2&#10;3&#10;4&#10;5&#10;6&#10;7&#10;8&#10;9&#10;10&#10;11&#10;12&#10;13&#10;14"/>
-            <column name="crp2_facility_number" value="Unlicensed"/>
-            <column name="crp2_facility_type" value="UNLIC"/>
-            <column name="crp2_facility_name" value="Unlicensed"/>
-            <column name="crp2_controlnumber" value="23-CR-20110201091337"/>
-            <column name="crp2_visitduedate"/>
-            <column name="crp2_prioritynr" value="4"/>
+            <column name="crp2_facility_number" value="107201149"/>
+            <column name="crp2_facility_type" value="730"/>
+            <column name="crp2_facility_name" value="DAVID AND MARGARET YOUTH AND FAMILY SERVICES"/>
+            <column name="crp2_controlnumber" value="32-CR-20100618091646"/>
+            <column name="crp2_visitduedate" valueDate="2010-06-28"/>
+            <column name="crp2_prioritynr" value="3"/>
             <column name="crp2_priority" value="PRIORITY"/>
-            <column name="do_zip2" value="95833"/>
+            <column name="do_zip2" value="91754"/>
             <column name="do_state2" value="CA"/>
-            <column name="do_city2" value="SACRAMENTO"/>
-            <column name="do_address2" value="2525 NATOMAS PARK DRIVE"/>
-            <column name="do_name2" value=""/>
+            <column name="do_city2" value="MONTEREY PARK"/>
+            <column name="do_address2" value="1000 CORPORATE CNTR DR. #200A"/>
+            <column name="do_name2" value="CCLD Regional Office"/>
             <column name="reportname2" value="COMPLAINT REPORT (Cont)"/>
             <column name="page_total1" value="2"/>
             <column name="page_nr1" value="1"/>
             <column name="form_number" value="LIC802"/>
             <column name="cr_time"/>
-            <column name="cr_date" valueDate = "2010-06-18"/>
-            <column name="cr_receivedby" value="Julie Darden"/>
+            <column name="cr_date" valueDate="2010-06-18"/>
+            <column name="cr_receivedby" value="Suzanne Ngo"/>
             <column name="cr_allegation_7" value=""/>
             <column name="z_7" value=""/>
             <column name="undr_apl_7" value=""/>
@@ -290,7 +395,7 @@
             <column name="facility_name" value=""/>
             <column name="facility_number_text" value=""/>
             <column name="facility_type"/>
-            <column name="cr_controlnumber" value="24-CR-20070921132110"/>
+            <column name="cr_controlnumber" value="23-CR-20110201091337"/>
             <column name="cr_visitduedate"/>
             <column name="cr_doname" value=""/>
             <column name="cr_prioritynr" value="4"/>
@@ -300,85 +405,85 @@
             <column name="cr_abusereportfiled" value="1&#10;2&#10;3"/>
             <column name="cr_complainantrelation" value="No"/>
             <column name="cr_complainantnightphone" value=""/>
-            <column name="cr_complainantdayphone" value="U"/>
+            <column name="cr_complainantdayphone" value=""/>
             <column name="cr_complainantzip" value=""/>
-            <column name="cr_complainantcity" value=""/>
-            <column name="cr_complainantaddress" value="Unlicensed Children's Residential Facility "/>
+            <column name="cr_complainantcity" value="S"/>
+            <column name="cr_complainantaddress" value="A client was harassed in the GH."/>
             <column name="cr_complainantname" value="1&#10;2&#10;3"/>
             <column name="p_howreported" value="No"/>
-            <column name="cr_howreported" value="4"/>
-            <column name="do_zip" value="(Unk) Unk-nown"/>
-            <column name="do_state" value="96096"/>
-            <column name="do_city" value="Whitmore"/>
-            <column name="do_address" value="12069 Tintagel Road"/>
-            <column name="do_name" value="Unlicensed"/>
-            <column name="report_title" value="Unlicensed"/>
-            <column name="reportname" value="UNLIC"/>
-            <column name="linked_pages" value="23-CR-20110201091337"/>
-            <column name="time_created" value="2/11/2011"/>
-            <column name="create_date" value=""/>
-            <column name="created_by" value="4"/>
+            <column name="cr_howreported" value="10"/>
+            <column name="do_zip" value="(909) 596-5921"/>
+            <column name="do_state" value="91750"/>
+            <column name="do_city" value="LA VERNE"/>
+            <column name="do_address" value="1350 THIRD ST"/>
+            <column name="do_name" value="DAVID AND MARGARET YOUTH AND FAMILY SERVICES"/>
+            <column name="report_title" value="191500192"/>
+            <column name="reportname" value="730"/>
+            <column name="linked_pages" value="32-CR-20100618091646"/>
+            <column name="time_created" value="2010-06-28"/>
+            <column name="create_date" value="CCLD Regional Office"/>
+            <column name="created_by" value="3"/>
             <column name="facility_num_new" value="PRIORITY"/>
             <column name="orgtoamd_unid" value="YES"/>
             <column name="amend_printed" value="YES"/>
-            <column name="times_amended" value="NO"/>
-            <column name="amend_flag" value="NO"/>
-            <column name="proof" value="None"/>
+            <column name="times_amended" value="YES"/>
+            <column name="amend_flag" value="YES"/>
+            <column name="proof" value="CSW I"/>
             <column name="program_code" value=""/>
-            <column name="do_number" value="(707) 235-8488"/>
-            <column name="create_date_time" value="95476"/>
-            <column name="link_count" value="Sonoma"/>
-            <column name="show_linked_pages" value="PO Box 581"/>
-            <column name="fas_lpa_code" value="Kathy Hargitt"/>
-            <column name="facility_number" value="BY TELEPHONE"/>
-            <column name="allowableeditors" value="BY TELEPHONE"/>
-            <column name="authornames" value="95833"/>
+            <column name="do_number" value="(323) 290-8494"/>
+            <column name="create_date_time" value="90056"/>
+            <column name="link_count" value="Los Angeles, CA"/>
+            <column name="show_linked_pages" value="5110 W. Goldleaf Circle"/>
+            <column name="fas_lpa_code" value="Mr. Vahaken Depoyan"/>
+            <column name="facility_number" value="BY LETTER"/>
+            <column name="allowableeditors" value="BY LETTER"/>
+            <column name="authornames" value="91754"/>
             <column name="lpa_code" value="CA"/>
-            <column name="delete_flag" value="SACRAMEN"/>
-            <column name="signature" value="2525 NATOMAS PARK DRIVE"/>
-            <column name="form_abrievation" value=""/>
-            <column name="sign_off_date" value="COMPLAINT REPORT"/>
-            <column name="ai_action_taken" value=" LIC9099-O - CIR  LIC9099 - CIR  LIC812 - DSI  LIC812 - DSI  LIC9099 - CIR  &#10;LIC812 - DSI  LIC812 - DSI  LIC812 - DSI  LIC812 - DSI  LIC9099 - CIR  LIC812 - &#10;DSI  LIC812 - DSI  LIC812 - DSI  LIC812 - DSI  LIC812 - DSI  LIC812 - DSI  &#10;LIC812 - DSI  LIC812 -"/>
-            <column name="ai_total_hours" value="9:13:37 AM"/>
-            <column name="ai_num_visits" value="2/1/2011"/>
-            <column name="audit_acpt_date" value="Julie Darden"/>
-            <column name="p_audit_accept" value=""/>
+            <column name="delete_flag" value="MONTEREY"/>
+            <column name="signature" value="1000 CORPORATE CNTR DR. #200A"/>
+            <column name="form_abrievation" value="CCLD Regional Office"/>
+            <column name="sign_off_date" value=""/>
+            <column name="ai_action_taken" value="COMPLAINT REPORT"/>
+            <column name="ai_total_hours" value=" LIC9099 - CIR  LIC9099 - CIR  LIC9099 - CIR  LIC9099 - CIR  LIC9099 - CIR "/>
+            <column name="ai_num_visits" value="1900-01-00"/>
+            <column name="audit_acpt_date" value="2010-06-18"/>
+            <column name="p_audit_accept" value="Suzanne Ngo"/>
             <column name="audit_accept" value=""/>
             <column name="audit_rfr_date" value=""/>
-            <column name="p_audit_refer" value=""/>
-            <column name="audit_refer" value=""/>
-            <column name="why" value=""/>
-            <column name="p_follow_up" value=""/>
-            <column name="follow_up" value=""/>
-            <column name="admin_total_hours" value=""/>
-            <column name="action_taken" value=""/>
-            <column name="total_hours" value=""/>
-            <column name="num_of_visits" value=""/>
-            <column name="c_home_type" value=""/>
-            <column name="c_home_zip" value=""/>
-            <column name="c_home_telephone" value=""/>
-            <column name="c_home_city" value=""/>
-            <column name="c_home_licensee" value=""/>
+            <column name="p_audit_refer" value="No"/>
+            <column name="audit_refer" value="0"/>
+            <column name="why" value="0"/>
+            <column name="p_follow_up" value="Proof"/>
+            <column name="follow_up" value="CR"/>
+            <column name="admin_total_hours" value="32"/>
+            <column name="action_taken" value="2.01006E+13"/>
+            <column name="total_hours" value="5"/>
+            <column name="num_of_visits" value="Yes"/>
+            <column name="c_home_type" value="329906"/>
+            <column name="c_home_zip" value="191500192"/>
+            <column name="c_home_telephone" value="Suzanne Ngo"/>
+            <column name="c_home_city" value="CN=Suzanne Ngo/OU=CCLD/O=CDSS"/>
+            <column name="c_home_licensee" value="329808"/>
             <column name="c_home_address" value=""/>
-            <column name="c_home_name" value=""/>
-            <column name="c_home_number" value=""/>
+            <column name="c_home_name" value="Yes"/>
+            <column name="c_home_number" value="CR"/>
             <column name="cr_lps_appname" value=""/>
             <column name="cr_lps_appdate"/>
             <column name="cr_lps_name" value=""/>
             <column name="cr_lpa_subname" value=""/>
             <column name="cr_lpa_subdate"/>
             <column name="cr_lpa_name" value=""/>
-            <column name="cr_status" value="Approved"/>
+            <column name="cr_status" value="Open"/>
             <column name="date_assigned"/>
-            <column name="lpa_assigned" value="Leon Wells"/>
-            <column name="date_signed" valueDate="2010-10-18 04:07:10.0"/>
-            <column name="cre_authornames" value="Leon Wells"/>
-            <column name="verified_by" value="Julie Darden"/>
-            <column name="verified_date" value="4/10/2013 22:01"/>
-            <column name="verified" value="Julie Darden"/>
-            <column name="agency_selection_1" value="Approved"/>
-            <column name="agency_selection" value="4/10/2013 21:55"/>
-            <column name="from_intake" value="Julie Darden"/>
+            <column name="lpa_assigned" value="Julie Darden"/>
+            <column name="date_signed" valueDate="2007-11-01 08:15:10.1"/>
+            <column name="cre_authornames" value=""/>
+            <column name="verified_by" value=""/>
+            <column name="verified_date" value=""/>
+            <column name="verified" value=""/>
+            <column name="agency_selection_1" value=""/>
+            <column name="agency_selection" value=""/>
+            <column name="from_intake" value=""/>
             <column name="fac_do_nbr"/>
             <column name="tendaymissed" value=""/>
             <column name="tendayvisit_flag" value=""/>
@@ -386,16 +491,17 @@
             <column name="faslpacode_1" value=""/>
             <column name="reject_comments" value=""/>
             <column name="ancs" value=""/>
-            <column name="complaintsumunid" value="No"/>
-            <column name="complaintunid" value="Yes"/>
+            <column name="complaintsumunid" value=""/>
+            <column name="complaintunid" value="10/11/2010 11:40:57 AM by Yan Yeung - Need to follow up to see whether enough staff in the campus or suffiecient training was done. ; "/>
             <column name="search_address" value=""/>
-            <column name="search_name" value=""/>
-            <column name="search_number" value=""/>
-            <column name="createddbname" value="Julie Darden"/>
-            <column name="facility_state" value="4/10/2013 22:01"/>
-            <column name="facility_admin" value="Completed"/>
-            <column name="cr_visit_date"/>
-            <column name="form_name" value="Julie Darden"/>
+            <column name="search_name" value="2010-10-11"/>
+            <column name="search_number" value="Yan Yeung"/>
+            <column name="createddbname" value="2010-10-18"/>
+            <column name="facility_state" value="Yan Yeung"/>
+            <column name="facility_admin" value="Danny Ling"/>
+            <column name="cr_visit_date" valueDate="2010-10-18"/>
+            <column name="form_name" value="Danny Ling"/>
         </insert>
+
     </changeSet>
 </databaseChangeLog>

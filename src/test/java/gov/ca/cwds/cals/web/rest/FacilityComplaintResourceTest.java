@@ -6,7 +6,6 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.Invocation;
@@ -19,8 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
-    public static final String FACILITY_ID = "1";
-    public static final String COMPLAINT_ID = "34-CR-340302-20051129105102";
+    public static final String FACILITY_ID = "107201149";
+    public static final String COMPLAINT_ID = "32-CR-SNGO-86JMJE-20100618091646";
 
     @BeforeClass
     public static void beforeClass() throws Exception {
@@ -28,7 +27,6 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     }
 
     @Test
-    @Ignore
     public void assertGetAllFacilityComplaints() throws JsonProcessingException {
         String restUrl = getServerUrl() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS;
         WebTarget target = clientTestRule.getClient().target(restUrl);
