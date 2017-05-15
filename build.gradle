@@ -1,3 +1,5 @@
+import static org.gradle.api.logging.LogLevel.*
+
 buildscript {
     repositories {
         mavenLocal()
@@ -16,13 +18,15 @@ plugins {
     id 'net.ltgt.apt' version '0.9'
 }
 
+project.logging.setLevelInternal(INFO)
+
 project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
-    projectVersion = '1.0-SNAPSHOT'
+    projectVersion = '2.5-SNAPSHOT'
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.20.173'
+    coreApiVersion = '0.21.216'
     calsModelVersion = '2.5-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
@@ -74,7 +78,6 @@ dependencies {
     }
 
     compile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: calsModelVersion)
-    compile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: calsModelVersion)
 
     compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
     compile group: 'org.slf4j', name: 'slf4j-ext', version: '1.7.22'
@@ -139,7 +142,7 @@ task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
     dockerfile = "Dockerfile"
     project.group = projectDockerGroup
     applicationName = projectDockerAppName
-    tagVersion = version + ((System.properties.getProperty('BUILD_ID') != null ) ? '.' + System.properties.getProperty('BUILD_ID') : '')
+    tagVersion = version + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
 }
 
 task createDockerImage(type:Exec, dependsOn: shadowJar) {

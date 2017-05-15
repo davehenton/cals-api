@@ -1,15 +1,14 @@
 package gov.ca.cwds.cals.service.dto;
 
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the RaceType entity.
  */
-public class RaceTypeDTO implements Serializable {
+
+public class RaceTypeDTO extends BaseDTO {
 
     private Long id;
 
@@ -27,6 +26,7 @@ public class RaceTypeDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getCode() {
         return code;
     }
@@ -34,6 +34,7 @@ public class RaceTypeDTO implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
+
     public String getType() {
         return type;
     }
@@ -53,7 +54,9 @@ public class RaceTypeDTO implements Serializable {
 
         RaceTypeDTO raceTypeDTO = (RaceTypeDTO) o;
 
-        if ( ! Objects.equals(id, raceTypeDTO.id)) { return false; }
+        if (!Objects.equals(id, raceTypeDTO.id)) {
+            return false;
+        }
 
         return true;
     }
@@ -63,12 +66,4 @@ public class RaceTypeDTO implements Serializable {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "RaceTypeDTO{" +
-            "id=" + id +
-            ", code='" + code + "'" +
-            ", type='" + type + "'" +
-            '}';
-    }
 }

@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 @Mapper
-public abstract class PostMappingProcessor {
+public abstract class FacilityPostMappingProcessor {
 
     @AfterMapping
     protected void fillAddresses(LisFacFile lisFacFile, @MappingTarget FacilityDTO facilityDTO) {
@@ -25,7 +25,7 @@ public abstract class PostMappingProcessor {
     }
 
     private void mapPhones(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
-        List<PhoneDTO> phones = new ArrayList(1);
+        List<PhoneDTO> phones = new ArrayList<>(1);
         phones.add(new PhoneMapperImpl().lisFacilityToPhoneDTO(lisFacFile));
         facilityDTO.setPhone(phones);
     }

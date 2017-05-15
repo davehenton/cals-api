@@ -1,16 +1,18 @@
 package gov.ca.cwds.cals.service.dto;
 
 import gov.ca.cwds.rest.api.Response;
+import gov.ca.cwds.rest.api.domain.DomainObject;
+import gov.ca.cwds.rest.api.domain.DomainObject;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 /**
  * A DTO for the FacilityChild entity.
  */
-public class FacilityChildDTO implements Serializable, Response {
+
+public class FacilityChildDTO extends DomainObject {
 
     private Long id;
 
@@ -91,13 +93,4 @@ public class FacilityChildDTO implements Serializable, Response {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "FacilityChildDTO{" +
-            "id=" + id +
-            ", dateOfPlacement='" + dateOfPlacement + "'" +
-            ", assignedWorker='" + assignedWorker + "'" +
-            ", countyOfOrigin='" + countyOfOrigin + "'" +
-            '}';
-    }
 }
