@@ -78,6 +78,7 @@ dependencies {
     }
 
     compile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: calsModelVersion)
+    compile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: calsModelVersion)
 
     compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
     compile group: 'org.slf4j', name: 'slf4j-ext', version: '1.7.22'
