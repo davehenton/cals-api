@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
-import gov.ca.cwds.rest.api.domain.DomainObject;
+import gov.ca.cwds.rest.api.Request;
+import gov.ca.cwds.rest.api.Response;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -10,7 +11,7 @@ import java.util.Objects;
  * A DTO for the FacilityChild entity.
  */
 
-public class FacilityChildDTO extends DomainObject {
+public class FacilityChildDTO extends BaseDTO implements Request, Response {
 
     private Long id;
 
