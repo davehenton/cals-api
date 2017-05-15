@@ -142,7 +142,7 @@ task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
     dockerfile = "Dockerfile"
     project.group = projectDockerGroup
     applicationName = projectDockerAppName
-    tagVersion = version + ((System.properties.getProperty('BUILD_ID') != null ) ? '.' + System.properties.getProperty('BUILD_ID') : '')
+    tagVersion = version + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
 }
 
 task createDockerImage(type:Exec, dependsOn: shadowJar) {
