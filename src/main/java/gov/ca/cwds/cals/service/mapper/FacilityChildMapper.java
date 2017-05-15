@@ -13,6 +13,6 @@ import org.mapstruct.factory.Mappers;
 public interface FacilityChildMapper {
     FacilityChildMapper INSTANCE = Mappers.getMapper(FacilityChildMapper.class);
 
-    @Mapping(target = "assignedWorker", source = "licenseNo") //todo
+    @Mapping(target = "assignedWorker", source = "licenseNo")
     FacilityChildDTO toFacilityChildDTO(PlacementHome placementHome);
 }
