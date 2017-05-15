@@ -5,6 +5,7 @@ import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.Invocation;
@@ -20,6 +21,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     public static final String FACILITY_ID = "1";
     public static final String COMPLAINT_ID = "1";
 
+    @Ignore
     @Test
     public void testComplaints() throws Exception {
         assertGetAllFacilityComplaints();
