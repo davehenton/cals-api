@@ -7,11 +7,13 @@ import com.google.inject.name.Named;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.ComplaintsCollectionService;
+import gov.ca.cwds.cals.service.FacilityChildCollectionService;
+import gov.ca.cwds.cals.service.FacilityChildService;
+import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
-import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
 
