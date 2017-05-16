@@ -3,11 +3,14 @@ package gov.ca.cwds.cals.service.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.rest.api.Response;
+import gov.ca.cwds.rest.validation.Date;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
 
 /**
  * @author CWDS CALS API Team
@@ -16,7 +19,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 public class ComplaintDTO extends BaseDTO implements Response {
 
     @JsonProperty("id")
-    private Long id;
+    private String id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
@@ -35,16 +38,16 @@ public class ComplaintDTO extends BaseDTO implements Response {
     @JsonProperty("status")
     private String status;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
-    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
     @JsonProperty("approval_date")
-    private LocalDate approvalDate;
+    @Date(format = DATE_FORMAT + " " + TIME_FORMAT, required = false)
+    private LocalDateTime approvalDate;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -88,11 +91,11 @@ public class ComplaintDTO extends BaseDTO implements Response {
         this.status = status;
     }
 
-    public LocalDate getApprovalDate() {
+    public LocalDateTime getApprovalDate() {
         return approvalDate;
     }
 
-    public void setApprovalDate(LocalDate approvalDate) {
+    public void setApprovalDate(LocalDateTime approvalDate) {
         this.approvalDate = approvalDate;
     }
 

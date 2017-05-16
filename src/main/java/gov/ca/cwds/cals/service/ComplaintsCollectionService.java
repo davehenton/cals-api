@@ -1,13 +1,14 @@
 package gov.ca.cwds.cals.service;
 
-import gov.ca.cwds.cals.service.dto.ComplaintDTO;
-import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
+import com.google.inject.Inject;
+import gov.ca.cwds.cals.model.fas.LisFacFile;
+import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
+import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 /**
  * @author CWDS CALS API Team
@@ -15,31 +16,20 @@ import java.time.LocalDate;
 
 public class ComplaintsCollectionService implements CrudsService {
 
+    private LisFacFileDao lisFacFileDao;
+    private ComplaintMapper complaintMapper;
+
+    @Inject
+    public ComplaintsCollectionService(LisFacFileDao lisFacFileDao,
+            ComplaintMapper complaintMapper) {
+        this.lisFacFileDao = lisFacFileDao;
+        this.complaintMapper = complaintMapper;
+    }
+
     @Override
-    public Response find(Serializable serializable) {
-        ComplaintDTO complaint1 = new ComplaintDTO();
-        complaint1.setId(1234567l);
-        complaint1.setComplaintDate(LocalDate.of(2004, 2, 13));
-        complaint1.setAssignedWorker("assigned_worker");
-        complaint1.setControlNumber("123");
-        complaint1.setPriorityLevel(3);
-        complaint1.setStatus("status1");
-        complaint1.setApprovalDate(LocalDate.of(2004, 3, 15));
-
-        ComplaintDTO complaint2 = new ComplaintDTO();
-        complaint2.setId(1234567l);
-        complaint2.setComplaintDate(LocalDate.of(2005, 2, 13));
-        complaint2.setAssignedWorker("assigned_worker2");
-        complaint2.setControlNumber("456");
-        complaint2.setPriorityLevel(2);
-        complaint2.setStatus("status2");
-        complaint2.setApprovalDate(LocalDate.of(2005, 5, 11));
-
-        ComplaintsDTO complaintsDTO = new ComplaintsDTO();
-        complaintsDTO.getComplaints().add(complaint1);
-        complaintsDTO.getComplaints().add(complaint2);
-
-        return complaintsDTO;
+    public Response find(Serializable facilityId) {
+        LisFacFile lisFacFile = lisFacFileDao.find(facilityId);
+        return complaintMapper.complaintsListToComplaintsDTOList(lisFacFile);
     }
 
     @Override

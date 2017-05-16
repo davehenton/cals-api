@@ -6,7 +6,9 @@ import gov.ca.cwds.cals.inject.ComplaintServiceBackedResource;
 import gov.ca.cwds.cals.inject.ComplaintsCollectionServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
+import gov.ca.cwds.cals.web.rest.parameter.FacilityComplaintParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
+import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -46,11 +48,12 @@ public class FacilityComplaintResource {
        this.resourceEntityDelegate = resourceEntityDelegate;
     }
 
+    @UnitOfWork(value = "fas")
     @GET
     @Timed
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found")})
-    @ApiOperation(value = "Returns Facility by id ", response = ComplaintsDTO.class)
+    @ApiOperation(value = "Returns Complaints collection by Facility Id", response = ComplaintsDTO.class)
     public Response getFacilityComplaintsByFacilityId(
             @PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
                     value = "The id of the Facility") Integer facilityId) {
@@ -58,19 +61,20 @@ public class FacilityComplaintResource {
         return resourceCollectionDelegate.get(facilityId);
     }
 
+    @UnitOfWork(value = "fas")
     @GET
     @Timed
     @Path("/{" + COMPLAINT_ID + "}")
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found")})
-    @ApiOperation(value = "Returns Facility by id ", response = ComplaintDTO.class)
+    @ApiOperation(value = "Returns Complaint by Facility Id and Complaint Id", response = ComplaintDTO.class)
     public Response getFacilityComplaintByFacilityIdAndComplaintId(
             @PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
                     value = "The id of the Facility") Integer facilityId,
             @PathParam(COMPLAINT_ID) @ApiParam(required = true, name = COMPLAINT_ID,
-                    value = "The id of the Complaint") Integer complaintId) {
+                    value = "The id of the Complaint") String complaintId) {
 
-        return resourceEntityDelegate.get(complaintId);
+        return resourceEntityDelegate.get(new FacilityComplaintParameterObject(facilityId, complaintId));
     }
 
 }

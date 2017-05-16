@@ -7,10 +7,13 @@ import com.google.inject.name.Named;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.ComplaintsCollectionService;
+import gov.ca.cwds.cals.service.FacilityChildCollectionService;
+import gov.ca.cwds.cals.service.FacilityChildService;
+import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
+import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
-import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
 
@@ -33,6 +36,7 @@ public class ResourcesModule extends AbstractModule {
     protected void configure() {
         bind(ApplicationResource.class);
         bind(FacilityResource.class);
+        bind(FacilityChildResource.class);
         bind(FacilityComplaintResource.class);
     }
 
@@ -53,6 +57,20 @@ public class ResourcesModule extends AbstractModule {
     public ResourceDelegate facilityServiceBackendResource(Injector injector) {
         return new ServiceBackedResourceDelegate(injector.getInstance(FacilityService.class));
     }
+
+    @Provides
+    @FacilityChildServiceBackendResource
+    public ResourceDelegate facilityChildServiceBackendResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(FacilityChildService.class));
+    }
+
+    @Provides
+    @FacilityChildCollectionServiceBackendResource
+    public ResourceDelegate facilityChildServiceCollectionBackendResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(FacilityChildCollectionService.class));
+    }
+
+
 
     @Provides
     @ComplaintsCollectionServiceBackedResource

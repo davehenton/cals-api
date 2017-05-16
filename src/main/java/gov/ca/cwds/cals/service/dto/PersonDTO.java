@@ -1,8 +1,13 @@
 package gov.ca.cwds.cals.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 
 /**
  * A DTO for the Person entity.
@@ -13,15 +18,20 @@ public class PersonDTO extends BaseDTO {
     private Long id;
 
     @NotNull
+    @JsonProperty("first_name")
     private String firstName;
 
     @NotNull
+    @JsonProperty("last_name")
     private String lastName;
 
     private String gender;
 
     private Integer age;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
+    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
+    @JsonProperty("date_of_birth")
     private LocalDate dateOfBirth;
 
     private String ssn;
@@ -97,9 +107,7 @@ public class PersonDTO extends BaseDTO {
 
         PersonDTO personDTO = (PersonDTO) o;
 
-        if ( ! Objects.equals(id, personDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, personDTO.id);
     }
 
     @Override

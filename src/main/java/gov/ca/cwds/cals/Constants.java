@@ -14,6 +14,7 @@ public final class Constants {
 
         public static final String RESOURCE_APPLICATION = "application";
 
+        //todo: check and remove
         public static final String CHILDREN = "children";
 
         public static final String COMPLAINTS = "complaints";
