@@ -39,7 +39,7 @@ public abstract class BaseCalsApiIntegrationTest {
     @Rule
     public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
 
-//    @BeforeClass
+    @BeforeClass
     public static void setUp() throws Exception {
         DataSourceFactory fasDataSourceFactory = appRule.getConfiguration()
                 .getFasDataSourceFactory();
