@@ -51,9 +51,10 @@ public interface  FacilityChildrenMapper {
 
     default FacilityChildDTO toFacilityChildDTO(OutOfHomePlacement outOfHomePlacement,
                                                 PlacementEpisode placementEpisode, Client client) {
+        FacilityChildDTO facilityChildDTO = new FacilityChildDTO();
+        facilityChildDTO.setId(client.getIdentifier());
 
         PersonDTO personDTO = personDtoMapper.fromClient(client);
-        FacilityChildDTO facilityChildDTO = new FacilityChildDTO();
         facilityChildDTO.setPerson(personDTO);
 
         Set<StaffPerson> staffPersons = placementEpisode.getStaffPersons();

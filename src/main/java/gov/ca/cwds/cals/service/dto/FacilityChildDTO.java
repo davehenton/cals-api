@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class FacilityChildDTO extends BaseDTO implements Request, Response {
 
-    private Long id;
+    private String id;
 
     private LocalDate dateOfPlacement;
 
@@ -26,11 +26,11 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
 
     private PersonDTO person;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
     public LocalDate getDateOfPlacement() {
