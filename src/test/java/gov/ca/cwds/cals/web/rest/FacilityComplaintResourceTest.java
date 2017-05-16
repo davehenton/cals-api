@@ -33,11 +33,10 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     @Test
     public void assertGetAllFacilityComplaints() throws JsonProcessingException {
         URI serverUrl = getServerUrl();
+        System.out.println("Server URI: " + serverUrl);
         String serverUrlStr = URI.create("http://localhost:" + serverUrl.getPort() + "/").toString();
         String restUrl = serverUrlStr + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS;
-
         System.out.println("Rest URL: " + restUrl);
-
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
