@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.model.fas.LisFacFile;
-import gov.ca.cwds.cals.persistence.dao.LisFacFileDao;
+import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;

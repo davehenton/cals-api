@@ -11,6 +11,9 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import static gov.ca.cwds.cals.Constants.API.CHILDREN;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +25,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     @Test
     @Ignore
     public void testGetFacilityChildren() throws Exception {
-        String pathInfo = Constants.API.FACILITY_CHILD;
+        String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
 //        String pathInfo = Constants.API.FACILITY_CHILD + "/1";
         pathInfo = pathInfo.replace("{facility_id}", "MH12AE541");
         String restUrl = appRule.getEnvironment().getApplicationContext().getServer().getURI() + pathInfo;
@@ -37,7 +40,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     @Test
     @Ignore
     public void testGetFacilityChild() throws Exception {
-        String pathInfo = Constants.API.FACILITY_CHILD;
+        String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
 //        String pathInfo = Constants.API.FACILITY_CHILD + "/1";
         pathInfo = pathInfo.replace("{facility_id}", "MH12AE541") + "/SQkWeH80Mf";
         String restUrl = appRule.getEnvironment().getApplicationContext().getServer().getURI() + pathInfo;

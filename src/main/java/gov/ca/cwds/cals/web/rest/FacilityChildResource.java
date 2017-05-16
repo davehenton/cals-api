@@ -22,13 +22,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.Constants.API.FACILITY_CHILD;
+import static gov.ca.cwds.cals.Constants.API.*;
+import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
 
 /**
  * @author CWDS CALS API Team
  */
-@Api(value = FACILITY_CHILD, tags = FACILITY_CHILD)
-@Path(FACILITY_CHILD)
+@Api(tags = {FACILITIES, CHILDREN})
+@Path(FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN)
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityChildResource {
     private ResourceDelegate resourceDelegate;
@@ -48,7 +49,7 @@ public class FacilityChildResource {
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Children", response = FacilityChildrenDTO.class)
-    public Response getChildren(@PathParam("facility_id")  @ApiParam(required = true, name = "facility_id",
+    public Response getChildren(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID,
             value = "The license number of the Placement Home") String facility_license_number) {
         return collectionResourceDelegate.get(facility_license_number);
     }
@@ -61,7 +62,7 @@ public class FacilityChildResource {
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Child", response = FacilityChildDTO.class)
-    public Response getChild(@PathParam("facility_id")  @ApiParam(required = true, name = "facility_id", value = "The license number of the Placement Home") String facility_license_number,
+    public Response getChild(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID, value = "The license number of the Placement Home") String facility_license_number,
             @PathParam("child_id") @ApiParam(required = true, name = "child_id", value = "The id of the Client") String child_id) {
         return resourceDelegate.get(facility_license_number + ',' + child_id);
     }
