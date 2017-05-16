@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import org.junit.Ignore;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.ws.rs.client.Invocation;
@@ -17,11 +18,15 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
     private static final String FACILITY_ID = "193600001";
 
+    @BeforeClass
+    public static void beforeClass() throws Exception {
+        setUpFas();
+        getFasDatabaseHelper().runScript("liquibase/fas/fas-data.xml", "fas");
+    }
+
     @Ignore
     @Test
     public void testGetFacilityById() throws Exception {
-        fasDatabaseHelper.runScript("liquibase/fas-data.xml", "fas");
-
         String restUrl = getServerUrl() + Constants.API.FACILITIES + "/" + FACILITY_ID;
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);

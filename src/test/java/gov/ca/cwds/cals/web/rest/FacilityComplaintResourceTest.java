@@ -27,7 +27,8 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        fasDatabaseHelper.runScript("liquibase/complaints_data.xml", "fas");
+        setUpFas();
+        getFasDatabaseHelper().runScript("liquibase/fas/complaints_data.xml", "fas");
     }
 
     @Test
