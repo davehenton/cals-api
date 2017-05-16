@@ -11,6 +11,8 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import java.net.URLEncoder;
+
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +29,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
     //@Ignore
     @Test
     public void testGetFacilityById() throws Exception {
-        String restUrl = getServerUrl() + Constants.API.FACILITIES + "/" + FACILITY_ID;
+        String restUrl = URLEncoder.encode(getServerUrl() + Constants.API.FACILITIES + "/" + FACILITY_ID);
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);
