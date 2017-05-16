@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
+import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.FacilityService;
 
 /**
@@ -21,5 +22,6 @@ public class ServicesModule extends AbstractModule{
     @Override
     protected void configure() {
         bind(FacilityService.class);
+        bind(ComplaintService.class);
     }
 }

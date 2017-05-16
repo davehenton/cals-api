@@ -17,6 +17,7 @@ public interface FacilityMapper {
 
     FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
 
+    @Mapping(target = "messages", ignore = true)
     @Mapping(target = "href", ignore = true)
     @Mapping(target = "address", ignore = true)
     @Mapping(target = "phone", ignore = true)

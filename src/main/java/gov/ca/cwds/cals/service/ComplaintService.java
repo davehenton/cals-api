@@ -1,14 +1,17 @@
 package gov.ca.cwds.cals.service;
 
-import gov.ca.cwds.cals.service.dto.ComplaintDTO;
+import com.google.inject.Inject;
+import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.model.fas.LisFacFile;
+import gov.ca.cwds.cals.persistence.dao.LisFacFileDao;
+import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
+import gov.ca.cwds.cals.web.rest.parameter.FacilityComplaintParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-
-import static io.dropwizard.testing.FixtureHelpers.fixture;
+import java.util.Optional;
 
 /**
  * @author CWDS CALS API Team
@@ -16,17 +19,29 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 
 public class ComplaintService implements CrudsService {
 
+    private LisFacFileDao lisFacFileDao;
+    private ComplaintMapper complaintMapper;
+
+    @Inject
+    public ComplaintService(LisFacFileDao lisFacFileDao,
+            ComplaintMapper complaintMapper) {
+        this.lisFacFileDao = lisFacFileDao;
+        this.complaintMapper = complaintMapper;
+    }
+
     @Override
-    public Response find(Serializable serializable) {
-        ComplaintDTO complaintDTO = new ComplaintDTO();
-        complaintDTO.setId(1234567l);
-        complaintDTO.setComplaintDate(LocalDate.of(2004, 2, 13));
-        complaintDTO.setAssignedWorker("assigned_worker");
-        complaintDTO.setControlNumber("123");
-        complaintDTO.setPriorityLevel(3);
-        complaintDTO.setStatus("status1");
-        complaintDTO.setApprovalDate(LocalDate.of(2004, 3, 15));
-        return complaintDTO;
+    public Response find(Serializable parametersObject) {
+        FacilityComplaintParameterObject parameterObject = null;
+        if (parametersObject instanceof FacilityComplaintParameterObject) {
+            parameterObject = (FacilityComplaintParameterObject) parametersObject;
+            LisFacFile facility = lisFacFileDao.find(parameterObject.getFacilityId());
+            final FacilityComplaintParameterObject finalParameterObject = parameterObject;
+            Optional<ComplaintReportLic802> complaintReportLic802 = facility.getComplaints().stream()
+                    .filter((complaint) -> complaint.getOriginalunidkey().equals(finalParameterObject.getComplaintId()))
+                    .findFirst();
+            return complaintMapper.entityToDTO(complaintReportLic802.get());
+        }
+        throw new IllegalStateException("FacilityComplaintParameterObject is expected here");
     }
 
     @Override
