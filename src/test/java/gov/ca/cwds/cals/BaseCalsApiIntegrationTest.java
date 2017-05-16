@@ -17,7 +17,7 @@ import java.net.URI;
  * @author CWDS CALS API Team
  */
 
-public class BaseCalsApiIntegrationTest {
+public abstract class BaseCalsApiIntegrationTest {
 
     protected static DatabaseHelper fasDatabaseHelper;
 
@@ -51,6 +51,7 @@ public class BaseCalsApiIntegrationTest {
         fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_schema.xml");
         fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", "fas");
         fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", "fas");
+        fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/complaints_structure.xml", "fas");
     }
 
     protected static URI getServerUrl() {

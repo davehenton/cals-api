@@ -3,8 +3,8 @@ package gov.ca.cwds.cals.service.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.rest.api.Response;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author CWDS CALS API Team
@@ -13,13 +13,13 @@ import java.util.List;
 public class ComplaintsDTO extends BaseDTO implements Response {
 
     @JsonProperty("complaints")
-    private List<ComplaintDTO> complaints = new ArrayList<>();
+    private Set<ComplaintDTO> complaints = new HashSet<>();
 
-    public List<ComplaintDTO> getComplaints() {
+    public Set<ComplaintDTO> getComplaints() {
         return complaints;
     }
 
-    public void setComplaints(List<ComplaintDTO> complaints) {
+    public void setComplaints(Set<ComplaintDTO> complaints) {
         this.complaints = complaints;
     }
 
