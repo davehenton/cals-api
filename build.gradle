@@ -66,6 +66,10 @@ cobertura {
     coverageReportDir = new File("$buildDir/reports/cobertura")
 }
 
+configurations.all {
+    // Check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
 
 dependencies {
 
@@ -73,12 +77,13 @@ dependencies {
 
 // Dropwizard-guice 1.0.0.2 conflicts with jersey-client 2.25.
 // Exclude transitive dependencies.
-    compile ('gov.ca.cwds.api:api-core:' + coreApiVersion) {
+    compile ('gov.ca.cwds.api:api-core:' + coreApiVersion , changing: true) {
         exclude group: 'org.glassfish.jersey.core'
     }
 
-    compile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: calsModelVersion)
-    compile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: calsModelVersion)
+    compile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: calsModelVersion, changing: true)
+    compile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: calsModelVersion, changing: true)
+
 
     compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
     compile group: 'org.slf4j', name: 'slf4j-ext', version: '1.7.22'
