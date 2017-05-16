@@ -24,9 +24,11 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
     @JsonProperty("date_of_placement")
     private LocalDate dateOfPlacement;
 
+    @JsonProperty("assigned_worker")
     private PersonDTO assignedWorker;
 
     @NotNull
+    @JsonProperty("county_of_origin")
     private String countyOfOrigin;
 
     private Long facilityId;

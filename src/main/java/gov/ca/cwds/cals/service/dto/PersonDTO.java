@@ -18,9 +18,11 @@ public class PersonDTO extends BaseDTO {
     private Long id;
 
     @NotNull
+    @JsonProperty("first_name")
     private String firstName;
 
     @NotNull
+    @JsonProperty("last_name")
     private String lastName;
 
     private String gender;

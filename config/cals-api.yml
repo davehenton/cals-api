@@ -26,7 +26,7 @@ nsDataSourceFactory:
   driverClass: org.postgresql.Driver
   user: ${DB_NS_USER:-postgres}
   password: ${DB_NS_PASSWORD:-postgres}
-  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://localhost:5431/postgres}
+  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres}
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
@@ -42,7 +42,7 @@ fasDataSourceFactory:
   driverClass: org.postgresql.Driver
   user: ${DB_NS_USER:-postgres}
   password: ${DB_NS_PASSWORD:-postgres}
-  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://localhost:5431/postgres}
+  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres}
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
