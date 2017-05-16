@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.model.fas.County;
 import gov.ca.cwds.cals.model.fas.FacilityStatusType;
 import gov.ca.cwds.cals.model.fas.FacilityType;
@@ -10,6 +11,7 @@ import gov.ca.cwds.cals.model.fas.LisDoFile;
 import gov.ca.cwds.cals.model.fas.LisFacFile;
 import gov.ca.cwds.cals.model.fas.LisTableFile;
 import gov.ca.cwds.cals.model.fas.VisitReasonType;
+import gov.ca.cwds.cals.persistence.dao.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.LisFacFileDao;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
@@ -30,7 +32,8 @@ public class DataAccessModule extends AbstractModule {
                     LisDoFile.class,
                     FacilityStatusType.class,
                     VisitReasonType.class,
-                    County.class
+                    County.class,
+                    ComplaintReportLic802.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -50,6 +53,7 @@ public class DataAccessModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(LisFacFileDao.class);
+        bind(ComplaintReportLic802Dao.class);
     }
 
     @Provides
