@@ -59,7 +59,8 @@ public class DataAccessModule extends AbstractModule {
                     OutOfHomePlacement.class,
                     PlacementEpisode.class,
                     PlacementHome.class,
-                    StaffPerson.class
+                    StaffPerson.class,
+                    gov.ca.cwds.cals.model.cms.County.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
