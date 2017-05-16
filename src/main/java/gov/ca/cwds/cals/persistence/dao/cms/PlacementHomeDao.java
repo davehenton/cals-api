@@ -47,6 +47,10 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
         Query query = session.createNamedQuery("gov.ca.cwds.cals.model.cms.PlacementHome.findChild");
         query.setParameter("facilityNumber", facilityNumber);
         query.setParameter("childId", childId);
+
+        //todo: we have duplicates related to different periods. needs more analysis here
+        query.setMaxResults(1);
+
         //todo: refactor. try to query through client entity
         PlacementHome placementHome = null;
         try {
