@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.mapper;
 
 
 import gov.ca.cwds.cals.model.cms.Client;
+import gov.ca.cwds.cals.model.cms.County;
 import gov.ca.cwds.cals.model.cms.OutOfHomePlacement;
 import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
@@ -62,6 +63,12 @@ public interface  FacilityChildrenMapper {
         if (staffPersons != null && !staffPersons.isEmpty()) {
             PersonDTO staffPersonDTO = INSTANCE.toPersonDTO(staffPersons.iterator().next());
             facilityChildDTO.setAssignedWorker(staffPersonDTO);
+        }
+
+        County county = placementEpisode.getCounty();
+
+        if (county != null) {
+            facilityChildDTO.setCountyOfOrigin(county.getShortDsc());
         }
 
         facilityChildDTO.setDateOfPlacement(outOfHomePlacement.getStartDt());
