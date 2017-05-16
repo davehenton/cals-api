@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
-import gov.ca.cwds.rest.api.domain.DomainObject;
+import gov.ca.cwds.rest.api.Request;
+import gov.ca.cwds.rest.api.Response;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -10,26 +11,26 @@ import java.util.Objects;
  * A DTO for the FacilityChild entity.
  */
 
-public class FacilityChildDTO extends DomainObject {
+public class FacilityChildDTO extends BaseDTO implements Request, Response {
 
-    private Long id;
+    private String id;
 
     private LocalDate dateOfPlacement;
 
-    private String assignedWorker;
+    private PersonDTO assignedWorker;
 
     @NotNull
     private String countyOfOrigin;
 
     private Long facilityId;
 
-    private Long personId;
+    private PersonDTO person;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
     public LocalDate getDateOfPlacement() {
@@ -39,13 +40,15 @@ public class FacilityChildDTO extends DomainObject {
     public void setDateOfPlacement(LocalDate dateOfPlacement) {
         this.dateOfPlacement = dateOfPlacement;
     }
-    public String getAssignedWorker() {
+
+    public PersonDTO getAssignedWorker() {
         return assignedWorker;
     }
 
-    public void setAssignedWorker(String assignedWorker) {
+    public void setAssignedWorker(PersonDTO assignedWorker) {
         this.assignedWorker = assignedWorker;
     }
+
     public String getCountyOfOrigin() {
         return countyOfOrigin;
     }
@@ -62,12 +65,12 @@ public class FacilityChildDTO extends DomainObject {
         this.facilityId = facilityId;
     }
 
-    public Long getPersonId() {
-        return personId;
+    public PersonDTO getPerson() {
+        return person;
     }
 
-    public void setPersonId(Long personId) {
-        this.personId = personId;
+    public void setPerson(PersonDTO person) {
+        this.person = person;
     }
 
     @Override

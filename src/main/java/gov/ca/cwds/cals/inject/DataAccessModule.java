@@ -4,6 +4,11 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.model.cms.Client;
+import gov.ca.cwds.cals.model.cms.OutOfHomePlacement;
+import gov.ca.cwds.cals.model.cms.PlacementEpisode;
+import gov.ca.cwds.cals.model.cms.PlacementHome;
+import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.County;
 import gov.ca.cwds.cals.model.fas.FacilityStatusType;
 import gov.ca.cwds.cals.model.fas.FacilityType;
@@ -13,6 +18,8 @@ import gov.ca.cwds.cals.model.fas.LisTableFile;
 import gov.ca.cwds.cals.model.fas.VisitReasonType;
 import gov.ca.cwds.cals.persistence.dao.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.LisFacFileDao;
+import gov.ca.cwds.inject.CmsHibernateBundle;
+import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -46,8 +53,28 @@ public class DataAccessModule extends AbstractModule {
                 }
             };
 
+    private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
+            new HibernateBundle<CalsApiConfiguration>(
+                    Client.class,
+                    OutOfHomePlacement.class,
+                    PlacementEpisode.class,
+                    PlacementHome.class,
+                    StaffPerson.class
+                    ) {
+                @Override
+                public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+                    return configuration.getCmsDataSourceFactory();
+                }
+
+                @Override
+                public String name() {
+                    return "cms";
+                }
+            };
+
     public DataAccessModule(Bootstrap<CalsApiConfiguration> bootstrap) {
         bootstrap.addBundle(fasHibernateBundle);
+        bootstrap.addBundle(cmsHibernateBundle);
     }
 
     @Override
@@ -63,8 +90,20 @@ public class DataAccessModule extends AbstractModule {
     }
 
     @Provides
+    @CmsSessionFactory
+    SessionFactory cmsSessionFactory() {
+        return cmsHibernateBundle.getSessionFactory();
+    }
+
+    @Provides
     @FasHibernateBundle
     HibernateBundle<CalsApiConfiguration> fasHibernateBundle() {
+        return fasHibernateBundle;
+    }
+
+    @Provides
+    @CmsHibernateBundle
+    public HibernateBundle<CalsApiConfiguration> getCmsHibernateBundle() {
         return fasHibernateBundle;
     }
 
