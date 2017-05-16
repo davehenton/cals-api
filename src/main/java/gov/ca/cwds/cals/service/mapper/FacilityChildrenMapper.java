@@ -55,7 +55,7 @@ public interface  FacilityChildrenMapper {
         FacilityChildDTO facilityChildDTO = new FacilityChildDTO();
         facilityChildDTO.setId(client.getIdentifier());
 
-        PersonDTO personDTO = personDtoMapper.fromClient(client);
+        PersonDTO personDTO = personDtoMapper.toPersonDTO(client);
         facilityChildDTO.setPerson(personDTO);
 
         Set<StaffPerson> staffPersons = placementEpisode.getStaffPersons();
@@ -76,8 +76,15 @@ public interface  FacilityChildrenMapper {
         return facilityChildDTO;
     }
 
+
     @Mapping(target = "firstName", source = "firstNm")
     @Mapping(target = "lastName", source = "lastNm")
+    @Mapping(target = "id",          ignore = true)
+    @Mapping(target = "gender",      ignore = true)
+    @Mapping(target = "age",         ignore = true)
+    @Mapping(target = "dateOfBirth", ignore = true)
+    @Mapping(target = "ssn",         ignore = true)
+    @Mapping(target = "ethnicityId", ignore = true)
     PersonDTO toPersonDTO(StaffPerson staffPerson);
 
 
