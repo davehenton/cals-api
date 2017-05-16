@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.web.rest;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
-import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
 import org.junit.Ignore;
@@ -27,7 +26,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     public void testGetFacilityChildren() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
 //        String pathInfo = Constants.API.FACILITY_CHILD + "/1";
-        pathInfo = pathInfo.replace("{facility_id}", "MH12AE541");
+        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "MH12AE541");
         String restUrl = appRule.getEnvironment().getApplicationContext().getServer().getURI() + pathInfo;
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
@@ -42,7 +41,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     public void testGetFacilityChild() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
 //        String pathInfo = Constants.API.FACILITY_CHILD + "/1";
-        pathInfo = pathInfo.replace("{facility_id}", "MH12AE541") + "/SQkWeH80Mf";
+        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "MH12AE541") + "/SQkWeH80Mf";
         String restUrl = appRule.getEnvironment().getApplicationContext().getServer().getURI() + pathInfo;
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
