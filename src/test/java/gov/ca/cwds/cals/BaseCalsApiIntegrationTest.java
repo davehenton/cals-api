@@ -19,8 +19,6 @@ import java.net.URI;
 
 public abstract class BaseCalsApiIntegrationTest {
 
-    protected static DatabaseHelper fasDatabaseHelper;
-
     @ClassRule
     public static final DropwizardAppRule<CalsApiConfiguration> appRule = new DropwizardAppRule<CalsApiConfiguration>(
             CalsApiApplication.class, ResourceHelpers.resourceFilePath("config/test-cals-api.yml")) {
@@ -36,22 +34,22 @@ public abstract class BaseCalsApiIntegrationTest {
 
     };
 
+    protected static DatabaseHelper getFasDatabaseHelper() {
+        DataSourceFactory dataSourceFactory = appRule.getConfiguration().getFasDataSourceFactory();
+        return new DatabaseHelper(dataSourceFactory.getUrl(),
+                dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+    }
+
     @Rule
     public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
 
-//    @BeforeClass
-    public static void setUp() throws Exception {
-        DataSourceFactory fasDataSourceFactory = appRule.getConfiguration()
-                .getFasDataSourceFactory();
-        fasDatabaseHelper = new DatabaseHelper(
-                fasDataSourceFactory.getUrl(),
-                fasDataSourceFactory.getUser(),
-                fasDataSourceFactory.getPassword());
-
-        fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_schema.xml");
-        fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", "fas");
-        fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", "fas");
-        fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/complaints_structure.xml", "fas");
+    @BeforeClass
+    public static void setUpFas() throws Exception {
+        getFasDatabaseHelper().runScript("liquibase/fas/drop_fas_schema.xml");
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_schema.xml");
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", "fas");
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", "fas");
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/complaints_structure.xml", "fas");
     }
 
     protected static URI getServerUrl() {
