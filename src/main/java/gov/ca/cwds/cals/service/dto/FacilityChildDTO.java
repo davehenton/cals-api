@@ -1,11 +1,15 @@
 package gov.ca.cwds.cals.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 
 /**
  * A DTO for the FacilityChild entity.
@@ -15,6 +19,9 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
 
     private String id;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
+    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
+    @JsonProperty("date_of_placement")
     private LocalDate dateOfPlacement;
 
     private PersonDTO assignedWorker;
@@ -84,9 +91,7 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
 
         FacilityChildDTO facilityChildDTO = (FacilityChildDTO) o;
 
-        if ( ! Objects.equals(id, facilityChildDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, facilityChildDTO.id);
     }
 
     @Override

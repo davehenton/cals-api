@@ -26,7 +26,7 @@ nsDataSourceFactory:
   driverClass: org.postgresql.Driver
   user: ${DB_NS_USER:-postgres}
   password: ${DB_NS_PASSWORD:-postgres}
-  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres}
+  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://localhost:5431/postgres}
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
@@ -42,7 +42,7 @@ fasDataSourceFactory:
   driverClass: org.postgresql.Driver
   user: ${DB_NS_USER:-postgres}
   password: ${DB_NS_PASSWORD:-postgres}
-  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres}
+  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://localhost:5431/postgres}
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
@@ -59,8 +59,8 @@ cmsDataSourceFactory:
   driverClass: com.ibm.db2.jcc.DB2Driver
   user: ${DB_CMS_USER:-db2inst1}
   password: ${DB_CMS_PASSWORD:-db2inst1}
-  url: ${DB_CMS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/CWSINT}
-#  url: ${DB_CMS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/DB0TDEV}
+#  url: ${DB_CMS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/CWSINT}
+  url: ${DB_CMS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/DB0TDEV}
   validationQuery: "/* MyService Health Check */ SELECT 1 FROM sysibm.sysdummy1 for read only"
   logValidationErrors: true
   initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
