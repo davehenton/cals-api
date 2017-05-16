@@ -17,8 +17,6 @@ public final class Constants {
         //todo: check and remove
         public static final String CHILDREN = "children";
 
-        public static final String FACILITY_CHILD = FACILITIES + "/{facility_id}/children";
-
         public static final String COMPLAINTS = "complaints";
 
         public static class PATH_PARAMS {
