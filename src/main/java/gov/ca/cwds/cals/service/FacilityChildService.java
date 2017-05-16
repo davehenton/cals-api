@@ -27,15 +27,19 @@ public class FacilityChildService extends CrudServiceAdapter {
     // TODO Refactor me, implement proper mapping
     @Override
     public Response find(Serializable params) {
+        Response resp = null;
         String paramsString = (String) params;
         String[] paramsValues = paramsString.split(",");
         PlacementHome placementHome = placementHomeDao.findChild(paramsValues[0], paramsValues[1]);
 
-        List<FacilityChildDTO> children = facilityChildrenMapper.toFacilityChildrenDTO(placementHome).getChildren();
-        if (children.isEmpty()) {
-            return null;
+        if (placementHome != null) {
+            List<FacilityChildDTO> children = facilityChildrenMapper.toFacilityChildrenDTO(placementHome).getChildren();
+            if (!children.isEmpty()) {
+                resp = children.get(0);
+            }
         }
-        return children.get(0);
+
+        return resp;
     }
 
     @Override

@@ -23,7 +23,11 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
 
     @Override
     public Response find(Serializable params) {
+        Response resp = null;
         PlacementHome placementHome = placementHomeDao.findChildren((String) params);
-        return facilityChildrenMapper.toFacilityChildrenDTO(placementHome);
+        if (placementHome != null) {
+            resp = facilityChildrenMapper.toFacilityChildrenDTO(placementHome);
+        }
+        return resp;
     }
 }
