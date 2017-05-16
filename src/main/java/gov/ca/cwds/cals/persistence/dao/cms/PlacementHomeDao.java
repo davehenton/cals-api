@@ -7,6 +7,7 @@ import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,8 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
         PlacementHome placementHome = null;
         try {
             placementHome = (PlacementHome) query.getSingleResult();
+            session.detach(placementHome);
+            session.clear();
         } catch (NoResultException e) {
             LOG.warn("There is no result for facilityNumber = " + facilityNumber, e);
         }
@@ -53,10 +56,11 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
             Set<OutOfHomePlacement> outOfHomePlacementSet = new HashSet<>();
             outOfHomePlacementSet.add(outOfHomePlacement);
             placementHome.setOutOfHomePlacements(outOfHomePlacementSet);
+            session.detach(placementHome);session.detach(placementHome);
+            session.clear();
         } catch (NoResultException e) {
             LOG.warn("There is no result for facilityNumber = " + facilityNumber + " and childId = " + childId, e);
         }
-
         return placementHome;
     }
 
