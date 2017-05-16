@@ -14,7 +14,6 @@ import javax.ws.rs.core.MediaType;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
 public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
     private static final String FACILITY_ID = "193600001";
@@ -25,6 +24,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         getFasDatabaseHelper().runScript("liquibase/fas/fas-data.xml", "fas");
     }
 
+    //@Ignore
     @Test
     public void testGetFacilityById() throws Exception {
         String restUrl = getServerUrl() + Constants.API.FACILITIES + "/" + FACILITY_ID;

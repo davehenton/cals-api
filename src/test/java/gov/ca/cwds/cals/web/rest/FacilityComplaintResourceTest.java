@@ -6,7 +6,6 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.Invocation;
@@ -17,7 +16,7 @@ import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
+//@Ignore
 public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     public static final String FACILITY_ID = "107201149";
