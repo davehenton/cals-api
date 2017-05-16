@@ -66,6 +66,10 @@ cobertura {
     coverageReportDir = new File("$buildDir/reports/cobertura")
 }
 
+configurations.all {
+    // Check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
 
 dependencies {
 
