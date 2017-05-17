@@ -19,7 +19,7 @@ node ('tpt2-slave'){
    }
 
    stage('CoverageCheck_and_Test') {
-       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test jacocoTestReport'
+       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test'
    }
 
    stage('SonarQube analysis'){
