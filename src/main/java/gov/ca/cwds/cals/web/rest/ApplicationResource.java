@@ -12,6 +12,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
 
 import static gov.ca.cwds.cals.Constants.API.RESOURCE_APPLICATION;
 
@@ -19,13 +23,18 @@ import static gov.ca.cwds.cals.Constants.API.RESOURCE_APPLICATION;
  * @author CWDS CALS API Team
  */
 
-@Api(value = RESOURCE_APPLICATION/*, hidden = true*/)
+@Api(value = RESOURCE_APPLICATION)
 @Path(RESOURCE_APPLICATION)
 @Produces(MediaType.APPLICATION_JSON)
 public class ApplicationResource {
 
+    private static final String VERSION_PROPERTIES_FILE = "version.properties";
+    private static final String BUILD_VERSION = "build.version";
+    private static final String BUILD_NUMBER = "build.number";
+
     private String applicationName;
     private String version;
+    private String buildNumber;
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -33,13 +42,26 @@ public class ApplicationResource {
      * Constructor
      *
      * @param applicationName The name of the application
-     * @param version The version of the API
+     *
      */
     @Inject
-    public ApplicationResource(@Named("app.name") String applicationName,
-            @Named("app.version") String version) {
+    public ApplicationResource(@Named("app.name") String applicationName) {
         this.applicationName = applicationName;
-        this.version = version;
+        Properties versionProperties = getVersionProperties();
+        this.version = versionProperties.getProperty(BUILD_VERSION);
+        this.buildNumber = versionProperties.getProperty(BUILD_NUMBER);
+    }
+
+    private Properties getVersionProperties() {
+        Properties versionProperties = new Properties();
+        try {
+            java.nio.file.Path path = Paths.get(ClassLoader.getSystemResource(VERSION_PROPERTIES_FILE).toURI());
+            InputStream is = Files.newInputStream(path);
+            versionProperties.load(is);
+        } catch (Exception e) {
+            throw new RuntimeException("Can't read version.properties", e);
+        }
+        return versionProperties;
     }
 
     /**
@@ -50,7 +72,9 @@ public class ApplicationResource {
     @GET
     public String get() {
         ImmutableMap<String, String> map = ImmutableMap.<String, String>builder()
-                .put("Application", applicationName).put("Version", version).build();
+                .put("Application", applicationName)
+                .put("Version", version)
+                .put("BuildNumber", buildNumber).build();
         try {
             return MAPPER.writeValueAsString(map);
         } catch (JsonProcessingException e) {

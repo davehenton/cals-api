@@ -16,13 +16,14 @@ public class ApplicationResourceTest {
 
     private static final String APP_NAME = "my app";
     private static final String VERSION = "1.0.0";
+    private static final String BUILD_NUMBER = "1";
 
     @ClassRule
     public static JerseyGuiceRule rule = new JerseyGuiceRule();
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new ApplicationResource(APP_NAME, VERSION))
+            .addResource(new ApplicationResource(APP_NAME))
             .build();
 
     @Test
@@ -40,6 +41,12 @@ public class ApplicationResourceTest {
     public void applicationGetReturnsCorrectVersion() {
         assertThat(resources.client().target("/application").request().get().readEntity(String.class),
                 containsString(VERSION));
+    }
+
+    @Test
+    public void applicationGetReturnsCorrectBuildNumber() {
+        assertThat(resources.client().target("/application").request().get().readEntity(String.class),
+                containsString(BUILD_NUMBER));
     }
 
     @Test

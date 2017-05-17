@@ -1,4 +1,5 @@
 import static org.gradle.api.logging.LogLevel.*
+import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
     repositories {
@@ -183,6 +184,13 @@ tasks.withType(JavaCompile) {
     options.compilerArgs = [
             '-Amapstruct.suppressGeneratorTimestamp=true'
     ]
+}
+
+processResources {
+    filter(ReplaceTokens, tokens:[
+            'build.version' : projectVersion,
+            'build.number' : (System.getenv("BUILD_NUMBER") ?: "IDE")
+    ])
 }
 
 
