@@ -1,12 +1,14 @@
 node ('tpt2-slave'){
    def serverArti = Artifactory.server 'CWDS_DEV'
    def rtGradle = Artifactory.newGradleBuild()
-   properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '3')), disableConcurrentBuilds(), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], pipelineTriggers([pollSCM('H/5 * * * *')])])
+   properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '3')), disableConcurrentBuilds(), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], parameters([string(defaultValue: 'latest', description: '', name: 'APP_VERSION'), string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory')]), pipelineTriggers([pollSCM('H/5 * * * *')])])
+   slackSend channel: "#channel-name", baseUrl: 'https://hooks.slack.com/services/', tokenCredentialId: 'slackmessagetpt2', message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
 
-   catchError {
+
+   try {
 
    stage('Preparation') {
-		  git branch: 'development', url: 'https://github.com/ca-cwds/cals-api.git'
+		  git branch: 'developDevOps', url: 'https://github.com/ca-cwds/cals-api.git'
 		  rtGradle.tool = "Gradle_35"
 		  rtGradle.resolver repo:'repo', server: serverArti
 
@@ -43,8 +45,18 @@ node ('tpt2-slave'){
 		archiveArtifacts artifacts: '**/cals-api-*.jar,readme.txt', fingerprint: true
 		cleanWs()
 	}
-	}
-	    emailext attachLog: true, body: 'For detail see log', recipientProviders: [[$class: 'DevelopersRecipientProvider']], subject: 'Cals-api unstable', to: 'Leonid.Marushevskiy@osi.ca.gov, Alex.Kuznetsov@osi.ca.gov'
+	stage('Deploy app'){
+	    git branch: 'devenv-144325651', credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', url: 'git@github.com:ca-cwds/de-ansible.git'
+	    sh 'ansible-playbook -e CALS_API_VERSION=$APP_VERSION -i $inventory deploy-calsapi.yml --vault-password-file ~/.ssh/vault.txt -vv'
 	    cleanWs()
+	    slackSend channel: "#channel-name", baseUrl: 'https://hooks.slack.com/services/', tokenCredentialId: 'slackmessagetpt2', message: "Build Succes: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+	}
+	} catch (e)   {
+       emailext attachLog: true, body: "Failed: ${e}", recipientProviders: [[$class: 'DevelopersRecipientProvider']],
+       subject: "Cals-api failed with ${e.message}", to: "Leonid.Marushevskiy@osi.ca.gov, Alex.Kuznetsov@osi.ca.gov"
+       slackSend channel: "#channel-name", baseUrl: 'https://hooks.slack.com/services/', tokenCredentialId: 'slackmessagetpt2', message: "Build Falled: ${env.JOB_NAME} ${env.BUILD_NUMBER} with ${e.message}"
+       throw e
+	   cleanWs()
+	   }
 }
 
