@@ -13,8 +13,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 import static gov.ca.cwds.cals.Constants.API.RESOURCE_APPLICATION;
@@ -55,8 +53,7 @@ public class ApplicationResource {
     private Properties getVersionProperties() {
         Properties versionProperties = new Properties();
         try {
-            java.nio.file.Path path = Paths.get(ClassLoader.getSystemResource(VERSION_PROPERTIES_FILE).toURI());
-            InputStream is = Files.newInputStream(path);
+            InputStream is = ClassLoader.getSystemResourceAsStream(VERSION_PROPERTIES_FILE);
             versionProperties.load(is);
         } catch (Exception e) {
             throw new RuntimeException("Can't read version.properties", e);
