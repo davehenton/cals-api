@@ -6,7 +6,6 @@ import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.glassfish.jersey.client.JerseyClient;
 import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -34,22 +33,31 @@ public abstract class BaseCalsApiIntegrationTest {
 
     };
 
+    @Rule
+    public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
+
     protected static DatabaseHelper getFasDatabaseHelper() {
         DataSourceFactory dataSourceFactory = appRule.getConfiguration().getFasDataSourceFactory();
         return new DatabaseHelper(dataSourceFactory.getUrl(),
                 dataSourceFactory.getUser(), dataSourceFactory.getPassword());
     }
 
-    @Rule
-    public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
+    protected static DatabaseHelper getCmsDatabaseHelper() {
+        DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCmsDataSourceFactory();
+        return new DatabaseHelper(dataSourceFactory.getUrl(),
+                dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+    }
 
-    @BeforeClass
     public static void setUpFas() throws Exception {
         getFasDatabaseHelper().runScript("liquibase/fas/drop_fas_schema.xml");
         getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_schema.xml");
         getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", "fas");
         getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", "fas");
         getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/complaints_structure.xml", "fas");
+    }
+
+    public static void setUpCms() throws Exception {
+        getCmsDatabaseHelper().runScript("liquibase/cms/cms-ddl-master.xml");
     }
 
     protected static URI getServerUrl() {

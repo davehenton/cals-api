@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.web.rest;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -20,6 +21,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author CWDS CALS API Team
  */
 public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
+
+    @BeforeClass
+    public static void beforeClass() throws Exception {
+        setUpCms();
+        getCmsDatabaseHelper().runScript("liquibase/cms/cms-dml-master.xml", "cms");
+    }
 
     @Test
     @Ignore

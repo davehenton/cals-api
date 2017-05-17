@@ -4,6 +4,16 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <property name="schema.name" value="CMS" dbms="h2"/>
+
+    <changeSet author="System" id="0" runAlways="true" dbms="db2">
+        <sql>
+            set schema ${schema.name}
+        </sql>
+        <rollback/>
+    </changeSet>
+
     <changeSet author="leonid.marushevskiy" id="0513201710136-53">
         <sqlFile path="liquibase/cms/dml/SYS_CD_C.sql"/>
     </changeSet>
