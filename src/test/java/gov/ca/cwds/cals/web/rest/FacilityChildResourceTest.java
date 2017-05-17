@@ -29,33 +29,29 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     }
 
     @Test
-    @Ignore
     public void testGetFacilityChildren() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
-//        String pathInfo = Constants.API.FACILITY_CHILD + "/1";
-        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "MH12AE541");
+        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "336400295");
         String restUrl = appRule.getEnvironment().getApplicationContext().getServer().getURI() + pathInfo;
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityChildrenDTO facilityChildDTO = invocation.get(FacilityChildrenDTO.class);
 
-        String fixture = fixture("fixtures/facility-by-id-response.json");
-        assertThat(clientTestRule.getMapper().writeValueAsString(facilityChildDTO)).isEqualTo(fixture);
+        String fixture = fixture("fixtures/facility-children-response.json");
+        assertThat(clientTestRule.getMapper().writeValueAsString(facilityChildDTO)).isEqualToIgnoringWhitespace(fixture);
     }
 
     @Test
-    @Ignore
     public void testGetFacilityChild() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
-//        String pathInfo = Constants.API.FACILITY_CHILD + "/1";
-        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "MH12AE541") + "/SQkWeH80Mf";
+        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "336400295") + "/AazXkWY06s";
         String restUrl = appRule.getEnvironment().getApplicationContext().getServer().getURI() + pathInfo;
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityChildDTO facilityChildDTO = invocation.get(FacilityChildDTO.class);
 
-        String fixture = fixture("fixtures/facility-by-id-response.json");
-        assertThat(clientTestRule.getMapper().writeValueAsString(facilityChildDTO)).isEqualTo(fixture);
+        String fixture = fixture("fixtures/facility-child-response.json");
+        assertThat(clientTestRule.getMapper().writeValueAsString(facilityChildDTO)).isEqualToIgnoringWhitespace(fixture);
     }
 }
 
