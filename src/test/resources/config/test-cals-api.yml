@@ -67,6 +67,6 @@ cmsDataSourceFactory:
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
-      hibernate.default_schema: ${DB_CMS_SCHEMA:-CMS}
+      hibernate.default_schema: CMS
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: true
