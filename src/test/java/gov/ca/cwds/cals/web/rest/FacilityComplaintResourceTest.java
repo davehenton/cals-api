@@ -6,7 +6,6 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.Invocation;
@@ -17,7 +16,7 @@ import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
+//@Ignore
 public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     public static final String FACILITY_ID = "107201149";
@@ -25,12 +24,14 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        fasDatabaseHelper.runScript("liquibase/complaints_data.xml", "fas");
+        setUpFas();
+        getFasDatabaseHelper().runScript("liquibase/fas/complaints_data.xml", "fas");
     }
 
     @Test
     public void assertGetAllFacilityComplaints() throws JsonProcessingException {
-        String restUrl = getServerUrl() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS;
+        String restUrl = getUriString() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS;
+        System.out.println("Rest URL: " + restUrl);
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
@@ -42,7 +43,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     @Test
     public void assertGetFacilityComplaint() throws JsonProcessingException {
         String restUrl =
-                getServerUrl() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID;
+                getUriString() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID;
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintDTO complaintDTO = invocation.get(ComplaintDTO.class);
@@ -50,5 +51,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
         String fixture = fixture("fixtures/complaint-response.json");
         assertThat(clientTestRule.getMapper().writeValueAsString(complaintDTO)).isEqualTo(fixture);
     }
+
+
 
 }

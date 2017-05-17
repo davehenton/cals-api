@@ -6,7 +6,6 @@ import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.glassfish.jersey.client.JerseyClient;
 import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -18,8 +17,6 @@ import java.net.URI;
  */
 
 public abstract class BaseCalsApiIntegrationTest {
-
-    protected static DatabaseHelper fasDatabaseHelper;
 
     @ClassRule
     public static final DropwizardAppRule<CalsApiConfiguration> appRule = new DropwizardAppRule<CalsApiConfiguration>(
@@ -39,23 +36,41 @@ public abstract class BaseCalsApiIntegrationTest {
     @Rule
     public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
 
-//    @BeforeClass
-    public static void setUp() throws Exception {
-        DataSourceFactory fasDataSourceFactory = appRule.getConfiguration()
-                .getFasDataSourceFactory();
-        fasDatabaseHelper = new DatabaseHelper(
-                fasDataSourceFactory.getUrl(),
-                fasDataSourceFactory.getUser(),
-                fasDataSourceFactory.getPassword());
+    protected static DatabaseHelper getFasDatabaseHelper() {
+        DataSourceFactory dataSourceFactory = appRule.getConfiguration().getFasDataSourceFactory();
+        return new DatabaseHelper(dataSourceFactory.getUrl(),
+                dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+    }
 
-        fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_schema.xml");
-        fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", "fas");
-        fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", "fas");
-        fasDatabaseHelper.runScript("gov/ca/cwds/cals/model/fas/liquibase/complaints_structure.xml", "fas");
+    protected static DatabaseHelper getCmsDatabaseHelper() {
+        DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCmsDataSourceFactory();
+        return new DatabaseHelper(dataSourceFactory.getUrl(),
+                dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+    }
+
+    public static void setUpFas() throws Exception {
+        getFasDatabaseHelper().runScript("liquibase/fas/drop_fas_schema.xml");
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_schema.xml");
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", "fas");
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", "fas");
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/complaints_structure.xml", "fas");
+    }
+
+    public static void setUpCms() throws Exception {
+        getCmsDatabaseHelper().runScript("liquibase/cms/cms-ddl-master.xml");
     }
 
     protected static URI getServerUrl() {
         return appRule.getEnvironment().getApplicationContext().getServer().getURI();
+    }
+
+    protected String getUriString() {
+        URI serverUri = getServerUrl();
+        String serverUrlStr = "http://localhost:8090/"; //port defined in src/test/resources/config/test-cals-api.yml
+        if (serverUri != null) {
+            serverUrlStr = serverUri.toString();
+        }
+        return serverUrlStr;
     }
 
     @After
