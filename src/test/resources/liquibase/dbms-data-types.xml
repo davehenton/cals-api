@@ -5,7 +5,7 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
     <property name="type.longstring" value="LONG VARCHAR" dbms="db2"/>
-    <property name="type.longstring" value="VARCHAR" dbms="postgresql,h2"/>
+    <property name="type.longstring" value="VARCHAR" dbms="postgresql, h2"/>
 
     <property name="current.timestamp" value="NOW" dbms="postgresql"/>
     <property name="current.timestamp" value="CURRENT_TIMESTAMP" dbms="db2, h2"/>
