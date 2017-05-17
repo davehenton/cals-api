@@ -11,7 +11,6 @@ import org.junit.Test;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import java.net.URLEncoder;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
@@ -31,7 +30,8 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void assertGetAllFacilityComplaints() throws JsonProcessingException {
-        String restUrl = URLEncoder.encode(getServerUrl() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS);
+        String restUrl = getUriString() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS;
+        System.out.println("Rest URL: " + restUrl);
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
@@ -43,7 +43,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     @Test
     public void assertGetFacilityComplaint() throws JsonProcessingException {
         String restUrl =
-                URLEncoder.encode(getServerUrl() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID);
+                getUriString() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID;
         WebTarget target = clientTestRule.getClient().target(restUrl);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintDTO complaintDTO = invocation.get(ComplaintDTO.class);
@@ -51,5 +51,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
         String fixture = fixture("fixtures/complaint-response.json");
         assertThat(clientTestRule.getMapper().writeValueAsString(complaintDTO)).isEqualTo(fixture);
     }
+
+
 
 }
