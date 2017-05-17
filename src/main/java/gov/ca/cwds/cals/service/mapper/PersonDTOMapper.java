@@ -17,13 +17,18 @@ import java.util.Set;
 public interface PersonDTOMapper {
     PersonDTOMapper INSTANCE = Mappers.getMapper(PersonDTOMapper.class);
 
-    List<PersonDTO> fromClient(Set<Client> clients);
+    List<PersonDTO> toPersonDTO(Set<Client> clients);
 
     @Mapping(target = "firstName", source = "comFstNm")
     @Mapping(target = "lastName", source = "comLstNm")
     @Mapping(target = "gender", source = "genderCd")
     @Mapping(target = "dateOfBirth", source = "birthDt")
-    PersonDTO fromClient(Client client);
+
+    @Mapping(target = "id",          ignore = true)
+    @Mapping(target = "age",         ignore = true)
+    @Mapping(target = "ssn",         ignore = true)
+    @Mapping(target = "ethnicityId", ignore = true)
+    PersonDTO toPersonDTO(Client client);
 
     @AfterMapping
     default void fillAge(@MappingTarget PersonDTO personDTO) {
