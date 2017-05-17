@@ -16,11 +16,7 @@ node ('tpt2-slave'){
 		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar'
    }
     stage('CoverageCheck_and_Test') {
-        sh 'chmod +x ./gradlew'
-        sh './gradlew test -debug'
-
-        //buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test'
-		//buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'coberturaCheck test coberturaReport'
+		buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'coberturaCheck test coberturaReport'
     }
    stage('SonarQube analysis'){
 		withSonarQubeEnv('Core-SonarQube') {
