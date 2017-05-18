@@ -24,10 +24,10 @@ project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
-    projectVersion = '2.5-SNAPSHOT'
+    projectVersion = '2.6-SNAPSHOT'
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.21.216'
-    calsModelVersion = '2.5-SNAPSHOT'
+    calsModelVersion = '2.6-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
 }

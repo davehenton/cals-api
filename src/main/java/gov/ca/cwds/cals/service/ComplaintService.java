@@ -39,7 +39,7 @@ public class ComplaintService implements CrudsService {
             Optional<ComplaintReportLic802> complaintReportLic802 = facility.getComplaints().stream()
                     .filter((complaint) -> complaint.getOriginalunidkey().equals(finalParameterObject.getComplaintId()))
                     .findFirst();
-            return complaintMapper.entityToDTO(complaintReportLic802.get());
+            return complaintMapper.entityToDTO(complaintReportLic802.orElseThrow(() -> new IllegalStateException("No Report 802 was found")));
         }
         throw new IllegalStateException("FacilityComplaintParameterObject is expected here");
     }
