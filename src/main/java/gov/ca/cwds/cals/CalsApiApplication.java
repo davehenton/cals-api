@@ -5,6 +5,7 @@ import com.codahale.metrics.health.HealthCheckRegistry;
 import com.google.inject.Module;
 import gov.ca.cwds.cals.health.DataSourceHealthCheck;
 import gov.ca.cwds.cals.inject.ApplicationModule;
+import gov.ca.cwds.cals.web.rest.exception.CalsExceptionHandler;
 import gov.ca.cwds.rest.BaseApiApplication;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -32,6 +33,8 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
 
     @Override
     public void runInternal(CalsApiConfiguration configuration, Environment environment) {
+        environment.jersey().register(CalsExceptionHandler.class);
+
         HealthCheckRegistry healthCheckRegistry = environment.healthChecks();
         healthCheckRegistry.register("nsDataSource", new DataSourceHealthCheck(configuration.getNsDataSourceFactory()));
         healthCheckRegistry.register("cmsDataSource", new DataSourceHealthCheck(configuration.getCmsDataSourceFactory()));
