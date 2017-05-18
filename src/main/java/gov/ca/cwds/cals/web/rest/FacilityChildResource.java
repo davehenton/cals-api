@@ -23,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.*;
+import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.CHILD_ID;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
 
 /**
@@ -57,13 +58,13 @@ public class FacilityChildResource {
     @UnitOfWork(value = "cms")
     @GET
     @Timed
-    @Path("/{child_id}")
+    @Path("/{" + CHILD_ID + "}")
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Child", response = FacilityChildDTO.class)
     public Response getChild(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID, value = "The license number of the Placement Home") String facility_license_number,
-            @PathParam("child_id") @ApiParam(required = true, name = "child_id", value = "The id of the Client") String child_id) {
-        return resourceDelegate.get(facility_license_number + ',' + child_id);
+            @PathParam(CHILD_ID) @ApiParam(required = true, name = CHILD_ID, value = "The id of the Client") String childId) {
+        return resourceDelegate.get(facility_license_number + ',' + childId);
     }
 }

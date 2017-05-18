@@ -10,6 +10,7 @@ import gov.ca.cwds.cals.service.ComplaintsCollectionService;
 import gov.ca.cwds.cals.service.FacilityChildCollectionService;
 import gov.ca.cwds.cals.service.FacilityChildService;
 import gov.ca.cwds.cals.service.FacilityService;
+import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
@@ -70,6 +71,12 @@ public class ResourcesModule extends AbstractModule {
         return new ServiceBackedResourceDelegate(injector.getInstance(FacilityChildCollectionService.class));
     }
 
+
+    @Provides
+    @FacilityTypeCollectionServiceBackendResource
+    public ResourceDelegate facilityTypeServiceCollectionBackendResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(FacilityTypeCollectionService.class));
+    }
 
 
     @Provides
