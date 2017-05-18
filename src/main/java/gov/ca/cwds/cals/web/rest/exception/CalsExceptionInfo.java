@@ -14,11 +14,11 @@ public enum CalsExceptionInfo {
     FACILITY_NOT_FOUND_BY_ID("1", "Facility is not found by id"),
     COMPLAINT_NOT_FOUND_BY_ID("2", "Facility complaint is not found by id");
 
-    @JsonProperty("message")
-    private final String message;
-
     @JsonProperty("code")
     private final String code;
+
+    @JsonProperty("message")
+    private final String message;
 
     CalsExceptionInfo(String code, String message) {
         this.message = message;
