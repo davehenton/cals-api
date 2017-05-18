@@ -7,6 +7,7 @@ import com.google.inject.name.Named;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.ComplaintsCollectionService;
+import gov.ca.cwds.cals.service.CountiesService;
 import gov.ca.cwds.cals.service.FacilityChildCollectionService;
 import gov.ca.cwds.cals.service.FacilityChildService;
 import gov.ca.cwds.cals.service.FacilityService;
@@ -70,8 +71,6 @@ public class ResourcesModule extends AbstractModule {
         return new ServiceBackedResourceDelegate(injector.getInstance(FacilityChildCollectionService.class));
     }
 
-
-
     @Provides
     @ComplaintsCollectionServiceBackedResource
     public ResourceDelegate complaintsCollectionServiceBackedResource(Injector injector) {
@@ -82,6 +81,12 @@ public class ResourcesModule extends AbstractModule {
     @ComplaintServiceBackedResource
     public ResourceDelegate complaintServiceBackedResource(Injector injector) {
         return new ServiceBackedResourceDelegate(injector.getInstance(ComplaintService.class));
+    }
+
+    @Provides
+    @CountiesServiceBackendResource
+    public ResourceDelegate countiesServiceBackendResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(CountiesService.class));
     }
 
 }
