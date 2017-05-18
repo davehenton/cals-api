@@ -16,6 +16,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.io.Serializable;
+
 import static gov.ca.cwds.cals.Constants.API.COUNTIES;
 import static gov.ca.cwds.cals.Constants.API.DICTIOMARY;
 
@@ -26,24 +28,23 @@ import static gov.ca.cwds.cals.Constants.API.DICTIOMARY;
 @Api(value = COUNTIES, tags = {DICTIOMARY, COUNTIES})
 @Path(DICTIOMARY + "/" + COUNTIES)
 @Produces(MediaType.APPLICATION_JSON)
-public class CountyResource {
+public class CountiesResource {
 
     private ResourceDelegate countiesResourceDeledate;
 
     @Inject
-    public CountyResource(@CountiesServiceBackendResource ResourceDelegate countiesResourceDeledate) {
+    public CountiesResource(@CountiesServiceBackendResource ResourceDelegate countiesResourceDeledate) {
         this.countiesResourceDeledate = countiesResourceDeledate;
     }
 
     @GET
     @Timed
-    //@Path("/")
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns List of counties ", response = CountiesDTO.class)
     public Response getCounties() {
-        return countiesResourceDeledate.get(-1);
+        return countiesResourceDeledate.get(new Serializable(){});
     }
 
 }
