@@ -31,12 +31,12 @@ public class CountiesService implements CrudsService {
         dto0.setDescription("Desc0");
 
         CountyDTO dto1 = new CountyDTO();
-        dto0.setCode("1");
-        dto0.setDescription("Desc1");
+        dto1.setCode("1");
+        dto1.setDescription("Desc1");
 
         CountyDTO dto2 = new CountyDTO();
-        dto0.setCode("2");
-        dto0.setDescription("Desc2");
+        dto2.setCode("2");
+        dto2.setDescription("Desc2");
 
         countyDTOS.add(dto0);
         countyDTOS.add(dto1);
