@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CountiesServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.CountiesDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
+import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -15,8 +16,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import java.io.Serializable;
 
 import static gov.ca.cwds.cals.Constants.API.COUNTIES;
 import static gov.ca.cwds.cals.Constants.API.DICTIOMARY;
@@ -37,6 +36,7 @@ public class CountiesResource {
         this.countiesResourceDeledate = countiesResourceDeledate;
     }
 
+    @UnitOfWork(value = "cms")
     @GET
     @Timed
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
@@ -44,7 +44,7 @@ public class CountiesResource {
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns List of counties ", response = CountiesDTO.class)
     public Response getCounties() {
-        return countiesResourceDeledate.get(new Serializable(){});
+        return countiesResourceDeledate.get(null);
     }
 
 }
