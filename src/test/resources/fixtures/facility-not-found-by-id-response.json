@@ -1,4 +1,4 @@
 {
-  "message" : "Facility is not found by id",
-  "code" : "1"
+  "code" : "1",
+  "message" : "Facility is not found by id"
 }

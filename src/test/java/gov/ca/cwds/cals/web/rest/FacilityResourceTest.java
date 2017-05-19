@@ -28,8 +28,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void testGetFacilityById() throws Exception {
-        String restUrl = getUriString() + Constants.API.FACILITIES + "/" + FACILITY_ID;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(Constants.API.FACILITIES + "/" + FACILITY_ID);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);
 
@@ -39,8 +38,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void testWrongFasilityId() throws Exception {
-        String restUrl = getUriString() + Constants.API.FACILITIES + "/" + WRONG_FACILITY_ID;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(Constants.API.FACILITIES + "/" + WRONG_FACILITY_ID);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         Response response = invocation.get();
         assertEquals(404, response.getStatus());
