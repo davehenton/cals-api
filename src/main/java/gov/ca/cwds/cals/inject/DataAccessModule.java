@@ -17,6 +17,7 @@ import gov.ca.cwds.cals.model.fas.LisFacFile;
 import gov.ca.cwds.cals.model.fas.LisTableFile;
 import gov.ca.cwds.cals.model.fas.VisitReasonType;
 import gov.ca.cwds.cals.persistence.dao.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
@@ -82,6 +83,7 @@ public class DataAccessModule extends AbstractModule {
     protected void configure() {
         bind(LisFacFileDao.class);
         bind(ComplaintReportLic802Dao.class);
+        bind(CountiesDao.class);
     }
 
     @Provides
