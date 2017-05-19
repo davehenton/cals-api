@@ -33,9 +33,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void getAllFacilityComplaintsTest() throws JsonProcessingException {
-        String restUrl = getUriString() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS;
-        System.out.println("Rest URL: " + restUrl);
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
 
@@ -45,9 +43,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void getAllFacilityComplaintsWrongFacilityIdTest() throws JsonProcessingException {
-        String restUrl = getUriString() + FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS;
-        System.out.println("Rest URL: " + restUrl);
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         Response response = invocation.get();
         assertEquals(404, response.getStatus());
@@ -55,9 +51,8 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void getFacilityComplaintTest() throws JsonProcessingException {
-        String restUrl =
-                getUriString() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule
+                .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintDTO complaintDTO = invocation.get(ComplaintDTO.class);
 
@@ -67,9 +62,9 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void getFacilityComplaintWrongFacilityIdTest() throws JsonProcessingException {
-        String restUrl = getUriString() + FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
-                COMPLAINT_ID;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule
+                .target(FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
+                                COMPLAINT_ID);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         Response response = invocation.get();
         assertEquals(404, response.getStatus());
@@ -79,9 +74,8 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void getFacilityComplaintWrongComplaintIdTest() throws JsonProcessingException {
-        String restUrl = getUriString() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
-                WRONG_COMPLAINT_ID;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
+                WRONG_COMPLAINT_ID);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         Response response = invocation.get();
         assertEquals(404, response.getStatus());
