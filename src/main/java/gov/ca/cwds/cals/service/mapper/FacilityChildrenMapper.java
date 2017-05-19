@@ -27,7 +27,7 @@ import java.util.Set;
 public interface  FacilityChildrenMapper {
 
     FacilityChildrenMapper INSTANCE = Mappers.getMapper(FacilityChildrenMapper.class);
-    PersonDTOMapper personDtoMapper = Mappers.getMapper(PersonDTOMapper.class);
+    PersonMapper PERSON_MAPPER = Mappers.getMapper(PersonMapper.class);
 
     default FacilityChildrenDTO toFacilityChildrenDTO(PlacementHome placementHome) {
         FacilityChildrenDTO facilityChildrenDTO = new FacilityChildrenDTO();
@@ -55,7 +55,7 @@ public interface  FacilityChildrenMapper {
         FacilityChildDTO facilityChildDTO = new FacilityChildDTO();
         facilityChildDTO.setId(client.getIdentifier());
 
-        PersonDTO personDTO = personDtoMapper.toPersonDTO(client);
+        PersonDTO personDTO = PERSON_MAPPER.toPerson(client);
         facilityChildDTO.setPerson(personDTO);
 
         Set<StaffPerson> staffPersons = placementEpisode.getStaffPersons();

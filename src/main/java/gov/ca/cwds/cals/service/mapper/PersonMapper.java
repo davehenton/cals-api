@@ -2,7 +2,10 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.model.cms.Client;
 import gov.ca.cwds.cals.service.dto.PersonDTO;
-import org.mapstruct.*;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import java.time.LocalDate;
@@ -14,10 +17,10 @@ import java.util.Set;
  * @author CWDS CALS API Team
  */
 @Mapper
-public interface PersonDTOMapper {
-    PersonDTOMapper INSTANCE = Mappers.getMapper(PersonDTOMapper.class);
+public interface PersonMapper {
+    PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
-    List<PersonDTO> toPersonDTO(Set<Client> clients);
+    List<PersonDTO> toPerson(Set<Client> clients);
 
     @Mapping(target = "firstName", source = "comFstNm")
     @Mapping(target = "lastName", source = "comLstNm")
@@ -28,7 +31,7 @@ public interface PersonDTOMapper {
     @Mapping(target = "age",         ignore = true)
     @Mapping(target = "ssn",         ignore = true)
     @Mapping(target = "ethnicityId", ignore = true)
-    PersonDTO toPersonDTO(Client client);
+    PersonDTO toPerson(Client client);
 
     @AfterMapping
     default void fillAge(@MappingTarget PersonDTO personDTO) {
