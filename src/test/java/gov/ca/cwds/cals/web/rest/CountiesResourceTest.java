@@ -27,8 +27,7 @@ public class CountiesResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void testGetCounties() throws Exception {
-        String restUrl = getUriString() + Constants.API.DICTIONARY + "/" + COUNTIES;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(Constants.API.DICTIONARY + "/" + COUNTIES);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         CountiesDTO countiesDTO = invocation.get(CountiesDTO.class);
 
