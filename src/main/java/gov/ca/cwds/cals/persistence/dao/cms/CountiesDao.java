@@ -7,6 +7,7 @@ import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -20,11 +21,11 @@ public class CountiesDao extends BaseDaoImpl<County> {
         super(sessionFactory);
     }
 
-    @Override
+
     public List<County> findAll() {
         Session session = this.getSessionFactory().getCurrentSession();
-        org.hibernate.Query query = session.getNamedQuery(County.NQ_ALL);
-        ImmutableList.Builder<County> entities = new ImmutableList.Builder();
+        Query<County> query = session.createNamedQuery(County.NQ_ALL, County.class);
+        ImmutableList.Builder<County> entities = new ImmutableList.Builder<>();
         entities.addAll(query.list());
         return entities.build();
     }

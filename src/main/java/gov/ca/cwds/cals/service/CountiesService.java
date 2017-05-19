@@ -28,36 +28,10 @@ public class CountiesService implements CrudsService {
 
     @Override
     public Response find(Serializable serializable) {
-
         final CountiesDTO countiesDTO = new CountiesDTO();
-
         List<County> counties = countiesDao.findAll();
-
-        counties.forEach((County county) -> countiesDTO.getCounties().add(countyMapper.toCountyDTO(county)));
-
-        // Fake implementation
-        // TODO rework
-/*
-        ArrayList<CountyDTO> countyDTOS = new ArrayList<>();
-
-        CountyDTO dto0 = new CountyDTO();
-        dto0.setCode("0");
-        dto0.setDescription("Desc0");
-
-        CountyDTO dto1 = new CountyDTO();
-        dto1.setCode("1");
-        dto1.setDescription("Desc1");
-
-        CountyDTO dto2 = new CountyDTO();
-        dto2.setCode("2");
-        dto2.setDescription("Desc2");
-
-        countyDTOS.add(dto0);
-        countyDTOS.add(dto1);
-        countyDTOS.add(dto2);
-
-        counties.setCounties(countyDTOS);
-*/
+        counties.forEach((County county) ->
+                countiesDTO.getCounties().add(countyMapper.toCountyDTO(county)));
         return countiesDTO;
     }
 
