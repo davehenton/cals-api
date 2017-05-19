@@ -23,11 +23,15 @@ public final class Constants {
 
         public static final String COUNTIES = "counties";
 
+        public static final String INSPECTIONS ="inspections";
+
         public static class PATH_PARAMS {
 
             public static final String FACILITY_ID = "facilityId";
 
             public static final String COMPLAINT_ID = "complaintId";
+
+            public static final String INSPECTION_ID = "inspectionId";
 
         }
     }

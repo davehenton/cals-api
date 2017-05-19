@@ -3,6 +3,8 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
+import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
+import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 
 /**
@@ -24,6 +26,8 @@ public class ServicesModule extends AbstractModule{
     protected void configure() {
         bind(FacilityService.class);
         bind(ComplaintService.class);
+        bind(FacilityInspectionCollectionService.class);
+        bind(FacilityInspectionService.class);
         bind(CountiesService.class);
     }
 }
