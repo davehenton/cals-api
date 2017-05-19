@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class FacilityTypesDTO extends BaseDTO implements Response {
 
-    @JsonProperty("facility_type")
+    @JsonProperty("facility_types")
     private List<FacilityTypeDTO> facilityTypes = new ArrayList<>();
 
     public List<FacilityTypeDTO> getFacilityTypes() {

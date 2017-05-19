@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.FacilityTypeCollectionServiceBackendResource;
-import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
+import gov.ca.cwds.cals.service.dto.FacilityTypesDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -17,14 +17,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import static gov.ca.cwds.cals.Constants.API.DICTIONARY;
 import static gov.ca.cwds.cals.Constants.API.FACILITY_TYPES;
-import static gov.ca.cwds.cals.Constants.API.DICTIOMARY;
 
 /**
  * @author CWDS CALS API Team
  */
-@Api(value = FACILITY_TYPES, tags = {DICTIOMARY, FACILITY_TYPES})
-@Path(DICTIOMARY + "/" + FACILITY_TYPES)
+@Api(value = FACILITY_TYPES, tags = {DICTIONARY, FACILITY_TYPES})
+@Path(DICTIONARY + "/" + FACILITY_TYPES)
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityTypeResource {
     private ResourceDelegate collectionResourceDelegate;
@@ -40,7 +40,7 @@ public class FacilityTypeResource {
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
-    @ApiOperation(value = "Returns Facility Types", response = FacilityTypeDTO.class)
+    @ApiOperation(value = "Returns Facility Types", response = FacilityTypesDTO.class)
     public Response getFacilityTypes() {
         return collectionResourceDelegate.get(null);
     }

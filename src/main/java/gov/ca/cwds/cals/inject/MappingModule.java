@@ -4,11 +4,13 @@ import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapperImpl;
 import gov.ca.cwds.cals.service.mapper.CountyMapper;
+import gov.ca.cwds.cals.service.mapper.CountyMapperImpl;
 import gov.ca.cwds.cals.service.mapper.FacilityChildrenMapper;
+import gov.ca.cwds.cals.service.mapper.FacilityChildrenMapperImpl;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapperImpl;
-import gov.ca.cwds.cals.service.mapper.FacilityChildrenMapperImpl;
-import gov.ca.cwds.cals.service.mapper.CountyMapperImpl;
+import gov.ca.cwds.cals.service.mapper.FacilityTypeMapper;
+import gov.ca.cwds.cals.service.mapper.FacilityTypeMapperImpl;
 
 /**
  * DI (dependency injection) setup for mapping classes.
@@ -24,6 +26,7 @@ public class MappingModule extends AbstractModule {
         bind(FacilityChildrenMapper.class).to(FacilityChildrenMapperImpl.class).asEagerSingleton();
         bind(ComplaintMapper.class).to(ComplaintMapperImpl.class).asEagerSingleton();
         bind(CountyMapper.class).to(CountyMapperImpl.class).asEagerSingleton();
+        bind(FacilityTypeMapper.class).to(FacilityTypeMapperImpl.class).asEagerSingleton();
     }
 
 }
