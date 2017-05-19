@@ -18,7 +18,7 @@ public final class Constants {
 
         public static final String COMPLAINTS = "complaints";
 
-        public static final String DICTIOMARY = "dictionary";
+        public static final String DICTIONARY = "dictionary";
 
         public static final String COUNTIES = "counties";
 

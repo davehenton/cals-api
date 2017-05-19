@@ -11,16 +11,19 @@ import org.junit.Test;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
-//@Ignore
 public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     public static final String FACILITY_ID = "107201149";
+    public static final String WRONG_FACILITY_ID = "1";
     public static final String COMPLAINT_ID = "32-CR-SNGO-86JMJE-20100618091646";
+    public static final String WRONG_COMPLAINT_ID = "1";
 
     @BeforeClass
     public static void beforeClass() throws Exception {
@@ -29,10 +32,8 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     }
 
     @Test
-    public void assertGetAllFacilityComplaints() throws JsonProcessingException {
-        String restUrl = getUriString() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS;
-        System.out.println("Rest URL: " + restUrl);
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+    public void getAllFacilityComplaintsTest() throws JsonProcessingException {
+        WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
 
@@ -41,10 +42,17 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     }
 
     @Test
-    public void assertGetFacilityComplaint() throws JsonProcessingException {
-        String restUrl =
-                getUriString() + FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+    public void getAllFacilityComplaintsWrongFacilityIdTest() throws JsonProcessingException {
+        WebTarget target = clientTestRule.target(FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS);
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        Response response = invocation.get();
+        assertEquals(404, response.getStatus());
+    }
+
+    @Test
+    public void getFacilityComplaintTest() throws JsonProcessingException {
+        WebTarget target = clientTestRule
+                .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintDTO complaintDTO = invocation.get(ComplaintDTO.class);
 
@@ -52,6 +60,27 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
         assertThat(clientTestRule.getMapper().writeValueAsString(complaintDTO)).isEqualTo(fixture);
     }
 
+    @Test
+    public void getFacilityComplaintWrongFacilityIdTest() throws JsonProcessingException {
+        WebTarget target = clientTestRule
+                .target(FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
+                                COMPLAINT_ID);
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        Response response = invocation.get();
+        assertEquals(404, response.getStatus());
+        String fixture = fixture("fixtures/facility-not-found-by-id-response.json");
+        assertThat(response.readEntity(String.class)).isEqualTo(fixture);
+    }
 
+    @Test
+    public void getFacilityComplaintWrongComplaintIdTest() throws JsonProcessingException {
+        WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
+                WRONG_COMPLAINT_ID);
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        Response response = invocation.get();
+        assertEquals(404, response.getStatus());
+        String fixture = fixture("fixtures/complaint-not-found-by-id-response.json");
+        assertThat(response.readEntity(String.class)).isEqualTo(fixture);
+    }
 
 }

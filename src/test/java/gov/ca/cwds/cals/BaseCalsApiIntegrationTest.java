@@ -60,19 +60,6 @@ public abstract class BaseCalsApiIntegrationTest {
         getCmsDatabaseHelper().runScript("liquibase/cms/cms-ddl-master.xml");
     }
 
-    protected static URI getServerUrl() {
-        return appRule.getEnvironment().getApplicationContext().getServer().getURI();
-    }
-
-    protected String getUriString() {
-        URI serverUri = getServerUrl();
-        String serverUrlStr = "http://localhost:8090/"; //port defined in src/test/resources/config/test-cals-api.yml
-        if (serverUri != null) {
-            serverUrlStr = serverUri.toString();
-        }
-        return serverUrlStr;
-    }
-
     @After
     public void tearDown() throws Exception {
 

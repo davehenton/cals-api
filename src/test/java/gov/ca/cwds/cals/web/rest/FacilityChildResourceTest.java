@@ -33,8 +33,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     public void testGetFacilityChildren() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
         pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "336400295");
-        String restUrl = getUriString() + pathInfo;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(pathInfo);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityChildrenDTO facilityChildDTO = invocation.get(FacilityChildrenDTO.class);
 
@@ -46,8 +45,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     public void testGetFacilityChild() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
         pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "336400295") + "/AazXkWY06s";
-        String restUrl = getUriString() + pathInfo;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(pathInfo);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityChildDTO facilityChildDTO = invocation.get(FacilityChildDTO.class);
 
@@ -60,8 +58,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
         String wrongId = "-1";
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
         pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", wrongId);
-        String restUrl = getUriString() + pathInfo;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(pathInfo);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         try {
             invocation.get(FacilityChildrenDTO.class);
@@ -76,8 +73,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
         String wrongChildId = "-1";
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
         pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "336400295") + "/" + wrongChildId;
-        String restUrl = getUriString() + pathInfo;
-        WebTarget target = clientTestRule.getClient().target(restUrl);
+        WebTarget target = clientTestRule.target(pathInfo);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         try {
             invocation.get(FacilityChildrenDTO.class);
