@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
@@ -92,6 +93,7 @@ public class DataAccessModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(ComplaintReportLic802Dao.class);
+        bind(CountiesDao.class);
     }
 
     @Provides
