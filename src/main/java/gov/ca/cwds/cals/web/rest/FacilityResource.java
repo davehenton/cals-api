@@ -39,7 +39,6 @@ public class FacilityResource {
         this.resourceDelegate = resourceDelegate;
     }
 
-    @UnitOfWork(value = "fas")
     @GET
     @Timed
     @Path("/{" + FACILITY_ID + "}")

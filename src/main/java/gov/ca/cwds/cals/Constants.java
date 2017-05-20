@@ -14,7 +14,6 @@ public final class Constants {
 
         public static final String RESOURCE_APPLICATION = "application";
 
-        //todo: check and remove
         public static final String CHILDREN = "children";
 
         public static final String COMPLAINTS = "complaints";
@@ -33,6 +32,16 @@ public final class Constants {
         public static final String RESIDENTIAL = "residential";
 
         public static final String MAIL = "mail";
+
+    }
+
+    public static class UNIT_OF_WORK {
+
+        public static final String FAS = "fas";
+
+        public static final String LIS = "lis";
+
+        public static final String CMS = "cms";
 
     }
 

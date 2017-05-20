@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import static gov.ca.cwds.cals.Constants.API.CHILDREN;
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -26,7 +27,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
         setUpCms();
-        getCmsDatabaseHelper().runScript("liquibase/cms/cms-dml-master.xml", "cms");
+        getCmsDatabaseHelper().runScript("liquibase/cms/cms-dml-master.xml", CMS);
     }
 
     @Test

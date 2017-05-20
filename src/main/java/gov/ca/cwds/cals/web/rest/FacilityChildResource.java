@@ -6,7 +6,6 @@ import gov.ca.cwds.cals.inject.FacilityChildCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.FacilityChildServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -22,8 +21,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.Constants.API.*;
+import static gov.ca.cwds.cals.Constants.API.CHILDREN;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
 
 /**
  * @author CWDS CALS API Team
@@ -42,7 +43,7 @@ public class FacilityChildResource {
         this.collectionResourceDelegate = collectionResourceDelegate;
     }
 
-    @UnitOfWork(value = "cms")
+    @UnitOfWork(CMS)
     @GET
     @Timed
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
@@ -54,7 +55,7 @@ public class FacilityChildResource {
         return collectionResourceDelegate.get(facility_license_number);
     }
 
-    @UnitOfWork(value = "cms")
+    @UnitOfWork(CMS)
     @GET
     @Timed
     @Path("/{child_id}")

@@ -1,22 +1,13 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
-import gov.ca.cwds.cals.model.fas.LisFacFile;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
+import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
-import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
-import gov.ca.cwds.cals.web.rest.parameter.FacilityComplaintParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 
 import java.io.Serializable;
-import java.util.Optional;
-
-import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.FACILITY_NOT_FOUND_BY_ID;
-import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.COMPLAINT_NOT_FOUND_BY_ID;
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 /**
  * @author CWDS CALS API Team
@@ -36,6 +27,7 @@ public class ComplaintService implements CrudsService {
 
     @Override
     public Response find(Serializable parametersObject) {
+/*
         FacilityComplaintParameterObject parameterObject = null;
         if (parametersObject instanceof FacilityComplaintParameterObject) {
             parameterObject = (FacilityComplaintParameterObject) parametersObject;
@@ -50,6 +42,7 @@ public class ComplaintService implements CrudsService {
             return complaintMapper.entityToDTO(complaintReportLic802
                     .orElseThrow(() -> new UserFriendlyException(COMPLAINT_NOT_FOUND_BY_ID, NOT_FOUND)));
         }
+*/
         throw new IllegalStateException("FacilityComplaintParameterObject is expected here");
     }
 

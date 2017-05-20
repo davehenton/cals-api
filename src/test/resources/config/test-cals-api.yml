@@ -61,12 +61,30 @@ cmsDataSourceFactory:
   url: jdbc:h2:mem:cms
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
-  initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
-  minSize: ${DB_NS_CP_MIN_SIZE:-2}
-  maxSize: ${DB_NS_CP_MAX_SIZE:-8}
+  initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
+  minSize: ${DB_CMS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_CMS_CP_MAX_SIZE:-8}
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
       hibernate.default_schema: CMS
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: true
+
+lisDataSourceFactory:
+  driverClass: org.h2.Driver
+  user: sa
+  password:
+  url: jdbc:h2:mem:lis
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  logValidationErrors: true
+  initialSize: ${DB_LIS_CP_INITIAL_SIZE:-2}
+  minSize: ${DB_LIS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_LIS_CP_MAX_SIZE:-8}
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      hibernate.default_schema: lis
+      hibernate.id.new_generator_mappings: false
+      hibernate.show_sql: true
+

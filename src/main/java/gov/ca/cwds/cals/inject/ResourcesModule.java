@@ -70,8 +70,6 @@ public class ResourcesModule extends AbstractModule {
         return new ServiceBackedResourceDelegate(injector.getInstance(FacilityChildCollectionService.class));
     }
 
-
-
     @Provides
     @ComplaintsCollectionServiceBackedResource
     public ResourceDelegate complaintsCollectionServiceBackedResource(Injector injector) {

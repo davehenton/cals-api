@@ -10,7 +10,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 
 import javax.ws.rs.client.Client;
-import java.net.URI;
+
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
 
 /**
  * @author CWDS CALS API Team
@@ -48,12 +50,23 @@ public abstract class BaseCalsApiIntegrationTest {
                 dataSourceFactory.getUser(), dataSourceFactory.getPassword());
     }
 
+    protected static DatabaseHelper getLisDatabaseHelper() {
+        DataSourceFactory dataSourceFactory = appRule.getConfiguration().getLisDataSourceFactory();
+        return new DatabaseHelper(dataSourceFactory.getUrl(),
+                dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+    }
+
     public static void setUpFas() throws Exception {
         getFasDatabaseHelper().runScript("liquibase/fas/drop_fas_schema.xml");
         getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_schema.xml");
-        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", "fas");
-        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", "fas");
-        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/complaints_structure.xml", "fas");
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", FAS);
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", FAS);
+        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/complaints_structure.xml", FAS);
+    }
+
+    public static void setUpLis() throws Exception {
+        getLisDatabaseHelper().runScript("liquibase/lis/create-schema-ddl.xml");
+        getLisDatabaseHelper().runScript("liquibase/lis/lis-ddl-master.xml", LIS);
     }
 
     public static void setUpCms() throws Exception {

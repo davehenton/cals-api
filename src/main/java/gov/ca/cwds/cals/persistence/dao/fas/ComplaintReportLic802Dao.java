@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.dao;
+package gov.ca.cwds.cals.persistence.dao.fas;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.FasSessionFactory;
