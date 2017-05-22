@@ -27,6 +27,7 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
         super(sessionFactory);
     }
 
+    @Deprecated
     public PlacementHome findChildren(String facilityNumber) {
         Session session = getSessionFactory().getCurrentSession();
         Query query = session.createNamedQuery("gov.ca.cwds.cals.model.cms.PlacementHome.findChildren");
@@ -42,6 +43,7 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
         return placementHome;
     }
 
+    @Deprecated
     public PlacementHome findChild(String facilityNumber, String childId) {
         Session session = getSessionFactory().getCurrentSession();
         Query query = session.createNamedQuery("gov.ca.cwds.cals.model.cms.PlacementHome.findChild");
@@ -59,8 +61,9 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
             OutOfHomePlacement outOfHomePlacement = (OutOfHomePlacement) result[1];
             Set<OutOfHomePlacement> outOfHomePlacementSet = new HashSet<>();
             outOfHomePlacementSet.add(outOfHomePlacement);
-            placementHome.setOutOfHomePlacements(outOfHomePlacementSet);
-            session.detach(placementHome);session.detach(placementHome);
+//            placementHome.setOutOfHomePlacements(outOfHomePlacementSet);
+            session.detach(placementHome);
+            session.detach(placementHome);
             session.clear();
         } catch (NoResultException e) {
             LOG.warn("There is no result for facilityNumber = " + facilityNumber + " and childId = " + childId, e);
