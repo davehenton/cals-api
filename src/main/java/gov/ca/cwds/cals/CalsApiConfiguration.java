@@ -8,6 +8,8 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
 
     private DataSourceFactory fasDataSourceFactory;
 
+    private DataSourceFactory connxDataSourceFactory;
+
     @JsonProperty
     public DataSourceFactory getFasDataSourceFactory() {
         return fasDataSourceFactory;
@@ -16,5 +18,15 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
     @JsonProperty
     public void setFasDataSourceFactory(DataSourceFactory fasDataSourceFactory) {
         this.fasDataSourceFactory = fasDataSourceFactory;
+    }
+
+    @JsonProperty
+    public DataSourceFactory getConnxDataSourceFactory() {
+        return connxDataSourceFactory;
+    }
+
+    @JsonProperty
+    public void setConnxDataSourceFactory(DataSourceFactory connxDataSourceFactory) {
+        this.connxDataSourceFactory = connxDataSourceFactory;
     }
 }
