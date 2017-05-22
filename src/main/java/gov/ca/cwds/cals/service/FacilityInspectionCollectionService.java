@@ -1,6 +1,8 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.model.fas.Rrcpoc;
+import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionsDTO;
 import gov.ca.cwds.cals.service.dto.PlanOfCorrectionDTO;
@@ -18,17 +20,23 @@ import java.util.List;
 public class FacilityInspectionCollectionService extends CrudServiceAdapter {
 
     private FacilityInspectionMapper facilityInspectionMapper;
+    private InspectionDao inspectionDao;
 
     @Inject
-    public FacilityInspectionCollectionService(FacilityInspectionMapper facilityInspectionMapper) {
+    public FacilityInspectionCollectionService(FacilityInspectionMapper facilityInspectionMapper,
+                                               InspectionDao inspectionDao) {
         this.facilityInspectionMapper = facilityInspectionMapper;
+        this.inspectionDao = inspectionDao;
     }
 
     @Override
     public Response find(Serializable facilityId) {
         FacilityInspectionsDTO dto = new FacilityInspectionsDTO();
 
+        List<Rrcpoc> pocsRes = inspectionDao.findByFacilityNumber((Integer) facilityId);
+
         // TODO Implement retrieving Inspections data
+
         List<FacilityInspectionDTO> inspections = dto.getInspections();
         for (int i = 0; i < 3; i++)  {
 
@@ -57,7 +65,6 @@ public class FacilityInspectionCollectionService extends CrudServiceAdapter {
 
             inspections.add(facilityInspectionDTO);
         }
-
         return dto;
     }
 }

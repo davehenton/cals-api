@@ -8,6 +8,7 @@ import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionsDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityInspectionParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
+import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -45,7 +46,7 @@ public class FacilityInspectionsResource {
         this.collectionResourceDelegate = collectionResourceDelegate;
     }
 
-    //@UnitOfWork(value = "fas")
+    @UnitOfWork(value = "fas")
     @GET
     @Timed
     @ApiResponses(value = {

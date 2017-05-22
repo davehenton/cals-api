@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.PlanOfCorrectionDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
@@ -18,10 +19,13 @@ import java.util.List;
 public class FacilityInspectionService extends CrudServiceAdapter {
 
     private FacilityInspectionMapper facilityInspectionMapper;
+    private InspectionDao inspectionDao;
+
 
     @Inject
-    public FacilityInspectionService(FacilityInspectionMapper facilityInspectionMapper) {
+    public FacilityInspectionService(FacilityInspectionMapper facilityInspectionMapper, InspectionDao inspectionDao) {
         this.facilityInspectionMapper = facilityInspectionMapper;
+        this.inspectionDao = inspectionDao;
     }
 
     @Override
