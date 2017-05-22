@@ -57,15 +57,12 @@ public abstract class BaseCalsApiIntegrationTest {
     }
 
     public static void setUpFas() throws Exception {
-        getFasDatabaseHelper().runScript("liquibase/fas/drop_fas_schema.xml");
-        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_schema.xml");
-        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_structure.xml", FAS);
-        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/fas_constraints.xml", FAS);
-        getFasDatabaseHelper().runScript("gov/ca/cwds/cals/model/fas/liquibase/complaints_structure.xml", FAS);
+        getFasDatabaseHelper().runScript("liquibase/fas/fas-create-schema-ddl.xml");
+        getFasDatabaseHelper().runScript("liquibase/fas/fas-ddl-master.xml", FAS);
     }
 
     public static void setUpLis() throws Exception {
-        getLisDatabaseHelper().runScript("liquibase/lis/create-schema-ddl.xml");
+        getLisDatabaseHelper().runScript("liquibase/lis/lis-create-schema-ddl.xml");
         getLisDatabaseHelper().runScript("liquibase/lis/lis-ddl-master.xml", LIS);
     }
 
