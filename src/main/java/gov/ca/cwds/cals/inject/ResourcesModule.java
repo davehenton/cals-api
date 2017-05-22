@@ -18,6 +18,7 @@ import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.CountiesResource;
 import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
+import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -44,6 +45,7 @@ public class ResourcesModule extends AbstractModule {
         bind(FacilityResource.class);
         bind(FacilityChildResource.class);
         bind(FacilityComplaintResource.class);
+        bind(FacilityInspectionsResource.class);
         bind(CountiesResource.class);
         bind(FacilityTypeResource.class);
     }

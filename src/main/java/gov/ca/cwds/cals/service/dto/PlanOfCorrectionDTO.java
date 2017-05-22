@@ -1,11 +1,16 @@
 package gov.ca.cwds.cals.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.rest.validation.Date;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalDateTime;
+
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
 
 /**
  * @author CWDS CALS API Team
@@ -28,6 +33,8 @@ public class PlanOfCorrectionDTO extends BaseDTO {
 
     private String pomCommentCont;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
+    @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
     public LocalDateTime getPocDueDate() {
         return pocDueDate;
     }
@@ -52,6 +59,8 @@ public class PlanOfCorrectionDTO extends BaseDTO {
         this.pocCorrectionPlan = pocCorrectionPlan;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
+    @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
     public LocalDateTime getPocDateCleared() {
         return pocDateCleared;
     }
