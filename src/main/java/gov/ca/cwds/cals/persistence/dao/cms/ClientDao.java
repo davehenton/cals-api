@@ -30,7 +30,7 @@ public class ClientDao extends BaseDaoImpl<Client> {
         Session session = getSessionFactory().getCurrentSession();
         Class<Client> entityClass = getEntityClass();
         Query<Client> query = session.createNamedQuery(entityClass.getName() + ".findAll", entityClass);
-        query.setParameter("facilityNumber", parameterObject.getFacilityNumber());
+        query.setParameter("licenseNumber", parameterObject.getLicenseNumber());
         ImmutableList.Builder<Client> entities = new ImmutableList.Builder<>();
         entities.addAll(query.list());
         return entities.build();
@@ -41,8 +41,8 @@ public class ClientDao extends BaseDaoImpl<Client> {
         Class<Client> entityClass = getEntityClass();
         Query<Client> query = session.createNamedQuery(entityClass.getName() + ".find", entityClass);
 
-        String facilityNumber = parameterObject.getFacilityNumber();
-        query.setParameter("facilityNumber", facilityNumber);
+        String licenseNumber = parameterObject.getLicenseNumber();
+        query.setParameter("licenseNumber", licenseNumber);
 
         String childId = parameterObject.getChildId();
         query.setParameter("childId", childId);
@@ -54,7 +54,7 @@ public class ClientDao extends BaseDaoImpl<Client> {
         try {
             client = query.getSingleResult();
         } catch (NoResultException e) {
-            LOG.warn("There is no result for facilityNumber = " + facilityNumber + " and childId = " + childId, e);
+            LOG.warn("There is no result for licenseNumber = " + licenseNumber + " and childId = " + childId, e);
         }
 
         return client;

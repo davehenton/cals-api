@@ -6,7 +6,6 @@ import gov.ca.cwds.cals.inject.FacilityChildCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.FacilityChildServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -23,7 +22,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.Constants.API.*;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.Constants.API.CHILDREN;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.CHILD_ID;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
 
