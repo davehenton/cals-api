@@ -1,20 +1,17 @@
 package gov.ca.cwds.cals.persistence.dao.cms;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.model.cms.OutOfHomePlacement;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
+import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.NoResultException;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author CWDS CALS API Team
@@ -27,48 +24,21 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
         super(sessionFactory);
     }
 
-    @Deprecated
-    public PlacementHome findChildren(String facilityNumber) {
+    public PlacementHome find(FacilityParameterObject parameterObject) {
         Session session = getSessionFactory().getCurrentSession();
-        Query query = session.createNamedQuery("gov.ca.cwds.cals.model.cms.PlacementHome.findChildren");
-        query.setParameter("facilityNumber", facilityNumber);
+        Class<PlacementHome> entityClass = getEntityClass();
+        Query<PlacementHome> query = session.createNamedQuery(entityClass.getName() + ".find", entityClass);
+
+        String facilityId = parameterObject.getFacilityId();
+        query.setParameter("facilityId", facilityId);
+
         PlacementHome placementHome = null;
         try {
-            placementHome = (PlacementHome) query.getSingleResult();
-            session.detach(placementHome);
-            session.clear();
+            placementHome = query.getSingleResult();
         } catch (NoResultException e) {
-            LOG.warn("There is no result for facilityNumber = " + facilityNumber, e);
+            LOG.warn("There is no result for facilityId = " + facilityId, e);
         }
+
         return placementHome;
     }
-
-    @Deprecated
-    public PlacementHome findChild(String facilityNumber, String childId) {
-        Session session = getSessionFactory().getCurrentSession();
-        Query query = session.createNamedQuery("gov.ca.cwds.cals.model.cms.PlacementHome.findChild");
-        query.setParameter("facilityNumber", facilityNumber);
-        query.setParameter("childId", childId);
-
-        //todo: we have duplicates related to different periods. needs more analysis here
-        query.setMaxResults(1);
-
-        //todo: refactor. try to query through client entity
-        PlacementHome placementHome = null;
-        try {
-            Object[] result = (Object[]) query.getSingleResult();
-            placementHome = (PlacementHome) result[0];
-            OutOfHomePlacement outOfHomePlacement = (OutOfHomePlacement) result[1];
-            Set<OutOfHomePlacement> outOfHomePlacementSet = new HashSet<>();
-            outOfHomePlacementSet.add(outOfHomePlacement);
-//            placementHome.setOutOfHomePlacements(outOfHomePlacementSet);
-            session.detach(placementHome);
-            session.detach(placementHome);
-            session.clear();
-        } catch (NoResultException e) {
-            LOG.warn("There is no result for facilityNumber = " + facilityNumber + " and childId = " + childId, e);
-        }
-        return placementHome;
-    }
-
 }

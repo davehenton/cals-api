@@ -45,4 +45,14 @@ public final class Constants {
 
     }
 
+    public static class UNIT_OF_WORK {
+
+        public static final String FAS = "fas";
+
+        public static final String LIS = "lis";
+
+        public static final String CMS = "cms";
+
+    }
+
 }

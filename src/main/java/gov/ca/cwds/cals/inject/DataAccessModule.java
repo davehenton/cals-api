@@ -19,12 +19,14 @@ import gov.ca.cwds.cals.model.fas.VisitReasonType;
 import gov.ca.cwds.cals.persistence.dao.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
@@ -88,6 +90,7 @@ public class DataAccessModule extends AbstractModule {
         bind(FacilityTypeDao.class);
         bind(CountiesDao.class);
         bind(ClientDao.class);
+        bind(PlacementHomeDao.class);
     }
 
     @Provides
@@ -114,4 +117,8 @@ public class DataAccessModule extends AbstractModule {
         return fasHibernateBundle;
     }
 
+    @Provides
+    UnitOfWorkAwareProxyFactory lisUnitOfWorkAwareProxyFactory() {
+        return new UnitOfWorkAwareProxyFactory(fasHibernateBundle, cmsHibernateBundle);
+    }
 }

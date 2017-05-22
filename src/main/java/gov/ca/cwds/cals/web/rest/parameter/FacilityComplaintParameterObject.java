@@ -22,16 +22,7 @@ public class FacilityComplaintParameterObject implements Serializable {
         return facilityId;
     }
 
-    public void setFacilityId(Integer facilityId) {
-        this.facilityId = facilityId;
-    }
-
     public String getComplaintId() {
         return complaintId;
     }
-
-    public void setComplaintId(String complaintId) {
-        this.complaintId = complaintId;
-    }
-
 }
