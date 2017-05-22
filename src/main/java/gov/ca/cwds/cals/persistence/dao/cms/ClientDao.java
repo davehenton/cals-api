@@ -8,13 +8,17 @@ import gov.ca.cwds.inject.CmsSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
  * @author CWDS CALS API Team
  */
 public class ClientDao extends BaseDaoImpl<Client> {
+    private static final Logger LOG = LoggerFactory.getLogger(ClientDao.class);
 
     @Inject
     public ClientDao(@CmsSessionFactory SessionFactory sessionFactory) {
@@ -40,8 +44,14 @@ public class ClientDao extends BaseDaoImpl<Client> {
 
         //todo: we have duplicates related to different periods. needs more analysis here
         query.setMaxResults(1);
-        return query.getSingleResult();
+
+        Client client = null;
+        try {
+            client = query.getSingleResult();
+        } catch (NoResultException e) {
+            LOG.warn("There is no result for facilityNumber = " + facilityNumber + " and childId = " + childId, e);
+        }
+
+        return client;
     }
-
-
 }
