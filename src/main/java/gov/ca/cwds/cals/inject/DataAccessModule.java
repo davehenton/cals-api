@@ -18,6 +18,7 @@ import gov.ca.cwds.cals.model.lis.LisTableFile;
 import gov.ca.cwds.cals.model.lis.VisitReasonType;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityTypeDao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
@@ -106,6 +107,7 @@ public class DataAccessModule extends AbstractModule {
         bind(FacilityTypeDao.class);
         bind(CountiesDao.class);
         bind(ClientDao.class);
+        bind(PlacementHomeDao.class);
     }
 
     @Provides
@@ -149,4 +151,8 @@ public class DataAccessModule extends AbstractModule {
         return new UnitOfWorkAwareProxyFactory(lisHibernateBundle, fasHibernateBundle, cmsHibernateBundle);
     }
 
+    @Provides
+    UnitOfWorkAwareProxyFactory lisUnitOfWorkAwareProxyFactory() {
+        return new UnitOfWorkAwareProxyFactory(fasHibernateBundle, cmsHibernateBundle);
+    }
 }

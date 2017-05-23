@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
+import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.rest.api.Response;
 
 import java.io.Serializable;
@@ -27,8 +28,8 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
     @Override
     public Response find(Serializable params) {
         Response resp = null;
-        String facilityNumber = (String) params;
-        List<Client> clients = clientDao.findAll(facilityNumber);
+        FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
+        List<Client> clients = clientDao.findAll(parameterObject);
         if (clients.size() > 0) {
             List<FacilityChildDTO> facilityChildDTOs = facilityChildMapper.toFacilityChildDTO(clients);
             FacilityChildrenDTO facilityChildrenDTO = new FacilityChildrenDTO();

@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.model.lis.LisFacFile;
+import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.HyperlinkDTO;
 import org.mapstruct.Mapper;
@@ -47,7 +48,25 @@ public interface FacilityMapper {
     @Mapping(target = "complains", expression = "java(new HyperlinkDTO( String.format(Constants.API.FACILITIES + " +
             "\"/%s/\" + Constants.API.COMPLAINTS, lisFacFile.getFacNbr())))")
 
-    FacilityDTO lisFacilityToFacilityDTO(LisFacFile lisFacFile);
+    FacilityDTO toFacilityDTO(LisFacFile lisFacFile);
+
+    @Mapping(target = "name", source = "facltyNm")
+//    @Mapping(target = "facType", source = "plcFclc")
+    @Mapping(target = "licenseeName", source = "licnseeNm")
+//    @Mapping(target = "Approval/Licensing worker", source = "")
+//    @Mapping(target = "Assigned oversight agency", source = "")
+    @Mapping(target = "licenseNumber", source = "licenseNo")
+//    @Mapping(target = "status", source = "licStc")
+    @Mapping(target = "capacity", source = "maxCapNo")
+    @Mapping(target = "licenseEffectiveDate", source = "licEfctdt")
+    @Mapping(target = "originalApplicationRecievedDate", source = "licAplDt")
+//    @Mapping(target = "address", source = "street_number, street_name, state_code_type, zip_number, zip_suffix_number")
+    @Mapping(target = "county.description", source = "gvrEntc")
+//    @Mapping(target = "phones", source = "prmCnctnm")
+//    @Mapping(target = "phones", source = "bckTelNo")
+//    @Mapping(target = "lastVisitDate", source = "lic_vstt \tvisit_date")
+//    @Mapping(target = "lastVisitReason.code", source = "lic_vstt \tvisit_type")
+    FacilityDTO toFacilityDTO(PlacementHome placementHome);
 
 /*
     @InheritInverseConfiguration

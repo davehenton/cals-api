@@ -1,9 +1,6 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Inject;
-import com.google.inject.Provides;
-import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
 import gov.ca.cwds.cals.service.FacilityService;
@@ -34,10 +31,10 @@ public class ServicesModule extends AbstractModule{
     @Provides
     @Inject
     FacilityService provideFacilityService(UnitOfWorkAwareProxyFactory unitOfWorkAwareProxyFactory,
-            LisFacFileDao lisFacFileDao, FacilityMapper facilityMapper) {
+                                           LisFacFileDao lisFacFileDao, PlacementHomeDao placementHomeDao, FacilityMapper facilityMapper) {
         return unitOfWorkAwareProxyFactory
-                .create(FacilityService.class, new Class[]{LisFacFileDao.class, FacilityMapper.class},
-                        new Object[]{lisFacFileDao, facilityMapper});
+                .create(FacilityService.class, new Class[]{LisFacFileDao.class, PlacementHomeDao.class, FacilityMapper.class},
+                        new Object[]{lisFacFileDao, placementHomeDao, facilityMapper});
     }
 
 }
