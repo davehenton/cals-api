@@ -9,6 +9,13 @@ import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.model.lis.County;
+import gov.ca.cwds.cals.model.lis.FacilityStatusType;
+import gov.ca.cwds.cals.model.lis.FacilityType;
+import gov.ca.cwds.cals.model.lis.LisDoFile;
+import gov.ca.cwds.cals.model.lis.LisFacFile;
+import gov.ca.cwds.cals.model.lis.LisTableFile;
+import gov.ca.cwds.cals.model.lis.VisitReasonType;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
@@ -33,13 +40,13 @@ public class DataAccessModule extends AbstractModule {
 
     private final HibernateBundle<CalsApiConfiguration> lisHibernateBundle =
             new HibernateBundle<CalsApiConfiguration>(
-                    gov.ca.cwds.cals.model.lis.LisFacFile.class,
-                    gov.ca.cwds.cals.model.lis.LisTableFile.class,
-                    gov.ca.cwds.cals.model.lis.FacilityType.class,
-                    gov.ca.cwds.cals.model.lis.LisDoFile.class,
-                    gov.ca.cwds.cals.model.lis.FacilityStatusType.class,
-                    gov.ca.cwds.cals.model.lis.VisitReasonType.class,
-                    gov.ca.cwds.cals.model.lis.County.class
+                    LisFacFile.class,
+                    LisTableFile.class,
+                    FacilityType.class,
+                    LisDoFile.class,
+                    FacilityStatusType.class,
+                    VisitReasonType.class,
+                    County.class
             ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
