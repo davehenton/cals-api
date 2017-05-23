@@ -46,6 +46,7 @@ public class FacilityResource {
     @Path("/{" + FACILITY_ID + "}")
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 417, message = "Expectation Failed"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Facility by id ", response = FacilityDTO.class)
     public Response getFacilityById(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
