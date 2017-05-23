@@ -1,17 +1,14 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
-import gov.ca.cwds.cals.service.dto.PlanOfCorrectionDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityInspectionParameterObject;
 import gov.ca.cwds.rest.api.Response;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -30,8 +27,15 @@ public class FacilityInspectionService extends CrudServiceAdapter {
 
     @Override
     public Response find(Serializable params) {
+
         FacilityInspectionParameterObject paramsObj = (FacilityInspectionParameterObject) params;
 
+        Rrcpoc rrcpoc = inspectionDao.getByFacilityNumberAndInspectionId(
+                paramsObj.getFacilityId(), paramsObj.getInspectionId());
+
+        FacilityInspectionDTO dto = facilityInspectionMapper.toFacilityInspectionDto(rrcpoc);
+
+        /*
         FacilityInspectionDTO dto = new FacilityInspectionDTO();
         FacilityInspectionDTO facilityInspectionDTO = new FacilityInspectionDTO();
 
@@ -50,13 +54,13 @@ public class FacilityInspectionService extends CrudServiceAdapter {
             poc.setPocDateCleared(LocalDateTime.now());
             poc.setPocDueDate(LocalDateTime.MAX);
             poc.setPocSectionViolated("Section Violated #" + i);
-            poc.setPomCommentCont("Comment Cont #" + i);
-            poc.setPomCorrectionPlanCont("Correction Plan Cont #" + i);
+            poc.setPocCommentCont("Comment Cont #" + i);
+            poc.setPocCorrectionPlanCont("Correction Plan Cont #" + i);
 
             pocs.add(poc);
         }
+        */
 
-        //FacilityInspectionDTO dto =  facilityInspectionMapper.toFacilityInspectionDto(null);
         return dto;
     }
 

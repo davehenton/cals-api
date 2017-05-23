@@ -61,7 +61,7 @@ public class FacilityInspectionsResource {
         return collectionResourceDelegate.get(facilityId);
     }
 
-
+    @UnitOfWork(value = "fas")
     @GET
     @Timed
     @Path("/{" + INSPECTION_ID + "}")

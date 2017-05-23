@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
@@ -30,7 +31,7 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
 
     private LocalDateTime form809PrintDate;
 
-    private List<PlanOfCorrectionDTO> pocs;
+    private List<PlanOfCorrectionDTO> pocs = new ArrayList<>();
 
     public String getId() {
         return id;

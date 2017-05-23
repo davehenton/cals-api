@@ -21,10 +21,19 @@ public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
         super(sessionFactory);
     }
 
-    public List<Rrcpoc> findByFacilityNumber(Integer fasilityNumber) {
+    public List<Rrcpoc> findByFacilityNumber(Integer facilityNumber) {
         Session currentSession = getSessionFactory().getCurrentSession();
         Query<Rrcpoc> namedQuery = currentSession.createNamedQuery(Rrcpoc.NQ_FIND_BY_FACILITY_NUMBER, Rrcpoc.class);
-        namedQuery.setParameter("facilityNumber", fasilityNumber);
+        namedQuery.setParameter("facilityNumber", facilityNumber);
         return namedQuery.list();
+    }
+
+    public Rrcpoc getByFacilityNumberAndInspectionId(Integer facilityNumber, String inspectionId) {
+        Session currentSession = getSessionFactory().getCurrentSession();
+        Query<Rrcpoc> namedQuery = currentSession.createNamedQuery(
+                Rrcpoc.NQ_FIND_BY_FACILITY_NUMBER_AND_INSPECTION_ID, Rrcpoc.class);
+        namedQuery.setParameter("facilityNumber", facilityNumber);
+        namedQuery.setParameter("inspectionId", inspectionId);
+        return namedQuery.getSingleResult();
     }
 }

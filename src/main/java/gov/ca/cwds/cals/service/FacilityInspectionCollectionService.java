@@ -31,12 +31,13 @@ public class FacilityInspectionCollectionService extends CrudServiceAdapter {
 
     @Override
     public Response find(Serializable facilityId) {
-        FacilityInspectionsDTO dto = new FacilityInspectionsDTO();
-
+        final FacilityInspectionsDTO dto = new FacilityInspectionsDTO();
         List<Rrcpoc> pocsRes = inspectionDao.findByFacilityNumber((Integer) facilityId);
+        pocsRes.forEach(rrcpoc -> dto.getInspections().add(
+                facilityInspectionMapper.toFacilityInspectionDto(rrcpoc)));
 
         // TODO Implement retrieving Inspections data
-
+        /*
         List<FacilityInspectionDTO> inspections = dto.getInspections();
         for (int i = 0; i < 3; i++)  {
 
@@ -57,14 +58,14 @@ public class FacilityInspectionCollectionService extends CrudServiceAdapter {
                 poc.setPocDateCleared(LocalDateTime.now());
                 poc.setPocDueDate(LocalDateTime.MAX);
                 poc.setPocSectionViolated("Section Violated #" + j);
-                poc.setPomCommentCont("Comment Cont #" + j);
-                poc.setPomCorrectionPlanCont("Correction Plan Cont #" + j);
+                poc.setPocCommentCont("Comment Cont #" + j);
+                poc.setPocCorrectionPlanCont("Correction Plan Cont #" + j);
 
                 pocs.add(poc);
             }
 
             inspections.add(facilityInspectionDTO);
-        }
+        }*/
         return dto;
     }
 }

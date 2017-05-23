@@ -29,9 +29,9 @@ public class PlanOfCorrectionDTO extends BaseDTO {
 
     private String pocComment;
 
-    private String pomCorrectionPlanCont;
+    private String pocCorrectionPlanCont;
 
-    private String pomCommentCont;
+    private String pocCommentCont;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
     @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
@@ -77,20 +77,20 @@ public class PlanOfCorrectionDTO extends BaseDTO {
         this.pocComment = pocComment;
     }
 
-    public String getPomCorrectionPlanCont() {
-        return pomCorrectionPlanCont;
+    public String getPocCorrectionPlanCont() {
+        return pocCorrectionPlanCont;
     }
 
-    public void setPomCorrectionPlanCont(String pomCorrectionPlanCont) {
-        this.pomCorrectionPlanCont = pomCorrectionPlanCont;
+    public void setPocCorrectionPlanCont(String pocCorrectionPlanCont) {
+        this.pocCorrectionPlanCont = pocCorrectionPlanCont;
     }
 
-    public String getPomCommentCont() {
-        return pomCommentCont;
+    public String getPocCommentCont() {
+        return pocCommentCont;
     }
 
-    public void setPomCommentCont(String pomCommentCont) {
-        this.pomCommentCont = pomCommentCont;
+    public void setPocCommentCont(String pocCommentCont) {
+        this.pocCommentCont = pocCommentCont;
     }
 
     @Override
