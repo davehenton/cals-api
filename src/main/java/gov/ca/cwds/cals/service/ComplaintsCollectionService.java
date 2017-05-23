@@ -1,14 +1,17 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.model.fas.LisFacFile;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
+import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -16,21 +19,28 @@ import java.io.Serializable;
 
 public class ComplaintsCollectionService implements CrudsService {
 
-    private LisFacFileDao lisFacFileDao;
+    private ComplaintReportLic802Dao complaintReportLic802Dao;
     private ComplaintMapper complaintMapper;
 
     @Inject
-    public ComplaintsCollectionService(LisFacFileDao lisFacFileDao,
+    public ComplaintsCollectionService(ComplaintReportLic802Dao complaintReportLic802Dao,
             ComplaintMapper complaintMapper) {
-        this.lisFacFileDao = lisFacFileDao;
+        this.complaintReportLic802Dao = complaintReportLic802Dao;
         this.complaintMapper = complaintMapper;
     }
 
     @Override
-    public Response find(Serializable facilityId) {
-        LisFacFile lisFacFile = lisFacFileDao.find(facilityId);
-        return complaintMapper.complaintsListToComplaintsDTOList(lisFacFile);
+    public Response find(Serializable facilityNumber) {
+        List<ComplaintReportLic802> facilityComplaints = complaintReportLic802Dao
+                .findComplaintsByFacilityNumber((Integer) facilityNumber);
+        if (CollectionUtils.isEmpty(facilityComplaints)) {
+            return null;
+        }
+        ComplaintsDTO complaintsDTO = new ComplaintsDTO();
+        complaintsDTO.setComplaints(complaintMapper.complaintsListToComplaintsDTOList(facilityComplaints));
+        return complaintsDTO;
     }
+
 
     @Override
     public Response delete(Serializable serializable) {

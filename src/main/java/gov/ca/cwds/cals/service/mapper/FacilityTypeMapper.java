@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.model.fas.FacilityType;
+import gov.ca.cwds.cals.model.lis.FacilityType;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

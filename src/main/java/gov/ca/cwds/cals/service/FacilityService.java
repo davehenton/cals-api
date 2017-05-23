@@ -2,9 +2,9 @@ package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
-import gov.ca.cwds.cals.model.fas.LisFacFile;
+import gov.ca.cwds.cals.model.lis.LisFacFile;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
+import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.api.Request;
@@ -15,7 +15,6 @@ import io.dropwizard.hibernate.UnitOfWork;
 import java.io.Serializable;
 
 import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
 import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
 
 /**
@@ -41,7 +40,7 @@ public class FacilityService implements CrudsService {
     public Response find(Serializable params) {
         Response response = null;
         FacilityParameterObject parameterObject = (FacilityParameterObject) params;
-        if (FAS.equals(parameterObject.getUnitOfWork())) {
+        if (LIS.equals(parameterObject.getUnitOfWork())) {
             LisFacFile lisFacFile = findFacilityByLicenseNumber(parameterObject);
             response = facilityMapper.toFacilityDTO(lisFacFile);
         } else if (CMS.equals(parameterObject.getUnitOfWork())) {
@@ -51,7 +50,7 @@ public class FacilityService implements CrudsService {
         return response;
     }
 
-    @UnitOfWork(FAS)
+    @UnitOfWork(LIS)
     protected LisFacFile findFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
         return lisFacFileDao.find(parameterObject.getLicenseNumber());
     }

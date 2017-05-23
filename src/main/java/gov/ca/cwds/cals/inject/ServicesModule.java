@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
+import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
 import gov.ca.cwds.cals.service.FacilityService;

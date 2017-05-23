@@ -38,6 +38,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
         HealthCheckRegistry healthCheckRegistry = environment.healthChecks();
         healthCheckRegistry.register("nsDataSource", new DataSourceHealthCheck(configuration.getNsDataSourceFactory()));
         healthCheckRegistry.register("cmsDataSource", new DataSourceHealthCheck(configuration.getCmsDataSourceFactory()));
+        healthCheckRegistry.register("lisDataSource", new DataSourceHealthCheck(configuration.getLisDataSourceFactory()));
         environment.jersey().getResourceConfig().packages(getClass().getPackage().getName()).register(DeclarativeLinkingFeature.class);
 
         runHealthChecks(environment);
