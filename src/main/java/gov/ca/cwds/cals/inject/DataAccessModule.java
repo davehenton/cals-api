@@ -9,8 +9,10 @@ import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.dao.fas.FacilityTypeDao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.DataSourceFactory;
@@ -21,6 +23,7 @@ import org.hibernate.SessionFactory;
 
 import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
 import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
 
 /**
  * @author CWDS CALS API Team
@@ -45,7 +48,7 @@ public class DataAccessModule extends AbstractModule {
 
                 @Override
                 public String name() {
-                    return "lis";
+                    return LIS;
                 }
             };
 
@@ -93,7 +96,9 @@ public class DataAccessModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(ComplaintReportLic802Dao.class);
+        bind(FacilityTypeDao.class);
         bind(CountiesDao.class);
+        bind(ClientDao.class);
     }
 
     @Provides

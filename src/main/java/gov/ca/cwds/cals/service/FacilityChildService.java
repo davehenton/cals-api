@@ -1,45 +1,34 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.model.cms.PlacementHome;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.cals.service.mapper.FacilityChildrenMapper;
+import gov.ca.cwds.cals.model.cms.Client;
+import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
+import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author CWDS CALS API Team
  */
 public class FacilityChildService extends CrudServiceAdapter {
-    private PlacementHomeDao placementHomeDao;
-    private FacilityChildrenMapper facilityChildrenMapper;
+    private ClientDao clientDao;
+    private FacilityChildMapper facilityChildMapper;
 
     @Inject
-    public FacilityChildService(PlacementHomeDao placementHomeDao, FacilityChildrenMapper facilityChildrenMapper) {
-        this.placementHomeDao = placementHomeDao;
-        this.facilityChildrenMapper = facilityChildrenMapper;
+    public FacilityChildService(ClientDao clientDao, FacilityChildMapper facilityChildMapper) {
+        this.clientDao = clientDao;
+        this.facilityChildMapper = facilityChildMapper;
     }
 
     // TODO Refactor me, implement proper mapping
     @Override
     public Response find(Serializable params) {
-        Response resp = null;
         String paramsString = (String) params;
         String[] paramsValues = paramsString.split(",");
-        PlacementHome placementHome = placementHomeDao.findChild(paramsValues[0], paramsValues[1]);
-
-        if (placementHome != null) {
-            List<FacilityChildDTO> children = facilityChildrenMapper.toFacilityChildrenDTO(placementHome).getChildren();
-            if (!children.isEmpty()) {
-                resp = children.get(0);
-            }
-        }
-
-        return resp;
+        Client client = clientDao.find(paramsValues[0], paramsValues[1]);
+        return facilityChildMapper.toFacilityChildDTO(client);
     }
 
     @Override

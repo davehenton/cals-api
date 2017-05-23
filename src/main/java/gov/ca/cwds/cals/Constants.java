@@ -22,11 +22,17 @@ public final class Constants {
 
         public static final String COUNTIES = "counties";
 
+        public static final String FACILITY_TYPES = "facility-types";
+
         public static class PATH_PARAMS {
 
             public static final String FACILITY_ID = "facilityId";
 
+            public static final String CHILD_ID = "childId";
+
             public static final String COMPLAINT_ID = "complaintId";
+
+            public static final String FACILITY_TYPE_ID = "facilityTypeId";
 
         }
     }

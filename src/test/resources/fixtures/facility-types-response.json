@@ -1,0 +1,10 @@
+{
+  "messages" : [ ],
+  "facility_types" : [ {
+    "code" : "811",
+    "description" : "A First Care"
+  }, {
+    "code" : "810",
+    "description" : "FAMILY DAY CARE"
+  } ]
+}
