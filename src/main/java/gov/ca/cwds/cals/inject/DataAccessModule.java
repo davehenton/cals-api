@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.model.fas.LpaInformation;
 import gov.ca.cwds.cals.model.lis.County;
 import gov.ca.cwds.cals.model.lis.FacilityStatusType;
 import gov.ca.cwds.cals.model.lis.FacilityType;
@@ -21,6 +22,7 @@ import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityTypeDao;
+import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.DataSourceFactory;
@@ -62,7 +64,8 @@ public class DataAccessModule extends AbstractModule {
 
     private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
             new HibernateBundle<CalsApiConfiguration>(
-                    ComplaintReportLic802.class
+                    ComplaintReportLic802.class,
+                    LpaInformation.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -108,6 +111,7 @@ public class DataAccessModule extends AbstractModule {
         bind(CountiesDao.class);
         bind(ClientDao.class);
         bind(PlacementHomeDao.class);
+        bind(LpaInformationDao.class);
     }
 
     @Provides
