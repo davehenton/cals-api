@@ -2,8 +2,7 @@ package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
-import gov.ca.cwds.cals.model.fas.LisFacFile;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
+import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityComplaintParameterObject;
@@ -12,9 +11,7 @@ import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 
 import java.io.Serializable;
-import java.util.Optional;
 
-import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.FACILITY_NOT_FOUND_BY_ID;
 import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.COMPLAINT_NOT_FOUND_BY_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
@@ -24,13 +21,13 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 public class ComplaintService implements CrudsService {
 
-    private LisFacFileDao lisFacFileDao;
+    private ComplaintReportLic802Dao complaintReportLic802Dao;
     private ComplaintMapper complaintMapper;
 
     @Inject
-    public ComplaintService(LisFacFileDao lisFacFileDao,
+    public ComplaintService(ComplaintReportLic802Dao complaintReportLic802Dao,
             ComplaintMapper complaintMapper) {
-        this.lisFacFileDao = lisFacFileDao;
+        this.complaintReportLic802Dao = complaintReportLic802Dao;
         this.complaintMapper = complaintMapper;
     }
 
@@ -39,16 +36,13 @@ public class ComplaintService implements CrudsService {
         FacilityComplaintParameterObject parameterObject = null;
         if (parametersObject instanceof FacilityComplaintParameterObject) {
             parameterObject = (FacilityComplaintParameterObject) parametersObject;
-            LisFacFile facility = lisFacFileDao.find(parameterObject.getFacilityId());
-            if (facility == null) {
-                throw new UserFriendlyException(FACILITY_NOT_FOUND_BY_ID, NOT_FOUND);
+            ComplaintReportLic802 complaintReportLic802 =complaintReportLic802Dao.findComplaintByFacilityIdAndComplaintId(
+                    parameterObject.getFacilityId(), parameterObject.getComplaintId());
+            if (complaintReportLic802 == null) {
+                throw new UserFriendlyException(COMPLAINT_NOT_FOUND_BY_ID, NOT_FOUND);
+            } else {
+                return complaintMapper.entityToDTO(complaintReportLic802);
             }
-            final FacilityComplaintParameterObject finalParameterObject = parameterObject;
-            Optional<ComplaintReportLic802> complaintReportLic802 = facility.getComplaints().stream()
-                    .filter((complaint) -> complaint.getOriginalunidkey().equals(finalParameterObject.getComplaintId()))
-                    .findFirst();
-            return complaintMapper.entityToDTO(complaintReportLic802
-                    .orElseThrow(() -> new UserFriendlyException(COMPLAINT_NOT_FOUND_BY_ID, NOT_FOUND)));
         }
         throw new IllegalStateException("FacilityComplaintParameterObject is expected here");
     }

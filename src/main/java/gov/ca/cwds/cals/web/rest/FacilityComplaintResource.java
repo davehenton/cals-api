@@ -26,6 +26,7 @@ import static gov.ca.cwds.cals.Constants.API.COMPLAINTS;
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.COMPLAINT_ID;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
 
 /**
  * @author CWDS CALS API Team
@@ -48,7 +49,7 @@ public class FacilityComplaintResource {
        this.resourceEntityDelegate = resourceEntityDelegate;
     }
 
-    @UnitOfWork(value = "fas")
+    @UnitOfWork(FAS)
     @GET
     @Timed
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
@@ -61,7 +62,7 @@ public class FacilityComplaintResource {
         return resourceCollectionDelegate.get(facilityId);
     }
 
-    @UnitOfWork(value = "fas")
+    @UnitOfWork(FAS)
     @GET
     @Timed
     @Path("/{" + COMPLAINT_ID + "}")

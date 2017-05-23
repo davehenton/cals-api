@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.model.cms.Client;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
+import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 
@@ -22,12 +23,10 @@ public class FacilityChildService extends CrudServiceAdapter {
         this.facilityChildMapper = facilityChildMapper;
     }
 
-    // TODO Refactor me, implement proper mapping
     @Override
     public Response find(Serializable params) {
-        String paramsString = (String) params;
-        String[] paramsValues = paramsString.split(",");
-        Client client = clientDao.find(paramsValues[0], paramsValues[1]);
+        FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
+        Client client = clientDao.find(parameterObject);
         return facilityChildMapper.toFacilityChildDTO(client);
     }
 

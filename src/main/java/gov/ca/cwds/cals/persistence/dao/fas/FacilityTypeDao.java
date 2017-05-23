@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.persistence.dao.fas;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.FasSessionFactory;
-import gov.ca.cwds.cals.model.fas.FacilityType;
+import gov.ca.cwds.cals.inject.LisSessionFactory;
+import gov.ca.cwds.cals.model.lis.FacilityType;
 import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,7 +20,7 @@ public class FacilityTypeDao extends BaseDaoImpl<FacilityType> {
     private static final Logger LOG = LoggerFactory.getLogger(FacilityTypeDao.class);
 
     @Inject
-    public FacilityTypeDao(@FasSessionFactory SessionFactory sessionFactory) {
+    public FacilityTypeDao(@LisSessionFactory SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 

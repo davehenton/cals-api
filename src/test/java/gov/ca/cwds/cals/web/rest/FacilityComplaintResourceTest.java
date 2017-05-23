@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -28,7 +29,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
         setUpFas();
-        getFasDatabaseHelper().runScript("liquibase/fas/complaints_data.xml", "fas");
+        getFasDatabaseHelper().runScript("liquibase/fas/dml/complaints_data.xml", FAS);
     }
 
     @Test
@@ -61,19 +62,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     }
 
     @Test
-    public void getFacilityComplaintWrongFacilityIdTest() throws JsonProcessingException {
-        WebTarget target = clientTestRule
-                .target(FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
-                                COMPLAINT_ID);
-        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-        Response response = invocation.get();
-        assertEquals(404, response.getStatus());
-        String fixture = fixture("fixtures/facility-not-found-by-id-response.json");
-        assertThat(response.readEntity(String.class)).isEqualTo(fixture);
-    }
-
-    @Test
-    public void getFacilityComplaintWrongComplaintIdTest() throws JsonProcessingException {
+    public void getFacilityComplaintNoResultTest() throws JsonProcessingException {
         WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
                 WRONG_COMPLAINT_ID);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);

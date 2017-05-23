@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.model.fas.LisFacFile;
+import gov.ca.cwds.cals.model.lis.LisFacFile;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
