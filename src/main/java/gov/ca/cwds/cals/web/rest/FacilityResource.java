@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
 import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
 
 /**
  *  @author CALS API Team
@@ -59,7 +59,7 @@ public class FacilityResource {
         FacilityParameterObject parameterObject;
         try {
             Integer licenseNumber = Integer.valueOf(facilityNumber);
-            parameterObject = new FacilityParameterObject(licenseNumber, FAS);
+            parameterObject = new FacilityParameterObject(licenseNumber, LIS);
         } catch (NumberFormatException e) {
             parameterObject = new FacilityParameterObject(facilityNumber, CMS);
         }

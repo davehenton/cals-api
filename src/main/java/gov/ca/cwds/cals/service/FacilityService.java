@@ -15,7 +15,6 @@ import io.dropwizard.hibernate.UnitOfWork;
 import java.io.Serializable;
 
 import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
 import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
 
 /**
@@ -41,7 +40,7 @@ public class FacilityService implements CrudsService {
     public Response find(Serializable params) {
         Response response = null;
         FacilityParameterObject parameterObject = (FacilityParameterObject) params;
-        if (FAS.equals(parameterObject.getUnitOfWork())) {
+        if (LIS.equals(parameterObject.getUnitOfWork())) {
             LisFacFile lisFacFile = findFacilityByLicenseNumber(parameterObject);
             response = facilityMapper.toFacilityDTO(lisFacFile);
         } else if (CMS.equals(parameterObject.getUnitOfWork())) {
@@ -51,7 +50,7 @@ public class FacilityService implements CrudsService {
         return response;
     }
 
-    @UnitOfWork(FAS)
+    @UnitOfWork(LIS)
     protected LisFacFile findFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
         return lisFacFileDao.find(parameterObject.getLicenseNumber());
     }
