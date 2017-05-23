@@ -9,13 +9,13 @@ import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.model.lis.County;
 import gov.ca.cwds.cals.model.lis.FacilityStatusType;
 import gov.ca.cwds.cals.model.lis.FacilityType;
 import gov.ca.cwds.cals.model.lis.LisDoFile;
 import gov.ca.cwds.cals.model.lis.LisFacFile;
 import gov.ca.cwds.cals.model.lis.LisTableFile;
-import gov.ca.cwds.cals.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.model.lis.VisitReasonType;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
@@ -23,7 +23,6 @@ import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.DataSourceFactory;
@@ -32,9 +31,7 @@ import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.*;
 
 /**
  * @author CWDS CALS API Team
