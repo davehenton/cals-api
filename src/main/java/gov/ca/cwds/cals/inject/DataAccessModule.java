@@ -151,8 +151,4 @@ public class DataAccessModule extends AbstractModule {
         return new UnitOfWorkAwareProxyFactory(lisHibernateBundle, fasHibernateBundle, cmsHibernateBundle);
     }
 
-    @Provides
-    UnitOfWorkAwareProxyFactory lisUnitOfWorkAwareProxyFactory() {
-        return new UnitOfWorkAwareProxyFactory(fasHibernateBundle, cmsHibernateBundle);
-    }
 }
