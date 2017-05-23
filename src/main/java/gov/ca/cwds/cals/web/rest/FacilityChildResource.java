@@ -6,7 +6,7 @@ import gov.ca.cwds.cals.inject.FacilityChildCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.FacilityChildServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
+import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -22,7 +22,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.Constants.API.*;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.Constants.API.CHILDREN;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.CHILD_ID;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
 
@@ -52,7 +53,7 @@ public class FacilityChildResource {
     @ApiOperation(value = "Returns Children", response = FacilityChildrenDTO.class)
     public Response getChildren(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID,
             value = "The license number of the Placement Home") String facility_license_number) {
-        return collectionResourceDelegate.get(facility_license_number);
+        return collectionResourceDelegate.get(new FacilityChildParameterObject(facility_license_number));
     }
 
     @UnitOfWork(value = "cms")
@@ -65,6 +66,6 @@ public class FacilityChildResource {
     @ApiOperation(value = "Returns Child", response = FacilityChildDTO.class)
     public Response getChild(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID, value = "The license number of the Placement Home") String facility_license_number,
             @PathParam(CHILD_ID) @ApiParam(required = true, name = CHILD_ID, value = "The id of the Client") String childId) {
-        return resourceDelegate.get(facility_license_number + ',' + childId);
+        return resourceDelegate.get(new FacilityChildParameterObject(facility_license_number, childId));
     }
 }
