@@ -9,9 +9,7 @@ import gov.ca.cwds.cals.model.cms.OutOfHomePlacement;
 import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
-import gov.ca.cwds.cals.model.fas.County;
 import gov.ca.cwds.cals.model.fas.FacilityStatusType;
-import gov.ca.cwds.cals.model.fas.FacilityType;
 import gov.ca.cwds.cals.model.fas.LisDoFile;
 import gov.ca.cwds.cals.model.fas.LisFacFile;
 import gov.ca.cwds.cals.model.fas.LisTableFile;
@@ -40,11 +38,11 @@ public class DataAccessModule extends AbstractModule {
             new HibernateBundle<CalsApiConfiguration>(
                     LisFacFile.class,
                     LisTableFile.class,
-                    FacilityType.class,
+                    gov.ca.cwds.cals.model.fas.FacilityType.class,
                     LisDoFile.class,
                     FacilityStatusType.class,
                     VisitReasonType.class,
-                    County.class,
+                    gov.ca.cwds.cals.model.fas.County.class,
                     ComplaintReportLic802.class
                     ) {
                 @Override
@@ -65,6 +63,7 @@ public class DataAccessModule extends AbstractModule {
                     PlacementEpisode.class,
                     PlacementHome.class,
                     StaffPerson.class,
+                    gov.ca.cwds.cals.model.cms.FacilityType.class,
                     gov.ca.cwds.cals.model.cms.County.class
                     ) {
                 @Override

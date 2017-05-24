@@ -41,7 +41,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonProperty("type")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Facility Type")
-    private DictionaryDTO type;
+    private FacilityTypeDTO type;
 
     @JsonProperty("name")
     @NotNull
@@ -152,11 +152,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
         this.id = id;
     }
 
-    public DictionaryDTO getType() {
+    public FacilityTypeDTO getType() {
         return type;
     }
 
-    public void setType(DictionaryDTO type) {
+    public void setType(FacilityTypeDTO type) {
         this.type = type;
     }
 
