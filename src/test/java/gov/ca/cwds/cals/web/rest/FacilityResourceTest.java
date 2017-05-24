@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
-    private static final String LICENSE_NUMBER = "193600001";
+    private static final String LICENSE_NUMBER = "193600110";
     private static final String WRONG_LICENSE_NUMBER = "1";
 
     private static final String FACILITY_ID = "E6tloOO0Ql";

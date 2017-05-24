@@ -1,65 +1,65 @@
 {
   "messages" : [ ],
-  "href" : "facilities/193600001",
-  "id" : 193600001,
+  "href" : "facilities/193600110",
+  "id" : 193600110,
   "type" : {
     "code" : "810",
     "description" : "FAMILY DAY CARE"
   },
-  "name" : "BACKYARDIGAN FOSTER FAMILY HOME",
-  "licensee_name" : "PROMESA BEHAVIORAL HEALTH",
+  "name" : "MAD HATTER RESIDENTIAL FOR THE CHRONICALLY ILL",
+  "licensee_name" : "CHILDHELP, INC.",
   "license_type" : "A",
   "assigned_worker" : {
-    "code" : "980AJH",
-    "description" : "Adam Hudnall"
+    "code" : "03B302",
+    "description" : "Karen Buckley"
   },
   "district_office" : {
-    "number" : "98",
-    "name" : "BAY AREA-CC OAKLAND"
+    "number" : "3",
+    "name" : "RIVER CITY (SACTO)CC"
   },
-  "license_number" : 193600001,
+  "license_number" : 193600110,
   "status" : {
-    "code" : "15",
-    "description" : "CLOSED, CHG LOCATION"
+    "code" : "9",
+    "description" : "CLOSED, LIC INIT."
   },
-  "capacity" : 14,
-  "license_effective_date" : "2004-05-10",
-  "original_application_recieved_date" : "2004-01-28",
-  "last_visit_date" : "2011-08-18",
+  "capacity" : 8,
+  "license_effective_date" : "2004-05-27",
+  "original_application_recieved_date" : "2004-01-26",
+  "last_visit_date" : "2004-04-02",
   "last_visit_reason" : {
-    "code" : "4",
-    "description" : "ANNUAL"
+    "code" : "1",
+    "description" : "PRELICENSING"
   },
   "county" : {
-    "code" : "7",
-    "description" : "CONTRA COSTA"
+    "code" : "39",
+    "description" : "SAN JOAQUIN"
   },
   "children" : {
-    "href" : "facilities/193600001/children"
+    "href" : "facilities/193600110/children"
   },
   "complains" : {
-    "href" : "facilities/193600001/complaints"
+    "href" : "facilities/193600110/complaints"
   },
   "phones" : [ {
     "relation" : "primary",
     "type" : "Cell",
-    "number" : "9255220001"
+    "number" : "2092340660"
   } ],
   "addresses" : [ {
     "type" : "residential",
     "address" : {
-      "street_address" : "485 PILGRIM AVE.",
-      "city" : "MODESTO",
+      "street_address" : "87 SW. LAKEWOOD AVE.",
+      "city" : "NATIONAL CITY",
       "state" : "CA",
-      "zip_code" : "95650"
+      "zip_code" : "91950"
     }
   }, {
     "type" : "mail",
     "address" : {
-      "street_address" : "485 PILGRIM AVE.",
-      "city" : "MODESTO",
+      "street_address" : "87 SW. LAKEWOOD AVE.",
+      "city" : "NATIONAL CITY",
       "state" : "CA",
-      "zip_code" : "95650"
+      "zip_code" : "91950"
     }
   } ]
 }
