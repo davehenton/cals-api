@@ -23,6 +23,10 @@ public interface AddressMapper {
 //    @Mapping(target = "state", source = "fState")
     @Mapping(target = "zipCode", source = "zipNo")
     @Mapping(target = "zipSuffixCode", source = "zipSfxNo")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "longitude", ignore = true)
+    @Mapping(target = "lattitude", ignore = true)
+    @Mapping(target = "deliverable", ignore = true)
     AddressDTO toResidentialAddressDTO(PlacementHome placementHome);
 
     @Named(MAIL)
@@ -31,6 +35,10 @@ public interface AddressMapper {
 //    @Mapping(target = "state", source = "pState")
     @Mapping(target = "zipCode", source = "pZipNo")
     @Mapping(target = "zipSuffixCode", source = "pyZipSfx")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "longitude", ignore = true)
+    @Mapping(target = "lattitude", ignore = true)
+    @Mapping(target = "deliverable", ignore = true)
     AddressDTO toMailAddressDTO(PlacementHome placementHome);
 }
 

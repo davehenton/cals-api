@@ -19,12 +19,12 @@ import static gov.ca.cwds.cals.Constants.ADDRESS_TYPES.RESIDENTIAL;
 public interface FacilityAddressMapper {
     FacilityAddressMapper INSTANCE = Mappers.getMapper(FacilityAddressMapper.class);
 
-//    @Named(RESIDENTIAL)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "type", constant = RESIDENTIAL)
     @Mapping(target = "address", source = "placementHome", qualifiedByName = RESIDENTIAL)
     FacilityAddressDTO toResidentialAddress(PlacementHome placementHome);
 
-//    @Named(MAIL)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "type", constant = MAIL)
     @Mapping(target = "address", source = "placementHome", qualifiedByName = MAIL)
     FacilityAddressDTO toMailAddress(PlacementHome placementHome);
