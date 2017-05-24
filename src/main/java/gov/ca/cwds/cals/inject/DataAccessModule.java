@@ -10,9 +10,7 @@ import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.model.fas.LpaInformation;
-import gov.ca.cwds.cals.model.lis.County;
 import gov.ca.cwds.cals.model.lis.FacilityStatusType;
-import gov.ca.cwds.cals.model.lis.FacilityType;
 import gov.ca.cwds.cals.model.lis.LisDoFile;
 import gov.ca.cwds.cals.model.lis.LisFacFile;
 import gov.ca.cwds.cals.model.lis.LisTableFile;
@@ -45,11 +43,11 @@ public class DataAccessModule extends AbstractModule {
             new HibernateBundle<CalsApiConfiguration>(
                     LisFacFile.class,
                     LisTableFile.class,
-                    gov.ca.cwds.cals.model.fas.FacilityType.class,
+                    gov.ca.cwds.cals.model.lis.FacilityType.class,
                     LisDoFile.class,
                     FacilityStatusType.class,
                     VisitReasonType.class,
-                    gov.ca.cwds.cals.model.fas.County.County.class
+                    gov.ca.cwds.cals.model.lis.County.class
             ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {

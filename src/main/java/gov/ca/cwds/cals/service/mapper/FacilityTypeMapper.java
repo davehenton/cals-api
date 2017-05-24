@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.model.lis.FacilityType;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,11 +14,11 @@ import java.util.List;
 public interface FacilityTypeMapper {
     FacilityTypeMapper INSTANCE = Mappers.getMapper(FacilityTypeMapper.class);
 
-    List<FacilityTypeDTO> toFacilityTypeDTO(List<gov.ca.cwds.cals.model.fas.FacilityType> facilityTypes);
+    List<FacilityTypeDTO> toFacilityTypeDTO(List<gov.ca.cwds.cals.model.lis.FacilityType> facilityTypes);
 
     @Mapping(target = "code", source = "tblFacTypeCode")
     @Mapping(target = "description", source = "tblFacTypeDesc")
-    FacilityTypeDTO toFacilityTypeDTO(gov.ca.cwds.cals.model.fas.FacilityType facilityType);
+    FacilityTypeDTO toFacilityTypeDTO(gov.ca.cwds.cals.model.lis.FacilityType facilityType);
 
     @Mapping(target = "code", source = "lgcId")
     @Mapping(target = "description", source = "shortDsc")
