@@ -26,15 +26,14 @@ public abstract class FacilityPostMappingProcessor {
 
     private void mapPhones(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
         List<PhoneDTO> phones = new ArrayList<>(1);
-        phones.add(new PhoneMapperImpl().lisFacilityToPhoneDTO(lisFacFile));
+        phones.add(PhoneMapper.INSTANCE.lisFacilityToPhoneDTO(lisFacFile));
         facilityDTO.setPhone(phones);
     }
 
     private void mapAddresses(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
-        List<FacilityAddressDTO> addresses = new ArrayList<>(2); FacilityAddressDTO residentialAddress = new ResidentialAddressMapperImpl().lisFacilityToFacilityAddressDTO(
-                lisFacFile);
-        FacilityAddressDTO mailAddress = new MailAddressMapperImpl().lisFacilityToFacilityAddressDTO(
-                lisFacFile);
+        List<FacilityAddressDTO> addresses = new ArrayList<>(2);
+        FacilityAddressDTO residentialAddress = ResidentialAddressMapper.INSTANCE.lisFacilityToFacilityAddressDTO(lisFacFile);
+        FacilityAddressDTO mailAddress = MailAddressMapper.INSTANCE.lisFacilityToFacilityAddressDTO(lisFacFile);
         addresses.add(residentialAddress);
         addresses.add(mailAddress);
         facilityDTO.setAddress(addresses);

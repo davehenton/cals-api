@@ -114,7 +114,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonProperty("county")
     @NotNull
     @ApiModelProperty(required = false, readOnly = false, value = "County")
-    private DictionaryDTO county;
+    private CountyDTO county;
 
     @JsonProperty("children")
     @NotNull
@@ -264,11 +264,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
         this.lastVisitReason = lastVisitReason;
     }
 
-    public DictionaryDTO getCounty() {
+    public CountyDTO getCounty() {
         return county;
     }
 
-    public void setCounty(DictionaryDTO county) {
+    public void setCounty(CountyDTO county) {
         this.county = county;
     }
 

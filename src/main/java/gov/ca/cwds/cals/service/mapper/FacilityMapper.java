@@ -21,7 +21,7 @@ import java.util.List;
  * @author CWDS CALS API Team
  */
 @Mapper(imports = {Constants.class, HyperlinkDTO.class},
-        uses={FacilityPostMappingProcessor.class, FacilityTypeMapper.class} )
+        uses={FacilityPostMappingProcessor.class, FacilityTypeMapper.class, CountyMapper.class} )
 public interface FacilityMapper {
 
     FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
@@ -58,6 +58,7 @@ public interface FacilityMapper {
             "\"/%s/\" + Constants.API.COMPLAINTS, lisFacFile.getFacNbr())))")
     FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "name", source = "facltyNm")
     @Mapping(target = "type", source = "facilityType")
     @Mapping(target = "licenseeName", source = "licnseeNm")
@@ -68,9 +69,15 @@ public interface FacilityMapper {
     @Mapping(target = "capacity", source = "maxCapNo")
     @Mapping(target = "licenseEffectiveDate", source = "licEfctdt")
     @Mapping(target = "originalApplicationRecievedDate", source = "licAplDt")
-    @Mapping(target = "county.description", source = "gvrEntc")
+    @Mapping(target = "county", source = "county")
 //    @Mapping(target = "lastVisitDate", source = "lic_vstt \tvisit_date")
 //    @Mapping(target = "lastVisitReason.code", source = "lic_vstt \tvisit_type")
+    @Mapping(target = "messages", ignore = true)
+    @Mapping(target = "phone", ignore = true)
+    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "emailAddress", ignore = true)
+    @Mapping(target = "children", ignore = true)
+    @Mapping(target = "complains", ignore = true)
     FacilityDTO toFacilityDTO(PlacementHome placementHome);
 
     @AfterMapping
