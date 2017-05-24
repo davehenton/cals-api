@@ -33,7 +33,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
     private String controlNumber;
 
     @JsonProperty("priority_level")
-    private Integer priorityLevel;
+    private String priorityLevel;
 
     @JsonProperty("status")
     private String status;
@@ -75,11 +75,11 @@ public class ComplaintDTO extends BaseDTO implements Response {
         this.controlNumber = controlNumber;
     }
 
-    public Integer getPriorityLevel() {
+    public String getPriorityLevel() {
         return priorityLevel;
     }
 
-    public void setPriorityLevel(Integer priorityLevel) {
+    public void setPriorityLevel(String priorityLevel) {
         this.priorityLevel = priorityLevel;
     }
 
