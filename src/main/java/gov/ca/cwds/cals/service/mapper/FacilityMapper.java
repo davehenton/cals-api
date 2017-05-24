@@ -5,16 +5,23 @@ import gov.ca.cwds.cals.model.fas.LpaInformation;
 import gov.ca.cwds.cals.model.lis.LisFacFile;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
+import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.HyperlinkDTO;
+import gov.ca.cwds.cals.service.dto.PhoneDTO;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author CWDS CALS API Team
  */
-
-@Mapper(imports = {Constants.class, HyperlinkDTO.class}, uses={FacilityPostMappingProcessor.class} )
+@Mapper(imports = {Constants.class, HyperlinkDTO.class},
+        uses={FacilityPostMappingProcessor.class, FacilityTypeMapper.class} )
 public interface FacilityMapper {
 
     FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
@@ -52,7 +59,7 @@ public interface FacilityMapper {
     FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
     @Mapping(target = "name", source = "facltyNm")
-//    @Mapping(target = "facType", source = "plcFclc")
+    @Mapping(target = "type", source = "facilityType")
     @Mapping(target = "licenseeName", source = "licnseeNm")
 //    @Mapping(target = "Approval/Licensing worker", source = "")
 //    @Mapping(target = "Assigned oversight agency", source = "")
@@ -61,17 +68,26 @@ public interface FacilityMapper {
     @Mapping(target = "capacity", source = "maxCapNo")
     @Mapping(target = "licenseEffectiveDate", source = "licEfctdt")
     @Mapping(target = "originalApplicationRecievedDate", source = "licAplDt")
-//    @Mapping(target = "address", source = "street_number, street_name, state_code_type, zip_number, zip_suffix_number")
     @Mapping(target = "county.description", source = "gvrEntc")
-//    @Mapping(target = "phones", source = "prmCnctnm")
-//    @Mapping(target = "phones", source = "bckTelNo")
 //    @Mapping(target = "lastVisitDate", source = "lic_vstt \tvisit_date")
 //    @Mapping(target = "lastVisitReason.code", source = "lic_vstt \tvisit_type")
     FacilityDTO toFacilityDTO(PlacementHome placementHome);
+
+    @AfterMapping
+    default void after(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
+        List<FacilityAddressDTO> facilityAddressDTOs = new ArrayList<>(2);
+        facilityAddressDTOs.add(FacilityAddressMapper.INSTANCE.toResidentialAddress(placementHome));
+        facilityAddressDTOs.add(FacilityAddressMapper.INSTANCE.toMailAddress(placementHome));
+        facilityDTO.setAddress(facilityAddressDTOs);
+
+        List<PhoneDTO> phoneDTOs = new ArrayList<>(2);
+        phoneDTOs.add(PhoneMapper.INSTANCE.toPrimaryPhoneDTO(placementHome));
+        phoneDTOs.add(PhoneMapper.INSTANCE.toAlternatePhoneDTO(placementHome));
+        facilityDTO.setPhone(phoneDTOs);
+    }
 
 /*
     @InheritInverseConfiguration
     LisFacFile facilityDTOToLisFacility(FacilityDTO target);
 */
-
 }

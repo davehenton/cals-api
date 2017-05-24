@@ -32,8 +32,6 @@ public final class Constants {
 
             public static final String COMPLAINT_ID = "complaintId";
 
-            public static final String FACILITY_TYPE_ID = "facilityTypeId";
-
         }
     }
 
@@ -42,6 +40,14 @@ public final class Constants {
         public static final String RESIDENTIAL = "residential";
 
         public static final String MAIL = "mail";
+
+    }
+
+    public static class PHONE_TYPES {
+
+        public static final String PRIMARY = "primary";
+
+        public static final String ALTERNATE = "alternate";
 
     }
 

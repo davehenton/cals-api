@@ -41,7 +41,7 @@
     "href" : "facilities/193600001/complaints"
   },
   "phones" : [ {
-    "relation" : "Primary",
+    "relation" : "primary",
     "type" : "Cell",
     "number" : "9255220001"
   } ],

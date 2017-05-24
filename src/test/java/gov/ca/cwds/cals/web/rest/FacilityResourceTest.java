@@ -44,7 +44,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);
 
-        String fixture = fixture("fixtures/facility-by-id-response.json");
+        String fixture = fixture("fixtures/facility-by-license-number-response.json");
         assertThat(clientTestRule.getMapper().writeValueAsString(facilityDTO)).isEqualTo(fixture);
     }
 
