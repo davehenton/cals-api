@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet author="leonid.marushevskiy (generated)" id="1493269173453-30">
+    <insert tableName="lpa_information">
+        <column name="access_level" value="LPA"/>
+        <column name="audit_history"/>
+        <column name="creator_name" value="Kimmi Goss"/>
+        <column name="do_email_address"/>
+        <column name="dbfilename" value="MasterTrainingDB.nsf"/>
+        <column name="dbpathname" value="Production"/>
+        <column name="dbservername" value="Domino04"/>
+        <column name="dbtitle" value="FAS Training Database"/>
+        <column name="delete_flag"/>
+        <column name="doc_unid" value="89203A7868C28E7788257AE500658283"/>
+        <column name="dont_save_flag" value="1"/>
+        <column name="dt_created" valueDate="2012-12-31"/>
+        <column name="dt_edited" valueDate="2012-12-31"/>
+        <column name="edit_history" value="Kimmi Goss!12/31/2012 10:29:25 AM&#10;"/>
+        <column name="editor_name" value="Kimmi Goss&#10;"/>
+        <column name="editors" value="Admin,RTS,Adam Hudnall"/>
+        <column name="full_lpa_name" value="Adam Hudnall"/>
+        <column name="keydbname" value="Production\\FASSystemKeywords.nsf"/>
+        <column name="lpa_code" value="980AJH"/>
+        <column name="lpa_code_d" value="980AJH"/>
+        <column name="lpa_do_city" value="SACRAMENTO"/>
+        <column name="lpa_do_name" value="CCLD Regional Office"/>
+        <column name="lpa_do_phone" value="(916) 323-6102"/>
+        <column name="lpa_do_street" value="1700 9TH STREET, FOURTH FLOOR"/>
+        <column name="lpa_do_zip" value="95814"/>
+        <column name="lpa_email_address" value="Adam.Hudnall@CDSS.DSS.CA.GOV"/>
+        <column name="lpa_loc_code" value="0"/>
+        <column name="lpa_loc_code_d" value="0"/>
+        <column name="lpa_name" value="Adam Hudnall"/>
+        <column name="lpa_name_d" value="Adam Hudnall"/>
+        <column name="lpa_rgnl_mgr" value="98"/>
+        <column name="lpa_rgnl_mgr_d" value="98"/>
+        <column name="lpa_sup" value="Kimmi Goss"/>
+        <column name="lpa_sup_d" value="Kimmi Goss"/>
+        <column name="lpa_sup_email_addr" value="Kimmi.Goss@DSS.CA.GOV"/>
+        <column name="lpa_sup_telephone" value="(916) 987-6543"/>
+        <column name="lpa_telephone" value="(916) 123-4567"/>
+        <column name="loc_address_code" value="98"/>
+        <column name="noexport"/>
+        <column name="originalunidkey" value="-CC-KGOS-93HPPE-"/>
+        <column name="program_code" value="CC"/>
+        <column name="response_description"/>
+        <column name="lpacodesave" value="980AJH"/>
+    </insert>
+
+    </changeSet>
+</databaseChangeLog>

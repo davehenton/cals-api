@@ -39,7 +39,7 @@ public class RestClientTestRule implements TestRule {
 
     protected String getUriString() {
         URI serverUri = getServerUrl();
-        String serverUrlStr = "http://localhost:8090/"; //port defined in src/test/resources/config/test-cals-api.yml
+        String serverUrlStr = String.format("http://localhost:%s/", dropWizardApplication.getLocalPort());
         if (serverUri != null) {
             serverUrlStr = serverUri.toString();
         }

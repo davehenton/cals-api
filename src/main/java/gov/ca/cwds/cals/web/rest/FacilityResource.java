@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
 import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
 
 /**
  *  @author CALS API Team
@@ -46,6 +46,7 @@ public class FacilityResource {
     @Path("/{" + FACILITY_ID + "}")
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
+            @ApiResponse(code = 417, message = "Expectation Failed"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Facility by id ", response = FacilityDTO.class)
     public Response getFacilityById(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
@@ -59,7 +60,7 @@ public class FacilityResource {
         FacilityParameterObject parameterObject;
         try {
             Integer licenseNumber = Integer.valueOf(facilityNumber);
-            parameterObject = new FacilityParameterObject(licenseNumber, FAS);
+            parameterObject = new FacilityParameterObject(licenseNumber, LIS);
         } catch (NumberFormatException e) {
             parameterObject = new FacilityParameterObject(facilityNumber, CMS);
         }

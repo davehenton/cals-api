@@ -11,6 +11,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -25,11 +28,14 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        setUpFas();
-        getFasDatabaseHelper().runScript("liquibase/fas/fas-data.xml", "fas");
+        setUpLis();
+        getLisDatabaseHelper().runScript("liquibase/lis/dml/lis-data.xml", LIS);
 
         setUpCms();
-        getCmsDatabaseHelper().runScript("liquibase/cms/cms-dml-master.xml", "cms");
+        getCmsDatabaseHelper().runScript("liquibase/cms/cms-dml-master.xml", CMS);
+
+        setUpFas();
+        getFasDatabaseHelper().runScript("liquibase/fas/dml/lpa-information-data.xml", FAS);
     }
 
     @Test

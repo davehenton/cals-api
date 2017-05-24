@@ -11,8 +11,8 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum CalsExceptionInfo {
 
-    FACILITY_NOT_FOUND_BY_ID("1", "Facility is not found by id"),
-    COMPLAINT_NOT_FOUND_BY_ID("2", "Facility complaint is not found by id");
+    COMPLAINT_NOT_FOUND_BY_ID("1", "Facility complaint is not found by facility number and complaint id"),
+    DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN("2", "Disctrict office (lis_fac_file.fac_do_nbr) is unexpectedly empty");
 
     @JsonProperty("code")
     private final String code;

@@ -1,4 +1,4 @@
 {
-  "code" : "2",
-  "message" : "Facility complaint is not found by id"
+  "code" : "1",
+  "message" : "Facility complaint is not found by facility number and complaint id"
 }

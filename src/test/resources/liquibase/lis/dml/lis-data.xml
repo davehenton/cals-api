@@ -8,8 +8,8 @@
             <column name="isn_lis_fac_file" valueNumeric="1"/>
             <column name="fac_nbr" valueNumeric="193600001"/>
             <column name="fac_name" value="BACKYARDIGAN FOSTER FAMILY HOME                   "/>
-            <column name="fac_do_eval_code" value="A106"/>
-            <column name="fac_do_nbr" valueNumeric="2"/>
+            <column name="fac_do_eval_code" value="0AJH"/>
+            <column name="fac_do_nbr" valueNumeric="98"/>
             <column name="fac_co_nbr" valueNumeric="7"/>
             <column name="fac_fm_region_nbr" valueNumeric="0"/>
             <column name="fac_cfirs_id_nbr" valueNumeric="0"/>
@@ -341,7 +341,7 @@
 
         <insert tableName="lis_do_file">
             <column name="isn_lis_do_file" valueNumeric="7"/>
-            <column name="do_nbr" valueNumeric="2"/>
+            <column name="do_nbr" valueNumeric="98"/>
             <column name="do_name" value="BAY AREA-CC OAKLAND "/>
             <column name="do_street_addr" value="1515 CLAY STREET, SUITE 1102  "/>
             <column name="do_city" value="OAKLAND             "/>

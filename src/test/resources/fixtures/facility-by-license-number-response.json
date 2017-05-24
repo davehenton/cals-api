@@ -9,9 +9,12 @@
   "name" : "BACKYARDIGAN FOSTER FAMILY HOME",
   "licensee_name" : "PROMESA BEHAVIORAL HEALTH",
   "license_type" : "A",
-  "assigned_worker" : "A106",
+  "assigned_worker" : {
+    "code" : "980AJH",
+    "description" : "Adam Hudnall"
+  },
   "district_office" : {
-    "number" : "2",
+    "number" : "98",
     "name" : "BAY AREA-CC OAKLAND"
   },
   "license_number" : 193600001,
