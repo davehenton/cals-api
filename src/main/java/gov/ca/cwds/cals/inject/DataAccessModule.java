@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.model.fas.LpaInformation;
 import gov.ca.cwds.cals.model.lis.FacilityStatusType;
@@ -66,7 +67,8 @@ public class DataAccessModule extends AbstractModule {
             new HibernateBundle<CalsApiConfiguration>(
                     ComplaintReportLic802.class,
                     LpaInformation.class,
-                    Rrcpoc.class
+                    Rrcpoc.class,
+                    Rr809Dn.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
