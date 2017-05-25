@@ -56,9 +56,7 @@ public class FacilityAddressDTO extends BaseDTO {
 
         FacilityAddressDTO facilityAddressDTO = (FacilityAddressDTO) o;
 
-        if ( ! Objects.equals(id, facilityAddressDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, facilityAddressDTO.id);
     }
 
     @Override

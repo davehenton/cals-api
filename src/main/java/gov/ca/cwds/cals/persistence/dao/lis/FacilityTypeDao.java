@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.dao.fas;
+package gov.ca.cwds.cals.persistence.dao.lis;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;

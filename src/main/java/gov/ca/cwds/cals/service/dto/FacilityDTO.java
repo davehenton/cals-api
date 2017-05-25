@@ -41,7 +41,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonProperty("type")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Facility Type")
-    private DictionaryDTO type;
+    private FacilityTypeDTO type;
 
     @JsonProperty("name")
     @NotNull
@@ -60,8 +60,8 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     private String licenseeType;
 
     @JsonProperty("assigned_worker")
-    @ApiModelProperty(required = false, readOnly = false, value = "Assigned Worker", example = "PARKER, TONY")
-    private String assignedWorker;
+    @ApiModelProperty(required = false, readOnly = false, value = "Assigned Worker")
+    private DictionaryDTO assignedWorker;
 
     @JsonProperty("district_office")
     @ApiModelProperty(required = false, readOnly = false, value = "District Office", example = "MISSION VALLEY")
@@ -87,20 +87,20 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDate licenseEffectiveDate;
+    private transient LocalDate licenseEffectiveDate;
 
     @JsonProperty("original_application_recieved_date")
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDate originalApplicationRecievedDate;
+    private transient LocalDate originalApplicationRecievedDate;
 
     @JsonProperty("last_visit_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDate lastVisitDate;
+    private transient LocalDate lastVisitDate;
 
     @JsonProperty("email_address")
     @Size(max = 50)
@@ -114,7 +114,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonProperty("county")
     @NotNull
     @ApiModelProperty(required = false, readOnly = false, value = "County")
-    private DictionaryDTO county;
+    private CountyDTO county;
 
     @JsonProperty("children")
     @NotNull
@@ -152,11 +152,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
         this.id = id;
     }
 
-    public DictionaryDTO getType() {
+    public FacilityTypeDTO getType() {
         return type;
     }
 
-    public void setType(DictionaryDTO type) {
+    public void setType(FacilityTypeDTO type) {
         this.type = type;
     }
 
@@ -184,11 +184,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
         this.licenseeType = licenseeType;
     }
 
-    public String getAssignedWorker() {
+    public DictionaryDTO getAssignedWorker() {
         return assignedWorker;
     }
 
-    public void setAssignedWorker(String assignedWorker) {
+    public void setAssignedWorker(DictionaryDTO assignedWorker) {
         this.assignedWorker = assignedWorker;
     }
 
@@ -264,11 +264,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
         this.lastVisitReason = lastVisitReason;
     }
 
-    public DictionaryDTO getCounty() {
+    public CountyDTO getCounty() {
         return county;
     }
 
-    public void setCounty(DictionaryDTO county) {
+    public void setCounty(CountyDTO county) {
         this.county = county;
     }
 

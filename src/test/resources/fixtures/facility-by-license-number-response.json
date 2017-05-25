@@ -1,0 +1,65 @@
+{
+  "messages" : [ ],
+  "href" : "facilities/193600110",
+  "id" : 193600110,
+  "type" : {
+    "code" : "810",
+    "description" : "FAMILY DAY CARE"
+  },
+  "name" : "MAD HATTER RESIDENTIAL FOR THE CHRONICALLY ILL",
+  "licensee_name" : "CHILDHELP, INC.",
+  "license_type" : "A",
+  "assigned_worker" : {
+    "code" : "03B302",
+    "description" : "Karen Buckley"
+  },
+  "district_office" : {
+    "number" : "3",
+    "name" : "RIVER CITY (SACTO)CC"
+  },
+  "license_number" : 193600110,
+  "status" : {
+    "code" : "9",
+    "description" : "CLOSED, LIC INIT."
+  },
+  "capacity" : 8,
+  "license_effective_date" : "2004-05-27",
+  "original_application_recieved_date" : "2004-01-26",
+  "last_visit_date" : "2004-04-02",
+  "last_visit_reason" : {
+    "code" : "1",
+    "description" : "PRELICENSING"
+  },
+  "county" : {
+    "code" : "39",
+    "description" : "SAN JOAQUIN"
+  },
+  "children" : {
+    "href" : "facilities/193600110/children"
+  },
+  "complains" : {
+    "href" : "facilities/193600110/complaints"
+  },
+  "phones" : [ {
+    "relation" : "primary",
+    "type" : "Cell",
+    "number" : "2092340660"
+  } ],
+  "addresses" : [ {
+    "type" : "residential",
+    "address" : {
+      "street_address" : "87 SW. LAKEWOOD AVE.",
+      "city" : "NATIONAL CITY",
+      "state" : "CA",
+      "zip_code" : "91950"
+    }
+  }, {
+    "type" : "mail",
+    "address" : {
+      "street_address" : "87 SW. LAKEWOOD AVE.",
+      "city" : "NATIONAL CITY",
+      "state" : "CA",
+      "zip_code" : "91950"
+    }
+  } ]
+}

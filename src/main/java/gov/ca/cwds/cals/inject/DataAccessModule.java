@@ -10,9 +10,8 @@ import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.model.fas.Rrcpoc;
-import gov.ca.cwds.cals.model.lis.County;
+import gov.ca.cwds.cals.model.fas.LpaInformation;
 import gov.ca.cwds.cals.model.lis.FacilityStatusType;
-import gov.ca.cwds.cals.model.lis.FacilityType;
 import gov.ca.cwds.cals.model.lis.LisDoFile;
 import gov.ca.cwds.cals.model.lis.LisFacFile;
 import gov.ca.cwds.cals.model.lis.LisTableFile;
@@ -21,7 +20,8 @@ import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
-import gov.ca.cwds.cals.persistence.dao.fas.FacilityTypeDao;
+import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
+import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
@@ -31,7 +31,9 @@ import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.*;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
+import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
 
 /**
  * @author CWDS CALS API Team
@@ -43,11 +45,11 @@ public class DataAccessModule extends AbstractModule {
             new HibernateBundle<CalsApiConfiguration>(
                     LisFacFile.class,
                     LisTableFile.class,
-                    FacilityType.class,
+                    gov.ca.cwds.cals.model.lis.FacilityType.class,
                     LisDoFile.class,
                     FacilityStatusType.class,
                     VisitReasonType.class,
-                    County.class
+                    gov.ca.cwds.cals.model.lis.County.class
             ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -63,6 +65,7 @@ public class DataAccessModule extends AbstractModule {
     private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
             new HibernateBundle<CalsApiConfiguration>(
                     ComplaintReportLic802.class,
+                    LpaInformation.class,
                     Rrcpoc.class
                     ) {
                 @Override
@@ -83,6 +86,7 @@ public class DataAccessModule extends AbstractModule {
                     PlacementEpisode.class,
                     PlacementHome.class,
                     StaffPerson.class,
+                    gov.ca.cwds.cals.model.cms.FacilityType.class,
                     gov.ca.cwds.cals.model.cms.County.class
                     ) {
                 @Override
@@ -109,6 +113,7 @@ public class DataAccessModule extends AbstractModule {
         bind(CountiesDao.class);
         bind(ClientDao.class);
         bind(PlacementHomeDao.class);
+        bind(LpaInformationDao.class);
         bind(InspectionDao.class);
     }
 
@@ -152,5 +157,4 @@ public class DataAccessModule extends AbstractModule {
     UnitOfWorkAwareProxyFactory lisUnitOfWorkAwareProxyFactory() {
         return new UnitOfWorkAwareProxyFactory(lisHibernateBundle, fasHibernateBundle, cmsHibernateBundle);
     }
-
 }

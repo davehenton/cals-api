@@ -24,7 +24,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @JsonProperty("complaint_date")
-    private LocalDate complaintDate;
+    private transient LocalDate complaintDate;
 
     @JsonProperty("assigned_worker")
     private String assignedWorker;
@@ -33,7 +33,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
     private String controlNumber;
 
     @JsonProperty("priority_level")
-    private Integer priorityLevel;
+    private String priorityLevel;
 
     @JsonProperty("status")
     private String status;
@@ -41,7 +41,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
     @JsonProperty("approval_date")
     @Date(format = DATE_FORMAT + " " + TIME_FORMAT, required = false)
-    private LocalDateTime approvalDate;
+    private transient LocalDateTime approvalDate;
 
     public String getId() {
         return id;
@@ -75,11 +75,11 @@ public class ComplaintDTO extends BaseDTO implements Response {
         this.controlNumber = controlNumber;
     }
 
-    public Integer getPriorityLevel() {
+    public String getPriorityLevel() {
         return priorityLevel;
     }
 
-    public void setPriorityLevel(Integer priorityLevel) {
+    public void setPriorityLevel(String priorityLevel) {
         this.priorityLevel = priorityLevel;
     }
 
@@ -110,9 +110,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
 
         ComplaintDTO complaintDTO = (ComplaintDTO) o;
 
-        if ( ! Objects.equals(id, complaintDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, complaintDTO.id);
     }
 
     @Override
