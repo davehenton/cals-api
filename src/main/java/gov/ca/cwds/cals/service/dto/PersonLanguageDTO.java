@@ -49,9 +49,7 @@ public class PersonLanguageDTO extends BaseDTO {
 
         PersonLanguageDTO personLanguageDTO = (PersonLanguageDTO) o;
 
-        if ( ! Objects.equals(id, personLanguageDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, personLanguageDTO.id);
     }
 
     @Override

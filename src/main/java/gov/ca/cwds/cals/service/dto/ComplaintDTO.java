@@ -110,9 +110,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
 
         ComplaintDTO complaintDTO = (ComplaintDTO) o;
 
-        if ( ! Objects.equals(id, complaintDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, complaintDTO.id);
     }
 
     @Override

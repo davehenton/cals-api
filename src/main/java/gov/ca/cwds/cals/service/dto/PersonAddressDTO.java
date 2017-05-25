@@ -49,9 +49,7 @@ public class PersonAddressDTO extends BaseDTO {
 
         PersonAddressDTO personAddressDTO = (PersonAddressDTO) o;
 
-        if ( ! Objects.equals(id, personAddressDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, personAddressDTO.id);
     }
 
     @Override

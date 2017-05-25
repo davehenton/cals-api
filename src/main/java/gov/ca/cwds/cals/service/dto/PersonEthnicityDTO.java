@@ -49,9 +49,7 @@ public class PersonEthnicityDTO extends BaseDTO {
 
         PersonEthnicityDTO personEthnicityDTO = (PersonEthnicityDTO) o;
 
-        if ( ! Objects.equals(id, personEthnicityDTO.id)) { return false; }
-
-        return true;
+        return Objects.equals(id, personEthnicityDTO.id);
     }
 
     @Override

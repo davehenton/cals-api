@@ -59,9 +59,8 @@ public class PersonPhoneDTO extends BaseDTO {
 
         PersonPhoneDTO personPhoneDTO = (PersonPhoneDTO) o;
 
-        if ( ! Objects.equals(id, personPhoneDTO.id)) { return false; }
+        return Objects.equals(id, personPhoneDTO.id);
 
-        return true;
     }
 
     @Override
