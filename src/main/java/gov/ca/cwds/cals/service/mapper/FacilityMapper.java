@@ -1,6 +1,8 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.model.cms.CountyLicenseCase;
+import gov.ca.cwds.cals.model.cms.LicensingVisit;
 import gov.ca.cwds.cals.model.fas.LpaInformation;
 import gov.ca.cwds.cals.model.lis.LisFacFile;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
@@ -8,6 +10,7 @@ import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.HyperlinkDTO;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
+import org.apache.commons.collections4.CollectionUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,7 +24,8 @@ import java.util.List;
  * @author CWDS CALS API Team
  */
 @Mapper(imports = {Constants.class, HyperlinkDTO.class},
-        uses={FacilityPostMappingProcessor.class, FacilityTypeMapper.class, CountyMapper.class} )
+        uses={FacilityPostMappingProcessor.class, FacilityTypeMapper.class, CountyMapper.class,
+              DistrictOfficeMapper.class, DictionaryMapper.class} )
 public interface FacilityMapper {
 
     FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
@@ -62,16 +66,16 @@ public interface FacilityMapper {
     @Mapping(target = "name", source = "facltyNm")
     @Mapping(target = "type", source = "facilityType")
     @Mapping(target = "licenseeName", source = "licnseeNm")
-//    @Mapping(target = "Approval/Licensing worker", source = "")
-//    @Mapping(target = "Assigned oversight agency", source = "")
+    @Mapping(target = "assignedWorker", source = "countyLicenseCase.staffPerson")
+    @Mapping(target = "districtOffice", source = "countyLicenseCase.staffPerson.county")
     @Mapping(target = "licenseNumber", source = "licenseNo")
 //    @Mapping(target = "status", source = "licStc")
     @Mapping(target = "capacity", source = "maxCapNo")
     @Mapping(target = "licenseEffectiveDate", source = "licEfctdt")
     @Mapping(target = "originalApplicationRecievedDate", source = "licAplDt")
     @Mapping(target = "county", source = "county")
-//    @Mapping(target = "lastVisitDate", source = "lic_vstt \tvisit_date")
-//    @Mapping(target = "lastVisitReason.code", source = "lic_vstt \tvisit_type")
+    @Mapping(target = "lastVisitDate", ignore = true)
+    @Mapping(target = "lastVisitReason", ignore = true)
     @Mapping(target = "messages", ignore = true)
     @Mapping(target = "phone", ignore = true)
     @Mapping(target = "address", ignore = true)
@@ -80,16 +84,50 @@ public interface FacilityMapper {
     @Mapping(target = "complains", ignore = true)
     FacilityDTO toFacilityDTO(PlacementHome placementHome);
 
+    @Mapping(target = "lastVisitDate", source = "visitDate")
+    @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
+    FacilityDTO toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, LicensingVisit licensingVisit);
+
     @AfterMapping
     default void after(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
-        List<FacilityAddressDTO> facilityAddressDTOs = new ArrayList<>(2);
-        facilityAddressDTOs.add(FacilityAddressMapper.INSTANCE.toResidentialAddress(placementHome));
-        facilityAddressDTOs.add(FacilityAddressMapper.INSTANCE.toMailAddress(placementHome));
-        facilityDTO.setAddress(facilityAddressDTOs);
+        afterAddresses(facilityDTO, placementHome);
+        afterPhones(facilityDTO, placementHome);
+        afterLastVisit(facilityDTO, placementHome.getCountyLicenseCase());
+    }
 
+    default void afterLastVisit(@MappingTarget FacilityDTO facilityDTO, CountyLicenseCase countyLicenseCase) {
+        if (CollectionUtils.isNotEmpty(countyLicenseCase.getLicensingVisits())) {
+            INSTANCE.toFacilityDTO(facilityDTO, countyLicenseCase.getLicensingVisits().get(0));
+        }
+    }
+
+    default void afterAddresses(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
+        List<FacilityAddressDTO> facilityAddressDTOs = new ArrayList<>(2);
+
+        FacilityAddressDTO residentialAddress = FacilityAddressMapper.INSTANCE.toResidentialAddress(placementHome);
+        if (residentialAddress != null) {
+            facilityAddressDTOs.add(residentialAddress);
+        }
+
+        FacilityAddressDTO mailingAddress = FacilityAddressMapper.INSTANCE.toMailAddress(placementHome);
+        if (mailingAddress != null) {
+            facilityAddressDTOs.add(mailingAddress);
+        }
+        facilityDTO.setAddress(facilityAddressDTOs);
+    }
+
+    default void afterPhones(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
         List<PhoneDTO> phoneDTOs = new ArrayList<>(2);
-        phoneDTOs.add(PhoneMapper.INSTANCE.toPrimaryPhoneDTO(placementHome));
-        phoneDTOs.add(PhoneMapper.INSTANCE.toAlternatePhoneDTO(placementHome));
+
+        PhoneDTO primaryPhone = PhoneMapper.INSTANCE.toPrimaryPhoneDTO(placementHome);
+        if (primaryPhone != null) {
+            phoneDTOs.add(primaryPhone);
+        }
+
+        PhoneDTO alternativePhone = PhoneMapper.INSTANCE.toAlternatePhoneDTO(placementHome);
+        if (alternativePhone != null) {
+            phoneDTOs.add(alternativePhone);
+        }
         facilityDTO.setPhone(phoneDTOs);
     }
 

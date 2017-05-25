@@ -35,8 +35,8 @@ public interface PersonMapper {
     @Mapping(target = "ethnicityId", ignore = true)
     PersonDTO toPerson(Client client);
 
-    @Mapping(target = "firstName", source = "firstNm")
-    @Mapping(target = "lastName", source = "lastNm")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
     @Mapping(target = "id",          ignore = true)
     @Mapping(target = "gender",      ignore = true)
     @Mapping(target = "age",         ignore = true)
