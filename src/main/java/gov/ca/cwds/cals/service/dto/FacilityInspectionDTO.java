@@ -31,7 +31,9 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
 
     private LocalDateTime form809PrintDate;
 
-    private List<PlanOfCorrectionDTO> pocs = new ArrayList<>();
+    private List<FacilityDeficiencyDTO> deficiencies = new ArrayList<>(4);
+
+    private List<PlanOfCorrectionDTO> pocs = new ArrayList<>(4);
 
     public String getId() {
         return id;
@@ -75,6 +77,14 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
 
     public void setPocs(List<PlanOfCorrectionDTO> pocs) {
         this.pocs = pocs;
+    }
+
+    public List<FacilityDeficiencyDTO> getDeficiencies() {
+        return deficiencies;
+    }
+
+    public void setDeficiencies(List<FacilityDeficiencyDTO> deficiencies) {
+        this.deficiencies = deficiencies;
     }
 
     @Override

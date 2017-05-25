@@ -27,40 +27,10 @@ public class FacilityInspectionService extends CrudServiceAdapter {
 
     @Override
     public Response find(Serializable params) {
-
         FacilityInspectionParameterObject paramsObj = (FacilityInspectionParameterObject) params;
-
         Rrcpoc rrcpoc = inspectionDao.getByFacilityNumberAndInspectionId(
                 paramsObj.getFacilityId(), paramsObj.getInspectionId());
-
-        FacilityInspectionDTO dto = facilityInspectionMapper.toFacilityInspectionDto(rrcpoc);
-
-        /*
-        FacilityInspectionDTO dto = new FacilityInspectionDTO();
-        FacilityInspectionDTO facilityInspectionDTO = new FacilityInspectionDTO();
-
-        facilityInspectionDTO.setId(String.valueOf(paramsObj.getInspectionId()));
-        facilityInspectionDTO.setForm809PrintDate(LocalDateTime.now());
-        facilityInspectionDTO.setHref("/facilities/"+ paramsObj.getFacilityId() +"/inspections/" + paramsObj.getInspectionId());
-        facilityInspectionDTO.setRepresentativeSignatureDate(LocalDateTime.now());
-
-        List<PlanOfCorrectionDTO> pocs = new ArrayList<>();
-        facilityInspectionDTO.setPocs(pocs);
-
-        for (int i = 0; i < 3; i++) {
-            PlanOfCorrectionDTO poc = new PlanOfCorrectionDTO();
-            poc.setPocComment("Comment #" + i);
-            poc.setPocCorrectionPlan("Correction plan #" + i);
-            poc.setPocDateCleared(LocalDateTime.now());
-            poc.setPocDueDate(LocalDateTime.MAX);
-            poc.setPocSectionViolated("Section Violated #" + i);
-            poc.setPocCommentCont("Comment Cont #" + i);
-            poc.setPocCorrectionPlanCont("Correction Plan Cont #" + i);
-
-            pocs.add(poc);
-        }
-        */
-
+        FacilityInspectionDTO dto = facilityInspectionMapper.toFacilityInspectionDto( rrcpoc);
         return dto;
     }
 

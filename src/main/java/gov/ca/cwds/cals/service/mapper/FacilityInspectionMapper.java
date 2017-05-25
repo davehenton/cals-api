@@ -1,7 +1,9 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.model.fas.Rrcpoc;
+import gov.ca.cwds.cals.service.dto.FacilityDeficiencyDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.PlanOfCorrectionDTO;
 import org.mapstruct.AfterMapping;
@@ -18,7 +20,41 @@ import java.util.List;
 @Mapper
 public interface FacilityInspectionMapper {
 
-    @Mapping(target = "id", source = "createDateTime")
+    @Mapping(target = "id", source = "originalunidkey")
+    @Mapping(target = "href", ignore = true)
+    @Mapping(target = "representativeSignatureDate", source = "date2")
+    @Mapping(target = "form809PrintDate", source = "date1")
+    FacilityInspectionDTO toFacilityInspectionDto(Rr809Dn rr809Dn);
+
+    @Mapping(target = "deficiencyType",     source = "deftype1")
+    @Mapping(target = "pocDate",            source = "pocDate")
+    @Mapping(target = "facSectionViolated", source = "facSectionviolated")
+    @Mapping(target = "deficiency",         expression = "java(deficiency1 + ' ' + deficiency1Cont)")
+    @Mapping(target = "correctionPlan",     expression = "java(correctionPlan + ' ' + correctionPlanCont)")
+    FacilityDeficiencyDTO toPlanOfCorrectionDTO(Rr809Dn rrcpoc);
+
+    @Mapping(target = "deficiencyType",     source = "deftype2Ab")
+    @Mapping(target = "pocDate",            source = "pocDate1")
+    @Mapping(target = "facSectionViolated", source = "facSectionviolated1")
+    @Mapping(target = "deficiency",         expression = "java(deficiency11 + ' ' + deficiency2Cont)")
+    @Mapping(target = "correctionPlan",     expression = "java(correctionPlan1 + ' ' + correctionPlan2Cont)")
+    FacilityDeficiencyDTO toPlanOfCorrectionDTO1(Rr809Dn rrcpoc);
+
+    @Mapping(target = "deficiencyType",     source = "deftype3Ab")
+    @Mapping(target = "pocDate",            source = "pocDate2")
+    @Mapping(target = "facSectionViolated", source = "facSectionviolated2")
+    @Mapping(target = "deficiency",         expression = "java(deficiency12 + ' ' + deficiency3Cont)")
+    @Mapping(target = "correctionPlan",     expression = "java(correctionPlan2 + ' ' + correctionPlan3Cont)")
+    FacilityDeficiencyDTO toPlanOfCorrectionDTO2(Rr809Dn rrcpoc);
+
+    @Mapping(target = "deficiencyType",     source = "deftype4Ab")
+    @Mapping(target = "pocDate",            source = "pocDate3")
+    @Mapping(target = "facSectionViolated", source = "facSectionviolated3")
+    @Mapping(target = "deficiency",         source = "deficiency13")
+    @Mapping(target = "correctionPlan",     source = "correctionPlan3")
+    FacilityDeficiencyDTO toPlanOfCorrectionDTO3(Rr809Dn rrcpoc);
+
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "href", ignore = true)
     @Mapping(target = "representativeSignatureDate", ignore = true)
     @Mapping(target = "form809PrintDate", ignore = true)
@@ -60,6 +96,28 @@ public interface FacilityInspectionMapper {
     @Mapping(target = "pocCommentCont",        ignore = true)
     PlanOfCorrectionDTO toPlanOfCorrectionDTO3(Rrcpoc rrcpoc);
 
+
+    @AfterMapping
+    default void fillPlanOfCorrectionDTOs(
+            @MappingTarget FacilityInspectionDTO facilityInspectionDTO, Rr809Dn rr809Dn) {
+
+        List<FacilityDeficiencyDTO> defs = facilityInspectionDTO.getDeficiencies();
+        facilityInspectionDTO.setDeficiencies(defs);
+        defs.add(toPlanOfCorrectionDTO(rr809Dn));
+        defs.add(toPlanOfCorrectionDTO1(rr809Dn));
+        defs.add(toPlanOfCorrectionDTO2(rr809Dn));
+        defs.add(toPlanOfCorrectionDTO3(rr809Dn));
+
+
+        StringBuilder hrefSb = new StringBuilder();
+        hrefSb.append("/").append(Constants.API.FACILITIES)
+                .append("/").append(rr809Dn.getFacilityNumberText())
+                .append("/").append(Constants.API.INSPECTIONS)
+                .append("/").append(facilityInspectionDTO.getId());
+
+        facilityInspectionDTO.setHref(hrefSb.toString());
+    }
+
     @AfterMapping
     default void fillPlanOfCorrectionDTOs(
             @MappingTarget FacilityInspectionDTO facilityInspectionDTO, Rrcpoc rrcpoc) {
@@ -69,15 +127,6 @@ public interface FacilityInspectionMapper {
         pocs.add(toPlanOfCorrectionDTO1(rrcpoc));
         pocs.add(toPlanOfCorrectionDTO2(rrcpoc));
         pocs.add(toPlanOfCorrectionDTO3(rrcpoc));
-
-        StringBuilder hrefSb = new StringBuilder();
-        hrefSb.append("/").append(Constants.API.FACILITIES)
-                .append("/").append(rrcpoc.getFacilityNumber())
-                .append("/").append(Constants.API.INSPECTIONS)
-                .append("/").append(facilityInspectionDTO.getId());
-
-        facilityInspectionDTO.setHref(hrefSb.toString());
-
     }
 
 }

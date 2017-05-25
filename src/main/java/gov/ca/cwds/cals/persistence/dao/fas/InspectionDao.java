@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.persistence.dao.fas;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.FasSessionFactory;
+import gov.ca.cwds.cals.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.model.fas.Rrcpoc;
 import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.Session;
@@ -19,6 +20,22 @@ public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
     @Inject
     public InspectionDao(@FasSessionFactory SessionFactory sessionFactory) {
         super(sessionFactory);
+    }
+
+    public List<Rr809Dn> findDeficienciesByFacilityNumber(Integer facilityNumber) {
+        Session currentSession = getSessionFactory().getCurrentSession();
+        Query<Rr809Dn> namedQuery = currentSession.createNamedQuery(Rr809Dn.NQ_FIND_BY_FACILITY_NUMBER, Rr809Dn.class);
+        namedQuery.setParameter("facilityNumber", facilityNumber);
+        return namedQuery.list();
+    }
+
+    public Rr809Dn findDeficiencyByFacilityNumberAndId(Integer facilityNumber, String deficiencyId) {
+        Session currentSession = getSessionFactory().getCurrentSession();
+        Query<Rr809Dn> namedQuery = currentSession.createNamedQuery(
+                Rr809Dn.NQ_FIND_BY_FACILITY_NUMBER_AND_DEFICIENCY_ID, Rr809Dn.class);
+        namedQuery.setParameter("facilityNumber", facilityNumber);
+        namedQuery.setParameter("deficiencyId", deficiencyId);
+        return namedQuery.getSingleResult();
     }
 
     public List<Rrcpoc> findByFacilityNumber(Integer facilityNumber) {
