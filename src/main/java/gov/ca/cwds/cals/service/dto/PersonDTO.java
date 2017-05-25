@@ -32,7 +32,7 @@ public class PersonDTO extends BaseDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @JsonProperty("date_of_birth")
-    private LocalDate dateOfBirth;
+    private transient LocalDate dateOfBirth;
 
     private String ssn;
 

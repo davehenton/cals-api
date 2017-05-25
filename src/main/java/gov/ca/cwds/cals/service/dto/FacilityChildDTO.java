@@ -22,7 +22,7 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @JsonProperty("date_of_placement")
-    private LocalDate dateOfPlacement;
+    private transient LocalDate dateOfPlacement;
 
     @JsonProperty("assigned_worker")
     private PersonDTO assignedWorker;
