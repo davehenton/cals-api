@@ -5,11 +5,13 @@ import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.model.cms.Client;
 import gov.ca.cwds.cals.model.cms.CountyLicenseCase;
+import gov.ca.cwds.cals.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.model.cms.LicensingVisit;
 import gov.ca.cwds.cals.model.cms.OutOfHomePlacement;
 import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
+import gov.ca.cwds.cals.model.cms.State;
 import gov.ca.cwds.cals.model.cms.VisitType;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.model.fas.Rr809Dn;
@@ -95,7 +97,9 @@ public class DataAccessModule extends AbstractModule {
                     gov.ca.cwds.cals.model.cms.County.class,
                     CountyLicenseCase.class,
                     LicensingVisit.class,
-                    VisitType.class
+                    VisitType.class,
+                    State.class,
+                    LicenseStatus.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {

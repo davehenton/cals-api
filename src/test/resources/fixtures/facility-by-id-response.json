@@ -1,0 +1,51 @@
+{
+  "messages" : [ ],
+  "href" : "facilities/E6tloOO0Ql",
+  "id" : "E6tloOO0Ql",
+  "type" : {
+    "code" : "710",
+    "description" : "Small Family Home"
+  },
+  "name" : "AESCHLIMANN SMALL FAMILY HOME",
+  "licensee_name" : "AESCHLIMANN, DAMARIS & ERNESTO",
+  "assigned_worker" : {
+    "description" : "Dora S"
+  },
+  "district_office" : {
+    "number" : "03",
+    "name" : "Amador"
+  },
+  "license_number" : 336400295,
+  "status" : {
+    "code" : "0003",
+    "description" : "Licensed"
+  },
+  "capacity" : 0,
+  "license_effective_date" : "1995-03-22",
+  "original_application_recieved_date" : "1995-03-22",
+  "last_visit_date" : "1999-10-09",
+  "last_visit_reason" : {
+    "description" : "Complaint or Violation"
+  },
+  "county" : {
+    "code" : "33",
+    "description" : "Riverside"
+  },
+  "complains" : {
+    "href" : "facilities/E6tloOO0Ql/complaints"
+  },
+  "phones" : [ {
+    "relation" : "primary",
+    "number" : "9097854078"
+  } ],
+  "addresses" : [ {
+    "type" : "residential",
+    "address" : {
+      "street_address" : "4261 FORD PLACE",
+      "city" : "RIVERSIDE",
+      "state" : "CA",
+      "zip_code" : "92505",
+      "zip_suffix_code" : "0"
+    }
+  } ]
+}
