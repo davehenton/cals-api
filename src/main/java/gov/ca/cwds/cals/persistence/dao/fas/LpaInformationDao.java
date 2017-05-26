@@ -7,6 +7,8 @@ import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.NoResultException;
 
@@ -15,6 +17,8 @@ import javax.persistence.NoResultException;
  */
 
 public class LpaInformationDao extends BaseDaoImpl<LpaInformation> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(LpaInformationDao.class);
 
     @Inject
     public LpaInformationDao(@FasSessionFactory SessionFactory sessionFactory) {
@@ -30,6 +34,7 @@ public class LpaInformationDao extends BaseDaoImpl<LpaInformation> {
         try {
             return query.getSingleResult();
         } catch (NoResultException e) {
+            LOG.error(e.getMessage(), e);
             return null;
         }
     }

@@ -4,10 +4,13 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.model.cms.Client;
+import gov.ca.cwds.cals.model.cms.CountyLicenseCase;
+import gov.ca.cwds.cals.model.cms.LicensingVisit;
 import gov.ca.cwds.cals.model.cms.OutOfHomePlacement;
 import gov.ca.cwds.cals.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
+import gov.ca.cwds.cals.model.cms.VisitType;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.model.fas.Rrcpoc;
@@ -32,9 +35,9 @@ import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  * @author CWDS CALS API Team
@@ -89,7 +92,10 @@ public class DataAccessModule extends AbstractModule {
                     PlacementHome.class,
                     StaffPerson.class,
                     gov.ca.cwds.cals.model.cms.FacilityType.class,
-                    gov.ca.cwds.cals.model.cms.County.class
+                    gov.ca.cwds.cals.model.cms.County.class,
+                    CountyLicenseCase.class,
+                    LicensingVisit.class,
+                    VisitType.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {

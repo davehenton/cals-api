@@ -19,6 +19,9 @@ import java.util.Set;
  */
 @Mapper
 public interface PersonMapper {
+
+    //This is standard mapstruct approach that is why it's false positive
+    @SuppressWarnings({"squid:S1214"})
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
     List<PersonDTO> toPerson(Set<Client> clients);
@@ -28,15 +31,14 @@ public interface PersonMapper {
     @Mapping(target = "gender", source = "genderCd")
     @Mapping(target = "dateOfBirth", source = "birthDt")
 
-    //todo: we set id in facility child. should we duplicate it here?
     @Mapping(target = "id",          ignore = true)
     @Mapping(target = "age",         ignore = true)
     @Mapping(target = "ssn",         ignore = true)
     @Mapping(target = "ethnicityId", ignore = true)
     PersonDTO toPerson(Client client);
 
-    @Mapping(target = "firstName", source = "firstNm")
-    @Mapping(target = "lastName", source = "lastNm")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
     @Mapping(target = "id",          ignore = true)
     @Mapping(target = "gender",      ignore = true)
     @Mapping(target = "age",         ignore = true)

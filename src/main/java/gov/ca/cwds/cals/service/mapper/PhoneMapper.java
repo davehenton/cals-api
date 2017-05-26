@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import static gov.ca.cwds.cals.Constants.PHONE_TYPES.ALTERNATE;
-import static gov.ca.cwds.cals.Constants.PHONE_TYPES.PRIMARY;
+import static gov.ca.cwds.cals.Constants.PhoneTypes.ALTERNATE;
+import static gov.ca.cwds.cals.Constants.PhoneTypes.PRIMARY;
 
 /**
  * @author CWDS CALS API Team
@@ -19,6 +19,8 @@ import static gov.ca.cwds.cals.Constants.PHONE_TYPES.PRIMARY;
 @DecoratedWith(PhoneMapperDecorator.class)
 public interface PhoneMapper {
 
+    //This is standard mapstruct approach that is why it's false positive
+    @SuppressWarnings({"squid:S1214"})
     PhoneMapper INSTANCE = Mappers.getMapper(PhoneMapper.class);
 
     @Mapping(target = "id", ignore = true)

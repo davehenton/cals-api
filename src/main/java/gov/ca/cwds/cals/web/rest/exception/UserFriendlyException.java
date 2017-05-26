@@ -10,7 +10,7 @@ public class UserFriendlyException extends RuntimeException {
 
     private final CalsExceptionInfo calsExceptionInfo;
 
-    private Status responseStatus;
+    private final Status responseStatus;
 
     public UserFriendlyException(CalsExceptionInfo calsExceptionInfo, Status responseStatus) {
         this.calsExceptionInfo = calsExceptionInfo;

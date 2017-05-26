@@ -22,6 +22,7 @@ public class CountiesDao extends BaseDaoImpl<County> {
     }
 
 
+    @Override
     public List<County> findAll() {
         Session session = this.getSessionFactory().getCurrentSession();
         Query<County> query = session.createNamedQuery(County.NQ_ALL, County.class);

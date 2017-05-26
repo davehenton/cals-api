@@ -2,7 +2,6 @@ package gov.ca.cwds.cals.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.inject.FacilityTypeCollectionServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.FacilityTypesDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -20,7 +19,7 @@ import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.DICTIONARY;
 import static gov.ca.cwds.cals.Constants.API.FACILITY_TYPES;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  * @author CWDS CALS API Team

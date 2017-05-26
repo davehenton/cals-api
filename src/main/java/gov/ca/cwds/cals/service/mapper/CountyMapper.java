@@ -11,9 +11,8 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface CountyMapper {
 
-    @Mapping(target = "code", source = "sysId")
+    @Mapping(target = "code", source = "lgcId")
     @Mapping(target = "description", source = "shortDsc")
-    @Mapping(target = "lisCode", source = "lgcId")
     CountyDTO toCountyDTO(County county);
 
 }
