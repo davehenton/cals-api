@@ -28,7 +28,6 @@ public interface PersonMapper {
     @Mapping(target = "gender", source = "genderCd")
     @Mapping(target = "dateOfBirth", source = "birthDt")
 
-    //todo: we set id in facility child. should we duplicate it here?
     @Mapping(target = "id",          ignore = true)
     @Mapping(target = "age",         ignore = true)
     @Mapping(target = "ssn",         ignore = true)

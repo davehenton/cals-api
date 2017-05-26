@@ -60,7 +60,6 @@ public interface FacilityChildMapper {
     @Mapping(target = "person", ignore = true)
     @Mapping(target = "countyOfOrigin", ignore = true)
     @Mapping(target = "assignedWorker", ignore = true)
-    //todo: should we? @Mapping(target = "facilityId", source = "placementHome.identifier")
     @Mapping(target = "facilityId", ignore = true)
     @Mapping(target = "messages", ignore = true)
     FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO, OutOfHomePlacement outOfHomePlacement);
@@ -69,7 +68,7 @@ public interface FacilityChildMapper {
     default void after(@MappingTarget FacilityChildDTO facilityChildDTO, Client client) {
         Set<PlacementEpisode> placementEpisodes = client.getPlacementEpisodes();
         if (!placementEpisodes.isEmpty()) {
-            //todo: consider how to choose correct placement episode from a set
+
             PlacementEpisode placementEpisode = placementEpisodes.iterator().next();
             County county = placementEpisode.getCounty();
             INSTANCE.toFacilityChildDTO(facilityChildDTO, county);
@@ -79,7 +78,7 @@ public interface FacilityChildMapper {
 
             Set<OutOfHomePlacement> outOfHomePlacements = placementEpisode.getOutOfHomePlacements();
             if (!outOfHomePlacements.isEmpty()) {
-                //todo: consider how to choose correct out of home placement from a set
+
                 OutOfHomePlacement outOfHomePlacement = outOfHomePlacements.iterator().next();
                 INSTANCE.toFacilityChildDTO(facilityChildDTO, outOfHomePlacement);
             }

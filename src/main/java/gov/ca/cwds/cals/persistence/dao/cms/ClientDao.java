@@ -47,7 +47,6 @@ public class ClientDao extends BaseDaoImpl<Client> {
         String childId = parameterObject.getChildId();
         query.setParameter("childId", childId);
 
-        //todo: we have duplicates related to different periods. needs more analysis here
         query.setMaxResults(1);
 
         Client client = null;
