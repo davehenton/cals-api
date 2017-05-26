@@ -5,7 +5,6 @@ import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.ws.rs.client.Invocation;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author CWDS CALS API Team
  */
-@Ignore
+
 public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
 
     public static final Integer FACILITY_NUMBER = 193600027;
@@ -27,7 +26,7 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
         setUpFas();
-        getFasDatabaseHelper().runScript("liquibase/fas/inspections_test_data.xml", FAS);
+        getFasDatabaseHelper().runScript("liquibase/fas/dml/inspections-data.xml", FAS);
     }
 
     @Test
@@ -37,7 +36,7 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
         FacilityInspectionDTO inspectionDTO = invocation.get(FacilityInspectionDTO.class);
         assertThat(inspectionDTO != null);
         assertThat(inspectionDTO.getDeficiencies() != null);
-        assertThat(inspectionDTO.getDeficiencies().size() == 2);
+        assertThat(inspectionDTO.getDeficiencies().size() == 3);
     }
 
 }
