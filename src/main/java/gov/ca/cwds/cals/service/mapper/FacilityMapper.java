@@ -62,26 +62,29 @@ public interface FacilityMapper {
             "\"/%s/\" + Constants.API.COMPLAINTS, lisFacFile.getFacNbr())))")
     FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "id", source = "identifier")
     @Mapping(target = "name", source = "facltyNm")
     @Mapping(target = "type", source = "facilityType")
     @Mapping(target = "licenseeName", source = "licnseeNm")
     @Mapping(target = "assignedWorker", source = "countyLicenseCase.staffPerson")
     @Mapping(target = "districtOffice", source = "countyLicenseCase.staffPerson.county")
     @Mapping(target = "licenseNumber", source = "licenseNo")
-//    @Mapping(target = "status", source = "licStc")
+    @Mapping(target = "status", source = "licenseStatus")
     @Mapping(target = "capacity", source = "maxCapNo")
     @Mapping(target = "licenseEffectiveDate", source = "licEfctdt")
     @Mapping(target = "originalApplicationRecievedDate", source = "licAplDt")
     @Mapping(target = "county", source = "county")
     @Mapping(target = "lastVisitDate", ignore = true)
     @Mapping(target = "lastVisitReason", ignore = true)
-    @Mapping(target = "messages", ignore = true)
     @Mapping(target = "phone", ignore = true)
     @Mapping(target = "address", ignore = true)
+    @Mapping(target = "href", ignore = true)
+    @Mapping(target = "licenseeType", ignore = true)
+    @Mapping(target = "complains", expression = "java(new HyperlinkDTO( String.format(Constants.API.FACILITIES + " +
+            "\"/%s/\" + Constants.API.COMPLAINTS, placementHome.getIdentifier())))")
+    @Mapping(target = "messages", ignore = true)
     @Mapping(target = "emailAddress", ignore = true)
     @Mapping(target = "children", ignore = true)
-    @Mapping(target = "complains", ignore = true)
     FacilityDTO toFacilityDTO(PlacementHome placementHome);
 
     @Mapping(target = "lastVisitDate", source = "visitDate")
