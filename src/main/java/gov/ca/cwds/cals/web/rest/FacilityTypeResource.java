@@ -2,7 +2,6 @@ package gov.ca.cwds.cals.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.inject.FacilityTypeCollectionServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.FacilityTypesDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;

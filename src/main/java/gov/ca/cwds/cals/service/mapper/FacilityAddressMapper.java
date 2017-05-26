@@ -5,7 +5,6 @@ import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import static gov.ca.cwds.cals.Constants.ADDRESS_TYPES.MAIL;
