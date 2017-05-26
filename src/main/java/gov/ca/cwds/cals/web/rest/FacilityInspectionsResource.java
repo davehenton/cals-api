@@ -24,8 +24,8 @@ import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.INSPECTIONS;
-import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
-import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.INSPECTION_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.INSPECTION_ID;
 
 /**
  * @author CWDS CALS API Team
