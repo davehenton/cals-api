@@ -7,6 +7,8 @@ import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.NoResultException;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
  */
 
 public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ComplaintReportLic802Dao.class);
 
     @Inject
     public ComplaintReportLic802Dao(@FasSessionFactory SessionFactory sessionFactory) {
@@ -41,6 +45,7 @@ public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802>
         try {
             return query.getSingleResult();
         } catch (NoResultException e) {
+            LOG.error(e.getMessage(), e);
             return null;
         }
     }

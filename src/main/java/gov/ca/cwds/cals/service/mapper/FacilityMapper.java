@@ -93,8 +93,4 @@ public interface FacilityMapper {
         facilityDTO.setPhone(phoneDTOs);
     }
 
-/*
-    @InheritInverseConfiguration
-    LisFacFile facilityDTOToLisFacility(FacilityDTO target);
-*/
 }

@@ -17,7 +17,6 @@ import java.util.List;
  * @author CWDS CALS API Team
  */
 public class FacilityTypeDao extends BaseDaoImpl<FacilityType> {
-    private static final Logger LOG = LoggerFactory.getLogger(FacilityTypeDao.class);
 
     @Inject
     public FacilityTypeDao(@LisSessionFactory SessionFactory sessionFactory) {

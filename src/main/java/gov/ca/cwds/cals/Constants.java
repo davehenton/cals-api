@@ -10,6 +10,9 @@ public final class Constants {
 
     public static class API {
 
+        private API() {
+        }
+
         public static final String FACILITIES = "facilities";
 
         public static final String RESOURCE_APPLICATION = "application";
@@ -26,6 +29,9 @@ public final class Constants {
 
         public static class PATH_PARAMS {
 
+            private PATH_PARAMS() {
+            }
+
             public static final String FACILITY_ID = "facilityId";
 
             public static final String CHILD_ID = "childId";
@@ -37,6 +43,9 @@ public final class Constants {
 
     public static class ADDRESS_TYPES {
 
+        private ADDRESS_TYPES() {
+        }
+
         public static final String RESIDENTIAL = "residential";
 
         public static final String MAIL = "mail";
@@ -45,6 +54,9 @@ public final class Constants {
 
     public static class PHONE_TYPES {
 
+        private PHONE_TYPES() {
+        }
+
         public static final String PRIMARY = "primary";
 
         public static final String ALTERNATE = "alternate";
@@ -52,6 +64,9 @@ public final class Constants {
     }
 
     public static class UNIT_OF_WORK {
+
+        private UNIT_OF_WORK() {
+        }
 
         public static final String FAS = "fas";
 
