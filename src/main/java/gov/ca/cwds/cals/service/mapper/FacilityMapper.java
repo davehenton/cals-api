@@ -24,6 +24,8 @@ import java.util.List;
         uses={FacilityPostMappingProcessor.class, FacilityTypeMapper.class, CountyMapper.class} )
 public interface FacilityMapper {
 
+    //This standard Mmapstruct approach that is why it's false positive
+    @SuppressWarnings("squid:S1214")
     FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
 
     @Mapping(target = "messages", ignore = true)

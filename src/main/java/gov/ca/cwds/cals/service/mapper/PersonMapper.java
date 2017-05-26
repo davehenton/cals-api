@@ -19,6 +19,9 @@ import java.util.Set;
  */
 @Mapper
 public interface PersonMapper {
+
+    //This standard Mmapstruct approach that is why it's false positive
+    @SuppressWarnings("squid:S1214")
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
     List<PersonDTO> toPerson(Set<Client> clients);

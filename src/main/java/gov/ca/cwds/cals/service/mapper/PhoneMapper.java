@@ -19,6 +19,8 @@ import static gov.ca.cwds.cals.Constants.PhoneTypes.PRIMARY;
 @DecoratedWith(PhoneMapperDecorator.class)
 public interface PhoneMapper {
 
+    //This standard Mmapstruct approach that is why it's false positive
+    @SuppressWarnings("squid:S1214")
     PhoneMapper INSTANCE = Mappers.getMapper(PhoneMapper.class);
 
     @Mapping(target = "id", ignore = true)

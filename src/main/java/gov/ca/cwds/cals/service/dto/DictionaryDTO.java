@@ -43,11 +43,25 @@ public class DictionaryDTO extends BaseDTO {
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return new HashCodeBuilder().append(code).append(description).hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        DictionaryDTO dictionaryDTO = (DictionaryDTO) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(code, dictionaryDTO.code)
+                .append(description, dictionaryDTO.description)
+                .isEquals();
     }
 }

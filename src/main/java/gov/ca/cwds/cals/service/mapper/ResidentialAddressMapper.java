@@ -14,6 +14,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface ResidentialAddressMapper {
 
+    //This standard Mmapstruct approach that is why it's false positive
+    @SuppressWarnings("squid:S1214")
     ResidentialAddressMapper INSTANCE = Mappers.getMapper(ResidentialAddressMapper.class);
 
     @Mapping(source = "facResStreetAddr", target = "address.streetAddress")
