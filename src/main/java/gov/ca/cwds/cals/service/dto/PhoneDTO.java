@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
@@ -15,14 +16,17 @@ public class PhoneDTO extends BaseDTO {
 
     private Long id;
 
+    @RemoveTrailingSpaces
     @JsonProperty("relation")
     @ApiModelProperty(required = false, value = "Phone Relation", example = "Alternative")
     private String relation;
 
+    @RemoveTrailingSpaces
     @JsonProperty("type")
     @ApiModelProperty(required = false, value = "Phone type", example = "Cell")
     private String type;
 
+    @RemoveTrailingSpaces
     @NotNull
     @Size(max = 16)
     @JsonProperty("number")

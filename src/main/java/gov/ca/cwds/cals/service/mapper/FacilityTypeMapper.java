@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper
+@Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface FacilityTypeMapper {
 
     //This is standard mapstruct approach that is why it's false positive

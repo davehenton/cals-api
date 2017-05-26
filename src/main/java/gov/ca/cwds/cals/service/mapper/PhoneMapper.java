@@ -15,7 +15,7 @@ import static gov.ca.cwds.cals.Constants.PhoneTypes.PRIMARY;
  * @author CWDS CALS API Team
  */
 
-@Mapper
+@Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 @DecoratedWith(PhoneMapperDecorator.class)
 public interface PhoneMapper {
 

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper
+@Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityInspectionMapper {
 
     @Mapping(target = "id", source = "originalunidkey")

@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Mapper(imports = {Constants.class, HyperlinkDTO.class},
         uses={FacilityPostMappingProcessor.class, FacilityTypeMapper.class, CountyMapper.class,
-              DistrictOfficeMapper.class, DictionaryMapper.class} )
+              DistrictOfficeMapper.class, DictionaryMapper.class, TrailingSpacesRemovalPostMappingProcessor.class} )
 public interface FacilityMapper {
 
     //This is standard mapstruct approach that is why it's false positive

@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -17,14 +18,17 @@ public class PersonDTO extends BaseDTO {
 
     private Long id;
 
+    @RemoveTrailingSpaces
     @NotNull
     @JsonProperty("first_name")
     private String firstName;
 
+    @RemoveTrailingSpaces
     @NotNull
     @JsonProperty("last_name")
     private String lastName;
 
+    @RemoveTrailingSpaces
     private String gender;
 
     private Integer age;
@@ -34,6 +38,7 @@ public class PersonDTO extends BaseDTO {
     @JsonProperty("date_of_birth")
     private LocalDate dateOfBirth;
 
+    @RemoveTrailingSpaces
     private String ssn;
 
     private Long ethnicityId;

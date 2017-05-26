@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 
@@ -27,6 +28,7 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
     @JsonProperty("assigned_worker")
     private PersonDTO assignedWorker;
 
+    @RemoveTrailingSpaces
     @NotNull
     @JsonProperty("county_of_origin")
     private String countyOfOrigin;

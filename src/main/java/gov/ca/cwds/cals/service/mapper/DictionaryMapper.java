@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper
+@Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface DictionaryMapper {
 
     //This is standard mapstruct approach that is why it's false positive

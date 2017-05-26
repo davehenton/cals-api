@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Objects;
@@ -11,6 +12,7 @@ import java.util.Objects;
 
 public class FacilityAddressDTO extends BaseDTO {
 
+    @RemoveTrailingSpaces
     @JsonProperty("type")
     @ApiModelProperty(required = true, readOnly = true, value = "Address Type", example = "mail")
     private String type;

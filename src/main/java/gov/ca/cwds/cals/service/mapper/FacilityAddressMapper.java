@@ -13,7 +13,7 @@ import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(uses = AddressMapper.class)
+@Mapper(uses = {AddressMapper.class, TrailingSpacesRemovalPostMappingProcessor.class})
 @DecoratedWith(FacilityAddressMapperDecorator.class)
 public interface FacilityAddressMapper {
 

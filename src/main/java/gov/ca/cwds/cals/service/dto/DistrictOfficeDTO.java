@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
@@ -12,11 +13,13 @@ public class DistrictOfficeDTO extends BaseDTO {
 
     public DistrictOfficeDTO() {}
 
+    @RemoveTrailingSpaces
     @JsonProperty("number")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "District Office Number", example = "21")
     private String number;
 
+    @RemoveTrailingSpaces
     @JsonProperty("name")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "District Office Name", example = "NO. CAL AC/SC")

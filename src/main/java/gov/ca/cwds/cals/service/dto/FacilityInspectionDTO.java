@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.validation.Date;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -22,9 +23,11 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
 public class FacilityInspectionDTO extends BaseDTO implements Response {
 
     private static final long serialVersionUID = 3722343378274527122L;
-    
+
+    @RemoveTrailingSpaces
     private String id;
 
+    @RemoveTrailingSpaces
     private String href;
 
     private LocalDateTime representativeSignatureDate;

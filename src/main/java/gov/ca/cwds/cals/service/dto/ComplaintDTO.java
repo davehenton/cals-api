@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.validation.Date;
 
@@ -26,15 +27,19 @@ public class ComplaintDTO extends BaseDTO implements Response {
     @JsonProperty("complaint_date")
     private LocalDate complaintDate;
 
+    @RemoveTrailingSpaces
     @JsonProperty("assigned_worker")
     private String assignedWorker;
 
+    @RemoveTrailingSpaces
     @JsonProperty("control_number")
     private String controlNumber;
 
+    @RemoveTrailingSpaces
     @JsonProperty("priority_level")
     private String priorityLevel;
 
+    @RemoveTrailingSpaces
     @JsonProperty("status")
     private String status;
 

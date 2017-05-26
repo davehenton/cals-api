@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper
+@Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface CountyMapper {
 
     @Mapping(target = "code", source = "lgcId")
