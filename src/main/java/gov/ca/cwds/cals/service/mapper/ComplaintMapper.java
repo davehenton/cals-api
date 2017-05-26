@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
-import gov.ca.cwds.cals.model.lis.LisFacFile;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
@@ -18,6 +17,8 @@ import java.util.Set;
 @Mapper(imports = StringUtils.class)
 public interface ComplaintMapper {
 
+    //This is standard mapstruct approach that is why it's false positive
+    @SuppressWarnings({"squid:S1214"})
     ComplaintMapper INSTANCE = Mappers.getMapper(ComplaintMapper.class);
 
     @Mapping(target = "messages", ignore = true)

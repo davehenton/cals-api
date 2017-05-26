@@ -21,9 +21,9 @@ import io.dropwizard.hibernate.UnitOfWork;
 
 import java.io.Serializable;
 
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.CMS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
 import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 

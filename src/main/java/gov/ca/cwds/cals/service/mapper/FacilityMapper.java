@@ -28,6 +28,8 @@ import java.util.List;
               DistrictOfficeMapper.class, DictionaryMapper.class} )
 public interface FacilityMapper {
 
+    //This is standard mapstruct approach that is why it's false positive
+    @SuppressWarnings({"squid:S1214"})
     FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
 
     @Mapping(target = "messages", ignore = true)
@@ -134,8 +136,4 @@ public interface FacilityMapper {
         facilityDTO.setPhone(phoneDTOs);
     }
 
-/*
-    @InheritInverseConfiguration
-    LisFacFile facilityDTOToLisFacility(FacilityDTO target);
-*/
 }

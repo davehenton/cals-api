@@ -24,9 +24,9 @@ import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.COMPLAINTS;
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
-import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.COMPLAINT_ID;
-import static gov.ca.cwds.cals.Constants.API.PATH_PARAMS.FACILITY_ID;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.FAS;
+import static gov.ca.cwds.cals.Constants.API.PathParams.COMPLAINT_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 
 /**
  * @author CWDS CALS API Team

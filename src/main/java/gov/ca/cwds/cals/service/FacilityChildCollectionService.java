@@ -8,6 +8,7 @@ import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.rest.api.Response;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -30,7 +31,7 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
         Response resp = null;
         FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
         List<Client> clients = clientDao.findAll(parameterObject);
-        if (clients.size() > 0) {
+        if (!CollectionUtils.isEmpty(clients)) {
             List<FacilityChildDTO> facilityChildDTOs = facilityChildMapper.toFacilityChildDTO(clients);
             FacilityChildrenDTO facilityChildrenDTO = new FacilityChildrenDTO();
             facilityChildrenDTO.setChildren(facilityChildDTOs);

@@ -14,13 +14,15 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface MailAddressMapper {
 
+    //This is standard mapstruct approach that is why it's false positive
+    @SuppressWarnings({"squid:S1214"})
     MailAddressMapper INSTANCE = Mappers.getMapper(MailAddressMapper.class);
 
     @Mapping(source = "facMailStreetAddr", target = "address.streetAddress")
     @Mapping(source = "facMailCity", target = "address.city")
     @Mapping(source = "facMailState", target = "address.state")
     @Mapping(source = "facMailZipCode", target = "address.zipCode")
-    @Mapping(constant = Constants.ADDRESS_TYPES.MAIL, target = "type")
+    @Mapping(constant = Constants.AddressTypes.MAIL, target = "type")
     @Mapping(target = "id", ignore = true)
     FacilityAddressDTO lisFacilityToFacilityAddressDTO(LisFacFile lisFacFile);
 
