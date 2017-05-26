@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.service.dto.FacilityDeficiencyDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -90,14 +91,7 @@ public interface FacilityInspectionMapper {
     }
 
     default String concat(String... strings) {
-        StringBuilder sb = new StringBuilder();
-        for (String string : strings) {
-            if (string != null && !string.isEmpty()) {
-                sb.append(" ").append(string);
-            }
-        }
-        String res = sb.toString().trim();
-        return res.isEmpty() ? null : res;
+        return StringUtils.join(strings, ' ').trim();
     }
 
 }
