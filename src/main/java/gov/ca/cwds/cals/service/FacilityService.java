@@ -1,9 +1,13 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.model.cms.County;
+import gov.ca.cwds.cals.model.cms.CountyLicenseCase;
 import gov.ca.cwds.cals.model.cms.PlacementHome;
+import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.fas.LpaInformation;
 import gov.ca.cwds.cals.model.lis.LisFacFile;
+import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao;
@@ -33,15 +37,17 @@ import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 public class FacilityService implements CrudsService {
     private LisFacFileDao lisFacFileDao;
     private PlacementHomeDao placementHomeDao;
+    private CountiesDao countiesDao;
     private FacilityMapper facilityMapper;
     private LpaInformationDao lpaInformationDao;
 
     @Inject
     public FacilityService(LisFacFileDao lisFacFileDao, PlacementHomeDao placementHomeDao,
-            LpaInformationDao lpaInformationDao, FacilityMapper facilityMapper) {
+                           LpaInformationDao lpaInformationDao, CountiesDao countiesDao, FacilityMapper facilityMapper) {
         this.lisFacFileDao = lisFacFileDao;
         this.placementHomeDao = placementHomeDao;
         this.lpaInformationDao = lpaInformationDao;
+        this.countiesDao = countiesDao;
         this.facilityMapper = facilityMapper;
     }
 
@@ -76,7 +82,16 @@ public class FacilityService implements CrudsService {
 
     @UnitOfWork(CMS)
     protected PlacementHome findFacilityById(FacilityParameterObject parameterObject) {
-        return placementHomeDao.find(parameterObject);
+        PlacementHome placementHome = placementHomeDao.find(parameterObject);
+        CountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
+        if (countyLicenseCase != null) {
+            StaffPerson staffPerson = countyLicenseCase.getStaffPerson();
+            if (staffPerson != null) {
+                County county = countiesDao.findByLogicalId(staffPerson.getCntySpfcd());
+                staffPerson.setCounty(county);
+            }
+        }
+        return placementHome;
     }
 
     @Override

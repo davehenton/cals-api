@@ -10,12 +10,15 @@ import gov.ca.cwds.cals.service.ComplaintsCollectionService;
 import gov.ca.cwds.cals.service.CountiesService;
 import gov.ca.cwds.cals.service.FacilityChildCollectionService;
 import gov.ca.cwds.cals.service.FacilityChildService;
+import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
+import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.CountiesResource;
 import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
+import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -42,6 +45,7 @@ public class ResourcesModule extends AbstractModule {
         bind(FacilityResource.class);
         bind(FacilityChildResource.class);
         bind(FacilityComplaintResource.class);
+        bind(FacilityInspectionsResource.class);
         bind(CountiesResource.class);
         bind(FacilityTypeResource.class);
     }
@@ -95,6 +99,19 @@ public class ResourcesModule extends AbstractModule {
     public ResourceDelegate complaintServiceBackedResource(Injector injector) {
         return new ServiceBackedResourceDelegate(injector.getInstance(ComplaintService.class));
     }
+
+    @Provides
+    @FacilityInspectionCollectionServiceBackendResource
+    public ResourceDelegate facilityInspectionCollectionServiceBackendResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(FacilityInspectionCollectionService.class));
+    }
+
+    @Provides
+    @FacilityInspectionServiceBackendResource
+    public ResourceDelegate facilityInspectionServiceBackendResource(Injector injector) {
+        return new ServiceBackedResourceDelegate(injector.getInstance(FacilityInspectionService.class));
+    }
+
 
     @Provides
     @CountiesServiceBackendResource

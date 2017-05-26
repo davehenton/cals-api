@@ -37,7 +37,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonProperty("id")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Facility ID", example = "193600010")
-    private Long id;
+    private String id;
 
     @JsonProperty("type")
     @NotNull
@@ -149,11 +149,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
         this.href = href;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
