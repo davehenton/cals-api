@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author CWDS CALS API Team
  */
 
-public abstract class BaseDTO implements Serializable {
+public abstract class BaseDTO {
 
     @Override
     public String toString() {

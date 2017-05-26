@@ -24,7 +24,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @JsonProperty("complaint_date")
-    private transient LocalDate complaintDate;
+    private LocalDate complaintDate;
 
     @JsonProperty("assigned_worker")
     private String assignedWorker;
@@ -41,7 +41,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
     @JsonProperty("approval_date")
     @Date(format = DATE_FORMAT + " " + TIME_FORMAT, required = false)
-    private transient LocalDateTime approvalDate;
+    private LocalDateTime approvalDate;
 
     public String getId() {
         return id;
