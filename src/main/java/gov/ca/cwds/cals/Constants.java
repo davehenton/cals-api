@@ -6,12 +6,7 @@ package gov.ca.cwds.cals;
 
 public final class Constants {
 
-    private Constants() {}
-
     public static class API {
-
-        private API() {
-        }
 
         public static final String FACILITIES = "facilities";
 
@@ -27,10 +22,7 @@ public final class Constants {
 
         public static final String FACILITY_TYPES = "facility-types";
 
-        public static class PATH_PARAMS {
-
-            private PATH_PARAMS() {
-            }
+        public static class PathParams {
 
             public static final String FACILITY_ID = "facilityId";
 
@@ -38,35 +30,35 @@ public final class Constants {
 
             public static final String COMPLAINT_ID = "complaintId";
 
+            private PathParams() {}
+
         }
+
+        private API() {}
+
     }
 
-    public static class ADDRESS_TYPES {
-
-        private ADDRESS_TYPES() {
-        }
+    public static class AddressTypes {
 
         public static final String RESIDENTIAL = "residential";
 
         public static final String MAIL = "mail";
 
+        private AddressTypes() {}
+
     }
 
-    public static class PHONE_TYPES {
-
-        private PHONE_TYPES() {
-        }
+    public static class PhoneTypes {
 
         public static final String PRIMARY = "primary";
 
         public static final String ALTERNATE = "alternate";
 
+        private PhoneTypes() {}
+
     }
 
-    public static class UNIT_OF_WORK {
-
-        private UNIT_OF_WORK() {
-        }
+    public static class UnitOfWork {
 
         public static final String FAS = "fas";
 
@@ -74,6 +66,10 @@ public final class Constants {
 
         public static final String CMS = "cms";
 
+        private UnitOfWork() {}
+
     }
+
+    private Constants() {}
 
 }

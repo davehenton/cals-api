@@ -20,7 +20,7 @@ public interface MailAddressMapper {
     @Mapping(source = "facMailCity", target = "address.city")
     @Mapping(source = "facMailState", target = "address.state")
     @Mapping(source = "facMailZipCode", target = "address.zipCode")
-    @Mapping(constant = Constants.ADDRESS_TYPES.MAIL, target = "type")
+    @Mapping(constant = Constants.AddressTypes.MAIL, target = "type")
     @Mapping(target = "id", ignore = true)
     FacilityAddressDTO lisFacilityToFacilityAddressDTO(LisFacFile lisFacFile);
 

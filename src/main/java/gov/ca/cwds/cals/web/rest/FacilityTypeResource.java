@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.DICTIONARY;
 import static gov.ca.cwds.cals.Constants.API.FACILITY_TYPES;
-import static gov.ca.cwds.cals.Constants.UNIT_OF_WORK.LIS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  * @author CWDS CALS API Team

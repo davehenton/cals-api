@@ -7,8 +7,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import static gov.ca.cwds.cals.Constants.ADDRESS_TYPES.MAIL;
-import static gov.ca.cwds.cals.Constants.ADDRESS_TYPES.RESIDENTIAL;
+import static gov.ca.cwds.cals.Constants.AddressTypes.MAIL;
+import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 
 /**
  * @author CWDS CALS API Team
