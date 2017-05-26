@@ -5,50 +5,50 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
     <changeSet author="leonid.marushevskiy (generated)" id="1493269173453-1" >
         <insert tableName="lis_fac_file">
-            <column name="isn_lis_fac_file" valueNumeric="1"/>
-            <column name="fac_nbr" valueNumeric="193600001"/>
-            <column name="fac_name" value="BACKYARDIGAN FOSTER FAMILY HOME                   "/>
-            <column name="fac_do_eval_code" value="0AJH"/>
-            <column name="fac_do_nbr" valueNumeric="98"/>
-            <column name="fac_co_nbr" valueNumeric="7"/>
+            <column name="isn_lis_fac_file" valueNumeric="349454"/>
+            <column name="fac_nbr" valueNumeric="193600110"/>
+            <column name="fac_name" value="MAD HATTER RESIDENTIAL FOR THE CHRONICALLY ILL    "/>
+            <column name="fac_do_eval_code" value="B302"/>
+            <column name="fac_do_nbr" valueNumeric="3"/>
+            <column name="fac_co_nbr" valueNumeric="39"/>
             <column name="fac_fm_region_nbr" valueNumeric="0"/>
             <column name="fac_cfirs_id_nbr" valueNumeric="0"/>
-            <column name="fac_street_search" value="ISABEL              "/>
+            <column name="fac_street_search" value="MCDOUGALD           "/>
             <column name="fac_type" valueNumeric="810"/>
-            <column name="fac_status" valueNumeric="15"/>
-            <column name="fac_res_street_addr" value="485 PILGRIM AVE.              "/>
-            <column name="fac_res_city" value="MODESTO             "/>
+            <column name="fac_status" valueNumeric="9"/>
+            <column name="fac_res_street_addr" value="87 SW. LAKEWOOD AVE.          "/>
+            <column name="fac_res_city" value="NATIONAL CITY       "/>
             <column name="fac_res_state" value="CA"/>
-            <column name="fac_res_zip_code" value="95650    "/>
-            <column name="fac_mail_street_addr" value="485 PILGRIM AVE.              "/>
-            <column name="fac_mail_city" value="MODESTO             "/>
+            <column name="fac_res_zip_code" value="91950    "/>
+            <column name="fac_mail_street_addr" value="87 SW. LAKEWOOD AVE.          "/>
+            <column name="fac_mail_city" value="NATIONAL CITY       "/>
             <column name="fac_mail_state" value="CA"/>
-            <column name="fac_mail_zip_code" value="95650    "/>
-            <column name="fac_licensee_name" value="PROMESA BEHAVIORAL HEALTH                         "/>
+            <column name="fac_mail_zip_code" value="91950    "/>
+            <column name="fac_licensee_name" value="CHILDHELP, INC.                                   "/>
             <column name="fac_licensee_type" value="A"/>
-            <column name="fac_lic_comments" value="MAX. CAPACITY: 12 CHILDREN WITH NO MORE THAN 4 INFANTS, OR CAPACITY   14 CHILDREN WHEN 2 ARE AT LEAST 6 YEARS OF AGE WITH A MAXIMUM OF 3    INFANTS: PROPERTY/OWNER LANDLORD CONSENT IS REQUIRED.                 "/>
-            <column name="fac_lic_eff_date" valueDate="2004-05-10"/>
+            <column name="fac_lic_comments" value="MAXIMUM CAPACITY: 6 CHILDREN WITH NO MORE THAN 3 INFANTS, OR 4 INFANTSONLY, OR CAPACITY 8 CHILDREN WHEN 2 ARE AT LEAST 6 YEARS OF AGE WITH AMAXIMUM OF 2 INFANTS; PROPERTY OWNER/LANDLORD CONSENT IS REQUIRED     "/>
+            <column name="fac_lic_eff_date" valueDate="2004-05-27"/>
             <column name="fac_lic_expir_date"/>
-            <column name="fac_lic_first_date" valueDate="2004-05-10"/>
-            <column name="fac_lic_last_change_date" valueDate="2006-10-13"/>
-            <column name="fac_lic_mail_street_addr" value="4147 MOUNT ISABEL ROAD        "/>
-            <column name="fac_lic_mail_city" value="ANTIOCH             "/>
+            <column name="fac_lic_first_date" valueDate="2004-05-27"/>
+            <column name="fac_lic_last_change_date"/>
+            <column name="fac_lic_mail_street_addr" value="3622 MCDOUGALD BLVD           "/>
+            <column name="fac_lic_mail_city" value="STOCKTON            "/>
             <column name="fac_lic_mail_state" value="CA"/>
-            <column name="fac_lic_mail_zip_code" value="94531    "/>
-            <column name="fac_admin" value="THORNTON, SHELIA          "/>
-            <column name="fac_capacity" valueNumeric="14"/>
+            <column name="fac_lic_mail_zip_code" value="95206    "/>
+            <column name="fac_admin" value="SCOTT, BETTY              "/>
+            <column name="fac_capacity" valueNumeric="8"/>
             <column name="fac_client_served" valueNumeric="960"/>
-            <column name="fac_closed_date" valueDate="2012-06-12"/>
-            <column name="fac_orig_appl_rec_date" valueDate="2004-01-28"/>
-            <column name="fac_phone_nbr" value="9255220001"/>
+            <column name="fac_closed_date" valueDate="2008-08-14"/>
+            <column name="fac_orig_appl_rec_date" valueDate="2004-01-26"/>
+            <column name="fac_phone_nbr" value="2092340660"/>
             <column name="fac_annual_10_mo_defer_date"/>
             <column name="fac_annual_22_mo_defer_date"/>
             <column name="fac_annual_10_mo_visit_appr"/>
             <column name="fac_annual_22_mo_visit_appr"/>
-            <column name="fac_annual_10_mo_visit_date" valueDate="2011-08-18"/>
+            <column name="fac_annual_10_mo_visit_date"/>
             <column name="fac_annual_22_mo_visit_date"/>
-            <column name="fac_last_visit_date" valueDate="2011-08-18"/>
-            <column name="fac_last_visit_reason" valueNumeric="4"/>
+            <column name="fac_last_visit_date" valueDate="2004-04-02"/>
+            <column name="fac_last_visit_reason" valueNumeric="1"/>
             <column name="fac_mid_yr_defer_date"/>
             <column name="fac_mid_yr_visit_appr"/>
             <column name="fac_mid_yr_visit_date"/>
@@ -58,7 +58,7 @@
             <column name="fac_renewal_defer_date"/>
             <column name="fac_renewal_visit_appr"/>
             <column name="fac_renewal_visit_date"/>
-            <column name="fac_last_fire_clear_date" valueDate="2006-08-29"/>
+            <column name="fac_last_fire_clear_date"/>
             <column name="fac_sfm_id_nbr"/>
             <column name="fac_amb_1_17_nbr"/>
             <column name="fac_amb_18_64_nbr"/>
@@ -67,45 +67,45 @@
             <column name="fac_nonamb_18_64_nbr"/>
             <column name="fac_nonamb_65_plus_nbr"/>
             <column name="fac_unlic_orig_input_date"/>
-            <column name="fac_closed_process_date" valueDate="2012-06-12"/>
-            <column name="fac_cap_inc_rec_date" valueDate="2006-06-27"/>
+            <column name="fac_closed_process_date" valueDate="2008-08-14"/>
+            <column name="fac_cap_inc_rec_date"/>
             <column name="fac_region_nbr" valueNumeric="40"/>
             <column name="fac_last_defer_visit_date"/>
             <column name="fac_last_defer_visit_reason"/>
-            <column name="fac_annual_visit_year" valueNumeric="12"/>
-            <column name="fac_last_upd_date" valueDate="2015-08-04"/>
+            <column name="fac_annual_visit_year" valueNumeric="5"/>
+            <column name="fac_last_upd_date" valueDate="2013-09-30"/>
             <column name="fac_cap_inc_closed_date"/>
             <column name="fac_action_code" value="M"/>
-            <column name="fac_inc_cap_eff_date" valueDate="2006-10-13"/>
-            <column name="fac_lic_comments_2"/>
+            <column name="fac_inc_cap_eff_date"/>
+            <column name="fac_lic_comments_2" value="OFF LIMITS: UPSTAIRS AREA.                                                                                                                                                                                        "/>
             <column name="fac_client_served_appr_date"/>
             <column name="fac_legal_action_indicator"/>
             <column name="fac_agg_status"/>
             <column name="fac_primary_nbr"/>
-            <column name="fac_billing_date" valueDate="2004-05-10"/>
+            <column name="fac_billing_date" valueDate="2004-05-27"/>
             <column name="fac_dual_id" value="N"/>
             <column name="fac_dual_nbr"/>
             <column name="fac_fcrb_prgm_nbr"/>
             <column name="fac_gh_indicator"/>
             <column name="fac_complaint"/>
             <column name="fac_deficiency"/>
-            <column name="fac_nbr_new" valueNumeric="73407549"/>
+            <column name="fac_nbr_new"/>
             <column name="fac_email_address"/>
-            <column name="fac_pre_lic_visit_date" valueDate="2006-09-28"/>
+            <column name="fac_pre_lic_visit_date" valueDate="2004-04-02"/>
             <column name="fac_placement_ready"/>
             <column name="fac_placement_date"/>
             <column name="fac_required_visit" value="N"/>
-            <column name="fac_pin" valueNumeric="511355"/>
+            <column name="fac_pin" valueNumeric="653173"/>
             <column name="fac_old_ffa_nbr"/>
             <column name="fac_inactive_notice_date"/>
             <column name="fac_inactive_start_date"/>
             <column name="fac_sod_match_date"/>
-            <column name="fac_addr_key" value="MTISABEL4147       "/>
+            <column name="fac_addr_key"/>
             <column name="fac_loc_indicator"/>
             <column name="fac_type999_caci_indicator"/>
             <column name="fac_bilingual"/>
-            <column name="fac_region_do" valueNumeric="-185536270"/>
-            <column name="fac_region_co" valueNumeric="-185536265"/>
+            <column name="fac_region_do" valueNumeric="-185536269"/>
+            <column name="fac_region_co" valueNumeric="-185535495"/>
         </insert>
 
         <insert tableName="lis_table_file">
@@ -339,9 +339,105 @@
             <column name="TBL_FEE_PRTY_TYPE" value="00 "/>
         </insert>
 
+        <insert tableName="lis_table_file">
+            <column name="isn_lis_table_file" valueNumeric="169"/>
+            <column name="tbl_aa_status_code"/>
+            <column name="tbl_aa_status_desc"/>
+            <column name="tbl_ed_status_code"/>
+            <column name="tbl_ed_status_desc"/>
+            <column name="tbl_fa_per_type_code"/>
+            <column name="tbl_fa_per_type_desc"/>
+            <column name="tbl_fac_type_code"/>
+            <column name="tbl_fac_type_desc"/>
+            <column name="tbl_act_status_code"/>
+            <column name="tbl_act_status_desc"/>
+            <column name="tbl_cari_status"/>
+            <column name="tbl_cari_desc"/>
+            <column name="tbl_crcs_code"/>
+            <column name="tbl_crcs_desc"/>
+            <column name="tbl_ssv_category_code"/>
+            <column name="tbl_ssv_category_desc"/>
+            <column name="tbl_log_id"/>
+            <column name="tbl_old_log_pass"/>
+            <column name="tbl_co_nbr"/>
+            <column name="tbl_co_desc"/>
+            <column name="tbl_fac_status_code" valueNumeric="9"/>
+            <column name="tbl_fac_status_desc" value="CLOSED, LIC INIT.                                                     "/>
+            <column name="tbl_visit_reason_code"/>
+            <column name="tbl_visit_reason_desc"/>
+            <column name="tbl_clients_served_code"/>
+            <column name="tbl_clients_served_desc"/>
+            <column name="tbl_fm_region_nbr"/>
+            <column name="tbl_fm_region_name"/>
+            <column name="tbl_fm_region_street_addr"/>
+            <column name="tbl_fm_region_city"/>
+            <column name="tbl_fm_region_state"/>
+            <column name="tbl_fm_region_zip_code"/>
+            <column name="tbl_co_com_copies"/>
+            <column name="cfirs_nbr"/>
+            <column name="cfirs_fm_name"/>
+            <column name="cfirs_fm_street_addr"/>
+            <column name="cfirs_fm_city"/>
+            <column name="cfirs_fm_state"/>
+            <column name="cfirs_fm_zip_code"/>
+            <column name="tbl_fac_type_acronym"/>
+            <column name="tbl_month_code"/>
+            <column name="tbl_month_desc"/>
+            <column name="tbl_log_pass_date"/>
+            <column name="tbl_wv_code"/>
+            <column name="tbl_wv_desc"/>
+            <column name="tbl_wv_sum_desc"/>
+            <column name="tbl_phone_area_code"/>
+            <column name="tbl_report_pass"/>
+            <column name="tbl_per_id"/>
+            <column name="tbl_shut_down_time"/>
+            <column name="tbl_per_id_control"/>
+            <column name="tbl_cws_code"/>
+            <column name="tbl_last_cws_trans_date"/>
+            <column name="tbl_pals_last_trans_date"/>
+            <column name="tbl_pals_code"/>
+            <column name="tbl_clf_page_code"/>
+            <column name="tbl_fee_type_code" value="0"/>
+            <column name="tbl_fee_type_desc"/>
+            <column name="tbl_fac_licensee_code"/>
+            <column name="tbl_fac_licensee_desc"/>
+            <column name="tbl_aa_violation_desc"/>
+            <column name="tbl_lcts_action_desc"/>
+            <column name="tbl_fee_pmt_prty"/>
+            <column name="tbl_fee_type_print_desc"/>
+            <column name="tbl_aa_flag"/>
+            <column name="tbl_aa_flag_desc"/>
+            <column name="tbl_fee_type_fpb" value=" "/>
+            <column name="tbl_pondera_last_run_date"/>
+            <column name="tbl_aa_violation_code"/>
+            <column name="tbl_lcts_action_code"/>
+            <column name="tbl_fee_pmt_type"/>
+            <column name="tbl_fee_pmt_type_desc"/>
+            <column name="tbl_fee_prty_type" value="000"/>
+        </insert>
+
+        <insert tableName="lis_do_file">
+            <column name="isn_lis_do_file" valueNumeric="10"/>
+            <column name="do_nbr" valueNumeric="3"/>
+            <column name="do_name" value="RIVER CITY (SACTO)CC"/>
+            <column name="do_street_addr" value="2525 NATOMAS PARK DR. STE.250 "/>
+            <column name="do_city" value="SACRAMENTO          "/>
+            <column name="do_state" value="CA"/>
+            <column name="do_zip_code" value="95833    "/>
+            <column name="do_phone_nbr" value="9162635744"/>
+            <column name="do_calstars_nbr" valueNumeric="3872"/>
+            <column name="do_unit_code" valueNumeric="872"/>
+            <column name="do_print_dest" value="U11799"/>
+            <column name="do_region_nbr" valueNumeric="40"/>
+            <column name="do_access_code" valueNumeric="1"/>
+            <column name="do_block_begin" valueNumeric="3600001"/>
+            <column name="do_block_end" valueNumeric="3700000"/>
+            <column name="do_next_fac_nbr"/>
+        </insert>
+
         <insert tableName="lis_do_file">
             <column name="isn_lis_do_file" valueNumeric="7"/>
-            <column name="do_nbr" valueNumeric="98"/>
+            <column name="do_nbr" valueNumeric="2"/>
             <column name="do_name" value="BAY AREA-CC OAKLAND "/>
             <column name="do_street_addr" value="1515 CLAY STREET, SUITE 1102  "/>
             <column name="do_city" value="OAKLAND             "/>
@@ -356,6 +452,83 @@
             <column name="do_block_begin" valueNumeric="3400001"/>
             <column name="do_block_end" valueNumeric="3500000"/>
             <column name="do_next_fac_nbr"/>
+        </insert>
+
+        <insert tableName="lis_table_file">
+            <column name="isn_lis_table_file" valueNumeric="172"/>
+            <column name="tbl_aa_status_code"/>
+            <column name="tbl_aa_status_desc"/>
+            <column name="tbl_ed_status_code"/>
+            <column name="tbl_ed_status_desc"/>
+            <column name="tbl_fa_per_type_code"/>
+            <column name="tbl_fa_per_type_desc"/>
+            <column name="tbl_fac_type_code"/>
+            <column name="tbl_fac_type_desc"/>
+            <column name="tbl_act_status_code"/>
+            <column name="tbl_act_status_desc"/>
+            <column name="tbl_cari_status"/>
+            <column name="tbl_cari_desc"/>
+            <column name="tbl_crcs_code"/>
+            <column name="tbl_crcs_desc"/>
+            <column name="tbl_ssv_category_code"/>
+            <column name="tbl_ssv_category_desc"/>
+            <column name="tbl_log_id"/>
+            <column name="tbl_old_log_pass"/>
+            <column name="tbl_co_nbr"/>
+            <column name="tbl_co_desc"/>
+            <column name="tbl_fac_status_code"/>
+            <column name="tbl_fac_status_desc"/>
+            <column name="tbl_visit_reason_code" valueNumeric="1"/>
+            <column name="tbl_visit_reason_desc" value="PRELICENSING                                                          "/>
+            <column name="tbl_clients_served_code"/>
+            <column name="tbl_clients_served_desc"/>
+            <column name="tbl_fm_region_nbr"/>
+            <column name="tbl_fm_region_name"/>
+            <column name="tbl_fm_region_street_addr"/>
+            <column name="tbl_fm_region_city"/>
+            <column name="tbl_fm_region_state"/>
+            <column name="tbl_fm_region_zip_code"/>
+            <column name="tbl_co_com_copies"/>
+            <column name="cfirs_nbr"/>
+            <column name="cfirs_fm_name"/>
+            <column name="cfirs_fm_street_addr"/>
+            <column name="cfirs_fm_city"/>
+            <column name="cfirs_fm_state"/>
+            <column name="cfirs_fm_zip_code"/>
+            <column name="tbl_fac_type_acronym"/>
+            <column name="tbl_month_code"/>
+            <column name="tbl_month_desc"/>
+            <column name="tbl_log_pass_date"/>
+            <column name="tbl_wv_code"/>
+            <column name="tbl_wv_desc"/>
+            <column name="tbl_wv_sum_desc"/>
+            <column name="tbl_phone_area_code"/>
+            <column name="tbl_report_pass"/>
+            <column name="tbl_per_id"/>
+            <column name="tbl_shut_down_time"/>
+            <column name="tbl_per_id_control"/>
+            <column name="tbl_cws_code"/>
+            <column name="tbl_last_cws_trans_date"/>
+            <column name="tbl_pals_last_trans_date"/>
+            <column name="tbl_pals_code"/>
+            <column name="tbl_clf_page_code"/>
+            <column name="tbl_fee_type_code" value="0"/>
+            <column name="tbl_fee_type_desc"/>
+            <column name="tbl_fac_licensee_code"/>
+            <column name="tbl_fac_licensee_desc"/>
+            <column name="tbl_aa_violation_desc"/>
+            <column name="tbl_lcts_action_desc"/>
+            <column name="tbl_fee_pmt_prty"/>
+            <column name="tbl_fee_type_print_desc"/>
+            <column name="tbl_aa_flag"/>
+            <column name="tbl_aa_flag_desc"/>
+            <column name="tbl_fee_type_fpb" value=" "/>
+            <column name="tbl_pondera_last_run_date"/>
+            <column name="tbl_aa_violation_code"/>
+            <column name="tbl_lcts_action_code"/>
+            <column name="tbl_fee_pmt_type"/>
+            <column name="tbl_fee_pmt_type_desc"/>
+            <column name="tbl_fee_prty_type" value="000"/>
         </insert>
 
         <insert tableName="lis_table_file">
@@ -510,6 +683,83 @@
             <column name="TBL_FEE_PMT_TYPE"/>
             <column name="TBL_FEE_PMT_TYPE_DESC"/>
             <column name="TBL_FEE_PRTY_TYPE" value="000"/>
+        </insert>
+
+        <insert tableName="lis_table_file">
+            <column name="isn_lis_table_file" valueNumeric="144"/>
+            <column name="tbl_aa_status_code"/>
+            <column name="tbl_aa_status_desc"/>
+            <column name="tbl_ed_status_code"/>
+            <column name="tbl_ed_status_desc"/>
+            <column name="tbl_fa_per_type_code"/>
+            <column name="tbl_fa_per_type_desc"/>
+            <column name="tbl_fac_type_code"/>
+            <column name="tbl_fac_type_desc"/>
+            <column name="tbl_act_status_code"/>
+            <column name="tbl_act_status_desc"/>
+            <column name="tbl_cari_status"/>
+            <column name="tbl_cari_desc"/>
+            <column name="tbl_crcs_code"/>
+            <column name="tbl_crcs_desc"/>
+            <column name="tbl_ssv_category_code"/>
+            <column name="tbl_ssv_category_desc"/>
+            <column name="tbl_log_id"/>
+            <column name="tbl_old_log_pass"/>
+            <column name="tbl_co_nbr" valueNumeric="39"/>
+            <column name="tbl_co_desc" value="SAN JOAQUIN         "/>
+            <column name="tbl_fac_status_code"/>
+            <column name="tbl_fac_status_desc"/>
+            <column name="tbl_visit_reason_code"/>
+            <column name="tbl_visit_reason_desc"/>
+            <column name="tbl_clients_served_code"/>
+            <column name="tbl_clients_served_desc"/>
+            <column name="tbl_fm_region_nbr"/>
+            <column name="tbl_fm_region_name"/>
+            <column name="tbl_fm_region_street_addr"/>
+            <column name="tbl_fm_region_city"/>
+            <column name="tbl_fm_region_state"/>
+            <column name="tbl_fm_region_zip_code"/>
+            <column name="tbl_co_com_copies" valueNumeric="1"/>
+            <column name="cfirs_nbr"/>
+            <column name="cfirs_fm_name"/>
+            <column name="cfirs_fm_street_addr"/>
+            <column name="cfirs_fm_city"/>
+            <column name="cfirs_fm_state"/>
+            <column name="cfirs_fm_zip_code"/>
+            <column name="tbl_fac_type_acronym"/>
+            <column name="tbl_month_code"/>
+            <column name="tbl_month_desc"/>
+            <column name="tbl_log_pass_date"/>
+            <column name="tbl_wv_code"/>
+            <column name="tbl_wv_desc"/>
+            <column name="tbl_wv_sum_desc"/>
+            <column name="tbl_phone_area_code"/>
+            <column name="tbl_report_pass"/>
+            <column name="tbl_per_id"/>
+            <column name="tbl_shut_down_time"/>
+            <column name="tbl_per_id_control"/>
+            <column name="tbl_cws_code"/>
+            <column name="tbl_last_cws_trans_date"/>
+            <column name="tbl_pals_last_trans_date"/>
+            <column name="tbl_pals_code"/>
+            <column name="tbl_clf_page_code"/>
+            <column name="tbl_fee_type_code" value="0"/>
+            <column name="tbl_fee_type_desc"/>
+            <column name="tbl_fac_licensee_code"/>
+            <column name="tbl_fac_licensee_desc"/>
+            <column name="tbl_aa_violation_desc"/>
+            <column name="tbl_lcts_action_desc"/>
+            <column name="tbl_fee_pmt_prty"/>
+            <column name="tbl_fee_type_print_desc"/>
+            <column name="tbl_aa_flag"/>
+            <column name="tbl_aa_flag_desc"/>
+            <column name="tbl_fee_type_fpb" value=" "/>
+            <column name="tbl_pondera_last_run_date"/>
+            <column name="tbl_aa_violation_code"/>
+            <column name="tbl_lcts_action_code"/>
+            <column name="tbl_fee_pmt_type"/>
+            <column name="tbl_fee_pmt_type_desc"/>
+            <column name="tbl_fee_prty_type" value="000"/>
         </insert>
 
     </changeSet>

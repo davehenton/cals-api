@@ -87,20 +87,20 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDate licenseEffectiveDate;
+    private transient LocalDate licenseEffectiveDate;
 
     @JsonProperty("original_application_recieved_date")
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDate originalApplicationRecievedDate;
+    private transient LocalDate originalApplicationRecievedDate;
 
     @JsonProperty("last_visit_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDate lastVisitDate;
+    private transient LocalDate lastVisitDate;
 
     @JsonProperty("email_address")
     @Size(max = 50)
