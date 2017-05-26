@@ -8,7 +8,10 @@ import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 /**
@@ -16,6 +19,8 @@ import java.util.List;
  */
 public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
     private static final long serialVersionUID = 839402158987943034L;
+
+    private static final Logger LOG = LoggerFactory.getLogger(InspectionDao.class);
 
     @Inject
     public InspectionDao(@FasSessionFactory SessionFactory sessionFactory) {
@@ -35,7 +40,13 @@ public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
                 Rr809Dn.NQ_FIND_BY_FACILITY_NUMBER_AND_DEFICIENCY_ID, Rr809Dn.class);
         namedQuery.setParameter("facilityNumberText", formatFacilityNumber(facilityNumber));
         namedQuery.setParameter("deficiencyId", deficiencyId);
-        return namedQuery.getSingleResult();
+        Rr809Dn res = null;
+        try {
+            res = namedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            LOG.warn(e.getMessage(), e);
+        }
+        return res;
     }
 
     public List<Rrcpoc> findByFacilityNumber(Integer facilityNumber) {
@@ -52,7 +63,14 @@ public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
                 Rrcpoc.NQ_FIND_BY_FACILITY_NUMBER_AND_INSPECTION_ID, Rrcpoc.class);
         namedQuery.setParameter("facilityNumberText", formatFacilityNumber(facilityNumber));
         namedQuery.setParameter("inspectionId", inspectionId);
-        return namedQuery.getSingleResult();
+        Rrcpoc res = null;
+        try {
+            res = namedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            LOG.warn(e.getMessage(), e);
+        }
+
+        return res;
     }
 
     protected static String formatFacilityNumber(Integer facilityNumber) {

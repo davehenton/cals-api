@@ -11,6 +11,7 @@ import org.junit.Test;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
@@ -48,6 +49,14 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
         FacilityInspectionDTO inspectionDTO = invocation.get(FacilityInspectionDTO.class);
 
         assertEquals(inspectionDTO0, inspectionDTO);
+    }
+
+    @Test
+    public void notFoundTest() throws Exception {
+        WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_NUMBER + "/" + Constants.API.INSPECTIONS + "/" + 0);
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        Response response = invocation.get();
+        assertEquals(404, response.getStatus());
     }
 
 }
