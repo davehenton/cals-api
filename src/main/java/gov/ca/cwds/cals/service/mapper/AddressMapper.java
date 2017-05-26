@@ -17,7 +17,7 @@ import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 public interface AddressMapper {
 
     //This is standard mapstruct approach that is why it's false positive
-    @SuppressWarnings("squid:S1214")
+    @SuppressWarnings({"squid:S1214"})
     AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
 
     @Named(RESIDENTIAL)

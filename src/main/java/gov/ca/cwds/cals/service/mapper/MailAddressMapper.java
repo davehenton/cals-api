@@ -15,7 +15,7 @@ import org.mapstruct.factory.Mappers;
 public interface MailAddressMapper {
 
     //This is standard mapstruct approach that is why it's false positive
-    @SuppressWarnings("squid:S1214")
+    @SuppressWarnings({"squid:S1214"})
     MailAddressMapper INSTANCE = Mappers.getMapper(MailAddressMapper.class);
 
     @Mapping(source = "facMailStreetAddr", target = "address.streetAddress")

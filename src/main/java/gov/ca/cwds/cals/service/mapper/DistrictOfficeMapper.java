@@ -11,6 +11,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DistrictOfficeMapper {
+
+    //This is standard mapstruct approach that is why it's false positive
+    @SuppressWarnings({"squid:S1214"})
     DistrictOfficeMapper INSTANCE = Mappers.getMapper(DistrictOfficeMapper.class);
 
     @Mapping(target = "number", source = "lgcId")

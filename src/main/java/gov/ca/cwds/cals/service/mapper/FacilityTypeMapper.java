@@ -14,7 +14,7 @@ import java.util.List;
 public interface FacilityTypeMapper {
 
     //This is standard mapstruct approach that is why it's false positive
-    @SuppressWarnings("squid:S1214")
+    @SuppressWarnings({"squid:S1214"})
     FacilityTypeMapper INSTANCE = Mappers.getMapper(FacilityTypeMapper.class);
 
     List<FacilityTypeDTO> toFacilityTypeDTO(List<gov.ca.cwds.cals.model.lis.FacilityType> facilityTypes);

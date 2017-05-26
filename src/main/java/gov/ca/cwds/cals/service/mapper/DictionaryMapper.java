@@ -11,6 +11,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DictionaryMapper {
+
+    //This is standard mapstruct approach that is why it's false positive
+    @SuppressWarnings({"squid:S1214"})
     DictionaryMapper INSTANCE = Mappers.getMapper(DictionaryMapper.class);
 
     @Mapping(target = "description", expression = "java(staffPerson.getFirstName() + ' ' + staffPerson.getLastName())")
