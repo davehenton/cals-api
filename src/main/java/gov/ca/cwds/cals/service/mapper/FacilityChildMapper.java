@@ -21,7 +21,7 @@ import java.util.Set;
  *  @author CWDS CALS API Team
  *
  */
-@Mapper(uses = {PersonMapper.class})
+@Mapper(uses = {PersonMapper.class, TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityChildMapper {
 
     //This is standard mapstruct approach that is why it's false positive

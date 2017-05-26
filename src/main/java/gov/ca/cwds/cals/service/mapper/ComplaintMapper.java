@@ -14,7 +14,7 @@ import java.util.Set;
  * @author CWDS CALS API Team
  */
 
-@Mapper(imports = StringUtils.class)
+@Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface ComplaintMapper {
 
     //This is standard mapstruct approach that is why it's false positive

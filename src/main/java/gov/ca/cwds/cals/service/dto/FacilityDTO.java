@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.api.domain.DomainObject;
@@ -43,18 +44,21 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @ApiModelProperty(required = true, readOnly = false, value = "Facility Type")
     private FacilityTypeDTO type;
 
+    @RemoveTrailingSpaces
     @JsonProperty("name")
     @NotNull
     @Size(max = 50)
     @ApiModelProperty(required = true, readOnly = false, value = "Facility Name", example = "LITTLE ROADRUNNERS INFANT CARE")
     private String name;
 
+    @RemoveTrailingSpaces
     @JsonProperty("licensee_name")
     @NotNull
     @Size(max = 50)
     @ApiModelProperty(required = false, readOnly = false, value = "Licensee Name", example = "BROWN, KIMBERLY")
     private String licenseeName;
 
+    @RemoveTrailingSpaces
     @JsonProperty("license_type")
     @ApiModelProperty(required = false, readOnly = false, value = "Licensee Type", example = "A")
     private String licenseeType;
@@ -102,6 +106,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
     private LocalDate lastVisitDate;
 
+    @RemoveTrailingSpaces
     @JsonProperty("email_address")
     @Size(max = 50)
     @ApiModelProperty(required = false, readOnly = false, value = "Email Address", example = "name@mail.com")

@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
@@ -16,30 +17,35 @@ public class AddressDTO extends BaseDTO {
 
     private Long id;
 
+    @RemoveTrailingSpaces
     @JsonProperty("street_address")
     @NotNull
     @Size(max = 100)
     @ApiModelProperty(required = true, readOnly = true, value = "Street Address", example = "609 WOODSMAN DR")
     private String streetAddress;
 
+    @RemoveTrailingSpaces
     @JsonProperty("city")
     @NotNull
     @Size(max = 50)
     @ApiModelProperty(required = true, readOnly = true, value = "City", example = "BAKERSFIELD")
     private String city;
 
+    @RemoveTrailingSpaces
     @JsonProperty("state")
     @NotNull
     @Size(min = 2, max = 2)
     @ApiModelProperty(required = true, readOnly = true, value = "State", example = "CA")
     private String state;
 
+    @RemoveTrailingSpaces
     @JsonProperty("zip_code")
     @NotNull
     @Size(min = 5, max = 5)
     @ApiModelProperty(required = true, readOnly = true, value = "Zipcode", example = "93306")
     private String zipCode;
 
+    @RemoveTrailingSpaces
     @JsonProperty("zip_suffix_code")
     @Size(min = 4, max = 4)
     private String zipSuffixCode;

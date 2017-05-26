@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -10,7 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public class CountyDTO extends DictionaryDTO {
 
-
+    @RemoveTrailingSpaces
     private String lisCode;
 
     @ApiModelProperty(readOnly = true, value = "LIS (legacy) Dictionary Code", example = "01")

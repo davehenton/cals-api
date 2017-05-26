@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -15,11 +16,13 @@ public class DictionaryDTO extends BaseDTO {
 
     public DictionaryDTO() {}
 
+    @RemoveTrailingSpaces
     @JsonProperty("code")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Dictionary Status Code", example = "1")
     private String code;
 
+    @RemoveTrailingSpaces
     @JsonProperty("description")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Dictionary Status Description", example = "Some dictionary item description")
