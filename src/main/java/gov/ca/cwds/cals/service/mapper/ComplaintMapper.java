@@ -17,7 +17,7 @@ import java.util.Set;
 @Mapper(imports = StringUtils.class)
 public interface ComplaintMapper {
 
-    //This standard Mmapstruct approach that is why it's false positive
+    //This is standard mapstruct approach that is why it's false positive
     @SuppressWarnings("squid:S1214")
     ComplaintMapper INSTANCE = Mappers.getMapper(ComplaintMapper.class);
 

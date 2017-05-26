@@ -17,7 +17,7 @@ import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 @DecoratedWith(FacilityAddressMapperDecorator.class)
 public interface FacilityAddressMapper {
 
-    //This standard Mmapstruct approach that is why it's false positive
+    //This is standard mapstruct approach that is why it's false positive
     @SuppressWarnings("squid:S1214")
     FacilityAddressMapper INSTANCE = Mappers.getMapper(FacilityAddressMapper.class);
 

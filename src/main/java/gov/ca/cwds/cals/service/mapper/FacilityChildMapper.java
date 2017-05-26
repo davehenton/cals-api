@@ -24,7 +24,7 @@ import java.util.Set;
 @Mapper(uses = {PersonMapper.class})
 public interface FacilityChildMapper {
 
-    //This standard Mmapstruct approach that is why it's false positive
+    //This is standard mapstruct approach that is why it's false positive
     @SuppressWarnings("squid:S1214")
     FacilityChildMapper INSTANCE = Mappers.getMapper(FacilityChildMapper.class);
 
