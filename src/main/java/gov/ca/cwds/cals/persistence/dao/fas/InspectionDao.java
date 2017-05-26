@@ -25,23 +25,24 @@ public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
     public List<Rr809Dn> findDeficienciesByFacilityNumber(Integer facilityNumber) {
         Session currentSession = getSessionFactory().getCurrentSession();
         Query<Rr809Dn> namedQuery = currentSession.createNamedQuery(Rr809Dn.NQ_FIND_BY_FACILITY_NUMBER, Rr809Dn.class);
-        namedQuery.setParameter("facilityNumber", facilityNumber);
+        namedQuery.setParameter("facilityNumberText", formatFacilityNumber(facilityNumber));
         return namedQuery.list();
     }
 
-    public Rr809Dn findDeficiencyByFacilityNumberAndId(Integer facilityNumber, String deficiencyId) {
+    public Rr809Dn getDeficiencyByFacilityNumberAndId(Integer facilityNumber, String deficiencyId) {
         Session currentSession = getSessionFactory().getCurrentSession();
         Query<Rr809Dn> namedQuery = currentSession.createNamedQuery(
                 Rr809Dn.NQ_FIND_BY_FACILITY_NUMBER_AND_DEFICIENCY_ID, Rr809Dn.class);
-        namedQuery.setParameter("facilityNumber", facilityNumber);
+        namedQuery.setParameter("facilityNumberText", formatFacilityNumber(facilityNumber));
         namedQuery.setParameter("deficiencyId", deficiencyId);
         return namedQuery.getSingleResult();
     }
 
     public List<Rrcpoc> findByFacilityNumber(Integer facilityNumber) {
+
         Session currentSession = getSessionFactory().getCurrentSession();
         Query<Rrcpoc> namedQuery = currentSession.createNamedQuery(Rrcpoc.NQ_FIND_BY_FACILITY_NUMBER, Rrcpoc.class);
-        namedQuery.setParameter("facilityNumber", facilityNumber);
+        namedQuery.setParameter("facilityNumberText", formatFacilityNumber(facilityNumber));
         return namedQuery.list();
     }
 
@@ -49,8 +50,12 @@ public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
         Session currentSession = getSessionFactory().getCurrentSession();
         Query<Rrcpoc> namedQuery = currentSession.createNamedQuery(
                 Rrcpoc.NQ_FIND_BY_FACILITY_NUMBER_AND_INSPECTION_ID, Rrcpoc.class);
-        namedQuery.setParameter("facilityNumber", facilityNumber);
+        namedQuery.setParameter("facilityNumberText", formatFacilityNumber(facilityNumber));
         namedQuery.setParameter("inspectionId", inspectionId);
         return namedQuery.getSingleResult();
+    }
+
+    protected static String formatFacilityNumber(Integer facilityNumber) {
+        return String.format("%09d", facilityNumber);
     }
 }

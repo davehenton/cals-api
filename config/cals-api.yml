@@ -34,15 +34,15 @@ nsDataSourceFactory:
   maxSize: ${DB_NS_CP_MAX_SIZE:-8}
   minIdleTime: 1 minute
   properties:
-      hibernate.dialect: org.hibernate.dialect.PostgreSQL82Dialect
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: true
 
 lisDataSourceFactory:
   driverClass: org.postgresql.Driver
-  user: ${DB_NS_USER:-postgres}
-  password: ${DB_NS_PASSWORD:-postgres}
-  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres}
+  user: ${DB_NS_USER:-postgres_data}
+  password: ${DB_NS_PASSWORD:-postgres_data}
+  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
@@ -50,7 +50,7 @@ lisDataSourceFactory:
   maxSize: ${DB_NS_CP_MAX_SIZE:-8}
   minIdleTime: 1 minute
   properties:
-      hibernate.dialect: org.hibernate.dialect.PostgreSQL82Dialect
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: true
       hibernate.default_schema: lis
@@ -67,7 +67,7 @@ fasDataSourceFactory:
   maxSize: ${DB_NS_CP_MAX_SIZE:-8}
   minIdleTime: 1 minute
   properties:
-      hibernate.dialect: org.hibernate.dialect.PostgreSQL82Dialect
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: true
       hibernate.default_schema: fas

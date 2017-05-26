@@ -2,7 +2,6 @@ package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.model.fas.Rr809Dn;
-import gov.ca.cwds.cals.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionsDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
@@ -32,11 +31,6 @@ public class FacilityInspectionCollectionService extends CrudServiceAdapter {
         List<Rr809Dn> deficiencies = inspectionDao.findDeficienciesByFacilityNumber((Integer) facilityId);
         deficiencies.forEach(def -> 
             dto.getInspections().add(facilityInspectionMapper.toFacilityInspectionDto(def)));
-
-        List<Rrcpoc> pocsRes = inspectionDao.findByFacilityNumber((Integer) facilityId);
-        pocsRes.forEach(rrcpoc -> dto.getInspections().add(
-                facilityInspectionMapper.toFacilityInspectionDto(rrcpoc)));
-
         return dto;
     }
 }

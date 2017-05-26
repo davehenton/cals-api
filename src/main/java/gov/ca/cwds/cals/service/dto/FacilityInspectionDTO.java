@@ -29,11 +29,7 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
 
     private LocalDateTime representativeSignatureDate;
 
-    private LocalDateTime form809PrintDate;
-
     private List<FacilityDeficiencyDTO> deficiencies = new ArrayList<>(4);
-
-    private List<PlanOfCorrectionDTO> pocs = new ArrayList<>(4);
 
     public String getId() {
         return id;
@@ -59,24 +55,6 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
 
     public void setRepresentativeSignatureDate(LocalDateTime representativeSignatureDate) {
         this.representativeSignatureDate = representativeSignatureDate;
-    }
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
-    @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
-    public LocalDateTime getForm809PrintDate() {
-        return form809PrintDate;
-    }
-
-    public void setForm809PrintDate(LocalDateTime form809PrintDate) {
-        this.form809PrintDate = form809PrintDate;
-    }
-
-    public List<PlanOfCorrectionDTO> getPocs() {
-        return pocs;
-    }
-
-    public void setPocs(List<PlanOfCorrectionDTO> pocs) {
-        this.pocs = pocs;
     }
 
     public List<FacilityDeficiencyDTO> getDeficiencies() {

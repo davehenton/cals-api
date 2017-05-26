@@ -36,8 +36,8 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityInspectionDTO inspectionDTO = invocation.get(FacilityInspectionDTO.class);
         assertThat(inspectionDTO != null);
-        assertThat(inspectionDTO.getPocs() != null);
-        assertThat(inspectionDTO.getPocs().size() == 2);
+        assertThat(inspectionDTO.getDeficiencies() != null);
+        assertThat(inspectionDTO.getDeficiencies().size() == 2);
     }
 
 }

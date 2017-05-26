@@ -21,8 +21,6 @@ public class FacilityDeficiencyDTO extends BaseDTO {
 
     private String deficiencyType;
 
-    private String deficiencyTypeDescription;
-
     private LocalDateTime pocDate;
 
     private String facSectionViolated;
@@ -30,6 +28,10 @@ public class FacilityDeficiencyDTO extends BaseDTO {
     private String deficiency;
 
     private String correctionPlan;
+
+    private LocalDateTime pocDateCleared;
+
+    private String pocComment;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -41,14 +43,6 @@ public class FacilityDeficiencyDTO extends BaseDTO {
 
     public void setDeficiencyType(String deficiencyType) {
         this.deficiencyType = deficiencyType;
-    }
-
-    public String getDeficiencyTypeDescription() {
-        return deficiencyTypeDescription;
-    }
-
-    public void setDeficiencyTypeDescription(String deficiencyTypeDescription) {
-        this.deficiencyTypeDescription = deficiencyTypeDescription;
     }
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
@@ -83,6 +77,24 @@ public class FacilityDeficiencyDTO extends BaseDTO {
 
     public void setCorrectionPlan(String correctionPlan) {
         this.correctionPlan = correctionPlan;
+    }
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
+    @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
+    public LocalDateTime getPocDateCleared() {
+        return pocDateCleared;
+    }
+
+    public void setPocDateCleared(LocalDateTime pocDateCleared) {
+        this.pocDateCleared = pocDateCleared;
+    }
+
+    public String getPocComment() {
+        return pocComment;
+    }
+
+    public void setPocComment(String pocComment) {
+        this.pocComment = pocComment;
     }
 
     @Override

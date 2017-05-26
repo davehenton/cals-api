@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.model.fas.Rrcpoc;
+import gov.ca.cwds.cals.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
@@ -28,9 +28,9 @@ public class FacilityInspectionService extends CrudServiceAdapter {
     @Override
     public Response find(Serializable params) {
         FacilityInspectionParameterObject paramsObj = (FacilityInspectionParameterObject) params;
-        Rrcpoc rrcpoc = inspectionDao.getByFacilityNumberAndInspectionId(
-                paramsObj.getFacilityId(), paramsObj.getInspectionId());
-        FacilityInspectionDTO dto = facilityInspectionMapper.toFacilityInspectionDto( rrcpoc);
+        Rr809Dn rr809Dn = inspectionDao.getDeficiencyByFacilityNumberAndId(paramsObj.getFacilityId(),
+                paramsObj.getInspectionId());
+        FacilityInspectionDTO dto = facilityInspectionMapper.toFacilityInspectionDto(rr809Dn);
         return dto;
     }
 
