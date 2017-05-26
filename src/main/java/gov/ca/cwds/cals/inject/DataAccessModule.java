@@ -12,6 +12,8 @@ import gov.ca.cwds.cals.model.cms.PlacementHome;
 import gov.ca.cwds.cals.model.cms.StaffPerson;
 import gov.ca.cwds.cals.model.cms.VisitType;
 import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.model.fas.Rr809Dn;
+import gov.ca.cwds.cals.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.model.fas.LpaInformation;
 import gov.ca.cwds.cals.model.lis.FacilityStatusType;
 import gov.ca.cwds.cals.model.lis.LisDoFile;
@@ -24,6 +26,7 @@ import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
+import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.DataSourceFactory;
@@ -66,7 +69,9 @@ public class DataAccessModule extends AbstractModule {
     private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
             new HibernateBundle<CalsApiConfiguration>(
                     ComplaintReportLic802.class,
-                    LpaInformation.class
+                    LpaInformation.class,
+                    Rrcpoc.class,
+                    Rr809Dn.class
                     ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -117,6 +122,7 @@ public class DataAccessModule extends AbstractModule {
         bind(ClientDao.class);
         bind(PlacementHomeDao.class);
         bind(LpaInformationDao.class);
+        bind(InspectionDao.class);
     }
 
     @Provides

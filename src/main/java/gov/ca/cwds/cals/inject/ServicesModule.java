@@ -8,6 +8,8 @@ import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
+import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
+import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
@@ -30,6 +32,8 @@ public class ServicesModule extends AbstractModule{
     @Override
     protected void configure() {
         bind(ComplaintService.class);
+        bind(FacilityInspectionCollectionService.class);
+        bind(FacilityInspectionService.class);
         bind(CountiesService.class);
     }
 

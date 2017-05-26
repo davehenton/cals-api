@@ -20,6 +20,8 @@ public final class Constants {
 
         public static final String COUNTIES = "counties";
 
+        public static final String INSPECTIONS ="inspections";
+
         public static final String FACILITY_TYPES = "facility-types";
 
         public static class PathParams {
@@ -29,6 +31,8 @@ public final class Constants {
             public static final String CHILD_ID = "childId";
 
             public static final String COMPLAINT_ID = "complaintId";
+
+            public static final String INSPECTION_ID = "inspectionId";
 
             private PathParams() {}
 
