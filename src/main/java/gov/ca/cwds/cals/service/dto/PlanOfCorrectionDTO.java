@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.rest.validation.Date;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -21,16 +22,21 @@ public class PlanOfCorrectionDTO extends BaseDTO {
 
     private LocalDateTime pocDueDate;
 
+    @RemoveTrailingSpaces
     private String pocSectionViolated;
 
+    @RemoveTrailingSpaces
     private String pocCorrectionPlan;
 
     private LocalDateTime pocDateCleared;
 
+    @RemoveTrailingSpaces
     private String pocComment;
 
+    @RemoveTrailingSpaces
     private String pocCorrectionPlanCont;
 
+    @RemoveTrailingSpaces
     private String pocCommentCont;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)

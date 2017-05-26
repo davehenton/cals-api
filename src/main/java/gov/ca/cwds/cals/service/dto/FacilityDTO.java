@@ -34,6 +34,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example = Constants.API.FACILITIES + "/193600010")
     URI href;
 
+    @RemoveTrailingSpaces
     @JsonProperty("id")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Facility ID", example = "193600010")

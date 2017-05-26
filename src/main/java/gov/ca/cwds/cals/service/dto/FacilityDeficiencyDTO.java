@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.rest.validation.Date;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -19,18 +20,23 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
 public class FacilityDeficiencyDTO extends BaseDTO {
     private static final long serialVersionUID = -3548530142566196513L;
 
+    @RemoveTrailingSpaces
     private String deficiencyType;
 
     private LocalDateTime pocDate;
 
+    @RemoveTrailingSpaces
     private String facSectionViolated;
 
+    @RemoveTrailingSpaces
     private String deficiency;
 
+    @RemoveTrailingSpaces
     private String correctionPlan;
 
     private LocalDateTime pocDateCleared;
 
+    @RemoveTrailingSpaces
     private String pocComment;
 
     public static long getSerialVersionUID() {
