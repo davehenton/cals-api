@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.service.dto.FacilityDeficiencyDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -74,10 +75,18 @@ public interface FacilityInspectionMapper {
 
         List<FacilityDeficiencyDTO> defs = facilityInspectionDTO.getDeficiencies();
         facilityInspectionDTO.setDeficiencies(defs);
-        defs.add(toPlanOfCorrectionDTO(rr809Dn));
-        defs.add(toPlanOfCorrectionDTO1(rr809Dn));
-        defs.add(toPlanOfCorrectionDTO2(rr809Dn));
-        defs.add(toPlanOfCorrectionDTO3(rr809Dn));
+        if (StringUtils.isNotEmpty(rr809Dn.getFacSectionviolated())) {
+            defs.add(toPlanOfCorrectionDTO(rr809Dn));
+        }
+        if (StringUtils.isNotEmpty(rr809Dn.getFacSectionviolated1())) {
+            defs.add(toPlanOfCorrectionDTO1(rr809Dn));
+        }
+        if (StringUtils.isNotEmpty(rr809Dn.getFacSectionviolated2())) {
+            defs.add(toPlanOfCorrectionDTO2(rr809Dn));
+        }
+        if (StringUtils.isNotEmpty(rr809Dn.getFacSectionviolated3())) {
+            defs.add(toPlanOfCorrectionDTO3(rr809Dn));
+        }
 
 
         StringBuilder hrefSb = new StringBuilder();

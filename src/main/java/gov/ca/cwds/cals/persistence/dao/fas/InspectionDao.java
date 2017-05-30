@@ -49,30 +49,6 @@ public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
         return res;
     }
 
-    public List<Rrcpoc> findByFacilityNumber(Integer facilityNumber) {
-
-        Session currentSession = getSessionFactory().getCurrentSession();
-        Query<Rrcpoc> namedQuery = currentSession.createNamedQuery(Rrcpoc.NQ_FIND_BY_FACILITY_NUMBER, Rrcpoc.class);
-        namedQuery.setParameter("facilityNumberText", formatFacilityNumber(facilityNumber));
-        return namedQuery.list();
-    }
-
-    public Rrcpoc getByFacilityNumberAndInspectionId(Integer facilityNumber, String inspectionId) {
-        Session currentSession = getSessionFactory().getCurrentSession();
-        Query<Rrcpoc> namedQuery = currentSession.createNamedQuery(
-                Rrcpoc.NQ_FIND_BY_FACILITY_NUMBER_AND_INSPECTION_ID, Rrcpoc.class);
-        namedQuery.setParameter("facilityNumberText", formatFacilityNumber(facilityNumber));
-        namedQuery.setParameter("inspectionId", inspectionId);
-        Rrcpoc res = null;
-        try {
-            res = namedQuery.getSingleResult();
-        } catch (NoResultException e) {
-            LOG.warn(e.getMessage(), e);
-        }
-
-        return res;
-    }
-
     protected static String formatFacilityNumber(Integer facilityNumber) {
         return String.format("%09d", facilityNumber);
     }

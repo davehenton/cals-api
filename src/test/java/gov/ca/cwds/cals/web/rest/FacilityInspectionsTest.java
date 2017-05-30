@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
 
     public static final Integer FACILITY_NUMBER = 11400218;
+    public static final String INSPECTION_ID = "14-CR-MHRO-8WZSF8-20120809134525";
 
     @BeforeClass
     public static void beforeClass() throws Exception {
@@ -44,11 +45,21 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
 
         FacilityInspectionDTO inspectionDTO0 = inspectionsDTO.getInspections().get(0);
         String inspectionId = inspectionDTO0.getId();
-        target = clientTestRule.target(FACILITIES + "/" + FACILITY_NUMBER + "/" + Constants.API.INSPECTIONS + "/" + inspectionId);
-        invocation = target.request(MediaType.APPLICATION_JSON);
-        FacilityInspectionDTO inspectionDTO = invocation.get(FacilityInspectionDTO.class);
 
-        assertEquals(inspectionDTO0, inspectionDTO);
+        target = clientTestRule.target(FACILITIES + "/" + FACILITY_NUMBER + "/" + Constants.API.INSPECTIONS + "/" + INSPECTION_ID);
+        invocation = target.request(MediaType.APPLICATION_JSON);
+        final FacilityInspectionDTO inspectionDTO = invocation.get(FacilityInspectionDTO.class);
+
+        // Expected only 1 deficiency object
+        assertTrue(inspectionDTO.getDeficiencies().size() == 1);
+
+        inspectionsDTO.getInspections().forEach(inspection -> {
+            if (INSPECTION_ID.equals(inspection.getId())) {
+                assertEquals(inspection, inspectionDTO);
+            }
+        });
+
+
     }
 
     @Test
