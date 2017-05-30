@@ -48,7 +48,7 @@ public class FacilityResource {
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 417, message = "Expectation Failed"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
-    @ApiOperation(value = "Returns Facility by id ", response = FacilityDTO.class)
+    @ApiOperation(value = "Returns Facility by Id", response = FacilityDTO.class)
     public Response getFacilityById(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
             value = "The id of the Facility to find") String facilityNumber) {
 

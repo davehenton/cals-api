@@ -101,7 +101,7 @@ public interface FacilityMapper {
     }
 
     default void afterLastVisit(@MappingTarget FacilityDTO facilityDTO, CountyLicenseCase countyLicenseCase) {
-        if (CollectionUtils.isNotEmpty(countyLicenseCase.getLicensingVisits())) {
+        if (countyLicenseCase != null && CollectionUtils.isNotEmpty(countyLicenseCase.getLicensingVisits())) {
             INSTANCE.toFacilityDTO(facilityDTO, countyLicenseCase.getLicensingVisits().get(0));
         }
     }

@@ -134,6 +134,12 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
             Constants.API.FACILITIES + "/193600010/" + Constants.API.COMPLAINTS)
     private HyperlinkDTO complains;
 
+    @JsonProperty("inspections")
+    @NotNull
+    @ApiModelProperty(required = true, readOnly = true, value = "Inspections hyperlink", example =
+             Constants.API.FACILITIES + "/193600010/" + Constants.API.INSPECTIONS)
+    private HyperlinkDTO inspections;
+
     @JsonProperty("phones")
     @ApiModelProperty(required = true, readOnly = true, value = "Facility Phones")
     private List<PhoneDTO> phone;
@@ -292,6 +298,14 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
 
     public void setComplains(HyperlinkDTO complains) {
         this.complains = complains;
+    }
+
+    public HyperlinkDTO getInspections() {
+        return inspections;
+    }
+
+    public void setInspections(HyperlinkDTO inspections) {
+        this.inspections = inspections;
     }
 
     public List<FacilityAddressDTO> getAddress() {

@@ -50,7 +50,7 @@ public class FacilityChildResource {
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
-    @ApiOperation(value = "Returns Children", response = FacilityChildrenDTO.class)
+    @ApiOperation(value = "Returns Children collection by Facility Id", response = FacilityChildrenDTO.class)
     public Response getChildren(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID,
             value = "The license number of the Placement Home") String facility_license_number) {
         return collectionResourceDelegate.get(new FacilityChildParameterObject(facility_license_number));
@@ -63,7 +63,7 @@ public class FacilityChildResource {
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
-    @ApiOperation(value = "Returns Child", response = FacilityChildDTO.class)
+    @ApiOperation(value = "Returns Child by Facility Id and Child Id", response = FacilityChildDTO.class)
     public Response getChild(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID, value = "The license number of the Placement Home") String facility_license_number,
             @PathParam(CHILD_ID) @ApiParam(required = true, name = CHILD_ID, value = "The id of the Client") String childId) {
         return resourceDelegate.get(new FacilityChildParameterObject(facility_license_number, childId));

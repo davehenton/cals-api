@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.rest.api.ApiException;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -67,6 +69,7 @@ public class ApplicationResource {
      * @return the application data
      */
     @GET
+    @ApiOperation(value = "Returns Application information")
     public String get() {
         ImmutableMap<String, String> map = ImmutableMap.<String, String>builder()
                 .put("Application", applicationName)
