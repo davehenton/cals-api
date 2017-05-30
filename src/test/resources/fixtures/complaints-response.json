@@ -1,7 +1,5 @@
 {
-  "messages" : [ ],
   "complaints" : [ {
-    "messages" : [ ],
     "id" : "32-CR-SNGO-86JMJE-20100618091646",
     "complaint_date" : "2010-06-18",
     "assigned_worker" : "Julie Darden",
@@ -10,7 +8,6 @@
     "status" : "Open",
     "approval_date" : "2007-11-01 08:15:10"
   }, {
-    "messages" : [ ],
     "id" : "24-CR-DCHN-779RZ4-20070921132110",
     "complaint_date" : "2007-09-21",
     "assigned_worker" : "Regina Martin",

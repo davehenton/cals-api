@@ -1,5 +1,4 @@
 {
-  "messages" : [ ],
   "children" : [ {
     "id" : "AazXkWY06s",
     "person" : {
@@ -9,7 +8,6 @@
       "last_name" : "Oliver",
       "date_of_birth" : "2016-01-01"
     },
-    "messages" : [ ],
     "date_of_placement" : "2004-08-10",
     "assigned_worker" : {
       "first_name" : "John",
@@ -25,7 +23,6 @@
       "last_name" : "money",
       "date_of_birth" : "1977-09-01"
     },
-    "messages" : [ ],
     "date_of_placement" : "2004-08-12",
     "county_of_origin" : "Yolo"
   }, {
@@ -37,7 +34,6 @@
       "last_name" : "money",
       "date_of_birth" : "1977-09-01"
     },
-    "messages" : [ ],
     "date_of_placement" : "2004-08-12",
     "county_of_origin" : "Yolo"
   } ]
