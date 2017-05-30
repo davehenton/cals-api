@@ -75,13 +75,11 @@ public class TrailingSpacesRemovalPostMappingProcessor {
     private static void doRemoveTrailingSpaces(Object object)
             throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         for (Field field : FieldUtils.getFieldsWithAnnotation(object.getClass(), RemoveTrailingSpaces.class)) {
-            if (!field.getType().isAssignableFrom(String.class)) {
-                LOG.warn(WARN_MESSAGE);
+            if (field.getType().isAssignableFrom(String.class)) {
+                PropertyUtils.setProperty(object, field.getName(),
+                        StringUtils.trim((String) PropertyUtils.getProperty(object, field.getName())));
             } else {
-                if (field.getType().isAssignableFrom(String.class)) {
-                    PropertyUtils.setProperty(object, field.getName(),
-                            StringUtils.trim((String) PropertyUtils.getProperty(object, field.getName())));
-                }
+                LOG.warn(WARN_MESSAGE);
             }
         }
     }
