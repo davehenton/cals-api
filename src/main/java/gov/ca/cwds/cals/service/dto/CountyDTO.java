@@ -41,10 +41,10 @@ public class CountyDTO extends DictionaryDTO {
             return false;
         }
         CountyDTO countyDTO = (CountyDTO) obj;
-        return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
-                .append(lisCode, countyDTO.lisCode)
-                .isEquals();
+        EqualsBuilder equalsBuilder = new EqualsBuilder();
+        equalsBuilder.appendSuper(super.equals(obj));
+        equalsBuilder.append(lisCode, countyDTO.lisCode);
+        return equalsBuilder.isEquals();
     }
 
 }

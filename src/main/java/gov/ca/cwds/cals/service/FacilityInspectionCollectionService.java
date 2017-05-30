@@ -27,10 +27,14 @@ public class FacilityInspectionCollectionService extends CrudServiceAdapter {
 
     @Override
     public Response find(Serializable facilityId) {
+        Response res = null;
         final FacilityInspectionsDTO dto = new FacilityInspectionsDTO();
         List<Rr809Dn> deficiencies = inspectionDao.findDeficienciesByFacilityNumber((Integer) facilityId);
         deficiencies.forEach(def -> 
             dto.getInspections().add(facilityInspectionMapper.toFacilityInspectionDto(def)));
-        return dto;
+        if (dto.getInspections() != null && dto.getInspections().size() > 0 ) {
+            res = dto;
+        }
+        return res;
     }
 }

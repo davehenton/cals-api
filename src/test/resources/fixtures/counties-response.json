@@ -1,0 +1,241 @@
+{
+  "counties": [
+    {
+      "code": "01",
+      "description": "Alameda"
+    },
+    {
+      "code": "02",
+      "description": "Alpine"
+    },
+    {
+      "code": "03",
+      "description": "Amador"
+    },
+    {
+      "code": "04",
+      "description": "Butte"
+    },
+    {
+      "code": "05",
+      "description": "Calaveras"
+    },
+    {
+      "code": "06",
+      "description": "Colusa"
+    },
+    {
+      "code": "07",
+      "description": "Contra Costa"
+    },
+    {
+      "code": "08",
+      "description": "Del Norte"
+    },
+    {
+      "code": "09",
+      "description": "El Dorado"
+    },
+    {
+      "code": "10",
+      "description": "Fresno"
+    },
+    {
+      "code": "11",
+      "description": "Glenn"
+    },
+    {
+      "code": "12",
+      "description": "Humboldt"
+    },
+    {
+      "code": "13",
+      "description": "Imperial"
+    },
+    {
+      "code": "14",
+      "description": "Inyo"
+    },
+    {
+      "code": "15",
+      "description": "Kern"
+    },
+    {
+      "code": "16",
+      "description": "Kings"
+    },
+    {
+      "code": "17",
+      "description": "Lake"
+    },
+    {
+      "code": "18",
+      "description": "Lassen"
+    },
+    {
+      "code": "19",
+      "description": "Los Angeles"
+    },
+    {
+      "code": "20",
+      "description": "Madera"
+    },
+    {
+      "code": "21",
+      "description": "Marin"
+    },
+    {
+      "code": "22",
+      "description": "Mariposa"
+    },
+    {
+      "code": "23",
+      "description": "Mendocino"
+    },
+    {
+      "code": "24",
+      "description": "Merced"
+    },
+    {
+      "code": "25",
+      "description": "Modoc"
+    },
+    {
+      "code": "26",
+      "description": "Mono"
+    },
+    {
+      "code": "27",
+      "description": "Monterey"
+    },
+    {
+      "code": "28",
+      "description": "Napa"
+    },
+    {
+      "code": "29",
+      "description": "Nevada"
+    },
+    {
+      "code": "30",
+      "description": "Orange"
+    },
+    {
+      "code": "31",
+      "description": "Placer"
+    },
+    {
+      "code": "32",
+      "description": "Plumas"
+    },
+    {
+      "code": "33",
+      "description": "Riverside"
+    },
+    {
+      "code": "34",
+      "description": "Sacramento"
+    },
+    {
+      "code": "35",
+      "description": "San Benito"
+    },
+    {
+      "code": "36",
+      "description": "San Bernardino"
+    },
+    {
+      "code": "37",
+      "description": "San Diego"
+    },
+    {
+      "code": "38",
+      "description": "San Francisco"
+    },
+    {
+      "code": "39",
+      "description": "San Joaquin"
+    },
+    {
+      "code": "40",
+      "description": "San Luis Obispo"
+    },
+    {
+      "code": "41",
+      "description": "San Mateo"
+    },
+    {
+      "code": "42",
+      "description": "Santa Barbara"
+    },
+    {
+      "code": "43",
+      "description": "Santa Clara"
+    },
+    {
+      "code": "44",
+      "description": "Santa Cruz"
+    },
+    {
+      "code": "45",
+      "description": "Shasta"
+    },
+    {
+      "code": "46",
+      "description": "Sierra"
+    },
+    {
+      "code": "47",
+      "description": "Siskiyou"
+    },
+    {
+      "code": "48",
+      "description": "Solano"
+    },
+    {
+      "code": "49",
+      "description": "Sonoma"
+    },
+    {
+      "code": "50",
+      "description": "Stanislaus"
+    },
+    {
+      "code": "51",
+      "description": "Sutter"
+    },
+    {
+      "code": "52",
+      "description": "Tehama"
+    },
+    {
+      "code": "53",
+      "description": "Trinity"
+    },
+    {
+      "code": "54",
+      "description": "Tulare"
+    },
+    {
+      "code": "55",
+      "description": "Tuolumne"
+    },
+    {
+      "code": "56",
+      "description": "Ventura"
+    },
+    {
+      "code": "57",
+      "description": "Yolo"
+    },
+    {
+      "code": "58",
+      "description": "Yuba"
+    },
+    {
+      "code": "99",
+      "description": "State of California"
+    }
+  ],
+  "messages": []
+}

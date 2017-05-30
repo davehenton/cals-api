@@ -11,13 +11,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.*;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
@@ -45,7 +41,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);
 
         String fixture = fixture("fixtures/facility-by-license-number-response.json");
-        assertThat(clientTestRule.getMapper().writeValueAsString(facilityDTO)).isEqualTo(fixture);
+        assertEqualsResponse(fixture, facilityDTO);
     }
 
     @Test
@@ -63,7 +59,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);
 
         String fixture = fixture("fixtures/facility-by-id-response.json");
-        assertThat(clientTestRule.getMapper().writeValueAsString(facilityDTO)).isEqualTo(fixture);
+        assertEqualsResponse(fixture, facilityDTO);
     }
 
 }

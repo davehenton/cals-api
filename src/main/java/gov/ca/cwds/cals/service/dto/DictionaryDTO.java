@@ -62,7 +62,6 @@ public class DictionaryDTO extends BaseDTO {
         }
         DictionaryDTO dictionaryDTO = (DictionaryDTO) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(code, dictionaryDTO.code)
                 .append(description, dictionaryDTO.description)
                 .isEquals();

@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author CWDS CALS API Team
@@ -32,6 +31,6 @@ public class FacilityTypesResourceTest extends BaseCalsApiIntegrationTest {
         FacilityTypesDTO facilityDTOs = invocation.get(FacilityTypesDTO.class);
 
         String fixture = fixture("fixtures/facility-types-response.json");
-        assertThat(clientTestRule.getMapper().writeValueAsString(facilityDTOs)).isEqualTo(fixture);
+        assertEqualsResponse(fixture, facilityDTOs);
     }
 }
