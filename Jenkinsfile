@@ -18,12 +18,6 @@ node ('tpt2-slave'){
    stage('SonarQube analysis'){
 		withSonarQubeEnv('Core-SonarQube') {
 			buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'sonarqube'
-			timeout(15) {
-				def qg = waitForQualityGate()
-				if (qg.status != 'OK') {
-					error "Pipeline aborted due to quality gate failure: ${qg.status}"
-				}
-			}
         }
     }
 
