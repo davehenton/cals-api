@@ -75,16 +75,16 @@ public interface FacilityInspectionMapper {
 
         List<FacilityDeficiencyDTO> defs = facilityInspectionDTO.getDeficiencies();
         facilityInspectionDTO.setDeficiencies(defs);
-        if (StringUtils.isEmpty(rr809Dn.getFacSectionviolated())) {
+        if (StringUtils.isNotEmpty(rr809Dn.getFacSectionviolated())) {
             defs.add(toPlanOfCorrectionDTO(rr809Dn));
         }
-        if (StringUtils.isEmpty(rr809Dn.getFacSectionviolated1())) {
+        if (StringUtils.isNotEmpty(rr809Dn.getFacSectionviolated1())) {
             defs.add(toPlanOfCorrectionDTO1(rr809Dn));
         }
-        if (StringUtils.isEmpty(rr809Dn.getFacSectionviolated2())) {
+        if (StringUtils.isNotEmpty(rr809Dn.getFacSectionviolated2())) {
             defs.add(toPlanOfCorrectionDTO2(rr809Dn));
         }
-        if (StringUtils.isEmpty(rr809Dn.getFacSectionviolated3())) {
+        if (StringUtils.isNotEmpty(rr809Dn.getFacSectionviolated3())) {
             defs.add(toPlanOfCorrectionDTO3(rr809Dn));
         }
 
