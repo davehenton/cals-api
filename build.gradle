@@ -64,6 +64,14 @@ jacocoTestReport {
         csv.enabled false
         html.destination "${project.buildDir}/jacocoHtml"
     }
+    
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    'org/hibernate/*'
+            ])
+        })
+    }
 }
 
 
