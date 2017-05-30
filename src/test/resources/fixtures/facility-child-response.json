@@ -7,7 +7,6 @@
     "last_name" : "Oliver",
     "date_of_birth" : "2016-01-01"
   },
-  "messages" : [ ],
   "date_of_placement" : "2004-08-10",
   "assigned_worker" : {
     "first_name" : "John",
