@@ -10,7 +10,7 @@ import java.util.List;
  *
  * Represent Collection of Facility Inspections {@link FacilityInspectionDTO}
  */
-public class FacilityInspectionsDTO implements Response {
+public class FacilityInspectionsDTO extends BaseDTO implements Response {
 
     private List<FacilityInspectionDTO> inspections = new ArrayList<>();
 
