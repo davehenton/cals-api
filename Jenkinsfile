@@ -22,9 +22,11 @@ node ('tpt2-slave'){
 	}
    stage("Quality Gate"){
 		timeout(15) {
-			def qg = waitForQualityGate()
-			if (qg.status != 'OK') {
-				error "Pipeline aborted due to quality gate failure: ${qg.status}"
+			withSonarQubeEnv('Core-SonarQube') {
+				def qg = waitForQualityGate()
+				if (qg.status != 'OK') {
+					error "Pipeline aborted due to quality gate failure: ${qg.status}"
+				}
 			}
         }
     }
