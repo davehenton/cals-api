@@ -28,10 +28,6 @@ import java.util.List;
               DistrictOfficeMapper.class, DictionaryMapper.class, TrailingSpacesRemovalPostMappingProcessor.class} )
 public interface FacilityMapper {
 
-    //This is standard mapstruct approach that is why it's false positive
-    @SuppressWarnings({"squid:S1214"})
-    //FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
-
     @Mapping(target = "messages", ignore = true)
     @Mapping(target = "href", ignore = true)
     @Mapping(target = "address", ignore = true)
