@@ -7,7 +7,6 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -19,10 +18,6 @@ import java.util.Set;
  */
 @Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface PersonMapper {
-
-    //This is standard mapstruct approach that is why it's false positive
-    @SuppressWarnings({"squid:S1214"})
-    PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
     List<PersonDTO> toPerson(Set<Client> clients);
 
