@@ -5,7 +5,6 @@ import gov.ca.cwds.cals.model.cms.Client;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
-import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 
 import java.io.Serializable;
@@ -28,20 +27,5 @@ public class FacilityChildService extends CrudServiceAdapter {
         FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
         Client client = clientDao.find(parameterObject);
         return facilityChildMapper.toFacilityChildDTO(client);
-    }
-
-    @Override
-    public Response delete(Serializable params) {
-        return super.delete(params);
-    }
-
-    @Override
-    public Response create(Request request) {
-        return super.create(request);
-    }
-
-    @Override
-    public Response update(Serializable params, Request request) {
-        return super.update(params, request);
     }
 }

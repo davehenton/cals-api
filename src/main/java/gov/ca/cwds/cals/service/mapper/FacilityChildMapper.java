@@ -24,10 +24,6 @@ import java.util.Set;
 @Mapper(uses = {PersonMapper.class, TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityChildMapper {
 
-    //This is standard mapstruct approach that is why it's false positive
-    @SuppressWarnings({"squid:S1214"})
-    FacilityChildMapper INSTANCE = Mappers.getMapper(FacilityChildMapper.class);
-
     List<FacilityChildDTO> toFacilityChildDTO(List<Client> clients);
 
     @Mapping(target = "id", source = "client.identifier")
@@ -71,18 +67,20 @@ public interface FacilityChildMapper {
         Set<PlacementEpisode> placementEpisodes = client.getPlacementEpisodes();
         if (!placementEpisodes.isEmpty()) {
 
+            FacilityChildMapper facilityChildMapper = Mappers.getMapper(FacilityChildMapper.class);
+
             PlacementEpisode placementEpisode = placementEpisodes.iterator().next();
             County county = placementEpisode.getCounty();
-            INSTANCE.toFacilityChildDTO(facilityChildDTO, county);
+            facilityChildMapper.toFacilityChildDTO(facilityChildDTO, county);
 
             StaffPerson staffPerson = placementEpisode.getStaffPerson();
-            INSTANCE.toFacilityChildDTO(facilityChildDTO, staffPerson);
+            facilityChildMapper.toFacilityChildDTO(facilityChildDTO, staffPerson);
 
             Set<OutOfHomePlacement> outOfHomePlacements = placementEpisode.getOutOfHomePlacements();
             if (!outOfHomePlacements.isEmpty()) {
 
                 OutOfHomePlacement outOfHomePlacement = outOfHomePlacements.iterator().next();
-                INSTANCE.toFacilityChildDTO(facilityChildDTO, outOfHomePlacement);
+                facilityChildMapper.toFacilityChildDTO(facilityChildDTO, outOfHomePlacement);
             }
         }
     }

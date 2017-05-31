@@ -8,10 +8,10 @@ import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 
 public class HyperlinkDTO extends BaseDTO {
 
-    public HyperlinkDTO() {}
-
     @RemoveTrailingSpaces
     private String href;
+
+    public HyperlinkDTO() {}
 
     public HyperlinkDTO(String href) {
         this.href = href;

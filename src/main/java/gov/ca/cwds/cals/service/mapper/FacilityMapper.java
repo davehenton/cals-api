@@ -30,7 +30,7 @@ public interface FacilityMapper {
 
     //This is standard mapstruct approach that is why it's false positive
     @SuppressWarnings({"squid:S1214"})
-    FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
+    //FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
 
     @Mapping(target = "messages", ignore = true)
     @Mapping(target = "href", ignore = true)
@@ -102,19 +102,22 @@ public interface FacilityMapper {
 
     default void afterLastVisit(@MappingTarget FacilityDTO facilityDTO, CountyLicenseCase countyLicenseCase) {
         if (countyLicenseCase != null && CollectionUtils.isNotEmpty(countyLicenseCase.getLicensingVisits())) {
-            INSTANCE.toFacilityDTO(facilityDTO, countyLicenseCase.getLicensingVisits().get(0));
+            Mappers.getMapper(FacilityMapper.class).toFacilityDTO(
+                    facilityDTO, countyLicenseCase.getLicensingVisits().get(0));
         }
     }
 
     default void afterAddresses(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
         List<FacilityAddressDTO> facilityAddressDTOs = new ArrayList<>(2);
 
-        FacilityAddressDTO residentialAddress = FacilityAddressMapper.INSTANCE.toResidentialAddress(placementHome);
+        FacilityAddressMapper facilityAddressMapper = Mappers.getMapper(FacilityAddressMapper.class);
+
+        FacilityAddressDTO residentialAddress = facilityAddressMapper.toResidentialAddress(placementHome);
         if (residentialAddress != null) {
             facilityAddressDTOs.add(residentialAddress);
         }
 
-        FacilityAddressDTO mailingAddress = FacilityAddressMapper.INSTANCE.toMailAddress(placementHome);
+        FacilityAddressDTO mailingAddress = facilityAddressMapper.toMailAddress(placementHome);
         if (mailingAddress != null) {
             facilityAddressDTOs.add(mailingAddress);
         }
@@ -124,12 +127,14 @@ public interface FacilityMapper {
     default void afterPhones(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
         List<PhoneDTO> phoneDTOs = new ArrayList<>(2);
 
-        PhoneDTO primaryPhone = PhoneMapper.INSTANCE.toPrimaryPhoneDTO(placementHome);
+        PhoneMapper phoneMapper = Mappers.getMapper(PhoneMapper.class);
+
+        PhoneDTO primaryPhone = phoneMapper.toPrimaryPhoneDTO(placementHome);
         if (primaryPhone != null) {
             phoneDTOs.add(primaryPhone);
         }
 
-        PhoneDTO alternativePhone = PhoneMapper.INSTANCE.toAlternatePhoneDTO(placementHome);
+        PhoneDTO alternativePhone = phoneMapper.toAlternatePhoneDTO(placementHome);
         if (alternativePhone != null) {
             phoneDTOs.add(alternativePhone);
         }

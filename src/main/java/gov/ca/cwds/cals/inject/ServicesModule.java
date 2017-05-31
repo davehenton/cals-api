@@ -27,7 +27,7 @@ public class ServicesModule extends AbstractModule{
      *  Default constructor
      */
     public ServicesModule() {
-
+        // Do nothing - Default constructor
     }
 
     @Override
