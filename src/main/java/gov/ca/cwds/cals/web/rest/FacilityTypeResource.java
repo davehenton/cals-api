@@ -17,15 +17,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static gov.ca.cwds.cals.Constants.API.DICTIONARY;
+import static gov.ca.cwds.cals.Constants.API.DICTIONARIES;
 import static gov.ca.cwds.cals.Constants.API.FACILITY_TYPES;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  * @author CWDS CALS API Team
  */
-@Api(value = FACILITY_TYPES, tags = {DICTIONARY, FACILITY_TYPES})
-@Path(DICTIONARY + "/" + FACILITY_TYPES)
+@Api(value = FACILITY_TYPES, tags = {DICTIONARIES})
+@Path(DICTIONARIES + "/" + FACILITY_TYPES)
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityTypeResource {
     private ResourceDelegate collectionResourceDelegate;

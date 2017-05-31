@@ -30,7 +30,7 @@ import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
 /**
  * @author CWDS CALS API Team
  */
-@Api(tags = {FACILITIES, CHILDREN})
+@Api(tags = {FACILITIES})
 @Path(FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN)
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityChildResource {

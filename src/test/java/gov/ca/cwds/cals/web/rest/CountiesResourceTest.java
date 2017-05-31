@@ -31,7 +31,7 @@ public class CountiesResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void testGetCounties() throws Exception {
-        WebTarget target = clientTestRule.target(Constants.API.DICTIONARY + "/" + COUNTIES);
+        WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + COUNTIES);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         CountiesDTO countiesDTO = invocation.get(CountiesDTO.class);
         assertNotNull(countiesDTO);

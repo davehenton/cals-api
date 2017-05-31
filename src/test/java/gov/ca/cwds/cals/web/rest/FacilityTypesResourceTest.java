@@ -26,7 +26,7 @@ public class FacilityTypesResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void testGetFacilityTypes() throws Exception {
-        WebTarget target = clientTestRule.target(Constants.API.DICTIONARY + "/" + Constants.API.FACILITY_TYPES);
+        WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + Constants.API.FACILITY_TYPES);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityTypesDTO facilityDTOs = invocation.get(FacilityTypesDTO.class);
 

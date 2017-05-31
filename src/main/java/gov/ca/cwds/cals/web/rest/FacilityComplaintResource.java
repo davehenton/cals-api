@@ -32,7 +32,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
  * @author CWDS CALS API Team
  */
 
-@Api(tags = {FACILITIES, COMPLAINTS})
+@Api(tags = {FACILITIES})
 @Path(FACILITIES + "/{"+ FACILITY_ID + "}/" + COMPLAINTS)
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityComplaintResource {
