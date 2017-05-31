@@ -1,6 +1,8 @@
 package gov.ca.cwds.cals;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
+import gov.ca.cwds.rest.api.Response;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
@@ -10,9 +12,12 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 
 import javax.ws.rs.client.Client;
+import java.io.IOException;
+import java.util.Map;
 
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author CWDS CALS API Team
@@ -73,5 +78,13 @@ public abstract class BaseCalsApiIntegrationTest {
     @After
     public void tearDown() throws Exception {
 
+    }
+
+    protected void assertEqualsResponse(String fixture, Response response) throws IOException {
+        ObjectMapper om = new ObjectMapper();
+        String actual = clientTestRule.getMapper().writeValueAsString(response);
+        Map<String, String> map1 = (Map<String, String>) om.readValue(fixture, Map.class);
+        Map<String, String> map2 = (Map<String, String>) om.readValue(actual, Map.class);
+        assertThat(map1).isEqualTo(map2);
     }
 }

@@ -33,13 +33,13 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     }
 
     @Test
-    public void getAllFacilityComplaintsTest() throws JsonProcessingException {
+    public void getAllFacilityComplaintsTest() throws Exception {
         WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
 
         String fixture = fixture("fixtures/complaints-response.json");
-        assertThat(clientTestRule.getMapper().writeValueAsString(complaintsDTO)).isEqualTo(fixture);
+        assertEqualsResponse(fixture, complaintsDTO);
     }
 
     @Test
@@ -51,14 +51,14 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     }
 
     @Test
-    public void getFacilityComplaintTest() throws JsonProcessingException {
+    public void getFacilityComplaintTest() throws Exception {
         WebTarget target = clientTestRule
                 .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         ComplaintDTO complaintDTO = invocation.get(ComplaintDTO.class);
 
         String fixture = fixture("fixtures/complaint-response.json");
-        assertThat(clientTestRule.getMapper().writeValueAsString(complaintDTO)).isEqualTo(fixture);
+        assertEqualsResponse(fixture, complaintDTO);
     }
 
     @Test

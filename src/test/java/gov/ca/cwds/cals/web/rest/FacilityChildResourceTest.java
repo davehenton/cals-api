@@ -39,7 +39,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
         FacilityChildrenDTO facilityChildDTO = invocation.get(FacilityChildrenDTO.class);
 
         String fixture = fixture("fixtures/facility-children-response.json");
-        assertThat(clientTestRule.getMapper().writeValueAsString(facilityChildDTO)).isEqualToIgnoringWhitespace(fixture);
+        assertEqualsResponse(fixture, facilityChildDTO);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
         FacilityChildDTO facilityChildDTO = invocation.get(FacilityChildDTO.class);
 
         String fixture = fixture("fixtures/facility-child-response.json");
-        assertThat(clientTestRule.getMapper().writeValueAsString(facilityChildDTO)).isEqualToIgnoringWhitespace(fixture);
+        assertEqualsResponse(fixture, facilityChildDTO);
     }
 
     @Test
