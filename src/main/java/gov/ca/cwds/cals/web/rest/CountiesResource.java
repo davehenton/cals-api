@@ -18,14 +18,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.COUNTIES;
-import static gov.ca.cwds.cals.Constants.API.DICTIONARY;
+import static gov.ca.cwds.cals.Constants.API.DICTIONARIES;
 
 /**
  * @author CWDS CALS API Team
  */
 
-@Api(value = COUNTIES, tags = {DICTIONARY, COUNTIES})
-@Path(DICTIONARY + "/" + COUNTIES)
+@Api(value = COUNTIES, tags = {DICTIONARIES})
+@Path(DICTIONARIES + "/" + COUNTIES)
 @Produces(MediaType.APPLICATION_JSON)
 public class CountiesResource {
 

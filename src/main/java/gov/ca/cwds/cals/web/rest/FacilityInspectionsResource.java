@@ -30,7 +30,7 @@ import static gov.ca.cwds.cals.Constants.API.PathParams.INSPECTION_ID;
 /**
  * @author CWDS CALS API Team
  */
-@Api(tags = {FACILITIES, INSPECTIONS})
+@Api(tags = {FACILITIES})
 @Path(FACILITIES + "/{"+ FACILITY_ID + "}/" + INSPECTIONS)
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityInspectionsResource {
