@@ -32,7 +32,7 @@ public class FacilityInspectionCollectionService extends CrudServiceAdapter {
         List<Rr809Dn> deficiencies = inspectionDao.findDeficienciesByFacilityNumber((Integer) facilityId);
         deficiencies.forEach(def -> 
             dto.getInspections().add(facilityInspectionMapper.toFacilityInspectionDto(def)));
-        if (dto.getInspections() != null && dto.getInspections().size() > 0 ) {
+        if (dto.getInspections() != null && !dto.getInspections().isEmpty()) {
             res = dto;
         }
         return res;
