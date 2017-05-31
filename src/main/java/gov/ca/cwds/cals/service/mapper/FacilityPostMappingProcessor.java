@@ -7,6 +7,7 @@ import gov.ca.cwds.cals.service.dto.PhoneDTO;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +27,16 @@ public abstract class FacilityPostMappingProcessor {
 
     private void mapPhones(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
         List<PhoneDTO> phones = new ArrayList<>(1);
-        phones.add(PhoneMapper.INSTANCE.lisFacilityToPhoneDTO(lisFacFile));
+        phones.add(Mappers.getMapper(PhoneMapper.class).lisFacilityToPhoneDTO(lisFacFile));
         facilityDTO.setPhone(phones);
     }
 
     private void mapAddresses(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
         List<FacilityAddressDTO> addresses = new ArrayList<>(2);
-        FacilityAddressDTO residentialAddress = ResidentialAddressMapper.INSTANCE.lisFacilityToFacilityAddressDTO(lisFacFile);
-        FacilityAddressDTO mailAddress = MailAddressMapper.INSTANCE.lisFacilityToFacilityAddressDTO(lisFacFile);
+        FacilityAddressDTO residentialAddress = Mappers.getMapper(ResidentialAddressMapper.class)
+                .lisFacilityToFacilityAddressDTO(lisFacFile);
+        FacilityAddressDTO mailAddress = Mappers.getMapper(MailAddressMapper.class)
+                .lisFacilityToFacilityAddressDTO(lisFacFile);
         addresses.add(residentialAddress);
         addresses.add(mailAddress);
         facilityDTO.setAddress(addresses);

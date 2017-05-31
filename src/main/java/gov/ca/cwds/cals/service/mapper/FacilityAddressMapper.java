@@ -5,7 +5,6 @@ import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import static gov.ca.cwds.cals.Constants.AddressTypes.MAIL;
 import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
@@ -16,10 +15,6 @@ import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 @Mapper(uses = {AddressMapper.class, TrailingSpacesRemovalPostMappingProcessor.class})
 @DecoratedWith(FacilityAddressMapperDecorator.class)
 public interface FacilityAddressMapper {
-
-    //This is standard mapstruct approach that is why it's false positive
-    @SuppressWarnings({"squid:S1214"})
-    FacilityAddressMapper INSTANCE = Mappers.getMapper(FacilityAddressMapper.class);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "type", constant = RESIDENTIAL)
