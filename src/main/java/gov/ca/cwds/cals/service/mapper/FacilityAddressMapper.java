@@ -16,6 +16,7 @@ import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 @DecoratedWith(FacilityAddressMapperDecorator.class)
 public interface FacilityAddressMapper {
 
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "type", constant = RESIDENTIAL)
     @Mapping(target = "address", source = "placementHome", qualifiedByName = RESIDENTIAL)

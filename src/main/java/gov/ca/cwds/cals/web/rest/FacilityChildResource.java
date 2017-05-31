@@ -52,8 +52,8 @@ public class FacilityChildResource {
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Children collection by Facility Id", response = FacilityChildrenDTO.class)
     public Response getChildren(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID,
-            value = "The license number of the Placement Home") String facility_license_number) {
-        return collectionResourceDelegate.get(new FacilityChildParameterObject(facility_license_number));
+            value = "The license number of the Placement Home") String facilityLicenseNumber) {
+        return collectionResourceDelegate.get(new FacilityChildParameterObject(facilityLicenseNumber));
     }
 
     @UnitOfWork(value = "cms")
@@ -64,8 +64,8 @@ public class FacilityChildResource {
             @ApiResponse(code = 404, message = "Not found"),
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Child by Facility Id and Child Id", response = FacilityChildDTO.class)
-    public Response getChild(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID, value = "The license number of the Placement Home") String facility_license_number,
+    public Response getChild(@PathParam(FACILITY_ID)  @ApiParam(required = true, name = FACILITY_ID, value = "The license number of the Placement Home") String facilityLicenseNumber,
             @PathParam(CHILD_ID) @ApiParam(required = true, name = CHILD_ID, value = "The id of the Client") String childId) {
-        return resourceDelegate.get(new FacilityChildParameterObject(facility_license_number, childId));
+        return resourceDelegate.get(new FacilityChildParameterObject(facilityLicenseNumber, childId));
     }
 }

@@ -14,8 +14,6 @@ import javax.validation.constraints.NotNull;
 
 public class DictionaryDTO extends BaseDTO {
 
-    public DictionaryDTO() {}
-
     @RemoveTrailingSpaces
     @JsonProperty("code")
     @NotNull

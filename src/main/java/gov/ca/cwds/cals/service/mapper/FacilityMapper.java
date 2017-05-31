@@ -98,21 +98,22 @@ public interface FacilityMapper {
 
     default void afterLastVisit(@MappingTarget FacilityDTO facilityDTO, CountyLicenseCase countyLicenseCase) {
         if (countyLicenseCase != null && CollectionUtils.isNotEmpty(countyLicenseCase.getLicensingVisits())) {
-            Mappers.getMapper(FacilityMapper.class)
-                    .toFacilityDTO(facilityDTO, countyLicenseCase.getLicensingVisits().get(0));
+            Mappers.getMapper(FacilityMapper.class).toFacilityDTO(
+                    facilityDTO, countyLicenseCase.getLicensingVisits().get(0));
         }
     }
 
     default void afterAddresses(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
         List<FacilityAddressDTO> facilityAddressDTOs = new ArrayList<>(2);
 
-        FacilityAddressDTO residentialAddress = Mappers.getMapper(FacilityAddressMapper.class)
-                .toResidentialAddress(placementHome);
+        FacilityAddressMapper facilityAddressMapper = Mappers.getMapper(FacilityAddressMapper.class);
+
+        FacilityAddressDTO residentialAddress = facilityAddressMapper.toResidentialAddress(placementHome);
         if (residentialAddress != null) {
             facilityAddressDTOs.add(residentialAddress);
         }
 
-        FacilityAddressDTO mailingAddress = Mappers.getMapper(FacilityAddressMapper.class).toMailAddress(placementHome);
+        FacilityAddressDTO mailingAddress = facilityAddressMapper.toMailAddress(placementHome);
         if (mailingAddress != null) {
             facilityAddressDTOs.add(mailingAddress);
         }
@@ -122,12 +123,14 @@ public interface FacilityMapper {
     default void afterPhones(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
         List<PhoneDTO> phoneDTOs = new ArrayList<>(2);
 
-        PhoneDTO primaryPhone = Mappers.getMapper(PhoneMapper.class).toPrimaryPhoneDTO(placementHome);
+        PhoneMapper phoneMapper = Mappers.getMapper(PhoneMapper.class);
+
+        PhoneDTO primaryPhone = phoneMapper.toPrimaryPhoneDTO(placementHome);
         if (primaryPhone != null) {
             phoneDTOs.add(primaryPhone);
         }
 
-        PhoneDTO alternativePhone = Mappers.getMapper(PhoneMapper.class).toAlternatePhoneDTO(placementHome);
+        PhoneDTO alternativePhone = phoneMapper.toAlternatePhoneDTO(placementHome);
         if (alternativePhone != null) {
             phoneDTOs.add(alternativePhone);
         }

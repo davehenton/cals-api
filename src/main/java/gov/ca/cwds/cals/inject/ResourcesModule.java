@@ -36,7 +36,7 @@ public class ResourcesModule extends AbstractModule {
      * Default constructor
      */
     public ResourcesModule() {
-
+        // Do nothing - Default Constructor
     }
 
     @Override

@@ -67,18 +67,20 @@ public interface FacilityChildMapper {
         Set<PlacementEpisode> placementEpisodes = client.getPlacementEpisodes();
         if (!placementEpisodes.isEmpty()) {
 
+            FacilityChildMapper facilityChildMapper = Mappers.getMapper(FacilityChildMapper.class);
+
             PlacementEpisode placementEpisode = placementEpisodes.iterator().next();
             County county = placementEpisode.getCounty();
-            Mappers.getMapper(FacilityChildMapper.class).toFacilityChildDTO(facilityChildDTO, county);
+            facilityChildMapper.toFacilityChildDTO(facilityChildDTO, county);
 
             StaffPerson staffPerson = placementEpisode.getStaffPerson();
-            Mappers.getMapper(FacilityChildMapper.class).toFacilityChildDTO(facilityChildDTO, staffPerson);
+            facilityChildMapper.toFacilityChildDTO(facilityChildDTO, staffPerson);
 
             Set<OutOfHomePlacement> outOfHomePlacements = placementEpisode.getOutOfHomePlacements();
             if (!outOfHomePlacements.isEmpty()) {
 
                 OutOfHomePlacement outOfHomePlacement = outOfHomePlacements.iterator().next();
-                Mappers.getMapper(FacilityChildMapper.class).toFacilityChildDTO(facilityChildDTO, outOfHomePlacement);
+                facilityChildMapper.toFacilityChildDTO(facilityChildDTO, outOfHomePlacement);
             }
         }
     }

@@ -80,6 +80,7 @@ public abstract class BaseCalsApiIntegrationTest {
 
     }
 
+    @SuppressWarnings("unchecked")
     protected void assertEqualsResponse(String fixture, Response response) throws IOException {
         ObjectMapper om = new ObjectMapper();
         String actual = clientTestRule.getMapper().writeValueAsString(response);

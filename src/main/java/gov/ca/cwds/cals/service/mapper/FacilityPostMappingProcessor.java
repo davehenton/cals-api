@@ -19,6 +19,12 @@ import java.util.List;
 @Mapper
 public abstract class FacilityPostMappingProcessor {
 
+    private static final PhoneMapper PHONE_MAPPER = Mappers.getMapper(PhoneMapper.class);
+    private static final MailAddressMapper MAIL_ADDRESS_MAPPER = Mappers.getMapper(MailAddressMapper.class);
+    private static final ResidentialAddressMapper RESIDENTIAL_ADDRESS_MAPPER = Mappers.getMapper(
+            ResidentialAddressMapper.class);
+
+
     @AfterMapping
     protected void fillAddresses(LisFacFile lisFacFile, @MappingTarget FacilityDTO facilityDTO) {
         mapAddresses(lisFacFile, facilityDTO);
@@ -27,16 +33,14 @@ public abstract class FacilityPostMappingProcessor {
 
     private void mapPhones(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
         List<PhoneDTO> phones = new ArrayList<>(1);
-        phones.add(Mappers.getMapper(PhoneMapper.class).lisFacilityToPhoneDTO(lisFacFile));
+        phones.add(PHONE_MAPPER.lisFacilityToPhoneDTO(lisFacFile));
         facilityDTO.setPhone(phones);
     }
 
     private void mapAddresses(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
         List<FacilityAddressDTO> addresses = new ArrayList<>(2);
-        FacilityAddressDTO residentialAddress = Mappers.getMapper(ResidentialAddressMapper.class)
-                .lisFacilityToFacilityAddressDTO(lisFacFile);
-        FacilityAddressDTO mailAddress = Mappers.getMapper(MailAddressMapper.class)
-                .lisFacilityToFacilityAddressDTO(lisFacFile);
+        FacilityAddressDTO residentialAddress = RESIDENTIAL_ADDRESS_MAPPER.lisFacilityToFacilityAddressDTO(lisFacFile);
+        FacilityAddressDTO mailAddress = MAIL_ADDRESS_MAPPER.lisFacilityToFacilityAddressDTO(lisFacFile);
         addresses.add(residentialAddress);
         addresses.add(mailAddress);
         facilityDTO.setAddress(addresses);
