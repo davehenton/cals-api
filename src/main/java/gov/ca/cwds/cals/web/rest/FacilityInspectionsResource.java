@@ -26,6 +26,7 @@ import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.INSPECTIONS;
 import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.INSPECTION_ID;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 
 /**
  * @author CWDS CALS API Team
@@ -46,7 +47,7 @@ public class FacilityInspectionsResource {
         this.collectionResourceDelegate = collectionResourceDelegate;
     }
 
-    @UnitOfWork(value = "fas")
+    @UnitOfWork(value = FAS)
     @GET
     @Timed
     @ApiResponses(value = {
@@ -63,7 +64,7 @@ public class FacilityInspectionsResource {
         return response;
     }
 
-    @UnitOfWork(value = "fas")
+    @UnitOfWork(value = FAS)
     @GET
     @Timed
     @Path("/{" + INSPECTION_ID + "}")

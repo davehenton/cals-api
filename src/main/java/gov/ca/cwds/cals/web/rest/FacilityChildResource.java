@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.inject.FacilityChildCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.FacilityChildServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
@@ -26,6 +27,7 @@ import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.CHILDREN;
 import static gov.ca.cwds.cals.Constants.API.PathParams.CHILD_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 
 /**
  * @author CWDS CALS API Team
@@ -44,7 +46,7 @@ public class FacilityChildResource {
         this.collectionResourceDelegate = collectionResourceDelegate;
     }
 
-    @UnitOfWork(value = "cms")
+    @UnitOfWork(value = CMS)
     @GET
     @Timed
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
@@ -56,7 +58,7 @@ public class FacilityChildResource {
         return collectionResourceDelegate.get(new FacilityChildParameterObject(facility_license_number));
     }
 
-    @UnitOfWork(value = "cms")
+    @UnitOfWork(value = CMS)
     @GET
     @Timed
     @Path("/{" + CHILD_ID + "}")

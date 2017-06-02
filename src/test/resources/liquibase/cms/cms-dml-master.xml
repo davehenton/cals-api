@@ -5,7 +5,7 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-    <property name="schema.name" value="CMS" dbms="h2"/>
+    <property name="schema.name" value="CWSCMS" dbms="h2"/>
 
     <changeSet author="System" id="0" runAlways="true" dbms="db2">
         <sql>

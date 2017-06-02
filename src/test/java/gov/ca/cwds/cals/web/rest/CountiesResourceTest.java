@@ -11,6 +11,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import static gov.ca.cwds.cals.Constants.API.COUNTIES;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -26,7 +27,7 @@ public class CountiesResourceTest extends BaseCalsApiIntegrationTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
         setUpCms();
-        getCmsDatabaseHelper().runScript("liquibase/cms/cms-dml-master.xml", "cms");
+        getCmsDatabaseHelper().runScript("liquibase/cms/cms-dml-master.xml", CMS);
     }
 
     @Test

@@ -68,7 +68,7 @@ public final class Constants {
 
         public static final String LIS = "lis";
 
-        public static final String CMS = "cms";
+        public static final String CMS = "cwscms";
 
         private UnitOfWork() {}
 

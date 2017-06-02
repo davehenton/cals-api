@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.COUNTIES;
 import static gov.ca.cwds.cals.Constants.API.DICTIONARIES;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 
 /**
  * @author CWDS CALS API Team
@@ -36,7 +37,7 @@ public class CountiesResource {
         this.countiesResourceDeledate = countiesResourceDeledate;
     }
 
-    @UnitOfWork(value = "cms")
+    @UnitOfWork(value = CMS)
     @GET
     @Timed
     @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
