@@ -39,10 +39,6 @@ public class FacilityDeficiencyDTO extends BaseDTO {
     @RemoveTrailingSpaces
     private String pocComment;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public String getDeficiencyType() {
         return deficiencyType;
     }

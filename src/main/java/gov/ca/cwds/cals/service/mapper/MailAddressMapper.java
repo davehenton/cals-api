@@ -5,18 +5,14 @@ import gov.ca.cwds.cals.model.lis.LisFacFile;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 
+@FunctionalInterface
 @Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface MailAddressMapper {
-
-    //This is standard mapstruct approach that is why it's false positive
-    @SuppressWarnings({"squid:S1214"})
-    MailAddressMapper INSTANCE = Mappers.getMapper(MailAddressMapper.class);
 
     @Mapping(source = "facMailStreetAddr", target = "address.streetAddress")
     @Mapping(source = "facMailCity", target = "address.city")

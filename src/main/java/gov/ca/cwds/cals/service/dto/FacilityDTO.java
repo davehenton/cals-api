@@ -32,7 +32,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonProperty("href")
     @InjectLink(value = Constants.API.FACILITIES + "/${instance.id}", style=RELATIVE_PATH)
     @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example = Constants.API.FACILITIES + "/193600010")
-    URI href;
+    private URI href;
 
     @RemoveTrailingSpaces
     @JsonProperty("id")

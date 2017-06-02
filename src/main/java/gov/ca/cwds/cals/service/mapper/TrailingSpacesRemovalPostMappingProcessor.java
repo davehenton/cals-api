@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -30,24 +31,31 @@ public class TrailingSpacesRemovalPostMappingProcessor {
 
     @AfterMapping
     protected void apply(@MappingTarget Object object) {
-        try {
-            if (object == null || isCollection(object.getClass())) {
-                return;
-            }
+        if (object == null || isCollection(object.getClass())) {
+            return;
+        }
 
+        try {
             doRemoveTrailingSpaces(object);
-            for (Field field : FieldUtils.getAllFieldsList(object.getClass())) {
-                if (!isSimpleValueType(field.getType()) && !field.getName().startsWith("$")) {
-                    if (isCollection(field.getType())) {
-                        applyForCollection(object, field);
-                    } else {
-                        apply(PropertyUtils.getProperty(object, field.getName()));
-                    }
-                }
+            List<Field> allFieldsList = FieldUtils.getAllFieldsList(object.getClass());
+
+            for (Field field : allFieldsList) {
+                applyForField(object, field);
             }
 
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new IllegalStateException(ERROR_MESSAGE, e);
+        }
+    }
+
+    private void applyForField(Object object, Field field)
+            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        if (!isSimpleValueType(field.getType()) && !field.getName().startsWith("$")) {
+            if (isCollection(field.getType())) {
+                applyForCollection(object, field);
+            } else {
+                apply(PropertyUtils.getProperty(object, field.getName()));
+            }
         }
     }
 

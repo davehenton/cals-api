@@ -3,7 +3,6 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
@@ -12,10 +11,6 @@ import java.util.List;
  */
 @Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface FacilityTypeMapper {
-
-    //This is standard mapstruct approach that is why it's false positive
-    @SuppressWarnings({"squid:S1214"})
-    FacilityTypeMapper INSTANCE = Mappers.getMapper(FacilityTypeMapper.class);
 
     List<FacilityTypeDTO> toFacilityTypeDTO(List<gov.ca.cwds.cals.model.lis.FacilityType> facilityTypes);
 

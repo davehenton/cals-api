@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.rest.api.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +13,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -57,8 +57,8 @@ public class ApplicationResource {
         try {
             InputStream is = ClassLoader.getSystemResourceAsStream(VERSION_PROPERTIES_FILE);
             versionProperties.load(is);
-        } catch (Exception e) {
-            throw new RuntimeException("Can't read version.properties", e);
+        } catch (IOException e) {
+            throw new ApiException("Can't read version.properties", e);
         }
         return versionProperties;
     }

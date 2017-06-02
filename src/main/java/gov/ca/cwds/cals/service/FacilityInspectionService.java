@@ -3,7 +3,6 @@ package gov.ca.cwds.cals.service;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
-import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityInspectionParameterObject;
 import gov.ca.cwds.rest.api.Response;
@@ -30,8 +29,7 @@ public class FacilityInspectionService extends CrudServiceAdapter {
         FacilityInspectionParameterObject paramsObj = (FacilityInspectionParameterObject) params;
         Rr809Dn rr809Dn = inspectionDao.getDeficiencyByFacilityNumberAndId(paramsObj.getFacilityId(),
                 paramsObj.getInspectionId());
-        FacilityInspectionDTO dto = facilityInspectionMapper.toFacilityInspectionDto(rr809Dn);
-        return dto;
+        return facilityInspectionMapper.toFacilityInspectionDto(rr809Dn);
     }
 
 }

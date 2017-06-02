@@ -11,8 +11,6 @@ import javax.validation.constraints.NotNull;
  */
 public class DistrictOfficeDTO extends BaseDTO {
 
-    public DistrictOfficeDTO() {}
-
     @RemoveTrailingSpaces
     @JsonProperty("number")
     @NotNull

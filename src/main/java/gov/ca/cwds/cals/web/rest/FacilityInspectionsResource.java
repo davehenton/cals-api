@@ -59,9 +59,8 @@ public class FacilityInspectionsResource {
                         @PathParam(FACILITY_ID)
                         @ApiParam(required = true, name = FACILITY_ID, value = "The id of the Facility")
                         Integer facilityId){
-        Response response = collectionResourceDelegate.get(facilityId);
 
-        return response;
+        return collectionResourceDelegate.get(facilityId);
     }
 
     @UnitOfWork(value = FAS)
