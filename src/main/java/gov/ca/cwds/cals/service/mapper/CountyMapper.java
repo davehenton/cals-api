@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.model.cms.County;
+import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.service.dto.CountyDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

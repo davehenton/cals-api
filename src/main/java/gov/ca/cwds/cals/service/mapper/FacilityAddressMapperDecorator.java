@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import org.apache.commons.lang3.StringUtils;
 

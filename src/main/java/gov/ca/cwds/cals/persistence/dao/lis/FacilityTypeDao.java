@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.persistence.dao.lis;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.LisSessionFactory;
-import gov.ca.cwds.cals.model.lis.FacilityType;
+import gov.ca.cwds.cals.persistence.model.lis.FacilityType;
 import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,7 +24,7 @@ public class FacilityTypeDao extends BaseDaoImpl<FacilityType> {
     @Override
     public List<FacilityType> findAll() {
         Session session = this.getSessionFactory().getCurrentSession();
-        Query<FacilityType> query = session.createNamedQuery(this.getEntityClass().getName() + ".findAll", FacilityType.class);
+        Query<FacilityType> query = session.createNamedQuery(this.getEntityClass().getSimpleName() + ".findAll", FacilityType.class);
         ImmutableList.Builder<FacilityType> entities = new ImmutableList.Builder<>();
         entities.addAll(query.list());
         return entities.build();

@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.model.cms.LicenseStatus;
-import gov.ca.cwds.cals.model.cms.StaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
+import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
 import gov.ca.cwds.cals.service.dto.DictionaryDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

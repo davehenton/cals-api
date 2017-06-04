@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.model.fas.Rr809Dn;
+import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.service.dto.FacilityDeficiencyDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import org.apache.commons.lang3.StringUtils;
