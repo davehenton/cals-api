@@ -3,25 +3,27 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
-import gov.ca.cwds.cals.model.cms.Client;
-import gov.ca.cwds.cals.model.cms.CountyLicenseCase;
-import gov.ca.cwds.cals.model.cms.LicenseStatus;
-import gov.ca.cwds.cals.model.cms.LicensingVisit;
-import gov.ca.cwds.cals.model.cms.OutOfHomePlacement;
-import gov.ca.cwds.cals.model.cms.PlacementEpisode;
-import gov.ca.cwds.cals.model.cms.PlacementHome;
-import gov.ca.cwds.cals.model.cms.StaffPerson;
-import gov.ca.cwds.cals.model.cms.State;
-import gov.ca.cwds.cals.model.cms.VisitType;
-import gov.ca.cwds.cals.model.fas.ComplaintReportLic802;
-import gov.ca.cwds.cals.model.fas.Rr809Dn;
-import gov.ca.cwds.cals.model.fas.Rrcpoc;
-import gov.ca.cwds.cals.model.fas.LpaInformation;
-import gov.ca.cwds.cals.model.lis.FacilityStatusType;
-import gov.ca.cwds.cals.model.lis.LisDoFile;
-import gov.ca.cwds.cals.model.lis.LisFacFile;
-import gov.ca.cwds.cals.model.lis.LisTableFile;
-import gov.ca.cwds.cals.model.lis.VisitReasonType;
+import gov.ca.cwds.cals.persistence.model.cms.Client;
+import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
+import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
+import gov.ca.cwds.cals.persistence.model.cms.LicensingVisit;
+import gov.ca.cwds.cals.persistence.model.cms.OutOfHomePlacement;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementEpisode;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.State;
+import gov.ca.cwds.cals.persistence.model.cms.VisitType;
+import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
+import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
+import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
+import gov.ca.cwds.cals.persistence.model.lis.County;
+import gov.ca.cwds.cals.persistence.model.lis.FacilityStatusType;
+import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
+import gov.ca.cwds.cals.persistence.model.lis.LisDoFile;
+import gov.ca.cwds.cals.persistence.model.lis.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.lis.LisTableFile;
+import gov.ca.cwds.cals.persistence.model.lis.VisitReasonType;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
@@ -51,11 +53,11 @@ public class DataAccessModule extends AbstractModule {
             new HibernateBundle<CalsApiConfiguration>(
                     LisFacFile.class,
                     LisTableFile.class,
-                    gov.ca.cwds.cals.model.lis.FacilityType.class,
+                    gov.ca.cwds.cals.persistence.model.lis.FacilityType.class,
                     LisDoFile.class,
                     FacilityStatusType.class,
                     VisitReasonType.class,
-                    gov.ca.cwds.cals.model.lis.County.class
+                    County.class
             ) {
                 @Override
                 public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -93,8 +95,8 @@ public class DataAccessModule extends AbstractModule {
                     PlacementEpisode.class,
                     PlacementHome.class,
                     StaffPerson.class,
-                    gov.ca.cwds.cals.model.cms.FacilityType.class,
-                    gov.ca.cwds.cals.model.cms.County.class,
+                    FacilityType.class,
+                    gov.ca.cwds.cals.persistence.model.cms.County.class,
                     CountyLicenseCase.class,
                     LicensingVisit.class,
                     VisitType.class,

@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.model.cms.Client;
-import gov.ca.cwds.cals.model.cms.StaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.Client;
+import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
 import gov.ca.cwds.cals.service.dto.PersonDTO;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;

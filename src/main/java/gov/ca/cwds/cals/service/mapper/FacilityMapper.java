@@ -1,11 +1,11 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.model.cms.CountyLicenseCase;
-import gov.ca.cwds.cals.model.cms.LicensingVisit;
-import gov.ca.cwds.cals.model.fas.LpaInformation;
-import gov.ca.cwds.cals.model.lis.LisFacFile;
-import gov.ca.cwds.cals.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
+import gov.ca.cwds.cals.persistence.model.cms.LicensingVisit;
+import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
+import gov.ca.cwds.cals.persistence.model.lis.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.HyperlinkDTO;

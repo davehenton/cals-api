@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.persistence.dao.cms;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
@@ -27,7 +27,7 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
     public PlacementHome find(FacilityParameterObject parameterObject) {
         Session session = getSessionFactory().getCurrentSession();
         Class<PlacementHome> entityClass = getEntityClass();
-        Query<PlacementHome> query = session.createNamedQuery(entityClass.getName() + ".find", entityClass);
+        Query<PlacementHome> query = session.createNamedQuery(entityClass.getSimpleName() + ".find", entityClass);
 
         String facilityId = parameterObject.getFacilityId();
         query.setParameter("facilityId", facilityId);

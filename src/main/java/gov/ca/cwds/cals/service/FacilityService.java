@@ -1,12 +1,12 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.model.cms.County;
-import gov.ca.cwds.cals.model.cms.CountyLicenseCase;
-import gov.ca.cwds.cals.model.cms.PlacementHome;
-import gov.ca.cwds.cals.model.cms.StaffPerson;
-import gov.ca.cwds.cals.model.fas.LpaInformation;
-import gov.ca.cwds.cals.model.lis.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.cms.County;
+import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
+import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
+import gov.ca.cwds.cals.persistence.model.lis.LisFacFile;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
