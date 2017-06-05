@@ -8,12 +8,12 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.sql.Time;
@@ -92,6 +92,7 @@ public class PlacementEpisode implements PersistentObject {
 
     @OneToMany
     @JoinColumn(name = "FKPLC_EPS0", referencedColumnName = "THIRD_ID")
+    @OrderBy("startDt DESC")
     public Set<OutOfHomePlacement> getOutOfHomePlacements() {
         return outOfHomePlacements;
     }

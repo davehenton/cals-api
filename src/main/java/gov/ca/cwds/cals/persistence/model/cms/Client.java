@@ -7,10 +7,10 @@ import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -117,6 +117,7 @@ public class Client implements PersistentObject {
 
     @OneToMany
     @JoinColumn(name = "FKCLIENT_T", referencedColumnName = "IDENTIFIER")
+    @OrderBy("removalDt DESC")
     public Set<PlacementEpisode> getPlacementEpisodes() {
         return placementEpisodes;
     }
