@@ -12,6 +12,8 @@ import java.util.Set;
 
 public class ComplaintsDTO extends BaseDTO implements Response {
 
+    private static final long serialVersionUID = -5045346074331689606L;
+
     @JsonProperty("complaints")
     private Set<ComplaintDTO> complaints = new HashSet<>();
 

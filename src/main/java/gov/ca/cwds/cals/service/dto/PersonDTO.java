@@ -16,6 +16,8 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 
 public class PersonDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 3804635989895101545L;
+    
     private Long id;
 
     @RemoveTrailingSpaces

@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class FacilityChildrenDTO extends BaseDTO implements Response {
 
+    private static final long serialVersionUID = -5195502655333485625L;
+
     @JsonProperty("children")
     private List<FacilityChildDTO> children = new ArrayList<>();
 

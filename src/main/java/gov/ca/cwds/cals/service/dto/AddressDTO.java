@@ -15,6 +15,8 @@ import java.util.Objects;
 
 public class AddressDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 1921798483033435568L;
+    
     private Long id;
 
     @RemoveTrailingSpaces

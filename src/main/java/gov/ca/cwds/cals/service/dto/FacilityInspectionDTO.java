@@ -32,7 +32,7 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
 
     private LocalDateTime representativeSignatureDate;
 
-    private List<FacilityDeficiencyDTO> deficiencies = new ArrayList<>(4);
+    private ArrayList<FacilityDeficiencyDTO> deficiencies = new ArrayList<>(4);
 
     public String getId() {
         return id;
@@ -65,7 +65,7 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
     }
 
     public void setDeficiencies(List<FacilityDeficiencyDTO> deficiencies) {
-        this.deficiencies = deficiencies;
+        this.deficiencies = new ArrayList<>(deficiencies);
     }
 
     @Override
