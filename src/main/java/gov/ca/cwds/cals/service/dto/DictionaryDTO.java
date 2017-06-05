@@ -44,7 +44,7 @@ public class DictionaryDTO extends BaseDTO {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(code).append(description).hashCode();
+        return new HashCodeBuilder().append(code).append(description).toHashCode();
     }
 
     @Override

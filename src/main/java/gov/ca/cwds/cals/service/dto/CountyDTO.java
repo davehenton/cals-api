@@ -26,7 +26,7 @@ public class CountyDTO extends DictionaryDTO {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(getCode()).append(getDescription()).append(lisCode).hashCode();
+        return new HashCodeBuilder(17, 37).append(getCode()).append(getDescription()).append(lisCode).toHashCode();
     }
 
     @Override

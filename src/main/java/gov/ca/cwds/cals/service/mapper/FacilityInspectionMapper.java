@@ -90,10 +90,10 @@ public interface FacilityInspectionMapper {
 
 
         StringBuilder hrefSb = new StringBuilder();
-        hrefSb.append("/").append(Constants.API.FACILITIES)
-                .append("/").append(rr809Dn.getFacilityNumberText())
-                .append("/").append(Constants.API.INSPECTIONS)
-                .append("/").append(facilityInspectionDTO.getId());
+        hrefSb.append('/').append(Constants.API.FACILITIES)
+                .append('/').append(rr809Dn.getFacilityNumberText())
+                .append('/').append(Constants.API.INSPECTIONS)
+                .append('/').append(facilityInspectionDTO.getId());
 
         facilityInspectionDTO.setHref(hrefSb.toString());
     }
@@ -102,7 +102,7 @@ public interface FacilityInspectionMapper {
         StringBuilder sb = new StringBuilder();
         for (String string : strings) {
             if (string != null && !string.isEmpty()) {
-                sb.append(" ").append(string);
+                sb.append(' ').append(string);
             }
         }
         String res = sb.toString().trim();
