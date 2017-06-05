@@ -80,7 +80,7 @@ public class PlacementEpisode implements PersistentObject {
     private String plc24HrCd;
 
     @NotFound(action = NotFoundAction.IGNORE)
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "RMV_BY_ID", referencedColumnName = "IDENTIFIER")
     public StaffPerson getStaffPerson() {
         return staffPerson;
@@ -90,7 +90,7 @@ public class PlacementEpisode implements PersistentObject {
         this.staffPerson = staffPerson;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinColumn(name = "FKPLC_EPS0", referencedColumnName = "THIRD_ID")
     public Set<OutOfHomePlacement> getOutOfHomePlacements() {
         return outOfHomePlacements;
@@ -100,7 +100,7 @@ public class PlacementEpisode implements PersistentObject {
         this.outOfHomePlacements = outOfHomePlacements;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "GVR_ENTC", referencedColumnName = "SYS_ID", insertable = false, updatable = false)
     public County getCounty() {
         return county;
