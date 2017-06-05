@@ -100,6 +100,7 @@ public class PlacementEpisode implements PersistentObject {
         this.outOfHomePlacements = outOfHomePlacements;
     }
 
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
     @JoinColumn(name = "GVR_ENTC", referencedColumnName = "SYS_ID", insertable = false, updatable = false)
     public County getCounty() {
