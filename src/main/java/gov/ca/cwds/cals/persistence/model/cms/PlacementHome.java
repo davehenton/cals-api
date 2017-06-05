@@ -143,7 +143,7 @@ public class PlacementHome implements PersistentObject {
     private String endComdsc;
 
     @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "PLC_FCLC", referencedColumnName = "SYS_ID")
     public FacilityType getFacilityType() {
         return facilityType;
@@ -154,7 +154,7 @@ public class PlacementHome implements PersistentObject {
     }
 
     @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "GVR_ENTC", referencedColumnName = "SYS_ID")
     public County getCounty() {
         return county;
@@ -165,7 +165,7 @@ public class PlacementHome implements PersistentObject {
     }
 
     @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "F_STATE_C", referencedColumnName = "SYS_ID")
     public gov.ca.cwds.cals.persistence.model.cms.State getStateCode() {
         return stateCode;
@@ -190,7 +190,7 @@ public class PlacementHome implements PersistentObject {
     }
 
     @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "LIC_STC", referencedColumnName = "SYS_ID", nullable = false)
     public gov.ca.cwds.cals.persistence.model.cms.LicenseStatus getLicenseStatus() {
         return licenseStatus;

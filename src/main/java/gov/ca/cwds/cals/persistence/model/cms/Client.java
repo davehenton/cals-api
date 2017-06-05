@@ -23,22 +23,18 @@ import java.util.Set;
  */
 @NamedQuery(
         name = "Client.find",
-        query = "SELECT c FROM Client c" +
-                " JOIN FETCH c.placementEpisodes pe" +
-                " JOIN FETCH pe.staffPerson" +
-                " JOIN FETCH pe.county" +
-                " JOIN FETCH pe.outOfHomePlacements ohp" +
-                " JOIN FETCH ohp.placementHome ph" +
-                " WHERE ph.licenseNo = :licenseNumber AND c.identifier = :childId"
+        query = "SELECT c FROM Client c"
+                + " JOIN c.placementEpisodes pe"
+                + " JOIN pe.outOfHomePlacements ohp"
+                + " JOIN ohp.placementHome ph"
+                + " WHERE ph.licenseNo = :licenseNumber AND c.identifier = :childId"
 )
 @NamedQuery(
         name = "Client.findAll",
         query = "SELECT c FROM Client c" +
-                " JOIN FETCH c.placementEpisodes pe" +
-                " JOIN FETCH pe.staffPerson" +
-                " JOIN FETCH pe.county" +
-                " JOIN FETCH pe.outOfHomePlacements ohp" +
-                " JOIN FETCH ohp.placementHome ph" +
+                " JOIN c.placementEpisodes pe" +
+                " JOIN pe.outOfHomePlacements ohp" +
+                " JOIN ohp.placementHome ph" +
                 " WHERE ph.licenseNo = :licenseNumber"
 )
 @Entity
@@ -119,7 +115,7 @@ public class Client implements PersistentObject {
     private String socplcCd;
     private String clIndxNo;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinColumn(name = "FKCLIENT_T", referencedColumnName = "IDENTIFIER")
     public Set<PlacementEpisode> getPlacementEpisodes() {
         return placementEpisodes;
