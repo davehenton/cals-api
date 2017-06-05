@@ -76,7 +76,7 @@ public class OutOfHomePlacement implements PersistentObject {
     private String cpwnmdInd;
     private Short cpwnmdCnt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "FKPLC_HM_T", referencedColumnName = "IDENTIFIER")
     public PlacementHome getPlacementHome() {
         return placementHome;
