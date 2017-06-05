@@ -19,6 +19,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
 /**
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S3437")   //LocalDateTime is serializable
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class FacilityInspectionDTO extends BaseDTO implements Response {
 
@@ -32,7 +33,7 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
 
     private LocalDateTime representativeSignatureDate;
 
-    private ArrayList<FacilityDeficiencyDTO> deficiencies = new ArrayList<>(4);
+    private List<FacilityDeficiencyDTO> deficiencies = new ArrayList<>(4);
 
     public String getId() {
         return id;
@@ -65,7 +66,7 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
     }
 
     public void setDeficiencies(List<FacilityDeficiencyDTO> deficiencies) {
-        this.deficiencies = new ArrayList<>(deficiencies);
+        this.deficiencies = deficiencies;
     }
 
     @Override

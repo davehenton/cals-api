@@ -6,20 +6,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
- *         <p>
- *         <p>
- *         "complaint_code" : "10",      // cr_Code
- *         "allegation": "String",       // cr_allegation
- *         "resolution_code_sub": "",    // cr_Sub
- *         "resolution_code_insub": "",  // cr_InSub
- *         "resolution_code_unsub": ""   // cr_Sub
  */
 public class AllegationDTO extends BaseDTO {
 
     private static final long serialVersionUID = 846994544015933635L;
 
     @JsonProperty("complaint_code")
-    private int complaintCode;
+    private String complaintCode;
 
     @JsonProperty("allegation")
     private String allegation;
@@ -34,11 +27,11 @@ public class AllegationDTO extends BaseDTO {
     private String resolutionCodeUnsub;
 
 
-    public int getComplaintCode() {
+    public String getComplaintCode() {
         return complaintCode;
     }
 
-    public void setComplaintCode(int complaintCode) {
+    public void setComplaintCode(String complaintCode) {
         this.complaintCode = complaintCode;
     }
 

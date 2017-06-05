@@ -10,7 +10,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
@@ -20,6 +19,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
  * @author CWDS CALS API Team
  */
 
+@SuppressWarnings("squid:S3437")  //LocalDateTime is serializable
 public class ComplaintDTO extends BaseDTO implements Response {
 
     private static final long serialVersionUID = 5198076888434433809L;
@@ -66,7 +66,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
     private String followupComments;
 
     @JsonProperty("allegations")
-    private ArrayList<AllegationDTO> allegations;
+    private List<AllegationDTO> allegations;
 
     public String getId() {
         return id;
@@ -162,7 +162,7 @@ public class ComplaintDTO extends BaseDTO implements Response {
     }
 
     public void setAllegations(List<AllegationDTO> allegations) {
-        this.allegations = new ArrayList<>(allegations);
+        this.allegations = allegations;
     }
 
     @Override
