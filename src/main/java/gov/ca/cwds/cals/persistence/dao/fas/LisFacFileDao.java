@@ -1,7 +1,7 @@
-package gov.ca.cwds.cals.persistence.dao.lis;
+package gov.ca.cwds.cals.persistence.dao.fas;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.LisSessionFactory;
+import gov.ca.cwds.cals.inject.FasSessionFactory;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.SessionFactory;
@@ -9,11 +9,10 @@ import org.hibernate.SessionFactory;
 /**
  * @author CWDS CALS API Team
  */
-
-public class LisFacFileDao extends BaseDaoImpl<LisFacFile> {
+public class LisFacFileDao  extends BaseDaoImpl<LisFacFile> {
 
     @Inject
-    public LisFacFileDao(@LisSessionFactory SessionFactory sessionFactory) {
+    public LisFacFileDao(@FasSessionFactory SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 

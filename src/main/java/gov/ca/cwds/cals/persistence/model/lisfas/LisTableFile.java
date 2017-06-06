@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.model.lis;
+package gov.ca.cwds.cals.persistence.model.lisfas;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
 import org.apache.commons.lang3.builder.EqualsBuilder;

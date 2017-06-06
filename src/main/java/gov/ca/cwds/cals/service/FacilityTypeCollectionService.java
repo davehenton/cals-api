@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.model.lis.FacilityType;
+import gov.ca.cwds.cals.persistence.model.lisfas.FacilityType;
 import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
 import gov.ca.cwds.cals.service.dto.FacilityTypesDTO;

@@ -62,6 +62,21 @@ public final class Constants {
 
     }
 
+    public static class VisitTypes {
+
+        public static final String ANNUAL_10_MONTH = "Annual 10 month";
+
+        public static final String ANNUAL_22_MONTH = "Annual 22 month";
+
+        public static final String POST_LICENSING = "Post Licensing";
+
+        public static final String RENEWAL = "Renewal";
+
+        public static final String MIDDLE_YEAR = "Middle Year";
+
+        private VisitTypes() {}
+    }
+
     public static class UnitOfWork {
 
         public static final String FAS = "fas";

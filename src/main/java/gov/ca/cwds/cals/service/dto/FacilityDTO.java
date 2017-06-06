@@ -107,6 +107,12 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
     private LocalDate lastVisitDate;
 
+    @JsonProperty("last_deferred_visit_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
+    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
+    @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
+    private LocalDate lastDeferredVisitDate;
+
     @RemoveTrailingSpaces
     @JsonProperty("email_address")
     @Size(max = 50)
@@ -116,6 +122,10 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonProperty("last_visit_reason")
     @ApiModelProperty(required = false, readOnly = false, value = "Last Visit Reason")
     private DictionaryDTO lastVisitReason;
+
+    @JsonProperty("last_deferred_visit_reason")
+    @ApiModelProperty(required = false, readOnly = false, value = "Last Deferred Visit Reason")
+    private DictionaryDTO lastDeferredVisitReason;
 
     @JsonProperty("county")
     @NotNull
@@ -147,6 +157,18 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonProperty("addresses")
     @ApiModelProperty(required = true, readOnly = true, value = "Facility Addresses")
     private List<FacilityAddressDTO> address;
+
+    @JsonProperty("visits")
+    @ApiModelProperty(required = true, readOnly = true, value = "Facility Visits")
+    private List<FacilityVisitDTO> visits;
+
+    @JsonProperty("annual_visit_year")
+    @ApiModelProperty(required = true, readOnly = true, value = "18")
+    private Integer annualVisitYear;
+
+    @JsonProperty("prelicensing_visit_date")
+    @ApiModelProperty(required = true, readOnly = true, value = "2000-01-01")
+    private LocalDate prelicensingVisitDate;
 
     public URI getHref() {
         return href;
@@ -260,6 +282,14 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
         this.lastVisitDate = lastVisitDate;
     }
 
+    public LocalDate getLastDeferredVisitDate() {
+        return lastDeferredVisitDate;
+    }
+
+    public void setLastDeferredVisitDate(LocalDate lastDeferredVisitDate) {
+        this.lastDeferredVisitDate = lastDeferredVisitDate;
+    }
+
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -274,6 +304,14 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
 
     public void setLastVisitReason(DictionaryDTO lastVisitReason) {
         this.lastVisitReason = lastVisitReason;
+    }
+
+    public DictionaryDTO getLastDeferredVisitReason() {
+        return lastDeferredVisitReason;
+    }
+
+    public void setLastDeferredVisitReason(DictionaryDTO lastDeferredVisitReason) {
+        this.lastDeferredVisitReason = lastDeferredVisitReason;
     }
 
     public CountyDTO getCounty() {
@@ -314,6 +352,30 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
 
     public void setAddress(List<FacilityAddressDTO> address) {
         this.address = address;
+    }
+
+    public List<FacilityVisitDTO> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(List<FacilityVisitDTO> visits) {
+        this.visits = visits;
+    }
+
+    public Integer getAnnualVisitYear() {
+        return annualVisitYear;
+    }
+
+    public void setAnnualVisitYear(Integer annualVisitYear) {
+        this.annualVisitYear = annualVisitYear;
+    }
+
+    public LocalDate getPrelicensingVisitDate() {
+        return prelicensingVisitDate;
+    }
+
+    public void setPrelicensingVisitDate(LocalDate prelicensingVisitDate) {
+        this.prelicensingVisitDate = prelicensingVisitDate;
     }
 
     public List<PhoneDTO> getPhone() {

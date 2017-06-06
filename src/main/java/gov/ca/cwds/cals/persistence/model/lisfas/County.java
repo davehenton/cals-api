@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.model.lis;
+package gov.ca.cwds.cals.persistence.model.lisfas;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

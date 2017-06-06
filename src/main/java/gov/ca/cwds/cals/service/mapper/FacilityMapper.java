@@ -4,10 +4,10 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.LicensingVisit;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
-import gov.ca.cwds.cals.persistence.model.lis.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
+import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.HyperlinkDTO;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
 import org.apache.commons.collections4.CollectionUtils;
@@ -28,6 +28,13 @@ import java.util.List;
               DistrictOfficeMapper.class, DictionaryMapper.class, TrailingSpacesRemovalPostMappingProcessor.class} )
 public interface FacilityMapper {
 
+    /**
+     * Visit data is converted in {@link FasFacilityMapper}
+     *
+     * @param lisFacFile param to convert
+     * @param lpaInformation param to convert
+     * @return converted data
+     */
     @Mapping(target = "messages", ignore = true)
     @Mapping(target = "href", ignore = true)
     @Mapping(target = "address", ignore = true)
@@ -48,10 +55,7 @@ public interface FacilityMapper {
     @Mapping(source = "lisFacFile.facCapacity", target = "capacity")
     @Mapping(source = "lisFacFile.facLicEffDate", target = "licenseEffectiveDate")
     @Mapping(source = "lisFacFile.facOrigApplRecDate", target = "originalApplicationRecievedDate")
-    @Mapping(source = "lisFacFile.facLastVisitDate", target = "lastVisitDate")
     @Mapping(source = "lisFacFile.facEmailAddress", target = "emailAddress")
-    @Mapping(source = "lisFacFile.facLastVisitReason.tblVisitReasonCode", target = "lastVisitReason.code")
-    @Mapping(source = "lisFacFile.facLastVisitReason.tblVisitReasonDesc", target = "lastVisitReason.description")
     @Mapping(source = "lisFacFile.facCoNbr.tblCoNbr", target = "county.code")
     @Mapping(source = "lisFacFile.facCoNbr.tblCoDesc", target = "county.description")
     @Mapping(target = "children", expression = "java(new HyperlinkDTO( String.format(Constants.API.FACILITIES + " +
@@ -136,5 +140,4 @@ public interface FacilityMapper {
         }
         facilityDTO.setPhone(phoneDTOs);
     }
-
 }
