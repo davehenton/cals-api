@@ -12,11 +12,11 @@ node ('tpt2-slave'){
 		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar'
    }
    stage('CoverageCheck_and_Test') {
-       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test jacocoTestReport'
+       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test jacocoTestReport --stacktrace'
    }
    stage('SonarQube analysis'){
 		withSonarQubeEnv('Core-SonarQube') {
-			buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'sonarqube'
+			buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'sonarqube --stacktrace'
         }
     }
 
