@@ -1,0 +1,204 @@
+/**
+ * @author CALS API team.
+ */
+
+entity RFAApplication {
+	rfaApplicationType String maxlength(100) required, //initial or other
+}
+
+/**
+* Table describes questions with yes/no answer
+* and additional answer-refinement in case if answer is yes
+* and null in case if answer no
+*/
+entity RFAApplicationQuestion {
+	code String maxlength(100) required,
+    question String maxlength(255) required,
+    order Integer required,
+    questionAnswerIfYes String maxlength(255)
+}
+
+entity PreviousFosterCareApproval {
+	agencyName String maxlength(255) required,
+    approvalType String maxlength(100) required
+}
+
+entity Household {}
+
+entity HouseholdApplicant {}
+
+entity Person {
+    firstName String required,
+    lastName String required,
+    middleName String,
+	dateOfBirth LocalDate required,
+    driversLicenseNumber String required
+}
+
+entity CountyType {
+	fipsCode String required minlength(3) maxlength(3),
+    description String maxlength(20)
+}
+
+entity PersonPreviousName {
+	name String required
+}
+
+entity EducationLevelType {
+	name String required
+}
+
+entity GenderType {
+	name String required
+}
+
+entity RaceType {
+	name String required
+}
+
+entity EthnicityType {
+	name String required
+}
+
+entity EmailAddress {
+	email String required
+}
+
+entity PhoneNumber {
+	phoneNumber String required
+}
+
+entity PersonPhone {}
+
+entity PersonAddress {}
+
+entity PhoneNumberType {
+	type String required
+}
+
+entity Address {
+    streetAddress String required maxlength(100),
+    city String required maxlength(50),
+    state String required minlength(2) maxlength(2),
+    zipCode String required minlength(5) maxlength(5),
+    zipSuffixCode String minlength(4) maxlength(4),
+    longitude BigDecimal,
+    lattitude BigDecimal,
+    deliverable Boolean
+}
+
+entity Employer {
+    name String
+}
+
+entity Employment {
+	occupation String required,
+	annualIncome BigDecimal required,
+    startDate LocalDate required,
+    endDate LocalDate
+}
+
+entity AddressType {
+	name String required
+}
+
+entity PosessionType { //own, rent, lease
+	name String required
+}
+
+entity HouseholdAddress {
+	isWeaponsInHome Boolean required,
+    directionsToHome String
+}
+
+entity BodyOfWater {
+	location String,
+    size Integer
+}
+
+entity LanguageType {
+    name String  maxlength(20) required
+}
+
+entity RelationshipType {
+    name String maxlength(100) required
+}
+
+entity Relationship {}
+
+entity RelationshipEvent {
+	eventPlace String,
+    eventDate LocalDate,
+    eventDescription String
+}
+
+entity HouseholdChild {
+	isFinanciallySupported Boolean required,
+    isAdopted Boolean required
+}
+
+entity PreferredAgeType{
+   name String  maxlength(20) required
+}
+
+entity SiblingType{
+   name String  maxlength(20) required
+}
+
+entity ChildPreferences {}
+
+relationship ManyToOne {
+  RFAApplication{forCountyUseOnly} to CountyType,
+  Person{highestEducationLevel required} to EducationLevelType,
+  Person{gender required} to GenderType,
+  Person{race required} to RaceType,
+  PersonPhone{phoneType} to PhoneNumberType,
+  Employment{employer} to Employer,
+  HouseholdApplicant{household} to Household,
+  HouseholdAddress{addressType} to AddressType,
+  HouseholdAddress{posessionType} to PosessionType,
+  PersonAddress{addressType} to AddressType,
+  PersonAddress{address} to Address,
+  Relationship{from required} to Person,
+  Relationship{to required} to Person,
+  HouseholdChild{household required} to Household,
+  HouseholdChild{person} to Person,
+  Relationship{relationshipType} to RelationshipType,
+  RFAApplication{desiredChild} to Person,
+  ChildPreferences{preferredAge} to PreferredAgeType,
+  ChildPreferences{sibling} to SiblingType
+}
+
+relationship ManyToMany {
+  Person{ethnicities required} to EthnicityType,
+  Household{languages} to LanguageType
+}
+
+relationship OneToMany {
+	Person{previousNames} to PersonPreviousName,
+    Person{emailAddresses} to EmailAddress,
+    Person{phoneNumbers} to PersonPhone{person},
+    Person{employments} to Employment{person},
+    Employment{phoneNumbers} to PhoneNumber,
+    Household{persons} to Person,
+    RFAApplication{applicants} to HouseholdApplicant,
+	Household{addresses} to HouseholdAddress{address},
+    HouseholdAddress{bodyOfWaters} to BodyOfWater,
+    Person{addresses} to PersonAddress,
+    RFAApplication{questions} to RFAApplicationQuestion,
+    RFAApplication{references} to Person
+}
+
+relationship OneToOne {
+	RFAApplication{previousFosterCareApproval} to PreviousFosterCareApproval,
+	PersonPhone{phoneNumber} to PhoneNumber,
+    Employer{address} to Address,
+    HouseholdApplicant{person} to Person,
+    HouseholdAddress{address} to Address,
+    Relationship{startEvent} to RelationshipEvent{relationShip},
+	Relationship{endEvent} to RelationshipEvent{relationShip}
+}
+
+
+
+
