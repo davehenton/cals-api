@@ -26,6 +26,7 @@ import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
  *
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S3437") //LocalDate is serializable
 public class FacilityDTO extends BaseDTO implements Request, Response {
 
     private static final long serialVersionUID = 1L;

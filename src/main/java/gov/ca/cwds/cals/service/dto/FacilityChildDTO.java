@@ -15,7 +15,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 /**
  * A DTO for the FacilityChild entity.
  */
-
+@SuppressWarnings("squid:S3437") //LocalDate is serializable
 public class FacilityChildDTO extends BaseDTO implements Request, Response {
 
     private static final long serialVersionUID = -4616515477832458787L;
