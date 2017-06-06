@@ -55,7 +55,7 @@ sonarqube {
         property "sonar.projectName", "${name}"
         property "sonar.projectKey", "${group}:${name}"
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
-        property "sonar.exclusions", "**/liquibase/**"
+        property "sonar.exclusions", "${project.rootDir}/src/test/resources/liquibase/cms/dml/*.xml,${project.rootDir}/src/test/resources/liquibase/fas/dml/*.xml,${project.rootDir}/src/test/resources/liquibase/lis/dml/*.xml"
     }
 }
 
