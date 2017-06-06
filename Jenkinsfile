@@ -16,7 +16,7 @@ node ('tpt2-slave'){
    }
    stage('SonarQube analysis'){
 		withSonarQubeEnv('Core-SonarQube') {
-			buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'sonarqube --stacktrace'
+			buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'sonarqube --stacktrace --debug'
         }
     }
 
