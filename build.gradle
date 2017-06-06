@@ -55,6 +55,7 @@ sonarqube {
         property "sonar.projectName", "${name}"
         property "sonar.projectKey", "${group}:${name}"
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.exclusions", "**/liquibase/**"
     }
 }
 
