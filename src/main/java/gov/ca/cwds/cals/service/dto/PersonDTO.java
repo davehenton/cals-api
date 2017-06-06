@@ -13,7 +13,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 /**
  * A DTO for the Person entity.
  */
-
+@SuppressWarnings("squid:S3437")  //LocalDate is serializable
 public class PersonDTO extends BaseDTO {
 
     private static final long serialVersionUID = 3804635989895101545L;
