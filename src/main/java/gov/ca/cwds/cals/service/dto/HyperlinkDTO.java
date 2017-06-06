@@ -8,6 +8,8 @@ import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 
 public class HyperlinkDTO extends BaseDTO {
 
+    private static final long serialVersionUID = -9070129634987372402L;
+
     @RemoveTrailingSpaces
     private String href;
 

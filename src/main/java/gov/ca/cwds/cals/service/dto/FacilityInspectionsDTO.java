@@ -12,7 +12,9 @@ import java.util.List;
  */
 public class FacilityInspectionsDTO extends BaseDTO implements Response {
 
-    private List<FacilityInspectionDTO> inspections = new ArrayList<>();
+    private static final long serialVersionUID = 9143585256908266652L;
+
+    private ArrayList<FacilityInspectionDTO> inspections = new ArrayList<>();
 
 
     public List<FacilityInspectionDTO> getInspections() {

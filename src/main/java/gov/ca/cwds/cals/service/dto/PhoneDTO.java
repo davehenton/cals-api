@@ -14,6 +14,8 @@ import java.util.Objects;
 
 public class PhoneDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 845164274506455774L;
+
     private Long id;
 
     @RemoveTrailingSpaces

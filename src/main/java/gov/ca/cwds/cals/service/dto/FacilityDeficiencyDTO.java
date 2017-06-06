@@ -16,6 +16,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
 /**
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S3437") //LocalDate is serializable
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class FacilityDeficiencyDTO extends BaseDTO {
     private static final long serialVersionUID = -3548530142566196513L;

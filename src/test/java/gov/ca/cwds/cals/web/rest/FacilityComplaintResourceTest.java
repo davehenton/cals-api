@@ -23,7 +23,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
     public static final String FACILITY_ID = "107201149";
     public static final String WRONG_FACILITY_ID = "1";
-    public static final String COMPLAINT_ID = "32-CR-SNGO-86JMJE-20100618091646";
+    public static final String COMPLAINT_ID = "24-CR-BJAS-72KVMM-20070424163336";
     public static final String WRONG_COMPLAINT_ID = "1";
 
     @BeforeClass

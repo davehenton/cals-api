@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
  */
 public class DistrictOfficeDTO extends BaseDTO {
 
+    private static final long serialVersionUID = -6573472953019773477L;
+    
     @RemoveTrailingSpaces
     @JsonProperty("number")
     @NotNull
