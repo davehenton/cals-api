@@ -3,7 +3,23 @@
  */
 
 entity RFAApplication {
-	rfaApplicationType String maxlength(100) required, //initial or other
+	  rfaApplicationType String maxlength(100) required, //initial or other
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+ 	  updateUserId String maxlength(50) required,
+ 	  updateDateTime ZonedDateTime required
+}
+
+entity DesiredChildType { //determined or non-determined
+   name String maxlength(100) required
+}
+
+entity DeterminedChild {
+   dateOfPlacement LocalDate required
+}
+
+entity RFAApplicationStatusType {
+    name String maxlength(100) required
 }
 
 /**
@@ -15,37 +31,73 @@ entity RFAApplicationQuestion {
 	code String maxlength(100) required,
     question String maxlength(255) required,
     order Integer required,
-    questionAnswerIfYes String maxlength(255)
+    questionAnswerIfYes String maxlength(255),
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+ 	  updateUserId String maxlength(50) required,
+ 	  updateDateTime ZonedDateTime required
 }
 
 entity PreviousFosterCareApproval {
 	agencyName String maxlength(255) required,
-    approvalType String maxlength(100) required
+    approvalType String maxlength(100) required,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+ 	  updateUserId String maxlength(50) required,
+ 	  updateDateTime ZonedDateTime required
 }
 
-entity Household {}
+entity Household {
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+ 	  updateUserId String maxlength(50) required,
+ 	  updateDateTime ZonedDateTime required
+}
 
-entity HouseholdApplicant {}
+entity HouseholdApplicant {
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+ 	  updateUserId String maxlength(50) required,
+ 	  updateDateTime ZonedDateTime required
+}
 
 entity Person {
     firstName String required,
     lastName String required,
     middleName String,
-	dateOfBirth LocalDate required,
-    driversLicenseNumber String required
+	  dateOfBirth LocalDate required,
+    driversLicenseNumber String required,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+ 	  updateUserId String maxlength(50) required,
+ 	  updateDateTime ZonedDateTime required
 }
 
 entity CountyType {
-	fipsCode String required minlength(3) maxlength(3),
+	  fipsCode String required minlength(3) maxlength(3),
     description String maxlength(20)
 }
 
 entity PersonPreviousName {
-	name String required
+	name String required,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
 entity EducationLevelType {
-	name String required
+  	name String required,
+    level Integer
+}
+
+entity EducationPoint {
+  	degree String required,
+    name String required,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
 entity GenderType {
@@ -61,16 +113,34 @@ entity EthnicityType {
 }
 
 entity EmailAddress {
-	email String required
+  	email String required,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
 entity PhoneNumber {
-	phoneNumber String required
+  	phoneNumber String required,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
-entity PersonPhone {}
+entity PersonPhone {
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
+}
 
-entity PersonAddress {}
+entity PersonAddress {
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
+}
 
 entity PhoneNumberType {
 	type String required
@@ -84,18 +154,30 @@ entity Address {
     zipSuffixCode String minlength(4) maxlength(4),
     longitude BigDecimal,
     lattitude BigDecimal,
-    deliverable Boolean
+    deliverable Boolean,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
 entity Employer {
-    name String
+    name String,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
 entity Employment {
-	occupation String required,
-	annualIncome BigDecimal required,
+  	occupation String required,
+  	annualIncome BigDecimal required,
     startDate LocalDate required,
-    endDate LocalDate
+    endDate LocalDate,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
 entity AddressType {
@@ -107,13 +189,21 @@ entity PosessionType { //own, rent, lease
 }
 
 entity HouseholdAddress {
-	isWeaponsInHome Boolean required,
-    directionsToHome String
+	  isWeaponsInHome Boolean required,
+    directionsToHome String,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+ 	  updateUserId String maxlength(50) required,
+ 	  updateDateTime ZonedDateTime required
 }
 
 entity BodyOfWater {
-	location String,
-    size Integer
+  	location String,
+    size Integer,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
 entity LanguageType {
@@ -124,17 +214,30 @@ entity RelationshipType {
     name String maxlength(100) required
 }
 
-entity Relationship {}
+entity Relationship {
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+ 	  updateDateTime ZonedDateTime required
+}
 
 entity RelationshipEvent {
-	eventPlace String,
+  	eventPlace String,
     eventDate LocalDate,
-    eventDescription String
+    eventDescription String,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
 entity HouseholdChild {
-	isFinanciallySupported Boolean required,
-    isAdopted Boolean required
+  	isFinanciallySupported Boolean required,
+    isAdopted Boolean required,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
 }
 
 entity PreferredAgeType{
@@ -145,11 +248,21 @@ entity SiblingType{
    name String  maxlength(20) required
 }
 
-entity ChildPreferences {}
+entity ChildPreferences {
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+   	updateDateTime ZonedDateTime required
+}
+
+entity RFAApplicationStatusType {
+   name String  maxlength(100) required
+}
 
 relationship ManyToOne {
   RFAApplication{forCountyUseOnly} to CountyType,
-  Person{highestEducationLevel required} to EducationLevelType,
+  RFAApplication{status} to RFAApplicationStatusType,
+  RFAApplication{desiredChildType} to DesiredChildType,
   Person{gender required} to GenderType,
   Person{race required} to RaceType,
   PersonPhone{phoneType} to PhoneNumberType,
@@ -164,9 +277,11 @@ relationship ManyToOne {
   HouseholdChild{household required} to Household,
   HouseholdChild{person} to Person,
   Relationship{relationshipType} to RelationshipType,
-  RFAApplication{desiredChild} to Person,
   ChildPreferences{preferredAge} to PreferredAgeType,
-  ChildPreferences{sibling} to SiblingType
+  ChildPreferences{sibling} to SiblingType,
+  DeterminedChild{county} to CountyType,
+  EducationPoint{type} to EducationLevelType,
+  EducationPoint{address} to Address
 }
 
 relationship ManyToMany {
@@ -175,29 +290,41 @@ relationship ManyToMany {
 }
 
 relationship OneToMany {
-	Person{previousNames} to PersonPreviousName,
+    RFAApplication{questions} to RFAApplicationQuestion,
+    RFAApplication{references} to Person,
+    RFAApplication to DeterminedChild{application},
+    RFAApplication{applicants} to HouseholdApplicant,
+	  Person{previousNames} to PersonPreviousName,
     Person{emailAddresses} to EmailAddress,
     Person{phoneNumbers} to PersonPhone{person},
     Person{employments} to Employment{person},
+    Person{addresses} to PersonAddress,
+    Person{educationPoints} to EducationPoint{person},
     Employment{phoneNumbers} to PhoneNumber,
     Household{persons} to Person,
-    RFAApplication{applicants} to HouseholdApplicant,
-	Household{addresses} to HouseholdAddress{address},
-    HouseholdAddress{bodyOfWaters} to BodyOfWater,
-    Person{addresses} to PersonAddress,
-    RFAApplication{questions} to RFAApplicationQuestion,
-    RFAApplication{references} to Person
+	  Household{addresses} to HouseholdAddress{address},
+    HouseholdAddress{bodyOfWaters} to BodyOfWater
 }
 
 relationship OneToOne {
-	RFAApplication{previousFosterCareApproval} to PreviousFosterCareApproval,
-	PersonPhone{phoneNumber} to PhoneNumber,
+  	RFAApplication{previousFosterCareApproval} to PreviousFosterCareApproval,
+    RFAApplication to ChildPreferences{application},
+	  PersonPhone{phoneNumber} to PhoneNumber,
     Employer{address} to Address,
     HouseholdApplicant{person} to Person,
     HouseholdAddress{address} to Address,
     Relationship{startEvent} to RelationshipEvent{relationShip},
-	Relationship{endEvent} to RelationshipEvent{relationShip}
+	  Relationship{endEvent} to RelationshipEvent{relationShip},
+    DeterminedChild{person} to Person
 }
+
+
+
+
+
+
+
+
 
 
 
