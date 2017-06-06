@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -142,11 +143,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
 
     @JsonProperty("phones")
     @ApiModelProperty(required = true, readOnly = true, value = "Facility Phones")
-    private List<PhoneDTO> phone;
+    private ArrayList<PhoneDTO> phone;
 
     @JsonProperty("addresses")
     @ApiModelProperty(required = true, readOnly = true, value = "Facility Addresses")
-    private List<FacilityAddressDTO> address;
+    private ArrayList<FacilityAddressDTO> address;
 
     public URI getHref() {
         return href;
@@ -313,7 +314,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     }
 
     public void setAddress(List<FacilityAddressDTO> address) {
-        this.address = address;
+        this.address = new ArrayList<>(address);
     }
 
     public List<PhoneDTO> getPhone() {
@@ -321,7 +322,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     }
 
     public void setPhone(List<PhoneDTO> phone) {
-        this.phone = phone;
+        this.phone = new ArrayList<>(phone);
     }
 
     @Override

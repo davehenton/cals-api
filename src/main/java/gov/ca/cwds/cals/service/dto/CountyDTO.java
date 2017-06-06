@@ -11,6 +11,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public class CountyDTO extends DictionaryDTO {
 
+    private static final long serialVersionUID = -7976061092080021333L;
+    
     @RemoveTrailingSpaces
     private String lisCode;
 

@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 
 public class DictionaryDTO extends BaseDTO {
 
+    private static final long serialVersionUID = -1184272035663245384L;
+    
     @RemoveTrailingSpaces
     @JsonProperty("code")
     @NotNull

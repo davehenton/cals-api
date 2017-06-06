@@ -12,6 +12,8 @@ import java.util.Objects;
 
 public class FacilityAddressDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 3818465870720603849L;
+
     @RemoveTrailingSpaces
     @JsonProperty("type")
     @ApiModelProperty(required = true, readOnly = true, value = "Address Type", example = "mail")

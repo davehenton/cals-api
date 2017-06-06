@@ -12,14 +12,14 @@ import java.util.List;
 public class FacilityTypesDTO extends BaseDTO implements Response {
 
     @JsonProperty("facility_types")
-    private List<FacilityTypeDTO> facilityTypes = new ArrayList<>();
+    private ArrayList<FacilityTypeDTO> facilityTypes = new ArrayList<>();
 
     public List<FacilityTypeDTO> getFacilityTypes() {
         return facilityTypes;
     }
 
     public void setFacilityTypes(List<FacilityTypeDTO> facilityTypeDTOs) {
-        this.facilityTypes = facilityTypeDTOs;
+        this.facilityTypes = new ArrayList<>(facilityTypeDTOs);
     }
 
 }
