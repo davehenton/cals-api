@@ -29,11 +29,10 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
         setUpCms();
     }
 
-    @Ignore
     @Test
     public void testGetFacilityChildren() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
-        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "336400295");
+        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "577000449");
         WebTarget target = clientTestRule.target(pathInfo);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityChildrenDTO facilityChildDTO = invocation.get(FacilityChildrenDTO.class);
@@ -42,11 +41,10 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
         assertEqualsResponse(fixture, facilityChildDTO);
     }
 
-    @Ignore
     @Test
     public void testGetFacilityChild() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
-        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "336400295") + "/AazXkWY06s";
+        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "577000449") + "/AyRhLiI07n";
         WebTarget target = clientTestRule.target(pathInfo);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         FacilityChildDTO facilityChildDTO = invocation.get(FacilityChildDTO.class);
@@ -74,7 +72,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     public void testFacilityChildWrongId() throws Exception {
         String wrongChildId = "-1";
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
-        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "336400295") + "/" + wrongChildId;
+        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "577000449") + "/" + wrongChildId;
         WebTarget target = clientTestRule.target(pathInfo);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         try {
