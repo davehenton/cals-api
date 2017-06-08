@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.model.lis;
+package gov.ca.cwds.cals.persistence.model.lisfas;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -28,12 +28,12 @@ public class LisFacFile implements PersistentObject {
     private String facName;
     private String facDoEvalCode;
     private LisDoFile facDoNbr;
-    private gov.ca.cwds.cals.persistence.model.lis.County facCoNbr;
+    private County facCoNbr;
     private Integer facFmRegionNbr;
     private Integer facCfirsIdNbr;
     private String facStreetSearch;
     private FacilityType facType;
-    private gov.ca.cwds.cals.persistence.model.lis.FacilityStatusType facStatus;
+    private FacilityStatusType facStatus;
     private VisitReasonType facLastVisitReason;
     private String facResStreetAddr;
     private String facResCity;
@@ -89,7 +89,7 @@ public class LisFacFile implements PersistentObject {
     private LocalDate facCapIncRecDate;
     private Integer facRegionNbr;
     private LocalDate facLastDeferVisitDate;
-    private Integer facLastDeferVisitReason;
+    private VisitReasonType facLastDeferVisitReason;
     private Integer facAnnualVisitYear;
     private LocalDate facLastUpdDate;
     private LocalDate facCapIncClosedDate;
@@ -177,11 +177,11 @@ public class LisFacFile implements PersistentObject {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fac_co_nbr", referencedColumnName = "tbl_co_nbr")
-    public gov.ca.cwds.cals.persistence.model.lis.County getFacCoNbr() {
+    public County getFacCoNbr() {
         return facCoNbr;
     }
 
-    public void setFacCoNbr(gov.ca.cwds.cals.persistence.model.lis.County facCoNbr) {
+    public void setFacCoNbr(County facCoNbr) {
         this.facCoNbr = facCoNbr;
     }
 
@@ -227,11 +227,11 @@ public class LisFacFile implements PersistentObject {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fac_status", referencedColumnName = "tbl_fac_status_code")
-    public gov.ca.cwds.cals.persistence.model.lis.FacilityStatusType getFacStatus() {
+    public FacilityStatusType getFacStatus() {
         return facStatus;
     }
 
-    public void setFacStatus(gov.ca.cwds.cals.persistence.model.lis.FacilityStatusType facStatus) {
+    public void setFacStatus(FacilityStatusType facStatus) {
         this.facStatus = facStatus;
     }
 
@@ -785,13 +785,13 @@ public class LisFacFile implements PersistentObject {
         this.facLastDeferVisitDate = facLastDeferVisitDate;
     }
 
-    @Basic
-    @Column(name = "fac_last_defer_visit_reason", nullable = true)
-    public Integer getFacLastDeferVisitReason() {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fac_last_defer_visit_reason", referencedColumnName = "tbl_visit_reason_code")
+    public VisitReasonType getFacLastDeferVisitReason() {
         return facLastDeferVisitReason;
     }
 
-    public void setFacLastDeferVisitReason(Integer facLastDeferVisitReason) {
+    public void setFacLastDeferVisitReason(VisitReasonType facLastDeferVisitReason) {
         this.facLastDeferVisitReason = facLastDeferVisitReason;
     }
 

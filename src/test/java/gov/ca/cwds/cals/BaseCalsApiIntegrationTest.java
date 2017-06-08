@@ -1,7 +1,5 @@
 package gov.ca.cwds.cals;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,17 +59,15 @@ public abstract class BaseCalsApiIntegrationTest {
     }
 
     public static void setUpFas() throws Exception {
-        getFasDatabaseHelper().runScript("liquibase/fas/fas-create-schema-ddl.xml");
-        getFasDatabaseHelper().runScript("liquibase/fas/fas-ddl-master.xml", FAS);
+        getFasDatabaseHelper().runScript("liquibase/fas_database_master.xml");
     }
 
     public static void setUpLis() throws Exception {
-        getLisDatabaseHelper().runScript("liquibase/lis/lis-create-schema-ddl.xml");
-        getLisDatabaseHelper().runScript("liquibase/lis/lis-ddl-master.xml", LIS);
+        getLisDatabaseHelper().runScript("liquibase/lis_database_master.xml");
     }
 
     public static void setUpCms() throws Exception {
-        getCmsDatabaseHelper().runScript("liquibase/cms/cms-ddl-master.xml");
+        getCmsDatabaseHelper().runScript("liquibase/cwscms_database_master.xml");
     }
 
     @After
@@ -87,8 +83,9 @@ public abstract class BaseCalsApiIntegrationTest {
     @SuppressWarnings("unchecked")
     protected void assertEqualsResponse(String fixture, String response) throws IOException {
         ObjectMapper om = new ObjectMapper();
-        Map<String, String> map1 = (Map<String, String>) om.readValue(fixture, Map.class);
-        Map<String, String> map2 = (Map<String, String>) om.readValue(response, Map.class);
-        assertThat(map1).isEqualTo(map2);
+        String actual = clientTestRule.getMapper().writeValueAsString(response);
+        Map<String, String> expectedMap = (Map<String, String>) om.readValue(fixture, Map.class);
+        Map<String, String> actualMap = (Map<String, String>) om.readValue(actual, Map.class);
+        assertThat(actualMap).isEqualTo(expectedMap);
     }
 }

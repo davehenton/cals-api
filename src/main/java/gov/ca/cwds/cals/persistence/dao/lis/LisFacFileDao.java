@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.persistence.dao.lis;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.LisSessionFactory;
-import gov.ca.cwds.cals.persistence.model.lis.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.SessionFactory;
 
