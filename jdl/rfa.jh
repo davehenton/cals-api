@@ -2,9 +2,9 @@
  * @author CALS API team.
  */
 
-
-entity RFAApplication {
-	rfaApplicationType String maxlength(100) required, //initial or other,
+entity Application {
+	isInitialApplication Boolean required,
+    otherApplicationType String, //3NF violated!!!
     isChildIdentified Boolean,
 	isChildCurrentlyInYourHome Boolean required,
     createUserId String maxlength(50) required,
@@ -17,7 +17,7 @@ entity DeterminedChild {
    dateOfPlacement LocalDate required
 }
 
-entity RFAApplicationStatusType {
+entity ApplicationStatusType {
     name String maxlength(100) required
 }
 
@@ -51,6 +51,13 @@ entity HouseholdAdult {
 	criminalRecordStatementQuestion1 Boolean required,
 	criminalRecordStatementQuestion2 Boolean required,
 	criminalRecordStatementQuestion3 Boolean required,
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+    updateUserId String maxlength(50) required,
+    updateDateTime ZonedDateTime required
+}
+
+entity Applicant {
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
     updateUserId String maxlength(50) required,
@@ -233,14 +240,24 @@ entity Relationship {
     updateDateTime ZonedDateTime required
 }
 
+entity ApplicantRelationHistoryRecord {
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+   	updateUserId String maxlength(50) required,
+    updateDateTime ZonedDateTime required
+}
+
 entity RelationshipEvent {
   	eventPlace String,
     eventDate LocalDate,
-    eventDescription String,
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
    	updateUserId String maxlength(50) required,
    	updateDateTime ZonedDateTime required
+}
+
+entity RelationshipEventType {
+   name String  maxlength(100) required
 }
 
 entity HouseholdChild {
@@ -267,13 +284,13 @@ entity ChildPreferences {
    	updateDateTime ZonedDateTime required
 }
 
-entity RFAApplicationStatusType {
+entity ApplicationStatusType {
    name String  maxlength(100) required
 }
 
 relationship ManyToOne {
-  RFAApplication{forCountyUseOnly} to CountyType,
-  RFAApplication{status} to RFAApplicationStatusType,
+  Application{forCountyUseOnly} to CountyType,
+  Application{status} to ApplicationStatusType,
   Person{gender required} to GenderType,
   Person{race required} to RaceType,
   PersonPhone{phoneType} to PhoneNumberType,
@@ -287,9 +304,11 @@ relationship ManyToOne {
   Relationship{to required} to Person,
   HouseholdChild{household required} to Household,
   Relationship{relationshipType} to RelationshipType,
+  ApplicantRelationHistoryRecord{relationshipType} to RelationshipType,
   DeterminedChild{countyOfJurisdiction required} to CountyType,
   EducationPoint{type} to EducationLevelType,
-  EducationPoint{address} to Address
+  EducationPoint{address} to Address,
+  RelationshipEvent{eventType} to RelationshipEventType
 }
 
 relationship ManyToMany {
@@ -301,33 +320,49 @@ relationship ManyToMany {
 }
 
 relationship OneToMany {
-    RFAApplication{references} to Person,
-    RFAApplication to DeterminedChild{application},
-    RFAApplication{applicants} to HouseholdAdult,
+    Application{references} to Person,
+    Application to DeterminedChild{application},
+    Application{applicants} to Applicant{application},
     Person{previousNames} to PersonPreviousName,
     Person{emailAddresses} to EmailAddress,
     Person{phoneNumbers} to PersonPhone{person},
     Person{employments} to Employment{person},
     Person{addresses} to PersonAddress,
     Person{educationPoints} to EducationPoint{person},
-    Employment{phoneNumbers} to PhoneNumber,
+    Employer{phoneNumbers} to PhoneNumber,
     Household{persons} to Person,
     Household{addresses} to HouseholdAddress{address},
     HouseholdAddress{bodyOfWaters} to BodyOfWater,
 	StateType{counties} to CountyType{state},
-    HouseholdAdult{criminalRecords} to CriminalRecord{person}
+    HouseholdAdult{criminalRecords} to CriminalRecord{person},
+	Applicant{relationHistoryRecords} to ApplicantRelationHistoryRecord{applicant}
 }
 
 relationship OneToOne {
-  	RFAApplication{licensureHistory} to LicensureHistory{application},
-    RFAApplication to ChildPreferences{application},
+  	Application{licensureHistory} to LicensureHistory{application},
+    Application to ChildPreferences{application},
     PersonPhone{phoneNumber} to PhoneNumber,
     Employer{address} to Address,
     HouseholdAdult{person} to Person,
+	Applicant{householdPerson} to HouseholdAdult,
     HouseholdAddress{address} to Address,
-    Relationship{startEvent} to RelationshipEvent{relationShip},
-    Relationship{endEvent} to RelationshipEvent{relationShip},
+    ApplicantRelationHistoryRecord{startEvent required} to RelationshipEvent{relationShip},
+    ApplicantRelationHistoryRecord{endEvent required} to RelationshipEvent{relationShip},
     DeterminedChild{person} to Person,
     HouseholdChild{person} to Person,
     CriminalRecord{state} to StateType
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
