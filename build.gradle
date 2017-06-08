@@ -150,6 +150,13 @@ jar {
 
 def dockerTag = projectVersion + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
 
+task integrationTest(type: Test, dependsOn: testClasses) {
+
+    // URL where integration tests will be pointed to (may change it in gradle.properties)
+    systemProperty 'cals.api.url', project.property('cals.api.url')
+
+}
+
 task copyConfig(type: Copy) {
     from 'config'
     into 'build/docker/config'
