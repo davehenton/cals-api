@@ -2,16 +2,15 @@
  * @author CALS API team.
  */
 
+
 entity RFAApplication {
-	  rfaApplicationType String maxlength(100) required, //initial or other
+	rfaApplicationType String maxlength(100) required, //initial or other,
+    isChildIdentified Boolean,
+	isChildCurrentlyInYourHome Boolean required,
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
- 	  updateUserId String maxlength(50) required,
- 	  updateDateTime ZonedDateTime required
-}
-
-entity DesiredChildType { //determined or non-determined
-   name String maxlength(100) required
+ 	updateUserId String maxlength(50) required,
+ 	updateDateTime ZonedDateTime required
 }
 
 entity DeterminedChild {
@@ -22,60 +21,73 @@ entity RFAApplicationStatusType {
     name String maxlength(100) required
 }
 
-/**
-* Table describes questions with yes/no answer
-* and additional answer-refinement in case if answer is yes
-* and null in case if answer no
-*/
-entity RFAApplicationQuestion {
-	code String maxlength(100) required,
-    question String maxlength(255) required,
-    order Integer required,
-    questionAnswerIfYes String maxlength(255),
-    createUserId String maxlength(50) required,
-    createDateTime ZonedDateTime required,
- 	  updateUserId String maxlength(50) required,
- 	  updateDateTime ZonedDateTime required
-}
-
-entity PreviousFosterCareApproval {
-	agencyName String maxlength(255) required,
-    approvalType String maxlength(100) required,
-    createUserId String maxlength(50) required,
-    createDateTime ZonedDateTime required,
- 	  updateUserId String maxlength(50) required,
- 	  updateDateTime ZonedDateTime required
+entity LicensureHistory {
+    licensureHistoryQuestion1 Boolean required,
+    licensureHistoryQuestion11 String,
+	licensureHistoryQuestion12 String,
+    licensureHistoryQuestion2 Boolean required,
+	licensureHistoryQuestion21 String,
+	licensureHistoryQuestion3 Boolean required,
+	licensureHistoryQuestion31 String,
+	licensureHistoryQuestion4 Boolean required,
+	licensureHistoryQuestion41 String,
+	licensureHistoryQuestion5 Boolean required,
+	licensureHistoryQuestion51 String,
+	licensureHistoryQuestion6 Boolean required,
+	licensureHistoryQuestion61 String,
+	licensureHistoryQuestion7 Boolean required,
+	licensureHistoryQuestion71 String
 }
 
 entity Household {
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
- 	  updateUserId String maxlength(50) required,
- 	  updateDateTime ZonedDateTime required
+    updateUserId String maxlength(50) required,
+    updateDateTime ZonedDateTime required
 }
 
-entity HouseholdApplicant {
+entity HouseholdAdult {
+	outOfStateDisclosureState Boolean required,
+	criminalRecordStatementQuestion1 Boolean required,
+	criminalRecordStatementQuestion2 Boolean required,
+	criminalRecordStatementQuestion3 Boolean required,
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
- 	  updateUserId String maxlength(50) required,
- 	  updateDateTime ZonedDateTime required
+    updateUserId String maxlength(50) required,
+    updateDateTime ZonedDateTime required
+}
+
+entity CriminalRecord {
+	offenseDescription TextBlob required,
+    offenseDate LocalDate,
+    offenseExplanation TextBlob required,
+	city String maxlength(100),
+    createUserId String maxlength(50) required,
+    createDateTime ZonedDateTime required,
+    updateUserId String maxlength(50) required,
+    updateDateTime ZonedDateTime required
 }
 
 entity Person {
     firstName String required,
     lastName String required,
     middleName String,
-	  dateOfBirth LocalDate required,
+    ssn String,
+	dateOfBirth LocalDate required,
     driversLicenseNumber String required,
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
- 	  updateUserId String maxlength(50) required,
- 	  updateDateTime ZonedDateTime required
+ 	updateUserId String maxlength(50) required,
+ 	updateDateTime ZonedDateTime required
 }
 
 entity CountyType {
-	  fipsCode String required minlength(3) maxlength(3),
+    fipsCode String required minlength(3) maxlength(3),
     description String maxlength(20)
+}
+
+entity StateType {
+    name String maxlength(100) required,
 }
 
 entity PersonPreviousName {
@@ -153,7 +165,7 @@ entity Address {
     zipCode String required minlength(5) maxlength(5),
     zipSuffixCode String minlength(4) maxlength(4),
     longitude BigDecimal,
-    lattitude BigDecimal,
+    latitude BigDecimal,
     deliverable Boolean,
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
@@ -189,12 +201,12 @@ entity PosessionType { //own, rent, lease
 }
 
 entity HouseholdAddress {
-	  isWeaponsInHome Boolean required,
+    isWeaponsInHome Boolean required,
     directionsToHome String,
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
- 	  updateUserId String maxlength(50) required,
- 	  updateDateTime ZonedDateTime required
+    updateUserId String maxlength(50) required,
+    updateDateTime ZonedDateTime required
 }
 
 entity BodyOfWater {
@@ -218,7 +230,7 @@ entity Relationship {
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
    	updateUserId String maxlength(50) required,
- 	  updateDateTime ZonedDateTime required
+    updateDateTime ZonedDateTime required
 }
 
 entity RelationshipEvent {
@@ -240,11 +252,11 @@ entity HouseholdChild {
    	updateDateTime ZonedDateTime required
 }
 
-entity PreferredAgeType{
+entity AgeGroupType {
    name String  maxlength(20) required
 }
 
-entity SiblingType{
+entity SiblingGroupType {
    name String  maxlength(20) required
 }
 
@@ -262,12 +274,11 @@ entity RFAApplicationStatusType {
 relationship ManyToOne {
   RFAApplication{forCountyUseOnly} to CountyType,
   RFAApplication{status} to RFAApplicationStatusType,
-  RFAApplication{desiredChildType} to DesiredChildType,
   Person{gender required} to GenderType,
   Person{race required} to RaceType,
   PersonPhone{phoneType} to PhoneNumberType,
   Employment{employer} to Employer,
-  HouseholdApplicant{household} to Household,
+  HouseholdAdult{household} to Household,
   HouseholdAddress{addressType} to AddressType,
   HouseholdAddress{posessionType} to PosessionType,
   PersonAddress{addressType} to AddressType,
@@ -275,26 +286,25 @@ relationship ManyToOne {
   Relationship{from required} to Person,
   Relationship{to required} to Person,
   HouseholdChild{household required} to Household,
-  HouseholdChild{person} to Person,
   Relationship{relationshipType} to RelationshipType,
-  ChildPreferences{preferredAge} to PreferredAgeType,
-  ChildPreferences{sibling} to SiblingType,
-  DeterminedChild{county} to CountyType,
+  DeterminedChild{countyOfJurisdiction required} to CountyType,
   EducationPoint{type} to EducationLevelType,
   EducationPoint{address} to Address
 }
 
 relationship ManyToMany {
   Person{ethnicities required} to EthnicityType,
-  Household{languages} to LanguageType
+  Household{languages} to LanguageType,
+  ChildPreferences{ageGroupTypes} to AgeGroupType,
+  ChildPreferences{siblingGroupTypes} to SiblingGroupType,
+  HouseholdAdult{otherStates} to StateType
 }
 
 relationship OneToMany {
-    RFAApplication{questions} to RFAApplicationQuestion,
     RFAApplication{references} to Person,
     RFAApplication to DeterminedChild{application},
-    RFAApplication{applicants} to HouseholdApplicant,
-	  Person{previousNames} to PersonPreviousName,
+    RFAApplication{applicants} to HouseholdAdult,
+    Person{previousNames} to PersonPreviousName,
     Person{emailAddresses} to EmailAddress,
     Person{phoneNumbers} to PersonPhone{person},
     Person{employments} to Employment{person},
@@ -302,30 +312,22 @@ relationship OneToMany {
     Person{educationPoints} to EducationPoint{person},
     Employment{phoneNumbers} to PhoneNumber,
     Household{persons} to Person,
-	  Household{addresses} to HouseholdAddress{address},
-    HouseholdAddress{bodyOfWaters} to BodyOfWater
+    Household{addresses} to HouseholdAddress{address},
+    HouseholdAddress{bodyOfWaters} to BodyOfWater,
+	StateType{counties} to CountyType{state},
+    HouseholdAdult{criminalRecords} to CriminalRecord{person}
 }
 
 relationship OneToOne {
-  	RFAApplication{previousFosterCareApproval} to PreviousFosterCareApproval,
+  	RFAApplication{licensureHistory} to LicensureHistory{application},
     RFAApplication to ChildPreferences{application},
-	  PersonPhone{phoneNumber} to PhoneNumber,
+    PersonPhone{phoneNumber} to PhoneNumber,
     Employer{address} to Address,
-    HouseholdApplicant{person} to Person,
+    HouseholdAdult{person} to Person,
     HouseholdAddress{address} to Address,
     Relationship{startEvent} to RelationshipEvent{relationShip},
-	  Relationship{endEvent} to RelationshipEvent{relationShip},
-    DeterminedChild{person} to Person
+    Relationship{endEvent} to RelationshipEvent{relationShip},
+    DeterminedChild{person} to Person,
+    HouseholdChild{person} to Person,
+    CriminalRecord{state} to StateType
 }
-
-
-
-
-
-
-
-
-
-
-
-
