@@ -26,7 +26,7 @@ nsDataSourceFactory:
   driverClass: org.h2.Driver
   user: sa
   password:
-  url: jdbc:h2:mem:ns
+  url: jdbc:h2:mem:cwsns;INIT=create schema if not exists cwsns\;set schema cwsns
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
@@ -42,7 +42,7 @@ fasDataSourceFactory:
   driverClass: org.h2.Driver
   user: sa
   password:
-  url: jdbc:h2:mem:fas
+  url: jdbc:h2:mem:fas;INIT=create schema if not exists fas\;set schema fas
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
@@ -58,7 +58,7 @@ cmsDataSourceFactory:
   driverClass: org.h2.Driver
   user: sa
   password:
-  url: jdbc:h2:mem:cwscms
+  url: jdbc:h2:mem:cwscms;INIT=create schema if not exists cwscms\;set schema cwscms
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
@@ -75,7 +75,7 @@ lisDataSourceFactory:
   driverClass: org.h2.Driver
   user: sa
   password:
-  url: jdbc:h2:mem:lis
+  url: jdbc:h2:mem:lis;INIT=create schema if not exists lis\;set schema lis
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_LIS_CP_INITIAL_SIZE:-2}
