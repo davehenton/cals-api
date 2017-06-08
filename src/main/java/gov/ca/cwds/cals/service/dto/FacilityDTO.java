@@ -77,7 +77,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
     @JsonProperty("license_number")
     @NotNull
     @ApiModelProperty(required = false, readOnly = false, value = "License Number", example = "193600161")
-    private Long licenseNumber;
+    private String licenseNumber;
 
     @JsonProperty("status")
     @NotNull
@@ -222,11 +222,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response {
         this.status = status;
     }
 
-    public Long getLicenseNumber() {
+    public String getLicenseNumber() {
         return licenseNumber;
     }
 
-    public void setLicenseNumber(Long licenseNumber) {
+    public void setLicenseNumber(String licenseNumber) {
         this.licenseNumber = licenseNumber;
     }
 
