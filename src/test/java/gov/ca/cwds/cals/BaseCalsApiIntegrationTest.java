@@ -1,7 +1,5 @@
 package gov.ca.cwds.cals;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,12 +15,6 @@ import org.glassfish.jersey.client.JerseyClient;
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
-import javax.ws.rs.client.Client;
-import java.io.IOException;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author CWDS CALS API Team
