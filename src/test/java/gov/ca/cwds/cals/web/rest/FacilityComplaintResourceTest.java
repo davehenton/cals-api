@@ -1,5 +1,10 @@
 package gov.ca.cwds.cals.web.rest;
 
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static io.dropwizard.testing.FixtureHelpers.fixture;
+import static org.junit.Assert.assertEquals;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
@@ -60,14 +65,14 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     }
 
     @Test
-    public void getFacilityComplaintNoResultTest() throws JsonProcessingException {
+    public void getFacilityComplaintNoResultTest() throws Exception {
         WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
                 WRONG_COMPLAINT_ID);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
         Response response = invocation.get();
         assertEquals(404, response.getStatus());
         String fixture = fixture("fixtures/complaint-not-found-by-id-response.json");
-        assertThat(response.readEntity(String.class)).isEqualTo(fixture);
+        assertEqualsResponse(fixture, response.readEntity(String.class));
     }
 
 }

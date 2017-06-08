@@ -99,12 +99,14 @@ public class FacilityService implements CrudsService {
     @UnitOfWork(CMS)
     protected PlacementHome findFacilityById(FacilityParameterObject parameterObject) {
         PlacementHome placementHome = placementHomeDao.find(parameterObject);
-        CountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
-        if (countyLicenseCase != null) {
-            StaffPerson staffPerson = countyLicenseCase.getStaffPerson();
-            if (staffPerson != null) {
-                County county = countiesDao.findByLogicalId(staffPerson.getCntySpfcd());
-                staffPerson.setCounty(county);
+        if (placementHome != null) {
+            CountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
+            if (countyLicenseCase != null) {
+                StaffPerson staffPerson = countyLicenseCase.getStaffPerson();
+                if (staffPerson != null) {
+                    County county = countiesDao.findByLogicalId(staffPerson.getCntySpfcd());
+                    staffPerson.setCounty(county);
+                }
             }
         }
         return placementHome;

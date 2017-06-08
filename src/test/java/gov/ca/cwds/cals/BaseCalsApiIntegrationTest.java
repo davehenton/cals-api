@@ -1,11 +1,18 @@
 package gov.ca.cwds.cals;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import gov.ca.cwds.rest.api.Response;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
+import java.io.IOException;
+import java.util.Map;
+import javax.ws.rs.client.Client;
 import org.glassfish.jersey.client.JerseyClient;
 import org.junit.After;
 import org.junit.ClassRule;
@@ -76,8 +83,13 @@ public abstract class BaseCalsApiIntegrationTest {
 
     }
 
-    @SuppressWarnings("unchecked")
     protected void assertEqualsResponse(String fixture, Response response) throws IOException {
+        String actualString = clientTestRule.getMapper().writeValueAsString(response);
+        assertEqualsResponse(fixture, actualString);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected void assertEqualsResponse(String fixture, String response) throws IOException {
         ObjectMapper om = new ObjectMapper();
         String actual = clientTestRule.getMapper().writeValueAsString(response);
         Map<String, String> expectedMap = (Map<String, String>) om.readValue(fixture, Map.class);
