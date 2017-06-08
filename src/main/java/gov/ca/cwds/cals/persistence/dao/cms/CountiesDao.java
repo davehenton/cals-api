@@ -42,7 +42,7 @@ public class CountiesDao extends BaseDaoImpl<County> {
     try {
       county = query.getSingleResult();
     } catch (NoResultException e) {
-      LOG.warn("There is no result for logicalId = " + logicalId);
+      LOG.warn("There is no result for logicalId = {}", logicalId);
       LOG.debug(e.getMessage(), e);
     }
 

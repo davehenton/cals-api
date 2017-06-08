@@ -1,16 +1,16 @@
 package gov.ca.cwds.cals.service.dto;
 
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-
 import java.time.LocalDate;
-
-import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 
 /**
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S3437")   //LocalDateTime is serializable
 public class FacilityVisitDTO extends BaseDTO {
 
     @JsonProperty("visit_type")

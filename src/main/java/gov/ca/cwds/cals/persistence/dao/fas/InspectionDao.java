@@ -46,7 +46,7 @@ public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
       res = namedQuery.getSingleResult();
     } catch (NoResultException e) {
       LOG.warn(
-          "There is no result for facilityNumberText: %s and deficiencyId %s ",
+          "There is no result for facilityNumberText: {} and deficiencyId {} ",
           facilityNumberText, deficiencyId);
       LOG.debug(e.getMessage(), e);
     }

@@ -34,7 +34,7 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
     try {
       placementHome = query.getSingleResult();
     } catch (NoResultException e) {
-      LOG.warn("There is no result for facilityId = " + facilityId);
+      LOG.warn("There is no result for facilityId = {}", facilityId);
       LOG.debug(e.getMessage(), e);
     }
 

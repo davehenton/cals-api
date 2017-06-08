@@ -32,7 +32,7 @@ public class LpaInformationDao extends BaseDaoImpl<LpaInformation> {
     try {
       res = query.getSingleResult();
     } catch (NoResultException e) {
-      LOG.warn("There is no result for lpaCode: %s", lpaCode);
+      LOG.warn("There is no result for lpaCode: {}", lpaCode);
       LOG.debug(e.getMessage(), e);
     }
     return res;

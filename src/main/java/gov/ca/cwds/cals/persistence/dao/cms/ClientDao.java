@@ -54,7 +54,7 @@ public class ClientDao extends BaseDaoImpl<Client> {
       client = query.getSingleResult();
     } catch (NoResultException e) {
       LOG.warn(
-          "There is no result for licenseNumber = " + licenseNumber + " and childId = " + childId);
+          "There is no result for licenseNumber = {} and childId = {}", licenseNumber, childId);
       LOG.debug(e.getMessage(), e);
     }
 

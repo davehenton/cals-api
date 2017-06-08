@@ -46,7 +46,7 @@ public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802>
       res = query.getSingleResult();
     } catch (NoResultException e) {
       LOG.warn(
-          "There is no result for facilityNumber: %s and complaintId: %s", facilityId, complaintId);
+          "There is no result for facilityNumber: {} and complaintId: {}", facilityId, complaintId);
       LOG.debug(e.getMessage(), e);
     }
     return res;
