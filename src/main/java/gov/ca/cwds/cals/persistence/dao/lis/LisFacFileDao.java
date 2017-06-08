@@ -6,15 +6,11 @@ import gov.ca.cwds.cals.persistence.model.lis.LisFacFile;
 import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.SessionFactory;
 
-/**
- * @author CWDS CALS API Team
- */
-
+/** @author CWDS CALS API Team */
 public class LisFacFileDao extends BaseDaoImpl<LisFacFile> {
 
-    @Inject
-    public LisFacFileDao(@LisSessionFactory SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
-
+  @Inject
+  public LisFacFileDao(@LisSessionFactory SessionFactory sessionFactory) {
+    super(sessionFactory);
+  }
 }
