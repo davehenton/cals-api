@@ -81,11 +81,10 @@ public abstract class BaseCalsApiIntegrationTest {
     }
 
     @SuppressWarnings("unchecked")
-    protected void assertEqualsResponse(String fixture, String response) throws IOException {
+    protected void assertEqualsResponse(String fixture, String actualString) throws IOException {
         ObjectMapper om = new ObjectMapper();
-        String actual = clientTestRule.getMapper().writeValueAsString(response);
         Map<String, String> expectedMap = (Map<String, String>) om.readValue(fixture, Map.class);
-        Map<String, String> actualMap = (Map<String, String>) om.readValue(actual, Map.class);
+        Map<String, String> actualMap = (Map<String, String>) om.readValue(actualString, Map.class);
         assertThat(actualMap).isEqualTo(expectedMap);
     }
 }
