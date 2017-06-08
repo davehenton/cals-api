@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "lis_table_file", schema = "lis")
+@Table(name = "lis_table_file")
 @DiscriminatorFormula(
         "CASE WHEN tbl_fac_type_code   IS NOT NULL THEN 'FACILITY_TYPE'" +
         "     WHEN tbl_fac_status_code IS NOT NULL THEN 'FACILITY_STATUS_TYPE'" +

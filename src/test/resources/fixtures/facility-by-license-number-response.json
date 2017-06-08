@@ -29,6 +29,7 @@
     "code" : "1",
     "description" : "PRELICENSING"
   },
+  "last_deferred_visit_reason" : { },
   "county" : {
     "code" : "39",
     "description" : "SAN JOAQUIN"
@@ -60,5 +61,8 @@
       "state" : "CA",
       "zip_code" : "91950"
     }
-  } ]
+  } ],
+  "visits" : [ ],
+  "annual_visit_year" : 5,
+  "prelicensing_visit_date" : [ 2004, 4, 2 ]
 }
