@@ -209,7 +209,7 @@ entity PosessionType { //own, rent, lease
 
 entity HouseholdAddress {
     isWeaponsInHome Boolean required,
-    directionsToHome String,
+    directionsToHome String maxlength(255),
     createUserId String maxlength(50) required,
     createDateTime ZonedDateTime required,
     updateUserId String maxlength(50) required,
@@ -307,7 +307,7 @@ relationship ManyToOne {
   ApplicantRelationHistoryRecord{relationshipType} to RelationshipType,
   DeterminedChild{countyOfJurisdiction required} to CountyType,
   EducationPoint{type} to EducationLevelType,
-  EducationPoint{address} to Address,
+  EducationPoint{educationalInstitutionAddress} to Address,
   RelationshipEvent{eventType} to RelationshipEventType
 }
 
@@ -342,6 +342,7 @@ relationship OneToOne {
   	Application{licensureHistory} to LicensureHistory{application},
     Application to ChildPreferences{application},
     PersonPhone{phoneNumber} to PhoneNumber,
+    Person{educationHighestLevel} to EducationLevelType, //denormalization !!!!
     Employer{address} to Address,
     HouseholdAdult{person} to Person,
 	Applicant{householdPerson} to HouseholdAdult,
