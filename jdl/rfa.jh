@@ -97,12 +97,18 @@ entity StateType {
   name String maxlength(100) required,
 }
 
-entity PersonPreviousName {
-  name String required,
+entity PersonOtherName {
+  firstName String required,
+  middleName String required,
+  lastName String required,
   createUserId String maxlength(50) required,
   createDateTime ZonedDateTime required,
   updateUserId String maxlength(50) required,
   updateDateTime ZonedDateTime required
+}
+
+entity OtherNameType { //alias, maiden name, preferred name, other
+  name String required
 }
 
 entity EducationLevelType {
@@ -120,7 +126,7 @@ entity EducationPoint {
 }
 
 entity GenderType {
-name String required
+  name String required
 }
 
 entity RaceType {
@@ -240,7 +246,7 @@ entity Relationship {
   updateDateTime ZonedDateTime required
 }
 
-entity ApplicantRelationHistoryRecord {
+entity RelationHistoryRecord {
   createUserId String maxlength(50) required,
   createDateTime ZonedDateTime required,
   updateUserId String maxlength(50) required,
@@ -304,7 +310,7 @@ relationship ManyToOne {
   Relationship{to required} to Person,
   HouseholdChild{household required} to Household,
   Relationship{relationshipType} to RelationshipType,
-  ApplicantRelationHistoryRecord{relationshipType} to RelationshipType,
+  RelationHistoryRecord{relationshipType} to RelationshipType,
   DeterminedChild{countyOfJurisdiction required} to CountyType,
   EducationPoint{type} to EducationLevelType,
   EducationPoint{educationalInstitutionAddress} to Address,
@@ -323,7 +329,7 @@ relationship OneToMany {
   Application{references} to Person,
   Application to DeterminedChild{application},
   Application{applicants} to Applicant{application},
-  Person{previousNames} to PersonPreviousName,
+  Person{previousNames} to PersonOtherName,
   Person{emailAddresses} to EmailAddress,
   Person{phoneNumbers} to PersonPhone{person},
   Person{employments} to Employment{person},
@@ -335,7 +341,7 @@ relationship OneToMany {
   HouseholdAddress{bodyOfWaters} to BodyOfWater,
   StateType{counties} to CountyType{state},
   HouseholdAdult{criminalRecords} to CriminalRecord{person},
-  Applicant{relationHistoryRecords} to ApplicantRelationHistoryRecord{applicant}
+  Applicant{relationHistoryRecords} to RelationHistoryRecord{applicant}
 }
 
 relationship OneToOne {
@@ -347,11 +353,12 @@ relationship OneToOne {
   Applicant{householdPerson} to HouseholdAdult,
   Applicant{educationHighestLevel} to EducationLevelType,
   HouseholdAddress{address} to Address,
-  ApplicantRelationHistoryRecord{startEvent required} to RelationshipEvent{relationShip},
-  ApplicantRelationHistoryRecord{endEvent required} to RelationshipEvent{relationShip},
+  RelationHistoryRecord{startEvent required} to RelationshipEvent{relationShip},
+  RelationHistoryRecord{endEvent required} to RelationshipEvent{relationShip},
   DeterminedChild{person} to Person,
   HouseholdChild{person} to Person,
-  CriminalRecord{state} to StateType
+  CriminalRecord{state} to StateType,
+  PersonOtherName{nameType} to OtherNameType
 }
 
 
