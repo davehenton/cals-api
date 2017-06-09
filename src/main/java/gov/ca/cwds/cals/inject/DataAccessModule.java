@@ -1,10 +1,25 @@
 package gov.ca.cwds.cals.inject;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.persistence.dao.calsns.AgeGroupTypeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
+import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
+import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
+import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
+import gov.ca.cwds.cals.persistence.model.calsns.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.cms.Client;
 import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
+import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.LicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.OutOfHomePlacement;
@@ -14,23 +29,15 @@ import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.State;
 import gov.ca.cwds.cals.persistence.model.cms.VisitType;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
-import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.County;
 import gov.ca.cwds.cals.persistence.model.lisfas.FacilityStatusType;
-import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.VisitReasonType;
-import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
-import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
-import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
-import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.DataSourceFactory;
@@ -39,143 +46,161 @@ import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-
-/**
- * @author CWDS CALS API Team
- */
-
+/** @author CWDS CALS API Team */
 public class DataAccessModule extends AbstractModule {
 
-    private final HibernateBundle<CalsApiConfiguration> lisHibernateBundle =
-            new HibernateBundle<CalsApiConfiguration>(
-                    LisFacFile.class,
-                    LisTableFile.class,
-                    gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
-                    LisDoFile.class,
-                    FacilityStatusType.class,
-                    VisitReasonType.class,
-                    County.class
-            ) {
-                @Override
-                public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
-                    return configuration.getLisDataSourceFactory();
-                }
+  private final HibernateBundle<CalsApiConfiguration> lisHibernateBundle =
+      new HibernateBundle<CalsApiConfiguration>(
+          LisFacFile.class,
+          LisTableFile.class,
+          gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
+          LisDoFile.class,
+          FacilityStatusType.class,
+          VisitReasonType.class,
+          County.class) {
+        @Override
+        public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+          return configuration.getLisDataSourceFactory();
+        }
 
-                @Override
-                public String name() {
-                    return LIS;
-                }
-            };
+        @Override
+        public String name() {
+          return LIS;
+        }
+      };
 
-    private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
-            new HibernateBundle<CalsApiConfiguration>(
-                    LisFacFile.class,
-                    LisTableFile.class,
-                    gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
-                    LisDoFile.class,
-                    FacilityStatusType.class,
-                    VisitReasonType.class,
-                    County.class,
-                    ComplaintReportLic802.class,
-                    LpaInformation.class,
-                    Rrcpoc.class,
-                    Rr809Dn.class
-                    ) {
-                @Override
-                public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
-                    return configuration.getFasDataSourceFactory();
-                }
+  private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
+      new HibernateBundle<CalsApiConfiguration>(
+          LisFacFile.class,
+          LisTableFile.class,
+          gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
+          LisDoFile.class,
+          FacilityStatusType.class,
+          VisitReasonType.class,
+          County.class,
+          ComplaintReportLic802.class,
+          LpaInformation.class,
+          Rrcpoc.class,
+          Rr809Dn.class) {
+        @Override
+        public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+          return configuration.getFasDataSourceFactory();
+        }
 
-                @Override
-                public String name() {
-                    return FAS;
-                }
-            };
+        @Override
+        public String name() {
+          return FAS;
+        }
+      };
 
-    private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
-            new HibernateBundle<CalsApiConfiguration>(
-                    Client.class,
-                    OutOfHomePlacement.class,
-                    PlacementEpisode.class,
-                    PlacementHome.class,
-                    StaffPerson.class,
-                    FacilityType.class,
-                    gov.ca.cwds.cals.persistence.model.cms.County.class,
-                    CountyLicenseCase.class,
-                    LicensingVisit.class,
-                    VisitType.class,
-                    State.class,
-                    LicenseStatus.class
-                    ) {
-                @Override
-                public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
-                    return configuration.getCmsDataSourceFactory();
-                }
+  private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
+      new HibernateBundle<CalsApiConfiguration>(
+          Client.class,
+          OutOfHomePlacement.class,
+          PlacementEpisode.class,
+          PlacementHome.class,
+          StaffPerson.class,
+          FacilityType.class,
+          gov.ca.cwds.cals.persistence.model.cms.County.class,
+          CountyLicenseCase.class,
+          LicensingVisit.class,
+          VisitType.class,
+          State.class,
+          LicenseStatus.class) {
+        @Override
+        public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+          return configuration.getCmsDataSourceFactory();
+        }
 
-                @Override
-                public String name() {
-                    return CMS;
-                }
-            };
+        @Override
+        public String name() {
+          return CMS;
+        }
+      };
 
-    public DataAccessModule(Bootstrap<CalsApiConfiguration> bootstrap) {
-        bootstrap.addBundle(fasHibernateBundle);
-        bootstrap.addBundle(cmsHibernateBundle);
-        bootstrap.addBundle(lisHibernateBundle);
-    }
+  private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
+      new HibernateBundle<CalsApiConfiguration>(AgeGroupType.class) {
+        @Override
+        public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+          return configuration.getCalsnsDataSourceFactory();
+        }
 
-    @Override
-    protected void configure() {
-        bind(ComplaintReportLic802Dao.class);
-        bind(FacilityTypeDao.class);
-        bind(CountiesDao.class);
-        bind(ClientDao.class);
-        bind(PlacementHomeDao.class);
-        bind(LpaInformationDao.class);
-        bind(InspectionDao.class);
-    }
+        @Override
+        public String name() {
+          return CALSNS;
+        }
+      };
 
-    @Provides
-    @FasSessionFactory
-    SessionFactory fasSessionFactory() {
-        return fasHibernateBundle.getSessionFactory();
-    }
+  public DataAccessModule(Bootstrap<CalsApiConfiguration> bootstrap) {
+    bootstrap.addBundle(fasHibernateBundle);
+    bootstrap.addBundle(cmsHibernateBundle);
+    bootstrap.addBundle(lisHibernateBundle);
+    bootstrap.addBundle(calsnsHibernateBundle);
+  }
 
-    @Provides
-    @CmsSessionFactory
-    SessionFactory cmsSessionFactory() {
-        return cmsHibernateBundle.getSessionFactory();
-    }
+  @Override
+  protected void configure() {
+    bind(ComplaintReportLic802Dao.class);
+    bind(FacilityTypeDao.class);
+    bind(CountiesDao.class);
+    bind(ClientDao.class);
+    bind(PlacementHomeDao.class);
+    bind(LpaInformationDao.class);
+    bind(InspectionDao.class);
+    bind(AgeGroupTypeDao.class);
+  }
 
-    @Provides
-    @LisSessionFactory
-    SessionFactory lisSessionFactory() {
-        return lisHibernateBundle.getSessionFactory();
-    }
+  @Provides
+  @FasSessionFactory
+  SessionFactory fasSessionFactory() {
+    return fasHibernateBundle.getSessionFactory();
+  }
 
-    @Provides
-    @FasHibernateBundle
-    HibernateBundle<CalsApiConfiguration> fasHibernateBundle() {
-        return fasHibernateBundle;
-    }
+  @Provides
+  @CmsSessionFactory
+  SessionFactory cmsSessionFactory() {
+    return cmsHibernateBundle.getSessionFactory();
+  }
 
-    @Provides
-    @CmsHibernateBundle
-    public HibernateBundle<CalsApiConfiguration> getCmsHibernateBundle() {
-        return cmsHibernateBundle;
-    }
+  @Provides
+  @LisSessionFactory
+  SessionFactory lisSessionFactory() {
+    return lisHibernateBundle.getSessionFactory();
+  }
 
-    @Provides
-    @LisHibernateBundle
-    public HibernateBundle<CalsApiConfiguration> getLisHibernateBundle() {
-        return lisHibernateBundle;
-    }
+  @Provides
+  @CalsnsSessionFactory
+  SessionFactory calsnsSessionFactory() {
+    return calsnsHibernateBundle.getSessionFactory();
+  }
 
-    @Provides
-    UnitOfWorkAwareProxyFactory lisUnitOfWorkAwareProxyFactory() {
-        return new UnitOfWorkAwareProxyFactory(lisHibernateBundle, fasHibernateBundle, cmsHibernateBundle);
-    }
+  @Provides
+  @FasHibernateBundle
+  HibernateBundle<CalsApiConfiguration> fasHibernateBundle() {
+    return fasHibernateBundle;
+  }
+
+  @Provides
+  @CmsHibernateBundle
+  public HibernateBundle<CalsApiConfiguration> getCmsHibernateBundle() {
+    return cmsHibernateBundle;
+  }
+
+  @Provides
+  @LisHibernateBundle
+  public HibernateBundle<CalsApiConfiguration> getLisHibernateBundle() {
+    return lisHibernateBundle;
+  }
+
+  @Provides
+  @CalsnsHibernateBundle
+  public HibernateBundle<CalsApiConfiguration> getCalsnsHibernateBundle() {
+    return calsnsHibernateBundle;
+  }
+
+  @Provides
+  UnitOfWorkAwareProxyFactory lisUnitOfWorkAwareProxyFactory() {
+    return new UnitOfWorkAwareProxyFactory(
+        lisHibernateBundle, fasHibernateBundle, cmsHibernateBundle, calsnsHibernateBundle);
+  }
 }

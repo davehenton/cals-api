@@ -6,28 +6,34 @@ import io.dropwizard.db.DataSourceFactory;
 
 public class CalsApiConfiguration extends BaseApiConfiguration {
 
-    private DataSourceFactory fasDataSourceFactory;
+  private DataSourceFactory fasDataSourceFactory;
+  private DataSourceFactory lisDataSourceFactory;
+  private DataSourceFactory calsnsDataSourceFactory;
 
+  @JsonProperty
+  public DataSourceFactory getFasDataSourceFactory() {
+    return fasDataSourceFactory;
+  }
 
-    private DataSourceFactory lisDataSourceFactory;
+  @JsonProperty
+  public DataSourceFactory getLisDataSourceFactory() {
+    return lisDataSourceFactory;
+  }
 
+  public void setFasDataSourceFactory(DataSourceFactory fasDataSourceFactory) {
+    this.fasDataSourceFactory = fasDataSourceFactory;
+  }
 
-    @JsonProperty
-    public DataSourceFactory getFasDataSourceFactory() {
-        return fasDataSourceFactory;
-    }
+  public void setLisDataSourceFactory(DataSourceFactory lisDataSourceFactory) {
+    this.lisDataSourceFactory = lisDataSourceFactory;
+  }
 
-    @JsonProperty
-    public DataSourceFactory getLisDataSourceFactory() {
-        return lisDataSourceFactory;
-    }
+  @JsonProperty
+  public DataSourceFactory getCalsnsDataSourceFactory() {
+    return calsnsDataSourceFactory;
+  }
 
-    public void setFasDataSourceFactory(DataSourceFactory fasDataSourceFactory) {
-        this.fasDataSourceFactory = fasDataSourceFactory;
-    }
-
-    public void setLisDataSourceFactory(DataSourceFactory lisDataSourceFactory) {
-        this.lisDataSourceFactory = lisDataSourceFactory;
-    }
-
+  public void setCalsnsDataSourceFactory(DataSourceFactory calsnsDataSourceFactory) {
+    this.calsnsDataSourceFactory = calsnsDataSourceFactory;
+  }
 }

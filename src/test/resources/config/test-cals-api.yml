@@ -88,3 +88,19 @@ lisDataSourceFactory:
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: true
 
+calsnsDataSourceFactory:
+  driverClass: org.h2.Driver
+  user: sa
+  password:
+  url: jdbc:h2:mem:calsns;INIT=create schema if not exists calsns\;set schema calsns
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  logValidationErrors: true
+  initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
+  minSize: ${DB_NS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_NS_CP_MAX_SIZE:-8}
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      hibernate.id.new_generator_mappings: false
+      hibernate.show_sql: true
+
