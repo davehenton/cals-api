@@ -6,6 +6,7 @@ import com.google.inject.Provides;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
+import gov.ca.cwds.cals.service.AgeGroupTypesService;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
@@ -37,6 +38,7 @@ public class ServicesModule extends AbstractModule{
         bind(FacilityInspectionCollectionService.class);
         bind(FacilityInspectionService.class);
         bind(CountiesService.class);
+        bind(AgeGroupTypesService.class);
     }
 
     @Provides

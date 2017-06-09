@@ -1,0 +1,28 @@
+{
+  "ageGroupTypes": [
+    {
+      "id": 0,
+      "name": "3 years"
+    },
+    {
+      "id": 4,
+      "name": "8 years"
+    },
+    {
+      "id": 9,
+      "name": "12 years"
+    },
+    {
+      "id": 13,
+      "name": "15 years"
+    },
+    {
+      "id": 16,
+      "name": "18 years"
+    },
+    {
+      "id": 18,
+      "name": "21 years"
+    }
+  ]
+}

@@ -24,6 +24,12 @@ public final class Constants {
 
         public static final String FACILITY_TYPES = "facility-types";
 
+        public static final String RFA = "rfa";
+
+        public static final String AGE_GROUP_TYPES = "age-groups";
+
+        
+
         public static class PathParams {
 
             public static final String FACILITY_ID = "facilityId";
@@ -84,6 +90,8 @@ public final class Constants {
         public static final String LIS = "lis";
 
         public static final String CMS = "cwscms";
+
+        public static final String CALSNS = "calsns";
 
         private UnitOfWork() {}
 
