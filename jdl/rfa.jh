@@ -233,7 +233,11 @@ entity HouseholdAddress {
 entity BriefPerson {
   firstName String,
   middleName String,
-  lastName String
+  lastName String,
+  createUserId String maxlength(50) required,
+  createDateTime ZonedDateTime required,
+  updateUserId String maxlength(50) required,
+  updateDateTime ZonedDateTime required
 }
 
 entity LanguageType {
