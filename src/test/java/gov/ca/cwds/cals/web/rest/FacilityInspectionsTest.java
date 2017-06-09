@@ -14,7 +14,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -34,7 +33,6 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
         setUpFas();
-        getFasDatabaseHelper().runScript("liquibase/fas/dml/inspections-data.xml", FAS);
     }
 
     @Test

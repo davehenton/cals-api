@@ -6,14 +6,16 @@ import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
-import gov.ca.cwds.cals.persistence.model.lis.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
-import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao;
+import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
+import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
+import gov.ca.cwds.data.CrudsDao;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
@@ -35,30 +37,39 @@ import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
  *
  */
 public class FacilityService implements CrudsService {
-    private LisFacFileDao lisFacFileDao;
+    private CrudsDao<LisFacFile> lisDsLisFacFileDao;
+    private CrudsDao<LisFacFile> fasDsLisFacFileDao;
     private PlacementHomeDao placementHomeDao;
     private CountiesDao countiesDao;
     private FacilityMapper facilityMapper;
+    private FasFacilityMapper fasFacilityMapper;
     private LpaInformationDao lpaInformationDao;
 
     @Inject
-    public FacilityService(LisFacFileDao lisFacFileDao, PlacementHomeDao placementHomeDao,
-                           LpaInformationDao lpaInformationDao, CountiesDao countiesDao, FacilityMapper facilityMapper) {
-        this.lisFacFileDao = lisFacFileDao;
+    public FacilityService(CrudsDao<LisFacFile> lisDsLisFacFileDao,
+                           CrudsDao<LisFacFile> fasDsLisFacFileDao,
+                           PlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
+                           CountiesDao countiesDao, FacilityMapper facilityMapper, FasFacilityMapper fasFacilityMapper) {
+        this.lisDsLisFacFileDao = lisDsLisFacFileDao;
+        this.fasDsLisFacFileDao = fasDsLisFacFileDao;
         this.placementHomeDao = placementHomeDao;
         this.lpaInformationDao = lpaInformationDao;
         this.countiesDao = countiesDao;
         this.facilityMapper = facilityMapper;
+        this.fasFacilityMapper = fasFacilityMapper;
     }
 
     @Override
     public Response find(Serializable params) {
-        Response response = null;
+        FacilityDTO response = null;
         FacilityParameterObject parameterObject = (FacilityParameterObject) params;
         if (LIS.equals(parameterObject.getUnitOfWork())) {
-            LisFacFile lisFacFile = findFacilityByLicenseNumber(parameterObject);
-            LpaInformation lpaInformation = lisFacFile != null ? findAssignedWorkerInformation(lisFacFile) : null;
-            response = facilityMapper.toFacilityDTO(lisFacFile, lpaInformation);
+            LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
+            LpaInformation lpaInformation = lisDsLisFacFile != null ? findAssignedWorkerInformation(lisDsLisFacFile) : null;
+            response = facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
+
+            LisFacFile fasDsLisFacFile = findFasFacilityByLicenseNumber(parameterObject);
+            response = fasFacilityMapper.toFacilityDTO(response, fasDsLisFacFile);
         } else if (CMS.equals(parameterObject.getUnitOfWork())) {
             PlacementHome placementHome = findFacilityById(parameterObject);
             response = facilityMapper.toFacilityDTO(placementHome);
@@ -67,8 +78,13 @@ public class FacilityService implements CrudsService {
     }
 
     @UnitOfWork(LIS)
-    protected LisFacFile findFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
-        return lisFacFileDao.find(parameterObject.getLicenseNumber());
+    protected LisFacFile findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
+        return lisDsLisFacFileDao.find(parameterObject.getLicenseNumber());
+    }
+
+    @UnitOfWork(FAS)
+    protected LisFacFile findFasFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
+        return fasDsLisFacFileDao.find(parameterObject.getLicenseNumber());
     }
 
     @UnitOfWork(FAS)

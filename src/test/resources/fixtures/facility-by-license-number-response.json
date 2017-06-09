@@ -24,10 +24,15 @@
   "capacity" : 8,
   "license_effective_date" : "2004-05-27",
   "original_application_recieved_date" : "2004-01-26",
-  "last_visit_date" : "2004-04-02",
+  "last_visit_date" : "2004-12-22",
+  "last_deferred_visit_date" : "2005-04-02",
   "last_visit_reason" : {
     "code" : "1",
     "description" : "PRELICENSING"
+  },
+  "last_deferred_visit_reason" : {
+    "code" : "2",
+    "description" : "POST LICENSING"
   },
   "county" : {
     "code" : "39",
@@ -60,5 +65,33 @@
       "state" : "CA",
       "zip_code" : "91950"
     }
-  } ]
+  } ],
+  "visits" : [ {
+    "approval" : "a01",
+    "visit_type" : "Annual 10 month",
+    "visit_date" : "2004-05-01",
+    "visit_deferred_date" : "2004-05-03"
+  }, {
+    "approval" : "a02",
+    "visit_type" : "Annual 22 month",
+    "visit_date" : "2004-05-02",
+    "visit_deferred_date" : "2004-05-04"
+  }, {
+    "approval" : "a04",
+    "visit_type" : "Post Licensing",
+    "visit_date" : "2004-12-22",
+    "visit_deferred_date" : "2004-05-07"
+  }, {
+    "approval" : "a05",
+    "visit_type" : "Renewal",
+    "visit_date" : "2004-05-09",
+    "visit_deferred_date" : "2004-05-08"
+  }, {
+    "approval" : "a03",
+    "visit_type" : "Middle Year",
+    "visit_date" : "2004-05-06",
+    "visit_deferred_date" : "2004-05-05"
+  } ],
+  "annual_visit_year" : 5,
+  "prelicensing_visit_date" : [ 2004, 4, 2 ]
 }

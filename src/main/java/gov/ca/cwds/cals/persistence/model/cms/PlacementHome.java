@@ -25,14 +25,14 @@ import java.time.LocalDate;
 @NamedQuery(
         name = "PlacementHome.find",
         query = "SELECT ph FROM PlacementHome ph "
-                + " JOIN FETCH ph.facilityType ft"
-                + " JOIN FETCH ph.county c"
-                + " JOIN FETCH ph.stateCode sc"
-                + " JOIN FETCH ph.licenseStatus ls"
-                + " JOIN FETCH ph.countyLicenseCase cls"
-                + " JOIN FETCH cls.staffPerson sp"
-                + " JOIN FETCH cls.licensingVisits lv"
-                + " JOIN FETCH lv.visitType vt"
+                + " LEFT JOIN FETCH ph.facilityType ft"
+                + " LEFT JOIN FETCH ph.county c"
+                + " LEFT JOIN FETCH ph.stateCode sc"
+                + " LEFT JOIN FETCH ph.licenseStatus ls"
+                + " LEFT JOIN FETCH ph.countyLicenseCase cls"
+                + " LEFT JOIN FETCH cls.staffPerson sp"
+                + " LEFT JOIN FETCH cls.licensingVisits lv"
+                + " LEFT JOIN FETCH lv.visitType vt"
 //                + " JOIN FETCH sp.county spc"
                 + " WHERE ph.identifier = :facilityId"
 )

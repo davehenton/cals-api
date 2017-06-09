@@ -17,13 +17,13 @@ import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
-import gov.ca.cwds.cals.persistence.model.lis.County;
-import gov.ca.cwds.cals.persistence.model.lis.FacilityStatusType;
+import gov.ca.cwds.cals.persistence.model.lisfas.County;
+import gov.ca.cwds.cals.persistence.model.lisfas.FacilityStatusType;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
-import gov.ca.cwds.cals.persistence.model.lis.LisDoFile;
-import gov.ca.cwds.cals.persistence.model.lis.LisFacFile;
-import gov.ca.cwds.cals.persistence.model.lis.LisTableFile;
-import gov.ca.cwds.cals.persistence.model.lis.VisitReasonType;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
+import gov.ca.cwds.cals.persistence.model.lisfas.VisitReasonType;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
@@ -53,7 +53,7 @@ public class DataAccessModule extends AbstractModule {
             new HibernateBundle<CalsApiConfiguration>(
                     LisFacFile.class,
                     LisTableFile.class,
-                    gov.ca.cwds.cals.persistence.model.lis.FacilityType.class,
+                    gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
                     LisDoFile.class,
                     FacilityStatusType.class,
                     VisitReasonType.class,
@@ -72,6 +72,13 @@ public class DataAccessModule extends AbstractModule {
 
     private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
             new HibernateBundle<CalsApiConfiguration>(
+                    LisFacFile.class,
+                    LisTableFile.class,
+                    gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
+                    LisDoFile.class,
+                    FacilityStatusType.class,
+                    VisitReasonType.class,
+                    County.class,
                     ComplaintReportLic802.class,
                     LpaInformation.class,
                     Rrcpoc.class,

@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.web.rest;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 
@@ -10,12 +9,13 @@ import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
@@ -27,7 +27,6 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     @BeforeClass
     public static void beforeClass() throws Exception {
         setUpFas();
-        getFasDatabaseHelper().runScript("liquibase/fas/dml/complaints-data.xml", FAS);
     }
 
     @Test

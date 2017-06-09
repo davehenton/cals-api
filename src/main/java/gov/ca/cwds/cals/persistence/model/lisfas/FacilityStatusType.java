@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.model.lis;
+package gov.ca.cwds.cals.persistence.model.lisfas;
 
 /**
  * @author CWDS CALS API Team

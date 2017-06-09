@@ -15,47 +15,49 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.NoResultException;
 import java.util.List;
 
-/**
- * @author CWDS CALS API Team
- */
+/** @author CWDS CALS API Team */
 public class ClientDao extends BaseDaoImpl<Client> {
-    private static final Logger LOG = LoggerFactory.getLogger(ClientDao.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ClientDao.class);
 
-    @Inject
-    public ClientDao(@CmsSessionFactory SessionFactory sessionFactory) {
-        super(sessionFactory);
+  @Inject
+  public ClientDao(@CmsSessionFactory SessionFactory sessionFactory) {
+    super(sessionFactory);
+  }
+
+  public List<Client> findAll(FacilityChildParameterObject parameterObject) {
+    Session session = getSessionFactory().getCurrentSession();
+    Class<Client> entityClass = getEntityClass();
+    Query<Client> query =
+        session.createNamedQuery(entityClass.getSimpleName() + ".findAll", entityClass);
+    query.setParameter("licenseNumber", parameterObject.getLicenseNumber());
+    ImmutableList.Builder<Client> entities = new ImmutableList.Builder<>();
+    entities.addAll(query.list());
+    return entities.build();
+  }
+
+  public Client find(FacilityChildParameterObject parameterObject) {
+    Session session = getSessionFactory().getCurrentSession();
+    Class<Client> entityClass = getEntityClass();
+    Query<Client> query =
+        session.createNamedQuery(entityClass.getSimpleName() + ".find", entityClass);
+
+    String licenseNumber = parameterObject.getLicenseNumber();
+    query.setParameter("licenseNumber", licenseNumber);
+
+    String childId = parameterObject.getChildId();
+    query.setParameter("childId", childId);
+
+    query.setMaxResults(1);
+
+    Client client = null;
+    try {
+      client = query.getSingleResult();
+    } catch (NoResultException e) {
+      LOG.warn(
+          "There is no result for licenseNumber = {} and childId = {}", licenseNumber, childId);
+      LOG.debug(e.getMessage(), e);
     }
 
-    public List<Client> findAll(FacilityChildParameterObject parameterObject) {
-        Session session = getSessionFactory().getCurrentSession();
-        Class<Client> entityClass = getEntityClass();
-        Query<Client> query = session.createNamedQuery(entityClass.getSimpleName() + ".findAll", entityClass);
-        query.setParameter("licenseNumber", parameterObject.getLicenseNumber());
-        ImmutableList.Builder<Client> entities = new ImmutableList.Builder<>();
-        entities.addAll(query.list());
-        return entities.build();
-    }
-
-    public Client find(FacilityChildParameterObject parameterObject) {
-        Session session = getSessionFactory().getCurrentSession();
-        Class<Client> entityClass = getEntityClass();
-        Query<Client> query = session.createNamedQuery(entityClass.getSimpleName() + ".find", entityClass);
-
-        String licenseNumber = parameterObject.getLicenseNumber();
-        query.setParameter("licenseNumber", licenseNumber);
-
-        String childId = parameterObject.getChildId();
-        query.setParameter("childId", childId);
-
-        query.setMaxResults(1);
-
-        Client client = null;
-        try {
-            client = query.getSingleResult();
-        } catch (NoResultException e) {
-            LOG.warn("There is no result for licenseNumber = " + licenseNumber + " and childId = " + childId, e);
-        }
-
-        return client;
-    }
+    return client;
+  }
 }

@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
-import gov.ca.cwds.cals.persistence.model.lis.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;

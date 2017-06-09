@@ -13,11 +13,11 @@ import java.util.List;
 @Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface FacilityTypeMapper {
 
-    List<FacilityTypeDTO> toFacilityTypeDTO(List<gov.ca.cwds.cals.persistence.model.lis.FacilityType> facilityTypes);
+    List<FacilityTypeDTO> toFacilityTypeDTO(List<gov.ca.cwds.cals.persistence.model.lisfas.FacilityType> facilityTypes);
 
     @Mapping(target = "code", source = "tblFacTypeCode")
     @Mapping(target = "description", source = "tblFacTypeDesc")
-    FacilityTypeDTO toFacilityTypeDTO(gov.ca.cwds.cals.persistence.model.lis.FacilityType facilityType);
+    FacilityTypeDTO toFacilityTypeDTO(gov.ca.cwds.cals.persistence.model.lisfas.FacilityType facilityType);
 
     @Mapping(target = "code", source = "lgcId")
     @Mapping(target = "description", source = "shortDsc")

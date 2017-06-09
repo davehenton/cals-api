@@ -6,13 +6,14 @@ import com.google.inject.Provides;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
-import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
+import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
+import gov.ca.cwds.data.CrudsDao;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 
 /**
@@ -41,11 +42,21 @@ public class ServicesModule extends AbstractModule{
     @Provides
     @Inject
     FacilityService provideFacilityService(UnitOfWorkAwareProxyFactory unitOfWorkAwareProxyFactory,
-            LisFacFileDao lisFacFileDao, PlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
-            CountiesDao countiesDao, FacilityMapper facilityMapper) {
+            gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao lisDsLisFacFileDao,
+            gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao fasDsLisFacFileDao,
+            PlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
+            CountiesDao countiesDao, FacilityMapper facilityMapper, FasFacilityMapper fasFacilityMapper) {
         return unitOfWorkAwareProxyFactory.create(FacilityService.class,
-                new Class[]{LisFacFileDao.class, PlacementHomeDao.class, LpaInformationDao.class, CountiesDao.class, FacilityMapper.class},
-                new Object[]{lisFacFileDao, placementHomeDao, lpaInformationDao, countiesDao, facilityMapper});
+                new Class[]{
+                        CrudsDao.class,
+                        CrudsDao.class,
+                        PlacementHomeDao.class,
+                        LpaInformationDao.class,
+                        CountiesDao.class,
+                        FacilityMapper.class,
+                        FasFacilityMapper.class
+                },
+                new Object[]{lisDsLisFacFileDao, fasDsLisFacFileDao, placementHomeDao, lpaInformationDao, countiesDao, facilityMapper, fasFacilityMapper});
     }
 
 }

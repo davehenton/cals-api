@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.model.lis;
+package gov.ca.cwds.cals.persistence.model.lisfas;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "lis_table_file", schema = "lis")
+@Table(name = "lis_table_file")
 @DiscriminatorFormula(
         "CASE WHEN tbl_fac_type_code   IS NOT NULL THEN 'FACILITY_TYPE'" +
         "     WHEN tbl_fac_status_code IS NOT NULL THEN 'FACILITY_STATUS_TYPE'" +
