@@ -278,6 +278,14 @@ entity RelationshipEventType {
 entity HouseholdChild {
   isFinanciallySupported Boolean required,
   isAdopted Boolean required,
+  dateOfBirth LocalDate,
+  createUserId String maxlength(50) required,
+  createDateTime ZonedDateTime required,
+  updateUserId String maxlength(50) required,
+  updateDateTime ZonedDateTime required
+}
+
+entity ApplicantToChildRelation {
   createUserId String maxlength(50) required,
   createDateTime ZonedDateTime required,
   updateUserId String maxlength(50) required,
@@ -318,6 +326,7 @@ relationship ManyToOne {
   Relationship{from required} to Person,
   Relationship{to required} to Person,
   HouseholdChild{household required} to Household,
+  ApplicantToChildRelation{applicant} to Applicant,
   Relationship{relationshipType} to RelationshipType,
   RelationHistoryRecord{relationshipType} to RelationshipType,
   DeterminedChild{countyOfJurisdiction required} to CountyType,
@@ -350,7 +359,8 @@ relationship OneToMany {
   HouseholdAddress{personsUsingResidenceAsMailingAddress} to BriefPerson,
   StateType{counties} to CountyType{state},
   HouseholdAdult{criminalRecords} to CriminalRecord{person},
-  Applicant{relationHistoryRecords} to RelationHistoryRecord{applicant}
+  Applicant{relationHistoryRecords} to RelationHistoryRecord{applicant},
+  HouseholdChild{relationsToApplicant} to ApplicantToChildRelation{child}
 }
 
 relationship OneToOne {
@@ -360,15 +370,16 @@ relationship OneToOne {
   PersonPhone{phoneNumber} to PhoneNumber,
   Employer{address} to Address,
   HouseholdAdult{person} to Person,
+  HouseholdChild{gender} to GenderType,
   Applicant{householdPerson} to HouseholdAdult,
   Applicant{educationHighestLevel} to EducationLevelType,
   HouseholdAddress{address} to Address,
   RelationHistoryRecord{startEvent required} to RelationshipEvent{relationShip},
   RelationHistoryRecord{endEvent required} to RelationshipEvent{relationShip},
   DeterminedChild{person} to Person,
-  HouseholdChild{person} to Person,
   CriminalRecord{state} to StateType,
-  PersonOtherName{nameType} to OtherNameType
+  PersonOtherName{nameType} to OtherNameType,
+  ApplicantToChildRelation{relationtype} to RelationshipType
 }
 
 
