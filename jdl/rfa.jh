@@ -216,7 +216,7 @@ entity AddressType {
   name String required
 }
 
-entity PosessionType { //own, rent, lease
+entity ResidenceOwnershipType { //own, rent, lease
   name String required
 }
 
@@ -312,7 +312,7 @@ relationship ManyToOne {
   Employment{employer} to Employer,
   HouseholdAdult{household} to Household,
   HouseholdAddress{addressType} to AddressType,
-  HouseholdAddress{posessionType} to PosessionType,
+  HouseholdAddress{residenceOwnershipType} to ResidenceOwnershipType,
   PersonAddress{addressType} to AddressType,
   PersonAddress{address} to Address,
   Relationship{from required} to Person,
