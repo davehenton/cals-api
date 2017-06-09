@@ -15,7 +15,8 @@ import java.util.List;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(uses={TrailingSpacesRemovalPostMappingProcessor.class} )
+@FunctionalInterface
+@Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FasFacilityMapper {
 
     @Mapping(target = "lastVisitDate", source = "facLastVisitDate")
@@ -32,11 +33,11 @@ public interface FasFacilityMapper {
     default void after(@MappingTarget FacilityDTO facilityDTO, LisFacFile lisFacFile) {
         FacilityVisitMapper mapper = Mappers.getMapper(FacilityVisitMapper.class);
         List<FacilityVisitDTO> facilityVisitDTOs = new ArrayList<>(5);
-        mapper.toAnnual10MonthFacilityVisitDTO(lisFacFile);
-        mapper.toAnnual22MonthFacilityVisitDTO(lisFacFile);
-        mapper.toPostLicensingFacilityVisitDTO(lisFacFile);
-        mapper.toRenewalFacilityVisitDTO(lisFacFile);
-        mapper.toMiddleYearVisitDTO(lisFacFile);
+        facilityVisitDTOs.add(mapper.toAnnual10MonthFacilityVisitDTO(lisFacFile));
+        facilityVisitDTOs.add(mapper.toAnnual22MonthFacilityVisitDTO(lisFacFile));
+        facilityVisitDTOs.add(mapper.toPostLicensingFacilityVisitDTO(lisFacFile));
+        facilityVisitDTOs.add(mapper.toRenewalFacilityVisitDTO(lisFacFile));
+        facilityVisitDTOs.add(mapper.toMiddleYearVisitDTO(lisFacFile));
         facilityDTO.setVisits(facilityVisitDTOs);
     }
 
