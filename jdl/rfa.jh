@@ -124,8 +124,6 @@ entity OtherNameType { //alias, maiden name, preferred name, other
 }
 
 entity EducationLevelType {
-  name String required,
-  level Integer
 }
 
 entity EducationPoint {
