@@ -1,10 +1,12 @@
-package gov.ca.cwds.cals.persistence.dao.cms;
+package gov.ca.cwds.cals.persistence.dao.cms.legacy;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
+import java.util.Collection;
 import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,7 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** @author CWDS CALS API Team */
-public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
+public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> implements
+    IPlacementHomeDao<PlacementHome> {
   private static final Logger LOG = LoggerFactory.getLogger(PlacementHomeDao.class);
 
   @Inject
@@ -21,7 +24,7 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
     super(sessionFactory);
   }
 
-  public PlacementHome find(FacilityParameterObject parameterObject) {
+  public PlacementHome findByParameterObject(FacilityParameterObject parameterObject) {
     Session session = getSessionFactory().getCurrentSession();
     Class<PlacementHome> entityClass = getEntityClass();
     Query<PlacementHome> query =
@@ -38,6 +41,12 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
       LOG.debug(e.getMessage(), e);
     }
 
-    return placementHome;
+        return placementHome;
+    }
+
+  @Override
+  public Collection<PlacementHome> findCollection(FacilityParameterObject parameterObject) {
+    // todo pagination
+    return findAll();
   }
 }

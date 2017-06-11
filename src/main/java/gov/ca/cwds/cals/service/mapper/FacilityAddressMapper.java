@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
@@ -20,11 +20,11 @@ public interface FacilityAddressMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "type", constant = RESIDENTIAL)
     @Mapping(target = "address", source = "placementHome", qualifiedByName = RESIDENTIAL)
-    FacilityAddressDTO toResidentialAddress(PlacementHome placementHome);
+    FacilityAddressDTO toResidentialAddress(BasePlacementHome placementHome);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "type", constant = MAIL)
     @Mapping(target = "address", source = "placementHome", qualifiedByName = MAIL)
-    FacilityAddressDTO toMailAddress(PlacementHome placementHome);
+    FacilityAddressDTO toMailAddress(BasePlacementHome placementHome);
 
 }

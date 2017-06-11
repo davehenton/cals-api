@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.service.dto.AddressDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -25,7 +25,7 @@ public interface AddressMapper {
     @Mapping(target = "longitude", ignore = true)
     @Mapping(target = "lattitude", ignore = true)
     @Mapping(target = "deliverable", ignore = true)
-    AddressDTO toResidentialAddressDTO(PlacementHome placementHome);
+    AddressDTO toResidentialAddressDTO(BasePlacementHome placementHome);
 
     @Named(MAIL)
     @Mapping(target = "streetAddress", expression = "java(placementHome.getPstreetNo() + ' ' + placementHome.getPstreetNm())")
@@ -37,6 +37,6 @@ public interface AddressMapper {
     @Mapping(target = "longitude", ignore = true)
     @Mapping(target = "lattitude", ignore = true)
     @Mapping(target = "deliverable", ignore = true)
-    AddressDTO toMailAddressDTO(PlacementHome placementHome);
+    AddressDTO toMailAddressDTO(BasePlacementHome placementHome);
 }
 

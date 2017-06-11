@@ -12,6 +12,10 @@ public class FacilityParameterObject implements Serializable {
     private Integer licenseNumber;
     private String unitOfWork;
 
+    public FacilityParameterObject(String unitOfWork) {
+        this.unitOfWork = unitOfWork;
+    }
+
     public FacilityParameterObject(String facilityId, String unitOfWork) {
         this.facilityId = facilityId;
         this.unitOfWork = unitOfWork;

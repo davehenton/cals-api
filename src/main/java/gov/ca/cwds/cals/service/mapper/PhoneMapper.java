@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
 import org.mapstruct.DecoratedWith;
@@ -28,12 +28,12 @@ public interface PhoneMapper {
     @Mapping(target = "relation", constant = PRIMARY)
     @Mapping(target = "type", ignore = true)
     @Mapping(target = "number", source = "prmTelNo")
-    PhoneDTO toPrimaryPhoneDTO(PlacementHome placementHome);
+    PhoneDTO toPrimaryPhoneDTO(BasePlacementHome placementHome);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "relation", constant = ALTERNATE)
     @Mapping(target = "type", ignore = true)
     @Mapping(target = "number", source = "bckTelNo")
-    PhoneDTO toAlternatePhoneDTO(PlacementHome placementHome);
+    PhoneDTO toAlternatePhoneDTO(BasePlacementHome placementHome);
 
 }
