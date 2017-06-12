@@ -7,6 +7,13 @@
   },
   "name" : "FST 510 Placements",
   "licensee_name" : "",
+  "assigned_worker" : {
+    "description" : "Shelby Released"
+  },
+  "district_office" : {
+    "number" : "19",
+    "name" : "Los Angeles"
+  },
   "license_number" : "",
   "status" : {
     "code" : "",
