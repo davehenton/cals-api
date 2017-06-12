@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.Identified;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
@@ -27,9 +28,9 @@ import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
  * @author CWDS CALS API Team
  */
 @SuppressWarnings("squid:S3437") //LocalDate is serializable
-public class FacilityDTO extends BaseDTO implements Request, Response {
+public class FacilityDTO extends BaseDTO implements Request, Response, Identified<String> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @JsonProperty("href")
     @InjectLink(value = Constants.API.FACILITIES + "/${instance.id}", style=RELATIVE_PATH)

@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,7 +15,7 @@ public abstract class FacilityAddressMapperDecorator implements FacilityAddressM
     }
 
     @Override
-    public FacilityAddressDTO toResidentialAddress(PlacementHome placementHome) {
+    public FacilityAddressDTO toResidentialAddress(BasePlacementHome placementHome) {
         FacilityAddressDTO facilityAddressDTO = null;
 
         Integer zipCode = placementHome.getZipNo();
@@ -29,7 +29,7 @@ public abstract class FacilityAddressMapperDecorator implements FacilityAddressM
     }
 
     @Override
-    public FacilityAddressDTO toMailAddress(PlacementHome placementHome) {
+    public FacilityAddressDTO toMailAddress(BasePlacementHome placementHome) {
         FacilityAddressDTO facilityAddressDTO = null;
 
         Integer zipCode = placementHome.getpZipNo();

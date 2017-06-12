@@ -48,6 +48,7 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'docker'
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'maven-publish'
 
 
 sonarqube {
@@ -217,5 +218,19 @@ processResources {
     ])
 }
 
-
-
+publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
+            groupId projectGroup
+            artifactId rootProject.name
+            version version + ((System.properties.getProperty('build') != null) ? '.' + System.properties.getProperty('build') : '')
+        }
+    }
+    repositories {
+        //mavenLocal()
+        maven {
+            url "http://sonar.dev.cwds.io:8081/artifactory/libs-snapshot"
+        }
+    }
+}

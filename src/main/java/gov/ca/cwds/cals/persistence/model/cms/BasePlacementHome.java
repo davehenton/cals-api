@@ -1,45 +1,28 @@
 package gov.ca.cwds.cals.persistence.model.cms;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.NamedQuery;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import javax.persistence.Basic;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDate;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /**
  * @author CWDS CALS API Team
  */
-@NamedQuery(
-        name = "PlacementHome.find",
-        query = "SELECT ph FROM PlacementHome ph "
-                + " LEFT JOIN FETCH ph.facilityType ft"
-                + " LEFT JOIN FETCH ph.county c"
-                + " LEFT JOIN FETCH ph.stateCode sc"
-                + " LEFT JOIN FETCH ph.licenseStatus ls"
-                + " LEFT JOIN FETCH ph.countyLicenseCase cls"
-                + " LEFT JOIN FETCH cls.staffPerson sp"
-                + " LEFT JOIN FETCH cls.licensingVisits lv"
-                + " LEFT JOIN FETCH lv.visitType vt"
-//                + " JOIN FETCH sp.county spc"
-                + " WHERE ph.identifier = :facilityId"
-)
-@Entity
-@javax.persistence.Table(name = "PLC_HM_T")
+@MappedSuperclass
 @SuppressWarnings({"squid:S00104", "squid:S3437"}) // Entity can't be splited , LocalDate is serializable
-public class PlacementHome implements PersistentObject {
+public abstract class BasePlacementHome implements PersistentObject {
 
     private static final long serialVersionUID = 8516376534560115438L;
 

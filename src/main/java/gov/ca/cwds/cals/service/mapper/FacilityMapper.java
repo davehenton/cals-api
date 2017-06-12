@@ -1,11 +1,11 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.LicensingVisit;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.HyperlinkDTO;
@@ -87,14 +87,14 @@ public interface FacilityMapper {
     @Mapping(target = "messages", ignore = true)
     @Mapping(target = "emailAddress", ignore = true)
     @Mapping(target = "children", ignore = true)
-    FacilityDTO toFacilityDTO(PlacementHome placementHome);
+    FacilityDTO toFacilityDTO(BasePlacementHome placementHome);
 
     @Mapping(target = "lastVisitDate", source = "visitDate")
     @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
     FacilityDTO toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, LicensingVisit licensingVisit);
 
     @AfterMapping
-    default void after(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
+    default void after(@MappingTarget FacilityDTO facilityDTO, BasePlacementHome placementHome) {
         afterAddresses(facilityDTO, placementHome);
         afterPhones(facilityDTO, placementHome);
         afterLastVisit(facilityDTO, placementHome.getCountyLicenseCase());
@@ -107,7 +107,7 @@ public interface FacilityMapper {
         }
     }
 
-    default void afterAddresses(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
+    default void afterAddresses(@MappingTarget FacilityDTO facilityDTO, BasePlacementHome placementHome) {
         List<FacilityAddressDTO> facilityAddressDTOs = new ArrayList<>(2);
 
         FacilityAddressMapper facilityAddressMapper = Mappers.getMapper(FacilityAddressMapper.class);
@@ -124,7 +124,7 @@ public interface FacilityMapper {
         facilityDTO.setAddress(facilityAddressDTOs);
     }
 
-    default void afterPhones(@MappingTarget FacilityDTO facilityDTO, PlacementHome placementHome) {
+    default void afterPhones(@MappingTarget FacilityDTO facilityDTO, BasePlacementHome placementHome) {
         List<PhoneDTO> phoneDTOs = new ArrayList<>(2);
 
         PhoneMapper phoneMapper = Mappers.getMapper(PhoneMapper.class);

@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
 
 /**
@@ -15,7 +15,7 @@ public abstract class PhoneMapperDecorator implements PhoneMapper {
     }
 
     @Override
-    public PhoneDTO toPrimaryPhoneDTO(PlacementHome placementHome) {
+    public PhoneDTO toPrimaryPhoneDTO(BasePlacementHome placementHome) {
         PhoneDTO phoneDTO = null;
         if (placementHome.getPrmTelNo() > 0) {
             phoneDTO = delegate.toPrimaryPhoneDTO(placementHome);
@@ -24,7 +24,7 @@ public abstract class PhoneMapperDecorator implements PhoneMapper {
     }
 
     @Override
-    public PhoneDTO toAlternatePhoneDTO(PlacementHome placementHome) {
+    public PhoneDTO toAlternatePhoneDTO(BasePlacementHome placementHome) {
         PhoneDTO phoneDTO = null;
         if (placementHome.getBckTelNo() > 0) {
             phoneDTO = delegate.toAlternatePhoneDTO(placementHome);

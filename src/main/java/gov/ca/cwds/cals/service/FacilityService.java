@@ -1,14 +1,14 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
@@ -39,7 +39,7 @@ import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 public class FacilityService implements CrudsService {
     private CrudsDao<LisFacFile> lisDsLisFacFileDao;
     private CrudsDao<LisFacFile> fasDsLisFacFileDao;
-    private PlacementHomeDao placementHomeDao;
+    private IPlacementHomeDao placementHomeDao;
     private CountiesDao countiesDao;
     private FacilityMapper facilityMapper;
     private FasFacilityMapper fasFacilityMapper;
@@ -48,7 +48,7 @@ public class FacilityService implements CrudsService {
     @Inject
     public FacilityService(CrudsDao<LisFacFile> lisDsLisFacFileDao,
                            CrudsDao<LisFacFile> fasDsLisFacFileDao,
-                           PlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
+                           IPlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
                            CountiesDao countiesDao, FacilityMapper facilityMapper, FasFacilityMapper fasFacilityMapper) {
         this.lisDsLisFacFileDao = lisDsLisFacFileDao;
         this.fasDsLisFacFileDao = fasDsLisFacFileDao;
@@ -71,7 +71,7 @@ public class FacilityService implements CrudsService {
             LisFacFile fasDsLisFacFile = findFasFacilityByLicenseNumber(parameterObject);
             response = fasFacilityMapper.toFacilityDTO(response, fasDsLisFacFile);
         } else if (CMS.equals(parameterObject.getUnitOfWork())) {
-            PlacementHome placementHome = findFacilityById(parameterObject);
+            BasePlacementHome placementHome = findFacilityById(parameterObject);
             response = facilityMapper.toFacilityDTO(placementHome);
         }
         return response;
@@ -97,8 +97,10 @@ public class FacilityService implements CrudsService {
     }
 
     @UnitOfWork(CMS)
-    protected PlacementHome findFacilityById(FacilityParameterObject parameterObject) {
-        PlacementHome placementHome = placementHomeDao.find(parameterObject);
+    protected BasePlacementHome findFacilityById(FacilityParameterObject parameterObject) {
+        // todo refactor to java8
+        // todo code duplication in FacilityCollectionService.findFacilities
+        BasePlacementHome placementHome = placementHomeDao.findByParameterObject(parameterObject);
         if (placementHome != null) {
             CountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
             if (countyLicenseCase != null) {

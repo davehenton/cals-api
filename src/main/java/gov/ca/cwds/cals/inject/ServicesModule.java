@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.service.AgeGroupTypesService;
 import gov.ca.cwds.cals.service.ComplaintService;
@@ -46,13 +46,13 @@ public class ServicesModule extends AbstractModule{
     FacilityService provideFacilityService(UnitOfWorkAwareProxyFactory unitOfWorkAwareProxyFactory,
             gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao lisDsLisFacFileDao,
             gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao fasDsLisFacFileDao,
-            PlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
+            IPlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
             CountiesDao countiesDao, FacilityMapper facilityMapper, FasFacilityMapper fasFacilityMapper) {
         return unitOfWorkAwareProxyFactory.create(FacilityService.class,
                 new Class[]{
                         CrudsDao.class,
                         CrudsDao.class,
-                        PlacementHomeDao.class,
+                        IPlacementHomeDao.class,
                         LpaInformationDao.class,
                         CountiesDao.class,
                         FacilityMapper.class,
