@@ -1,51 +1,24 @@
 package gov.ca.cwds.cals.persistence.model.cms;
 
-import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementEpisode;
 import gov.ca.cwds.data.persistence.PersistentObject;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.NamedQuery;
-
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Basic;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
-@NamedQuery(
-        name = "Client.find",
-        query = "SELECT c FROM Client c"
-                + " JOIN c.placementEpisodes pe"
-                + " JOIN pe.outOfHomePlacements ohp"
-                + " JOIN ohp.placementHome ph"
-                + " WHERE ph.licenseNo = :licenseNumber AND c.identifier = :childId"
-)
-@NamedQuery(
-        name = "Client.findAll",
-        query = "SELECT c FROM Client c" +
-                " JOIN c.placementEpisodes pe" +
-                " JOIN pe.outOfHomePlacements ohp" +
-                " JOIN ohp.placementHome ph" +
-                " WHERE ph.licenseNo = :licenseNumber"
-)
-@Entity
-@javax.persistence.Table(name = "CLIENT_T")
+@MappedSuperclass
 @SuppressWarnings("squid:S3437") //LocalDate is serializable
-public class Client implements PersistentObject {
-
+public abstract class BaseClient implements IClient, PersistentObject {
     private static final long serialVersionUID = -1570433180700848830L;
 
-    private Set<PlacementEpisode> placementEpisodes = new HashSet<>();
     private String identifier;
     private String adptnStcd;
     private String alnRegNo;
@@ -115,17 +88,6 @@ public class Client implements PersistentObject {
     private String hispUdCd;
     private String socplcCd;
     private String clIndxNo;
-
-    @OneToMany
-    @JoinColumn(name = "FKCLIENT_T", referencedColumnName = "IDENTIFIER")
-    @OrderBy("removalDt DESC")
-    public Set<PlacementEpisode> getPlacementEpisodes() {
-        return placementEpisodes;
-    }
-
-    public void setPlacementEpisodes(Set<PlacementEpisode> placementEpisodes) {
-        this.placementEpisodes = placementEpisodes;
-    }
 
     @Id
     @javax.persistence.Column(name = "IDENTIFIER", nullable = false, length = 10)

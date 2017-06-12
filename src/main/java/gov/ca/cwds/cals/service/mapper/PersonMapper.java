@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.Client;
+import gov.ca.cwds.cals.persistence.model.cms.BaseClient;
 import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
 import gov.ca.cwds.cals.service.dto.PersonDTO;
 import org.mapstruct.AfterMapping;
@@ -19,7 +19,7 @@ import java.util.Set;
 @Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface PersonMapper {
 
-    List<PersonDTO> toPerson(Set<Client> clients);
+    List<PersonDTO> toPerson(Set<BaseClient> clients);
 
     @Mapping(target = "firstName", source = "comFstNm")
     @Mapping(target = "lastName", source = "comLstNm")
@@ -30,7 +30,7 @@ public interface PersonMapper {
     @Mapping(target = "age",         ignore = true)
     @Mapping(target = "ssn",         ignore = true)
     @Mapping(target = "ethnicityId", ignore = true)
-    PersonDTO toPerson(Client client);
+    PersonDTO toPerson(BaseClient client);
 
     @Mapping(target = "firstName", source = "firstName")
     @Mapping(target = "lastName", source = "lastName")
