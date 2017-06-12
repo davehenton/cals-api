@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -26,7 +25,6 @@ public abstract class BasePlacementEpisode implements IBasePlacementEpisode, Per
 
     private static final long serialVersionUID = -3903845942588945919L;
 
-    private StaffPerson staffPerson;
     private County county;
     private LocalDate removalDt;
     private Short agyRspc;
@@ -71,17 +69,6 @@ public abstract class BasePlacementEpisode implements IBasePlacementEpisode, Per
     private String rsfsurbNm;
     private Short gvrEntc;
     private String plc24HrCd;
-
-    @NotFound(action = NotFoundAction.IGNORE)
-    @OneToOne
-    @JoinColumn(name = "RMV_BY_ID", referencedColumnName = "IDENTIFIER")
-    public StaffPerson getStaffPerson() {
-        return staffPerson;
-    }
-
-    public void setStaffPerson(StaffPerson staffPerson) {
-        this.staffPerson = staffPerson;
-    }
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne

@@ -1,15 +1,16 @@
 package gov.ca.cwds.cals.persistence.model.cms.rs;
 
-import gov.ca.cwds.cals.persistence.model.cms.BasePlacementEpisode;
+import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
@@ -18,14 +19,14 @@ import org.hibernate.annotations.Type;
  * @author CWDS TPT-2
  */
 @Entity
-@javax.persistence.Table(name = "PLC_EPST")
-public class ReplicatedPlacementEpisode extends BasePlacementEpisode {
+@Table(name = "CNTY_CST")
+public class ReplicatedCountyLicenseCase extends BaseCountyLicenseCase {
 
   private String replicationOperation;
 
   private Date replicationDate;
 
-  private Set<ReplicatedOutOfHomePlacement> outOfHomePlacements = new HashSet<>();
+  private List<ReplicatedLicensingVisit> licensingVisits;
 
   private ReplicatedStaffPerson staffPerson;
 
@@ -49,26 +50,27 @@ public class ReplicatedPlacementEpisode extends BasePlacementEpisode {
   }
 
   @Override
-  @OneToMany
-  @JoinColumn(name = "FKPLC_EPS0", referencedColumnName = "THIRD_ID")
-  @OrderBy("startDt DESC")
-  public Set<ReplicatedOutOfHomePlacement> getOutOfHomePlacements() {
-    return outOfHomePlacements;
+  @NotFound(action = NotFoundAction.IGNORE)
+  @OneToMany(fetch = FetchType.LAZY)
+  @JoinColumn(name = "FKCNTY_CST", referencedColumnName = "IDENTIFIER", nullable = true)
+  @OrderBy("visitDate DESC")
+  public List<ReplicatedLicensingVisit> getLicensingVisits() {
+    return licensingVisits;
   }
 
-  public void setOutOfHomePlacements(Set<ReplicatedOutOfHomePlacement> outOfHomePlacements) {
-    this.outOfHomePlacements = outOfHomePlacements;
+  public void setLicensingVisits(List<ReplicatedLicensingVisit> licensingVisits) {
+    this.licensingVisits = licensingVisits;
   }
 
   @Override
   @NotFound(action = NotFoundAction.IGNORE)
-  @OneToOne
-  @JoinColumn(name = "RMV_BY_ID", referencedColumnName = "IDENTIFIER")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "FKSTFPERST", referencedColumnName = "IDENTIFIER")
   public ReplicatedStaffPerson getStaffPerson() {
     return staffPerson;
   }
 
-  public void setStaffPerson(ReplicatedStaffPerson staffPerson) {
-    this.staffPerson = staffPerson;
+  public void setStaffPerson(ReplicatedStaffPerson fkstfperst) {
+    this.staffPerson = fkstfperst;
   }
 }

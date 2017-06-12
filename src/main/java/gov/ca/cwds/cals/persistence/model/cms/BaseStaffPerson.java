@@ -1,24 +1,22 @@
 package gov.ca.cwds.cals.persistence.model.cms;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import javax.persistence.Basic;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
-@Entity
-@javax.persistence.Table(name = "STFPERST")
+@MappedSuperclass
 @SuppressWarnings("squid:S3437") //LocalDate is serializable
-public class StaffPerson implements PersistentObject {
+public abstract class BaseStaffPerson implements PersistentObject {
 
     private static final long serialVersionUID = 5518501308828983601L;
 

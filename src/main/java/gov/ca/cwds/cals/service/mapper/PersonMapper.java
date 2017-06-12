@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.cms.BaseClient;
-import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.service.dto.PersonDTO;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -40,7 +40,7 @@ public interface PersonMapper {
     @Mapping(target = "dateOfBirth", ignore = true)
     @Mapping(target = "ssn",         ignore = true)
     @Mapping(target = "ethnicityId", ignore = true)
-    PersonDTO toPersonDTO(StaffPerson staffPerson);
+    PersonDTO toPersonDTO(BaseStaffPerson staffPerson);
 
     @AfterMapping
     default void fillAge(@MappingTarget PersonDTO personDTO) {
