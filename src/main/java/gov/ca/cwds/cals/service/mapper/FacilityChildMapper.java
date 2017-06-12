@@ -1,10 +1,10 @@
 package gov.ca.cwds.cals.service.mapper;
 
 
+import gov.ca.cwds.cals.persistence.model.cms.BaseOutOfHomePlacement;
+import gov.ca.cwds.cals.persistence.model.cms.BasePlacementEpisode;
 import gov.ca.cwds.cals.persistence.model.cms.Client;
 import gov.ca.cwds.cals.persistence.model.cms.County;
-import gov.ca.cwds.cals.persistence.model.cms.OutOfHomePlacement;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementEpisode;
 import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import org.mapstruct.AfterMapping;
@@ -60,26 +60,26 @@ public interface FacilityChildMapper {
     @Mapping(target = "assignedWorker", ignore = true)
     @Mapping(target = "facilityId", ignore = true)
     @Mapping(target = "messages", ignore = true)
-    FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO, OutOfHomePlacement outOfHomePlacement);
+    FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO, BaseOutOfHomePlacement outOfHomePlacement);
 
     @AfterMapping
     default void after(@MappingTarget FacilityChildDTO facilityChildDTO, Client client) {
-        Set<PlacementEpisode> placementEpisodes = client.getPlacementEpisodes();
+        Set<? extends BasePlacementEpisode> placementEpisodes = client.getPlacementEpisodes();
         if (!placementEpisodes.isEmpty()) {
 
             FacilityChildMapper facilityChildMapper = Mappers.getMapper(FacilityChildMapper.class);
 
-            PlacementEpisode placementEpisode = placementEpisodes.iterator().next();
+            BasePlacementEpisode placementEpisode = placementEpisodes.iterator().next();
             County county = placementEpisode.getCounty();
             facilityChildMapper.toFacilityChildDTO(facilityChildDTO, county);
 
             StaffPerson staffPerson = placementEpisode.getStaffPerson();
             facilityChildMapper.toFacilityChildDTO(facilityChildDTO, staffPerson);
 
-            Set<OutOfHomePlacement> outOfHomePlacements = placementEpisode.getOutOfHomePlacements();
+            Set<? extends BaseOutOfHomePlacement> outOfHomePlacements = placementEpisode.getOutOfHomePlacements();
             if (!outOfHomePlacements.isEmpty()) {
 
-                OutOfHomePlacement outOfHomePlacement = outOfHomePlacements.iterator().next();
+                BaseOutOfHomePlacement outOfHomePlacement = outOfHomePlacements.iterator().next();
                 facilityChildMapper.toFacilityChildDTO(facilityChildDTO, outOfHomePlacement);
             }
         }

@@ -1,38 +1,31 @@
 package gov.ca.cwds.cals.persistence.model.cms;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
+import java.io.Serializable;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import javax.persistence.Basic;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
-import javax.persistence.Transient;
-import java.io.Serializable;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @author CWDS CALS API Team
  */
-@Entity
-@javax.persistence.Table(name = "PLC_EPST")
+@MappedSuperclass
 @SuppressWarnings("squid:S3437") //LocalDate is serializable
-public class PlacementEpisode implements PersistentObject {
+public abstract class BasePlacementEpisode implements IBasePlacementEpisode, PersistentObject {
 
     private static final long serialVersionUID = -3903845942588945919L;
 
-    private Set<OutOfHomePlacement> outOfHomePlacements = new HashSet<>();
     private StaffPerson staffPerson;
     private County county;
     private LocalDate removalDt;
@@ -88,17 +81,6 @@ public class PlacementEpisode implements PersistentObject {
 
     public void setStaffPerson(StaffPerson staffPerson) {
         this.staffPerson = staffPerson;
-    }
-
-    @OneToMany
-    @JoinColumn(name = "FKPLC_EPS0", referencedColumnName = "THIRD_ID")
-    @OrderBy("startDt DESC")
-    public Set<OutOfHomePlacement> getOutOfHomePlacements() {
-        return outOfHomePlacements;
-    }
-
-    public void setOutOfHomePlacements(Set<OutOfHomePlacement> outOfHomePlacements) {
-        this.outOfHomePlacements = outOfHomePlacements;
     }
 
     @NotFound(action = NotFoundAction.IGNORE)

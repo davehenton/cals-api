@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.cms;
 
+import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementEpisode;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

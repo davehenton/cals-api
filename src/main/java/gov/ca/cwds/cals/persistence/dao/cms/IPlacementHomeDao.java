@@ -4,7 +4,6 @@ import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDao;
 import gov.ca.cwds.data.CrudsDao;
-import gov.ca.cwds.data.persistence.PersistentObject;
 import java.util.Collection;
 
 /**
