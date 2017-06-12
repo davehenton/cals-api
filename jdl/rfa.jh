@@ -20,9 +20,9 @@ entity Application {
   signatureDate LocalDate,
   isChildCurrentlyInYourHome Boolean,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity DeterminedChild {
@@ -49,16 +49,16 @@ entity LicensureHistory {
   licensureHistoryQuestion7 Boolean required,
   licensureHistoryQuestion71 String,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity Household {
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity HouseholdAdult {
@@ -67,16 +67,16 @@ entity HouseholdAdult {
   criminalRecordStatementQuestion2 Boolean required,
   criminalRecordStatementQuestion3 Boolean required,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity Applicant {
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity CriminalRecord {
@@ -85,9 +85,9 @@ entity CriminalRecord {
   offenseExplanation TextBlob required,
   city String maxlength(100),
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity Person {
@@ -98,9 +98,9 @@ entity Person {
   dateOfBirth LocalDate required,
   driversLicenseNumber String required,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity CountyType {
@@ -115,9 +115,9 @@ entity PersonOtherName {
   middleName String required,
   lastName String required,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity OtherNameType { //alias, maiden name, preferred name, other
@@ -130,9 +130,9 @@ entity EducationPoint {
   degree String required,
   name String required,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity GenderType {
@@ -147,32 +147,32 @@ entity EthnicityType {
 entity EmailAddress {
   email String required,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity PhoneNumber {
   phoneNumber String required,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity PersonPhone {
   isPreferredContact Boolean,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity PersonAddress {
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity PhoneNumberType {
@@ -188,17 +188,17 @@ entity Address {
   latitude BigDecimal,
   deliverable Boolean,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity Employer {
   name String,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity Employment {
@@ -207,9 +207,9 @@ entity Employment {
   startDate LocalDate required,
   endDate LocalDate,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity ResidenceOwnershipType { //own, rent, lease
@@ -220,9 +220,9 @@ entity HouseholdAddress {
   directionsToHome String maxlength(255),
   bodyOfWater TextBlob,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity BriefPerson {
@@ -230,9 +230,9 @@ entity BriefPerson {
   middleName String,
   lastName String,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity LanguageType {
@@ -243,25 +243,25 @@ entity RelationshipType {
 
 entity Relationship {
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity RelationHistoryRecord {
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity RelationshipEvent {
   eventPlace String,
   eventDate LocalDate,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity RelationshipEventType {
@@ -272,16 +272,16 @@ entity HouseholdChild {
   isAdopted Boolean required,
   dateOfBirth LocalDate,
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity ApplicantToChildRelation {
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity AgeGroupType {
@@ -292,9 +292,9 @@ entity SiblingGroupType {
 
 entity ChildPreferences {
   createUserId String maxlength(50) required,
-  createDateTime ZonedDateTime required,
+  createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
-  updateDateTime ZonedDateTime required
+  updateDatetime ZonedDateTime required
 }
 
 entity ApplicationStatusType {
