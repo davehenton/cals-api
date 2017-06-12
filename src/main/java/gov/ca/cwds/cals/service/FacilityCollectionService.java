@@ -5,10 +5,10 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
-import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
-import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
@@ -60,9 +60,9 @@ public class FacilityCollectionService extends CrudServiceAdapter {
       // todo refactor to java8
       // todo code duplication in FacilityService.findFacilityById
       if (placementHome != null) {
-        CountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
+        BaseCountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
         if (countyLicenseCase != null) {
-          StaffPerson staffPerson = countyLicenseCase.getStaffPerson();
+          BaseStaffPerson staffPerson = countyLicenseCase.getStaffPerson();
           if (staffPerson != null) {
             County county = countiesDao.findByLogicalId(staffPerson.getCntySpfcd());
             staffPerson.setCounty(county);

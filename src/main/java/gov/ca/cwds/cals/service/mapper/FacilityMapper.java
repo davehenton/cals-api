@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
+import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
-import gov.ca.cwds.cals.persistence.model.cms.CountyLicenseCase;
-import gov.ca.cwds.cals.persistence.model.cms.LicensingVisit;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
@@ -91,7 +91,7 @@ public interface FacilityMapper {
 
     @Mapping(target = "lastVisitDate", source = "visitDate")
     @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
-    FacilityDTO toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, LicensingVisit licensingVisit);
+    FacilityDTO toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);
 
     @AfterMapping
     default void after(@MappingTarget FacilityDTO facilityDTO, BasePlacementHome placementHome) {
@@ -100,10 +100,11 @@ public interface FacilityMapper {
         afterLastVisit(facilityDTO, placementHome.getCountyLicenseCase());
     }
 
-    default void afterLastVisit(@MappingTarget FacilityDTO facilityDTO, CountyLicenseCase countyLicenseCase) {
+    default void afterLastVisit(@MappingTarget FacilityDTO facilityDTO, BaseCountyLicenseCase countyLicenseCase) {
         if (countyLicenseCase != null && CollectionUtils.isNotEmpty(countyLicenseCase.getLicensingVisits())) {
+            List<? extends BaseLicensingVisit> licensingVisits = countyLicenseCase.getLicensingVisits();
             Mappers.getMapper(FacilityMapper.class).toFacilityDTO(
-                    facilityDTO, countyLicenseCase.getLicensingVisits().get(0));
+                    facilityDTO, licensingVisits.get(0));
         }
     }
 
