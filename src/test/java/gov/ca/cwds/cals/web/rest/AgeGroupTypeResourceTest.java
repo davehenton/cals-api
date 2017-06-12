@@ -33,4 +33,5 @@ public class AgeGroupTypeResourceTest extends BaseCalsApiIntegrationTest {
     String fixture = fixture(FIXTURES_AGE_GROUP_TYPES_RESPONSE_JSON);
     assertEqualsResponse(fixture, ageGroupTypesDTO);
   }
+
 }
