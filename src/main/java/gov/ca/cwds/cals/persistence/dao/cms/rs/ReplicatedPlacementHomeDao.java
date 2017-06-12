@@ -7,7 +7,6 @@ import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import java.util.Collection;
-import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -31,24 +30,9 @@ public class ReplicatedPlacementHomeDao extends BaseDaoImpl<ReplicatedPlacementH
     super(sessionFactory);
   }
 
-  // todo code is very similar to PlacementHomeDao.findByParameterObject
   @Override
   public ReplicatedPlacementHome findByParameterObject(FacilityParameterObject parameterObject) {
-    Session session = getSessionFactory().getCurrentSession();
-    Class<ReplicatedPlacementHome> entityClass = getEntityClass();
-    Query<ReplicatedPlacementHome> query= session.createNamedQuery(entityClass.getSimpleName() + ".find", entityClass);
-
-    String facilityId = parameterObject.getFacilityId();
-    query.setParameter("facilityId", facilityId);
-
-    ReplicatedPlacementHome placementHome = null;
-    try {
-      placementHome = query.getSingleResult();
-    } catch (NoResultException e) {
-      LOG.warn("There is no result for facilityId = " + facilityId, e);
-    }
-
-    return placementHome;
+    throw new UnsupportedOperationException();
   }
 
   // todo pagination
