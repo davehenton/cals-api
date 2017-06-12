@@ -5,12 +5,10 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import javax.persistence.Basic;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -22,7 +20,7 @@ import org.hibernate.annotations.NotFoundAction;
  */
 @MappedSuperclass
 @SuppressWarnings({"squid:S00104", "squid:S3437"}) // Entity can't be splited , LocalDate is serializable
-public abstract class BasePlacementHome implements PersistentObject {
+public abstract class BasePlacementHome implements IBasePlacementHome, PersistentObject {
 
     private static final long serialVersionUID = 8516376534560115438L;
 
@@ -31,7 +29,6 @@ public abstract class BasePlacementHome implements PersistentObject {
     private gov.ca.cwds.cals.persistence.model.cms.State stateCode;
     private gov.ca.cwds.cals.persistence.model.cms.State payeeStateCode;
     private gov.ca.cwds.cals.persistence.model.cms.LicenseStatus licenseStatus;
-    private CountyLicenseCase countyLicenseCase;
     private String identifier;
     private String licenseNo;
     private Short ageFrmNo;
@@ -181,17 +178,6 @@ public abstract class BasePlacementHome implements PersistentObject {
 
     public void setLicenseStatus(gov.ca.cwds.cals.persistence.model.cms.LicenseStatus licenseStatus) {
         this.licenseStatus = licenseStatus;
-    }
-
-    @NotFound(action = NotFoundAction.IGNORE)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FKCNTY_CST", referencedColumnName = "IDENTIFIER")
-    public CountyLicenseCase getCountyLicenseCase() {
-        return countyLicenseCase;
-    }
-
-    public void setCountyLicenseCase(CountyLicenseCase countyLicenseCase) {
-        this.countyLicenseCase = countyLicenseCase;
     }
 
     @Id

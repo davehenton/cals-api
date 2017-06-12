@@ -1,12 +1,13 @@
 package gov.ca.cwds.cals.service.mapper;
 
 
+import gov.ca.cwds.cals.persistence.model.cms.BaseClient;
 import gov.ca.cwds.cals.persistence.model.cms.BaseOutOfHomePlacement;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementEpisode;
-import gov.ca.cwds.cals.persistence.model.cms.Client;
+import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
-import gov.ca.cwds.cals.persistence.model.cms.StaffPerson;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
+import java.util.Collection;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,7 +25,7 @@ import java.util.Set;
 @Mapper(uses = {PersonMapper.class, TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityChildMapper {
 
-    List<FacilityChildDTO> toFacilityChildDTO(List<Client> clients);
+    List<FacilityChildDTO> toFacilityChildDTO(Collection<BaseClient> clients);
 
     @Mapping(target = "id", source = "client.identifier")
     @Mapping(target = "person", source = "client")
@@ -33,7 +34,7 @@ public interface FacilityChildMapper {
     @Mapping(target = "assignedWorker", ignore = true)
     @Mapping(target = "facilityId", ignore = true)
     @Mapping(target = "messages", ignore = true)
-    FacilityChildDTO toFacilityChildDTO(Client client);
+    FacilityChildDTO toFacilityChildDTO(BaseClient client);
 
     @Mapping(target = "assignedWorker", source = "staffPerson")
     @Mapping(target = "id", ignore = true)
@@ -42,7 +43,7 @@ public interface FacilityChildMapper {
     @Mapping(target = "countyOfOrigin", ignore = true)
     @Mapping(target = "facilityId", ignore = true)
     @Mapping(target = "messages", ignore = true)
-    FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO, StaffPerson staffPerson);
+    FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO, BaseStaffPerson staffPerson);
 
     @Mapping(target = "countyOfOrigin", source = "shortDsc")
     @Mapping(target = "id", ignore = true)
@@ -63,7 +64,7 @@ public interface FacilityChildMapper {
     FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO, BaseOutOfHomePlacement outOfHomePlacement);
 
     @AfterMapping
-    default void after(@MappingTarget FacilityChildDTO facilityChildDTO, Client client) {
+    default void after(@MappingTarget FacilityChildDTO facilityChildDTO, BaseClient client) {
         Set<? extends BasePlacementEpisode> placementEpisodes = client.getPlacementEpisodes();
         if (!placementEpisodes.isEmpty()) {
 
@@ -73,7 +74,7 @@ public interface FacilityChildMapper {
             County county = placementEpisode.getCounty();
             facilityChildMapper.toFacilityChildDTO(facilityChildDTO, county);
 
-            StaffPerson staffPerson = placementEpisode.getStaffPerson();
+            BaseStaffPerson staffPerson = placementEpisode.getStaffPerson();
             facilityChildMapper.toFacilityChildDTO(facilityChildDTO, staffPerson);
 
             Set<? extends BaseOutOfHomePlacement> outOfHomePlacements = placementEpisode.getOutOfHomePlacements();

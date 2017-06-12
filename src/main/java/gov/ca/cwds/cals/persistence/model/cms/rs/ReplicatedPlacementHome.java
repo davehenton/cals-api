@@ -4,7 +4,12 @@ import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
 
 /**
@@ -12,14 +17,26 @@ import org.hibernate.annotations.Type;
  */
 @NamedQuery(
     name = "ReplicatedPlacementHome.findUpdated",
-    query = "SELECT ph FROM ReplicatedPlacementHome ph WHERE ph.replicationOperation = 'U'"
+    query = "SELECT ph FROM ReplicatedPlacementHome ph "
+        + " LEFT JOIN FETCH ph.facilityType ft"
+        + " LEFT JOIN FETCH ph.county c"
+        + " LEFT JOIN FETCH ph.stateCode sc"
+        + " LEFT JOIN FETCH ph.licenseStatus ls"
+        + " LEFT JOIN FETCH ph.countyLicenseCase cls"
+        + " LEFT JOIN FETCH cls.staffPerson sp"
+        + " LEFT JOIN FETCH cls.licensingVisits lv"
+        + " LEFT JOIN FETCH lv.visitType vt"
+        + " WHERE ph.replicationOperation = 'U'"
 )
 @Entity
 @javax.persistence.Table(name = "PLC_HM_T")
 public class ReplicatedPlacementHome extends BasePlacementHome {
+
   private String replicationOperation;
 
   private Date replicationDate;
+
+  private ReplicatedCountyLicenseCase countyLicenseCase;
 
   @Column(name = "IBMSNAP_OPERATION", updatable = false)
   public String getReplicationOperation() {
@@ -38,5 +55,17 @@ public class ReplicatedPlacementHome extends BasePlacementHome {
 
   public void setReplicationDate(Date replicationDate) {
     this.replicationDate = replicationDate;
+  }
+
+  @Override
+  @NotFound(action = NotFoundAction.IGNORE)
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "FKCNTY_CST", referencedColumnName = "IDENTIFIER")
+  public ReplicatedCountyLicenseCase getCountyLicenseCase() {
+    return countyLicenseCase;
+  }
+
+  public void setCountyLicenseCase(ReplicatedCountyLicenseCase countyLicenseCase) {
+    this.countyLicenseCase = countyLicenseCase;
   }
 }

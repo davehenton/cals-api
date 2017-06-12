@@ -6,7 +6,10 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /**
  * @author CWDS CALS API Team
@@ -18,6 +21,8 @@ public class PlacementEpisode extends BasePlacementEpisode {
 
   private Set<OutOfHomePlacement> outOfHomePlacements = new HashSet<>();
 
+  private StaffPerson staffPerson;
+
   @Override
   @OneToMany
   @JoinColumn(name = "FKPLC_EPS0", referencedColumnName = "THIRD_ID")
@@ -28,5 +33,17 @@ public class PlacementEpisode extends BasePlacementEpisode {
 
   public void setOutOfHomePlacements(Set<OutOfHomePlacement> outOfHomePlacements) {
     this.outOfHomePlacements = outOfHomePlacements;
+  }
+
+  @Override
+  @NotFound(action = NotFoundAction.IGNORE)
+  @OneToOne
+  @JoinColumn(name = "RMV_BY_ID", referencedColumnName = "IDENTIFIER")
+  public StaffPerson getStaffPerson() {
+    return staffPerson;
+  }
+
+  public void setStaffPerson(StaffPerson staffPerson) {
+    this.staffPerson = staffPerson;
   }
 }

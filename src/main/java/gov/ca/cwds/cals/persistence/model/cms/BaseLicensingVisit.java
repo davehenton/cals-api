@@ -1,31 +1,28 @@
 package gov.ca.cwds.cals.persistence.model.cms;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-
 /**
  * @author CWDS CALS API Team
  */
-@Entity
-@Table(name = "LIC_VSTT")
+@MappedSuperclass
 @SuppressWarnings("squid:S3437") //LocalDate is serializable
-public class LicensingVisit implements PersistentObject {
+public abstract class BaseLicensingVisit implements PersistentObject {
 
     private static final long serialVersionUID = -8288205929550791793L;
 
