@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": 100,
+      "value": "0-3 years",
+      "type": "age-group-type"
+    },
+    {
+      "id": 101,
+      "value": "4-8 years",
+      "type": "age-group-type"
+    },
+    {
+      "id": 102,
+      "value": "9-12 years",
+      "type": "age-group-type"
+    },
+    {
+      "id": 103,
+      "value": "13-15 years",
+      "type": "age-group-type"
+    },
+    {
+      "id": 104,
+      "value": "16-18 years",
+      "type": "age-group-type"
+    },
+    {
+      "id": 105,
+      "value": "18-21 years",
+      "type": "age-group-type"
+    }
+  ]
+}
