@@ -2,11 +2,9 @@ package gov.ca.cwds.cals.persistence.model.calsns;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import gov.ca.cwds.data.ns.NsPersistentObject;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,201 +27,130 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "applicant")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Applicant implements Serializable {
+public class Applicant extends NsPersistentObject {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+  @SequenceGenerator(name = "sequenceGenerator")
+  private Long id;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "create_user_id", length = 50, nullable = false)
-    private String createUserId;
+  @OneToOne
+  @JoinColumn(unique = true)
+  private HouseholdAdult householdPerson;
 
-    @NotNull
-    @Column(name = "create_date_time", nullable = false)
-    private ZonedDateTime createDateTime;
+  @OneToOne
+  @JoinColumn(unique = true)
+  private EducationLevelType educationHighestLevel;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "update_user_id", length = 50, nullable = false)
-    private String updateUserId;
+  @OneToMany(mappedBy = "applicant")
+  @JsonIgnore
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+  private Set<RelationHistoryRecord> relationHistoryRecords = new HashSet<>();
 
-    @NotNull
-    @Column(name = "update_date_time", nullable = false)
-    private ZonedDateTime updateDateTime;
+  @ManyToOne
+  private Application application;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private HouseholdAdult householdPerson;
+  public Long getId() {
+    return id;
+  }
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private EducationLevelType educationHighestLevel;
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    @OneToMany(mappedBy = "applicant")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<RelationHistoryRecord> relationHistoryRecords = new HashSet<>();
+  public HouseholdAdult getHouseholdPerson() {
+    return householdPerson;
+  }
 
-    @ManyToOne
-    private Application application;
+  public Applicant householdPerson(HouseholdAdult householdAdult) {
+    this.householdPerson = householdAdult;
+    return this;
+  }
 
-    public Long getId() {
-        return id;
+  public void setHouseholdPerson(HouseholdAdult householdAdult) {
+    this.householdPerson = householdAdult;
+  }
+
+  public EducationLevelType getEducationHighestLevel() {
+    return educationHighestLevel;
+  }
+
+  public Applicant educationHighestLevel(EducationLevelType educationLevelType) {
+    this.educationHighestLevel = educationLevelType;
+    return this;
+  }
+
+  public void setEducationHighestLevel(EducationLevelType educationLevelType) {
+    this.educationHighestLevel = educationLevelType;
+  }
+
+  public Set<RelationHistoryRecord> getRelationHistoryRecords() {
+    return relationHistoryRecords;
+  }
+
+  public Applicant relationHistoryRecords(Set<RelationHistoryRecord> relationHistoryRecords) {
+    this.relationHistoryRecords = relationHistoryRecords;
+    return this;
+  }
+
+  public Applicant addRelationHistoryRecords(RelationHistoryRecord relationHistoryRecord) {
+    this.relationHistoryRecords.add(relationHistoryRecord);
+    relationHistoryRecord.setApplicant(this);
+    return this;
+  }
+
+  public Applicant removeRelationHistoryRecords(RelationHistoryRecord relationHistoryRecord) {
+    this.relationHistoryRecords.remove(relationHistoryRecord);
+    relationHistoryRecord.setApplicant(null);
+    return this;
+  }
+
+  public void setRelationHistoryRecords(Set<RelationHistoryRecord> relationHistoryRecords) {
+    this.relationHistoryRecords = relationHistoryRecords;
+  }
+
+  public Application getApplication() {
+    return application;
+  }
+
+  public Applicant application(Application application) {
+    this.application = application;
+    return this;
+  }
+
+  public void setApplication(Application application) {
+    this.application = application;
+  }
+
+  @Override
+  public Serializable getPrimaryKey() {
+    return getId();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
-
-    public String getCreateUserId() {
-        return createUserId;
+    Applicant applicant = (Applicant) o;
+    if (applicant.getId() == null || getId() == null) {
+      return false;
     }
+    return Objects.equals(getId(), applicant.getId());
+  }
 
-    public Applicant createUserId(String createUserId) {
-        this.createUserId = createUserId;
-        return this;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getId());
+  }
 
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public ZonedDateTime getCreateDateTime() {
-        return createDateTime;
-    }
-
-    public Applicant createDateTime(ZonedDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-        return this;
-    }
-
-    public void setCreateDateTime(ZonedDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-    }
-
-    public String getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public Applicant updateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-        return this;
-    }
-
-    public void setUpdateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-    }
-
-    public ZonedDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public Applicant updateDateTime(ZonedDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
-        return this;
-    }
-
-    public void setUpdateDateTime(ZonedDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
-    }
-
-    public HouseholdAdult getHouseholdPerson() {
-        return householdPerson;
-    }
-
-    public Applicant householdPerson(HouseholdAdult householdAdult) {
-        this.householdPerson = householdAdult;
-        return this;
-    }
-
-    public void setHouseholdPerson(HouseholdAdult householdAdult) {
-        this.householdPerson = householdAdult;
-    }
-
-    public EducationLevelType getEducationHighestLevel() {
-        return educationHighestLevel;
-    }
-
-    public Applicant educationHighestLevel(EducationLevelType educationLevelType) {
-        this.educationHighestLevel = educationLevelType;
-        return this;
-    }
-
-    public void setEducationHighestLevel(EducationLevelType educationLevelType) {
-        this.educationHighestLevel = educationLevelType;
-    }
-
-    public Set<RelationHistoryRecord> getRelationHistoryRecords() {
-        return relationHistoryRecords;
-    }
-
-    public Applicant relationHistoryRecords(Set<RelationHistoryRecord> relationHistoryRecords) {
-        this.relationHistoryRecords = relationHistoryRecords;
-        return this;
-    }
-
-    public Applicant addRelationHistoryRecords(RelationHistoryRecord relationHistoryRecord) {
-        this.relationHistoryRecords.add(relationHistoryRecord);
-        relationHistoryRecord.setApplicant(this);
-        return this;
-    }
-
-    public Applicant removeRelationHistoryRecords(RelationHistoryRecord relationHistoryRecord) {
-        this.relationHistoryRecords.remove(relationHistoryRecord);
-        relationHistoryRecord.setApplicant(null);
-        return this;
-    }
-
-    public void setRelationHistoryRecords(Set<RelationHistoryRecord> relationHistoryRecords) {
-        this.relationHistoryRecords = relationHistoryRecords;
-    }
-
-    public Application getApplication() {
-        return application;
-    }
-
-    public Applicant application(Application application) {
-        this.application = application;
-        return this;
-    }
-
-    public void setApplication(Application application) {
-        this.application = application;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Applicant applicant = (Applicant) o;
-        if (applicant.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), applicant.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "Applicant{" +
-            "id=" + getId() +
-            ", createUserId='" + getCreateUserId() + "'" +
-            ", createDateTime='" + getCreateDateTime() + "'" +
-            ", updateUserId='" + getUpdateUserId() + "'" +
-            ", updateDateTime='" + getUpdateDateTime() + "'" +
-            "}";
-    }
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
+  }
 }

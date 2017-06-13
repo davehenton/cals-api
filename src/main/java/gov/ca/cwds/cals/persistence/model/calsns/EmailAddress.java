@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import gov.ca.cwds.data.ns.NsPersistentObject;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,155 +23,83 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "email_address")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class EmailAddress implements Serializable {
+public class EmailAddress extends NsPersistentObject {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+  @SequenceGenerator(name = "sequenceGenerator")
+  private Long id;
 
-    @NotNull
-    @Column(name = "email", nullable = false)
-    private String email;
+  @NotNull
+  @Column(name = "email", nullable = false)
+  private String email;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "create_user_id", length = 50, nullable = false)
-    private String createUserId;
+  @ManyToOne
+  private Person person;
 
-    @NotNull
-    @Column(name = "create_date_time", nullable = false)
-    private ZonedDateTime createDateTime;
+  public Long getId() {
+    return id;
+  }
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "update_user_id", length = 50, nullable = false)
-    private String updateUserId;
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    @NotNull
-    @Column(name = "update_date_time", nullable = false)
-    private ZonedDateTime updateDateTime;
+  public String getEmail() {
+    return email;
+  }
 
-    @ManyToOne
-    private Person person;
+  public EmailAddress email(String email) {
+    this.email = email;
+    return this;
+  }
 
-    public Long getId() {
-        return id;
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public Person getPerson() {
+    return person;
+  }
+
+  public EmailAddress person(Person person) {
+    this.person = person;
+    return this;
+  }
+
+  public void setPerson(Person person) {
+    this.person = person;
+  }
+
+  @Override
+  public Serializable getPrimaryKey() {
+    return getId();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
-
-    public String getEmail() {
-        return email;
+    EmailAddress emailAddress = (EmailAddress) o;
+    if (emailAddress.getId() == null || getId() == null) {
+      return false;
     }
+    return Objects.equals(getId(), emailAddress.getId());
+  }
 
-    public EmailAddress email(String email) {
-        this.email = email;
-        return this;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getId());
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCreateUserId() {
-        return createUserId;
-    }
-
-    public EmailAddress createUserId(String createUserId) {
-        this.createUserId = createUserId;
-        return this;
-    }
-
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public ZonedDateTime getCreateDateTime() {
-        return createDateTime;
-    }
-
-    public EmailAddress createDateTime(ZonedDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-        return this;
-    }
-
-    public void setCreateDateTime(ZonedDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-    }
-
-    public String getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public EmailAddress updateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-        return this;
-    }
-
-    public void setUpdateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-    }
-
-    public ZonedDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public EmailAddress updateDateTime(ZonedDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
-        return this;
-    }
-
-    public void setUpdateDateTime(ZonedDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public EmailAddress person(Person person) {
-        this.person = person;
-        return this;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        EmailAddress emailAddress = (EmailAddress) o;
-        if (emailAddress.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), emailAddress.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "EmailAddress{" +
-            "id=" + getId() +
-            ", email='" + getEmail() + "'" +
-            ", createUserId='" + getCreateUserId() + "'" +
-            ", createDateTime='" + getCreateDateTime() + "'" +
-            ", updateUserId='" + getUpdateUserId() + "'" +
-            ", updateDateTime='" + getUpdateDateTime() + "'" +
-            "}";
-    }
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
+  }
 }
