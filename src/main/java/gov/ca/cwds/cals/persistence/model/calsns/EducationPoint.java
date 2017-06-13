@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import gov.ca.cwds.data.ns.NsPersistentObject;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,205 +23,132 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "education_point")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class EducationPoint implements Serializable {
+public class EducationPoint extends NsPersistentObject {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+  @SequenceGenerator(name = "sequenceGenerator")
+  private Long id;
 
-    @NotNull
-    @Column(name = "jhi_degree", nullable = false)
-    private String degree;
+  @NotNull
+  @Column(name = "jhi_degree", nullable = false)
+  private String degree;
 
-    @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
+  @NotNull
+  @Column(name = "name", nullable = false)
+  private String name;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "create_user_id", length = 50, nullable = false)
-    private String createUserId;
+  @ManyToOne
+  private EducationLevelType type;
 
-    @NotNull
-    @Column(name = "create_date_time", nullable = false)
-    private ZonedDateTime createDateTime;
+  @ManyToOne
+  private Address educationalInstitutionAddress;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "update_user_id", length = 50, nullable = false)
-    private String updateUserId;
+  @ManyToOne
+  private Person person;
 
-    @NotNull
-    @Column(name = "update_date_time", nullable = false)
-    private ZonedDateTime updateDateTime;
+  public Long getId() {
+    return id;
+  }
 
-    @ManyToOne
-    private EducationLevelType type;
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    @ManyToOne
-    private Address educationalInstitutionAddress;
+  public String getDegree() {
+    return degree;
+  }
 
-    @ManyToOne
-    private Person person;
+  public EducationPoint degree(String degree) {
+    this.degree = degree;
+    return this;
+  }
 
-    public Long getId() {
-        return id;
+  public void setDegree(String degree) {
+    this.degree = degree;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public EducationPoint name(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public EducationLevelType getType() {
+    return type;
+  }
+
+  public EducationPoint type(EducationLevelType educationLevelType) {
+    this.type = educationLevelType;
+    return this;
+  }
+
+  public void setType(EducationLevelType educationLevelType) {
+    this.type = educationLevelType;
+  }
+
+  public Address getEducationalInstitutionAddress() {
+    return educationalInstitutionAddress;
+  }
+
+  public EducationPoint educationalInstitutionAddress(Address address) {
+    this.educationalInstitutionAddress = address;
+    return this;
+  }
+
+  public void setEducationalInstitutionAddress(Address address) {
+    this.educationalInstitutionAddress = address;
+  }
+
+  public Person getPerson() {
+    return person;
+  }
+
+  public EducationPoint person(Person person) {
+    this.person = person;
+    return this;
+  }
+
+  public void setPerson(Person person) {
+    this.person = person;
+  }
+
+  @Override
+  public Serializable getPrimaryKey() {
+    return getId();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
-
-    public String getDegree() {
-        return degree;
+    EducationPoint educationPoint = (EducationPoint) o;
+    if (educationPoint.getId() == null || getId() == null) {
+      return false;
     }
+    return Objects.equals(getId(), educationPoint.getId());
+  }
 
-    public EducationPoint degree(String degree) {
-        this.degree = degree;
-        return this;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getId());
+  }
 
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public EducationPoint name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCreateUserId() {
-        return createUserId;
-    }
-
-    public EducationPoint createUserId(String createUserId) {
-        this.createUserId = createUserId;
-        return this;
-    }
-
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public ZonedDateTime getCreateDateTime() {
-        return createDateTime;
-    }
-
-    public EducationPoint createDateTime(ZonedDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-        return this;
-    }
-
-    public void setCreateDateTime(ZonedDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-    }
-
-    public String getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public EducationPoint updateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-        return this;
-    }
-
-    public void setUpdateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-    }
-
-    public ZonedDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public EducationPoint updateDateTime(ZonedDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
-        return this;
-    }
-
-    public void setUpdateDateTime(ZonedDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
-    }
-
-    public EducationLevelType getType() {
-        return type;
-    }
-
-    public EducationPoint type(EducationLevelType educationLevelType) {
-        this.type = educationLevelType;
-        return this;
-    }
-
-    public void setType(EducationLevelType educationLevelType) {
-        this.type = educationLevelType;
-    }
-
-    public Address getEducationalInstitutionAddress() {
-        return educationalInstitutionAddress;
-    }
-
-    public EducationPoint educationalInstitutionAddress(Address address) {
-        this.educationalInstitutionAddress = address;
-        return this;
-    }
-
-    public void setEducationalInstitutionAddress(Address address) {
-        this.educationalInstitutionAddress = address;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public EducationPoint person(Person person) {
-        this.person = person;
-        return this;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        EducationPoint educationPoint = (EducationPoint) o;
-        if (educationPoint.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), educationPoint.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "EducationPoint{" +
-            "id=" + getId() +
-            ", degree='" + getDegree() + "'" +
-            ", name='" + getName() + "'" +
-            ", createUserId='" + getCreateUserId() + "'" +
-            ", createDateTime='" + getCreateDateTime() + "'" +
-            ", updateUserId='" + getUpdateUserId() + "'" +
-            ", updateDateTime='" + getUpdateDateTime() + "'" +
-            "}";
-    }
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
+  }
 }

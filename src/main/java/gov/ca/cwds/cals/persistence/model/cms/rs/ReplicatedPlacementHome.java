@@ -18,15 +18,7 @@ import org.hibernate.annotations.Type;
 @NamedQuery(
     name = "ReplicatedPlacementHome.findUpdated",
     query = "SELECT ph FROM ReplicatedPlacementHome ph "
-        + " LEFT JOIN FETCH ph.facilityType ft"
-        + " LEFT JOIN FETCH ph.county c"
-        + " LEFT JOIN FETCH ph.stateCode sc"
-        + " LEFT JOIN FETCH ph.licenseStatus ls"
-        + " LEFT JOIN FETCH ph.countyLicenseCase cls"
-        + " LEFT JOIN FETCH cls.staffPerson sp"
-        + " LEFT JOIN FETCH cls.licensingVisits lv"
-        + " LEFT JOIN FETCH lv.visitType vt"
-        + " WHERE ph.replicationOperation = 'U'"
+        + " WHERE ph.replicationDate > ?"
 )
 @Entity
 @javax.persistence.Table(name = "PLC_HM_T")

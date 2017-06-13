@@ -1,9 +1,7 @@
 package gov.ca.cwds.cals.persistence.model.calsns;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import gov.ca.cwds.data.ns.NsPersistentObject;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,171 +22,100 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "relationship")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Relationship implements Serializable {
+public class Relationship extends NsPersistentObject {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+  @SequenceGenerator(name = "sequenceGenerator")
+  private Long id;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "create_user_id", length = 50, nullable = false)
-    private String createUserId;
+  @ManyToOne(optional = false)
+  @NotNull
+  private Person from;
 
-    @NotNull
-    @Column(name = "create_date_time", nullable = false)
-    private ZonedDateTime createDateTime;
+  @ManyToOne(optional = false)
+  @NotNull
+  private Person to;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "update_user_id", length = 50, nullable = false)
-    private String updateUserId;
+  @ManyToOne
+  private RelationshipType relationshipType;
 
-    @NotNull
-    @Column(name = "update_date_time", nullable = false)
-    private ZonedDateTime updateDateTime;
+  public Long getId() {
+    return id;
+  }
 
-    @ManyToOne(optional = false)
-    @NotNull
-    private Person from;
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    @ManyToOne(optional = false)
-    @NotNull
-    private Person to;
+  public Person getFrom() {
+    return from;
+  }
 
-    @ManyToOne
-    private RelationshipType relationshipType;
+  public Relationship from(Person person) {
+    this.from = person;
+    return this;
+  }
 
-    public Long getId() {
-        return id;
+  public void setFrom(Person person) {
+    this.from = person;
+  }
+
+  public Person getTo() {
+    return to;
+  }
+
+  public Relationship to(Person person) {
+    this.to = person;
+    return this;
+  }
+
+  public void setTo(Person person) {
+    this.to = person;
+  }
+
+  public RelationshipType getRelationshipType() {
+    return relationshipType;
+  }
+
+  public Relationship relationshipType(RelationshipType relationshipType) {
+    this.relationshipType = relationshipType;
+    return this;
+  }
+
+  public void setRelationshipType(RelationshipType relationshipType) {
+    this.relationshipType = relationshipType;
+  }
+
+  @Override
+  public Serializable getPrimaryKey() {
+    return getId();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
-
-    public String getCreateUserId() {
-        return createUserId;
+    Relationship relationship = (Relationship) o;
+    if (relationship.getId() == null || getId() == null) {
+      return false;
     }
+    return Objects.equals(getId(), relationship.getId());
+  }
 
-    public Relationship createUserId(String createUserId) {
-        this.createUserId = createUserId;
-        return this;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getId());
+  }
 
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public ZonedDateTime getCreateDateTime() {
-        return createDateTime;
-    }
-
-    public Relationship createDateTime(ZonedDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-        return this;
-    }
-
-    public void setCreateDateTime(ZonedDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-    }
-
-    public String getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public Relationship updateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-        return this;
-    }
-
-    public void setUpdateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-    }
-
-    public ZonedDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public Relationship updateDateTime(ZonedDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
-        return this;
-    }
-
-    public void setUpdateDateTime(ZonedDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
-    }
-
-    public Person getFrom() {
-        return from;
-    }
-
-    public Relationship from(Person person) {
-        this.from = person;
-        return this;
-    }
-
-    public void setFrom(Person person) {
-        this.from = person;
-    }
-
-    public Person getTo() {
-        return to;
-    }
-
-    public Relationship to(Person person) {
-        this.to = person;
-        return this;
-    }
-
-    public void setTo(Person person) {
-        this.to = person;
-    }
-
-    public RelationshipType getRelationshipType() {
-        return relationshipType;
-    }
-
-    public Relationship relationshipType(RelationshipType relationshipType) {
-        this.relationshipType = relationshipType;
-        return this;
-    }
-
-    public void setRelationshipType(RelationshipType relationshipType) {
-        this.relationshipType = relationshipType;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Relationship relationship = (Relationship) o;
-        if (relationship.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), relationship.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "Relationship{" +
-            "id=" + getId() +
-            ", createUserId='" + getCreateUserId() + "'" +
-            ", createDateTime='" + getCreateDateTime() + "'" +
-            ", updateUserId='" + getUpdateUserId() + "'" +
-            ", updateDateTime='" + getUpdateDateTime() + "'" +
-            "}";
-    }
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
+  }
 }
