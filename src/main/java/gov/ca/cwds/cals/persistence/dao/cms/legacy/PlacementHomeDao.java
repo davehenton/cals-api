@@ -6,7 +6,7 @@ import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
-import java.util.Collection;
+import java.util.stream.Stream;
 import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -45,8 +45,7 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> implements
     }
 
   @Override
-  public Collection<PlacementHome> findCollection(FacilityParameterObject parameterObject) {
-    // todo pagination
-    return findAll();
+  public Stream<PlacementHome> stream(FacilityParameterObject parameterObject) {
+   throw new UnsupportedOperationException("Not implemented!");
   }
 }
