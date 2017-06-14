@@ -6,13 +6,12 @@ import gov.ca.cwds.cals.persistence.model.cms.rs.ReplicatedPlacementHome;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
+import java.util.NoSuchElementException;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -23,7 +22,6 @@ import java.util.stream.StreamSupport;
  */
 public class ReplicatedPlacementHomeDao extends BaseDaoImpl<ReplicatedPlacementHome> implements
         IPlacementHomeDao<ReplicatedPlacementHome> {
-  private static final Logger LOG = LoggerFactory.getLogger(ReplicatedPlacementHomeDao.class);
 
   /**
    * Constructor
@@ -64,6 +62,9 @@ public class ReplicatedPlacementHomeDao extends BaseDaoImpl<ReplicatedPlacementH
 
       @Override
       public ReplicatedPlacementHome next() {
+        if(!hasNext()){
+          throw new NoSuchElementException();
+        }
         return (ReplicatedPlacementHome) scrollableResults.get(0);
       }
     };

@@ -9,27 +9,29 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.persistence.dao.calsns.AgeGroupTypeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
-import gov.ca.cwds.cals.persistence.dao.cms.legacy.ClientDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.legacy.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.legacy.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.model.calsns.AgeGroupType;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.Client;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.CountyLicenseCase;
+import gov.ca.cwds.cals.persistence.model.calsns.Dictionary;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
+import gov.ca.cwds.cals.persistence.model.cms.State;
+import gov.ca.cwds.cals.persistence.model.cms.VisitType;
+import gov.ca.cwds.cals.persistence.model.cms.legacy.Client;
+import gov.ca.cwds.cals.persistence.model.cms.legacy.CountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.LicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.OutOfHomePlacement;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementEpisode;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.StaffPerson;
-import gov.ca.cwds.cals.persistence.model.cms.State;
-import gov.ca.cwds.cals.persistence.model.cms.VisitType;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
@@ -121,7 +123,8 @@ public class DataAccessModule extends AbstractModule {
       };
 
   private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
-      new HibernateBundle<CalsApiConfiguration>(AgeGroupType.class) {
+      new HibernateBundle<CalsApiConfiguration>(AgeGroupType.class, Dictionary.class) {
+
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
           return configuration.getCalsnsDataSourceFactory();
@@ -150,6 +153,7 @@ public class DataAccessModule extends AbstractModule {
     bind(LpaInformationDao.class);
     bind(InspectionDao.class);
     bind(AgeGroupTypeDao.class);
+    bind(DictionariesDao.class);
   }
 
   @Provides

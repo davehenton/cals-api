@@ -27,11 +27,11 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class AgeGroupTypeResource {
 
-  private ResourceDelegate ageGroupTypesResourceDeledate;
+  private ResourceDelegate ageGroupTypesResourceDelegate;
 
   @Inject
   public AgeGroupTypeResource(@AgeGroupTypesServiceBackendResource ResourceDelegate resourceDelegate) {
-    ageGroupTypesResourceDeledate = resourceDelegate;
+    ageGroupTypesResourceDelegate = resourceDelegate;
   }
 
   @UnitOfWork(CALSNS)
@@ -41,8 +41,8 @@ public class AgeGroupTypeResource {
       @ApiResponse(code = 404, message = "Not found"),
       @ApiResponse(code = 406, message = "Accept Header not supported")})
   @ApiOperation(value = "Returns Age Group Types", response = AgeGroupTypesDTO.class)
-  public Response getFacilityTypes() {
-    return ageGroupTypesResourceDeledate.get(null);
+  public Response getAgeGroupTypes() {
+    return ageGroupTypesResourceDelegate.get(null);
   }
 
 }
