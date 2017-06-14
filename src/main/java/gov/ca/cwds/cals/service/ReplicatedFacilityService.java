@@ -6,7 +6,7 @@ import gov.ca.cwds.cals.persistence.dao.cms.rs.ReplicatedPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
+import gov.ca.cwds.cals.service.dto.rs.ReplicatedFacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 
@@ -24,27 +24,27 @@ public class ReplicatedFacilityService extends CrudServiceAdapter {
   // todo tests
 
   @Inject
-  public ReplicatedFacilityService(ReplicatedPlacementHomeDao placementHomeDao, CountiesDao countiesDao,
-                                   FacilityMapper facilityMapper) {
+  public ReplicatedFacilityService(ReplicatedPlacementHomeDao placementHomeDao,
+      CountiesDao countiesDao, FacilityMapper facilityMapper) {
     this.placementHomeDao = placementHomeDao;
     this.countiesDao = countiesDao;
     this.facilityMapper = facilityMapper;
   }
 
-  public Stream<FacilityDTO> facilitiesStream(FacilityParameterObject parameterObject) {
+  public Stream<ReplicatedFacilityDTO> facilitiesStream(FacilityParameterObject parameterObject) {
     return placementHomeDao.stream(parameterObject)
-            //TODO move to SELECT
-            .map(placementHome -> {
-              BaseCountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
-              if (countyLicenseCase != null) {
-                BaseStaffPerson staffPerson = countyLicenseCase.getStaffPerson();
-                if (staffPerson != null) {
-                  County county = countiesDao.findByLogicalId(staffPerson.getCntySpfcd());
-                  staffPerson.setCounty(county);
-                }
-              }
-              return placementHome;
-            })
-            .map(placementHome -> facilityMapper.toFacilityDTO(placementHome));
+        //TODO move to SELECT
+        .map(placementHome -> {
+          BaseCountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
+          if (countyLicenseCase != null) {
+            BaseStaffPerson staffPerson = countyLicenseCase.getStaffPerson();
+            if (staffPerson != null) {
+              County county = countiesDao.findByLogicalId(staffPerson.getCntySpfcd());
+              staffPerson.setCounty(county);
+            }
+          }
+          return placementHome;
+        })
+        .map(placementHome -> facilityMapper.toReplicatedFacilityDTO(placementHome));
   }
 }
