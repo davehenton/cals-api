@@ -11,11 +11,6 @@ public class ReplicatedFacilityDTO extends FacilityDTO {
   private static final long serialVersionUID = 1L;
 
   @NotNull
-  /*
-  @JsonProperty("capacity")
-  @NotNull
-  @ApiModelProperty(required = false, readOnly = false, value = "Capacity", example = "10")
-   */
   private String replicationOperation;
 
   @NotNull
