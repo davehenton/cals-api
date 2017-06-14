@@ -4,14 +4,17 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.rs.ReplicatedPlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.HyperlinkDTO;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
+import gov.ca.cwds.cals.service.dto.rs.ReplicatedFacilityDTO;
 import org.apache.commons.collections4.CollectionUtils;
 import org.mapstruct.AfterMapping;
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -88,6 +91,9 @@ public interface FacilityMapper {
     @Mapping(target = "emailAddress", ignore = true)
     @Mapping(target = "children", ignore = true)
     FacilityDTO toFacilityDTO(BasePlacementHome placementHome);
+
+    @InheritConfiguration(name = "toFacilityDTO")
+    ReplicatedFacilityDTO toReplicatedFacilityDTO(ReplicatedPlacementHome placementHome);
 
     @Mapping(target = "lastVisitDate", source = "visitDate")
     @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
