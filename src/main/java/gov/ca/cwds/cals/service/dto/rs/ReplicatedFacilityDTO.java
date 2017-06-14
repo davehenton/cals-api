@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.dto.rs;
 
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -19,7 +19,7 @@ public class ReplicatedFacilityDTO extends FacilityDTO {
   private String replicationOperation;
 
   @NotNull
-  private Date replicationDate;
+  private LocalDateTime replicationDate;
 
   public String getReplicationOperation() {
     return replicationOperation;
@@ -29,11 +29,11 @@ public class ReplicatedFacilityDTO extends FacilityDTO {
     this.replicationOperation = replicationOperation;
   }
 
-  public Date getReplicationDate() {
+  public LocalDateTime getReplicationDate() {
     return replicationDate;
   }
 
-  public void setReplicationDate(Date replicationDate) {
+  public void setReplicationDate(LocalDateTime replicationDate) {
     this.replicationDate = replicationDate;
   }
 }
