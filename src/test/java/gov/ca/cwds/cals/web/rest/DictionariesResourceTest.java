@@ -1,11 +1,15 @@
 package gov.ca.cwds.cals.web.rest;
 
+import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertNotNull;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.calsns.Dictionary;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -29,13 +33,14 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getDictionaryAgeGroupTypeTest() throws Exception {
-    WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/age-group-type");
+    WebTarget target =
+        clientTestRule.target(Constants.API.DICTIONARIES + "/" + AGE_GROUP_TYPE_PATH);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
 
     invocation.get(new GenericType<CollectionDTO<Dictionary>>() {});
 
-    CollectionDTO<Dictionary> collectionDTO =
-        invocation.get(new GenericType<CollectionDTO<Dictionary>>() {});
+    CollectionDTO<AgeGroupType> collectionDTO =
+        invocation.get(new GenericType<CollectionDTO<AgeGroupType>>() {});
     assertNotNull(collectionDTO);
     String fixture = fixture(FIXTURES_AGE_GROUP_TYPE_RESPONSE_JSON);
     assertEqualsResponse(fixture, collectionDTO);
@@ -43,10 +48,10 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getDictionaryLanguageTypeTest() throws Exception {
-    WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/language-type");
+    WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + LANGUAGE_TYPE_PATH);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    CollectionDTO<Dictionary> collectionDTO =
-        invocation.get(new GenericType<CollectionDTO<Dictionary>>() {});
+    CollectionDTO<LanguageType> collectionDTO =
+        invocation.get(new GenericType<CollectionDTO<LanguageType>>() {});
     assertNotNull(collectionDTO);
     String fixture = fixture(FIXTURES_LANGUAGE_TYPE_RESPONSE_JSON);
     assertEqualsResponse(fixture, collectionDTO);

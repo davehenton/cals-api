@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.dto;
 
-import gov.ca.cwds.cals.persistence.model.calsns.AgeGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
 

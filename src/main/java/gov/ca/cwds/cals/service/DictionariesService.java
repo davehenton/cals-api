@@ -1,8 +1,9 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants.DictionaryType;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
-import gov.ca.cwds.cals.persistence.model.calsns.Dictionary;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
@@ -21,7 +22,8 @@ public class DictionariesService extends CrudServiceAdapter implements CrudsServ
 
   @Override
   public Response find(Serializable dictionaryType) {
-    List<Dictionary> dictionariesByType = dao.findDictionariesByType((String) dictionaryType);
+    DictionaryType type = (DictionaryType) dictionaryType;
+    List<? extends BaseDictionary> dictionariesByType = dao.findDictionariesByType(type);
     return new CollectionDTO<>(dictionariesByType);
   }
 }

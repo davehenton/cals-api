@@ -1,7 +1,10 @@
 package gov.ca.cwds.cals.web.rest;
 
 import static gov.ca.cwds.cals.Constants.API.DICTIONARIES;
-import static gov.ca.cwds.cals.Constants.API.PathParams.DICTIONARY_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
@@ -12,12 +15,10 @@ import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -41,25 +42,35 @@ public class DictionariesResource {
 
   @UnitOfWork(CALSNS)
   @GET
-  @Path("/{" + DICTIONARY_TYPE + "}")
+  @Path("/" + AGE_GROUP_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
-  @ApiOperation(value = "Returns Dictionary by Type", response = CollectionDTO.class)
-  public Response getDictionaryByType(
-      @PathParam(DICTIONARY_TYPE)
-          @ApiParam(
-            required = true,
-            name = DICTIONARY_TYPE,
-            value = "The Type of Dictionary",
-            allowableValues = "age-group-type, language-type"
-          )
-          String type) {
-    return dictionariesResourceDeledate.get(type);
+  @ApiOperation(value = "Returns Age Group Types", response = CollectionDTO.class)
+  public Response getDictionaryAgeGroupTypes() {
+    return dictionariesResourceDeledate.get(AGE_GROUP_TYPE);
   }
+
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + LANGUAGE_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Language Types", response = CollectionDTO.class)
+  public Response getDictionaryLanguageTypes() {
+    return dictionariesResourceDeledate.get(LANGUAGE_TYPE);
+  }
+
 }

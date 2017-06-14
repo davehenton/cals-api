@@ -8,7 +8,6 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
-import gov.ca.cwds.cals.persistence.dao.calsns.AgeGroupTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
@@ -19,8 +18,8 @@ import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
-import gov.ca.cwds.cals.persistence.model.calsns.AgeGroupType;
-import gov.ca.cwds.cals.persistence.model.calsns.Dictionary;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
@@ -123,7 +122,7 @@ public class DataAccessModule extends AbstractModule {
       };
 
   private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
-      new HibernateBundle<CalsApiConfiguration>(AgeGroupType.class, Dictionary.class) {
+      new HibernateBundle<CalsApiConfiguration>(AgeGroupType.class, LanguageType.class) {
 
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -152,7 +151,6 @@ public class DataAccessModule extends AbstractModule {
     bind(IPlacementHomeDao.class).to(PlacementHomeDao.class);
     bind(LpaInformationDao.class);
     bind(InspectionDao.class);
-    bind(AgeGroupTypeDao.class);
     bind(DictionariesDao.class);
   }
 
