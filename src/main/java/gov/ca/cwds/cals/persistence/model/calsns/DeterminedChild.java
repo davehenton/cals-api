@@ -32,6 +32,7 @@ public class DeterminedChild implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
+    @SuppressWarnings("squid:S3437") //LocalDate is serializable
     @NotNull
     @Column(name = "date_of_placement", nullable = false)
     private LocalDate dateOfPlacement;

@@ -16,8 +16,6 @@ entity Application {
   isInitialApplication Boolean,
   otherApplicationType String, //3NF violated!!!
   isChildIdentified Boolean,
-  signatureCity String,
-  signatureDate LocalDate,
   isChildCurrentlyInYourHome Boolean,
   createUserId String maxlength(50) required,
   createDatetime ZonedDateTime required,
@@ -73,6 +71,8 @@ entity HouseholdAdult {
 }
 
 entity Applicant {
+  signatureCity String,
+  signatureDate LocalDate,
   createUserId String maxlength(50) required,
   createDatetime ZonedDateTime required,
   updateUserId String maxlength(50) required,
@@ -356,7 +356,7 @@ relationship OneToMany {
 relationship OneToOne {
   Application{licensureHistory} to LicensureHistory{application},
   Application{childPreferences} to ChildPreferences{application},
-  Application{signatureCounty} to CountyType,
+  Applicant{signatureCounty} to CountyType,
   PersonPhone{phoneNumber} to PhoneNumber,
   Employer{address} to Address,
   HouseholdAdult{person} to Person,
