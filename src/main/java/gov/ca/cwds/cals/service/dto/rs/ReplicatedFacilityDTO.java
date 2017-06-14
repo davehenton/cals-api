@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
  * @author CWDS TPT-2
  */
 @SuppressWarnings("squid:S3437") //LocalDate is serializable
-public class ReplicatedFacilityDTO extends FacilityDTO {
-  private static final long serialVersionUID = 1L;
+public class ReplicatedFacilityDTO extends FacilityDTO implements ReplicatedDTO {
+  private static final long serialVersionUID = 2L;
 
   @NotNull
   private String replicationOperation;

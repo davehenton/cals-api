@@ -2,15 +2,9 @@
  * @author CALS API team.
  */
 
-entity Dictionary {
-  value String maxlength(100) required
+entity AddressType{
+  description String maxlength(100) required
 }
-
-entity DictionaryType {
-  name String maxlength(100) required
-}
-
-entity AddressType{}
 
 entity Application {
   isInitialApplication Boolean,
@@ -28,6 +22,7 @@ entity DeterminedChild {
 }
 
 entity ApplicationStatusType {
+  description String maxlength(100) required
 }
 
 entity LicensureHistory {
@@ -104,10 +99,11 @@ entity Person {
 }
 
 entity CountyType {
-  fipsCode String required minlength(3) maxlength(3)
+   description String maxlength(100) required
 }
 
 entity StateType {
+   description String maxlength(100) required
 }
 
 entity PersonOtherName {
@@ -121,9 +117,11 @@ entity PersonOtherName {
 }
 
 entity OtherNameType { //alias, maiden name, preferred name, other
+  description String maxlength(100) required
 }
 
 entity EducationLevelType {
+  description String maxlength(100) required
 }
 
 entity EducationPoint {
@@ -136,12 +134,15 @@ entity EducationPoint {
 }
 
 entity GenderType {
+  description String maxlength(100) required
 }
 
 entity RaceType {
+  description String maxlength(100) required
 }
 
 entity EthnicityType {
+  description String maxlength(100) required
 }
 
 entity EmailAddress {
@@ -176,6 +177,7 @@ entity PersonAddress {
 }
 
 entity PhoneNumberType {
+  description String maxlength(100) required
 }
 
 entity Address {
@@ -213,6 +215,7 @@ entity Employment {
 }
 
 entity ResidenceOwnershipType { //own, rent, lease
+  description String maxlength(100) required
 }
 
 entity HouseholdAddress {
@@ -236,9 +239,11 @@ entity BriefPerson {
 }
 
 entity LanguageType {
+  description String maxlength(100) required
 }
 
 entity RelationshipType {
+  description String maxlength(100) required
 }
 
 entity Relationship {
@@ -265,6 +270,7 @@ entity RelationshipEvent {
 }
 
 entity RelationshipEventType {
+  description String maxlength(100) required
 }
 
 entity HouseholdChild {
@@ -285,9 +291,11 @@ entity ApplicantToChildRelation {
 }
 
 entity AgeGroupType {
+  description String maxlength(100) required
 }
 
 entity SiblingGroupType {
+  description String maxlength(100) required
 }
 
 entity ChildPreferences {
@@ -298,10 +306,10 @@ entity ChildPreferences {
 }
 
 entity ApplicationStatusType {
+  description String maxlength(100) required
 }
 
 relationship ManyToOne {
-  Dictionary{type} to DictionaryType,
   Application{forCountyUseOnly} to CountyType,
   Application{status} to ApplicationStatusType,
   Person{gender required} to GenderType,
@@ -369,23 +377,5 @@ relationship OneToOne {
   DeterminedChild{person} to Person,
   CriminalRecord{state} to StateType,
   PersonOtherName{nameType} to OtherNameType,
-  ApplicantToChildRelation{relationtype} to RelationshipType,
-  CountyType{dictionary} to Dictionary,
-  StateType{dictionary} to Dictionary,
-  EducationLevelType{dictionary} to Dictionary,
-  ApplicationStatusType{dictionary} to Dictionary,
-  OtherNameType{dictionary} to Dictionary,
-  GenderType{dictionary} to Dictionary,
-  RaceType{dictionary} to Dictionary,
-  EthnicityType{dictionary} to Dictionary,
-  PhoneNumberType{dictionary} to Dictionary,
-  AddressType{dictionary} to Dictionary,
-  ResidenceOwnershipType{dictionary} to Dictionary,
-  LanguageType{dictionary} to Dictionary,
-  RelationshipType{dictionary} to Dictionary,
-  RelationshipEventType{dictionary} to Dictionary,
-  AgeGroupType{dictionary} to Dictionary,
-  SiblingGroupType{dictionary} to Dictionary,
-  ApplicationStatusType{dictionary} to Dictionary
-
+  ApplicantToChildRelation{relationtype} to RelationshipType
 }
