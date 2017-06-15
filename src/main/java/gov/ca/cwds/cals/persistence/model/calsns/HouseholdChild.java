@@ -24,6 +24,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 /**
  * A HouseholdChild.
  */

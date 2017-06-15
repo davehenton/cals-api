@@ -3,6 +3,8 @@ package gov.ca.cwds.cals.web.rest;
 import static gov.ca.cwds.cals.Constants.API.DICTIONARIES;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
@@ -71,6 +73,22 @@ public class DictionariesResource {
   @ApiOperation(value = "Returns Language Types", response = CollectionDTO.class)
   public Response getDictionaryLanguageTypes() {
     return dictionariesResourceDeledate.get(LANGUAGE_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + GENDER_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Gender Types", response = CollectionDTO.class)
+  public Response getDictionaryGenderTypes() {
+    return dictionariesResourceDeledate.get(GENDER_TYPE);
   }
 
 }
