@@ -7,6 +7,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
@@ -89,6 +91,22 @@ public class DictionariesResource {
   @ApiOperation(value = "Returns Gender Types", response = CollectionDTO.class)
   public Response getDictionaryGenderTypes() {
     return dictionariesResourceDeledate.get(GENDER_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + NAME_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Name Types", response = CollectionDTO.class)
+  public Response getDictionaryNameTypes() {
+    return dictionariesResourceDeledate.get(NAME_TYPE);
   }
 
 }
