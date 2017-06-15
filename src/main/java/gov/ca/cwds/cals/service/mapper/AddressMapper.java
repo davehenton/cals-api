@@ -1,13 +1,13 @@
 package gov.ca.cwds.cals.service.mapper;
 
+import static gov.ca.cwds.cals.Constants.AddressTypes.MAIL;
+import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
+
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.service.dto.AddressDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-
-import static gov.ca.cwds.cals.Constants.AddressTypes.MAIL;
-import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 
 /**
  * @author CWDS CALS API Team

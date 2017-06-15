@@ -21,6 +21,7 @@ import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
@@ -123,7 +124,8 @@ public class DataAccessModule extends AbstractModule {
       };
 
   private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
-      new HibernateBundle<CalsApiConfiguration>(AgeGroupType.class, LanguageType.class, GenderType.class) {
+      new HibernateBundle<CalsApiConfiguration>(
+          AgeGroupType.class, LanguageType.class, GenderType.class, NameType.class) {
 
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
