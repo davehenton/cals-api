@@ -6,7 +6,6 @@ import gov.ca.cwds.cals.persistence.model.cms.rs.ReplicatedPlacementHome;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
-import java.util.NoSuchElementException;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
@@ -14,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -53,26 +53,40 @@ public class ReplicatedPlacementHomeDao extends BaseDaoImpl<ReplicatedPlacementH
   }
 
   private Iterable<ReplicatedPlacementHome> iterableScrollableResults(ScrollableResults scrollableResults) {
-    return () -> new Iterator<ReplicatedPlacementHome>() {
+    return () -> new ScrollableResultsIterator(scrollableResults);
+  }
 
-      @Override
-      public boolean hasNext() {
-        if (scrollableResults.next()) {
-          scrollableResults.previous();
-          return true;
-        } else {
-          return false;
-        }
-      }
+  private static class ScrollableResultsIterator implements Iterator<ReplicatedPlacementHome> {
+    private ReplicatedPlacementHome next;
+    private ScrollableResults scrollableResults;
 
-      @Override
-      public ReplicatedPlacementHome next() {
-        if(!hasNext()){
-          throw new NoSuchElementException();
-        }
-        scrollableResults.next();
-        return (ReplicatedPlacementHome) scrollableResults.get(0);
+    ScrollableResultsIterator(ScrollableResults scrollableResults) {
+      this.scrollableResults = scrollableResults;
+      moveForward();
+    }
+
+    @Override
+    public boolean hasNext() {
+      return next != null;
+    }
+
+    @Override
+    public ReplicatedPlacementHome next() {
+      if (next != null) {
+        ReplicatedPlacementHome result = next;
+        moveForward();
+        return result;
+      } else {
+        throw new NoSuchElementException();
       }
-    };
+    }
+
+    private void moveForward() {
+      if (scrollableResults.next()) {
+        next = (ReplicatedPlacementHome) scrollableResults.get(0);
+      } else {
+        next = null;
+      }
+    }
   }
 }
