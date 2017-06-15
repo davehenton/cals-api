@@ -1,6 +1,8 @@
 package gov.ca.cwds.cals.persistence.model.calsns;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
+import gov.ca.cwds.data.ns.NsPersistentObject;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,8 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import gov.ca.cwds.data.ns.NsPersistentObject;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

@@ -1,29 +1,24 @@
 {
   "items": [
     {
-      "id": 200,
-      "value": "Chinese Mandarin",
-      "type": "language-type"
+      "id": 1,
+      "value": "Chinese Mandarin"
     },
     {
-      "id": 201,
-      "value": "English",
-      "type": "language-type"
+      "id": 2,
+      "value": "English"
     },
     {
-      "id": 202,
-      "value": "French",
-      "type": "language-type"
+      "id": 3,
+      "value": "French"
     },
     {
-      "id": 203,
-      "value": "Russian",
-      "type": "language-type"
+      "id": 4,
+      "value": "Russian"
     },
     {
-      "id": 204,
-      "value": "Spanish",
-      "type": "language-type"
+      "id": 5,
+      "value": "Spanish"
     }
   ]
 }

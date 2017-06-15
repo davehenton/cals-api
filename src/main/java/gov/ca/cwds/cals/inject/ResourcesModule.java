@@ -5,7 +5,6 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import gov.ca.cwds.cals.CalsApiConfiguration;
-import gov.ca.cwds.cals.service.AgeGroupTypesService;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.ComplaintsCollectionService;
 import gov.ca.cwds.cals.service.CountiesService;
@@ -16,7 +15,6 @@ import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
-import gov.ca.cwds.cals.web.rest.AgeGroupTypeResource;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.CountiesResource;
 import gov.ca.cwds.cals.web.rest.DictionariesResource;
@@ -49,7 +47,6 @@ public class ResourcesModule extends AbstractModule {
     bind(FacilityInspectionsResource.class);
     bind(CountiesResource.class);
     bind(FacilityTypeResource.class);
-    bind(AgeGroupTypeResource.class);
     bind(DictionariesResource.class);
   }
 
@@ -121,12 +118,6 @@ public class ResourcesModule extends AbstractModule {
   @CountiesServiceBackendResource
   public ResourceDelegate countiesServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(CountiesService.class));
-  }
-
-  @Provides
-  @AgeGroupTypesServiceBackendResource
-  public ResourceDelegate ageGroupTypesServiceBackendResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(AgeGroupTypesService.class));
   }
 
   @Provides

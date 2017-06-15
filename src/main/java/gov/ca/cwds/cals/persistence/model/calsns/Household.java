@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.persistence.model.calsns;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
