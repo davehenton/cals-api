@@ -57,7 +57,12 @@ public class ReplicatedPlacementHomeDao extends BaseDaoImpl<ReplicatedPlacementH
 
       @Override
       public boolean hasNext() {
-        return scrollableResults.next();
+        if (scrollableResults.next()) {
+          scrollableResults.previous();
+          return true;
+        } else {
+          return false;
+        }
       }
 
       @Override
@@ -65,6 +70,7 @@ public class ReplicatedPlacementHomeDao extends BaseDaoImpl<ReplicatedPlacementH
         if(!hasNext()){
           throw new NoSuchElementException();
         }
+        scrollableResults.next();
         return (ReplicatedPlacementHome) scrollableResults.get(0);
       }
     };
