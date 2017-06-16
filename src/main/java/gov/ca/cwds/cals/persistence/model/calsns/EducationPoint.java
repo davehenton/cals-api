@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns;
 
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;

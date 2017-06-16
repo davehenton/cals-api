@@ -2,6 +2,7 @@ package gov.ca.cwds.cals;
 
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
@@ -53,7 +54,8 @@ public final class Constants {
     AGE_GROUP_TYPE(AgeGroupType.class),
     LANGUAGE_TYPE(LanguageType.class),
     GENDER_TYPE(GenderType.class),
-    NAME_TYPE(NameType.class)
+    NAME_TYPE(NameType.class),
+    EDUCATION_LEVEL_TYPE(EducationLevelType.class),
 
     /*
     COUNTY_TYPE("county-type", null),
@@ -76,9 +78,9 @@ public final class Constants {
     public static final String LANGUAGE_TYPE_PATH = "language-type";
     public static final String GENDER_TYPE_PATH = "gender-type";
     public static final String NAME_TYPE_PATH = "name-type";
+    public static final String EDUCATION_LEVEL_TYPE_PATH = "education-level-type";
     public static final String COUNTY_TYPE_PATH = "county-type";
     public static final String STATE_TYPE_PATH = "state-type";
-    public static final String EDUCATION_LEVEL_TYPE_PATH = "education-level-type";
     public static final String APPLICATION_STATUS_TYPE_PATH = "application-status-type";
     public static final String OTHER_NAME_TYPE_PATH = "other-name-type";
     public static final String RACE_TYPE_PATH = "race-type";
