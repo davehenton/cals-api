@@ -1,0 +1,58 @@
+/**
+ * @author CALS API team.
+ */
+
+entity Rfa_1a {
+  residence TextBlob,
+  relationships TextBlob,
+  applicantHistory TextBlob,
+  childDesired TextBlob,
+  adoptionHistory TextBlob,
+  references TextBlob,
+  applicationDeclaration TextBlob,
+
+  createUserId String maxlength(50) required,
+  createDatetime ZonedDateTime required,
+  updateUserId String maxlength(50) required,
+  updateDatetime ZonedDateTime required
+}
+
+entity Rfa_1a_applicant {
+  applicant TextBlob,
+
+  createUserId String maxlength(50) required,
+  createDatetime ZonedDateTime required,
+  updateUserId String maxlength(50) required,
+  updateDatetime ZonedDateTime required
+}
+
+entity Rfa_1a_minor_child {
+	minorChild TextBlob,
+  createUserId String maxlength(50) required,
+  createDatetime ZonedDateTime required,
+  updateUserId String maxlength(50) required,
+  updateDatetime ZonedDateTime required
+}
+
+entity Rfa_1a_other_adults {
+	otherAdult TextBlob,
+
+  createUserId String maxlength(50) required,
+  createDatetime ZonedDateTime required,
+  updateUserId String maxlength(50) required,
+  updateDatetime ZonedDateTime required
+}
+
+relationship OneToMany {
+  Rfa_1a{applicants} to Rfa_1a_applicant{application},
+  Rfa_1a{minorChildren} to Rfa_1a_minor_child{application},
+  Rfa_1a{otherAdults} to Rfa_1a_other_adults{application}
+}
+
+
+
+
+
+
+
+

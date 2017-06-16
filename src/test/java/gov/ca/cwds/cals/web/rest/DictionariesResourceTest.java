@@ -6,19 +6,22 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertNotNull;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.persistence.model.calsns.Dictionary;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import java.io.IOException;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -41,6 +44,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       "fixtures/dictionary-education-level-type-response.json";
   private static final String FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON =
       "fixtures/dictionary-ethnicity-type-response.json";
+  private static final String FIXTURES_RACE_TYPE_RESPONSE_JSON =
+      "fixtures/dictionary-race-type-response.json";
 
 
   @BeforeClass
@@ -48,73 +53,53 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     setUpCalsns();
   }
 
+  private <T extends BaseDictionary> void baseDictionaryTest(String path, String fixturePath, Class<T> clazz) throws IOException {
+    WebTarget target = clientTestRule
+        .target(Constants.API.DICTIONARIES + "/" + path);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    CollectionDTO<T> collectionDTO =
+        invocation.get(new GenericType<CollectionDTO<T>>() {
+        });
+    assertNotNull(collectionDTO);
+    String fixture = fixture(fixturePath);
+    assertEqualsResponse(fixture, collectionDTO);
+  }
+
+  @Test
+  public void getDictionaryRaceTypeTest() throws Exception {
+    baseDictionaryTest(RACE_TYPE_PATH, FIXTURES_RACE_TYPE_RESPONSE_JSON, RaceType.class);
+  }
+
   @Test
   public void getDictionaryAgeGroupTypeTest() throws Exception {
-    WebTarget target =
-        clientTestRule.target(Constants.API.DICTIONARIES + "/" + AGE_GROUP_TYPE_PATH);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    invocation.get(new GenericType<CollectionDTO<Dictionary>>() {});
-    CollectionDTO<AgeGroupType> collectionDTO =
-        invocation.get(new GenericType<CollectionDTO<AgeGroupType>>() {});
-    assertNotNull(collectionDTO);
-    String fixture = fixture(FIXTURES_AGE_GROUP_TYPE_RESPONSE_JSON);
-    assertEqualsResponse(fixture, collectionDTO);
+    baseDictionaryTest(AGE_GROUP_TYPE_PATH, FIXTURES_AGE_GROUP_TYPE_RESPONSE_JSON, AgeGroupType.class);
   }
 
   @Test
   public void getDictionaryLanguageTypeTest() throws Exception {
-    WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + LANGUAGE_TYPE_PATH);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    CollectionDTO<LanguageType> collectionDTO =
-        invocation.get(new GenericType<CollectionDTO<LanguageType>>() {});
-    assertNotNull(collectionDTO);
-    String fixture = fixture(FIXTURES_LANGUAGE_TYPE_RESPONSE_JSON);
-    assertEqualsResponse(fixture, collectionDTO);
+    baseDictionaryTest(LANGUAGE_TYPE_PATH, FIXTURES_LANGUAGE_TYPE_RESPONSE_JSON, LanguageType.class);
   }
 
   @Test
   public void getDictionaryGenderTypeTest() throws Exception {
-    WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + GENDER_TYPE_PATH);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    CollectionDTO<GenderType> collectionDTO =
-        invocation.get(new GenericType<CollectionDTO<GenderType>>() {});
-    assertNotNull(collectionDTO);
-    String fixture = fixture(FIXTURES_GENDER_TYPE_RESPONSE_JSON);
-    assertEqualsResponse(fixture, collectionDTO);
+    baseDictionaryTest(GENDER_TYPE_PATH, FIXTURES_GENDER_TYPE_RESPONSE_JSON, GenderType.class);
   }
 
   @Test
   public void getDictionaryNameTypeTest() throws Exception {
-    WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + NAME_TYPE_PATH);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    CollectionDTO<NameType> collectionDTO =
-        invocation.get(new GenericType<CollectionDTO<NameType>>() {});
-    assertNotNull(collectionDTO);
-    String fixture = fixture(FIXTURES_NAME_TYPE_RESPONSE_JSON);
-    assertEqualsResponse(fixture, collectionDTO);
+    baseDictionaryTest(NAME_TYPE_PATH, FIXTURES_NAME_TYPE_RESPONSE_JSON, NameType.class);
   }
 
   @Test
   public void getDictionaryEducationLevelTypeTest() throws Exception {
-    WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + EDUCATION_LEVEL_TYPE_PATH);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    CollectionDTO<EducationLevelType> collectionDTO =
-        invocation.get(new GenericType<CollectionDTO<EducationLevelType>>() {});
-    assertNotNull(collectionDTO);
-    String fixture = fixture(FIXTURES_EDUCATION_LEVEL_TYPE_RESPONSE_JSON);
-    assertEqualsResponse(fixture, collectionDTO);
+    baseDictionaryTest(EDUCATION_LEVEL_TYPE_PATH, FIXTURES_EDUCATION_LEVEL_TYPE_RESPONSE_JSON, EducationLevelType.class);
   }
 
   @Test
   public void getDictionaryEthnicityTypeTest() throws Exception {
-    WebTarget target = clientTestRule
-        .target(Constants.API.DICTIONARIES + "/" + ETHNICITY_TYPE_PATH);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    CollectionDTO<EthnicityType> collectionDTO =
-        invocation.get(new GenericType<CollectionDTO<EthnicityType>>() {
-        });
-    assertNotNull(collectionDTO);
-    String fixture = fixture(FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON);
-    assertEqualsResponse(fixture, collectionDTO);
+    baseDictionaryTest(ETHNICITY_TYPE_PATH, FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON, EthnicityType.class);
   }
+
 }
+
+

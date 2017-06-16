@@ -13,6 +13,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
@@ -143,4 +145,21 @@ public class DictionariesResource {
   public Response getDictionaryEthnicityType() {
     return dictionariesResourceDeledate.get(ETHNICITY_TYPE);
   }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + RACE_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Race Types", response = CollectionDTO.class)
+  public Response getRaceType() {
+    return dictionariesResourceDeledate.get(RACE_TYPE);
+  }
+
 }
