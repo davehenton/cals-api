@@ -1,7 +1,9 @@
 package gov.ca.cwds.cals.persistence.model.calsns;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.data.ns.NsPersistentObject;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -20,13 +22,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import gov.ca.cwds.data.ns.NsPersistentObject;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 
 /**
  * A Person.

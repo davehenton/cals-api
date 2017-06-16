@@ -5,6 +5,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE;
@@ -124,5 +126,21 @@ public class DictionariesResource {
   @ApiOperation(value = "Returns Education Level Types", response = CollectionDTO.class)
   public Response getDictionaryEducationLevelType() {
     return dictionariesResourceDeledate.get(EDUCATION_LEVEL_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + ETHNICITY_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Ethnicity Types", response = CollectionDTO.class)
+  public Response getDictionaryEthnicityType() {
+    return dictionariesResourceDeledate.get(ETHNICITY_TYPE);
   }
 }
