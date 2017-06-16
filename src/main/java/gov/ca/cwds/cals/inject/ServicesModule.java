@@ -14,6 +14,7 @@ import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
+import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
 import gov.ca.cwds.data.CrudsDao;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 
@@ -37,6 +38,9 @@ public class ServicesModule extends AbstractModule {
     bind(FacilityInspectionService.class);
     bind(CountiesService.class);
     bind(DictionariesService.class);
+
+    // RFA
+    bind(RFA1aFormService.class);
   }
 
   @Provides
