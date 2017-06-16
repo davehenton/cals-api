@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest;
 
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
@@ -13,6 +14,7 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.calsns.Dictionary;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
@@ -37,7 +39,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       "fixtures/dictionary-name-type-response.json";
   private static final String FIXTURES_EDUCATION_LEVEL_TYPE_RESPONSE_JSON =
       "fixtures/dictionary-education-level-type-response.json";
-
+  private static final String FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON =
+      "fixtures/dictionary-ethnicity-type-response.json";
 
 
   @BeforeClass
@@ -99,6 +102,19 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
         invocation.get(new GenericType<CollectionDTO<EducationLevelType>>() {});
     assertNotNull(collectionDTO);
     String fixture = fixture(FIXTURES_EDUCATION_LEVEL_TYPE_RESPONSE_JSON);
+    assertEqualsResponse(fixture, collectionDTO);
+  }
+
+  @Test
+  public void getDictionaryEthnicityTypeTest() throws Exception {
+    WebTarget target = clientTestRule
+        .target(Constants.API.DICTIONARIES + "/" + ETHNICITY_TYPE_PATH);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    CollectionDTO<EthnicityType> collectionDTO =
+        invocation.get(new GenericType<CollectionDTO<EthnicityType>>() {
+        });
+    assertNotNull(collectionDTO);
+    String fixture = fixture(FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON);
     assertEqualsResponse(fixture, collectionDTO);
   }
 }
