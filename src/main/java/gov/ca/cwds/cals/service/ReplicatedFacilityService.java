@@ -33,7 +33,7 @@ public class ReplicatedFacilityService extends CrudServiceAdapter {
 
   public Stream<ReplicatedFacilityDTO> facilitiesStream(FacilityParameterObject parameterObject) {
     return placementHomeDao.stream(parameterObject)
-        //TODO move to SELECT
+        // TODO move counties extraction to NamedQuery
         .map(placementHome -> {
           BaseCountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
           if (countyLicenseCase != null) {
