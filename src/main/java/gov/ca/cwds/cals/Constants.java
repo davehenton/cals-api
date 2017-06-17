@@ -7,6 +7,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 
 /** @author CWDS CALS API Team */
 public final class Constants {
@@ -64,14 +65,14 @@ public final class Constants {
     NAME_TYPE(NameType.class),
     EDUCATION_LEVEL_TYPE(EducationLevelType.class),
     ETHNICITY_TYPE(EthnicityType.class),
+    RACE_TYPE(RaceType.class)
 
     /*
     COUNTY_TYPE("county-type", null),
     STATE_TYPE("state-type", null),
-    EDUCATION_LEVEL_TYPE("education-level-type"),
     APPLICATION_STATUS_TYPE("application-status-type"),
     OTHER_NAME_TYPE("other-name-type"),
-    RACE_TYPE("race-type"),
+
     ETHNICITY_TYPE("ethnicity-type"),
     PHONE_NUMBER_TYPE("phone-number-type"),
     ADDRESS_TYPE("address-type"),
