@@ -16,6 +16,7 @@ import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
+import gov.ca.cwds.cals.service.rfa.RFA1aFormsCollectionService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.CountiesResource;
 import gov.ca.cwds.cals.web.rest.DictionariesResource;
@@ -135,5 +136,12 @@ public class ResourcesModule extends AbstractModule {
   @RFA1aFormServiceBackendResource
   public ResourceDelegate rfa1aFormsServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aFormService.class));
+  }
+
+  @Provides
+  @RFA1aFormCollectionServiceBackendResource
+  public ResourceDelegate rfa1aFormsCollectionServiceBackendResource(Injector injector) {
+    return new ServiceBackedResourceDelegate(
+        injector.getInstance(RFA1aFormsCollectionService.class));
   }
 }
