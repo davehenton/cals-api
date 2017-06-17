@@ -32,7 +32,11 @@ public final class Constants {
 
     public static final String RFA = "rfa";
 
+    public static final String RFA_1A_FORMS = "rfa-1a-forms";
+
     public static final String AGE_GROUP_TYPES = "age-groups";
+
+    public static final String SYSTEM_USER_ID = "SYSTEM";
 
     public static class PathParams {
 
@@ -45,6 +49,8 @@ public final class Constants {
       public static final String INSPECTION_ID = "inspectionId";
 
       public static final String DICTIONARY_TYPE = "dictionaryType";
+
+      public static final String RFA_1A_FORM_ID = "formId";
 
       private PathParams() {}
     }
