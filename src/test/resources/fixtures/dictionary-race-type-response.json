@@ -1,0 +1,18 @@
+{
+  "items" : [ {
+    "id" : 1,
+    "value" : "White"
+  }, {
+    "id" : 2,
+    "value" : "African American"
+  }, {
+    "id" : 3,
+    "value" : "American Indian"
+  }, {
+    "id" : 4,
+    "value" : "Asian"
+  }, {
+    "id" : 5,
+    "value" : "Native Hawaiian or Other Pacific Islander"
+  } ]
+}

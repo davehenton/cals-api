@@ -24,6 +24,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
@@ -132,7 +133,8 @@ public class DataAccessModule extends AbstractModule {
           GenderType.class,
           NameType.class,
           EducationLevelType.class,
-          EthnicityType.class) {
+          EthnicityType.class,
+          RaceType.class) {
 
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
