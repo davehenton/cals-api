@@ -2,9 +2,12 @@ package gov.ca.cwds.cals;
 
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 
 /** @author CWDS CALS API Team */
 public final class Constants {
@@ -29,7 +32,11 @@ public final class Constants {
 
     public static final String RFA = "rfa";
 
+    public static final String RFA_1A_FORMS = "rfa-1a-forms";
+
     public static final String AGE_GROUP_TYPES = "age-groups";
+
+    public static final String SYSTEM_USER_ID = "SYSTEM";
 
     public static class PathParams {
 
@@ -43,6 +50,8 @@ public final class Constants {
 
       public static final String DICTIONARY_TYPE = "dictionaryType";
 
+      public static final String RFA_1A_FORM_ID = "formId";
+
       private PathParams() {}
     }
 
@@ -53,15 +62,17 @@ public final class Constants {
     AGE_GROUP_TYPE(AgeGroupType.class),
     LANGUAGE_TYPE(LanguageType.class),
     GENDER_TYPE(GenderType.class),
-    NAME_TYPE(NameType.class)
+    NAME_TYPE(NameType.class),
+    EDUCATION_LEVEL_TYPE(EducationLevelType.class),
+    ETHNICITY_TYPE(EthnicityType.class),
+    RACE_TYPE(RaceType.class)
 
     /*
     COUNTY_TYPE("county-type", null),
     STATE_TYPE("state-type", null),
-    EDUCATION_LEVEL_TYPE("education-level-type"),
     APPLICATION_STATUS_TYPE("application-status-type"),
     OTHER_NAME_TYPE("other-name-type"),
-    RACE_TYPE("race-type"),
+
     ETHNICITY_TYPE("ethnicity-type"),
     PHONE_NUMBER_TYPE("phone-number-type"),
     ADDRESS_TYPE("address-type"),
@@ -76,20 +87,18 @@ public final class Constants {
     public static final String LANGUAGE_TYPE_PATH = "language-type";
     public static final String GENDER_TYPE_PATH = "gender-type";
     public static final String NAME_TYPE_PATH = "name-type";
+    public static final String EDUCATION_LEVEL_TYPE_PATH = "education-level-type";
+    public static final String ETHNICITY_TYPE_PATH = "ethnicity-type";
     public static final String COUNTY_TYPE_PATH = "county-type";
     public static final String STATE_TYPE_PATH = "state-type";
-    public static final String EDUCATION_LEVEL_TYPE_PATH = "education-level-type";
     public static final String APPLICATION_STATUS_TYPE_PATH = "application-status-type";
     public static final String OTHER_NAME_TYPE_PATH = "other-name-type";
     public static final String RACE_TYPE_PATH = "race-type";
-    public static final String ETHNICITY_TYPE_PATH = "ethnicity-type";
     public static final String PHONE_NUMBER_TYPE_PATH = "phone-number-type";
     public static final String ADDRESS_TYPE_PATH = "address-type";
     public static final String RESIDENCE_OWNERSHIP_TYPE_PATH = "residence-ownership-type";
-
     public static final String RELATIONSHIP_TYPE_PATH = "relationship-type";
     public static final String RELATIONSHIP_EVENT_TYPE_PATH = "relationship-event-type";
-
     public static final String SIBLING_GROUP_TYPE_PATH = "sibling-group-type";
 
     private Class<? extends BaseDictionary> dictionaryClass;

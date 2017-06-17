@@ -3,12 +3,18 @@ package gov.ca.cwds.cals.web.rest;
 import static gov.ca.cwds.cals.Constants.API.DICTIONARIES;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
@@ -49,28 +55,27 @@ public class DictionariesResource {
   @Path("/" + AGE_GROUP_TYPE_PATH)
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 404, message = "Not found"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
   @ApiOperation(value = "Returns Age Group Types", response = CollectionDTO.class)
   public Response getDictionaryAgeGroupTypes() {
     return dictionariesResourceDeledate.get(AGE_GROUP_TYPE);
   }
 
-
   @UnitOfWork(CALSNS)
   @GET
   @Path("/" + LANGUAGE_TYPE_PATH)
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 404, message = "Not found"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
   @ApiOperation(value = "Returns Language Types", response = CollectionDTO.class)
   public Response getDictionaryLanguageTypes() {
@@ -82,11 +87,11 @@ public class DictionariesResource {
   @Path("/" + GENDER_TYPE_PATH)
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 404, message = "Not found"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
   @ApiOperation(value = "Returns Gender Types", response = CollectionDTO.class)
   public Response getDictionaryGenderTypes() {
@@ -98,15 +103,63 @@ public class DictionariesResource {
   @Path("/" + NAME_TYPE_PATH)
   @Timed
   @ApiResponses(
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
+  )
+  @ApiOperation(value = "Returns Name Types", response = CollectionDTO.class)
+  public Response getDictionaryNameTypes() {
+    return dictionariesResourceDeledate.get(NAME_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + EDUCATION_LEVEL_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
+  )
+  @ApiOperation(value = "Returns Education Level Types", response = CollectionDTO.class)
+  public Response getDictionaryEducationLevelType() {
+    return dictionariesResourceDeledate.get(EDUCATION_LEVEL_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + ETHNICITY_TYPE_PATH)
+  @Timed
+  @ApiResponses(
       value = {
           @ApiResponse(code = 401, message = "Not Authorized"),
           @ApiResponse(code = 404, message = "Not found"),
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Name Types", response = CollectionDTO.class)
-  public Response getDictionaryNameTypes() {
-    return dictionariesResourceDeledate.get(NAME_TYPE);
+  @ApiOperation(value = "Returns Ethnicity Types", response = CollectionDTO.class)
+  public Response getDictionaryEthnicityType() {
+    return dictionariesResourceDeledate.get(ETHNICITY_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + RACE_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Race Types", response = CollectionDTO.class)
+  public Response getRaceType() {
+    return dictionariesResourceDeledate.get(RACE_TYPE);
   }
 
 }

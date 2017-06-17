@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "value": "Hispanic"
+    },
+    {
+      "id": 2,
+      "value": "Not Hispanic"
+    }
+  ]
+}
