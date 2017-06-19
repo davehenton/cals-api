@@ -5,6 +5,7 @@ import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.service.dto.AddressDTO;
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -12,11 +13,14 @@ import org.mapstruct.Named;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
+@Mapper(
+    imports = StringUtils.class,
+    uses = TrailingSpacesRemovalPostMappingProcessor.class
+)
 public interface AddressMapper {
 
     @Named(RESIDENTIAL)
-    @Mapping(target = "streetAddress", expression = "java(placementHome.getStreetNo() + ' ' + placementHome.getStreetNm())")
+    @Mapping(target = "streetAddress", expression = "java(StringUtils.trimToEmpty(placementHome.getStreetNo()) + ' ' + placementHome.getStreetNm())")
     @Mapping(target = "city", source = "cityNm")
     @Mapping(target = "state", source = "stateCode.lgcId")
     @Mapping(target = "zipCode", source = "zipNo")
@@ -28,7 +32,7 @@ public interface AddressMapper {
     AddressDTO toResidentialAddressDTO(BasePlacementHome placementHome);
 
     @Named(MAIL)
-    @Mapping(target = "streetAddress", expression = "java(placementHome.getPstreetNo() + ' ' + placementHome.getPstreetNm())")
+    @Mapping(target = "streetAddress", expression = "java(StringUtils.trimToEmpty(placementHome.getPstreetNo()) + ' ' + placementHome.getPstreetNm())")
     @Mapping(target = "city", source = "pCityNm")
     @Mapping(target = "state", source = "payeeStateCode.lgcId")
     @Mapping(target = "zipCode", source = "pZipNo")
