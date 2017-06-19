@@ -1,240 +1,240 @@
 {
   "counties": [
     {
-      "code": "01",
-      "description": "Alameda"
+      "id": "01",
+      "value": "Alameda"
     },
     {
-      "code": "02",
-      "description": "Alpine"
+      "id": "02",
+      "value": "Alpine"
     },
     {
-      "code": "03",
-      "description": "Amador"
+      "id": "03",
+      "value": "Amador"
     },
     {
-      "code": "04",
-      "description": "Butte"
+      "id": "04",
+      "value": "Butte"
     },
     {
-      "code": "05",
-      "description": "Calaveras"
+      "id": "05",
+      "value": "Calaveras"
     },
     {
-      "code": "06",
-      "description": "Colusa"
+      "id": "06",
+      "value": "Colusa"
     },
     {
-      "code": "07",
-      "description": "Contra Costa"
+      "id": "07",
+      "value": "Contra Costa"
     },
     {
-      "code": "08",
-      "description": "Del Norte"
+      "id": "08",
+      "value": "Del Norte"
     },
     {
-      "code": "09",
-      "description": "El Dorado"
+      "id": "09",
+      "value": "El Dorado"
     },
     {
-      "code": "10",
-      "description": "Fresno"
+      "id": "10",
+      "value": "Fresno"
     },
     {
-      "code": "11",
-      "description": "Glenn"
+      "id": "11",
+      "value": "Glenn"
     },
     {
-      "code": "12",
-      "description": "Humboldt"
+      "id": "12",
+      "value": "Humboldt"
     },
     {
-      "code": "13",
-      "description": "Imperial"
+      "id": "13",
+      "value": "Imperial"
     },
     {
-      "code": "14",
-      "description": "Inyo"
+      "id": "14",
+      "value": "Inyo"
     },
     {
-      "code": "15",
-      "description": "Kern"
+      "id": "15",
+      "value": "Kern"
     },
     {
-      "code": "16",
-      "description": "Kings"
+      "id": "16",
+      "value": "Kings"
     },
     {
-      "code": "17",
-      "description": "Lake"
+      "id": "17",
+      "value": "Lake"
     },
     {
-      "code": "18",
-      "description": "Lassen"
+      "id": "18",
+      "value": "Lassen"
     },
     {
-      "code": "19",
-      "description": "Los Angeles"
+      "id": "19",
+      "value": "Los Angeles"
     },
     {
-      "code": "20",
-      "description": "Madera"
+      "id": "20",
+      "value": "Madera"
     },
     {
-      "code": "21",
-      "description": "Marin"
+      "id": "21",
+      "value": "Marin"
     },
     {
-      "code": "22",
-      "description": "Mariposa"
+      "id": "22",
+      "value": "Mariposa"
     },
     {
-      "code": "23",
-      "description": "Mendocino"
+      "id": "23",
+      "value": "Mendocino"
     },
     {
-      "code": "24",
-      "description": "Merced"
+      "id": "24",
+      "value": "Merced"
     },
     {
-      "code": "25",
-      "description": "Modoc"
+      "id": "25",
+      "value": "Modoc"
     },
     {
-      "code": "26",
-      "description": "Mono"
+      "id": "26",
+      "value": "Mono"
     },
     {
-      "code": "27",
-      "description": "Monterey"
+      "id": "27",
+      "value": "Monterey"
     },
     {
-      "code": "28",
-      "description": "Napa"
+      "id": "28",
+      "value": "Napa"
     },
     {
-      "code": "29",
-      "description": "Nevada"
+      "id": "29",
+      "value": "Nevada"
     },
     {
-      "code": "30",
-      "description": "Orange"
+      "id": "30",
+      "value": "Orange"
     },
     {
-      "code": "31",
-      "description": "Placer"
+      "id": "31",
+      "value": "Placer"
     },
     {
-      "code": "32",
-      "description": "Plumas"
+      "id": "32",
+      "value": "Plumas"
     },
     {
-      "code": "33",
-      "description": "Riverside"
+      "id": "33",
+      "value": "Riverside"
     },
     {
-      "code": "34",
-      "description": "Sacramento"
+      "id": "34",
+      "value": "Sacramento"
     },
     {
-      "code": "35",
-      "description": "San Benito"
+      "id": "35",
+      "value": "San Benito"
     },
     {
-      "code": "36",
-      "description": "San Bernardino"
+      "id": "36",
+      "value": "San Bernardino"
     },
     {
-      "code": "37",
-      "description": "San Diego"
+      "id": "37",
+      "value": "San Diego"
     },
     {
-      "code": "38",
-      "description": "San Francisco"
+      "id": "38",
+      "value": "San Francisco"
     },
     {
-      "code": "39",
-      "description": "San Joaquin"
+      "id": "39",
+      "value": "San Joaquin"
     },
     {
-      "code": "40",
-      "description": "San Luis Obispo"
+      "id": "40",
+      "value": "San Luis Obispo"
     },
     {
-      "code": "41",
-      "description": "San Mateo"
+      "id": "41",
+      "value": "San Mateo"
     },
     {
-      "code": "42",
-      "description": "Santa Barbara"
+      "id": "42",
+      "value": "Santa Barbara"
     },
     {
-      "code": "43",
-      "description": "Santa Clara"
+      "id": "43",
+      "value": "Santa Clara"
     },
     {
-      "code": "44",
-      "description": "Santa Cruz"
+      "id": "44",
+      "value": "Santa Cruz"
     },
     {
-      "code": "45",
-      "description": "Shasta"
+      "id": "45",
+      "value": "Shasta"
     },
     {
-      "code": "46",
-      "description": "Sierra"
+      "id": "46",
+      "value": "Sierra"
     },
     {
-      "code": "47",
-      "description": "Siskiyou"
+      "id": "47",
+      "value": "Siskiyou"
     },
     {
-      "code": "48",
-      "description": "Solano"
+      "id": "48",
+      "value": "Solano"
     },
     {
-      "code": "49",
-      "description": "Sonoma"
+      "id": "49",
+      "value": "Sonoma"
     },
     {
-      "code": "50",
-      "description": "Stanislaus"
+      "id": "50",
+      "value": "Stanislaus"
     },
     {
-      "code": "51",
-      "description": "Sutter"
+      "id": "51",
+      "value": "Sutter"
     },
     {
-      "code": "52",
-      "description": "Tehama"
+      "id": "52",
+      "value": "Tehama"
     },
     {
-      "code": "53",
-      "description": "Trinity"
+      "id": "53",
+      "value": "Trinity"
     },
     {
-      "code": "54",
-      "description": "Tulare"
+      "id": "54",
+      "value": "Tulare"
     },
     {
-      "code": "55",
-      "description": "Tuolumne"
+      "id": "55",
+      "value": "Tuolumne"
     },
     {
-      "code": "56",
-      "description": "Ventura"
+      "id": "56",
+      "value": "Ventura"
     },
     {
-      "code": "57",
-      "description": "Yolo"
+      "id": "57",
+      "value": "Yolo"
     },
     {
-      "code": "58",
-      "description": "Yuba"
+      "id": "58",
+      "value": "Yuba"
     },
     {
-      "code": "99",
-      "description": "State of California"
+      "id": "99",
+      "value": "State of California"
     }
   ]
 }

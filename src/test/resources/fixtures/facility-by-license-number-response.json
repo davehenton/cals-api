@@ -2,15 +2,15 @@
   "href" : "facilities/193600110",
   "id" : "193600110",
   "type" : {
-    "code" : "810",
-    "description" : "FAMILY DAY CARE"
+    "id" : "810",
+    "value" : "FAMILY DAY CARE"
   },
   "name" : "MAD HATTER RESIDENTIAL FOR THE CHRONICALLY ILL",
   "licensee_name" : "CHILDHELP, INC.",
   "license_type" : "A",
   "assigned_worker" : {
-    "code" : "03B302",
-    "description" : "Karen Buckley"
+    "id" : "03B302",
+    "value" : "Karen Buckley"
   },
   "district_office" : {
     "number" : "3",
@@ -18,8 +18,8 @@
   },
   "license_number" : "193600110",
   "status" : {
-    "code" : "9",
-    "description" : "CLOSED, LIC INIT."
+    "id" : "9",
+    "value" : "CLOSED, LIC INIT."
   },
   "capacity" : 8,
   "license_effective_date" : "2004-05-27",
@@ -27,16 +27,16 @@
   "last_visit_date" : "2004-12-22",
   "last_deferred_visit_date" : "2005-04-02",
   "last_visit_reason" : {
-    "code" : "1",
-    "description" : "PRELICENSING"
+    "id" : "1",
+    "value" : "PRELICENSING"
   },
   "last_deferred_visit_reason" : {
-    "code" : "2",
-    "description" : "POST LICENSING"
+    "id" : "2",
+    "value" : "POST LICENSING"
   },
   "county" : {
-    "code" : "39",
-    "description" : "SAN JOAQUIN"
+    "id" : "39",
+    "value" : "SAN JOAQUIN"
   },
   "children" : {
     "href" : "facilities/193600110/children"
