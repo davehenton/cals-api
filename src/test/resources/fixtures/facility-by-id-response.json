@@ -2,26 +2,26 @@
   "href" : "facilities/E6tloOO0Ql",
   "id" : "E6tloOO0Ql",
   "type" : {
-    "code" : "793",
-    "description" : "Relative/NREFM Home"
+    "id" : "793",
+    "value" : "Relative/NREFM Home"
   },
   "name" : "FST 510 Placements",
   "licensee_name" : "",
   "assigned_worker" : {
-    "description" : "Shelby Released"
+    "value" : "Shelby Released"
   },
   "district_office" : {
     "number" : "19",
     "name" : "Los Angeles"
   },
   "status" : {
-    "code" : "",
-    "description" : ""
+    "id" : "",
+    "value" : ""
   },
   "capacity" : 600,
   "county" : {
-    "code" : "34",
-    "description" : "Sacramento"
+    "id" : "34",
+    "value" : "Sacramento"
   },
   "complains" : {
     "href" : "facilities/E6tloOO0Ql/complaints"

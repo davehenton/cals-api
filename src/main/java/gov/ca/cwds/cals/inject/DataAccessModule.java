@@ -9,6 +9,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
@@ -24,6 +25,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
@@ -128,13 +130,17 @@ public class DataAccessModule extends AbstractModule {
 
   private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(
+          // Dictionaries
           AgeGroupType.class,
           LanguageType.class,
           GenderType.class,
           NameType.class,
           EducationLevelType.class,
           EthnicityType.class,
-          RaceType.class) {
+          RaceType.class,
+          //RFA
+          RFA1aForm.class          
+      ) {
 
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -164,6 +170,9 @@ public class DataAccessModule extends AbstractModule {
     bind(LpaInformationDao.class);
     bind(InspectionDao.class);
     bind(DictionariesDao.class);
+
+    // RFA
+    bind(RFA1aFormsDao.class);
   }
 
   @Provides

@@ -17,13 +17,13 @@ public class DictionaryDTO extends BaseDTO {
     private static final long serialVersionUID = -1184272035663245384L;
     
     @RemoveTrailingSpaces
-    @JsonProperty("code")
+    @JsonProperty("id")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Dictionary Status Code", example = "1")
     private String code;
 
     @RemoveTrailingSpaces
-    @JsonProperty("description")
+    @JsonProperty("value")
     @NotNull
     @ApiModelProperty(required = true, readOnly = false, value = "Dictionary Status Description", example = "Some dictionary item description")
     private String description;

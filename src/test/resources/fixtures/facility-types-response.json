@@ -1,144 +1,144 @@
 {
   "facility_types": [
     {
-      "code": "400",
-      "description": "ADOPTION AGENCY"
+      "id": "400",
+      "value": "ADOPTION AGENCY"
     },
     {
-      "code": "775",
-      "description": "ADULT DAY CARE"
+      "id": "775",
+      "value": "ADULT DAY CARE"
     },
     {
-      "code": "735",
-      "description": "ADULT RESIDENTIAL"
+      "id": "735",
+      "value": "ADULT RESIDENTIAL"
     },
     {
-      "code": "737",
-      "description": "ARF-ENHANCED BEHAVIORAL SUPPORTS HOME"
+      "id": "737",
+      "value": "ARF-ENHANCED BEHAVIORAL SUPPORTS HOME"
     },
     {
-      "code": "734",
-      "description": "ARFPSHN"
+      "id": "734",
+      "value": "ARFPSHN"
     },
     {
-      "code": "738",
-      "description": "COMMUNITY CRISIS HOME-ARF"
+      "id": "738",
+      "value": "COMMUNITY CRISIS HOME-ARF"
     },
     {
-      "code": "728",
-      "description": "COMMUNITY TREATMENT FACILITY"
+      "id": "728",
+      "value": "COMMUNITY TREATMENT FACILITY"
     },
     {
-      "code": "720",
-      "description": "CRISIS NURSERY"
+      "id": "720",
+      "value": "CRISIS NURSERY"
     },
     {
-      "code": "850",
-      "description": "DAY CARE CENTER"
+      "id": "850",
+      "value": "DAY CARE CENTER"
     },
     {
-      "code": "845",
-      "description": "DC CENTER - ILL CHILD"
+      "id": "845",
+      "value": "DC CENTER - ILL CHILD"
     },
     {
-      "code": "999",
-      "description": "DUMMY FACILITY"
+      "id": "999",
+      "value": "DUMMY FACILITY"
     },
     {
-      "code": "810",
-      "description": "FAMILY DAY CARE"
+      "id": "810",
+      "value": "FAMILY DAY CARE"
     },
     {
-      "code": "433",
-      "description": "FFA CERTIFIED HOME"
+      "id": "433",
+      "value": "FFA CERTIFIED HOME"
     },
     {
-      "code": "431",
-      "description": "FOSTER FAMILY AG-SUB"
+      "id": "431",
+      "value": "FOSTER FAMILY AG-SUB"
     },
     {
-      "code": "430",
-      "description": "FOSTER FAMILY AGENCY"
+      "id": "430",
+      "value": "FOSTER FAMILY AGENCY"
     },
     {
-      "code": "711",
-      "description": "FOSTER FAMILY HOME"
+      "id": "711",
+      "value": "FOSTER FAMILY HOME"
     },
     {
-      "code": "729",
-      "description": "GH-ENHANCED BEHAVIORAL SUPPORTS HOME"
+      "id": "729",
+      "value": "GH-ENHANCED BEHAVIORAL SUPPORTS HOME"
     },
     {
-      "code": "730",
-      "description": "GROUP HOME"
+      "id": "730",
+      "value": "GROUP HOME"
     },
     {
-      "code": "300",
-      "description": "HOME CARE ORGANIZATION"
+      "id": "300",
+      "value": "HOME CARE ORGANIZATION"
     },
     {
-      "code": "830",
-      "description": "INFANT CENTER"
+      "id": "830",
+      "value": "INFANT CENTER"
     },
     {
-      "code": "731",
-      "description": "OUT OF STATE GH"
+      "id": "731",
+      "value": "OUT OF STATE GH"
     },
     {
-      "code": "771",
-      "description": "REHAB FACILITY"
+      "id": "771",
+      "value": "REHAB FACILITY"
     },
     {
-      "code": "736",
-      "description": "RESID FAC CHRON ILL"
+      "id": "736",
+      "value": "RESID FAC CHRON ILL"
     },
     {
-      "code": "741",
-      "description": "RESIDENTIAL ELDERLY-CONTINUING CARE"
+      "id": "741",
+      "value": "RESIDENTIAL ELDERLY-CONTINUING CARE"
     },
     {
-      "code": "740",
-      "description": "RESIDENTIAL-ELDERLY"
+      "id": "740",
+      "value": "RESIDENTIAL-ELDERLY"
     },
     {
-      "code": "403",
-      "description": "RESOURCE FAMILY HOME"
+      "id": "403",
+      "value": "RESOURCE FAMILY HOME"
     },
     {
-      "code": "732",
-      "description": "RUNAWAY AND HOMELESS YOUTH SHELTER-GH"
+      "id": "732",
+      "value": "RUNAWAY AND HOMELESS YOUTH SHELTER-GH"
     },
     {
-      "code": "840",
-      "description": "SCHOOL-AGE DC CENTER"
+      "id": "840",
+      "value": "SCHOOL-AGE DC CENTER"
     },
     {
-      "code": "733",
-      "description": "SHORT TERM RESIDENTIAL THERAPEUTIC PROGRAM"
+      "id": "733",
+      "value": "SHORT TERM RESIDENTIAL THERAPEUTIC PROGRAM"
     },
     {
-      "code": "710",
-      "description": "SMALL FAMILY HOME"
+      "id": "710",
+      "value": "SMALL FAMILY HOME"
     },
     {
-      "code": "772",
-      "description": "SOCIAL REHABILITATION FACILITY"
+      "id": "772",
+      "value": "SOCIAL REHABILITATION FACILITY"
     },
     {
-      "code": "432",
-      "description": "SUB EMPLOYMENT REG"
+      "id": "432",
+      "value": "SUB EMPLOYMENT REG"
     },
     {
-      "code": "721",
-      "description": "TEMPORARY SHELTER CARE FACILITY"
+      "id": "721",
+      "value": "TEMPORARY SHELTER CARE FACILITY"
     },
     {
-      "code": "726",
-      "description": "TRANSITIONAL HOUSING PLACEMENT PROGRAM"
+      "id": "726",
+      "value": "TRANSITIONAL HOUSING PLACEMENT PROGRAM"
     },
     {
-      "code": "722",
-      "description": "TRANSITIONAL SHELTER CARE"
+      "id": "722",
+      "value": "TRANSITIONAL SHELTER CARE"
     }
   ]
 }
