@@ -3,10 +3,10 @@
     "id": 1,
     "value": "Child"
   },
-  "child_related_to": {
-    "id": 1,
-    "value": "Applicant 1"
-  },
+  "child_related_to": [
+    {applicantId1},
+    {applicantId2}
+  ],
   "other_relative_first_name": "",
   "other_relative_middle_name": "",
   "other_relative_last_name": "",
