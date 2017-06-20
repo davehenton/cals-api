@@ -31,7 +31,7 @@ public class RFA1aFormService extends CrudServiceAdapter {
     form.setCreateUserId(SYSTEM_USER_ID);
     form.setUpdateDateTime(now);
     form.setUpdateUserId(SYSTEM_USER_ID);
-    dao.create(form);
+    form = dao.create(form);
     return form;
   }
 

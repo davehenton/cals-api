@@ -9,6 +9,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aApplicantDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
@@ -25,8 +26,9 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantEntity;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
@@ -139,7 +141,8 @@ public class DataAccessModule extends AbstractModule {
           EthnicityType.class,
           RaceType.class,
           //RFA
-          RFA1aForm.class          
+          RFA1aForm.class,
+          ApplicantEntity.class
       ) {
 
         @Override
@@ -173,6 +176,8 @@ public class DataAccessModule extends AbstractModule {
 
     // RFA
     bind(RFA1aFormsDao.class);
+    bind(RFA1aApplicantDao.class);
+
   }
 
   @Provides

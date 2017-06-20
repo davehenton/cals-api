@@ -34,6 +34,8 @@ public final class Constants {
 
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
+    public static final String RFA_1A_APPLICANTS = "applicants";
+
     public static final String AGE_GROUP_TYPES = "age-groups";
 
     public static final String SYSTEM_USER_ID = "SYSTEM";
