@@ -5,6 +5,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.ADDRESS_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ADDRESS_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE;
@@ -269,4 +271,21 @@ public class DictionariesResource {
   public Response getResidenceOwnershipTypes() {
     return dictionariesResourceDelegate.get(RESIDENCE_OWNERSHIP_TYPE);
   }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + APPLICANT_RELATIONSHIP_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Residence Ownership Types", response = CollectionDTO.class)
+  public Response getApplicantRelationshipTypes() {
+    return dictionariesResourceDelegate.get(APPLICANT_RELATIONSHIP_TYPE);
+  }
+
 }
