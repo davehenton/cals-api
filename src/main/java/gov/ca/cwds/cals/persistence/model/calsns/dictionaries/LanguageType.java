@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NamedQuery;
 
 /** @author CWDS CALS API Team */
-@NamedQuery(name = NAMED_QUERY_FIND_ALL, query = "FROM LanguageType ORDER BY id ASC")
+@NamedQuery(name = LanguageType.NAMED_QUERY_FIND_ALL, query = "FROM LanguageType ORDER BY id ASC")
 @Entity
 @Table(name = "language_type")
 public class LanguageType extends BaseDictionary {
