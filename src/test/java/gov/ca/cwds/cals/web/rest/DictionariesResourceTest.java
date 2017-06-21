@@ -47,19 +47,17 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
   private static final String FIXTURES_RACE_TYPE_RESPONSE_JSON =
       "fixtures/dictionary-race-type-response.json";
 
-
   @BeforeClass
   public static void beforeClass() throws Exception {
     setUpCalsns();
   }
 
-  private <T extends BaseDictionary> void baseDictionaryTest(String path, String fixturePath, Class<T> clazz) throws IOException {
-    WebTarget target = clientTestRule
-        .target(Constants.API.DICTIONARIES + "/" + path);
+  private <T extends BaseDictionary> void baseDictionaryTest(
+      String path, String fixturePath, GenericType<CollectionDTO<T>> genericType)
+      throws IOException {
+    WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + path);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    CollectionDTO<T> collectionDTO =
-        invocation.get(new GenericType<CollectionDTO<T>>() {
-        });
+    CollectionDTO<T> collectionDTO = invocation.get(genericType);
     assertNotNull(collectionDTO);
     String fixture = fixture(fixturePath);
     assertEqualsResponse(fixture, collectionDTO);
@@ -67,39 +65,57 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getDictionaryRaceTypeTest() throws Exception {
-    baseDictionaryTest(RACE_TYPE_PATH, FIXTURES_RACE_TYPE_RESPONSE_JSON, RaceType.class);
+    baseDictionaryTest(
+        RACE_TYPE_PATH,
+        FIXTURES_RACE_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<RaceType>>() {});
   }
 
   @Test
   public void getDictionaryAgeGroupTypeTest() throws Exception {
-    baseDictionaryTest(AGE_GROUP_TYPE_PATH, FIXTURES_AGE_GROUP_TYPE_RESPONSE_JSON, AgeGroupType.class);
+    baseDictionaryTest(
+        AGE_GROUP_TYPE_PATH,
+        FIXTURES_AGE_GROUP_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<AgeGroupType>>() {});
   }
 
   @Test
   public void getDictionaryLanguageTypeTest() throws Exception {
-    baseDictionaryTest(LANGUAGE_TYPE_PATH, FIXTURES_LANGUAGE_TYPE_RESPONSE_JSON, LanguageType.class);
+    baseDictionaryTest(
+        LANGUAGE_TYPE_PATH,
+        FIXTURES_LANGUAGE_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<LanguageType>>() {});
   }
 
   @Test
   public void getDictionaryGenderTypeTest() throws Exception {
-    baseDictionaryTest(GENDER_TYPE_PATH, FIXTURES_GENDER_TYPE_RESPONSE_JSON, GenderType.class);
+    baseDictionaryTest(
+        GENDER_TYPE_PATH,
+        FIXTURES_GENDER_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<GenderType>>() {});
   }
 
   @Test
   public void getDictionaryNameTypeTest() throws Exception {
-    baseDictionaryTest(NAME_TYPE_PATH, FIXTURES_NAME_TYPE_RESPONSE_JSON, NameType.class);
+    baseDictionaryTest(
+        NAME_TYPE_PATH,
+        FIXTURES_NAME_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<NameType>>() {});
   }
 
   @Test
   public void getDictionaryEducationLevelTypeTest() throws Exception {
-    baseDictionaryTest(EDUCATION_LEVEL_TYPE_PATH, FIXTURES_EDUCATION_LEVEL_TYPE_RESPONSE_JSON, EducationLevelType.class);
+    baseDictionaryTest(
+        EDUCATION_LEVEL_TYPE_PATH,
+        FIXTURES_EDUCATION_LEVEL_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<EducationLevelType>>() {});
   }
 
   @Test
   public void getDictionaryEthnicityTypeTest() throws Exception {
-    baseDictionaryTest(ETHNICITY_TYPE_PATH, FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON, EthnicityType.class);
+    baseDictionaryTest(
+        ETHNICITY_TYPE_PATH,
+        FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<EthnicityType>>() {});
   }
-
 }
-
-

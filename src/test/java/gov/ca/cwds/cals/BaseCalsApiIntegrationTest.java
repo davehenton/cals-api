@@ -61,23 +61,35 @@ public abstract class BaseCalsApiIntegrationTest {
   }
 
   public static void setUpFas() throws Exception {
-    getFasDatabaseHelper().runScript("liquibase/fas_database_master.xml");
+    if (!isIntegrationTestsRunning()) {
+      getFasDatabaseHelper().runScript("liquibase/fas_database_master.xml");
+    }
   }
 
   public static void setUpLis() throws Exception {
-    getLisDatabaseHelper().runScript("liquibase/lis_database_master.xml");
+    if (!isIntegrationTestsRunning()) {
+      getLisDatabaseHelper().runScript("liquibase/lis_database_master.xml");
+    }
   }
 
   public static void setUpCms() throws Exception {
-    getCmsDatabaseHelper().runScript("liquibase/cwscms_database_master.xml");
+    if (!isIntegrationTestsRunning()) {
+      getCmsDatabaseHelper().runScript("liquibase/cwscms_database_master.xml");
+    }
   }
 
   public static void setUpCalsns() throws Exception {
-    getCalsnsDatabaseHelper().runScript("liquibase/calsns_database_master.xml");
+    if (!isIntegrationTestsRunning()) {
+      getCalsnsDatabaseHelper().runScript("liquibase/calsns_database_master.xml");
+    }
   }
 
   @After
   public void tearDown() throws Exception {}
+
+  private static boolean isIntegrationTestsRunning() {
+    return System.getProperty("cals.api.url") != null;
+  }
 
   protected void assertEqualsResponse(String fixture, Response response) throws IOException {
     String actualString = clientTestRule.getMapper().writeValueAsString(response);
