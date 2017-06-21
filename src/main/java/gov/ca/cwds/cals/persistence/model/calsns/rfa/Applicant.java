@@ -1,14 +1,21 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -17,7 +24,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
-public class Applicant implements Serializable, Request, Response {
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class Applicant extends BaseDTO implements Serializable, Request, Response {
 
   private static final long serialVersionUID = -4333411852074578122L;
 
@@ -29,10 +37,11 @@ public class Applicant implements Serializable, Request, Response {
 
   private String lastName;
 
-  private List<PersonName> otherNames;
+  private List<PersonName> otherNames = new ArrayList<>();
 
   private EducationLevelType highestEducationLevel;
 
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
 
   private GenderType gender;
@@ -49,7 +58,7 @@ public class Applicant implements Serializable, Request, Response {
 
   private Employment employment;
 
-  private List<Phone> phones;
+  private List<Phone> phones = new ArrayList<>();
 
   public Long getId() {
     return id;

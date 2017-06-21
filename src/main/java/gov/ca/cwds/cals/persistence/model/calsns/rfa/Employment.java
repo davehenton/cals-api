@@ -1,14 +1,17 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
-import java.io.Serializable;
+import gov.ca.cwds.cals.service.dto.BaseDTO;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
-public class Employment implements Serializable {
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class Employment extends BaseDTO {
 
   private static final long serialVersionUID = 4050127780486627644L;
 

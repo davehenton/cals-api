@@ -67,8 +67,8 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
   private LocalDateTime updateDateTime;
 
   @OneToMany
-  @JoinColumn(name = "applicants", referencedColumnName = "formId")
-  private List<ApplicantEntity> applicantEntities;
+  @JoinColumn(name = "application_id")
+  private List<RFA1aApplicant> applicantEntities;
 
 
 
@@ -110,6 +110,15 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
 
   public void setUpdateDateTime(LocalDateTime updateDateTime) {
     this.updateDateTime = updateDateTime;
+  }
+
+  public List<RFA1aApplicant> getApplicantEntities() {
+    return applicantEntities;
+  }
+
+  public void setApplicantEntities(
+      List<RFA1aApplicant> applicantEntities) {
+    this.applicantEntities = applicantEntities;
   }
 
   @Override

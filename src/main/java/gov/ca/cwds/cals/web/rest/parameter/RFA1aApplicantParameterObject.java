@@ -12,11 +12,21 @@ public class RFA1aApplicantParameterObject implements Request, Serializable {
   private static final long serialVersionUID = 7927793063479450489L;
 
   private Long formId;
+  private Long applicantId;
   private Applicant applicant;
+
+  public RFA1aApplicantParameterObject(Long formId) {
+    this.formId = formId;
+  }
 
   public RFA1aApplicantParameterObject(Long formId, Applicant applicant) {
     this.formId = formId;
     this.applicant = applicant;
+  }
+
+  public RFA1aApplicantParameterObject(Long formId, Long applicantId) {
+    this.formId = formId;
+    this.applicantId = applicantId;
   }
 
   public Long getFormId() {
@@ -25,5 +35,9 @@ public class RFA1aApplicantParameterObject implements Request, Serializable {
 
   public Applicant getApplicant() {
     return applicant;
+  }
+
+  public Long getApplicantId() {
+    return applicantId;
   }
 }

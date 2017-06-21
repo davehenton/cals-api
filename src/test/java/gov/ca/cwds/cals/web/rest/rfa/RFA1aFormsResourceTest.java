@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
-import gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResource.RFA1aFormsDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormsDTO;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;

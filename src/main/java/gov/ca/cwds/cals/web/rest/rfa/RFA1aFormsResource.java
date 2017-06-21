@@ -10,7 +10,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackendResource;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormsDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -93,5 +93,4 @@ public class RFA1aFormsResource {
     return collectionResourceDelegate.get(null);
   }
 
-  public static final class RFA1aFormsDTO extends CollectionDTO<RFA1aForm> {}
 }

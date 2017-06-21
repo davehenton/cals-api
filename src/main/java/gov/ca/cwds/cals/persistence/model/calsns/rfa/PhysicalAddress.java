@@ -1,18 +1,21 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import java.io.Serializable;
+import gov.ca.cwds.cals.service.dto.BaseDTO;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
-public class PhysicalAddress implements Serializable {
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class PhysicalAddress extends BaseDTO {
 
   private static final long serialVersionUID = 9003280821142481526L;
 
-  private String streeAddress;
+  private String streetAddress;
 
   private String city;
 
@@ -20,12 +23,12 @@ public class PhysicalAddress implements Serializable {
 
   private String zip;
 
-  public String getStreeAddress() {
-    return streeAddress;
+  public String getStreetAddress() {
+    return streetAddress;
   }
 
-  public void setStreeAddress(String streeAddress) {
-    this.streeAddress = streeAddress;
+  public void setStreetAddress(String streetAddress) {
+    this.streetAddress = streetAddress;
   }
 
   public String getCity() {
@@ -66,7 +69,7 @@ public class PhysicalAddress implements Serializable {
   public String toString() {
     return "PhysicalAddress{"
         + "streeAddress='"
-        + streeAddress
+        + streetAddress
         + '\''
         + ", city='"
         + city

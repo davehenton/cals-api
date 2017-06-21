@@ -27,7 +27,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantEntity;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
@@ -142,7 +142,7 @@ public class DataAccessModule extends AbstractModule {
           RaceType.class,
           //RFA
           RFA1aForm.class,
-          ApplicantEntity.class
+          RFA1aApplicant.class
       ) {
 
         @Override
