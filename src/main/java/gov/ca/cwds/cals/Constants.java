@@ -11,10 +11,13 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public final class Constants {
 
   public static class API {
@@ -39,7 +42,7 @@ public final class Constants {
 
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
-    public static final String AGE_GROUP_TYPES = "age-groups";
+    public static final String RESIDENCE = "residence";
 
     public static final String SYSTEM_USER_ID = "SYSTEM";
 
@@ -57,10 +60,12 @@ public final class Constants {
 
       public static final String RFA_1A_FORM_ID = "formId";
 
-      private PathParams() {}
+      private PathParams() {
+      }
     }
 
-    private API() {}
+    private API() {
+    }
   }
 
   public enum DictionaryType {
@@ -75,12 +80,12 @@ public final class Constants {
     PHONE_NUMBER_TYPE(PhoneNumberType.class),
     ADDRESS_TYPE(AddressType.class),
     SIBLING_GROUP_TYPE(SiblingGroupType.class),
-    STATE_TYPE(StateType.class)
+    STATE_TYPE(StateType.class),
+    RESIDENCE_OWNERSHIP_TYPE(ResidenceOwnershipType.class)
 
     /*
     COUNTY_TYPE("county-type", null),
     APPLICATION_STATUS_TYPE("application-status-type"),
-    RESIDENCE_OWNERSHIP_TYPE("residence-ownership-type"),
     RELATIONSHIP_TYPE("relationship-type"),
     RELATIONSHIP_EVENT_TYPE("relationship-event-type"),
     */
@@ -121,7 +126,8 @@ public final class Constants {
 
     public static final String MAIL = "mail";
 
-    private AddressTypes() {}
+    private AddressTypes() {
+    }
   }
 
   public static class PhoneTypes {
@@ -130,7 +136,8 @@ public final class Constants {
 
     public static final String ALTERNATE = "alternate";
 
-    private PhoneTypes() {}
+    private PhoneTypes() {
+    }
   }
 
   public static class VisitTypes {
@@ -145,7 +152,8 @@ public final class Constants {
 
     public static final String MIDDLE_YEAR = "Middle Year";
 
-    private VisitTypes() {}
+    private VisitTypes() {
+    }
   }
 
   public static class UnitOfWork {
@@ -158,8 +166,10 @@ public final class Constants {
 
     public static final String CALSNS = "calsns";
 
-    private UnitOfWork() {}
+    private UnitOfWork() {
+    }
   }
 
-  private Constants() {}
+  private Constants() {
+  }
 }

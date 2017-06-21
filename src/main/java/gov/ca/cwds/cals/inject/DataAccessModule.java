@@ -29,6 +29,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
@@ -148,6 +149,7 @@ public class DataAccessModule extends AbstractModule {
           AddressType.class,
           SiblingGroupType.class,
           StateType.class,
+          ResidenceOwnershipType.class,
           //RFA
           RFA1aForm.class) {
 
