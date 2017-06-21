@@ -283,7 +283,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Residence Ownership Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Applicant Relationship Types", response = CollectionDTO.class)
   public Response getApplicantRelationshipTypes() {
     return dictionariesResourceDelegate.get(APPLICANT_RELATIONSHIP_TYPE);
   }
