@@ -1,7 +1,5 @@
 package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
-import static gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType.NAMED_QUERY_FIND_ALL;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.hibernate.annotations.NamedQuery;

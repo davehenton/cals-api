@@ -10,6 +10,7 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE_PATH;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
@@ -28,6 +29,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
@@ -39,7 +41,9 @@ import javax.ws.rs.core.MediaType;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
 
   private static final String BASE_DICTIONARY_PATH = "fixtures/dictionary/";
@@ -68,6 +72,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "sibling-group-type-response.json";
   private static final String FIXTURES_STATE_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "state-type-response.json";
+  private static final String FIXTURES_RESIDENCE_OWNERSHIP_TYPE_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "residence-ownership-type-response.json";
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -90,7 +96,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         RACE_TYPE_PATH,
         FIXTURES_RACE_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<RaceType>>() {});
+        new GenericType<CollectionDTO<RaceType>>() {
+        });
   }
 
   @Test
@@ -98,7 +105,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         AGE_GROUP_TYPE_PATH,
         FIXTURES_AGE_GROUP_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<AgeGroupType>>() {});
+        new GenericType<CollectionDTO<AgeGroupType>>() {
+        });
   }
 
   @Test
@@ -106,7 +114,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         LANGUAGE_TYPE_PATH,
         FIXTURES_LANGUAGE_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<LanguageType>>() {});
+        new GenericType<CollectionDTO<LanguageType>>() {
+        });
   }
 
   @Test
@@ -114,7 +123,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         GENDER_TYPE_PATH,
         FIXTURES_GENDER_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<GenderType>>() {});
+        new GenericType<CollectionDTO<GenderType>>() {
+        });
   }
 
   @Test
@@ -122,7 +132,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         NAME_TYPE_PATH,
         FIXTURES_NAME_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<NameType>>() {});
+        new GenericType<CollectionDTO<NameType>>() {
+        });
   }
 
   @Test
@@ -130,7 +141,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         EDUCATION_LEVEL_TYPE_PATH,
         FIXTURES_EDUCATION_LEVEL_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<EducationLevelType>>() {});
+        new GenericType<CollectionDTO<EducationLevelType>>() {
+        });
   }
 
   @Test
@@ -138,7 +150,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         ETHNICITY_TYPE_PATH,
         FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<EthnicityType>>() {});
+        new GenericType<CollectionDTO<EthnicityType>>() {
+        });
   }
 
   @Test
@@ -146,7 +159,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         INCOME_TYPE_PATH,
         FIXTURES_INCOME_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<IncomeType>>() {});
+        new GenericType<CollectionDTO<IncomeType>>() {
+        });
   }
 
   @Test
@@ -154,7 +168,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         PHONE_NUMBER_TYPE_PATH,
         FIXTURES_PHONE_NUMBER_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<PhoneNumberType>>() {});
+        new GenericType<CollectionDTO<PhoneNumberType>>() {
+        });
   }
 
   @Test
@@ -162,7 +177,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         ADDRESS_TYPE_PATH,
         FIXTURES_ADDRESS_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<AddressType>>() {});
+        new GenericType<CollectionDTO<AddressType>>() {
+        });
   }
 
   @Test
@@ -170,7 +186,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         SIBLING_GROUP_TYPE_PATH,
         FIXTURES_SIBLING_GROUP_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<SiblingGroupType>>() {});
+        new GenericType<CollectionDTO<SiblingGroupType>>() {
+        });
   }
 
   @Test
@@ -178,7 +195,17 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         STATE_TYPE_PATH,
         FIXTURES_STATE_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<StateType>>() {});
+        new GenericType<CollectionDTO<StateType>>() {
+        });
+  }
+
+  @Test
+  public void getResidenceOwnershipTypeTest() throws Exception {
+    baseDictionaryTest(
+        RESIDENCE_OWNERSHIP_TYPE_PATH,
+        FIXTURES_RESIDENCE_OWNERSHIP_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<ResidenceOwnershipType>>() {
+        });
   }
 
 }
