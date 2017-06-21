@@ -248,7 +248,7 @@ public class DictionariesResource {
     }
   )
   @ApiOperation(value = "Returns States", response = CollectionDTO.class)
-  public Response getSStateTypes() {
+  public Response getStateTypes() {
     return dictionariesResourceDeledate.get(STATE_TYPE);
   }
 }
