@@ -37,6 +37,8 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  private Residence residence;
+
   @Column(name = "create_user_id", length = 50, nullable = false)
   private String createUserId;
 
@@ -69,6 +71,14 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Residence getResidence() {
+    return residence;
+  }
+
+  public void setResidence(Residence residence) {
+    this.residence = residence;
   }
 
   public String getCreateUserId() {
