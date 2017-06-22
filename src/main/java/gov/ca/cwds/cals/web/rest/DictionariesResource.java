@@ -149,11 +149,11 @@ public class DictionariesResource {
   @Path("/" + ETHNICITY_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Ethnicity Types", response = CollectionDTO.class)
   public Response getDictionaryEthnicityType() {
@@ -165,11 +165,11 @@ public class DictionariesResource {
   @Path("/" + RACE_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Races", response = CollectionDTO.class)
   public Response getRaceType() {
@@ -181,11 +181,11 @@ public class DictionariesResource {
   @Path("/" + INCOME_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Income Types", response = CollectionDTO.class)
   public Response getIncomeType() {
@@ -197,11 +197,11 @@ public class DictionariesResource {
   @Path("/" + PHONE_NUMBER_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Phone Number Types", response = CollectionDTO.class)
   public Response getPhoneNumberTypes() {
@@ -213,11 +213,11 @@ public class DictionariesResource {
   @Path("/" + ADDRESS_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Address Types", response = CollectionDTO.class)
   public Response getAddressTypes() {
@@ -229,11 +229,11 @@ public class DictionariesResource {
   @Path("/" + SIBLING_GROUP_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Sibling Group Types", response = CollectionDTO.class)
   public Response getSiblingGroupTypes() {
@@ -245,11 +245,11 @@ public class DictionariesResource {
   @Path("/" + STATE_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns States", response = CollectionDTO.class)
   public Response getStateTypes() {

@@ -1,5 +1,8 @@
 package gov.ca.cwds.cals.service.dto;
 
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.Constants;
@@ -9,18 +12,14 @@ import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.api.domain.DomainObject;
 import io.swagger.annotations.ApiModelProperty;
-import org.glassfish.jersey.linking.InjectLink;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
-import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.glassfish.jersey.linking.InjectLink;
 
 /**
  * {@link DomainObject} representing a facility.
@@ -75,11 +74,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifie
     @ApiModelProperty(required = false, readOnly = false, value = "District Office", example = "MISSION VALLEY")
     private DistrictOfficeDTO districtOffice;
 
-    @RemoveTrailingSpaces
-    @JsonProperty("license_number")
-    @NotNull
-    @ApiModelProperty(required = false, readOnly = false, value = "License Number", example = "193600161")
-    private String licenseNumber;
+  @RemoveTrailingSpaces
+  @JsonProperty("license_number")
+  @NotNull
+  @ApiModelProperty(required = false, readOnly = false, value = "License Number", example = "193600161")
+  private String licenseNumber;
 
     @JsonProperty("status")
     @NotNull
