@@ -17,11 +17,15 @@ import org.hibernate.annotations.Type;
  */
 @NamedQuery(
     name = "ReplicatedClient.findUpdated",
-    query = "SELECT c FROM ReplicatedClient c" +
-        " JOIN c.placementEpisodes pe" +
-        " JOIN pe.outOfHomePlacements ohp" +
-        " JOIN ohp.placementHome ph" +
-        " WHERE ph.licenseNo IS NULL AND ph.replicationDate > :dateAfter"
+    query = "SELECT c, ph FROM ReplicatedClient c" +
+        " JOIN FETCH c.placementEpisodes pe" +
+        " JOIN FETCH pe.outOfHomePlacements ohp" +
+        " JOIN FETCH ohp.placementHome ph" +
+        " WHERE ph.licenseNo IS NULL AND (" +
+        " c.replicationDate > :dateAfter OR" +
+        " pe.replicationDate > :dateAfter OR" +
+        " ohp.replicationDate > :dateAfter OR" +
+        " ph.replicationDate > :dateAfter)"
 )
 @Entity
 @javax.persistence.Table(name = "CLIENT_T")
