@@ -9,6 +9,8 @@ import java.util.Collection;
  */
 public final class RFA1aFormsDTO extends CollectionDTO<RFA1aForm> {
 
+  public RFA1aFormsDTO() {}
+
   public RFA1aFormsDTO(Collection<RFA1aForm> collection) {
     super(collection);
   }
