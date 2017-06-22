@@ -18,7 +18,7 @@ import org.hibernate.annotations.Type;
 @NamedQuery(
     name = "ReplicatedPlacementHome.findUpdated",
     query = "SELECT ph FROM ReplicatedPlacementHome ph "
-      + " WHERE ph.licenseNo IS NULL AND ph.replicationDate > ?"
+        + " WHERE ph.licenseNo IS NULL AND ph.replicationDate > :dateAfter"
 )
 @Entity
 @javax.persistence.Table(name = "PLC_HM_T")
