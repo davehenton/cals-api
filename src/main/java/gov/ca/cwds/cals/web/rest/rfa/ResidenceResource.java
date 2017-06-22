@@ -68,8 +68,10 @@ public class ResidenceResource {
   public Response updateResidence(
       @PathParam(RFA_1A_FORM_ID)
       @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
-          Long formId) {
-    return resourceDelegate.create(null);
+          Long formId,
+      @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1a Residence object")
+          Residence residence) {
+    return resourceDelegate.update(formId, residence);
   }
 
 }

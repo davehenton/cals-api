@@ -12,12 +12,16 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 public enum CalsExceptionInfo {
 
   COMPLAINT_NOT_FOUND_BY_ID("1",
-      "Facility complaint is not found by facility number and complaint id"),
+      "Facility Complaint is not found by Facility Number and Complaint Id"),
 
   DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN("2",
       "Disctrict office (lis_fac_file.fac_do_nbr) is unexpectedly empty"),
 
-  RFA_1A_APPLICANT_NOT_FOUND_BY_ID("3", "Applicant is not found by Form Id and applicant id");
+  RFA_1A_APPLICANT_NOT_FOUND_BY_ID("3", "Applicant is not found by Form Id and Applicant Id"),
+
+  UNEXPECTED_RESIDENCE_CLASS_TYPE("4", "Unexpected Residence class type"),
+
+  RFA_1A_APPLICATION_NOT_FOUND_BY_ID("5", "Application is not found by Form Id");
 
   @JsonProperty("code")
   private final String code;
