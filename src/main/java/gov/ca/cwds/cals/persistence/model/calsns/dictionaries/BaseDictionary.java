@@ -18,7 +18,9 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class BaseDictionary extends BaseDTO implements PersistentObject {
@@ -74,11 +76,6 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
   @Override
   public int hashCode() {
     return Objects.hashCode(getId());
-  }
-
-  @Override
-  public String toString() {
-    return "Dictionary{" + "id=" + getId() + ", value='" + getValue() + "'" + "}";
   }
 
   @Override

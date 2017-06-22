@@ -75,6 +75,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifie
     @ApiModelProperty(required = false, readOnly = false, value = "District Office", example = "MISSION VALLEY")
     private DistrictOfficeDTO districtOffice;
 
+    @RemoveTrailingSpaces
     @JsonProperty("license_number")
     @NotNull
     @ApiModelProperty(required = false, readOnly = false, value = "License Number", example = "193600161")

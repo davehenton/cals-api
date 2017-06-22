@@ -1,20 +1,34 @@
 package gov.ca.cwds.cals.web.rest;
 
 import static gov.ca.cwds.cals.Constants.API.DICTIONARIES;
+import static gov.ca.cwds.cals.Constants.DictionaryType.ADDRESS_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.ADDRESS_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
@@ -42,12 +56,12 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class DictionariesResource {
 
-  private ResourceDelegate dictionariesResourceDeledate;
+  private ResourceDelegate dictionariesResourceDelegate;
 
   @Inject
   public DictionariesResource(
-      @DictionariesServiceBackendResource ResourceDelegate dictionariesResourceDeledate) {
-    this.dictionariesResourceDeledate = dictionariesResourceDeledate;
+      @DictionariesServiceBackendResource ResourceDelegate dictionariesResourceDelegate) {
+    this.dictionariesResourceDelegate = dictionariesResourceDelegate;
   }
 
   @UnitOfWork(CALSNS)
@@ -63,7 +77,7 @@ public class DictionariesResource {
   )
   @ApiOperation(value = "Returns Age Group Types", response = CollectionDTO.class)
   public Response getDictionaryAgeGroupTypes() {
-    return dictionariesResourceDeledate.get(AGE_GROUP_TYPE);
+    return dictionariesResourceDelegate.get(AGE_GROUP_TYPE);
   }
 
   @UnitOfWork(CALSNS)
@@ -77,9 +91,9 @@ public class DictionariesResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Returns Language Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Languages", response = CollectionDTO.class)
   public Response getDictionaryLanguageTypes() {
-    return dictionariesResourceDeledate.get(LANGUAGE_TYPE);
+    return dictionariesResourceDelegate.get(LANGUAGE_TYPE);
   }
 
   @UnitOfWork(CALSNS)
@@ -93,9 +107,9 @@ public class DictionariesResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Returns Gender Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Genders", response = CollectionDTO.class)
   public Response getDictionaryGenderTypes() {
-    return dictionariesResourceDeledate.get(GENDER_TYPE);
+    return dictionariesResourceDelegate.get(GENDER_TYPE);
   }
 
   @UnitOfWork(CALSNS)
@@ -111,7 +125,7 @@ public class DictionariesResource {
   )
   @ApiOperation(value = "Returns Name Types", response = CollectionDTO.class)
   public Response getDictionaryNameTypes() {
-    return dictionariesResourceDeledate.get(NAME_TYPE);
+    return dictionariesResourceDelegate.get(NAME_TYPE);
   }
 
   @UnitOfWork(CALSNS)
@@ -127,7 +141,7 @@ public class DictionariesResource {
   )
   @ApiOperation(value = "Returns Education Level Types", response = CollectionDTO.class)
   public Response getDictionaryEducationLevelType() {
-    return dictionariesResourceDeledate.get(EDUCATION_LEVEL_TYPE);
+    return dictionariesResourceDelegate.get(EDUCATION_LEVEL_TYPE);
   }
 
   @UnitOfWork(CALSNS)
@@ -135,20 +149,116 @@ public class DictionariesResource {
   @Path("/" + ETHNICITY_TYPE_PATH)
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 404, message = "Not found"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
   @ApiOperation(value = "Returns Ethnicity Types", response = CollectionDTO.class)
   public Response getDictionaryEthnicityType() {
-    return dictionariesResourceDeledate.get(ETHNICITY_TYPE);
+    return dictionariesResourceDelegate.get(ETHNICITY_TYPE);
   }
 
   @UnitOfWork(CALSNS)
   @GET
   @Path("/" + RACE_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
+  )
+  @ApiOperation(value = "Returns Races", response = CollectionDTO.class)
+  public Response getRaceType() {
+    return dictionariesResourceDelegate.get(RACE_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + INCOME_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
+  )
+  @ApiOperation(value = "Returns Income Types", response = CollectionDTO.class)
+  public Response getIncomeType() {
+    return dictionariesResourceDelegate.get(INCOME_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + PHONE_NUMBER_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
+  )
+  @ApiOperation(value = "Returns Phone Number Types", response = CollectionDTO.class)
+  public Response getPhoneNumberTypes() {
+    return dictionariesResourceDelegate.get(PHONE_NUMBER_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + ADDRESS_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
+  )
+  @ApiOperation(value = "Returns Address Types", response = CollectionDTO.class)
+  public Response getAddressTypes() {
+    return dictionariesResourceDelegate.get(ADDRESS_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + SIBLING_GROUP_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
+  )
+  @ApiOperation(value = "Returns Sibling Group Types", response = CollectionDTO.class)
+  public Response getSiblingGroupTypes() {
+    return dictionariesResourceDelegate.get(SIBLING_GROUP_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + STATE_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
+  )
+  @ApiOperation(value = "Returns States", response = CollectionDTO.class)
+  public Response getStateTypes() {
+    return dictionariesResourceDelegate.get(STATE_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + RESIDENCE_OWNERSHIP_TYPE_PATH)
   @Timed
   @ApiResponses(
       value = {
@@ -157,9 +267,25 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Race Types", response = CollectionDTO.class)
-  public Response getRaceType() {
-    return dictionariesResourceDeledate.get(RACE_TYPE);
+  @ApiOperation(value = "Returns Residence Ownership Types", response = CollectionDTO.class)
+  public Response getResidenceOwnershipTypes() {
+    return dictionariesResourceDelegate.get(RESIDENCE_OWNERSHIP_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + APPLICANT_RELATIONSHIP_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Applicant Relationship Types", response = CollectionDTO.class)
+  public Response getApplicantRelationshipTypes() {
+    return dictionariesResourceDelegate.get(APPLICANT_RELATIONSHIP_TYPE);
   }
 
 }
