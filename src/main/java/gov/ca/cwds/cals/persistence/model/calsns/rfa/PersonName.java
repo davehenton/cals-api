@@ -2,7 +2,6 @@ package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -18,7 +17,6 @@ public class PersonName extends BaseDTO {
   private String firstName;
   private String middleName;
   private String lastName;
-  private NameType nameType;
 
   public String getFirstName() {
     return firstName;
@@ -44,14 +42,6 @@ public class PersonName extends BaseDTO {
     this.lastName = lastName;
   }
 
-  public NameType getNameType() {
-    return nameType;
-  }
-
-  public void setNameType(NameType nameType) {
-    this.nameType = nameType;
-  }
-
   @Override
   public boolean equals(Object o) {
     return EqualsBuilder.reflectionEquals(this, o);
@@ -60,22 +50,5 @@ public class PersonName extends BaseDTO {
   @Override
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this);
-  }
-
-  @Override
-  public String toString() {
-    return "PersonName{"
-        + "firstName='"
-        + firstName
-        + '\''
-        + ", middleName='"
-        + middleName
-        + '\''
-        + ", lastName='"
-        + lastName
-        + '\''
-        + ", nameType="
-        + nameType
-        + '}';
   }
 }

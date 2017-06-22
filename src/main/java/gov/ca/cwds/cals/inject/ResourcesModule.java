@@ -30,6 +30,7 @@ import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResource;
+import gov.ca.cwds.cals.web.rest.rfa.ResidenceResource;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
 
@@ -59,6 +60,7 @@ public class ResourcesModule extends AbstractModule {
     // RFA
     bind(RFA1aFormsResource.class);
     bind(RFA1aApplicantResource.class);
+    bind(ResidenceResource.class);
   }
 
   @Provides

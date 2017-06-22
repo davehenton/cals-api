@@ -28,18 +28,18 @@ public class ResidenceService extends CrudServiceAdapter {
 
   private static final Logger LOG = LoggerFactory.getLogger(ResidenceService.class);
 
-  private final RFA1aFormsDao applicationDao;
+  private final RFA1aFormsDao formsDao;
 
   @Inject
-  public ResidenceService(RFA1aFormsDao applicationDao) {
-    this.applicationDao = applicationDao;
+  public ResidenceService(RFA1aFormsDao formsDao) {
+    this.formsDao = formsDao;
   }
 
   @Override
   public Response find(Serializable applicationId) {
     try {
-      RFA1aForm form = applicationDao.find(applicationId);
-      return form.getResidence();
+      RFA1aForm form = formsDao.find(applicationId);
+      return form == null ? null : form.getResidence();
     } catch (NoResultException e) {
       LOG.warn("There is no Residence found for applicationId = {}", applicationId);
       LOG.debug(e.getMessage(), e);
@@ -50,7 +50,7 @@ public class ResidenceService extends CrudServiceAdapter {
   @Override
   public Response update(Serializable applicationId, Request request) {
     try {
-      RFA1aForm form = applicationDao.find(applicationId);
+      RFA1aForm form = formsDao.find(applicationId);
       form.setUpdateDateTime(LocalDateTime.now());
       form.setUpdateUserId(SYSTEM_USER_ID);
       if (!(request instanceof Residence)) {
@@ -59,7 +59,7 @@ public class ResidenceService extends CrudServiceAdapter {
       Residence residence = (Residence) request;
       form.setResidence(residence);
 
-      RFA1aForm updatedForm = applicationDao.update(form);
+      RFA1aForm updatedForm = formsDao.update(form);
       return updatedForm.getResidence();
     } catch (NoResultException e) {
       LOG.warn("There is no Application found for applicationId = {}", applicationId);

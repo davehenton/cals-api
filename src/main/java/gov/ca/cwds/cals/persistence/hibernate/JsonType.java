@@ -32,7 +32,7 @@ public abstract class JsonType implements UserType {
 
   @Override
   public boolean equals(Object x, Object y) {
-    return x.equals(y);
+    return x == y || x.equals(y);
   }
 
   @Override

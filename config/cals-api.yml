@@ -129,20 +129,20 @@ cmsDataSourceFactory:
 #      #hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSINT}
 #      hibernate.connection.autocommit: false
 
-logging:
-  level: ${LOGLEVEL:-WARN}
-  loggers:
-    "org.hibernate.SQL":
-      level: DEBUG
-    "org.hibernate.type.descriptor.sql":
-      level: DEBUG
-    "AUDIT":
-      level: ALL
-    "gov.ca.cwds":
-      level: DEBUG
-  appenders:
-    - type: console
-      threshold: WARN
-      timeZone: UTC
-      target: stdout
-      logFormat: '%X{remoteAddress} [%date{ISO8601}] %level "%thread" "%X{uniqueId}" %logger: "%message%n"'
+#logging:
+#  level: ${LOGLEVEL:-WARN}
+#  loggers:
+#    "org.hibernate.SQL":
+#      level: DEBUG
+#    "org.hibernate.type.descriptor.sql":
+#      level: DEBUG
+#    "AUDIT":
+#      level: ALL
+#    "gov.ca.cwds":
+#      level: DEBUG
+#  appenders:
+#    - type: console
+#      threshold: WARN
+#      timeZone: UTC
+#      target: stdout
+#      logFormat: '%X{remoteAddress} [%date{ISO8601}] %level "%thread" "%X{uniqueId}" %logger: "%message%n"'

@@ -7,6 +7,7 @@ import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
+import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ResidenceServiceBackedResource;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Residence;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -28,11 +29,12 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team.
  */
 @Api(tags = {RFA})
-@Path(RFA_1A_FORMS + "{" + RFA_1A_FORM_ID + "}" + RESIDENCE)
+@Path(RFA_1A_FORMS + "/{" + RFA_1A_FORM_ID + "}/" + RESIDENCE)
 @Produces(MediaType.APPLICATION_JSON)
 public class ResidenceResource {
   private ResourceDelegate resourceDelegate;
 
+  @Inject
   public ResidenceResource(@ResidenceServiceBackedResource ResourceDelegate resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
