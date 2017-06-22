@@ -9,6 +9,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aApplicantDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
@@ -33,6 +34,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
@@ -153,7 +155,9 @@ public class DataAccessModule extends AbstractModule {
           ResidenceOwnershipType.class,
           ApplicantRelationshipType.class,
           //RFA
-          RFA1aForm.class) {
+          RFA1aForm.class
+          ,
+          RFA1aApplicant.class) {
 
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -186,6 +190,8 @@ public class DataAccessModule extends AbstractModule {
 
     // RFA
     bind(RFA1aFormsDao.class);
+    bind(RFA1aApplicantDao.class);
+
   }
 
   @Provides

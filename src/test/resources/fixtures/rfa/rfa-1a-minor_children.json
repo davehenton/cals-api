@@ -4,8 +4,12 @@
     "value": "Child"
   },
   "child_related_to": [
-    {applicantId1},
-    {applicantId2}
+    {
+      applicantId1
+    },
+    {
+      applicantId2
+    }
   ],
   "other_relative_first_name": "",
   "other_relative_middle_name": "",

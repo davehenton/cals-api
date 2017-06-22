@@ -1,7 +1,7 @@
 {
   "is_child_identified": false,
   "is_child_in_home": false,
-  "preferred_ages":[
+  "preferred_ages": [
     {
       "id": 1,
       "value": "0 to 3 years"
