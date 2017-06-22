@@ -9,6 +9,9 @@ server:
   - type: http
     port: 9081
 
+  requestLog:
+    appenders:
+      - type: console
 shiro:
   iniConfigs: ["file:${SHIRO_CONFIG_PATH:-config/shiro.ini}"]
 
@@ -36,7 +39,7 @@ nsDataSourceFactory:
   properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
-      hibernate.show_sql: true
+      hibernate.show_sql: false
 
 lisDataSourceFactory:
   driverClass: org.postgresql.Driver
@@ -52,7 +55,7 @@ lisDataSourceFactory:
   properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
-      hibernate.show_sql: true
+      hibernate.show_sql: false
       hibernate.default_schema: lis
 
 fasDataSourceFactory:
@@ -69,7 +72,7 @@ fasDataSourceFactory:
   properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
-      hibernate.show_sql: true
+      hibernate.show_sql: false
       hibernate.default_schema: fas
 
 calsnsDataSourceFactory:
@@ -84,9 +87,9 @@ calsnsDataSourceFactory:
   maxSize: ${DB_NS_CP_MAX_SIZE:-8}
   minIdleTime: 1 minute
   properties:
-      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
+      hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.JsonbSupportPostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
-      hibernate.show_sql: true
+      hibernate.show_sql: false
       hibernate.default_schema: calsns
 
 cmsDataSourceFactory:
@@ -103,7 +106,7 @@ cmsDataSourceFactory:
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: org.hibernate.dialect.DB2Dialect
-      hibernate.show_sql: true
+      hibernate.show_sql: false
       hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSCMS}
       hibernate.connection.autocommit: false
 
@@ -126,3 +129,20 @@ cmsDataSourceFactory:
 #      #hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSINT}
 #      hibernate.connection.autocommit: false
 
+logging:
+  level: ${LOGLEVEL:-WARN}
+  loggers:
+    "org.hibernate.SQL":
+      level: DEBUG
+    "org.hibernate.type.descriptor.sql":
+      level: DEBUG
+    "AUDIT":
+      level: ALL
+    "gov.ca.cwds":
+      level: DEBUG
+  appenders:
+    - type: console
+      threshold: WARN
+      timeZone: UTC
+      target: stdout
+      logFormat: '%X{remoteAddress} [%date{ISO8601}] %level "%thread" "%X{uniqueId}" %logger: "%message%n"'

@@ -11,12 +11,15 @@ import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.NamedQuery;
 
@@ -63,6 +66,12 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
   @Column(name = "update_datetime")
   private LocalDateTime updateDateTime;
 
+  @OneToMany
+  @JoinColumn(name = "application_id")
+  private List<RFA1aApplicant> applicantEntities;
+
+
+
   public Long getId() {
     return id;
   }
@@ -101,6 +110,15 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
 
   public void setUpdateDateTime(LocalDateTime updateDateTime) {
     this.updateDateTime = updateDateTime;
+  }
+
+  public List<RFA1aApplicant> getApplicantEntities() {
+    return applicantEntities;
+  }
+
+  public void setApplicantEntities(
+      List<RFA1aApplicant> applicantEntities) {
+    this.applicantEntities = applicantEntities;
   }
 
   @Override

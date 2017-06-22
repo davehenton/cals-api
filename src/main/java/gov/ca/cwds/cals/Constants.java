@@ -1,15 +1,24 @@
 package gov.ca.cwds.cals;
 
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public final class Constants {
 
   public static class API {
@@ -34,7 +43,11 @@ public final class Constants {
 
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
-    public static final String AGE_GROUP_TYPES = "age-groups";
+    public static final String RFA_1A_APPLICANT = "applicant";
+
+    public static final String RFA_1A_APPLICANTS = "applicants";
+
+    public static final String RESIDENCE = "residence";
 
     public static final String SYSTEM_USER_ID = "SYSTEM";
 
@@ -52,10 +65,14 @@ public final class Constants {
 
       public static final String RFA_1A_FORM_ID = "formId";
 
-      private PathParams() {}
+      public static final String RFA_1A_APPLICANT_ID = "applicantId";
+
+      private PathParams() {
+      }
     }
 
-    private API() {}
+    private API() {
+    }
   }
 
   public enum DictionaryType {
@@ -65,41 +82,38 @@ public final class Constants {
     NAME_TYPE(NameType.class),
     EDUCATION_LEVEL_TYPE(EducationLevelType.class),
     ETHNICITY_TYPE(EthnicityType.class),
-    RACE_TYPE(RaceType.class)
+    RACE_TYPE(RaceType.class),
+    INCOME_TYPE(IncomeType.class),
+    PHONE_NUMBER_TYPE(PhoneNumberType.class),
+    ADDRESS_TYPE(AddressType.class),
+    SIBLING_GROUP_TYPE(SiblingGroupType.class),
+    STATE_TYPE(StateType.class),
+    RESIDENCE_OWNERSHIP_TYPE(ResidenceOwnershipType.class),
+    APPLICANT_RELATIONSHIP_TYPE(ApplicantRelationshipType.class)
 
     /*
     COUNTY_TYPE("county-type", null),
-    STATE_TYPE("state-type", null),
     APPLICATION_STATUS_TYPE("application-status-type"),
-    OTHER_NAME_TYPE("other-name-type"),
-
-    ETHNICITY_TYPE("ethnicity-type"),
-    PHONE_NUMBER_TYPE("phone-number-type"),
-    ADDRESS_TYPE("address-type"),
-    RESIDENCE_OWNERSHIP_TYPE("residence-ownership-type"),
-    RELATIONSHIP_TYPE("relationship-type"),
     RELATIONSHIP_EVENT_TYPE("relationship-event-type"),
-    SIBLING_GROUP_TYPE("sibling-group-type")
     */
 
     ;
-    public static final String AGE_GROUP_TYPE_PATH = "age-group-type";
-    public static final String LANGUAGE_TYPE_PATH = "language-type";
-    public static final String GENDER_TYPE_PATH = "gender-type";
-    public static final String NAME_TYPE_PATH = "name-type";
-    public static final String EDUCATION_LEVEL_TYPE_PATH = "education-level-type";
-    public static final String ETHNICITY_TYPE_PATH = "ethnicity-type";
-    public static final String COUNTY_TYPE_PATH = "county-type";
-    public static final String STATE_TYPE_PATH = "state-type";
-    public static final String APPLICATION_STATUS_TYPE_PATH = "application-status-type";
-    public static final String OTHER_NAME_TYPE_PATH = "other-name-type";
-    public static final String RACE_TYPE_PATH = "race-type";
-    public static final String PHONE_NUMBER_TYPE_PATH = "phone-number-type";
-    public static final String ADDRESS_TYPE_PATH = "address-type";
-    public static final String RESIDENCE_OWNERSHIP_TYPE_PATH = "residence-ownership-type";
-    public static final String RELATIONSHIP_TYPE_PATH = "relationship-type";
-    public static final String RELATIONSHIP_EVENT_TYPE_PATH = "relationship-event-type";
-    public static final String SIBLING_GROUP_TYPE_PATH = "sibling-group-type";
+    public static final String AGE_GROUP_TYPE_PATH = "age-groups";
+    public static final String LANGUAGE_TYPE_PATH = "languages";
+    public static final String GENDER_TYPE_PATH = "genders";
+    public static final String NAME_TYPE_PATH = "name-types";
+    public static final String EDUCATION_LEVEL_TYPE_PATH = "education-level-types";
+    public static final String ETHNICITY_TYPE_PATH = "ethnicity-types";
+    public static final String RACE_TYPE_PATH = "race-types";
+    public static final String INCOME_TYPE_PATH = "income-types";
+    public static final String PHONE_NUMBER_TYPE_PATH = "phone-number-types";
+    public static final String ADDRESS_TYPE_PATH = "address-types";
+    public static final String SIBLING_GROUP_TYPE_PATH = "rfa/sibling-groups";
+    public static final String STATE_TYPE_PATH = "states";
+    public static final String APPLICATION_STATUS_TYPE_PATH = "application-statuses";
+    public static final String RESIDENCE_OWNERSHIP_TYPE_PATH = "residence-ownership-types";
+    public static final String APPLICANT_RELATIONSHIP_TYPE_PATH = "rfa/applicant-relationship-types";
+    public static final String RELATIONSHIP_EVENT_TYPE_PATH = "relationship-event-types";
 
     private Class<? extends BaseDictionary> dictionaryClass;
 
@@ -119,7 +133,8 @@ public final class Constants {
 
     public static final String MAIL = "mail";
 
-    private AddressTypes() {}
+    private AddressTypes() {
+    }
   }
 
   public static class PhoneTypes {
@@ -128,7 +143,8 @@ public final class Constants {
 
     public static final String ALTERNATE = "alternate";
 
-    private PhoneTypes() {}
+    private PhoneTypes() {
+    }
   }
 
   public static class VisitTypes {
@@ -143,7 +159,8 @@ public final class Constants {
 
     public static final String MIDDLE_YEAR = "Middle Year";
 
-    private VisitTypes() {}
+    private VisitTypes() {
+    }
   }
 
   public static class UnitOfWork {
@@ -156,8 +173,10 @@ public final class Constants {
 
     public static final String CALSNS = "calsns";
 
-    private UnitOfWork() {}
+    private UnitOfWork() {
+    }
   }
 
-  private Constants() {}
+  private Constants() {
+  }
 }
