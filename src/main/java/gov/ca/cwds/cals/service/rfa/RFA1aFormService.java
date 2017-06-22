@@ -31,12 +31,19 @@ public class RFA1aFormService extends CrudServiceAdapter {
     form.setCreateUserId(SYSTEM_USER_ID);
     form.setUpdateDateTime(now);
     form.setUpdateUserId(SYSTEM_USER_ID);
-    dao.create(form);
+    form = dao.create(form);
     return form;
   }
 
   @Override
   public Response find(Serializable formId) {
     return dao.find(formId);
+  }
+
+  public void update(Serializable formId) {
+    RFA1aForm rfa1aForm = dao.find(formId);
+    rfa1aForm.setUpdateDateTime(LocalDateTime.now());
+    rfa1aForm.setUpdateUserId(SYSTEM_USER_ID);
+    dao.update(rfa1aForm);
   }
 }

@@ -42,6 +42,10 @@ public final class Constants {
 
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
+    public static final String RFA_1A_APPLICANT = "applicant";
+
+    public static final String RFA_1A_APPLICANTS = "applicants";
+
     public static final String RESIDENCE = "residence";
 
     public static final String SYSTEM_USER_ID = "SYSTEM";
@@ -59,6 +63,8 @@ public final class Constants {
       public static final String DICTIONARY_TYPE = "dictionaryType";
 
       public static final String RFA_1A_FORM_ID = "formId";
+
+      public static final String RFA_1A_APPLICANT_ID = "applicantId";
 
       private PathParams() {
       }
