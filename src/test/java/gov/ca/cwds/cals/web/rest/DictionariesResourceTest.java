@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest;
 
 import static gov.ca.cwds.cals.Constants.DictionaryType.ADDRESS_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
@@ -74,6 +75,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "state-type-response.json";
   private static final String FIXTURES_RESIDENCE_OWNERSHIP_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "residence-ownership-type-response.json";
+  private static final String FIXTURES_APPLICANT_RELATIONSHIP_TYPE_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "applicant-relationship-type-response.json";
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -207,5 +210,15 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
         new GenericType<CollectionDTO<ResidenceOwnershipType>>() {
         });
   }
+
+  @Test
+  public void getApplicantRelationshipTypeTest() throws Exception {
+    baseDictionaryTest(
+        APPLICANT_RELATIONSHIP_TYPE_PATH,
+        FIXTURES_APPLICANT_RELATIONSHIP_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<ResidenceOwnershipType>>() {
+        });
+  }
+
 
 }
