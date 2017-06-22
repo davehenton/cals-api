@@ -146,6 +146,10 @@ run {
     args 'server', './config/cals-api.yml'
 }
 
+test {
+    systemProperty 'java.net.preferIPv4Stack', 'true'
+}
+
 jar {
     manifest {
         attributes 'Main-Class': mainClassName
