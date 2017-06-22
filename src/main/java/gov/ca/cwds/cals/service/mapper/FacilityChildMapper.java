@@ -28,8 +28,6 @@ import java.util.Set;
 @Mapper(uses = {PersonMapper.class, TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityChildMapper {
 
-    List<FacilityChildDTO> toFacilityChildDTO(Collection<BaseClient> clients);
-
     @Mapping(target = "id", source = "client.identifier")
     @Mapping(target = "person", source = "client")
     @Mapping(target = "dateOfPlacement", ignore = true)
