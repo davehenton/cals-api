@@ -3,6 +3,7 @@
  */
 
 entity Rfa_1a {
+  application TextBlob,
   residence TextBlob,
   relationships TextBlob,
   applicantHistory TextBlob,

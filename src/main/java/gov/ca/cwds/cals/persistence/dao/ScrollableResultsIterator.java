@@ -8,6 +8,7 @@ import org.hibernate.ScrollableResults;
  * @author CWDS TPT-2
  */
 public abstract class ScrollableResultsIterator<T> implements Iterator<T> {
+
   private T next;
   private ScrollableResults scrollableResults;
 
