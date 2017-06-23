@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import gov.ca.cwds.cals.persistence.model.calsns.Dictionary;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import io.swagger.annotations.ApiModelProperty;
@@ -66,7 +65,7 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Dictionary dictionary = (Dictionary) o;
+    BaseDictionary dictionary = (BaseDictionary) o;
     if (dictionary.getId() == null || getId() == null) {
       return false;
     }

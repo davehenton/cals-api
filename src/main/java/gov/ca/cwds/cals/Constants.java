@@ -21,6 +21,10 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
  */
 public final class Constants {
 
+  public static final String SQL_TYPE = "sqlType";
+  public static final String CLOB_TYPE = "2005";
+  public static final String OTHER_TYPE = "1111";
+
   public static class API {
 
     public static final String FACILITIES = "facilities";

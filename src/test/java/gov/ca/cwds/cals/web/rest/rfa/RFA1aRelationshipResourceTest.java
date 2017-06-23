@@ -17,7 +17,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -54,7 +53,6 @@ public class RFA1aRelationshipResourceTest extends BaseCalsApiIntegrationTest {
     assertEquals(404, response.getStatus());
   }
 
-  @Ignore
   @Test
   public void putApplicationRelationshipTest() throws Exception {
     RFA1aForm rfa1aForm = RFAHelper.createForm(clientTestRule);
