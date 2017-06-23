@@ -15,6 +15,7 @@ import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
+import gov.ca.cwds.cals.service.rfa.ApplicantsRelationshipService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
@@ -28,6 +29,7 @@ import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
+import gov.ca.cwds.cals.web.rest.rfa.ApplicantsRelationshipResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResource;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -59,6 +61,7 @@ public class ResourcesModule extends AbstractModule {
     // RFA
     bind(RFA1aFormsResource.class);
     bind(RFA1aApplicantResource.class);
+    bind(ApplicantsRelationshipResource.class);
   }
 
   @Provides
@@ -141,6 +144,13 @@ public class ResourcesModule extends AbstractModule {
   @ResidenceServiceBackedResource
   public ResourceDelegate residenceServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(ResidenceService.class));
+  }
+
+  @Provides
+  @ApplicantsRelationshipServiceBackedResource
+  public ResourceDelegate applicantsRelationshipServiceBackedResource(Injector injector) {
+    return new ServiceBackedResourceDelegate(
+        injector.getInstance(ApplicantsRelationshipService.class));
   }
 
   @Provides

@@ -34,6 +34,10 @@ public enum CalsExceptionInfo {
     this.code = code;
   }
 
+  public String getMessage() {
+    return message;
+  }
+
   @Override
   public String toString() {
     return ReflectionToStringBuilder.toString(this);

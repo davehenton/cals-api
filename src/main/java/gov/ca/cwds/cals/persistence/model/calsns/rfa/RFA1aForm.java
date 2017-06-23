@@ -44,6 +44,9 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
   @Type(type = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ResidenceJsonType")
   private Residence residence;
 
+  @Type(type = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsRelationshipJsonType")
+  private ApplicantsRelationship relationships;
+
   @Column(name = "create_user_id", length = 50, nullable = false)
   private String createUserId;
 
@@ -88,6 +91,15 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
 
   public void setResidence(Residence residence) {
     this.residence = residence;
+  }
+
+  public ApplicantsRelationship getRelationships() {
+    return relationships;
+  }
+
+  public void setRelationships(
+      ApplicantsRelationship relationships) {
+    this.relationships = relationships;
   }
 
   public String getCreateUserId() {

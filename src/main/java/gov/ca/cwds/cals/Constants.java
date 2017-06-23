@@ -47,6 +47,8 @@ public final class Constants {
 
     public static final String RFA_1A_APPLICANTS = "applicants";
 
+    public static final String APPLICANTS_RELATIONSHIP = "applicants-relationship";
+
     public static final String RESIDENCE = "residence";
 
     public static final String SYSTEM_USER_ID = "SYSTEM";

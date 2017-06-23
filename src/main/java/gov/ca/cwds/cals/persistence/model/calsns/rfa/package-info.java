@@ -3,6 +3,8 @@
  */
 @TypeDef(name = "ApplicantJsonType", typeClass = ApplicantJsonType.class)
 @TypeDef(name = "ResidenceJsonType", typeClass = ResidenceJsonType.class)
+@TypeDef(name = "ApplicantJsonType", typeClass = ApplicantJsonType.class)
+@TypeDef(name = "ApplicantsRelationshipJsonType", typeClass = ApplicantsRelationshipJsonType.class)
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
 import org.hibernate.annotations.TypeDef;
