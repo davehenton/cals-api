@@ -11,25 +11,32 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum CalsExceptionInfo {
 
-    COMPLAINT_NOT_FOUND_BY_ID("1", "Facility complaint is not found by facility number and complaint id"),
+  COMPLAINT_NOT_FOUND_BY_ID("1",
+      "Facility Complaint is not found by Facility Number and Complaint Id"),
+
   DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN("2",
       "Disctrict office (lis_fac_file.fac_do_nbr) is unexpectedly empty"),
-  RFA_1A_APPLICANT_NOT_FOUND_BY_ID("3", "Applicant is not found by Form Id and applicant id");
 
-    @JsonProperty("code")
-    private final String code;
+  RFA_1A_APPLICANT_NOT_FOUND_BY_ID("3", "Applicant is not found by Form Id and Applicant Id"),
 
-    @JsonProperty("message")
-    private final String message;
+  UNEXPECTED_RESIDENCE_CLASS_TYPE("4", "Unexpected Residence class type"),
 
-    CalsExceptionInfo(String code, String message) {
-        this.message = message;
-        this.code = code;
-    }
+  RFA_1A_APPLICATION_NOT_FOUND_BY_ID("5", "Application is not found by Form Id");
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this);
-    }
+  @JsonProperty("code")
+  private final String code;
+
+  @JsonProperty("message")
+  private final String message;
+
+  CalsExceptionInfo(String code, String message) {
+    this.message = message;
+    this.code = code;
+  }
+
+  @Override
+  public String toString() {
+    return ReflectionToStringBuilder.toString(this);
+  }
 
 }

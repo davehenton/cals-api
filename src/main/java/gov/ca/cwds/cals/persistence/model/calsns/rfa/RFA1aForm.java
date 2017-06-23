@@ -22,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.Type;
 
 /**
  * @author CWDS CALS API Team
@@ -39,6 +40,9 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @Type(type = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ResidenceJsonType")
+  private Residence residence;
 
   @Column(name = "create_user_id", length = 50, nullable = false)
   private String createUserId;
@@ -70,14 +74,20 @@ public class RFA1aForm extends BaseDTO implements PersistentObject, Response {
   @JoinColumn(name = "application_id")
   private List<RFA1aApplicant> applicantEntities;
 
-
-
   public Long getId() {
     return id;
   }
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Residence getResidence() {
+    return residence;
+  }
+
+  public void setResidence(Residence residence) {
+    this.residence = residence;
   }
 
   public String getCreateUserId() {
