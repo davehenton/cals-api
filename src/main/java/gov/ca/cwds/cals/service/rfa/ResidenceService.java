@@ -28,18 +28,18 @@ public class ResidenceService extends CrudServiceAdapter {
 
   private static final Logger LOG = LoggerFactory.getLogger(ResidenceService.class);
 
-  private final RFA1aFormsDao applicationDao;
+  private final RFA1aFormsDao formsDao;
 
   @Inject
-  public ResidenceService(RFA1aFormsDao applicationDao) {
-    this.applicationDao = applicationDao;
+  public ResidenceService(RFA1aFormsDao formsDao) {
+    this.formsDao = formsDao;
   }
 
   @Override
   public Response find(Serializable applicationId) {
     try {
-      RFA1aForm form = applicationDao.find(applicationId);
-      return form.getResidence();
+      RFA1aForm form = formsDao.find(applicationId);
+      return form == null ? null : form.getResidence();
     } catch (NoResultException e) {
       LOG.warn("There is no Residence found for applicationId = {}", applicationId);
       LOG.debug(e.getMessage(), e);
@@ -50,16 +50,19 @@ public class ResidenceService extends CrudServiceAdapter {
   @Override
   public Response update(Serializable applicationId, Request request) {
     try {
-      RFA1aForm form = applicationDao.find(applicationId);
+      RFA1aForm form = formsDao.find(applicationId);
+      if (form == null) {
+        throw new UserFriendlyException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
+      }
       form.setUpdateDateTime(LocalDateTime.now());
       form.setUpdateUserId(SYSTEM_USER_ID);
       if (!(request instanceof Residence)) {
-        throw new UserFriendlyException(UNEXPECTED_RESIDENCE_CLASS_TYPE, INTERNAL_SERVER_ERROR);
+        throw new IllegalArgumentException("Cannot convert Request to Residence");
       }
       Residence residence = (Residence) request;
       form.setResidence(residence);
 
-      RFA1aForm updatedForm = applicationDao.update(form);
+      RFA1aForm updatedForm = formsDao.update(form);
       return updatedForm.getResidence();
     } catch (NoResultException e) {
       LOG.warn("There is no Application found for applicationId = {}", applicationId);

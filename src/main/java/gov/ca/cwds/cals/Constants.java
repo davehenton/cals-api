@@ -114,11 +114,11 @@ public final class Constants {
     public static final String INCOME_TYPE_PATH = "income-types";
     public static final String PHONE_NUMBER_TYPE_PATH = "phone-number-types";
     public static final String ADDRESS_TYPE_PATH = "address-types";
-    public static final String SIBLING_GROUP_TYPE_PATH = "rfa/sibling-groups";
+    public static final String SIBLING_GROUP_TYPE_PATH = "sibling-groups";
     public static final String STATE_TYPE_PATH = "states";
     public static final String APPLICATION_STATUS_TYPE_PATH = "application-statuses";
     public static final String RESIDENCE_OWNERSHIP_TYPE_PATH = "residence-ownership-types";
-    public static final String APPLICANT_RELATIONSHIP_TYPE_PATH = "rfa/applicant-relationship-types";
+    public static final String APPLICANT_RELATIONSHIP_TYPE_PATH = "applicant-relationship-types";
     public static final String RELATIONSHIP_EVENT_TYPE_PATH = "relationship-event-types";
 
     private Class<? extends BaseDictionary> dictionaryClass;

@@ -37,7 +37,7 @@ public class Applicant extends BaseDTO implements Serializable, Request, Respons
 
   private String lastName;
 
-  private List<PersonName> otherNames = new ArrayList<>();
+  private List<TypedPersonName> otherNames = new ArrayList<>();
 
   private EducationLevelType highestEducationLevel;
 
@@ -92,11 +92,11 @@ public class Applicant extends BaseDTO implements Serializable, Request, Respons
     this.lastName = lastName;
   }
 
-  public List<PersonName> getOtherNames() {
+  public List<TypedPersonName> getOtherNames() {
     return otherNames;
   }
 
-  public void setOtherNames(List<PersonName> otherNames) {
+  public void setOtherNames(List<TypedPersonName> otherNames) {
     this.otherNames = otherNames;
   }
 

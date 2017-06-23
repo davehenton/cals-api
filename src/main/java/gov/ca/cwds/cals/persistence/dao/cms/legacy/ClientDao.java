@@ -1,13 +1,14 @@
 package gov.ca.cwds.cals.persistence.dao.cms.legacy;
 
-import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.persistence.dao.QueryCreator;
+import gov.ca.cwds.cals.persistence.dao.ScalarResultsStreamer;
 import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.Client;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
-import java.util.Collection;
+import java.util.stream.Stream;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,8 +17,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.NoResultException;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class ClientDao extends BaseDaoImpl<Client> implements IClientDao<Client> {
+
   private static final Logger LOG = LoggerFactory.getLogger(ClientDao.class);
 
   @Inject
@@ -51,14 +55,11 @@ public class ClientDao extends BaseDaoImpl<Client> implements IClientDao<Client>
     return client;
   }
 
-  public Collection<Client> findCollection(FacilityChildParameterObject parameterObject) {
-    Session session = getSessionFactory().getCurrentSession();
-    Class<Client> entityClass = getEntityClass();
-    Query<Client> query =
-        session.createNamedQuery(entityClass.getSimpleName() + ".findAll", entityClass);
-    query.setParameter("licenseNumber", parameterObject.getLicenseNumber());
-    ImmutableList.Builder<Client> entities = new ImmutableList.Builder<>();
-    entities.addAll(query.list());
-    return entities.build();
+  @Override
+  public Stream<Client> stream(FacilityChildParameterObject parameterObject) {
+    QueryCreator<Client> queryCreator = (session, entityClass) -> session
+        .createNamedQuery(entityClass.getSimpleName() + ".findAll", entityClass)
+        .setParameter("licenseNumber", parameterObject.getLicenseNumber());
+    return new ScalarResultsStreamer<>(this, queryCreator).createStream();
   }
 }
