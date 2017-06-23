@@ -8,5 +8,6 @@ import org.hibernate.query.Query;
  */
 @FunctionalInterface
 public interface QueryCreator<T> {
+
   Query<T> createQuery(Session session, Class<T> entityClass);
 }

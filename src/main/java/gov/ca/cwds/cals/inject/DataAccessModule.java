@@ -34,8 +34,8 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
@@ -168,6 +168,12 @@ public class DataAccessModule extends AbstractModule {
         public String name() {
           return CALSNS;
         }
+
+        @Override
+        public void configure(org.hibernate.cfg.Configuration configuration) {
+          configuration.addPackage("gov.ca.cwds.cals.persistence.model.calsns.rfa");
+        }
+
       };
 
   public DataAccessModule(Bootstrap<CalsApiConfiguration> bootstrap) {

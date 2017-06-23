@@ -8,9 +8,8 @@ import gov.ca.cwds.cals.persistence.model.cms.rs.ReplicatedPlacementHome;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
-import org.hibernate.SessionFactory;
-
 import java.util.stream.Stream;
+import org.hibernate.SessionFactory;
 
 /**
  * @author CWDS TPT-2

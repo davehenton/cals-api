@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.persistence.hibernate;
 
-import static java.sql.Types.JAVA_OBJECT;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import gov.ca.cwds.cals.Constants;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,20 +14,29 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Properties;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 
 /**
  * @author CWDS CALS API Team.
  */
-public abstract class JsonType implements UserType {
+public abstract class JsonType implements UserType, ParameterizedType {
 
-  private final ObjectMapper mapper = new ObjectMapper();
+  private static final ObjectMapper mapper = new ObjectMapper();
+
+  static {
+    mapper.registerModule(new JavaTimeModule());
+  }
+
+  private int sqlType;
 
   @Override
   public int[] sqlTypes() {
-    return new int[]{JAVA_OBJECT};
+    return new int[]{Types.JAVA_OBJECT};
   }
 
   @Override
@@ -41,8 +50,9 @@ public abstract class JsonType implements UserType {
   }
 
   @Override
-  public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor session,
-      Object owner) throws SQLException {
+  public Object nullSafeGet(
+      ResultSet rs, String[] names, SharedSessionContractImplementor session, Object owner)
+      throws SQLException {
     final String cellContent = rs.getString(names[0]);
     if (cellContent == null) {
       return null;
@@ -51,27 +61,32 @@ public abstract class JsonType implements UserType {
       return mapper.readValue(cellContent.getBytes("UTF-8"), returnedClass());
     } catch (final Exception ex) {
       throw new ConvertingException(
-          String.format("Failed to convert String to %s: %s", returnedClass().getSimpleName(),
-              ex.getMessage()), ex);
+          String.format(
+              "Failed to convert String to %s: %s",
+              returnedClass().getSimpleName(), ex.getMessage()),
+          ex);
     }
   }
 
   @Override
-  public void nullSafeSet(PreparedStatement st, Object value, int index,
-      SharedSessionContractImplementor session) throws SQLException {
+  public void nullSafeSet(
+      PreparedStatement st, Object value, int index, SharedSessionContractImplementor session)
+      throws SQLException {
     if (value == null) {
-      st.setNull(index, Types.OTHER);
+      st.setNull(index, sqlType);
       return;
     }
     try {
       final StringWriter stringWriter = new StringWriter();
       mapper.writeValue(stringWriter, value);
       stringWriter.flush();
-      st.setObject(index, stringWriter.toString(), Types.OTHER);
+      st.setObject(index, stringWriter.toString(), sqlType);
     } catch (final Exception ex) {
       throw new ConvertingException(
-          String.format("Failed to convert %s to String: %s", returnedClass().getSimpleName(),
-              ex.getMessage()), ex);
+          String.format(
+              "Failed to convert %s to String: %s",
+              returnedClass().getSimpleName(), ex.getMessage()),
+          ex);
     }
   }
 
@@ -110,4 +125,12 @@ public abstract class JsonType implements UserType {
   public Object replace(Object original, Object target, Object owner) {
     return deepCopy(original);
   }
+
+  @Override
+  public void setParameterValues(Properties parameters) {
+    if (StringUtils.isNoneEmpty(parameters.getProperty(Constants.SQL_TYPE))) {
+      this.sqlType = Integer.valueOf(parameters.getProperty(Constants.SQL_TYPE));
+    }
+  }
+
 }

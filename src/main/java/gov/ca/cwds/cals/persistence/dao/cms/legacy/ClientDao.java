@@ -9,13 +9,12 @@ import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import java.util.stream.Stream;
+import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.NoResultException;
 
 /**
  * @author CWDS CALS API Team

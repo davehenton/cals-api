@@ -2,8 +2,6 @@ package gov.ca.cwds.cals.service.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.SYSTEM_USER_ID;
 import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
-import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.UNEXPECTED_RESIDENCE_CLASS_TYPE;
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.google.inject.Inject;
