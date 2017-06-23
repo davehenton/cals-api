@@ -47,6 +47,10 @@ public final class Constants {
 
     public static final String RFA_1A_APPLICANTS = "applicants";
 
+    public static final String RFA_1A_MINOR_CHILDREN = "minor-children";
+
+    public static final String RFA_1A_MINOR_CHILD = "minorChild";
+
     public static final String RESIDENCE = "residence";
 
     public static final String SYSTEM_USER_ID = "SYSTEM";
@@ -63,9 +67,11 @@ public final class Constants {
 
       public static final String DICTIONARY_TYPE = "dictionaryType";
 
-      public static final String RFA_1A_FORM_ID = "formId";
+      public static final String RFA_1A_APPLICATION_ID = "applicationId";
 
       public static final String RFA_1A_APPLICANT_ID = "applicantId";
+
+      public static final String RFA_1A_MINOR_CHILD_ID = "minorChildId";
 
       private PathParams() {
       }
