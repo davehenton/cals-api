@@ -33,8 +33,10 @@ public class RFA1aApplicantService extends CrudServiceAdapter {
   @Override
   public Response create(Request request) {
     RFA1aApplicantParameterObject params = getParamObject(request);
-
-    Applicant applicant = new Applicant();
+    Applicant applicant = params.getApplicant();
+    if (applicant == null) {
+      applicant = new Applicant();
+    }
     RFA1aApplicant rfa1aApplicant = new RFA1aApplicant();
     LocalDateTime now = LocalDateTime.now();
     rfa1aApplicant.setCreateDateTime(now);

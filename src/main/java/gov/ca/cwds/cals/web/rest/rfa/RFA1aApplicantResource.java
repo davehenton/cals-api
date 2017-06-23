@@ -67,8 +67,10 @@ public class RFA1aApplicantResource {
   public Response createApplicant(
       @PathParam(RFA_1A_FORM_ID)
       @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
-          Long formId) {
-    return resourceDelegate.create(new RFA1aApplicantParameterObject(formId));
+          Long formId,
+      @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1a Applicant object")
+          Applicant applicant) {
+    return resourceDelegate.create(new RFA1aApplicantParameterObject(formId, applicant));
   }
 
   @UnitOfWork(CALSNS)
@@ -91,10 +93,9 @@ public class RFA1aApplicantResource {
       @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1a Applicant Id")
           Long applicantId,
       @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1a Applicant object")
-          Applicant applicant
-  ) {
-    return resourceDelegate
-        .update(applicantId, new RFA1aApplicantParameterObject(formId, applicant));
+          Applicant applicant) {
+    return resourceDelegate.update(
+        applicantId, new RFA1aApplicantParameterObject(formId, applicant));
   }
 
   @UnitOfWork(CALSNS)
@@ -161,5 +162,4 @@ public class RFA1aApplicantResource {
           Long applicantId) {
     return resourceDelegate.delete(new RFA1aApplicantParameterObject(formId, applicantId));
   }
-
 }
