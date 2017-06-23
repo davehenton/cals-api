@@ -170,6 +170,12 @@ public class DataAccessModule extends AbstractModule {
         public String name() {
           return CALSNS;
         }
+
+        @Override
+        public void configure(org.hibernate.cfg.Configuration configuration) {
+          configuration.addPackage("gov.ca.cwds.cals.persistence.model.calsns.rfa");
+        }
+
       };
 
   public DataAccessModule(Bootstrap<CalsApiConfiguration> bootstrap) {

@@ -100,7 +100,7 @@ calsnsDataSourceFactory:
   maxSize: ${DB_NS_CP_MAX_SIZE:-8}
   minIdleTime: 1 minute
   properties:
-      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.JsonbSupportH2Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: true
 
