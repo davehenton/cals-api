@@ -51,10 +51,13 @@ public class ResidenceService extends CrudServiceAdapter {
   public Response update(Serializable applicationId, Request request) {
     try {
       RFA1aForm form = formsDao.find(applicationId);
+      if (form == null) {
+        throw new UserFriendlyException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
+      }
       form.setUpdateDateTime(LocalDateTime.now());
       form.setUpdateUserId(SYSTEM_USER_ID);
       if (!(request instanceof Residence)) {
-        throw new UserFriendlyException(UNEXPECTED_RESIDENCE_CLASS_TYPE, INTERNAL_SERVER_ERROR);
+        throw new IllegalArgumentException("Cannot convert Request to Residence");
       }
       Residence residence = (Residence) request;
       form.setResidence(residence);
