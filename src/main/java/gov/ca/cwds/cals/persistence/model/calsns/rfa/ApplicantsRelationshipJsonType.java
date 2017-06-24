@@ -8,8 +8,6 @@ import gov.ca.cwds.cals.persistence.hibernate.JsonType;
 
 public class ApplicantsRelationshipJsonType extends JsonType {
 
-  public static final ApplicantsRelationshipJsonType INSTANCE = new ApplicantsRelationshipJsonType();
-
   public Class<ApplicantsRelationship> returnedClass() {
     return ApplicantsRelationship.class;
   }

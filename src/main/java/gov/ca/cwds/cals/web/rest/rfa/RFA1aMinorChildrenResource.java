@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICANT_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_MINOR_CHILD_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA;
@@ -15,7 +14,6 @@ import gov.ca.cwds.cals.inject.RFA1aMinorChildrenCollectionServiceBackendResourc
 import gov.ca.cwds.cals.inject.RFA1aMinorChildrenServiceBackendResource;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildrenDTO;
-import gov.ca.cwds.cals.web.rest.parameter.RFA1aApplicantParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aMinorChildrenParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -72,8 +70,8 @@ public class RFA1aMinorChildrenResource {
           Long applicationId,
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1a MinorChild object")
           MinorChild minorChild) {
-    return resourceDelegate
-        .create(new RFA1aMinorChildrenParameterObject(applicationId, minorChild));
+    return resourceDelegate.create(
+        new RFA1aMinorChildrenParameterObject(applicationId, minorChild));
   }
 
   @UnitOfWork(CALSNS)
@@ -90,10 +88,18 @@ public class RFA1aMinorChildrenResource {
   @ApiOperation(value = "Update and returns RFA 1a MinorChild object", response = MinorChild.class)
   public Response updateMinorChild(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Application Id")
+      @ApiParam(
+          required = true,
+          name = RFA_1A_APPLICATION_ID,
+          value = "The RFA-1a Application Id"
+      )
           Long applicationId,
       @PathParam(RFA_1A_MINOR_CHILD_ID)
-      @ApiParam(required = true, name = RFA_1A_MINOR_CHILD_ID, value = "The RFA-1a MinorChild Id")
+      @ApiParam(
+          required = true,
+          name = RFA_1A_MINOR_CHILD_ID,
+          value = "The RFA-1a MinorChild Id"
+      )
           Long minorChildId,
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1a MinorChild object")
           MinorChild minorChild) {
@@ -115,10 +121,18 @@ public class RFA1aMinorChildrenResource {
   @ApiOperation(value = "Returns RFA 1a Form's MinorChild by Id", response = MinorChild.class)
   public Response getMinorChildById(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Application Id")
+      @ApiParam(
+          required = true,
+          name = RFA_1A_APPLICATION_ID,
+          value = "The RFA-1a Application Id"
+      )
           Long applicationId,
       @PathParam(RFA_1A_MINOR_CHILD_ID)
-      @ApiParam(required = true, name = RFA_1A_MINOR_CHILD_ID, value = "The RFA-1a MinorChild Id")
+      @ApiParam(
+          required = true,
+          name = RFA_1A_MINOR_CHILD_ID,
+          value = "The RFA-1a MinorChild Id"
+      )
           Long minorChildId) {
 
     return resourceDelegate.get(new RFA1aMinorChildrenParameterObject(applicationId, minorChildId));
@@ -140,7 +154,11 @@ public class RFA1aMinorChildrenResource {
   )
   public Response getMinorChildByFormId(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Application Id")
+      @ApiParam(
+          required = true,
+          name = RFA_1A_APPLICATION_ID,
+          value = "The RFA-1a Application Id"
+      )
           Long applicationId) {
     return collectionResourceDelegate.get(new RFA1aMinorChildrenParameterObject(applicationId));
   }
@@ -160,9 +178,14 @@ public class RFA1aMinorChildrenResource {
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long applicationId,
-      @PathParam(RFA_1A_APPLICANT_ID)
-      @ApiParam(required = true, name = RFA_1A_MINOR_CHILD_ID, value = "The RFA-1a MinorChild Id")
+      @PathParam(RFA_1A_MINOR_CHILD_ID)
+      @ApiParam(
+          required = true,
+          name = RFA_1A_MINOR_CHILD_ID,
+          value = "The RFA-1a MinorChild Id"
+      )
           Long minorChildId) {
-    return resourceDelegate.delete(new RFA1aApplicantParameterObject(applicationId, minorChildId));
+    return resourceDelegate.delete(
+        new RFA1aMinorChildrenParameterObject(applicationId, minorChildId));
   }
 }

@@ -1,9 +1,11 @@
 package gov.ca.cwds.cals.persistence.dao.calsns;
 
+import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.data.BaseDaoImpl;
+import java.util.List;
 import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -41,5 +43,25 @@ public class RFA1aMinorChildDao extends BaseDaoImpl<RFA1aMinorChild> {
       LOG.debug(e.getMessage(), e);
     }
     return res;
+  }
+
+  public RFA1aMinorChild deleteMinor(Long applicationId, Long minorChildId) {
+    RFA1aMinorChild minorChildEntity = findMinorChildByFormIdAndMinorChildId(applicationId,
+        minorChildId);
+    if (minorChildEntity != null) {
+      minorChildEntity = delete(minorChildEntity.getId());
+    }
+    return minorChildEntity;
+  }
+
+  public List<RFA1aMinorChild> findAllByFormId(Long formId) {
+    Session session = this.getSessionFactory().getCurrentSession();
+    Query<RFA1aMinorChild> query =
+        session
+            .createNamedQuery(RFA1aMinorChild.NAMED_QUERY_FIND_ALL_BY_FORM, RFA1aMinorChild.class);
+    query.setParameter(RFA1aMinorChild.PARAM_FORM_ID, formId);
+    ImmutableList.Builder<RFA1aMinorChild> entities = new ImmutableList.Builder<>();
+    entities.addAll(query.list());
+    return entities.build();
   }
 }
