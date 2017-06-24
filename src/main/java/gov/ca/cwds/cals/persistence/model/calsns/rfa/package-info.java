@@ -20,6 +20,12 @@
         typeClass = ApplicantsRelationshipJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
             value = OTHER_TYPE)}
+    ),
+    @TypeDef(
+        name = "MinorChildJsonType",
+        typeClass = MinorChildJsonType.class,
+        parameters = {@Parameter(name = SQL_TYPE,
+            value = OTHER_TYPE)}
     )
 })
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;

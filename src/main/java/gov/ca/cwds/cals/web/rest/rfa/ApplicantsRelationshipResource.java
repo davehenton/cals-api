@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.APPLICANTS_RELATIONSHIP;
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_FORM_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
@@ -29,7 +29,7 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team.
  */
 @Api(tags = {RFA})
-@Path(RFA_1A_FORMS + "/{" + RFA_1A_FORM_ID + "}/" + APPLICANTS_RELATIONSHIP)
+@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + APPLICANTS_RELATIONSHIP)
 @Produces(MediaType.APPLICATION_JSON)
 public class ApplicantsRelationshipResource {
 
@@ -53,8 +53,8 @@ public class ApplicantsRelationshipResource {
   )
   @ApiOperation(value = "Returns RFA-1a Form Applicants Relationship", response = ApplicantsRelationship.class)
   public Response getApplicantsRelationship(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -70,8 +70,8 @@ public class ApplicantsRelationshipResource {
   )
   @ApiOperation(value = "Updates Applicants Relationship in RFA 1a Form", response = ApplicantsRelationship.class)
   public Response updateApplicantsRelationship(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
       @ApiParam(required = true, name = APPLICANTS_RELATIONSHIP, value = "The Applicants relationship object")
           ApplicantsRelationship applicantsRelationship) {
