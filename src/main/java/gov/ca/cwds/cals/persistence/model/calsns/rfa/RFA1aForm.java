@@ -26,6 +26,9 @@ public class RFA1aForm extends RFA1aBaseEntity implements PersistentObject, Resp
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.all";
 
 
+  @Type(type = "ApplicationJsonType")
+  private Application application;
+
   @Type(type = "ResidenceJsonType")
   private Residence residence;
 
@@ -36,7 +39,13 @@ public class RFA1aForm extends RFA1aBaseEntity implements PersistentObject, Resp
   @JoinColumn(name = "application_id")
   private List<RFA1aApplicant> applicantEntities;
 
+  public Application getApplication() {
+    return application;
+  }
 
+  public void setApplication(Application application) {
+    this.application = application;
+  }
 
   public Residence getResidence() {
     return residence;
