@@ -15,6 +15,7 @@ import gov.ca.cwds.cals.service.mapper.FacilityTypeMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityTypeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapperImpl;
+import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 
 /**
  * DI (dependency injection) setup for mapping classes.
@@ -33,6 +34,8 @@ public class MappingModule extends AbstractModule {
         bind(ComplaintMapper.class).to(ComplaintMapperImpl.class).asEagerSingleton();
         bind(CountyMapper.class).to(CountyMapperImpl.class).asEagerSingleton();
         bind(FacilityTypeMapper.class).to(FacilityTypeMapperImpl.class).asEagerSingleton();
+
+        bind(RFA1aFormMapper.class).to(RFA1aFormMapperImpl.class).asEagerSingleton();
     }
 
 }

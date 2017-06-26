@@ -9,6 +9,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackendResource;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.Application;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormsDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -54,9 +55,11 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a Form", response = RFA1aForm.class)
-  public Response createApplicationForm() {
-    return resourceDelegate.create(null);
+  @ApiOperation(value = "Creates and returns RFA 1a Form", response = Application.class)
+  public Response createApplicationForm(
+      @ApiParam(name = "application", value = "The RFA-1a Application object")
+          Application application) {
+    return resourceDelegate.create(application);
   }
 
   @UnitOfWork(CALSNS)
