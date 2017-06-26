@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants.DictionaryType;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.DictionaryValuesDTO;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 import java.io.Serializable;
@@ -23,7 +23,7 @@ public class DictionariesService extends CrudServiceAdapter implements CrudsServ
   @Override
   public Response find(Serializable dictionaryType) {
     DictionaryType type = (DictionaryType) dictionaryType;
-    List<? extends BaseDictionary> dictionariesByType = dao.findDictionariesByType(type);
-    return new CollectionDTO<>(dictionariesByType);
+    List<BaseDictionary> dictionariesByType = dao.findDictionariesByType(type);
+    return new DictionaryValuesDTO(dictionariesByType);
   }
 }
