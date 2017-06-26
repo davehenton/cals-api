@@ -17,7 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Properties;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.ParameterizedType;
@@ -135,9 +134,12 @@ public abstract class JsonType implements UserType, ParameterizedType {
 
   @Override
   public void setParameterValues(Properties parameters) {
-    if (StringUtils.isNoneEmpty(parameters.getProperty(Constants.SQL_TYPE))) {
-      this.sqlType = Integer.valueOf(parameters.getProperty(Constants.SQL_TYPE));
+    String sqlTypeName = parameters.getProperty(Constants.SQL_TYPE);
+    SQLTypes sqlTypeEnum = SQLTypes.valueOf(sqlTypeName);
+    if (sqlTypeEnum != null) {
+      sqlType = sqlTypeEnum.getType();
+    } else {
+      throw new IllegalArgumentException("The sqlType: " + sqlTypeName + " is not supported");
     }
   }
-
 }

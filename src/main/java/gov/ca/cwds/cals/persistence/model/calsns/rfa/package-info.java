@@ -6,33 +6,33 @@
         name = "ApplicantJsonType",
         typeClass = ApplicantJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
-            value = OTHER_TYPE)}
+            value = SQLTypes.OTHER_TYPE_NAME)}
     ),
     @TypeDef(
         name = "ResidenceJsonType",
         typeClass = ResidenceJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
-            value = OTHER_TYPE)}
+            value = SQLTypes.OTHER_TYPE_NAME)}
 
     ),
     @TypeDef(
         name = "ApplicantsRelationshipJsonType",
         typeClass = ApplicantsRelationshipJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
-            value = OTHER_TYPE)}
+            value = SQLTypes.OTHER_TYPE_NAME)}
     ),
     @TypeDef(
         name = "MinorChildJsonType",
         typeClass = MinorChildJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
-            value = OTHER_TYPE)}
+            value = SQLTypes.OTHER_TYPE_NAME)}
     )
 })
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
-import static gov.ca.cwds.cals.Constants.OTHER_TYPE;
 import static gov.ca.cwds.cals.Constants.SQL_TYPE;
 
+import gov.ca.cwds.cals.persistence.hibernate.SQLTypes;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
