@@ -22,7 +22,6 @@ import org.junit.Test;
 /**
  * @author CWDS CALS API Team
  */
-@Ignore
 public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
 
   @BeforeClass
