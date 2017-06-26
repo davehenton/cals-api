@@ -48,7 +48,7 @@ public class RFA1aApplicantDao extends BaseDaoImpl<RFA1aApplicant> {
       res = query.getSingleResult();
     } catch (NoResultException e) {
       LOG.warn("There is no result for formId: {} and applicantId: {}", formId, applicantId);
-      LOG.debug(e.getMessage(), e);
+      LOG.debug("There is no result", e);
     }
     return res;
   }
@@ -56,7 +56,7 @@ public class RFA1aApplicantDao extends BaseDaoImpl<RFA1aApplicant> {
   public RFA1aApplicant deleteApplicant(Long formId, Long applicantId) {
     RFA1aApplicant applicant = findApplicantByFormIdAndApplicantId(formId, applicantId);
     if (applicant != null) {
-      applicant = delete(applicantId);
+      applicant = delete(applicant.getId());
     }
     return applicant;
   }
