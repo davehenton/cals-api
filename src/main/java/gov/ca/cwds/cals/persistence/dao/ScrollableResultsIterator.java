@@ -8,6 +8,7 @@ import org.hibernate.ScrollableResults;
  * @author CWDS TPT-2
  */
 public abstract class ScrollableResultsIterator<T> implements Iterator<T> {
+
   private T next;
   private ScrollableResults scrollableResults;
 
@@ -17,12 +18,12 @@ public abstract class ScrollableResultsIterator<T> implements Iterator<T> {
   }
 
   @Override
-  final public boolean hasNext() {
+  public final boolean hasNext() {
     return next != null;
   }
 
   @Override
-  final public T next() {
+  public final T next() {
     if (next != null) {
       T result = next;
       moveForward();

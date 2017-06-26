@@ -21,6 +21,10 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
  */
 public final class Constants {
 
+  public static final String SQL_TYPE = "sqlType";
+  public static final String CLOB_TYPE = "2005";
+  public static final String OTHER_TYPE = "1111";
+
   public static class API {
 
     public static final String FACILITIES = "facilities";
@@ -47,6 +51,12 @@ public final class Constants {
 
     public static final String RFA_1A_APPLICANTS = "applicants";
 
+    public static final String APPLICANTS_RELATIONSHIP = "applicants-relationship";
+
+    public static final String RFA_1A_MINOR_CHILDREN = "minor-children";
+
+    public static final String RFA_1A_MINOR_CHILD = "minorChild";
+
     public static final String RESIDENCE = "residence";
 
     public static final String SYSTEM_USER_ID = "SYSTEM";
@@ -63,9 +73,11 @@ public final class Constants {
 
       public static final String DICTIONARY_TYPE = "dictionaryType";
 
-      public static final String RFA_1A_FORM_ID = "formId";
+      public static final String RFA_1A_APPLICATION_ID = "applicationId";
 
       public static final String RFA_1A_APPLICANT_ID = "applicantId";
+
+      public static final String RFA_1A_MINOR_CHILD_ID = "minorChildId";
 
       private PathParams() {
       }

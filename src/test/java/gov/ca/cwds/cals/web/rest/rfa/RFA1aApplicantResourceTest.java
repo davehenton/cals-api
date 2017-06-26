@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
@@ -31,7 +32,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void createApplicant() throws Exception {
-    RFA1aForm form = createForm();
+    RFA1aForm form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
 
     assertNotNull(created);
@@ -44,7 +45,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void updateApplicant() throws Exception {
-    RFA1aForm form = createForm();
+    RFA1aForm form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
 
     created.setFirstName("testFirstName");
@@ -69,7 +70,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getAplicantById() throws Exception {
-    RFA1aForm form = createForm();
+    RFA1aForm form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
     Applicant found = findApplicant(form, created.getId());
     assertThat(found).isEqualTo(created);
@@ -77,7 +78,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getAplicantsByFormId() throws Exception {
-    RFA1aForm form = createForm();
+    RFA1aForm form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
     Applicant created1 = createApplicant(form);
     Applicant created2 = createApplicant(form);
@@ -90,7 +91,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void deleteAplicant() throws Exception {
-    RFA1aForm form = createForm();
+    RFA1aForm form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
     Applicant found = findApplicant(form, created.getId());
 
@@ -111,13 +112,6 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
     Response response = invocation.delete();
 
     assertThat(response.getStatus()).isEqualTo(Status.NOT_FOUND.getStatusCode());
-  }
-
-  private RFA1aForm createForm() {
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    RFA1aForm rfaForm = invocation.post(null, RFA1aForm.class);
-    return rfaForm;
   }
 
   private Applicant createApplicant(RFA1aForm form) {

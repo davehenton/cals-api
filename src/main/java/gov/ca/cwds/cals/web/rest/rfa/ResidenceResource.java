@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_FORM_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.RESIDENCE;
 import static gov.ca.cwds.cals.Constants.API.RFA;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
@@ -29,7 +29,7 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team.
  */
 @Api(tags = {RFA})
-@Path(RFA_1A_FORMS + "/{" + RFA_1A_FORM_ID + "}/" + RESIDENCE)
+@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RESIDENCE)
 @Produces(MediaType.APPLICATION_JSON)
 public class ResidenceResource {
   private ResourceDelegate resourceDelegate;
@@ -51,8 +51,8 @@ public class ResidenceResource {
   )
   @ApiOperation(value = "Returns Residence by RFA-1a Form Id", response = Residence.class)
   public Response getResidence(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -68,8 +68,8 @@ public class ResidenceResource {
   )
   @ApiOperation(value = "Update Residence in RFA 1a Form", response = Residence.class)
   public Response updateResidence(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
       @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1a Residence object")
           Residence residence) {

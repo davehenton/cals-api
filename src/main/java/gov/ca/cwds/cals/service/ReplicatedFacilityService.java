@@ -9,7 +9,6 @@ import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.service.dto.rs.ReplicatedFacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
-
 import java.util.stream.Stream;
 
 /**
