@@ -9,8 +9,12 @@ import java.util.Collection;
  */
 public class ApplicantsDTO extends CollectionDTO<Applicant> {
 
-  public ApplicantsDTO(
-      Collection<Applicant> collection) {
+  private static final long serialVersionUID = -1535264201393941396L;
+
+  public ApplicantsDTO() {
+  }
+
+  public ApplicantsDTO(Collection<Applicant> collection) {
     super(collection);
   }
 }

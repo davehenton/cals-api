@@ -47,7 +47,7 @@ public class RFA1aApplicant extends RFA1aBaseEntity implements PersistentObject 
   private Long formId;
 
   @Column(name = "applicant")
-  @Type(type = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantJsonType")
+  @Type(type = "ApplicantJsonType")
   private Applicant applicant;
 
   public Long getFormId() {
