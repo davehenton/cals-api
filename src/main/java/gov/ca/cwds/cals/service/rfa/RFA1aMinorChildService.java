@@ -65,7 +65,7 @@ public class RFA1aMinorChildService extends CrudServiceAdapter {
     final RFA1aMinorChildrenParameterObject paramsObj = getParamObject(params);
     RFA1aMinorChild minorChildEntity;
 
-    if (minorChildId != null && minorChildId instanceof Long) {
+    if (minorChildId instanceof Long) {
       minorChildEntity =
           dao.findMinorChildByFormIdAndMinorChildId(
               paramsObj.getApplicationId(), (Long) minorChildId);
