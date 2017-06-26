@@ -5,8 +5,9 @@ import gov.ca.cwds.cals.persistence.hibernate.JsonType;
 /**
  * @author CWDS CALS API Team
  */
-public class ApplicantJsonType extends JsonType {
-  public Class<Applicant> returnedClass() {
-    return Applicant.class;
+public class MinorChildJsonType extends JsonType {
+
+  public Class<MinorChild> returnedClass() {
+    return MinorChild.class;
   }
 }

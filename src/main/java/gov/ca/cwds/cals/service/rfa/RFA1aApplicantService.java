@@ -38,11 +38,9 @@ public class RFA1aApplicantService extends CrudServiceAdapter {
       applicant = new Applicant();
     }
     RFA1aApplicant rfa1aApplicant = new RFA1aApplicant();
-    LocalDateTime now = LocalDateTime.now();
-    rfa1aApplicant.setCreateDateTime(now);
-    rfa1aApplicant.setCreateUserId(SYSTEM_USER_ID);
-    rfa1aApplicant.setUpdateDateTime(now);
-    rfa1aApplicant.setUpdateUserId(SYSTEM_USER_ID);
+
+    RFA1aServiceHelper.fillCreateBaseFields(rfa1aApplicant, SYSTEM_USER_ID);
+
     rfa1aApplicant.setApplicant(applicant);
     rfa1aApplicant.setFormId(params.getFormId());
     rfa1aApplicant = dao.create(rfa1aApplicant);
