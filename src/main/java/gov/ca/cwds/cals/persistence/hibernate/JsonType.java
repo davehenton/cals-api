@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.persistence.hibernate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gov.ca.cwds.cals.Constants;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
