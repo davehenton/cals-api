@@ -92,7 +92,7 @@ public class RFA1aApplicant implements PersistentObject {
   private Long formId;
 
   @Column(name = "applicant")
-  @Type(type = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantJsonType")
+  @Type(type = "ApplicantJsonType")
   private Applicant applicant;
 
   public long getId() {

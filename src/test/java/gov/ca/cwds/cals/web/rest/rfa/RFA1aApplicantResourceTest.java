@@ -12,6 +12,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -31,10 +33,13 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
   public void createApplicant() throws Exception {
     RFA1aForm form = createForm();
     Applicant created = createApplicant(form);
+
     assertNotNull(created);
     assertNotNull(created.getId());
 
-    findApplicant(form, created.getId());
+    Applicant found = findApplicant(form, created.getId());
+
+    assertThat(found).isEqualTo(created);
   }
 
   @Test
@@ -57,17 +62,17 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     invocation.put(Entity.entity(created, MediaType.APPLICATION_JSON_TYPE));
 
-    Applicant founded = findApplicant(form, created.getId());
+    Applicant found = findApplicant(form, created.getId());
 
-    assertThat(founded).isEqualTo(created);
+    assertThat(found).isEqualTo(created);
   }
 
   @Test
   public void getAplicantById() throws Exception {
     RFA1aForm form = createForm();
     Applicant created = createApplicant(form);
-    Applicant founded = findApplicant(form, created.getId());
-    assertThat(founded).isEqualTo(created);
+    Applicant found = findApplicant(form, created.getId());
+    assertThat(found).isEqualTo(created);
   }
 
   @Test
@@ -87,9 +92,9 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
   public void deleteAplicant() throws Exception {
     RFA1aForm form = createForm();
     Applicant created = createApplicant(form);
-    Applicant founded = findApplicant(form, created.getId());
+    Applicant found = findApplicant(form, created.getId());
 
-    assertThat(founded).isEqualTo(created);
+    assertThat(found).isEqualTo(created);
 
     WebTarget target =
         clientTestRule.target(
@@ -99,12 +104,13 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
                 + "/"
                 + API.RFA_1A_APPLICANTS
                 + "/"
-                + founded.getId());
+                + found.getId());
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     invocation.delete();
 
-    founded = findApplicant(form, created.getId());
-    assertThat(founded).isNull();
+    Response response = invocation.delete();
+
+    assertThat(response.getStatus()).isEqualTo(Status.NOT_FOUND.getStatusCode());
   }
 
   private RFA1aForm createForm() {
