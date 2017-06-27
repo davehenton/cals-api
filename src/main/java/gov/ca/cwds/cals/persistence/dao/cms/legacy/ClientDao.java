@@ -1,9 +1,8 @@
 package gov.ca.cwds.cals.persistence.dao.cms.legacy;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.dao.QueryCreator;
-import gov.ca.cwds.cals.persistence.dao.ScalarResultsStreamer;
-import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
+import gov.ca.cwds.cals.persistence.dao.stream.QueryCreator;
+import gov.ca.cwds.cals.persistence.dao.stream.ScalarResultsStreamer;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.Client;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
@@ -20,7 +19,7 @@ import javax.persistence.NoResultException;
 /**
  * @author CWDS CALS API Team
  */
-public class ClientDao extends BaseDaoImpl<Client> implements IClientDao<Client> {
+public class ClientDao extends BaseDaoImpl<Client> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ClientDao.class);
 
@@ -55,11 +54,17 @@ public class ClientDao extends BaseDaoImpl<Client> implements IClientDao<Client>
     return client;
   }
 
-  @Override
-  public Stream<Client> stream(FacilityChildParameterObject parameterObject) {
+  public Stream<Client> streamByLicenseNumber(FacilityChildParameterObject parameterObject) {
     QueryCreator<Client> queryCreator = (session, entityClass) -> session
         .createNamedQuery(entityClass.getSimpleName() + ".findAll", entityClass)
         .setParameter("licenseNumber", parameterObject.getLicenseNumber());
+    return new ScalarResultsStreamer<>(this, queryCreator).createStream();
+  }
+
+  public Stream<Client> streamByFacilityId(String facilityId) {
+    QueryCreator<Client> queryCreator = (session, entityClass) -> session
+        .createNamedQuery(entityClass.getSimpleName() + ".findByFacilityId", entityClass)
+        .setParameter("facilityId", facilityId);
     return new ScalarResultsStreamer<>(this, queryCreator).createStream();
   }
 }

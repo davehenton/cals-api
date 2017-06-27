@@ -1,8 +1,7 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
-import gov.ca.cwds.cals.persistence.model.cms.BaseClient;
+import gov.ca.cwds.cals.persistence.dao.cms.legacy.ClientDao;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
@@ -19,11 +18,11 @@ import java.util.List;
  */
 public class FacilityChildCollectionService extends CrudServiceAdapter {
 
-  private IClientDao<BaseClient> clientDao;
+  private ClientDao clientDao;
   private FacilityChildMapper facilityChildMapper;
 
   @Inject
-  public FacilityChildCollectionService(IClientDao clientDao,
+  public FacilityChildCollectionService(ClientDao clientDao,
       FacilityChildMapper facilityChildMapper) {
     this.clientDao = clientDao;
     this.facilityChildMapper = facilityChildMapper;
@@ -32,9 +31,8 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   @Override
   public Response find(Serializable params) {
     List<FacilityChildDTO> facilityChildDTOs = clientDao
-        .stream((FacilityChildParameterObject) params)
-        .map(client -> facilityChildMapper.toFacilityChildDTO(client)).collect(
-            Collectors.toList());
+        .streamByLicenseNumber((FacilityChildParameterObject) params)
+        .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
 
     if (CollectionUtils.isEmpty(facilityChildDTOs)) {
       return null;

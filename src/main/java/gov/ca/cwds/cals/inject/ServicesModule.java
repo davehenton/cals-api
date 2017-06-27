@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.legacy.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
@@ -57,7 +57,7 @@ public class ServicesModule extends AbstractModule {
       UnitOfWorkAwareProxyFactory unitOfWorkAwareProxyFactory,
       gov.ca.cwds.cals.persistence.dao.lis.LisFacFileDao lisDsLisFacFileDao,
       gov.ca.cwds.cals.persistence.dao.fas.LisFacFileDao fasDsLisFacFileDao,
-      IPlacementHomeDao placementHomeDao,
+      PlacementHomeDao placementHomeDao,
       LpaInformationDao lpaInformationDao,
       CountiesDao countiesDao,
       FacilityMapper facilityMapper,
@@ -67,7 +67,7 @@ public class ServicesModule extends AbstractModule {
         new Class[] {
           CrudsDao.class,
           CrudsDao.class,
-          IPlacementHomeDao.class,
+          PlacementHomeDao.class,
           LpaInformationDao.class,
           CountiesDao.class,
           FacilityMapper.class,

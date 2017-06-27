@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.legacy.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
@@ -39,16 +39,16 @@ import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 public class FacilityService implements CrudsService {
     private CrudsDao<LisFacFile> lisDsLisFacFileDao;
     private CrudsDao<LisFacFile> fasDsLisFacFileDao;
-    private IPlacementHomeDao placementHomeDao;
+    private PlacementHomeDao placementHomeDao;
     private CountiesDao countiesDao;
-    private FacilityMapper facilityMapper;
+    protected FacilityMapper facilityMapper;
     private FasFacilityMapper fasFacilityMapper;
     private LpaInformationDao lpaInformationDao;
 
     @Inject
     public FacilityService(CrudsDao<LisFacFile> lisDsLisFacFileDao,
                            CrudsDao<LisFacFile> fasDsLisFacFileDao,
-                           IPlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
+                           PlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
                            CountiesDao countiesDao, FacilityMapper facilityMapper, FasFacilityMapper fasFacilityMapper) {
         this.lisDsLisFacFileDao = lisDsLisFacFileDao;
         this.fasDsLisFacFileDao = fasDsLisFacFileDao;
@@ -61,20 +61,27 @@ public class FacilityService implements CrudsService {
 
     @Override
     public Response find(Serializable params) {
-        FacilityDTO response = null;
-        FacilityParameterObject parameterObject = (FacilityParameterObject) params;
+        return findByParameterObject((FacilityParameterObject) params);
+    }
+
+    protected FacilityDTO findById(String id) {
+        return findByParameterObject(newFacilityParameterObject(id));
+    }
+
+    private FacilityDTO findByParameterObject(FacilityParameterObject parameterObject) {
+        FacilityDTO facilityDTO = null;
         if (LIS.equals(parameterObject.getUnitOfWork())) {
             LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
             LpaInformation lpaInformation = lisDsLisFacFile != null ? findAssignedWorkerInformation(lisDsLisFacFile) : null;
-            response = facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
+            facilityDTO = facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
 
             LisFacFile fasDsLisFacFile = findFasFacilityByLicenseNumber(parameterObject);
-            response = fasFacilityMapper.toFacilityDTO(response, fasDsLisFacFile);
+            facilityDTO = fasFacilityMapper.toFacilityDTO(facilityDTO, fasDsLisFacFile);
         } else if (CMS.equals(parameterObject.getUnitOfWork())) {
             BasePlacementHome placementHome = findFacilityById(parameterObject);
-            response = facilityMapper.toFacilityDTO(placementHome);
+            facilityDTO = facilityMapper.toFacilityDTO(placementHome);
         }
-        return response;
+        return facilityDTO;
     }
 
     @UnitOfWork(LIS)
@@ -129,4 +136,14 @@ public class FacilityService implements CrudsService {
         throw new UnsupportedOperationException();
     }
 
+    public static FacilityParameterObject newFacilityParameterObject(String facilityNumber) {
+        FacilityParameterObject parameterObject;
+        try {
+            Integer licenseNumber = Integer.valueOf(facilityNumber);
+            parameterObject = new FacilityParameterObject(licenseNumber, LIS);
+        } catch (NumberFormatException e) {
+            parameterObject = new FacilityParameterObject(facilityNumber, CMS);
+        }
+        return parameterObject;
+    }
 }
