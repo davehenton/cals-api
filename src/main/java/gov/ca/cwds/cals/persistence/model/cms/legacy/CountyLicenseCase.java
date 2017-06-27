@@ -28,8 +28,8 @@ public class CountyLicenseCase extends BaseCountyLicenseCase {
 
   @Override
   @NotFound(action = NotFoundAction.IGNORE)
-  @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "FKCNTY_CST", referencedColumnName = "IDENTIFIER", nullable = true)
+  @OneToMany
+  @JoinColumn(name = "FKCNTY_CST", referencedColumnName = "IDENTIFIER")
   @OrderBy("visitDate DESC")
   public List<LicensingVisit> getLicensingVisits() {
     return licensingVisits;

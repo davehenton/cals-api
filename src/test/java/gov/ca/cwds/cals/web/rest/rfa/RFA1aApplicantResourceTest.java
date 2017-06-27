@@ -7,8 +7,8 @@ import static org.junit.Assert.assertNotNull;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -16,7 +16,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -31,7 +30,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void createApplicant() throws Exception {
-    RFA1aForm form = createForm(clientTestRule);
+    RFA1aFormDTO form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
 
     assertNotNull(created);
@@ -44,7 +43,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void updateApplicant() throws Exception {
-    RFA1aForm form = createForm(clientTestRule);
+    RFA1aFormDTO form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
 
     created.setFirstName("testFirstName");
@@ -68,16 +67,16 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void getAplicantById() throws Exception {
-    RFA1aForm form = createForm(clientTestRule);
+  public void getApplicantById() throws Exception {
+    RFA1aFormDTO form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
     Applicant found = findApplicant(form, created.getId());
     assertThat(found).isEqualTo(created);
   }
 
   @Test
-  public void getAplicantsByFormId() throws Exception {
-    RFA1aForm form = createForm(clientTestRule);
+  public void getApplicantsByFormId() throws Exception {
+    RFA1aFormDTO form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
     Applicant created1 = createApplicant(form);
     Applicant created2 = createApplicant(form);
@@ -89,8 +88,8 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void deleteAplicant() throws Exception {
-    RFA1aForm form = createForm(clientTestRule);
+  public void deleteApplicant() throws Exception {
+    RFA1aFormDTO form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
     Applicant found = findApplicant(form, created.getId());
 
@@ -113,14 +112,14 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(Status.NOT_FOUND.getStatusCode());
   }
 
-  private Applicant createApplicant(RFA1aForm form) {
+  private Applicant createApplicant(RFA1aFormDTO form) {
     WebTarget target =
         clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_APPLICANTS);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     return invocation.post(null, Applicant.class);
   }
 
-  private Applicant findApplicant(RFA1aForm form, Long applicantId) {
+  private Applicant findApplicant(RFA1aFormDTO form, Long applicantId) {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS
