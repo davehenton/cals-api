@@ -27,7 +27,7 @@ public class JsonTypeTest {
     jsonType.setParameterValues(properties);
 
     try {
-      properties.put(SQL_TYPE, "somethng not supported");
+      properties.put(SQL_TYPE, "something not supported");
       jsonType.setParameterValues(properties);
       assertTrue(false);
     } catch (Exception e) {
