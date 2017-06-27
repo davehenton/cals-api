@@ -10,16 +10,16 @@ import java.util.Objects;
  */
 public class FacilityCompositeDTO extends FacilityDTO {
 
-  @JsonProperty("facilityChildren")
-  private List<FacilityChildDTO> facilityChildren = new ArrayList<>();
+  @JsonProperty("children")
+  private List<FacilityChildDTO> children = new ArrayList<>();
 
-  public List<FacilityChildDTO> getFacilityChildren() {
-    return facilityChildren;
+  public List<FacilityChildDTO> getChildren() {
+    return children;
   }
 
-  public void setFacilityChildren(
-      List<FacilityChildDTO> facilityChildren) {
-    this.facilityChildren = facilityChildren;
+  public void setChildren(
+      List<FacilityChildDTO> children) {
+    this.children = children;
   }
 
   @Override
@@ -34,11 +34,11 @@ public class FacilityCompositeDTO extends FacilityDTO {
       return false;
     }
     FacilityCompositeDTO that = (FacilityCompositeDTO) o;
-    return Objects.equals(facilityChildren, that.facilityChildren);
+    return Objects.equals(children, that.children);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), facilityChildren);
+    return Objects.hash(super.hashCode(), children);
   }
 }

@@ -71,7 +71,7 @@ public class ReplicatedFacilityService extends FacilityService {
   private void addChildren(FacilityCompositeDTO compositeDTO) {
     List<FacilityChildDTO> facilityChildren = clientDao.streamByFacilityId(compositeDTO.getId())
         .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
-    compositeDTO.setFacilityChildren(facilityChildren);
+    compositeDTO.setChildren(facilityChildren);
   }
 
   private class ReplicatedFacilityDataHolder {
