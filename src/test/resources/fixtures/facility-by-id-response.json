@@ -14,10 +14,6 @@
     "number" : "19",
     "name" : "Los Angeles"
   },
-  "status" : {
-    "id" : "",
-    "value" : ""
-  },
   "capacity" : 600,
   "county" : {
     "id" : "34",
