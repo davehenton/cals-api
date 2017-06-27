@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
@@ -26,6 +27,9 @@ public class RFA1aForm extends RFA1aBaseEntity implements PersistentObject, Resp
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.all";
 
 
+  @Type(type = "ApplicationJsonType")
+  private Application application;
+
   @Type(type = "ResidenceJsonType")
   private Residence residence;
 
@@ -36,7 +40,13 @@ public class RFA1aForm extends RFA1aBaseEntity implements PersistentObject, Resp
   @JoinColumn(name = "application_id")
   private List<RFA1aApplicant> applicantEntities;
 
+  public Application getApplication() {
+    return application;
+  }
 
+  public void setApplication(Application application) {
+    this.application = application;
+  }
 
   public Residence getResidence() {
     return residence;
@@ -74,11 +84,4 @@ public class RFA1aForm extends RFA1aBaseEntity implements PersistentObject, Resp
     return HashCodeBuilder.reflectionHashCode(this, "applicantEntities");
   }
 
-  @Override
-  public String toString() {
-    return "RFA1aForm{" +
-        "residence=" + residence +
-        ", applicantEntities=" + applicantEntities +
-        '}';
-  }
 }
