@@ -7,8 +7,8 @@ import static org.junit.Assert.assertNotNull;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildrenDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -29,7 +29,7 @@ public class RFA1aMinorChildrenResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void createMinorChild() throws Exception {
-    RFA1aForm form = RFAHelper.createForm(clientTestRule);
+    RFA1aFormDTO form = RFAHelper.createForm(clientTestRule);
     MinorChild created = createMinorChild(form);
 
     assertNotNull(created);
@@ -41,7 +41,7 @@ public class RFA1aMinorChildrenResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void updateMinorChild() throws Exception {
-    RFA1aForm form = RFAHelper.createForm(clientTestRule);
+    RFA1aFormDTO form = RFAHelper.createForm(clientTestRule);
 
     MinorChild created = createMinorChild(form);
 
@@ -72,7 +72,7 @@ public class RFA1aMinorChildrenResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getMinorChildById() throws Exception {
-    RFA1aForm form = RFAHelper.createForm(clientTestRule);
+    RFA1aFormDTO form = RFAHelper.createForm(clientTestRule);
     MinorChild created = createMinorChild(form);
     MinorChild founded = findMinorChild(form, created.getId());
     assertThat(founded).isEqualTo(created);
@@ -80,7 +80,7 @@ public class RFA1aMinorChildrenResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getMinorChildByFormId() throws Exception {
-    RFA1aForm form = RFAHelper.createForm(clientTestRule);
+    RFA1aFormDTO form = RFAHelper.createForm(clientTestRule);
     MinorChild created1 = createMinorChild(form);
     MinorChild created2 = createMinorChild(form);
     MinorChild created3 = createMinorChild(form);
@@ -100,7 +100,7 @@ public class RFA1aMinorChildrenResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void deleteMinorChild() throws Exception {
-    RFA1aForm form = createForm(clientTestRule);
+    RFA1aFormDTO form = createForm(clientTestRule);
     MinorChild created = createMinorChild(form);
     MinorChild founded = findMinorChild(form, created.getId());
 
@@ -122,7 +122,7 @@ public class RFA1aMinorChildrenResourceTest extends BaseCalsApiIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(404);
   }
 
-  private MinorChild createMinorChild(RFA1aForm form) {
+  private MinorChild createMinorChild(RFA1aFormDTO form) {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_MINOR_CHILDREN);
@@ -132,7 +132,7 @@ public class RFA1aMinorChildrenResourceTest extends BaseCalsApiIntegrationTest {
         Entity.entity(minorChild, MediaType.APPLICATION_JSON_TYPE), MinorChild.class);
   }
 
-  private MinorChild findMinorChild(RFA1aForm form, Long minorChildId) {
+  private MinorChild findMinorChild(RFA1aFormDTO form, Long minorChildId) {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS

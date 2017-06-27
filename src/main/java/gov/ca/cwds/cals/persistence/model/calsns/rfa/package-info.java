@@ -3,6 +3,12 @@
  */
 @TypeDefs(value = {
     @TypeDef(
+        name = "ApplicationJsonType",
+        typeClass = ApplicationJsonType.class,
+        parameters = {@Parameter(name = SQL_TYPE,
+            value = SQLTypes.OTHER_TYPE_NAME)}
+    ),
+    @TypeDef(
         name = "ApplicantJsonType",
         typeClass = ApplicantJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,

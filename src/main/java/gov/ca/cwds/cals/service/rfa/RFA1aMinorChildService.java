@@ -19,12 +19,10 @@ import java.time.LocalDateTime;
 public class RFA1aMinorChildService extends CrudServiceAdapter {
 
   private RFA1aMinorChildDao dao;
-  private RFA1aFormService formService;
 
   @Inject
-  public RFA1aMinorChildService(RFA1aMinorChildDao dao, RFA1aFormService formService) {
+  public RFA1aMinorChildService(RFA1aMinorChildDao dao) {
     this.dao = dao;
-    this.formService = formService;
   }
 
   @Override
@@ -85,7 +83,6 @@ public class RFA1aMinorChildService extends CrudServiceAdapter {
     MinorChild minorChild = null;
     // Update RFA 1a Form
     if (updated != null) {
-      formService.update(paramsObj.getApplicationId());
       minorChild = updated.getMinorChild();
       minorChild.setId(updated.getId());
     }
