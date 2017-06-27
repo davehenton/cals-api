@@ -6,7 +6,7 @@
         name = "ApplicationJsonType",
         typeClass = ApplicationJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
-            value = OTHER_TYPE)}
+            value = SQLTypes.OTHER_TYPE_NAME)}
     ),
     @TypeDef(
         name = "ApplicantJsonType",

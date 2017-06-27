@@ -7,8 +7,8 @@ import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsRelationship;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import java.time.LocalDate;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -45,7 +45,7 @@ public class RFA1aRelationshipResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getApplicationRelationshipNotFoundTest() throws Exception {
-    RFA1aForm rfa1aForm = RFAHelper.createForm(clientTestRule);
+    RFA1aFormDTO rfa1aForm = RFAHelper.createForm(clientTestRule);
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + API.APPLICANTS_RELATIONSHIP);
@@ -56,7 +56,7 @@ public class RFA1aRelationshipResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void putApplicationRelationshipTest() throws Exception {
-    RFA1aForm rfa1aForm = RFAHelper.createForm(clientTestRule);
+    RFA1aFormDTO rfa1aForm = RFAHelper.createForm(clientTestRule);
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + API.APPLICANTS_RELATIONSHIP);

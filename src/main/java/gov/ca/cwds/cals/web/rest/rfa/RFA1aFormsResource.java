@@ -10,7 +10,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackendResource;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Application;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormsDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -51,15 +52,38 @@ public class RFA1aFormsResource {
   @Timed
   @ApiResponses(
       value = {
+          @ApiResponse(code = 201, message = "Created"),
           @ApiResponse(code = 401, message = "Not Authorized"),
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a Form", response = Application.class)
+  @ApiOperation(value = "Creates and returns RFA 1a Form", response = RFA1aFormDTO.class)
   public Response createApplicationForm(
       @ApiParam(name = "application", value = "The RFA-1a Application object")
           Application application) {
     return resourceDelegate.create(application);
+  }
+
+  @UnitOfWork(CALSNS)
+  @PUT
+  @Path("/{" + RFA_1A_APPLICATION_ID + "}")
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 400, message = "Bad request"),
+          @ApiResponse(code = 404, message = "Not Found"),
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Updates RFA 1a Form", response = RFA1aFormDTO.class)
+  public Response updateApplicationForm(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+          Long formId,
+      @ApiParam(name = "application", value = "The RFA-1a Application object")
+          RFA1aFormDTO formDTO) {
+    return resourceDelegate.update(formId, formDTO);
   }
 
   @UnitOfWork(CALSNS)
@@ -73,7 +97,7 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1a Form by Id", response = RFA1aForm.class)
+  @ApiOperation(value = "Returns RFA 1a Form by Id", response = RFA1aFormDTO.class)
   public Response getAplicationForm(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")

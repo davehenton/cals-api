@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
@@ -15,12 +16,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team.
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonPropertyOrder({"id", "is_initial_application", "is_other_type", "other_type_description",
+    "application_county"})
 public class Application extends BaseDTO implements Request, Response {
 
-  private static final long serialVersionUID = 1L;
-
-  @ApiModelProperty(value = "Application Id", hidden = true)
-  private Long id;
+  private static final long serialVersionUID = 3691906983136791415L;
 
   @JsonProperty("is_initial_application")
   @ApiModelProperty(value = "Is Initial Application Id", example = "false")
@@ -35,14 +35,6 @@ public class Application extends BaseDTO implements Request, Response {
 
   @ApiModelProperty(value = "County Type")
   private CountyType applicationCounty;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public boolean isInitialApplication() {
     return initialApplication;

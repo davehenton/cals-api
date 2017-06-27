@@ -16,6 +16,7 @@ import gov.ca.cwds.cals.service.mapper.FacilityTypeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapperImpl;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
+import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapperImpl;
 
 /**
  * DI (dependency injection) setup for mapping classes.

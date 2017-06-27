@@ -22,12 +22,10 @@ import java.time.LocalDateTime;
 public class RFA1aApplicantService extends CrudServiceAdapter {
 
   private RFA1aApplicantDao dao;
-  private RFA1aFormService formService;
 
   @Inject
-  public RFA1aApplicantService(RFA1aApplicantDao dao, RFA1aFormService formService) {
+  public RFA1aApplicantService(RFA1aApplicantDao dao) {
     this.dao = dao;
-    this.formService = formService;
   }
 
   @Override
@@ -96,7 +94,6 @@ public class RFA1aApplicantService extends CrudServiceAdapter {
     Applicant applicant = null;
     // Update RFA 1a Form 
     if (updated != null) {
-      formService.update(applicantParams.getFormId());
       applicant = updated.getApplicant();
       applicant.setId(updated.getId());
     }

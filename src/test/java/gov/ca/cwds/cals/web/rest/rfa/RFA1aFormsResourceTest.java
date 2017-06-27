@@ -8,11 +8,13 @@ import static org.junit.Assert.assertTrue;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormsDTO;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -33,24 +35,45 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getAplicationForm() throws Exception {
-    RFA1aForm rfaFormCreate = createForm(clientTestRule);
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+    target = clientTestRule.target(API.RFA_1A_FORMS + "/9999999");
+    Response response = target.request(MediaType.APPLICATION_JSON).get();
+    assertEquals(404, response.getStatus());
+  }
+
+  @Test
+  public void getAplicationFormTest() throws Exception {
+    RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
     target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    RFA1aForm rfaFormGet = invocation.get(RFA1aForm.class);
+    RFA1aFormDTO rfaFormGet = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
 
     assertNotNull(rfaFormGet);
     assertEquals(rfaFormCreate, rfaFormGet);
   }
 
   @Test
-  public void getAllAplicationForms() throws Exception {
+  public void updateAplicationFormTest() throws Exception {
+    RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
+
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+    target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
+    rfaFormCreate.setOtherTypeDescription("newOtherTypeDescription");
+    RFA1aFormDTO rfaFormGet = target.request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(rfaFormCreate, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
+
+    assertNotNull(rfaFormGet);
+    assertEquals(rfaFormCreate, rfaFormGet);
+  }
+
+  @Test
+  public void getAllAplicationFormsTest() throws Exception {
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    RFA1aForm rfaFormCreate1 = createForm(clientTestRule);
-    RFA1aForm rfaFormCreate2 = createForm(clientTestRule);
-    RFA1aForm rfaFormCreate3 = createForm(clientTestRule);
+    RFA1aFormDTO rfaFormCreate1 = createForm(clientTestRule);
+    RFA1aFormDTO rfaFormCreate2 = createForm(clientTestRule);
+    RFA1aFormDTO rfaFormCreate3 = createForm(clientTestRule);
 
     assertNotEquals(rfaFormCreate1, rfaFormCreate2);
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);

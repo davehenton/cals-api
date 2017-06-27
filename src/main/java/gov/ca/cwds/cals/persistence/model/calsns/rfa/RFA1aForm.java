@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
@@ -83,11 +84,4 @@ public class RFA1aForm extends RFA1aBaseEntity implements PersistentObject, Resp
     return HashCodeBuilder.reflectionHashCode(this, "applicantEntities");
   }
 
-  @Override
-  public String toString() {
-    return "RFA1aForm{" +
-        "residence=" + residence +
-        ", applicantEntities=" + applicantEntities +
-        '}';
-  }
 }
