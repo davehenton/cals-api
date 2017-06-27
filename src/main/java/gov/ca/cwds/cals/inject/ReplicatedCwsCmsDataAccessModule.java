@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.persistence.model.cms.rs.ReplicatedPersistentEntity;
-import gov.ca.cwds.cals.persistence.dao.cms.legacy.ClientDao;
-import gov.ca.cwds.cals.persistence.dao.cms.legacy.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.rs.ReplicatedPersistentEntityDao;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.Client;

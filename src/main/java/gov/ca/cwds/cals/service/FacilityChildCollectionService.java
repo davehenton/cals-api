@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.dao.cms.legacy.ClientDao;
+import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;

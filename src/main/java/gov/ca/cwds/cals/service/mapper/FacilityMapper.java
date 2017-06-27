@@ -59,8 +59,6 @@ public interface FacilityMapper {
     @Mapping(source = "lisFacFile.facEmailAddress", target = "emailAddress")
     @Mapping(source = "lisFacFile.facCoNbr.tblCoNbr", target = "county.code")
     @Mapping(source = "lisFacFile.facCoNbr.tblCoDesc", target = "county.description")
-    @Mapping(target = "children", expression = "java(new HyperlinkDTO( String.format(Constants.API.FACILITIES + " +
-            "\"/%s/\" + Constants.API.CHILDREN, lisFacFile.getFacNbr())))")
     @Mapping(target = "complains", expression = "java(new HyperlinkDTO( String.format(Constants.API.FACILITIES + " +
             "\"/%s/\" + Constants.API.COMPLAINTS, lisFacFile.getFacNbr())))")
     FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
@@ -87,7 +85,6 @@ public interface FacilityMapper {
             "\"/%s/\" + Constants.API.COMPLAINTS, placementHome.getIdentifier())))")
     @Mapping(target = "messages", ignore = true)
     @Mapping(target = "emailAddress", ignore = true)
-    @Mapping(target = "children", ignore = true)
     FacilityDTO toFacilityDTO(BasePlacementHome placementHome);
 
     FacilityCompositeDTO toFacilityCompositeDTO(FacilityDTO facilityDTO);

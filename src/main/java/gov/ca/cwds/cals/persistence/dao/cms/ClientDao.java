@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.dao.cms.legacy;
+package gov.ca.cwds.cals.persistence.dao.cms;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.stream.QueryCreator;
