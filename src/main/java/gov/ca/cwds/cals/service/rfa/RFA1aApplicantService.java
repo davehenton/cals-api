@@ -79,7 +79,7 @@ public class RFA1aApplicantService extends CrudServiceAdapter {
   public Response update(Serializable applicantId, Request params) {
     final RFA1aApplicantParameterObject applicantParams = getParamObject(params);
     RFA1aApplicant applicantEntity = null;
-    if (applicantId != null && applicantId instanceof Long) {
+    if (applicantId instanceof Long) {
       applicantEntity =
           dao.findApplicantByFormIdAndApplicantId(applicantParams.getFormId(), (Long) applicantId);
     }

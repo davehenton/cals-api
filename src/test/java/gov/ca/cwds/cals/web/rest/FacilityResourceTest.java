@@ -57,4 +57,14 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         assertEqualsResponse(fixture, facilityDTO);
     }
 
+    @Test
+    public void testGetFacilityByFacilityIdWithZeroInCountyAndFacilityType() throws Exception {
+        WebTarget target = clientTestRule.target(Constants.API.FACILITIES + "/BITrEV40OU");
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);
+
+        String fixture = fixture("fixtures/facility-by-id-with-zero-in-county-and-facility-type-response.json");
+        assertEqualsResponse(fixture, facilityDTO);
+    }
+
 }
