@@ -67,7 +67,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void getAplicantById() throws Exception {
+  public void getApplicantById() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
     Applicant found = findApplicant(form, created.getId());
@@ -75,7 +75,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void getAplicantsByFormId() throws Exception {
+  public void getApplicantsByFormId() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
     Applicant created1 = createApplicant(form);
@@ -88,7 +88,7 @@ public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void deleteAplicant() throws Exception {
+  public void deleteApplicant() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
     Applicant created = createApplicant(form);
     Applicant found = findApplicant(form, created.getId());

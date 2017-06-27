@@ -98,7 +98,7 @@ public class RFA1aFormsResource {
       }
   )
   @ApiOperation(value = "Returns RFA 1a Form by Id", response = RFA1aFormDTO.class)
-  public Response getAplicationForm(
+  public Response getApplicationForm(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId) {
@@ -116,7 +116,7 @@ public class RFA1aFormsResource {
       }
   )
   @ApiOperation(value = "Returns all available RFA 1a Forms", response = RFA1aFormsDTO.class)
-  public Response getAllAplicationForms() {
+  public Response getAllApplicationForms() {
     return collectionResourceDelegate.get(null);
   }
 

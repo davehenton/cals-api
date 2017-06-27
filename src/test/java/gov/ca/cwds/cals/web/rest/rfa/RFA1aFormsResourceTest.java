@@ -34,7 +34,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void getAplicationFormNotFound() throws Exception {
+  public void getApplicationFormNotFound() throws Exception {
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
     target = clientTestRule.target(API.RFA_1A_FORMS + "/9999999");
     Response response = target.request(MediaType.APPLICATION_JSON).get();
@@ -42,7 +42,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void getAplicationFormTest() throws Exception {
+  public void getApplicationFormTest() throws Exception {
     RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
@@ -54,7 +54,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void updateAplicationFormTest() throws Exception {
+  public void updateApplicationFormTest() throws Exception {
     RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
@@ -68,7 +68,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void getAllAplicationFormsTest() throws Exception {
+  public void getAllApplicationFormsTest() throws Exception {
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     RFA1aFormDTO rfaFormCreate1 = createForm(clientTestRule);
