@@ -34,7 +34,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void getAplicationForm() throws Exception {
+  public void getAplicationFormNotFound() throws Exception {
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
     target = clientTestRule.target(API.RFA_1A_FORMS + "/9999999");
     Response response = target.request(MediaType.APPLICATION_JSON).get();
