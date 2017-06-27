@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_FORM_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
@@ -61,7 +61,7 @@ public class RFA1aFormsResource {
 
   @UnitOfWork(CALSNS)
   @GET
-  @Path("/{" + RFA_1A_FORM_ID + "}")
+  @Path("/{" + RFA_1A_APPLICATION_ID + "}")
   @Timed
   @ApiResponses(
       value = {
@@ -72,8 +72,8 @@ public class RFA1aFormsResource {
   )
   @ApiOperation(value = "Returns RFA 1a Form by Id", response = RFA1aForm.class)
   public Response getAplicationForm(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }

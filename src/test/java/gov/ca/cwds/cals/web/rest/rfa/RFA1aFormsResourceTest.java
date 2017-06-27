@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -27,24 +28,18 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void createApplicationForm() throws Exception {
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    RFA1aForm rfaForm = invocation.post(null, RFA1aForm.class);
-    assertNotNull(rfaForm);
-    assertNotNull(rfaForm.getId());
+    createForm(clientTestRule);
   }
 
   @Test
   public void getAplicationForm() throws Exception {
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    RFA1aForm rfaFormCreate = invocation.post(null, RFA1aForm.class);
+    RFA1aForm rfaFormCreate = createForm(clientTestRule);
 
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
     target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
-    invocation = target.request(MediaType.APPLICATION_JSON);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     RFA1aForm rfaFormGet = invocation.get(RFA1aForm.class);
 
-    assertNotNull(rfaFormCreate);
     assertNotNull(rfaFormGet);
     assertEquals(rfaFormCreate, rfaFormGet);
   }
@@ -53,9 +48,9 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   public void getAllAplicationForms() throws Exception {
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    RFA1aForm rfaFormCreate1 = invocation.post(null, RFA1aForm.class);
-    RFA1aForm rfaFormCreate2 = invocation.post(null, RFA1aForm.class);
-    RFA1aForm rfaFormCreate3 = invocation.post(null, RFA1aForm.class);
+    RFA1aForm rfaFormCreate1 = createForm(clientTestRule);
+    RFA1aForm rfaFormCreate2 = createForm(clientTestRule);
+    RFA1aForm rfaFormCreate3 = createForm(clientTestRule);
 
     assertNotEquals(rfaFormCreate1, rfaFormCreate2);
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);

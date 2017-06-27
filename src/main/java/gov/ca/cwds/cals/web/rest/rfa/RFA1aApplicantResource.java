@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICANT_ID;
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_FORM_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANT;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS;
@@ -37,7 +37,7 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 @Api(tags = {RFA})
-@Path(RFA_1A_FORMS + "/{" + RFA_1A_FORM_ID + "}/" + RFA_1A_APPLICANTS)
+@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RFA_1A_APPLICANTS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aApplicantResource {
@@ -65,10 +65,12 @@ public class RFA1aApplicantResource {
   )
   @ApiOperation(value = "Creates and returns RFA 1a Applicant", response = Applicant.class)
   public Response createApplicant(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
-          Long formId) {
-    return resourceDelegate.create(new RFA1aApplicantParameterObject(formId));
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+          Long formId,
+      @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1a Applicant object")
+          Applicant applicant) {
+    return resourceDelegate.create(new RFA1aApplicantParameterObject(formId, applicant));
   }
 
   @UnitOfWork(CALSNS)
@@ -82,19 +84,18 @@ public class RFA1aApplicantResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a Applicant", response = Applicant.class)
+  @ApiOperation(value = "Update and returns RFA 1a Applicant", response = Applicant.class)
   public Response updateApplicant(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
       @PathParam(RFA_1A_APPLICANT_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1a Applicant Id")
           Long applicantId,
       @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1a Applicant object")
-          Applicant applicant
-  ) {
-    return resourceDelegate
-        .update(applicantId, new RFA1aApplicantParameterObject(formId, applicant));
+          Applicant applicant) {
+    return resourceDelegate.update(
+        applicantId, new RFA1aApplicantParameterObject(formId, applicant));
   }
 
   @UnitOfWork(CALSNS)
@@ -110,8 +111,8 @@ public class RFA1aApplicantResource {
   )
   @ApiOperation(value = "Returns RFA 1a Form's Applicant by Id", response = Applicant.class)
   public Response getAplicantById(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
       @PathParam(RFA_1A_APPLICANT_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1a Applicant Id")
@@ -135,8 +136,8 @@ public class RFA1aApplicantResource {
       response = ApplicantsDTO.class
   )
   public Response getAplicantsByFormId(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId) {
     return collectionResourceDelegate.get(new RFA1aApplicantParameterObject(formId));
   }
@@ -153,13 +154,12 @@ public class RFA1aApplicantResource {
   )
   @ApiOperation(value = "Delete RFA 1a Form's Applicant by Id")
   public Response deleteAplicant(
-      @PathParam(RFA_1A_FORM_ID)
-      @ApiParam(required = true, name = RFA_1A_FORM_ID, value = "The RFA-1a Form Id")
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
       @PathParam(RFA_1A_APPLICANT_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1a Applicant Id")
           Long applicantId) {
     return resourceDelegate.delete(new RFA1aApplicantParameterObject(formId, applicantId));
   }
-
 }

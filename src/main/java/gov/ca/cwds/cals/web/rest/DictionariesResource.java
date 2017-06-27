@@ -34,7 +34,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.DictionariesServiceBackendResource;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.DictionaryValuesDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -75,7 +75,7 @@ public class DictionariesResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Returns Age Group Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Age Group Types", response = DictionaryValuesDTO.class)
   public Response getDictionaryAgeGroupTypes() {
     return dictionariesResourceDelegate.get(AGE_GROUP_TYPE);
   }
@@ -91,7 +91,7 @@ public class DictionariesResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Returns Languages", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Languages", response = DictionaryValuesDTO.class)
   public Response getDictionaryLanguageTypes() {
     return dictionariesResourceDelegate.get(LANGUAGE_TYPE);
   }
@@ -107,7 +107,7 @@ public class DictionariesResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Returns Genders", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Genders", response = DictionaryValuesDTO.class)
   public Response getDictionaryGenderTypes() {
     return dictionariesResourceDelegate.get(GENDER_TYPE);
   }
@@ -123,7 +123,7 @@ public class DictionariesResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Returns Name Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Name Types", response = DictionaryValuesDTO.class)
   public Response getDictionaryNameTypes() {
     return dictionariesResourceDelegate.get(NAME_TYPE);
   }
@@ -139,7 +139,7 @@ public class DictionariesResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Returns Education Level Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Education Level Types", response = DictionaryValuesDTO.class)
   public Response getDictionaryEducationLevelType() {
     return dictionariesResourceDelegate.get(EDUCATION_LEVEL_TYPE);
   }
@@ -155,7 +155,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Ethnicity Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Ethnicity Types", response = DictionaryValuesDTO.class)
   public Response getDictionaryEthnicityType() {
     return dictionariesResourceDelegate.get(ETHNICITY_TYPE);
   }
@@ -171,7 +171,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Races", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Races", response = DictionaryValuesDTO.class)
   public Response getRaceType() {
     return dictionariesResourceDelegate.get(RACE_TYPE);
   }
@@ -187,7 +187,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Income Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Income Types", response = DictionaryValuesDTO.class)
   public Response getIncomeType() {
     return dictionariesResourceDelegate.get(INCOME_TYPE);
   }
@@ -203,7 +203,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Phone Number Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Phone Number Types", response = DictionaryValuesDTO.class)
   public Response getPhoneNumberTypes() {
     return dictionariesResourceDelegate.get(PHONE_NUMBER_TYPE);
   }
@@ -219,7 +219,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Address Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Address Types", response = DictionaryValuesDTO.class)
   public Response getAddressTypes() {
     return dictionariesResourceDelegate.get(ADDRESS_TYPE);
   }
@@ -235,7 +235,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Sibling Group Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Sibling Group Types", response = DictionaryValuesDTO.class)
   public Response getSiblingGroupTypes() {
     return dictionariesResourceDelegate.get(SIBLING_GROUP_TYPE);
   }
@@ -251,7 +251,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns States", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns States", response = DictionaryValuesDTO.class)
   public Response getStateTypes() {
     return dictionariesResourceDelegate.get(STATE_TYPE);
   }
@@ -267,7 +267,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Residence Ownership Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Residence Ownership Types", response = DictionaryValuesDTO.class)
   public Response getResidenceOwnershipTypes() {
     return dictionariesResourceDelegate.get(RESIDENCE_OWNERSHIP_TYPE);
   }
@@ -283,7 +283,7 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Applicant Relationship Types", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns Applicant Relationship Types", response = DictionaryValuesDTO.class)
   public Response getApplicantRelationshipTypes() {
     return dictionariesResourceDelegate.get(APPLICANT_RELATIONSHIP_TYPE);
   }

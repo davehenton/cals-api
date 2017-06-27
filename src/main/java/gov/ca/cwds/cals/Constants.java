@@ -21,6 +21,10 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
  */
 public final class Constants {
 
+  public static final String SQL_TYPE = "sqlType";
+  public static final String CLOB_TYPE = "2005";
+  public static final String OTHER_TYPE = "1111";
+
   public static class API {
 
     public static final String FACILITIES = "facilities";
@@ -47,6 +51,12 @@ public final class Constants {
 
     public static final String RFA_1A_APPLICANTS = "applicants";
 
+    public static final String APPLICANTS_RELATIONSHIP = "applicants-relationship";
+
+    public static final String RFA_1A_MINOR_CHILDREN = "minor-children";
+
+    public static final String RFA_1A_MINOR_CHILD = "minorChild";
+
     public static final String RESIDENCE = "residence";
 
     public static final String SYSTEM_USER_ID = "SYSTEM";
@@ -63,9 +73,11 @@ public final class Constants {
 
       public static final String DICTIONARY_TYPE = "dictionaryType";
 
-      public static final String RFA_1A_FORM_ID = "formId";
+      public static final String RFA_1A_APPLICATION_ID = "applicationId";
 
       public static final String RFA_1A_APPLICANT_ID = "applicantId";
+
+      public static final String RFA_1A_MINOR_CHILD_ID = "minorChildId";
 
       private PathParams() {
       }
@@ -108,11 +120,11 @@ public final class Constants {
     public static final String INCOME_TYPE_PATH = "income-types";
     public static final String PHONE_NUMBER_TYPE_PATH = "phone-number-types";
     public static final String ADDRESS_TYPE_PATH = "address-types";
-    public static final String SIBLING_GROUP_TYPE_PATH = "rfa/sibling-groups";
+    public static final String SIBLING_GROUP_TYPE_PATH = "sibling-groups";
     public static final String STATE_TYPE_PATH = "states";
     public static final String APPLICATION_STATUS_TYPE_PATH = "application-statuses";
     public static final String RESIDENCE_OWNERSHIP_TYPE_PATH = "residence-ownership-types";
-    public static final String APPLICANT_RELATIONSHIP_TYPE_PATH = "rfa/applicant-relationship-types";
+    public static final String APPLICANT_RELATIONSHIP_TYPE_PATH = "applicant-relationship-types";
     public static final String RELATIONSHIP_EVENT_TYPE_PATH = "relationship-event-types";
 
     private Class<? extends BaseDictionary> dictionaryClass;

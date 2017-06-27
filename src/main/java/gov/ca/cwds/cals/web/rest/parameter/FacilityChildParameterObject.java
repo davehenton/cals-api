@@ -11,16 +11,16 @@ public class FacilityChildParameterObject implements Serializable {
 
     private String licenseNumber;
     private String childId;
-    private Date after;
+  private Date after;
 
     public FacilityChildParameterObject(String licenseNumber, String childId) {
         this.licenseNumber = licenseNumber;
         this.childId = childId;
     }
 
-    public FacilityChildParameterObject(Date after) {
-        this.after = after;
-    }
+  public FacilityChildParameterObject(Date after) {
+    this.after = after;
+  }
 
     public FacilityChildParameterObject(String licenseNumber) {
         this(licenseNumber, null);
@@ -34,7 +34,7 @@ public class FacilityChildParameterObject implements Serializable {
         return childId;
     }
 
-    public Date getAfter() {
-        return after;
-    }
+  public Date getAfter() {
+    return after;
+  }
 }

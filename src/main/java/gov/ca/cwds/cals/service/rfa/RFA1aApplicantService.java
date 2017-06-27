@@ -33,14 +33,14 @@ public class RFA1aApplicantService extends CrudServiceAdapter {
   @Override
   public Response create(Request request) {
     RFA1aApplicantParameterObject params = getParamObject(request);
-
-    Applicant applicant = new Applicant();
+    Applicant applicant = params.getApplicant();
+    if (applicant == null) {
+      applicant = new Applicant();
+    }
     RFA1aApplicant rfa1aApplicant = new RFA1aApplicant();
-    LocalDateTime now = LocalDateTime.now();
-    rfa1aApplicant.setCreateDateTime(now);
-    rfa1aApplicant.setCreateUserId(SYSTEM_USER_ID);
-    rfa1aApplicant.setUpdateDateTime(now);
-    rfa1aApplicant.setUpdateUserId(SYSTEM_USER_ID);
+
+    RFA1aServiceHelper.fillCreateBaseFields(rfa1aApplicant, SYSTEM_USER_ID);
+
     rfa1aApplicant.setApplicant(applicant);
     rfa1aApplicant.setFormId(params.getFormId());
     rfa1aApplicant = dao.create(rfa1aApplicant);
@@ -81,7 +81,7 @@ public class RFA1aApplicantService extends CrudServiceAdapter {
   public Response update(Serializable applicantId, Request params) {
     final RFA1aApplicantParameterObject applicantParams = getParamObject(params);
     RFA1aApplicant applicantEntity = null;
-    if (applicantId != null && applicantId instanceof Long) {
+    if (applicantId instanceof Long) {
       applicantEntity =
           dao.findApplicantByFormIdAndApplicantId(applicantParams.getFormId(), (Long) applicantId);
     }

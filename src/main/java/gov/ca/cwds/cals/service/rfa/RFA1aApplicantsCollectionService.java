@@ -32,10 +32,7 @@ public class RFA1aApplicantsCollectionService extends CrudServiceAdapter {
     List<RFA1aApplicant> applicants =
         dao.findAllByFormId(((RFA1aApplicantParameterObject) params).getFormId());
     List<Applicant> collectDTOs =
-        applicants
-            .stream()
-            .map(RFA1aApplicant::getApplicant)
-            .collect(Collectors.toList());
+        applicants.stream().map(RFA1aApplicant::getApplicant).collect(Collectors.toList());
     return new ApplicantsDTO(collectDTOs);
   }
 }
