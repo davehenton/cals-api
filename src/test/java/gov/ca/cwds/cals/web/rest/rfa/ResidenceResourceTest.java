@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Residence;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -59,9 +60,7 @@ public class ResidenceResourceTest extends BaseCalsApiIntegrationTest {
 
     @Test
     public void testPutAndGetResidence() throws Exception {
-        WebTarget formTarget = clientTestRule.target(RFA_1A_FORMS);
-        Invocation.Builder formInvocation = formTarget.request(MediaType.APPLICATION_JSON);
-        RFA1aForm form = formInvocation.post(Entity.entity(null, MediaType.APPLICATION_JSON), RFA1aForm.class);
+        RFA1aFormDTO form = RFAHelper.createForm(clientTestRule);
 
         WebTarget residenceTarget = clientTestRule.target(RFA_1A_FORMS + "/" + form.getId() + "/" + RESIDENCE);
         Invocation.Builder residenceInvocation = residenceTarget.request(MediaType.APPLICATION_JSON);
