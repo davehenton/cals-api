@@ -50,9 +50,8 @@ public class ReplicatedCwsCmsDataAccessModule extends AbstractModule {
   protected void configure() {
     bind(SessionFactory.class).annotatedWith(CmsSessionFactory.class).toInstance(cmsSessionFactory);
 
-    bind(ReplicatedPersistentEntityDao.class);
-
     // schema: cwscms
+    bind(ReplicatedPersistentEntityDao.class);
     bind(CountiesDao.class);
     bind(ClientDao.class);
     bind(PlacementHomeDao.class);

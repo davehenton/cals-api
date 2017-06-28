@@ -14,7 +14,7 @@ import org.hibernate.annotations.NamedNativeQuery;
  * @author CWDS TPT-2
  */
 @NamedNativeQuery(
-    name = "RecordChangeObject.findChangedFacilityRecords",
+    name = "RecordChangeObject.findChangedFacilityRecordsInCWSCMS",
     query =
         "SELECT PlacementHome.IDENTIFIER AS ID, PlacementHome.IBMSNAP_OPERATION AS IBMSNAP_OPERATION"
             + " FROM {h-schema}PLC_HM_T PlacementHome"
@@ -29,6 +29,13 @@ import org.hibernate.annotations.NamedNativeQuery;
             + " Client.IBMSNAP_LOGMARKER > :dateAfter OR"
             + " PlacementEpisode.IBMSNAP_LOGMARKER > :dateAfter OR"
             + " OutOfHomePlacement.IBMSNAP_LOGMARKER > :dateAfter)",
+    resultClass = RecordChangeObject.class,
+    readOnly = true
+)
+@NamedNativeQuery(
+    name = "RecordChangeObject.findChangedFacilityRecordsInLIS",
+    query = "SELECT f.fac_nbr as ID, 'U' AS IBMSNAP_OPERATION"
+        + " FROM {h-schema}lis_fac_file f WHERE f.fac_last_upd_date > :dateAfter",
     resultClass = RecordChangeObject.class,
     readOnly = true
 )

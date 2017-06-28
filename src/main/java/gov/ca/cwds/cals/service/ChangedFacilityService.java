@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.CompositeIterator;
 import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
+import gov.ca.cwds.cals.persistence.dao.lis.LisRecordChangeDao;
 import gov.ca.cwds.cals.persistence.model.RecordChangeObject;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
@@ -35,6 +36,8 @@ public class ChangedFacilityService extends FacilityService {
 
   private static final Logger LOG = LoggerFactory.getLogger(ChangedFacilityService.class);
 
+  private LisRecordChangeDao lisRecordChangeDao;
+
   private ReplicatedPersistentEntityDao replicatedPersistentEntityDao;
   private ClientDao clientDao;
   private FacilityChildMapper facilityChildMapper;
@@ -47,10 +50,12 @@ public class ChangedFacilityService extends FacilityService {
       LpaInformationDao lpaInformationDao,
       CountiesDao countiesDao, FacilityMapper facilityMapper,
       FasFacilityMapper fasFacilityMapper,
+      LisRecordChangeDao lisRecordChangeDao,
       ReplicatedPersistentEntityDao replicatedPersistentEntityDao,
       ClientDao clientDao, FacilityChildMapper facilityChildMapper) {
     super(lisDsLisFacFileDao, fasDsLisFacFileDao, placementHomeDao, lpaInformationDao, countiesDao,
         facilityMapper, fasFacilityMapper);
+    this.lisRecordChangeDao = lisRecordChangeDao;
     this.replicatedPersistentEntityDao = replicatedPersistentEntityDao;
     this.clientDao = clientDao;
     this.facilityChildMapper = facilityChildMapper;
@@ -58,6 +63,7 @@ public class ChangedFacilityService extends FacilityService {
 
   public Stream<ReplicatedFacilityCompositeDTO> changedFacilitiesStream(Date after) {
     RecordChanges recordChanges = new RecordChanges();
+    lisRecordChangeDao.streamChangedFacilityRecords(after).forEach(recordChanges::add);
     replicatedPersistentEntityDao.streamChangedFacilityRecords(after).forEach(recordChanges::add);
 
     return StreamSupport.stream(recordChanges.newIterable().spliterator(), false).map(
