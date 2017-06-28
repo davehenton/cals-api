@@ -12,6 +12,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -124,6 +126,7 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
+    @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "PLC_FCLC", referencedColumnName = "SYS_ID")
     public FacilityType getFacilityType() {
         return facilityType;
@@ -135,6 +138,7 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
+    @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "GVR_ENTC", referencedColumnName = "SYS_ID")
     public County getCounty() {
         return county;
@@ -146,6 +150,7 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
+    @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "F_STATE_C", referencedColumnName = "SYS_ID")
     public gov.ca.cwds.cals.persistence.model.cms.State getStateCode() {
         return stateCode;
@@ -171,6 +176,7 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
+    @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "LIC_STC", referencedColumnName = "SYS_ID", nullable = false)
     public gov.ca.cwds.cals.persistence.model.cms.LicenseStatus getLicenseStatus() {
         return licenseStatus;

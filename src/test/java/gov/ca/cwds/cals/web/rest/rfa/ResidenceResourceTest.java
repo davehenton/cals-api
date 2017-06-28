@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Residence;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import org.junit.BeforeClass;
