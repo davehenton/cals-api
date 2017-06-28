@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.web.rest.parameter;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author CWDS CALS API Team
@@ -12,7 +11,6 @@ public class FacilityParameterObject implements Serializable {
     private String facilityId;
     private Integer licenseNumber;
     private String unitOfWork;
-    private Date after;
 
     public FacilityParameterObject(String unitOfWork) {
         this.unitOfWork = unitOfWork;
@@ -28,10 +26,6 @@ public class FacilityParameterObject implements Serializable {
         this.unitOfWork = unitOfWork;
     }
 
-    public FacilityParameterObject(Date after) {
-        this.after = after;
-    }
-
     public String getFacilityId() {
         return facilityId;
     }
@@ -42,9 +36,5 @@ public class FacilityParameterObject implements Serializable {
 
     public String getUnitOfWork() {
         return unitOfWork;
-    }
-
-    public Date getAfter() {
-        return after;
     }
 }

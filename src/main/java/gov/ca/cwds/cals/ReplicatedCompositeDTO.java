@@ -7,7 +7,7 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
  */
 public interface ReplicatedCompositeDTO extends Identified<String> {
 
-  ReplicationOperation getReplicationOperation();
+  RecordChangeOperation getRecordChangeOperation();
 
   BaseDTO getDTO();
 }

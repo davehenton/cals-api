@@ -2,9 +2,9 @@ package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.CompositeIterator;
+import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
-import gov.ca.cwds.cals.persistence.model.cms.rs.ReplicatedPersistentEntity;
-import gov.ca.cwds.cals.ReplicationOperation;
+import gov.ca.cwds.cals.persistence.model.RecordChangeObject;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.rs.ReplicatedPersistentEntityDao;
@@ -17,26 +17,30 @@ import gov.ca.cwds.cals.service.dto.rs.ReplicatedFacilityCompositeDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
-import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 
 import gov.ca.cwds.data.CrudsDao;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CWDS TPT-2
  */
-public class ReplicatedFacilityService extends FacilityService {
+public class ChangedFacilityService extends FacilityService {
+
+  private static final Logger LOG = LoggerFactory.getLogger(ChangedFacilityService.class);
 
   private ReplicatedPersistentEntityDao replicatedPersistentEntityDao;
   private ClientDao clientDao;
   private FacilityChildMapper facilityChildMapper;
 
   @Inject
-  public ReplicatedFacilityService(
+  public ChangedFacilityService(
       CrudsDao<LisFacFile> lisDsLisFacFileDao,
       CrudsDao<LisFacFile> fasDsLisFacFileDao,
       PlacementHomeDao placementHomeDao,
@@ -52,19 +56,19 @@ public class ReplicatedFacilityService extends FacilityService {
     this.facilityChildMapper = facilityChildMapper;
   }
 
-  public Stream<ReplicatedFacilityCompositeDTO> facilitiesStream(
-      FacilityParameterObject paramObject) {
-    ReplicatedFacilityDataHolder dataHolder = new ReplicatedFacilityDataHolder();
-    replicatedPersistentEntityDao.streamUpdatedFacilityData(paramObject).forEach(dataHolder::add);
+  public Stream<ReplicatedFacilityCompositeDTO> changedFacilitiesStream(Date after) {
+    RecordChanges recordChanges = new RecordChanges();
+    replicatedPersistentEntityDao.streamChangedFacilityRecords(after).forEach(recordChanges::add);
 
-    return StreamSupport.stream(dataHolder.newIterable().spliterator(), false).map(
-        replicatedEntity -> {
-          FacilityDTO facilityDTO = findById(replicatedEntity.getId());
+    return StreamSupport.stream(recordChanges.newIterable().spliterator(), false).map(
+        recordChange -> {
+          LOG.info("Getting facility by ID: " + recordChange.getId());
+          FacilityDTO facilityDTO = findById(recordChange.getId());
           FacilityCompositeDTO compositeDTO = facilityMapper.toFacilityCompositeDTO(facilityDTO);
           addChildren(compositeDTO);
 
           return new ReplicatedFacilityCompositeDTO(compositeDTO,
-              replicatedEntity.getReplicationOperation());
+              recordChange.getRecordChangeOperation());
         });
   }
 
@@ -74,23 +78,23 @@ public class ReplicatedFacilityService extends FacilityService {
     compositeDTO.setChildren(facilityChildren);
   }
 
-  private class ReplicatedFacilityDataHolder {
+  private class RecordChanges {
 
-    private HashMap<String, ReplicatedPersistentEntity> toBeDeleted = new HashMap<>();
-    private HashMap<String, ReplicatedPersistentEntity> toBeInserted = new HashMap<>();
-    private HashMap<String, ReplicatedPersistentEntity> toBeUpdated = new HashMap<>();
+    private HashMap<String, RecordChangeObject> toBeDeleted = new HashMap<>();
+    private HashMap<String, RecordChangeObject> toBeInserted = new HashMap<>();
+    private HashMap<String, RecordChangeObject> toBeUpdated = new HashMap<>();
 
-    void add(ReplicatedPersistentEntity data) {
-      if (ReplicationOperation.D == data.getReplicationOperation()) {
+    void add(RecordChangeObject data) {
+      if (RecordChangeOperation.D == data.getRecordChangeOperation()) {
         toBeDeleted.put(data.getId(), data);
-      } else if (ReplicationOperation.I == data.getReplicationOperation()) {
+      } else if (RecordChangeOperation.I == data.getRecordChangeOperation()) {
         toBeInserted.put(data.getId(), data);
-      } else if (ReplicationOperation.U == data.getReplicationOperation()) {
+      } else if (RecordChangeOperation.U == data.getRecordChangeOperation()) {
         toBeUpdated.put(data.getId(), data);
       }
     }
 
-    Iterable<ReplicatedPersistentEntity> newIterable() {
+    Iterable<RecordChangeObject> newIterable() {
       compact();
       return () -> new CompositeIterator<>(
           toBeDeleted.values().iterator(),

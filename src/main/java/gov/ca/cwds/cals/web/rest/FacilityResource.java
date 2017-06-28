@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.inject.FacilityServiceBackendResource;
-import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -51,7 +51,7 @@ public class FacilityResource {
     public Response getFacilityById(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
             value = "The id of the Facility to find") String facilityNumber) {
 
-        FacilityParameterObject parameterObject = FacilityService.newFacilityParameterObject(facilityNumber);
+        FacilityParameterObject parameterObject = Utils.createFacilityParameterObject(facilityNumber);
         return resourceDelegate.get(parameterObject);
     }
 }

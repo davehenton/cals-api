@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
@@ -65,7 +66,7 @@ public class FacilityService implements CrudsService {
     }
 
     protected FacilityDTO findById(String id) {
-        return findByParameterObject(newFacilityParameterObject(id));
+        return findByParameterObject(Utils.createFacilityParameterObject(id));
     }
 
     private FacilityDTO findByParameterObject(FacilityParameterObject parameterObject) {
@@ -106,7 +107,6 @@ public class FacilityService implements CrudsService {
     @UnitOfWork(CMS)
     protected BasePlacementHome findFacilityById(FacilityParameterObject parameterObject) {
         // todo refactor to java8
-        // todo code duplication in FacilityCollectionService.findFacilities
         BasePlacementHome placementHome = placementHomeDao.findByParameterObject(parameterObject);
         if (placementHome != null) {
             BaseCountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
@@ -134,16 +134,5 @@ public class FacilityService implements CrudsService {
     @Override
     public Response update(Serializable serializable, Request request) {
         throw new UnsupportedOperationException();
-    }
-
-    public static FacilityParameterObject newFacilityParameterObject(String facilityNumber) {
-        FacilityParameterObject parameterObject;
-        try {
-            Integer licenseNumber = Integer.valueOf(facilityNumber);
-            parameterObject = new FacilityParameterObject(licenseNumber, LIS);
-        } catch (NumberFormatException e) {
-            parameterObject = new FacilityParameterObject(facilityNumber, CMS);
-        }
-        return parameterObject;
     }
 }

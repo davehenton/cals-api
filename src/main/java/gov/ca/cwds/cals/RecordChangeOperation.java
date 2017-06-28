@@ -3,7 +3,7 @@ package gov.ca.cwds.cals;
 /**
  * @author CWDS TPT-2
  */
-public enum ReplicationOperation {
+public enum RecordChangeOperation {
   /**
    * Insert.
    */

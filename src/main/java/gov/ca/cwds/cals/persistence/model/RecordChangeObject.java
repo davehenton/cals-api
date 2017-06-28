@@ -1,6 +1,6 @@
-package gov.ca.cwds.cals.persistence.model.cms.rs;
+package gov.ca.cwds.cals.persistence.model;
 
-import gov.ca.cwds.cals.ReplicationOperation;
+import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -14,7 +14,7 @@ import org.hibernate.annotations.NamedNativeQuery;
  * @author CWDS TPT-2
  */
 @NamedNativeQuery(
-    name = "ReplicatedPersistentEntity.findUpdatedFacilityReplicationData",
+    name = "RecordChangeObject.findChangedFacilityRecords",
     query =
         "SELECT PlacementHome.IDENTIFIER AS ID, PlacementHome.IBMSNAP_OPERATION AS IBMSNAP_OPERATION"
             + " FROM {h-schema}PLC_HM_T PlacementHome"
@@ -29,11 +29,11 @@ import org.hibernate.annotations.NamedNativeQuery;
             + " Client.IBMSNAP_LOGMARKER > :dateAfter OR"
             + " PlacementEpisode.IBMSNAP_LOGMARKER > :dateAfter OR"
             + " OutOfHomePlacement.IBMSNAP_LOGMARKER > :dateAfter)",
-    resultClass = ReplicatedPersistentEntity.class,
+    resultClass = RecordChangeObject.class,
     readOnly = true
 )
 @Entity
-public class ReplicatedPersistentEntity implements PersistentObject {
+public class RecordChangeObject implements PersistentObject {
 
   @Id
   @Column(name = "ID")
@@ -41,7 +41,7 @@ public class ReplicatedPersistentEntity implements PersistentObject {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "IBMSNAP_OPERATION", updatable = false)
-  private ReplicationOperation replicationOperation;
+  private RecordChangeOperation recordChangeOperation;
 
   public String getId() {
     return id;
@@ -51,12 +51,12 @@ public class ReplicatedPersistentEntity implements PersistentObject {
     this.id = id;
   }
 
-  public ReplicationOperation getReplicationOperation() {
-    return replicationOperation;
+  public RecordChangeOperation getRecordChangeOperation() {
+    return recordChangeOperation;
   }
 
-  public void setReplicationOperation(ReplicationOperation replicationOperation) {
-    this.replicationOperation = replicationOperation;
+  public void setRecordChangeOperation(RecordChangeOperation recordChangeOperation) {
+    this.recordChangeOperation = recordChangeOperation;
   }
 
   @Override

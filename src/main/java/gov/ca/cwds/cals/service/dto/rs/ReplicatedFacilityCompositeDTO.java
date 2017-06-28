@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.dto.rs;
 
 import gov.ca.cwds.cals.ReplicatedCompositeDTO;
-import gov.ca.cwds.cals.ReplicationOperation;
+import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.cals.service.dto.FacilityCompositeDTO;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,17 +17,17 @@ public class ReplicatedFacilityCompositeDTO implements ReplicatedCompositeDTO, S
   private FacilityCompositeDTO facilityCompositeDTO;
 
   @NotNull
-  private ReplicationOperation replicationOperation;
+  private RecordChangeOperation recordChangeOperation;
 
   public ReplicatedFacilityCompositeDTO(
-      FacilityCompositeDTO facilityCompositeDTO, ReplicationOperation replicationOperation) {
+      FacilityCompositeDTO facilityCompositeDTO, RecordChangeOperation recordChangeOperation) {
     this.facilityCompositeDTO = facilityCompositeDTO;
-    this.replicationOperation = replicationOperation;
+    this.recordChangeOperation = recordChangeOperation;
   }
 
   @Override
-  public ReplicationOperation getReplicationOperation() {
-    return replicationOperation;
+  public RecordChangeOperation getRecordChangeOperation() {
+    return recordChangeOperation;
   }
 
   @Override
@@ -50,11 +50,11 @@ public class ReplicatedFacilityCompositeDTO implements ReplicatedCompositeDTO, S
     }
     ReplicatedFacilityCompositeDTO that = (ReplicatedFacilityCompositeDTO) o;
     return Objects.equals(facilityCompositeDTO, that.facilityCompositeDTO) &&
-        replicationOperation == that.replicationOperation;
+        recordChangeOperation == that.recordChangeOperation;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(facilityCompositeDTO, replicationOperation);
+    return Objects.hash(facilityCompositeDTO, recordChangeOperation);
   }
 }

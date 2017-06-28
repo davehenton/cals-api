@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.persistence.model.cms.rs.ReplicatedPersistentEntity;
+import gov.ca.cwds.cals.persistence.model.RecordChangeObject;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.rs.ReplicatedPersistentEntityDao;
@@ -30,7 +30,7 @@ public class ReplicatedCwsCmsDataAccessModule extends AbstractModule {
 
   public ReplicatedCwsCmsDataAccessModule(String hibernateCfg) {
     this.cmsSessionFactory = new Configuration().configure(hibernateCfg)
-        .addAnnotatedClass(ReplicatedPersistentEntity.class)
+        .addAnnotatedClass(RecordChangeObject.class)
         .addAnnotatedClass(Client.class)
         .addAnnotatedClass(OutOfHomePlacement.class)
         .addAnnotatedClass(PlacementEpisode.class)
