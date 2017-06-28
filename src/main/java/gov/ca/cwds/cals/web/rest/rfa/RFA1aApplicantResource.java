@@ -110,7 +110,7 @@ public class RFA1aApplicantResource {
       }
   )
   @ApiOperation(value = "Returns RFA 1a Form's Applicant by Id", response = Applicant.class)
-  public Response getAplicantById(
+  public Response getApplicantById(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
@@ -135,7 +135,7 @@ public class RFA1aApplicantResource {
       value = "Returns RFA 1a Form's Applicants by Form Id",
       response = ApplicantsDTO.class
   )
-  public Response getAplicantsByFormId(
+  public Response getApplicantsByFormId(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId) {
@@ -153,7 +153,7 @@ public class RFA1aApplicantResource {
       }
   )
   @ApiOperation(value = "Delete RFA 1a Form's Applicant by Id")
-  public Response deleteAplicant(
+  public Response deleteApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,

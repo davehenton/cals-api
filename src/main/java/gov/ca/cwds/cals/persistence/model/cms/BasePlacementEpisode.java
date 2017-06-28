@@ -13,6 +13,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -72,6 +74,7 @@ public abstract class BasePlacementEpisode implements IBasePlacementEpisode, Per
 
     @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
+    @Fetch(FetchMode.SELECT)
     @JoinColumn(name = "GVR_ENTC", referencedColumnName = "SYS_ID", insertable = false, updatable = false)
     public County getCounty() {
         return county;
