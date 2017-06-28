@@ -1,135 +1,37 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import javax.ws.rs.core.GenericType;
 
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aApplicantResourceTest extends BaseCalsApiIntegrationTest {
+public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applicant> {
 
-  @BeforeClass
-  public static void beforeClass() throws Exception {
-    setUpCalsns();
-  }
+  @Override
+  protected BaseExternalEntityApiHelper<Applicant> getExternalEntityApiHelper() {
+    BaseExternalEntityConfiguration<Applicant> configuration =
 
-  @Test
-  public void createApplicant() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
-    Applicant created = createApplicant(form);
+        new BaseExternalEntityConfiguration<Applicant>(
+            Applicant.class,
+            new GenericType<CollectionDTO<Applicant>>() {
+            },
+            API.RFA_1A_APPLICANTS) {
 
-    assertNotNull(created);
-    assertNotNull(created.getId());
+          @Override
+          protected void updateEntity(Applicant entity) {
+            entity.setFirstName("testFirstName");
+          }
 
-    Applicant found = findApplicant(form, created.getId());
+          @Override
+          protected Applicant createEntity() {
+            return new Applicant();
+          }
 
-    assertThat(found).isEqualTo(created);
-  }
+        };
 
-  @Test
-  public void updateApplicant() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
-    Applicant created = createApplicant(form);
-
-    created.setFirstName("testFirstName");
-
-    WebTarget target =
-        clientTestRule.target(
-            API.RFA_1A_FORMS
-                + "/"
-                + form.getId()
-                + "/"
-                + API.RFA_1A_APPLICANTS
-                + "/"
-                + created.getId());
-
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    invocation.put(Entity.entity(created, MediaType.APPLICATION_JSON_TYPE));
-
-    Applicant found = findApplicant(form, created.getId());
-
-    assertThat(found).isEqualTo(created);
-  }
-
-  @Test
-  public void getApplicantById() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
-    Applicant created = createApplicant(form);
-    Applicant found = findApplicant(form, created.getId());
-    assertThat(found).isEqualTo(created);
-  }
-
-  @Test
-  public void getApplicantsByFormId() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
-    Applicant created = createApplicant(form);
-    Applicant created1 = createApplicant(form);
-    Applicant created2 = createApplicant(form);
-    WebTarget target =
-        clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_APPLICANTS);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    ApplicantsDTO applicantsDTO = invocation.get(ApplicantsDTO.class);
-    assertThat(applicantsDTO.getCollection().size()).isEqualTo(3);
-  }
-
-  @Test
-  public void deleteApplicant() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
-    Applicant created = createApplicant(form);
-    Applicant found = findApplicant(form, created.getId());
-
-    assertThat(found).isEqualTo(created);
-
-    WebTarget target =
-        clientTestRule.target(
-            API.RFA_1A_FORMS
-                + "/"
-                + form.getId()
-                + "/"
-                + API.RFA_1A_APPLICANTS
-                + "/"
-                + found.getId());
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    invocation.delete();
-
-    Response response = invocation.delete();
-
-    assertThat(response.getStatus()).isEqualTo(Status.NOT_FOUND.getStatusCode());
-  }
-
-  private Applicant createApplicant(RFA1aFormDTO form) {
-    WebTarget target =
-        clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_APPLICANTS);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    return invocation.post(null, Applicant.class);
-  }
-
-  private Applicant findApplicant(RFA1aFormDTO form, Long applicantId) {
-    WebTarget target =
-        clientTestRule.target(
-            API.RFA_1A_FORMS
-                + "/"
-                + form.getId()
-                + "/"
-                + API.RFA_1A_APPLICANTS
-                + "/"
-                + applicantId);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    return invocation.get(Applicant.class);
+    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration);
   }
 }

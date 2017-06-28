@@ -53,6 +53,8 @@ public final class Constants {
 
     public static final String RFA_1A_MINOR_CHILDREN = "minor-children";
 
+    public static final String RFA_1A_OTHER_ADULTS = "other-adults";
+
     public static final String RFA_1A_MINOR_CHILD = "minorChild";
 
     public static final String RESIDENCE = "residence";
