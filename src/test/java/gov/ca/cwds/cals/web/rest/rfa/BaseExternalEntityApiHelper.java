@@ -21,13 +21,14 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 
-public class BaseExternalEntityApiHelper<T extends BaseDTO> implements ExternalEntityApiHelper {
+public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends CollectionDTO<T>> implements
+    ExternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
-  private ExternalEntityConfiguration<T> configuration;
+  private ExternalEntityConfiguration<T, G> configuration;
 
   public BaseExternalEntityApiHelper(RestClientTestRule clientTestRule,
-      ExternalEntityConfiguration<T> configuration) {
+      ExternalEntityConfiguration<T, G> configuration) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
   }
@@ -96,8 +97,8 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO> implements ExternalE
                 + form.getId()
                 + "/"
                 + configuration.getApiPath());
-    CollectionDTO<T> entityCollectionDTO = target.request(MediaType.APPLICATION_JSON)
-        .get(configuration.getEntityCollectionGenericType());
+    G entityCollectionDTO = target.request(MediaType.APPLICATION_JSON)
+        .get(configuration.getCollectionDTOClass());
 
     assertThat(entityCollectionDTO.getCollection().size()).isEqualTo(3);
   }

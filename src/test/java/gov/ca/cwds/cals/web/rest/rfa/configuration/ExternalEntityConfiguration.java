@@ -3,35 +3,34 @@ package gov.ca.cwds.cals.web.rest.rfa.configuration;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
-import javax.ws.rs.core.GenericType;
 
 /**
  * @author CWDS CALS API Team
  */
 
-public abstract class ExternalEntityConfiguration<T extends BaseDTO> extends
+public abstract class ExternalEntityConfiguration<T extends BaseDTO, G extends CollectionDTO<T>> extends
     InternalEntityConfiguration<T> {
 
-  private GenericType<CollectionDTO<T>> entityCollectionGenericType;
+  private Class<G> collectionDTOClass;
 
   public ExternalEntityConfiguration(
       RestClientTestRule clientTestRule,
       Class<T> entityClass,
-      GenericType<CollectionDTO<T>> entityCollectionGenericType,
+      Class<G> collectionDTOClass,
       String apiPath) {
     super(clientTestRule, entityClass, apiPath);
-    this.entityCollectionGenericType = entityCollectionGenericType;
+    this.collectionDTOClass = collectionDTOClass;
   }
 
   public abstract void modifyEntity(T entity);
 
-  public GenericType<CollectionDTO<T>> getEntityCollectionGenericType() {
-    return entityCollectionGenericType;
+  public Class<G> getCollectionDTOClass() {
+    return collectionDTOClass;
   }
 
-  public void setEntityCollectionGenericType(
-      GenericType<CollectionDTO<T>> entityCollectionGenericType) {
-    this.entityCollectionGenericType = entityCollectionGenericType;
+  public void setCollectionDTOClass(
+      Class<G> collectionDTOClass) {
+    this.collectionDTOClass = collectionDTOClass;
   }
 
 }

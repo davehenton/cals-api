@@ -2,24 +2,23 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.ExternalEntityConfiguration;
-import javax.ws.rs.core.GenericType;
 
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applicant> {
+public class RFA1aApplicantResourceTest extends
+    BaseExternalEntityApiTest<Applicant, ApplicantsDTO> {
 
   @Override
-  protected BaseExternalEntityApiHelper<Applicant> getExternalEntityApiHelper() {
-    ExternalEntityConfiguration<Applicant> configuration =
+  protected BaseExternalEntityApiHelper<Applicant, ApplicantsDTO> getExternalEntityApiHelper() {
+    ExternalEntityConfiguration<Applicant, ApplicantsDTO> configuration =
 
-        new ExternalEntityConfiguration<Applicant>(
+        new ExternalEntityConfiguration<Applicant, ApplicantsDTO>(
             clientTestRule,
             Applicant.class,
-            new GenericType<CollectionDTO<Applicant>>() {
-            },
+            ApplicantsDTO.class,
             API.RFA_1A_APPLICANTS) {
 
           @Override
