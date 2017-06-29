@@ -5,9 +5,17 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import java.net.URI;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import org.apache.commons.lang3.StringUtils;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -32,30 +40,29 @@ public class RestClientTestRule implements TestRule {
 
   public WebTarget target(String pathInfo) {
     String restUrl = getUriString() + pathInfo;
+    LOG.info("Test URL: " + restUrl);
     return client.target(restUrl);
+  }
+
+  protected String getUriString() {
+    String serverUrlStr = System.getProperty(CALS_API_URL);
+    if (StringUtils.isEmpty(serverUrlStr)) {
+      serverUrlStr = composeUriString();
+    }
+    return serverUrlStr;
   }
 
   protected URI getServerUrl() {
     return dropWizardApplication.getEnvironment().getApplicationContext().getServer().getURI();
   }
 
-  protected String getUriString() {
-
+  protected String composeUriString() {
     URI serverUri = getServerUrl();
     String serverUrlStr =
         String.format("http://localhost:%s/", dropWizardApplication.getLocalPort());
-
     if (serverUri != null) {
       serverUrlStr = serverUri.toString();
     }
-
-    String hostForIntegrationTesting = System.getProperty(CALS_API_URL);
-    if (StringUtils.isNotEmpty(hostForIntegrationTesting)) {
-      serverUrlStr = hostForIntegrationTesting;
-    }
-
-    LOG.info("Test server URL: " + serverUrlStr);
-
     return serverUrlStr;
   }
 
@@ -68,7 +75,34 @@ public class RestClientTestRule implements TestRule {
     return new Statement() {
       @Override
       public void evaluate() throws Throwable {
-        client = dropWizardApplication.client();
+
+        JerseyClientBuilder clientBuilder = new JerseyClientBuilder()
+            .property(ClientProperties.CONNECT_TIMEOUT, 1000)
+            .property(ClientProperties.READ_TIMEOUT, 5000).hostnameVerifier(new HostnameVerifier() {
+              @Override
+              public boolean verify(String hostName, SSLSession sslSession) {
+                // Just ignore host verification for test purposes
+                return true;
+              }
+            });
+
+        client = clientBuilder.build();
+
+        // Trust All certificates for test purposes
+        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+          public X509Certificate[] getAcceptedIssuers() {
+            return null;
+          }
+
+          public void checkClientTrusted(X509Certificate[] certs, String authType) {
+          }
+
+          public void checkServerTrusted(X509Certificate[] certs, String authType) {
+          }
+        }};
+
+        client.getSslContext().init(null, trustAllCerts, new SecureRandom());
+
         mapper = dropWizardApplication.getObjectMapper();
         client.register(new JacksonJsonProvider(mapper));
         statement.evaluate();
