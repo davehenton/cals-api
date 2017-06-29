@@ -20,4 +20,10 @@ public final class Utils {
     }
     return parameterObject;
   }
+
+  public static FacilityParameterObject createExpandedFacilityParameterObject(String facilityNumber) {
+    FacilityParameterObject parameterObject = createFacilityParameterObject(facilityNumber);
+    parameterObject.setExpanded(true);
+    return parameterObject;
+  }
 }

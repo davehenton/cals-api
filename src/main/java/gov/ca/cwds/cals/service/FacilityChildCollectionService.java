@@ -30,7 +30,7 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   @Override
   public Response find(Serializable params) {
     List<FacilityChildDTO> facilityChildDTOs = clientDao
-        .streamByLicenseNumber((FacilityChildParameterObject) params)
+        .streamByLicenseNumber(((FacilityChildParameterObject) params).getLicenseNumber())
         .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
 
     if (CollectionUtils.isEmpty(facilityChildDTOs)) {

@@ -8,8 +8,7 @@ import java.util.Objects;
 /**
  * @author CWDS TPT-2
  */
-public class FacilityCompositeDTO extends FacilityDTO {
-
+public class ExpandedFacilityDTO extends FacilityDTO {
   @JsonProperty("children")
   private List<FacilityChildDTO> children = new ArrayList<>();
 
@@ -33,7 +32,7 @@ public class FacilityCompositeDTO extends FacilityDTO {
     if (!super.equals(o)) {
       return false;
     }
-    FacilityCompositeDTO that = (FacilityCompositeDTO) o;
+    ExpandedFacilityDTO that = (ExpandedFacilityDTO) o;
     return Objects.equals(children, that.children);
   }
 

@@ -1,8 +1,9 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.persistence.dao.lis.LisRecordChangeDao;
-import gov.ca.cwds.cals.persistence.model.RecordChangeObject;
+import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
+import gov.ca.cwds.cals.persistence.dao.lis.RecordChangeLisDao;
+import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.persistence.model.lisfas.County;
 import gov.ca.cwds.cals.persistence.model.lisfas.FacilityStatusType;
 import gov.ca.cwds.cals.persistence.model.lisfas.FacilityType;
@@ -22,7 +23,7 @@ public class LisDataAccessModule extends AbstractModule {
 
   public LisDataAccessModule(String hibernateCfg) {
     this.lisSessionFactory = new Configuration().configure(hibernateCfg)
-        .addAnnotatedClass(RecordChangeObject.class)
+        .addAnnotatedClass(RecordChange.class)
         .addAnnotatedClass(LisFacFile.class)
         .addAnnotatedClass(LisTableFile.class)
         .addAnnotatedClass(FacilityType.class)
@@ -38,6 +39,7 @@ public class LisDataAccessModule extends AbstractModule {
     bind(SessionFactory.class).annotatedWith(LisSessionFactory.class).toInstance(lisSessionFactory);
 
     // schema: lis
-    bind(LisRecordChangeDao.class);
+    bind(RecordChangeLisDao.class);
+    bind(LisFacFileLisDao.class);
   }
 }

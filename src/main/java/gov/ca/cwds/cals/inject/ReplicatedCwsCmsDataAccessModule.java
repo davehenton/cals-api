@@ -1,10 +1,10 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.persistence.model.RecordChangeObject;
+import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
+import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.rs.ReplicatedPersistentEntityDao;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.Client;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.CountyLicenseCase;
@@ -30,7 +30,7 @@ public class ReplicatedCwsCmsDataAccessModule extends AbstractModule {
 
   public ReplicatedCwsCmsDataAccessModule(String hibernateCfg) {
     this.cmsSessionFactory = new Configuration().configure(hibernateCfg)
-        .addAnnotatedClass(RecordChangeObject.class)
+        .addAnnotatedClass(RecordChange.class)
         .addAnnotatedClass(Client.class)
         .addAnnotatedClass(OutOfHomePlacement.class)
         .addAnnotatedClass(PlacementEpisode.class)
@@ -51,7 +51,7 @@ public class ReplicatedCwsCmsDataAccessModule extends AbstractModule {
     bind(SessionFactory.class).annotatedWith(CmsSessionFactory.class).toInstance(cmsSessionFactory);
 
     // schema: cwscms
-    bind(ReplicatedPersistentEntityDao.class);
+    bind(RecordChangeCwsCmsDao.class);
     bind(CountiesDao.class);
     bind(ClientDao.class);
     bind(PlacementHomeDao.class);

@@ -4,26 +4,22 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.CompositeIterator;
 import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
-import gov.ca.cwds.cals.persistence.dao.lis.LisRecordChangeDao;
-import gov.ca.cwds.cals.persistence.model.RecordChangeObject;
+import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
+import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
+import gov.ca.cwds.cals.persistence.dao.lis.RecordChangeLisDao;
+import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.rs.ReplicatedPersistentEntityDao;
+import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
-import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
-import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.cals.service.dto.FacilityCompositeDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import gov.ca.cwds.cals.service.dto.rs.ReplicatedFacilityCompositeDTO;
+import gov.ca.cwds.cals.service.dto.ChangedFacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 
-import gov.ca.cwds.data.CrudsDao;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -36,61 +32,50 @@ public class ChangedFacilityService extends FacilityService {
 
   private static final Logger LOG = LoggerFactory.getLogger(ChangedFacilityService.class);
 
-  private LisRecordChangeDao lisRecordChangeDao;
-
-  private ReplicatedPersistentEntityDao replicatedPersistentEntityDao;
-  private ClientDao clientDao;
-  private FacilityChildMapper facilityChildMapper;
+  private RecordChangeLisDao recordChangeLisDao;
+  private RecordChangeCwsCmsDao recordChangeCwsCmsDao;
 
   @Inject
   public ChangedFacilityService(
-      CrudsDao<LisFacFile> lisDsLisFacFileDao,
-      CrudsDao<LisFacFile> fasDsLisFacFileDao,
+      LisFacFileLisDao lisFacFileLisDao,
+      LisFacFileFasDao lisFacFileFasDao,
       PlacementHomeDao placementHomeDao,
       LpaInformationDao lpaInformationDao,
       CountiesDao countiesDao, FacilityMapper facilityMapper,
       FasFacilityMapper fasFacilityMapper,
-      LisRecordChangeDao lisRecordChangeDao,
-      ReplicatedPersistentEntityDao replicatedPersistentEntityDao,
+      RecordChangeLisDao recordChangeLisDao,
+      RecordChangeCwsCmsDao recordChangeCwsCmsDao,
       ClientDao clientDao, FacilityChildMapper facilityChildMapper) {
-    super(lisDsLisFacFileDao, fasDsLisFacFileDao, placementHomeDao, lpaInformationDao, countiesDao,
-        facilityMapper, fasFacilityMapper);
-    this.lisRecordChangeDao = lisRecordChangeDao;
-    this.replicatedPersistentEntityDao = replicatedPersistentEntityDao;
-    this.clientDao = clientDao;
-    this.facilityChildMapper = facilityChildMapper;
+    super(lisFacFileLisDao, lisFacFileFasDao, placementHomeDao, lpaInformationDao, countiesDao,
+        facilityMapper, fasFacilityMapper, clientDao, facilityChildMapper);
+    this.recordChangeLisDao = recordChangeLisDao;
+    this.recordChangeCwsCmsDao = recordChangeCwsCmsDao;
   }
 
-  public Stream<ReplicatedFacilityCompositeDTO> changedFacilitiesStream(Date after) {
-    RecordChanges recordChanges = new RecordChanges();
-    lisRecordChangeDao.streamChangedFacilityRecords(after).forEach(recordChanges::add);
-    replicatedPersistentEntityDao.streamChangedFacilityRecords(after).forEach(recordChanges::add);
+  public Stream<ChangedFacilityDTO> changedFacilitiesStream(Date after) {
+    Stream<RecordChange> lisRecordChangesStream = recordChangeLisDao
+        .streamChangedFacilityRecords(after);
 
-    return StreamSupport.stream(recordChanges.newIterable().spliterator(), false).map(
+    RecordChanges cwsCmsRecordChanges = new RecordChanges();
+    recordChangeCwsCmsDao.streamChangedFacilityRecords(after).forEach(cwsCmsRecordChanges::add);
+    Stream<RecordChange> cwsCmsRecordChangesStream = StreamSupport
+        .stream(cwsCmsRecordChanges.newIterable().spliterator(), false);
+
+    return Stream.concat(lisRecordChangesStream, cwsCmsRecordChangesStream).map(
         recordChange -> {
           LOG.info("Getting facility by ID: " + recordChange.getId());
-          FacilityDTO facilityDTO = findById(recordChange.getId());
-          FacilityCompositeDTO compositeDTO = facilityMapper.toFacilityCompositeDTO(facilityDTO);
-          addChildren(compositeDTO);
-
-          return new ReplicatedFacilityCompositeDTO(compositeDTO,
-              recordChange.getRecordChangeOperation());
+          FacilityDTO facilityDTO = findExpandedById(recordChange.getId());
+          return new ChangedFacilityDTO(facilityDTO, recordChange.getRecordChangeOperation());
         });
-  }
-
-  private void addChildren(FacilityCompositeDTO compositeDTO) {
-    List<FacilityChildDTO> facilityChildren = clientDao.streamByFacilityId(compositeDTO.getId())
-        .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
-    compositeDTO.setChildren(facilityChildren);
   }
 
   private class RecordChanges {
 
-    private HashMap<String, RecordChangeObject> toBeDeleted = new HashMap<>();
-    private HashMap<String, RecordChangeObject> toBeInserted = new HashMap<>();
-    private HashMap<String, RecordChangeObject> toBeUpdated = new HashMap<>();
+    private HashMap<String, RecordChange> toBeDeleted = new HashMap<>();
+    private HashMap<String, RecordChange> toBeInserted = new HashMap<>();
+    private HashMap<String, RecordChange> toBeUpdated = new HashMap<>();
 
-    void add(RecordChangeObject data) {
+    void add(RecordChange data) {
       if (RecordChangeOperation.D == data.getRecordChangeOperation()) {
         toBeDeleted.put(data.getId(), data);
       } else if (RecordChangeOperation.I == data.getRecordChangeOperation()) {
@@ -100,7 +85,7 @@ public class ChangedFacilityService extends FacilityService {
       }
     }
 
-    Iterable<RecordChangeObject> newIterable() {
+    Iterable<RecordChange> newIterable() {
       compact();
       return () -> new CompositeIterator<>(
           toBeDeleted.values().iterator(),

@@ -16,6 +16,7 @@ public class CompositeIteratorTest {
   private Iterator<String> iterator2;
   private Iterator<String> iterator3;
   private Iterator<String> iterator4;
+  private Iterator<String> iterator5;
 
   @Before
   public void setUp() {
@@ -32,6 +33,9 @@ public class CompositeIteratorTest {
     iterator4 = new ArrayList<String>() {{
       add("f");
     }}.iterator();
+    iterator5 = new ArrayList<String>() {{
+      add("g");
+    }}.iterator();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -41,13 +45,24 @@ public class CompositeIteratorTest {
 
   @Test
   public void testIteration() {
-    int iterationCount = 0;
-    CompositeIterator<String> compositeIterator = new CompositeIterator<>(iterator1, iterator2,
+    CompositeIterator<String> compositeIterator1 = new CompositeIterator<>(iterator1, iterator2,
         iterator3, iterator4);
-    while (compositeIterator.hasNext()) {
+    int iterationCount = 0;
+    while (compositeIterator1.hasNext()) {
       ++iterationCount;
-      compositeIterator.next();
+      compositeIterator1.next();
     }
     assertEquals(6, iterationCount);
+
+    setUp();
+    compositeIterator1 = new CompositeIterator<>(iterator1, iterator2, iterator3, iterator4);
+    CompositeIterator<String> compositeIterator2 = new CompositeIterator<>(compositeIterator1,
+        iterator5);
+    iterationCount = 0;
+    while (compositeIterator2.hasNext()) {
+      ++iterationCount;
+      compositeIterator2.next();
+    }
+    assertEquals(7, iterationCount);
   }
 }

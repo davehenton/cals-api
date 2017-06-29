@@ -9,10 +9,10 @@ import org.hibernate.SessionFactory;
 /**
  * @author CWDS CALS API Team
  */
-public class LisFacFileDao  extends BaseDaoImpl<LisFacFile> {
+public class LisFacFileFasDao extends BaseDaoImpl<LisFacFile> {
 
     @Inject
-    public LisFacFileDao(@FasSessionFactory SessionFactory sessionFactory) {
+    public LisFacFileFasDao(@FasSessionFactory SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 

@@ -53,11 +53,15 @@ public class ClientDao extends BaseDaoImpl<Client> {
     return client;
   }
 
-  public Stream<Client> streamByLicenseNumber(FacilityChildParameterObject parameterObject) {
+  public Stream<Client> streamByLicenseNumber(String licenseNumber) {
     QueryCreator<Client> queryCreator = (session, entityClass) -> session
         .createNamedQuery(entityClass.getSimpleName() + ".findAll", entityClass)
-        .setParameter("licenseNumber", parameterObject.getLicenseNumber());
+        .setParameter("licenseNumber", licenseNumber);
     return new ScalarResultsStreamer<>(this, queryCreator).createStream();
+  }
+
+  public Stream<Client> streamByLicenseNumber(Integer licenseNumber) {
+    return streamByLicenseNumber(String.valueOf(licenseNumber));
   }
 
   public Stream<Client> streamByFacilityId(String facilityId) {

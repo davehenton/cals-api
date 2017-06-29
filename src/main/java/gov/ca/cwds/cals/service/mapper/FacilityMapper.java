@@ -6,8 +6,9 @@ import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
+import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
-import gov.ca.cwds.cals.service.dto.FacilityCompositeDTO;
+import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.HyperlinkDTO;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
@@ -87,11 +88,11 @@ public interface FacilityMapper {
     @Mapping(target = "emailAddress", ignore = true)
     FacilityDTO toFacilityDTO(BasePlacementHome placementHome);
 
-    FacilityCompositeDTO toFacilityCompositeDTO(FacilityDTO facilityDTO);
-
     @Mapping(target = "lastVisitDate", source = "visitDate")
     @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
-    FacilityDTO toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);
+    void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);
+
+    ExpandedFacilityDTO toExpandedFacilityDTO(FacilityDTO facilityDTO, List<FacilityChildDTO> children);
 
     @AfterMapping
     default void after(@MappingTarget FacilityDTO facilityDTO, BasePlacementHome placementHome) {
