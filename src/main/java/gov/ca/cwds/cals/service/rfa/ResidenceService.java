@@ -37,7 +37,10 @@ public class ResidenceService extends CrudServiceAdapter {
   public Response find(Serializable applicationId) {
     try {
       RFA1aForm form = formsDao.find(applicationId);
-      return form == null ? null : form.getResidence();
+      if (form == null) {
+        throw new UserFriendlyException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
+      }
+      return form.getResidence();
     } catch (NoResultException e) {
       LOG.warn("There is no Residence found for applicationId = {}", applicationId);
       LOG.debug(e.getMessage(), e);

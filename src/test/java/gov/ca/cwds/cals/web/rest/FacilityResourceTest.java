@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.web.rest;
 
+import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 
@@ -36,7 +37,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);
 
         String fixture = fixture("fixtures/facility-by-license-number-response.json");
-        assertEqualsResponse(fixture, facilityDTO);
+        assertEqualsResponse(fixture, transformDTOtoJSON(facilityDTO));
     }
 
     @Test
@@ -54,7 +55,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);
 
         String fixture = fixture("fixtures/facility-by-id-response.json");
-        assertEqualsResponse(fixture, facilityDTO);
+        assertEqualsResponse(fixture, transformDTOtoJSON(facilityDTO));
     }
 
     @Test
@@ -64,7 +65,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         FacilityDTO facilityDTO = invocation.get(FacilityDTO.class);
 
         String fixture = fixture("fixtures/facility-by-id-with-zero-in-county-and-facility-type-response.json");
-        assertEqualsResponse(fixture, facilityDTO);
+        assertEqualsResponse(fixture, transformDTOtoJSON(facilityDTO));
     }
 
 }

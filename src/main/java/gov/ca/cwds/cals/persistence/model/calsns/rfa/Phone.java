@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneType;
@@ -20,8 +19,7 @@ public class Phone extends BaseDTO {
 
   private String number;
 
-  @JsonProperty("preferred")
-  private boolean isPreferred;
+  private boolean preferred;
 
   public PhoneType getPhoneType() {
     return phoneType;
@@ -40,11 +38,11 @@ public class Phone extends BaseDTO {
   }
 
   public boolean isPreferred() {
-    return isPreferred;
+    return preferred;
   }
 
   public void setPreferred(boolean preferred) {
-    isPreferred = preferred;
+    this.preferred = preferred;
   }
 
   @Override
@@ -65,8 +63,8 @@ public class Phone extends BaseDTO {
         + ", number='"
         + number
         + '\''
-        + ", isPreferred="
-        + isPreferred
+        + ", preferred="
+        + preferred
         + '}';
   }
 }

@@ -14,6 +14,7 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE_PATH;
+import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertNotNull;
 
@@ -34,7 +35,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnership
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
-import java.io.IOException;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -85,13 +85,13 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
 
   private <T extends BaseDictionary> void baseDictionaryTest(
       String path, String fixturePath, GenericType<CollectionDTO<T>> genericType)
-      throws IOException {
+      throws Exception {
     WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + path);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     CollectionDTO<T> collectionDTO = invocation.get(genericType);
     assertNotNull(collectionDTO);
     String fixture = fixture(fixturePath);
-    assertEqualsResponse(fixture, collectionDTO);
+    assertEqualsResponse(fixture, transformDTOtoJSON(collectionDTO));
   }
 
   @Test

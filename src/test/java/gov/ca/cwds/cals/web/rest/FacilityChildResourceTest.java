@@ -1,23 +1,22 @@
 package gov.ca.cwds.cals.web.rest;
 
+import static gov.ca.cwds.cals.Constants.API.CHILDREN;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
+import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
+import static io.dropwizard.testing.FixtureHelpers.fixture;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-
-import static gov.ca.cwds.cals.Constants.API.CHILDREN;
-import static gov.ca.cwds.cals.Constants.API.FACILITIES;
-import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
-import static io.dropwizard.testing.FixtureHelpers.fixture;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
@@ -38,7 +37,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
         FacilityChildrenDTO facilityChildDTO = invocation.get(FacilityChildrenDTO.class);
 
         String fixture = fixture("fixtures/facility-children-response.json");
-        assertEqualsResponse(fixture, facilityChildDTO);
+        assertEqualsResponse(fixture, transformDTOtoJSON(facilityChildDTO));
     }
 
     @Test
@@ -50,7 +49,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
         FacilityChildDTO facilityChildDTO = invocation.get(FacilityChildDTO.class);
 
         String fixture = fixture("fixtures/facility-child-response.json");
-        assertEqualsResponse(fixture, facilityChildDTO);
+        assertEqualsResponse(fixture, transformDTOtoJSON(facilityChildDTO));
     }
 
     @Test

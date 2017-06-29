@@ -1,15 +1,10 @@
 package gov.ca.cwds.cals;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
-import gov.ca.cwds.rest.api.Response;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-import java.io.IOException;
-import java.util.Map;
 import javax.ws.rs.client.Client;
 import org.glassfish.jersey.client.JerseyClient;
 import org.junit.After;
@@ -84,6 +79,10 @@ public abstract class BaseCalsApiIntegrationTest {
     }
   }
 
+  public String transformDTOtoJSON(BaseDTO dto) throws Exception {
+    return clientTestRule.getMapper().writeValueAsString(dto);
+  }
+
   @After
   public void tearDown() throws Exception {}
 
@@ -91,16 +90,4 @@ public abstract class BaseCalsApiIntegrationTest {
     return System.getProperty("cals.api.url") != null;
   }
 
-  protected void assertEqualsResponse(String fixture, Response response) throws IOException {
-    String actualString = clientTestRule.getMapper().writeValueAsString(response);
-    assertEqualsResponse(fixture, actualString);
-  }
-
-  @SuppressWarnings("unchecked")
-  protected void assertEqualsResponse(String fixture, String actualString) throws IOException {
-    ObjectMapper om = new ObjectMapper();
-    Map<String, String> expectedMap = (Map<String, String>) om.readValue(fixture, Map.class);
-    Map<String, String> actualMap = (Map<String, String>) om.readValue(actualString, Map.class);
-    assertThat(actualMap).isEqualTo(expectedMap);
-  }
 }
