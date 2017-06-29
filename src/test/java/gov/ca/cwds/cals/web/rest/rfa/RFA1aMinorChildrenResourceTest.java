@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.web.rest.rfa.configuration.ExternalEntityConfiguration;
 import javax.ws.rs.core.GenericType;
 
 /**
@@ -12,22 +13,24 @@ public class RFA1aMinorChildrenResourceTest extends BaseExternalEntityApiTest<Mi
 
   @Override
   protected BaseExternalEntityApiHelper<MinorChild> getExternalEntityApiHelper() {
-    BaseExternalEntityConfiguration<MinorChild> configuration =
+    ExternalEntityConfiguration<MinorChild> configuration =
 
-        new BaseExternalEntityConfiguration<MinorChild>(
+        new ExternalEntityConfiguration<MinorChild>(
+            clientTestRule,
             MinorChild.class,
             new GenericType<CollectionDTO<MinorChild>>() {
             },
             API.RFA_1A_MINOR_CHILDREN) {
 
           @Override
-          protected void updateEntity(MinorChild entity) {
-            entity.setOtherRelativeFirstName("FIRST_NAME");
+          protected String getCreateFixture() {
+            //return "fixtures/rfa/rfa-1a-minor_children.json";
+            return "fixtures/rfa/stub.json";
           }
 
           @Override
-          protected MinorChild createEntity() {
-            return new MinorChild();
+          public void updateEntity(MinorChild entity) {
+            entity.setOtherRelativeFirstName("FIRST_NAME");
           }
 
         };

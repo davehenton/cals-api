@@ -10,6 +10,8 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
+import gov.ca.cwds.cals.web.rest.rfa.configuration.ExternalEntityConfiguration;
+import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -19,13 +21,13 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 
-public class BaseExternalEntityApiHelper<T extends BaseDTO> {
+public class BaseExternalEntityApiHelper<T extends BaseDTO> implements ExternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
-  private BaseExternalEntityConfiguration<T> configuration;
+  private ExternalEntityConfiguration<T> configuration;
 
   public BaseExternalEntityApiHelper(RestClientTestRule clientTestRule,
-      BaseExternalEntityConfiguration<T> configuration) {
+      ExternalEntityConfiguration<T> configuration) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
   }
@@ -125,7 +127,7 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO> {
     assertThat(response.getStatus()).isEqualTo(404);
   }
 
-  private T createEntity(RFA1aFormDTO form) {
+  private T createEntity(RFA1aFormDTO form) throws IOException {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath());

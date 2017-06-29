@@ -10,7 +10,7 @@ import org.junit.Test;
  */
 
 public abstract class BaseExternalEntityApiTest<T extends BaseDTO> extends
-    BaseCalsApiIntegrationTest {
+    BaseCalsApiIntegrationTest implements ExternalEntityApiHelper {
 
   protected abstract BaseExternalEntityApiHelper<T> getExternalEntityApiHelper();
 
@@ -20,27 +20,32 @@ public abstract class BaseExternalEntityApiTest<T extends BaseDTO> extends
   }
 
   @Test
-  public void createEntityTest() throws Exception {
+  @Override
+  public void createEntity() throws Exception {
     getExternalEntityApiHelper().createEntity();
   }
 
   @Test
-  public void updateEntityTest() throws Exception {
+  @Override
+  public void updateEntity() throws Exception {
     getExternalEntityApiHelper().updateEntity();
   }
 
   @Test
-  public void getEntityByIdTest() throws Exception {
+  @Override
+  public void getEntityById() throws Exception {
     getExternalEntityApiHelper().getEntityById();
   }
 
   @Test
-  public void getEntitiesByFormIdTest() throws Exception {
+  @Override
+  public void getEntitiesByFormId() throws Exception {
     getExternalEntityApiHelper().getEntitiesByFormId();
   }
 
   @Test
-  public void deleteentityTest() throws Exception {
+  @Override
+  public void deleteEntity() throws Exception {
     getExternalEntityApiHelper().deleteEntity();
   }
 
