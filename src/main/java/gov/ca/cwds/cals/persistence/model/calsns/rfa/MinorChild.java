@@ -5,7 +5,9 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.Identified;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
@@ -19,7 +21,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class MinorChild extends BaseDTO implements Request, Response {
+public class MinorChild extends BaseDTO implements Request, Response, Identified<Long> {
 
   private static final long serialVersionUID = 1367746149537559411L;
 
@@ -38,6 +40,13 @@ public class MinorChild extends BaseDTO implements Request, Response {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
 
+  private GenderType gender;
+
+  private boolean childFinanciallySupported;
+
+  private boolean childAdopted;
+
+  @Override
   public Long getId() {
     return id;
   }
@@ -94,6 +103,30 @@ public class MinorChild extends BaseDTO implements Request, Response {
     this.dateOfBirth = dateOfBirth;
   }
 
+  public GenderType getGender() {
+    return gender;
+  }
+
+  public void setGender(GenderType gender) {
+    this.gender = gender;
+  }
+
+  public boolean isChildFinanciallySupported() {
+    return childFinanciallySupported;
+  }
+
+  public void setChildFinanciallySupported(boolean childFinanciallySupported) {
+    this.childFinanciallySupported = childFinanciallySupported;
+  }
+
+  public boolean isChildAdopted() {
+    return childAdopted;
+  }
+
+  public void setChildAdopted(boolean childAdopted) {
+    this.childAdopted = childAdopted;
+  }
+
   @Override
   public boolean equals(Object o) {
     return EqualsBuilder.reflectionEquals(this, o);
@@ -124,6 +157,12 @@ public class MinorChild extends BaseDTO implements Request, Response {
         + '\''
         + ", dateOfBirth="
         + dateOfBirth
+        + ", gender="
+        + gender
+        + ", childFinanciallySupported="
+        + childFinanciallySupported
+        + ", childAdopted="
+        + childAdopted
         + '}';
   }
 }

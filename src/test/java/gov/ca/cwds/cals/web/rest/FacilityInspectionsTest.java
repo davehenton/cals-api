@@ -1,22 +1,22 @@
 package gov.ca.cwds.cals.web.rest;
 
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
+import static io.dropwizard.testing.FixtureHelpers.fixture;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionsDTO;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import static gov.ca.cwds.cals.Constants.API.FACILITIES;
-import static io.dropwizard.testing.FixtureHelpers.fixture;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
@@ -43,7 +43,7 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
         FacilityInspectionsDTO inspectionsDTO = invocation.get(FacilityInspectionsDTO.class);
 
         String fixture = fixture(INSPECTIONS_RESPONSE_JSON);
-        assertEqualsResponse(fixture, inspectionsDTO);
+        assertEqualsResponse(fixture, transformDTOtoJSON(inspectionsDTO));
     }
 
 
@@ -55,7 +55,7 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
         FacilityInspectionDTO inspectionDTO = invocation.get(FacilityInspectionDTO.class);
 
         String fixture = fixture(INSPECTION_RESPONSE_JSON);
-        assertEqualsResponse(fixture, inspectionDTO);
+        assertEqualsResponse(fixture, transformDTOtoJSON(inspectionDTO));
     }
 
 
