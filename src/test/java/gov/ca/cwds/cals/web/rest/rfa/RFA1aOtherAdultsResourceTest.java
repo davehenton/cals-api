@@ -2,9 +2,8 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultsDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.ExternalEntityConfiguration;
-import javax.ws.rs.core.GenericType;
 import org.junit.Ignore;
 
 /**
@@ -12,18 +11,18 @@ import org.junit.Ignore;
  */
 
 @Ignore
-public class RFA1aOtherAdultsResourceTest extends BaseExternalEntityApiTest<OtherAdult> {
+public class RFA1aOtherAdultsResourceTest extends
+    BaseExternalEntityApiTest<OtherAdult, OtherAdultsDTO> {
 
   @Override
-  protected BaseExternalEntityApiHelper<OtherAdult> getExternalEntityApiHelper() {
+  protected BaseExternalEntityApiHelper<OtherAdult, OtherAdultsDTO> getExternalEntityApiHelper() {
 
-    ExternalEntityConfiguration<OtherAdult> configuration =
+    ExternalEntityConfiguration<OtherAdult, OtherAdultsDTO> configuration =
 
-        new ExternalEntityConfiguration<OtherAdult>(
+        new ExternalEntityConfiguration<OtherAdult, OtherAdultsDTO>(
             clientTestRule,
             OtherAdult.class,
-            new GenericType<CollectionDTO<OtherAdult>>() {
-            },
+            OtherAdultsDTO.class,
             API.RFA_1A_OTHER_ADULTS) {
 
           @Override
