@@ -24,7 +24,7 @@ public class RFA1aApplicantResourceTest extends
           @Override
           protected String getCreateFixture() {
             //return "fixtures/rfa/rfa-1a-applicant.json";
-            return "fixtures/rfa/temp-rfa-1a-applicant.json";
+            return "fixtures/rfa/stub.json";
           }
 
           @Override
