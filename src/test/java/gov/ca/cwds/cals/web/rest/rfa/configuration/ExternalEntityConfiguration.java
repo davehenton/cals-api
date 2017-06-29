@@ -23,7 +23,7 @@ public abstract class ExternalEntityConfiguration<T extends BaseDTO> extends
     this.entityCollectionGenericType = entityCollectionGenericType;
   }
 
-  public abstract void updateEntity(T entity);
+  public abstract void modifyEntity(T entity);
 
   public GenericType<CollectionDTO<T>> getEntityCollectionGenericType() {
     return entityCollectionGenericType;

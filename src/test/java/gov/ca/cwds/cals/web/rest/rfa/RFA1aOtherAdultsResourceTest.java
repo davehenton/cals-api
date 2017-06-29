@@ -32,7 +32,7 @@ public class RFA1aOtherAdultsResourceTest extends BaseExternalEntityApiTest<Othe
           }
 
           @Override
-          public void updateEntity(OtherAdult entity) {
+          public void modifyEntity(OtherAdult entity) {
             entity.setFirstName("FIRST_NAME");
           }
 

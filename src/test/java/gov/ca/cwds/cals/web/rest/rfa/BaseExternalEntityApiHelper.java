@@ -40,8 +40,8 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO> implements ExternalE
     assertNotNull(((Identified) created).getId());
     Long createdEntityId = ((Identified<Long>) created).getId();
 
-    T founded = findEntity(form, createdEntityId);
-    assertThat(founded).isEqualTo(created);
+    T found = findEntity(form, createdEntityId);
+    assertThat(found).isEqualTo(created);
   }
 
   public void updateEntity() throws Exception {
@@ -50,10 +50,9 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO> implements ExternalE
     T created = createEntity(form);
     Long createdEntityId = ((Identified<Long>) created).getId();
 
-    T founded = findEntity(form, createdEntityId);
+    T found = findEntity(form, createdEntityId);
 
-    configuration.updateEntity(founded);
-    //founded.setOtherRelativeFirstName("FIRST_NAME");
+    configuration.modifyEntity(found);
 
     WebTarget target =
         clientTestRule.target(
@@ -66,13 +65,13 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO> implements ExternalE
                 + createdEntityId);
 
     T updated = target.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(founded, MediaType.APPLICATION_JSON_TYPE),
+        .put(Entity.entity(found, MediaType.APPLICATION_JSON_TYPE),
             configuration.getEntityClass());
 
-    founded = findEntity(form, createdEntityId);
+    found = findEntity(form, createdEntityId);
 
-    assertThat(founded).isEqualTo(updated);
-    assertThat(founded).isNotEqualTo(created);
+    assertThat(found).isEqualTo(updated);
+    assertThat(found).isNotEqualTo(created);
 
   }
 
@@ -80,8 +79,8 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO> implements ExternalE
     RFA1aFormDTO form = createForm(clientTestRule);
     T created = createEntity(form);
     Long createdEntityId = ((Identified<Long>) created).getId();
-    T founded = findEntity(form, createdEntityId);
-    assertThat(founded).isEqualTo(created);
+    T found = findEntity(form, createdEntityId);
+    assertThat(found).isEqualTo(created);
   }
 
   public void getEntitiesByFormId() throws Exception {
@@ -107,10 +106,10 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO> implements ExternalE
     RFA1aFormDTO form = createForm(clientTestRule);
     T created = createEntity(form);
     Long createdEntityId = ((Identified<Long>) created).getId();
-    T founded = findEntity(form, createdEntityId);
-    Long foundedId = ((Identified<Long>) founded).getId();
+    T found = findEntity(form, createdEntityId);
+    Long foundId = ((Identified<Long>) found).getId();
 
-    assertThat(founded).isEqualTo(created);
+    assertThat(found).isEqualTo(created);
 
     WebTarget target =
         clientTestRule.target(
@@ -120,7 +119,7 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO> implements ExternalE
                 + "/"
                 + configuration.getApiPath()
                 + "/"
-                + foundedId);
+                + foundId);
     Response response = target.request(MediaType.APPLICATION_JSON).delete();
     assertThat(response.getStatus()).isEqualTo(200);
     response = target.request(MediaType.APPLICATION_JSON).delete();

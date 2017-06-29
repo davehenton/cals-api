@@ -29,7 +29,7 @@ public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applic
           }
 
           @Override
-          public void updateEntity(Applicant entity) {
+          public void modifyEntity(Applicant entity) {
             entity.setFirstName("testFirstName");
           }
 

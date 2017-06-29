@@ -29,7 +29,7 @@ public class RFA1aMinorChildrenResourceTest extends BaseExternalEntityApiTest<Mi
           }
 
           @Override
-          public void updateEntity(MinorChild entity) {
+          public void modifyEntity(MinorChild entity) {
             entity.setOtherRelativeFirstName("FIRST_NAME");
           }
 
