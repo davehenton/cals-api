@@ -1,20 +1,20 @@
 package gov.ca.cwds.cals.web.rest;
 
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
-import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.service.dto.CountiesDTO;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
 import static gov.ca.cwds.cals.Constants.API.COUNTIES;
+import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
+import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.service.dto.CountiesDTO;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
@@ -38,7 +38,7 @@ public class CountiesResourceTest extends BaseCalsApiIntegrationTest {
 
         String fixture = fixture(FIXTURES_COUNTIES_RESPONSE_JSON);
         CountiesDTO countiesDTO1 = clientTestRule.getMapper().readValue(fixture, CountiesDTO.class);
-        assertEqualsResponse(fixture, countiesDTO);
+        assertEqualsResponse(fixture, transformDTOtoJSON(countiesDTO));
 
         assertEquals(countiesDTO, countiesDTO1);
     }
