@@ -11,7 +11,7 @@ import org.junit.Ignore;
  */
 
 @Ignore
-public class RFA1aOtherAdultsResourceTest extends
+public class RFAOtherAdultsResourceTest extends
     BaseExternalEntityApiTest<OtherAdult, OtherAdultsDTO> {
 
   @Override

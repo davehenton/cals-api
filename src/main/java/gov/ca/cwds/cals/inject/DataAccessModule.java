@@ -9,8 +9,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aApplicantDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.RFAApplicantDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
@@ -34,9 +34,9 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAApplicant;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAMinorChild;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
@@ -157,8 +157,8 @@ public class DataAccessModule extends AbstractModule {
           ApplicantRelationshipType.class,
           //RFA
           RFA1aForm.class,
-          RFA1aApplicant.class,
-          RFA1aMinorChild.class
+          RFAApplicant.class,
+          RFAMinorChild.class
       ) {
 
         @Override
@@ -198,7 +198,7 @@ public class DataAccessModule extends AbstractModule {
 
     // RFA
     bind(RFA1aFormsDao.class);
-    bind(RFA1aApplicantDao.class);
+    bind(RFAApplicantDao.class);
 
   }
 

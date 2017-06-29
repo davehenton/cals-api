@@ -8,23 +8,23 @@ import gov.ca.cwds.rest.api.Response;
 /**
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S00119")
+public abstract class RFAInternalEntityConfiguration<EntityDTO extends BaseDTO> {
 
-public abstract class InternalEntityConfiguration<T extends BaseDTO> {
+  private Class<EntityDTO> entityClass;
 
-  private Class<T> entityClass;
-
-  public InternalEntityConfiguration(Class<T> entityClass) {
+  public RFAInternalEntityConfiguration(Class<EntityDTO> entityClass) {
     this.entityClass = entityClass;
   }
 
-  public Class<T> getEntityClass() {
+  public Class<EntityDTO> getEntityClass() {
     return entityClass;
   }
 
-  protected abstract T retrieveEntityFromTheForm(RFA1aForm form);
+  protected abstract EntityDTO retrieveEntityFromTheForm(RFA1aForm form);
 
   public Response getEntityFromTheForm(RFA1aForm form) {
-    T entity = retrieveEntityFromTheForm(form);
+    EntityDTO entity = retrieveEntityFromTheForm(form);
     return (Response) entity;
   }
 
@@ -33,9 +33,9 @@ public abstract class InternalEntityConfiguration<T extends BaseDTO> {
       throw new IllegalStateException(
           "Unexpected request class type. Expected is " + entityClass.getSimpleName());
     }
-    saveEntityToTheForm(form, (T) request);
+    saveEntityToTheForm(form, (EntityDTO) request);
   }
 
-  protected abstract void saveEntityToTheForm(RFA1aForm form, T entity);
+  protected abstract void saveEntityToTheForm(RFA1aForm form, EntityDTO entity);
 
 }

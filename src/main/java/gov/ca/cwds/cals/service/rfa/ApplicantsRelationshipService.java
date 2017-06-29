@@ -4,19 +4,19 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
-import gov.ca.cwds.cals.service.rfa.configuration.InternalEntityConfiguration;
+import gov.ca.cwds.cals.service.rfa.configuration.RFAInternalEntityConfiguration;
 
 /**
  * @author CWDS CALS API Team.
  */
 public class ApplicantsRelationshipService
-    extends AbstractInternalEntityService<ApplicantsRelationship> {
+    extends AbstractRFAInternalEntityService<ApplicantsRelationship> {
 
   @Inject
   public ApplicantsRelationshipService(RFA1aFormsDao applicationDao) {
     super(
         applicationDao,
-        new InternalEntityConfiguration<ApplicantsRelationship>(ApplicantsRelationship.class) {
+        new RFAInternalEntityConfiguration<ApplicantsRelationship>(ApplicantsRelationship.class) {
 
           @Override
           protected ApplicantsRelationship retrieveEntityFromTheForm(RFA1aForm form) {

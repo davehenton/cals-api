@@ -5,8 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.Identified;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
@@ -21,37 +20,37 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 
-public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends CollectionDTO<T>> implements
+public class BaseExternalEntityApiHelper<EntityDTO extends RFAExternalEntityDTO, EntitiesDTO extends CollectionDTO<EntityDTO>> implements
     ExternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
-  private ExternalEntityConfiguration<T, G> configuration;
+  private ExternalEntityConfiguration<EntityDTO, EntitiesDTO> configuration;
 
   public BaseExternalEntityApiHelper(RestClientTestRule clientTestRule,
-      ExternalEntityConfiguration<T, G> configuration) {
+      ExternalEntityConfiguration<EntityDTO, EntitiesDTO> configuration) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
   }
 
   public void createEntity() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
-    T created = createEntity(form);
+    EntityDTO created = createEntity(form);
 
     assertNotNull(created);
-    assertNotNull(((Identified) created).getId());
-    Long createdEntityId = ((Identified<Long>) created).getId();
+    assertNotNull(created.getId());
+    Long createdEntityId = created.getId();
 
-    T found = findEntity(form, createdEntityId);
+    EntityDTO found = findEntity(form, createdEntityId);
     assertThat(found).isEqualTo(created);
   }
 
   public void updateEntity() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
 
-    T created = createEntity(form);
-    Long createdEntityId = ((Identified<Long>) created).getId();
+    EntityDTO created = createEntity(form);
+    Long createdEntityId = created.getId();
 
-    T found = findEntity(form, createdEntityId);
+    EntityDTO found = findEntity(form, createdEntityId);
 
     configuration.modifyEntity(found);
 
@@ -65,7 +64,7 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends Collection
                 + "/"
                 + createdEntityId);
 
-    T updated = target.request(MediaType.APPLICATION_JSON)
+    EntityDTO updated = target.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(found, MediaType.APPLICATION_JSON_TYPE),
             configuration.getEntityClass());
 
@@ -78,9 +77,9 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends Collection
 
   public void getEntityById() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
-    T created = createEntity(form);
-    Long createdEntityId = ((Identified<Long>) created).getId();
-    T found = findEntity(form, createdEntityId);
+    EntityDTO created = createEntity(form);
+    Long createdEntityId = created.getId();
+    EntityDTO found = findEntity(form, createdEntityId);
     assertThat(found).isEqualTo(created);
   }
 
@@ -97,7 +96,7 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends Collection
                 + form.getId()
                 + "/"
                 + configuration.getApiPath());
-    G entityCollectionDTO = target.request(MediaType.APPLICATION_JSON)
+    EntitiesDTO entityCollectionDTO = target.request(MediaType.APPLICATION_JSON)
         .get(configuration.getCollectionDTOClass());
 
     assertThat(entityCollectionDTO.getCollection().size()).isEqualTo(3);
@@ -105,10 +104,10 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends Collection
 
   public void deleteEntity() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
-    T created = createEntity(form);
-    Long createdEntityId = ((Identified<Long>) created).getId();
-    T found = findEntity(form, createdEntityId);
-    Long foundId = ((Identified<Long>) found).getId();
+    EntityDTO created = createEntity(form);
+    Long createdEntityId = created.getId();
+    EntityDTO found = findEntity(form, createdEntityId);
+    Long foundId = found.getId();
 
     assertThat(found).isEqualTo(created);
 
@@ -127,16 +126,16 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends Collection
     assertThat(response.getStatus()).isEqualTo(404);
   }
 
-  private T createEntity(RFA1aFormDTO form) throws IOException {
+  private EntityDTO createEntity(RFA1aFormDTO form) throws IOException {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath());
-    T entity = configuration.createEntity();
+    EntityDTO entity = configuration.createEntity();
     return target.request(MediaType.APPLICATION_JSON).post(
         Entity.entity(entity, MediaType.APPLICATION_JSON_TYPE), configuration.getEntityClass());
   }
 
-  private T findEntity(RFA1aFormDTO form, Long entityId) {
+  private EntityDTO findEntity(RFA1aFormDTO form, Long entityId) {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS
