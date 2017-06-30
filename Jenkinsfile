@@ -7,6 +7,7 @@ node ('tpt2-slave'){
 		  git branch: '$branch', url: 'https://github.com/ca-cwds/cals-api.git'
 		  rtGradle.tool = "Gradle_35"
 		  rtGradle.resolver repo:'repo', server: serverArti
+		  rtGradle.useWrapper = true
    }
    stage('Build'){
 		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar'
