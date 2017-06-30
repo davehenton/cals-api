@@ -8,7 +8,6 @@ node ('tpt2-slave'){
 		  rtGradle.tool = "Gradle_35"
 		  rtGradle.resolver repo:'repo', server: serverArti
 		  rtGradle.useWrapper = true
-		  sh('chmod +x gradlew')
    }
    stage('Build'){
 		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar'
@@ -20,7 +19,7 @@ node ('tpt2-slave'){
    }
    stage('SonarQube analysis'){
 		withSonarQubeEnv('Core-SonarQube') {
-			buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'sonarqube --stacktrace'
+			buildInfo = rtGradle.run buildFile: 'build.gradle', switches: '--info', tasks: 'sonarqube'
         }
     }
 
