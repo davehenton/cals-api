@@ -9,6 +9,7 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.MARRIAGE_TERMINATION_REASON_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
@@ -31,6 +32,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReason;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
@@ -82,7 +84,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "applicant-relationship-type-response.json";
   private static final String FIXTURES_LICENSE_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "license-type-response.json";
-
+  private static final String FIXTURES_MARRIAGE_TERMINATION_REASON_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "marriage-termination-reason-response.json";
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -227,11 +230,20 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void getLicenseTest() throws Exception {
+  public void getLicenseTypeTest() throws Exception {
     baseDictionaryTest(
         LICENSE_TYPE_PATH,
         FIXTURES_LICENSE_TYPE_RESPONSE_JSON,
         new GenericType<CollectionDTO<LicenseType>>() {
+        });
+  }
+
+  @Test
+  public void getMarriageTerminationReasonTest() throws Exception {
+    baseDictionaryTest(
+        MARRIAGE_TERMINATION_REASON_PATH,
+        FIXTURES_MARRIAGE_TERMINATION_REASON_RESPONSE_JSON,
+        new GenericType<CollectionDTO<MarriageTerminationReason>>() {
         });
   }
 

@@ -19,6 +19,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.MARRIAGE_TERMINATION_REASON;
+import static gov.ca.cwds.cals.Constants.DictionaryType.MARRIAGE_TERMINATION_REASON_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE;
@@ -285,7 +287,10 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Applicant Relationship Types", response = DictionaryValuesDTO.class)
+  @ApiOperation(
+      value = "Returns Applicant Relationship Types",
+      response = DictionaryValuesDTO.class
+  )
   public Response getApplicantRelationshipTypes() {
     return dictionariesResourceDelegate.get(APPLICANT_RELATIONSHIP_TYPE);
   }
@@ -306,4 +311,22 @@ public class DictionariesResource {
     return dictionariesResourceDelegate.get(LICENSE_TYPE);
   }
 
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + MARRIAGE_TERMINATION_REASON_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(
+      value = "Returns Marriage Termination Reasons",
+      response = DictionaryValuesDTO.class
+  )
+  public Response getMarriageTerminationReasons() {
+    return dictionariesResourceDelegate.get(MARRIAGE_TERMINATION_REASON);
+  }
 }
