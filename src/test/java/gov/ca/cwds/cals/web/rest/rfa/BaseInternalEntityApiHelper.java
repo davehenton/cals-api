@@ -20,14 +20,14 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 
-public class BaseInternalEntityApiHelper<EntityDTO extends BaseDTO> implements
+public class BaseInternalEntityApiHelper<T extends BaseDTO> implements
     InternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
-  private InternalEntityConfiguration<EntityDTO> configuration;
+  private InternalEntityConfiguration<T> configuration;
 
   public BaseInternalEntityApiHelper(RestClientTestRule clientTestRule,
-      InternalEntityConfiguration<EntityDTO> configuration) {
+      InternalEntityConfiguration<T> configuration) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
   }
@@ -47,7 +47,7 @@ public class BaseInternalEntityApiHelper<EntityDTO extends BaseDTO> implements
     WebTarget target =
         clientTestRule.target(API.RFA_1A_FORMS + "/" + -1 + "/" + configuration.getApiPath());
 
-    EntityDTO entity = configuration.createEntity();
+    T entity = configuration.createEntity();
 
     Response response = target.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(entity, MediaType.APPLICATION_JSON));
@@ -72,11 +72,11 @@ public class BaseInternalEntityApiHelper<EntityDTO extends BaseDTO> implements
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + configuration.getApiPath());
-    EntityDTO putEntity =
+    T putEntity =
         target.request(MediaType.APPLICATION_JSON).put(
             Entity.entity(configuration.createEntity(), MediaType.APPLICATION_JSON_TYPE),
             configuration.getEntityClass());
-    EntityDTO getEntity = target.request(MediaType.APPLICATION_JSON)
+    T getEntity = target.request(MediaType.APPLICATION_JSON)
         .get(configuration.getEntityClass());
     assertThat(getEntity).isEqualTo(putEntity);
   }

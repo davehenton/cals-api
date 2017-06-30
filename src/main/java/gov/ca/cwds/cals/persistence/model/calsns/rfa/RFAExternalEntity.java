@@ -12,8 +12,7 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@SuppressWarnings("squid:S00119")
-public abstract class RFAExternalEntity<EntityDTO extends RFAExternalEntityDTO> extends
+public abstract class RFAExternalEntity<T extends RFAExternalEntityDTO> extends
     RFABaseEntity {
 
   @Column(name = "application_id")
@@ -27,9 +26,9 @@ public abstract class RFAExternalEntity<EntityDTO extends RFAExternalEntityDTO> 
     this.formId = formId;
   }
 
-  public abstract EntityDTO getEntityDTO();
+  public abstract T getEntityDTO();
 
-  public abstract void setEntityDTO(EntityDTO entityDTO);
+  public abstract void setEntityDTO(T entityDTO);
 
   @Override
   public boolean equals(Object o) {

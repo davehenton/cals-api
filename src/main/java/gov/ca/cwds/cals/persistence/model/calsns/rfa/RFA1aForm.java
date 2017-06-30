@@ -38,7 +38,7 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
 
   @OneToMany
   @JoinColumn(name = "application_id")
-  private List<RFAApplicant> applicantEntities;
+  private List<RFA1aApplicant> applicantEntities;
 
   public Application getApplication() {
     return application;
@@ -65,12 +65,12 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     this.relationships = relationships;
   }
 
-  public List<RFAApplicant> getApplicantEntities() {
+  public List<RFA1aApplicant> getApplicantEntities() {
     return applicantEntities;
   }
 
   public void setApplicantEntities(
-      List<RFAApplicant> applicantEntities) {
+      List<RFA1aApplicant> applicantEntities) {
     this.applicantEntities = applicantEntities;
   }
 

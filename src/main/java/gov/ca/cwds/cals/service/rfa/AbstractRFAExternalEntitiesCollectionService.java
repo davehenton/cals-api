@@ -37,10 +37,10 @@ public class AbstractRFAExternalEntitiesCollectionService<
     if (!(params instanceof RFAExternalEntityParameterObject)) {
       throw new IllegalStateException("RFA1aApplicantParameterObject is expected here");
     }
-    List<Entity> applicants =
+    List<Entity> entities =
         dao.findAllByFormId(((RFAExternalEntityParameterObject) params).getFormId());
     List<EntityDTO> collectDTOs =
-        applicants.stream().map(Entity::getEntityDTO).collect(Collectors.toList());
+        entities.stream().map(Entity::getEntityDTO).collect(Collectors.toList());
     return configuration.createEntitiesDTO(collectDTOs);
   }
 }

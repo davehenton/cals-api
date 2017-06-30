@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAApplicant.NAMED_QUERY_FIND_ALL_BY_FORM;
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAApplicant.NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID;
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAApplicant.PARAM_APPLICANT_ID;
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAApplicant.PARAM_FORM_ID;
+import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.NAMED_QUERY_FIND_ALL_BY_FORM;
+import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID;
+import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.PARAM_APPLICANT_ID;
+import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.PARAM_FORM_ID;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.persistence.Column;
@@ -19,12 +19,12 @@ import org.hibernate.annotations.Type;
  */
 @NamedQuery(
     name = NAMED_QUERY_FIND_ALL_BY_FORM,
-    query = "FROM RFAApplicant a WHERE a.formId = :" + PARAM_FORM_ID
+    query = "FROM RFA1aApplicant a WHERE a.formId = :" + PARAM_FORM_ID
 )
 @NamedQuery(
     name = NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID,
     query =
-        "FROM RFAApplicant a WHERE a.id = :"
+        "FROM RFA1aApplicant a WHERE a.id = :"
             + PARAM_APPLICANT_ID
             + " AND a.formId = :"
             + PARAM_FORM_ID
@@ -32,13 +32,13 @@ import org.hibernate.annotations.Type;
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @Entity
 @Table(name = "rfa_1a_applicant")
-public class RFAApplicant extends RFAExternalEntity<Applicant> implements PersistentObject {
+public class RFA1aApplicant extends RFAExternalEntity<Applicant> implements PersistentObject {
   private static final long serialVersionUID = 7581768715451007632L;
 
   public static final java.lang.String NAMED_QUERY_FIND_ALL_BY_FORM =
-      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAApplicant.find.all.forFormId";
+      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.find.all.forFormId";
   public static final String NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID =
-      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAApplicant.find.ByFormIdAndApplicantId";
+      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.find.ByFormIdAndApplicantId";
 
   public static final String PARAM_FORM_ID = "formId";
   public static final String PARAM_APPLICANT_ID = "applicantId";

@@ -20,37 +20,37 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 
-public class BaseExternalEntityApiHelper<EntityDTO extends RFAExternalEntityDTO, EntitiesDTO extends CollectionDTO<EntityDTO>> implements
+public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO, G extends CollectionDTO<T>> implements
     ExternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
-  private ExternalEntityConfiguration<EntityDTO, EntitiesDTO> configuration;
+  private ExternalEntityConfiguration<T, G> configuration;
 
   public BaseExternalEntityApiHelper(RestClientTestRule clientTestRule,
-      ExternalEntityConfiguration<EntityDTO, EntitiesDTO> configuration) {
+      ExternalEntityConfiguration<T, G> configuration) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
   }
 
   public void createEntity() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
-    EntityDTO created = createEntity(form);
+    T created = createEntity(form);
 
     assertNotNull(created);
     assertNotNull(created.getId());
     Long createdEntityId = created.getId();
 
-    EntityDTO found = findEntity(form, createdEntityId);
+    T found = findEntity(form, createdEntityId);
     assertThat(found).isEqualTo(created);
   }
 
   public void updateEntity() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
 
-    EntityDTO created = createEntity(form);
+    T created = createEntity(form);
     Long createdEntityId = created.getId();
 
-    EntityDTO found = findEntity(form, createdEntityId);
+    T found = findEntity(form, createdEntityId);
 
     configuration.modifyEntity(found);
 
@@ -64,7 +64,7 @@ public class BaseExternalEntityApiHelper<EntityDTO extends RFAExternalEntityDTO,
                 + "/"
                 + createdEntityId);
 
-    EntityDTO updated = target.request(MediaType.APPLICATION_JSON)
+    T updated = target.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(found, MediaType.APPLICATION_JSON_TYPE),
             configuration.getEntityClass());
 
@@ -77,9 +77,9 @@ public class BaseExternalEntityApiHelper<EntityDTO extends RFAExternalEntityDTO,
 
   public void getEntityById() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
-    EntityDTO created = createEntity(form);
+    T created = createEntity(form);
     Long createdEntityId = created.getId();
-    EntityDTO found = findEntity(form, createdEntityId);
+    T found = findEntity(form, createdEntityId);
     assertThat(found).isEqualTo(created);
   }
 
@@ -96,7 +96,7 @@ public class BaseExternalEntityApiHelper<EntityDTO extends RFAExternalEntityDTO,
                 + form.getId()
                 + "/"
                 + configuration.getApiPath());
-    EntitiesDTO entityCollectionDTO = target.request(MediaType.APPLICATION_JSON)
+    G entityCollectionDTO = target.request(MediaType.APPLICATION_JSON)
         .get(configuration.getCollectionDTOClass());
 
     assertThat(entityCollectionDTO.getCollection().size()).isEqualTo(3);
@@ -104,9 +104,9 @@ public class BaseExternalEntityApiHelper<EntityDTO extends RFAExternalEntityDTO,
 
   public void deleteEntity() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
-    EntityDTO created = createEntity(form);
+    T created = createEntity(form);
     Long createdEntityId = created.getId();
-    EntityDTO found = findEntity(form, createdEntityId);
+    T found = findEntity(form, createdEntityId);
     Long foundId = found.getId();
 
     assertThat(found).isEqualTo(created);
@@ -126,16 +126,16 @@ public class BaseExternalEntityApiHelper<EntityDTO extends RFAExternalEntityDTO,
     assertThat(response.getStatus()).isEqualTo(404);
   }
 
-  private EntityDTO createEntity(RFA1aFormDTO form) throws IOException {
+  private T createEntity(RFA1aFormDTO form) throws IOException {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath());
-    EntityDTO entity = configuration.createEntity();
+    T entity = configuration.createEntity();
     return target.request(MediaType.APPLICATION_JSON).post(
         Entity.entity(entity, MediaType.APPLICATION_JSON_TYPE), configuration.getEntityClass());
   }
 
-  private EntityDTO findEntity(RFA1aFormDTO form, Long entityId) {
+  private T findEntity(RFA1aFormDTO form, Long entityId) {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS

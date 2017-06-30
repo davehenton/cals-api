@@ -32,9 +32,9 @@ import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
 import gov.ca.cwds.cals.web.rest.rfa.ApplicantsRelationshipResource;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResource;
-import gov.ca.cwds.cals.web.rest.rfa.RFAApplicantResource;
-import gov.ca.cwds.cals.web.rest.rfa.RFAMinorChildrenResource;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1aMinorChildrenResource;
 import gov.ca.cwds.cals.web.rest.rfa.ResidenceResource;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
@@ -64,8 +64,8 @@ public class ResourcesModule extends AbstractModule {
 
     // RFA
     bind(RFA1aFormsResource.class);
-    bind(RFAApplicantResource.class);
-    bind(RFAMinorChildrenResource.class);
+    bind(RFA1aApplicantResource.class);
+    bind(RFA1aMinorChildrenResource.class);
     bind(ResidenceResource.class);
     bind(ApplicantsRelationshipResource.class);
   }

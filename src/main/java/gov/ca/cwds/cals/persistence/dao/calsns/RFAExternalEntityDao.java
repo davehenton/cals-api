@@ -10,18 +10,17 @@ import org.hibernate.SessionFactory;
  * @author CWDS CALS API Team
  */
 
-@SuppressWarnings("squid:S00119")
-public abstract class RFAExternalEntityDao<Entity extends RFAExternalEntity> extends
-    BaseDaoImpl<Entity> {
+public abstract class RFAExternalEntityDao<T extends RFAExternalEntity> extends
+    BaseDaoImpl<T> {
 
   public RFAExternalEntityDao(@CalsnsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 
-  public abstract List<Entity> findAllByFormId(Long formId);
+  public abstract List<T> findAllByFormId(Long formId);
 
-  public abstract Entity findEntityByFormIdAndEntityId(Long formId, Long entityId);
+  public abstract T findEntityByFormIdAndEntityId(Long formId, Long entityId);
 
-  public abstract Entity deleteApplicant(Long formId, Long entityId);
+  public abstract T deleteApplicant(Long formId, Long entityId);
 
 }

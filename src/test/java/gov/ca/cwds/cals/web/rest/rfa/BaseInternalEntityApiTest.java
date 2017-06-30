@@ -9,10 +9,10 @@ import org.junit.Test;
  * @author CWDS CALS API Team
  */
 
-public abstract class BaseInternalEntityApiTest<EntityDTO extends BaseDTO> extends
+public abstract class BaseInternalEntityApiTest<T extends BaseDTO> extends
     BaseCalsApiIntegrationTest implements InternalEntityApiHelper {
 
-  protected abstract BaseInternalEntityApiHelper<EntityDTO> getInternalEntityApiHelper();
+  protected abstract BaseInternalEntityApiHelper<T> getInternalEntityApiHelper();
 
   @BeforeClass
   public static void beforeClass() throws Exception {

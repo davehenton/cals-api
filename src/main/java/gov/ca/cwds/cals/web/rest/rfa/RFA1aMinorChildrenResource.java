@@ -40,13 +40,13 @@ import javax.ws.rs.core.Response;
 @Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RFA_1A_MINOR_CHILDREN)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RFAMinorChildrenResource {
+public class RFA1aMinorChildrenResource {
 
   private ResourceDelegate resourceDelegate;
   private ResourceDelegate collectionResourceDelegate;
 
   @Inject
-  public RFAMinorChildrenResource(
+  public RFA1aMinorChildrenResource(
       @RFAMinorChildrenServiceBackendResource ResourceDelegate resourceDelegate,
       @RFAMinorChildrenCollectionServiceBackendResource
           ResourceDelegate collectionResourceDelegate) {

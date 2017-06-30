@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.persistence.dao.calsns;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAMinorChild;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.data.BaseDaoImpl;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -16,25 +16,25 @@ import org.slf4j.LoggerFactory;
 /**
  * @author CWDS CALS API Team
  */
-public class RFAMinorChildDao extends BaseDaoImpl<RFAMinorChild> {
+public class RFA1aMinorChildDao extends BaseDaoImpl<RFA1aMinorChild> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(RFAMinorChildDao.class);
+  private static final Logger LOG = LoggerFactory.getLogger(RFA1aMinorChildDao.class);
 
   @Inject
-  public RFAMinorChildDao(@CalsnsSessionFactory SessionFactory sessionFactory) {
+  public RFA1aMinorChildDao(@CalsnsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 
-  public RFAMinorChild findMinorChildByFormIdAndMinorChildId(
+  public RFA1aMinorChild findMinorChildByFormIdAndMinorChildId(
       Long applicationId, Long minorChildId) {
     Session session = getSessionFactory().getCurrentSession();
-    Class<RFAMinorChild> entityClass = getEntityClass();
-    Query<RFAMinorChild> query =
+    Class<RFA1aMinorChild> entityClass = getEntityClass();
+    Query<RFA1aMinorChild> query =
         session.createNamedQuery(
-            RFAMinorChild.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID, entityClass);
-    query.setParameter(RFAMinorChild.PARAM_FORM_ID, applicationId);
-    query.setParameter(RFAMinorChild.PARAM_CHILD_ID, minorChildId);
-    RFAMinorChild res = null;
+            RFA1aMinorChild.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID, entityClass);
+    query.setParameter(RFA1aMinorChild.PARAM_FORM_ID, applicationId);
+    query.setParameter(RFA1aMinorChild.PARAM_CHILD_ID, minorChildId);
+    RFA1aMinorChild res = null;
     try {
       res = query.getSingleResult();
     } catch (NoResultException e) {
@@ -45,8 +45,8 @@ public class RFAMinorChildDao extends BaseDaoImpl<RFAMinorChild> {
     return res;
   }
 
-  public RFAMinorChild deleteMinor(Long applicationId, Long minorChildId) {
-    RFAMinorChild minorChildEntity = findMinorChildByFormIdAndMinorChildId(applicationId,
+  public RFA1aMinorChild deleteMinor(Long applicationId, Long minorChildId) {
+    RFA1aMinorChild minorChildEntity = findMinorChildByFormIdAndMinorChildId(applicationId,
         minorChildId);
     if (minorChildEntity != null) {
       minorChildEntity = delete(minorChildEntity.getId());
@@ -54,13 +54,13 @@ public class RFAMinorChildDao extends BaseDaoImpl<RFAMinorChild> {
     return minorChildEntity;
   }
 
-  public List<RFAMinorChild> findAllByFormId(Long formId) {
+  public List<RFA1aMinorChild> findAllByFormId(Long formId) {
     Session session = this.getSessionFactory().getCurrentSession();
-    Query<RFAMinorChild> query =
+    Query<RFA1aMinorChild> query =
         session
-            .createNamedQuery(RFAMinorChild.NAMED_QUERY_FIND_ALL_BY_FORM, RFAMinorChild.class);
-    query.setParameter(RFAMinorChild.PARAM_FORM_ID, formId);
-    ImmutableList.Builder<RFAMinorChild> entities = new ImmutableList.Builder<>();
+            .createNamedQuery(RFA1aMinorChild.NAMED_QUERY_FIND_ALL_BY_FORM, RFA1aMinorChild.class);
+    query.setParameter(RFA1aMinorChild.PARAM_FORM_ID, formId);
+    ImmutableList.Builder<RFA1aMinorChild> entities = new ImmutableList.Builder<>();
     entities.addAll(query.list());
     return entities.build();
   }

@@ -7,40 +7,39 @@ import java.io.Serializable;
 /**
  * @author CWDS CALS API Team
  */
-@SuppressWarnings("squid:S00119")
-public class RFAExternalEntityParameterObject<EntityDTO extends BaseDTO> implements Request,
+public class RFAExternalEntityParameterObject<T extends BaseDTO> implements Request,
     Serializable {
 
   private static final long serialVersionUID = -531872197296633529L;
 
   private Long formId;
-  private Long applicantId;
-  private EntityDTO entityDTO;
+  private Long entityId;
+  private T entityDTO;
 
   public RFAExternalEntityParameterObject(Long formId) {
     this.formId = formId;
   }
 
-  public RFAExternalEntityParameterObject(Long formId, EntityDTO entityDTO) {
+  public RFAExternalEntityParameterObject(Long formId, T entityDTO) {
     this.formId = formId;
     this.entityDTO = entityDTO;
   }
 
-  public RFAExternalEntityParameterObject(Long formId, Long applicantId) {
+  public RFAExternalEntityParameterObject(Long formId, Long entityId) {
     this.formId = formId;
-    this.applicantId = applicantId;
+    this.entityId = entityId;
   }
 
   public Long getFormId() {
     return formId;
   }
 
-  public EntityDTO getEntityDTO() {
+  public T getEntityDTO() {
     return entityDTO;
   }
 
   public Long getEntityId() {
-    return applicantId;
+    return entityId;
   }
 }
 

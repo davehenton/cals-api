@@ -10,10 +10,10 @@ import org.junit.Test;
  * @author CWDS CALS API Team
  */
 public abstract class BaseExternalEntityApiTest<
-    EntityDTO extends RFAExternalEntityDTO, EntitiesDTO extends CollectionDTO<EntityDTO>>
+    T extends RFAExternalEntityDTO, G extends CollectionDTO<T>>
     extends BaseCalsApiIntegrationTest implements ExternalEntityApiHelper {
 
-  protected abstract BaseExternalEntityApiHelper<EntityDTO, EntitiesDTO>
+  protected abstract BaseExternalEntityApiHelper<T, G>
   getExternalEntityApiHelper();
 
   @BeforeClass

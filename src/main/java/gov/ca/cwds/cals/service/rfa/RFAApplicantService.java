@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.service.rfa;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.dao.calsns.RFAApplicantDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aApplicantDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAApplicant;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDTO;
 import gov.ca.cwds.cals.service.rfa.configuration.ApplicantConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
@@ -13,10 +13,10 @@ import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
  */
 public class RFAApplicantService
     extends AbstractRFAExternalEntityService<
-    RFAApplicant, Applicant, RFAExternalEntityParameterObject<Applicant>, ApplicantsDTO> {
+    RFA1aApplicant, Applicant, RFAExternalEntityParameterObject<Applicant>, ApplicantsDTO> {
 
   @Inject
-  public RFAApplicantService(RFAApplicantDao dao) {
+  public RFAApplicantService(RFA1aApplicantDao dao) {
     super(dao, ApplicantConfiguration.INSTANCE);
   }
 
