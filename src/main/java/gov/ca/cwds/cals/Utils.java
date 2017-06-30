@@ -10,6 +10,9 @@ import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
  */
 public final class Utils {
 
+  private Utils() {
+  }
+
   public static FacilityParameterObject createFacilityParameterObject(String facilityNumber) {
     FacilityParameterObject parameterObject;
     try {
@@ -23,7 +26,7 @@ public final class Utils {
 
   public static FacilityParameterObject createExpandedFacilityParameterObject(String facilityNumber) {
     FacilityParameterObject parameterObject = createFacilityParameterObject(facilityNumber);
-    parameterObject.setExpanded(true);
+    parameterObject.setExpanded(Boolean.TRUE);
     return parameterObject;
   }
 }

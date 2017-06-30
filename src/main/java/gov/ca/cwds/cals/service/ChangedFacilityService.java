@@ -63,13 +63,13 @@ public class ChangedFacilityService extends FacilityService {
 
     return Stream.concat(lisRecordChangesStream, cwsCmsRecordChangesStream).map(
         recordChange -> {
-          LOG.info("Getting facility by ID: " + recordChange.getId());
+          LOG.info("Getting facility by ID: {}", recordChange.getId());
           FacilityDTO facilityDTO = findExpandedById(recordChange.getId());
           return new ChangedFacilityDTO(facilityDTO, recordChange.getRecordChangeOperation());
         });
   }
 
-  private class RecordChanges {
+  private static class RecordChanges {
 
     private HashMap<String, RecordChange> toBeDeleted = new HashMap<>();
     private HashMap<String, RecordChange> toBeInserted = new HashMap<>();
