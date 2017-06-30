@@ -56,6 +56,8 @@ public final class Constants {
 
     public static final String RFA_1A_OTHER_ADULTS = "other-adults";
 
+    public static final String RFA_1A_OTHER_ADULT = "other-adult";
+
     public static final String RFA_1A_MINOR_CHILD = "minorChild";
 
     public static final String RESIDENCE = "residence";
@@ -79,6 +81,8 @@ public final class Constants {
       public static final String RFA_1A_APPLICANT_ID = "applicantId";
 
       public static final String RFA_1A_MINOR_CHILD_ID = "minorChildId";
+
+      public static final String RFA_1A_OTHER_ADULT_ID = "otherAdultId";
 
       private PathParams() {
       }

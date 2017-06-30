@@ -1,7 +1,5 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.NAMED_QUERY_FIND_ALL_BY_FORM;
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.PARAM_ENTITY_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.PARAM_FORM_ID;
 
@@ -18,11 +16,11 @@ import org.hibernate.annotations.Type;
  * @author CWDS CALS API Team
  */
 @NamedQuery(
-    name = NAMED_QUERY_FIND_ALL_BY_FORM,
+    name = RFA1aApplicant.NAMED_QUERY_FIND_ALL_BY_FORM,
     query = "FROM RFA1aApplicant a WHERE a.formId = :" + PARAM_FORM_ID
 )
 @NamedQuery(
-    name = NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID,
+    name = RFA1aApplicant.NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID,
     query =
         "FROM RFA1aApplicant a WHERE a.id = :"
             + PARAM_ENTITY_ID

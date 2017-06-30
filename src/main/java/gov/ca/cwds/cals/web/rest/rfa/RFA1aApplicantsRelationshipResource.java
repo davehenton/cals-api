@@ -33,12 +33,12 @@ import javax.ws.rs.core.Response;
 @Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + APPLICANTS_RELATIONSHIP)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ApplicantsRelationshipResource {
+public class RFA1aApplicantsRelationshipResource {
 
   private ResourceDelegate resourceDelegate;
 
   @Inject
-  public ApplicantsRelationshipResource(
+  public RFA1aApplicantsRelationshipResource(
       @ApplicantsRelationshipServiceBackedResource ResourceDelegate resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }

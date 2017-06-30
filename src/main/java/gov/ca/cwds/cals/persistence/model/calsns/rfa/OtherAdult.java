@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -24,6 +26,8 @@ public class OtherAdult extends RFAExternalEntityDTO {
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
+
+  private List<RelationshipToApplicant> relationshipToApplicants = new ArrayList<>();
 
   public String getFirstName() {
     return firstName;
@@ -55,6 +59,15 @@ public class OtherAdult extends RFAExternalEntityDTO {
 
   public void setDateOfBirth(LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
+  }
+
+  public List<RelationshipToApplicant> getRelationshipToApplicants() {
+    return relationshipToApplicants;
+  }
+
+  public void setRelationshipToApplicants(
+      List<RelationshipToApplicant> relationshipToApplicants) {
+    this.relationshipToApplicants = relationshipToApplicants;
   }
 
   @Override

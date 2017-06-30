@@ -4,6 +4,12 @@
  */
 @TypeDefs(value = {
     @TypeDef(
+        name = "OtherAdultJsonType",
+        typeClass = OtherAdultJsonType.class,
+        parameters = {@Parameter(name = SQL_TYPE,
+            value = SQLTypes.CLOB_TYPE_NAME)}
+    ),
+    @TypeDef(
         name = "ApplicationJsonType",
         typeClass = ApplicationJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
