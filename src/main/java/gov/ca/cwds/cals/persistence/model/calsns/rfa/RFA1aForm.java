@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -40,6 +41,10 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   @JoinColumn(name = "application_id")
   private List<RFA1aApplicant> applicantEntities;
 
+  @Type(type = "AdoptionHistoryJsonType")
+  @Column(name = "adoption_history")
+  private AdoptionHistory adoptionHistory;
+
   public Application getApplication() {
     return application;
   }
@@ -74,6 +79,15 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     this.applicantEntities = applicantEntities;
   }
 
+  public AdoptionHistory getAdoptionHistory() {
+    return adoptionHistory;
+  }
+
+  public void setAdoptionHistory(
+      AdoptionHistory adoptionHistory) {
+    this.adoptionHistory = adoptionHistory;
+  }
+
   @Override
   public boolean equals(Object o) {
     return EqualsBuilder.reflectionEquals(this, o, "applicantEntities");
@@ -83,5 +97,6 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this, "applicantEntities");
   }
+
 
 }
