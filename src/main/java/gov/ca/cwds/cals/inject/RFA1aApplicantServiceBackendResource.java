@@ -15,6 +15,6 @@ import java.lang.annotation.Target;
 @BindingAnnotation
 @Target({FIELD, PARAMETER, METHOD})
 @Retention(RUNTIME)
-public @interface RFAApplicantsCollectionServiceBackendResource {
+public @interface RFA1aApplicantServiceBackendResource {
 
 }

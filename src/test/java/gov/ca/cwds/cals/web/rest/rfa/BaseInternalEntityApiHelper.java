@@ -10,7 +10,7 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
-import gov.ca.cwds.cals.web.rest.rfa.configuration.InternalEntityConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -24,10 +24,10 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements
     InternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
-  private InternalEntityConfiguration<T> configuration;
+  private TestInternalEntityConfiguration<T> configuration;
 
   public BaseInternalEntityApiHelper(RestClientTestRule clientTestRule,
-      InternalEntityConfiguration<T> configuration) {
+      TestInternalEntityConfiguration<T> configuration) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
   }

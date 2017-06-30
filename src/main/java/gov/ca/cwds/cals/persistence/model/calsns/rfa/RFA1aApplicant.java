@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.NAMED_QUERY_FIND_ALL_BY_FORM;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID;
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.PARAM_APPLICANT_ID;
+import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.PARAM_ENTITY_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.PARAM_FORM_ID;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
@@ -25,7 +25,7 @@ import org.hibernate.annotations.Type;
     name = NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID,
     query =
         "FROM RFA1aApplicant a WHERE a.id = :"
-            + PARAM_APPLICANT_ID
+            + PARAM_ENTITY_ID
             + " AND a.formId = :"
             + PARAM_FORM_ID
 )
@@ -39,9 +39,6 @@ public class RFA1aApplicant extends RFAExternalEntity<Applicant> implements Pers
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.find.all.forFormId";
   public static final String NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID =
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.find.ByFormIdAndApplicantId";
-
-  public static final String PARAM_FORM_ID = "formId";
-  public static final String PARAM_APPLICANT_ID = "applicantId";
 
   @Column(name = "applicant")
   @Type(type = "ApplicantJsonType")

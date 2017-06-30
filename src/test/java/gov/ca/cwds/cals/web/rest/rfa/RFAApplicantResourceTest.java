@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDTO;
-import gov.ca.cwds.cals.web.rest.rfa.configuration.ExternalEntityConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 
 /**
  * @author CWDS CALS API Team
@@ -13,9 +13,9 @@ public class RFAApplicantResourceTest extends
 
   @Override
   protected BaseExternalEntityApiHelper<Applicant, ApplicantsDTO> getExternalEntityApiHelper() {
-    ExternalEntityConfiguration<Applicant, ApplicantsDTO> configuration =
+    TestExternalEntityConfiguration<Applicant, ApplicantsDTO> configuration =
 
-        new ExternalEntityConfiguration<Applicant, ApplicantsDTO>(
+        new TestExternalEntityConfiguration<Applicant, ApplicantsDTO>(
             clientTestRule,
             Applicant.class,
             ApplicantsDTO.class,

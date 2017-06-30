@@ -8,12 +8,12 @@ import gov.ca.cwds.cals.web.rest.RestClientTestRule;
  * @author CWDS CALS API Team
  */
 
-public abstract class ExternalEntityConfiguration<T extends BaseDTO, G extends CollectionDTO<T>> extends
-    InternalEntityConfiguration<T> {
+public abstract class TestExternalEntityConfiguration<T extends BaseDTO, G extends CollectionDTO<T>> extends
+    TestInternalEntityConfiguration<T> {
 
   private Class<G> collectionDTOClass;
 
-  public ExternalEntityConfiguration(
+  public TestExternalEntityConfiguration(
       RestClientTestRule clientTestRule,
       Class<T> entityClass,
       Class<G> collectionDTOClass,

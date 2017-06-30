@@ -166,33 +166,33 @@ public class ResourcesModule extends AbstractModule {
   }
 
   @Provides
-  @RFAFormCollectionServiceBackendResource
+  @RFA1aFormCollectionServiceBackendResource
   public ResourceDelegate rfa1aFormsCollectionServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFAFormsCollectionService.class));
   }
 
   @Provides
-  @RFAApplicantServiceBackendResource
+  @RFA1aApplicantServiceBackendResource
   public ResourceDelegate rfa1aApplicantServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(RFAApplicantService.class));
   }
 
   @Provides
-  @RFAApplicantsCollectionServiceBackendResource
+  @RFA1aApplicantsCollectionServiceBackendResource
   public ResourceDelegate rfa1aApplicantsCollectionServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFAApplicantsCollectionService.class));
   }
 
   @Provides
-  @RFAMinorChildrenServiceBackendResource
+  @RFA1aMinorChildrenServiceBackendResource
   public ResourceDelegate rfa1aMinorChildServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(RFAMinorChildService.class));
   }
 
   @Provides
-  @RFAMinorChildrenCollectionServiceBackendResource
+  @RFA1aMinorChildrenCollectionServiceBackendResource
   public ResourceDelegate rfa1aMinorChildrenCollectionServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFAMinorChildrenCollectionService.class));
