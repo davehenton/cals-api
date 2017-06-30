@@ -75,7 +75,7 @@ public class RFA1aAdoptionHistoryResource {
       }
   )
   @ApiOperation(value = "Update Adoption History in RFA 1a Form", response = AdoptionHistory.class)
-  public Response updateResidence(
+  public Response updateAdoptionHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
