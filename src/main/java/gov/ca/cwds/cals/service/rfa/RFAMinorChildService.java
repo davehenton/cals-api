@@ -7,7 +7,7 @@ import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aMinorChildDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.cals.service.CrudServiceAdapter;
-import gov.ca.cwds.cals.web.rest.parameter.RFA1aMinorChildrenParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAMinorChildrenParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
@@ -16,24 +16,24 @@ import java.time.LocalDateTime;
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aMinorChildService extends CrudServiceAdapter {
+public class RFAMinorChildService extends CrudServiceAdapter {
 
   private RFA1aMinorChildDao dao;
 
   @Inject
-  public RFA1aMinorChildService(RFA1aMinorChildDao dao) {
+  public RFAMinorChildService(RFA1aMinorChildDao dao) {
     this.dao = dao;
   }
 
   @Override
   public Response create(Request request) {
-    RFA1aMinorChildrenParameterObject paramObject = getParamObject(request);
+    RFAMinorChildrenParameterObject paramObject = getParamObject(request);
     MinorChild minorChild = paramObject.getMinorChild();
     if (minorChild == null) {
       minorChild = new MinorChild();
     }
     RFA1aMinorChild entity = new RFA1aMinorChild();
-    RFA1aServiceHelper.fillCreateBaseFields(entity, SYSTEM_USER_ID);
+    RFAServiceHelper.fillCreateBaseFields(entity, SYSTEM_USER_ID);
     entity.setApplicationId(paramObject.getApplicationId());
     entity.setMinorChild(minorChild);
 
@@ -47,7 +47,7 @@ public class RFA1aMinorChildService extends CrudServiceAdapter {
 
   @Override
   public Response find(Serializable params) {
-    RFA1aMinorChildrenParameterObject paramObject = getParamObject(params);
+    RFAMinorChildrenParameterObject paramObject = getParamObject(params);
     RFA1aMinorChild entity =
         dao.findMinorChildByFormIdAndMinorChildId(
             paramObject.getApplicationId(), paramObject.getMinorChildId());
@@ -60,7 +60,7 @@ public class RFA1aMinorChildService extends CrudServiceAdapter {
 
   @Override
   public Response update(Serializable minorChildId, Request params) {
-    final RFA1aMinorChildrenParameterObject paramsObj = getParamObject(params);
+    final RFAMinorChildrenParameterObject paramsObj = getParamObject(params);
     RFA1aMinorChild minorChildEntity;
 
     if (minorChildId instanceof Long) {
@@ -92,7 +92,7 @@ public class RFA1aMinorChildService extends CrudServiceAdapter {
 
   @Override
   public Response delete(Serializable params) {
-    RFA1aMinorChildrenParameterObject paramObject = getParamObject(params);
+    RFAMinorChildrenParameterObject paramObject = getParamObject(params);
     RFA1aMinorChild entity =
         dao.deleteMinor(paramObject.getApplicationId(), paramObject.getMinorChildId());
     MinorChild deleted = null;
@@ -102,10 +102,10 @@ public class RFA1aMinorChildService extends CrudServiceAdapter {
     return deleted;
   }
 
-  private RFA1aMinorChildrenParameterObject getParamObject(Object params) {
-    if (!(params instanceof RFA1aMinorChildrenParameterObject)) {
+  private RFAMinorChildrenParameterObject getParamObject(Object params) {
+    if (!(params instanceof RFAMinorChildrenParameterObject)) {
       throw new IllegalStateException("RFA1aMinorChildrenParameterObject is expected here");
     }
-    return (RFA1aMinorChildrenParameterObject) params;
+    return (RFAMinorChildrenParameterObject) params;
   }
 }

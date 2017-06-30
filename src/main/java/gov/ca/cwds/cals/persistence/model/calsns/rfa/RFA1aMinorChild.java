@@ -31,7 +31,7 @@ import org.hibernate.annotations.Type;
 )
 @Entity
 @Table(name = "rfa_1a_minor_child")
-public class RFA1aMinorChild extends RFA1aBaseEntity {
+public class RFA1aMinorChild extends RFABaseEntity {
 
   private static final long serialVersionUID = -2264013085327411067L;
 

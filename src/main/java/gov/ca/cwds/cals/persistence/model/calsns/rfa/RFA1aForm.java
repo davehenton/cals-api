@@ -20,7 +20,7 @@ import org.hibernate.annotations.Type;
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm ORDER BY id ASC")
 @Entity
 @Table(name = "rfa_1a")
-public class RFA1aForm extends RFA1aBaseEntity implements PersistentObject, Response {
+public class RFA1aForm extends RFABaseEntity implements PersistentObject, Response {
 
   private static final long serialVersionUID = -6201382973500280111L;
   public static final String NAMED_QUERY_FIND_ALL =

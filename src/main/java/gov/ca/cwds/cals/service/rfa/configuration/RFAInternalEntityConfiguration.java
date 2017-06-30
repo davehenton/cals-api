@@ -8,12 +8,11 @@ import gov.ca.cwds.rest.api.Response;
 /**
  * @author CWDS CALS API Team
  */
-
-public abstract class InternalEntityConfiguration<T extends BaseDTO> {
+public abstract class RFAInternalEntityConfiguration<T extends BaseDTO> {
 
   private Class<T> entityClass;
 
-  public InternalEntityConfiguration(Class<T> entityClass) {
+  public RFAInternalEntityConfiguration(Class<T> entityClass) {
     this.entityClass = entityClass;
   }
 
