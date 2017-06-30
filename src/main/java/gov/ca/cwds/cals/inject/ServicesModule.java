@@ -18,14 +18,16 @@ import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
-import gov.ca.cwds.cals.service.rfa.ApplicantsRelationshipService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsRelationshipService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildService;
 import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildrenCollectionService;
-import gov.ca.cwds.cals.service.rfa.ResidenceService;
+import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultService;
+import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aResidenceService;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 
 /**
@@ -58,8 +60,10 @@ public class ServicesModule extends AbstractModule {
     bind(RFA1aApplicantsCollectionService.class);
     bind(RFA1aMinorChildService.class);
     bind(RFA1aMinorChildrenCollectionService.class);
-    bind(ResidenceService.class);
-    bind(ApplicantsRelationshipService.class);
+    bind(RFA1aOtherAdultService.class);
+    bind(RFA1aOtherAdultsCollectionService.class);
+    bind(RFA1aResidenceService.class);
+    bind(RFA1aApplicantsRelationshipService.class);
   }
 
   @Provides

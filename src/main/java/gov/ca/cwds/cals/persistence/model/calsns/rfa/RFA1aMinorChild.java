@@ -1,7 +1,5 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.NAMED_QUERY_FIND_ALL_BY_FORM;
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.PARAM_FORM_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity.PARAM_ENTITY_ID;
 
@@ -18,11 +16,11 @@ import org.hibernate.annotations.Type;
  * @author CWDS CALS API Team
  */
 @NamedQuery(
-    name = NAMED_QUERY_FIND_ALL_BY_FORM,
+    name = RFA1aMinorChild.NAMED_QUERY_FIND_ALL_BY_FORM,
     query = "FROM RFA1aMinorChild mc WHERE mc.formId = :" + PARAM_FORM_ID
 )
 @NamedQuery(
-    name = NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID,
+    name = RFA1aMinorChild.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID,
     query =
         "FROM RFA1aMinorChild mc WHERE mc.formId = :"
             + PARAM_FORM_ID
