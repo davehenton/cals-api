@@ -59,7 +59,7 @@ public class RFA1aApplicant extends RFAExternalEntity<Applicant> implements Pers
 
   @Override
   public void setEntityDTO(Applicant applicant) {
-    this.applicant = applicant;
+    setApplicant(applicant);
   }
 
   @Override

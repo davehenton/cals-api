@@ -5,7 +5,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.CrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
-import gov.ca.cwds.cals.service.rfa.configuration.RFAExternalEntityFactory;
+import gov.ca.cwds.cals.service.rfa.factory.RFAExternalEntityFactory;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
  */
 @SuppressWarnings("squid:S00119")
 public class AbstractRFAExternalEntitiesCollectionService<
-    EntityDTO extends RFAExternalEntityDTO,
     Entity extends RFAExternalEntity<EntityDTO>,
+    EntityDTO extends RFAExternalEntityDTO,
     EntitiesDTO extends CollectionDTO<EntityDTO>>
     extends CrudServiceAdapter {
 

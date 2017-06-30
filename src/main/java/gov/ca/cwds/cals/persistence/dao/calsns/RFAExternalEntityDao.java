@@ -5,7 +5,7 @@ import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
-import gov.ca.cwds.cals.service.rfa.configuration.RFAExternalEntityFactory;
+import gov.ca.cwds.cals.service.rfa.factory.RFAExternalEntityFactory;
 import gov.ca.cwds.data.BaseDaoImpl;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
 public abstract class RFAExternalEntityDao<
     Entity extends RFAExternalEntity,
     EntityDTO extends RFAExternalEntityDTO,
-    EntitiesDTO extends CollectionDTO<EntityDTO>
-    >
+    EntitiesDTO extends CollectionDTO<EntityDTO>>
     extends BaseDaoImpl<Entity> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(RFA1aApplicantDao.class);
+  private static final Logger LOG = LoggerFactory.getLogger(RFAExternalEntityDao.class);
+
   private RFAExternalEntityFactory<Entity, EntityDTO, EntitiesDTO> entityFactory;
 
   public RFAExternalEntityDao(
@@ -39,8 +39,8 @@ public abstract class RFAExternalEntityDao<
   public List<Entity> findAllByFormId(Long formId) {
     Session session = this.getSessionFactory().getCurrentSession();
     Query<Entity> query =
-        session.createNamedQuery(entityFactory.getFindAllByFormNamedQuery(),
-            entityFactory.getEntityClass());
+        session.createNamedQuery(
+            entityFactory.getFindAllByFormNamedQuery(), entityFactory.getEntityClass());
     query.setParameter(RFAExternalEntity.PARAM_FORM_ID, formId);
     ImmutableList.Builder<Entity> entities = new ImmutableList.Builder<>();
     entities.addAll(query.list());
@@ -71,5 +71,4 @@ public abstract class RFAExternalEntityDao<
     }
     return entity;
   }
-
 }

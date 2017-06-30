@@ -16,12 +16,12 @@ import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
 import gov.ca.cwds.cals.service.rfa.ApplicantsRelationshipService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
-import gov.ca.cwds.cals.service.rfa.RFAApplicantService;
-import gov.ca.cwds.cals.service.rfa.RFAApplicantsCollectionService;
-import gov.ca.cwds.cals.service.rfa.RFAFormsCollectionService;
-import gov.ca.cwds.cals.service.rfa.RFAMinorChildService;
-import gov.ca.cwds.cals.service.rfa.RFAMinorChildrenCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aFormsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildService;
+import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildrenCollectionService;
 import gov.ca.cwds.cals.service.rfa.ResidenceService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.CountiesResource;
@@ -169,32 +169,32 @@ public class ResourcesModule extends AbstractModule {
   @RFA1aFormCollectionServiceBackendResource
   public ResourceDelegate rfa1aFormsCollectionServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
-        injector.getInstance(RFAFormsCollectionService.class));
+        injector.getInstance(RFA1aFormsCollectionService.class));
   }
 
   @Provides
   @RFA1aApplicantServiceBackendResource
   public ResourceDelegate rfa1aApplicantServiceBackendResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFAApplicantService.class));
+    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aApplicantService.class));
   }
 
   @Provides
   @RFA1aApplicantsCollectionServiceBackendResource
   public ResourceDelegate rfa1aApplicantsCollectionServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
-        injector.getInstance(RFAApplicantsCollectionService.class));
+        injector.getInstance(RFA1aApplicantsCollectionService.class));
   }
 
   @Provides
   @RFA1aMinorChildrenServiceBackendResource
   public ResourceDelegate rfa1aMinorChildServiceBackendResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFAMinorChildService.class));
+    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aMinorChildService.class));
   }
 
   @Provides
   @RFA1aMinorChildrenCollectionServiceBackendResource
   public ResourceDelegate rfa1aMinorChildrenCollectionServiceBackendResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
-        injector.getInstance(RFAMinorChildrenCollectionService.class));
+        injector.getInstance(RFA1aMinorChildrenCollectionService.class));
   }
 }

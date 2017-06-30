@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.service.rfa.configuration;
+package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
