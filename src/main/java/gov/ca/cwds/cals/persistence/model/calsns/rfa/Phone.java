@@ -55,16 +55,4 @@ public class Phone extends BaseDTO {
     return HashCodeBuilder.reflectionHashCode(this);
   }
 
-  @Override
-  public String toString() {
-    return "Phone{"
-        + "phoneType="
-        + phoneType
-        + ", number='"
-        + number
-        + '\''
-        + ", preferred="
-        + preferred
-        + '}';
-  }
 }

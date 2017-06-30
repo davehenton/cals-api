@@ -4,13 +4,11 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultsDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
-import org.junit.Ignore;
 
 /**
  * @author CWDS CALS API Team
  */
 
-@Ignore
 public class RFAOtherAdultsResourceTest extends
     BaseExternalEntityApiTest<OtherAdult, OtherAdultsDTO> {
 

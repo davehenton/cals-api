@@ -9,10 +9,10 @@ import gov.ca.cwds.cals.service.rfa.factory.RFAInternalEntityConfiguration;
 /**
  * @author CWDS CALS API Team.
  */
-public class ResidenceService extends AbstractRFAInternalEntityService<Residence> {
+public class RFA1aResidenceService extends AbstractRFAInternalEntityService<Residence> {
 
   @Inject
-  public ResidenceService(RFA1aFormsDao applicationDao) {
+  public RFA1aResidenceService(RFA1aFormsDao applicationDao) {
     super(
         applicationDao,
         new RFAInternalEntityConfiguration<Residence>(Residence.class) {

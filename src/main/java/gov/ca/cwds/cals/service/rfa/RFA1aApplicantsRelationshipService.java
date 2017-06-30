@@ -9,11 +9,11 @@ import gov.ca.cwds.cals.service.rfa.factory.RFAInternalEntityConfiguration;
 /**
  * @author CWDS CALS API Team.
  */
-public class ApplicantsRelationshipService
+public class RFA1aApplicantsRelationshipService
     extends AbstractRFAInternalEntityService<ApplicantsRelationship> {
 
   @Inject
-  public ApplicantsRelationshipService(RFA1aFormsDao applicationDao) {
+  public RFA1aApplicantsRelationshipService(RFA1aFormsDao applicationDao) {
     super(
         applicationDao,
         new RFAInternalEntityConfiguration<ApplicantsRelationship>(ApplicantsRelationship.class) {

@@ -15,15 +15,17 @@ import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
-import gov.ca.cwds.cals.service.rfa.ApplicantsRelationshipService;
 import gov.ca.cwds.cals.service.rfa.RFA1aAdoptionHistoryService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsRelationshipService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildService;
 import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildrenCollectionService;
-import gov.ca.cwds.cals.service.rfa.ResidenceService;
+import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultService;
+import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aResidenceService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.CountiesResource;
 import gov.ca.cwds.cals.web.rest.DictionariesResource;
@@ -32,12 +34,13 @@ import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
-import gov.ca.cwds.cals.web.rest.rfa.ApplicantsRelationshipResource;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsRelationshipResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResource;
-import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResource;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aMinorChildrenResource;
-import gov.ca.cwds.cals.web.rest.rfa.ResidenceResource;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResource;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResource;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
 
@@ -66,10 +69,11 @@ public class ResourcesModule extends AbstractModule {
 
     // RFA
     bind(RFA1aFormsResource.class);
-    bind(RFA1aApplicantResource.class);
+    bind(RFA1aApplicantsResource.class);
     bind(RFA1aMinorChildrenResource.class);
-    bind(ResidenceResource.class);
-    bind(ApplicantsRelationshipResource.class);
+    bind(RFA1aResidenceResource.class);
+    bind(RFA1aApplicantsRelationshipResource.class);
+    bind(RFA1aOtherAdultsResource.class);
     bind(RFA1aAdoptionHistoryResource.class);
   }
 
@@ -152,14 +156,14 @@ public class ResourcesModule extends AbstractModule {
   @Provides
   @ResidenceServiceBackedResource
   public ResourceDelegate residenceServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(ResidenceService.class));
+    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aResidenceService.class));
   }
 
   @Provides
   @ApplicantsRelationshipServiceBackedResource
   public ResourceDelegate applicantsRelationshipServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
-        injector.getInstance(ApplicantsRelationshipService.class));
+        injector.getInstance(RFA1aApplicantsRelationshipService.class));
   }
 
   @Provides
@@ -200,6 +204,20 @@ public class ResourcesModule extends AbstractModule {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFA1aMinorChildrenCollectionService.class));
   }
+
+  @Provides
+  @RFA1aOtherAdultsServiceBackendResource
+  public ResourceDelegate rfa1aOtherAdultServiceBackendResource(Injector injector) {
+    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aOtherAdultService.class));
+  }
+
+  @Provides
+  @RFA1aOtherAdultsCollectionServiceBackendResource
+  public ResourceDelegate rfa1aOtherAdultsCollectionServiceBackendResource(Injector injector) {
+    return new ServiceBackedResourceDelegate(
+        injector.getInstance(RFA1aOtherAdultsCollectionService.class));
+  }
+
 
   @Provides
   @RFA1aAdoptionHistoryServiceBackedResource
