@@ -14,13 +14,13 @@ import java.util.List;
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aFormsCollectionService extends CrudServiceAdapter {
+public class RFAFormsCollectionService extends CrudServiceAdapter {
 
   private RFA1aFormsDao dao;
   private RFA1aFormMapper rfa1aFormMapper;
 
   @Inject
-  public RFA1aFormsCollectionService(RFA1aFormsDao dao, RFA1aFormMapper rfa1aFormMapper) {
+  public RFAFormsCollectionService(RFA1aFormsDao dao, RFA1aFormMapper rfa1aFormMapper) {
     this.dao = dao;
     this.rfa1aFormMapper = rfa1aFormMapper;
   }

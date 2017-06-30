@@ -5,15 +5,11 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.Identified;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,12 +22,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Applicant extends BaseDTO implements Serializable, Request, Response,
-    Identified<Long> {
+public class Applicant extends RFAExternalEntityDTO implements Serializable {
 
   private static final long serialVersionUID = -4333411852074578122L;
-
-  private Long id;
 
   private String firstName;
 
@@ -61,14 +54,6 @@ public class Applicant extends BaseDTO implements Serializable, Request, Respons
   private Employment employment;
 
   private List<Phone> phones = new ArrayList<>();
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public String getFirstName() {
     return firstName;
@@ -198,44 +183,4 @@ public class Applicant extends BaseDTO implements Serializable, Request, Respons
     return HashCodeBuilder.reflectionHashCode(this);
   }
 
-  @Override
-  public String toString() {
-    return "Applicant{"
-        + "id="
-        + id
-        + ", firstName='"
-        + firstName
-        + '\''
-        + ", middleName='"
-        + middleName
-        + '\''
-        + ", lastName='"
-        + lastName
-        + '\''
-        + ", otherNames="
-        + otherNames
-        + ", highestEducationLevel="
-        + highestEducationLevel
-        + ", dateOfBirth="
-        + dateOfBirth
-        + ", gender="
-        + gender
-        + ", race="
-        + race
-        + ", ethnicity="
-        + ethnicity
-        + ", driverLicenseNumber='"
-        + driverLicenseNumber
-        + '\''
-        + ", driverLicenseState="
-        + driverLicenseState
-        + ", email='"
-        + email
-        + '\''
-        + ", employment="
-        + employment
-        + ", phones="
-        + phones
-        + '}';
-  }
 }

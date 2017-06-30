@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
-import gov.ca.cwds.data.BaseDaoImpl;
 import java.util.List;
 import javax.persistence.NoResultException;
 import org.hibernate.Session;
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aApplicantDao extends BaseDaoImpl<RFA1aApplicant> {
+public class RFA1aApplicantDao extends RFAExternalEntityDao<RFA1aApplicant> {
 
   private static final Logger LOG = LoggerFactory.getLogger(RFA1aApplicantDao.class);
 
@@ -25,6 +24,7 @@ public class RFA1aApplicantDao extends BaseDaoImpl<RFA1aApplicant> {
     super(sessionFactory);
   }
 
+  @Override
   public List<RFA1aApplicant> findAllByFormId(Long formId) {
     Session session = this.getSessionFactory().getCurrentSession();
     Query<RFA1aApplicant> query =
@@ -35,7 +35,8 @@ public class RFA1aApplicantDao extends BaseDaoImpl<RFA1aApplicant> {
     return entities.build();
   }
 
-  public RFA1aApplicant findApplicantByFormIdAndApplicantId(Long formId, Long applicantId) {
+  @Override
+  public RFA1aApplicant findEntityByFormIdAndEntityId(Long formId, Long applicantId) {
     Session session = getSessionFactory().getCurrentSession();
     Class<RFA1aApplicant> entityClass = getEntityClass();
     Query<RFA1aApplicant> query =
@@ -53,8 +54,9 @@ public class RFA1aApplicantDao extends BaseDaoImpl<RFA1aApplicant> {
     return res;
   }
 
+  @Override
   public RFA1aApplicant deleteApplicant(Long formId, Long applicantId) {
-    RFA1aApplicant applicant = findApplicantByFormIdAndApplicantId(formId, applicantId);
+    RFA1aApplicant applicant = findEntityByFormIdAndEntityId(formId, applicantId);
     if (applicant != null) {
       applicant = delete(applicant.getId());
     }

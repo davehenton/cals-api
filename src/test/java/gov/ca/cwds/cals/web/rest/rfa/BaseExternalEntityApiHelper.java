@@ -5,8 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.Identified;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
@@ -21,7 +20,7 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 
-public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends CollectionDTO<T>> implements
+public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO, G extends CollectionDTO<T>> implements
     ExternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
@@ -38,8 +37,8 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends Collection
     T created = createEntity(form);
 
     assertNotNull(created);
-    assertNotNull(((Identified) created).getId());
-    Long createdEntityId = ((Identified<Long>) created).getId();
+    assertNotNull(created.getId());
+    Long createdEntityId = created.getId();
 
     T found = findEntity(form, createdEntityId);
     assertThat(found).isEqualTo(created);
@@ -49,7 +48,7 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends Collection
     RFA1aFormDTO form = createForm(clientTestRule);
 
     T created = createEntity(form);
-    Long createdEntityId = ((Identified<Long>) created).getId();
+    Long createdEntityId = created.getId();
 
     T found = findEntity(form, createdEntityId);
 
@@ -79,7 +78,7 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends Collection
   public void getEntityById() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
     T created = createEntity(form);
-    Long createdEntityId = ((Identified<Long>) created).getId();
+    Long createdEntityId = created.getId();
     T found = findEntity(form, createdEntityId);
     assertThat(found).isEqualTo(created);
   }
@@ -106,9 +105,9 @@ public class BaseExternalEntityApiHelper<T extends BaseDTO, G extends Collection
   public void deleteEntity() throws Exception {
     RFA1aFormDTO form = createForm(clientTestRule);
     T created = createEntity(form);
-    Long createdEntityId = ((Identified<Long>) created).getId();
+    Long createdEntityId = created.getId();
     T found = findEntity(form, createdEntityId);
-    Long foundId = ((Identified<Long>) found).getId();
+    Long foundId = found.getId();
 
     assertThat(found).isEqualTo(created);
 

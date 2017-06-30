@@ -25,7 +25,7 @@ import javax.persistence.MappedSuperclass;
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class RFA1aBaseEntity extends BaseDTO implements PersistentObject {
+public class RFABaseEntity extends BaseDTO implements PersistentObject {
 
   private static final long serialVersionUID = -1765556534051721429L;
 
@@ -113,7 +113,7 @@ public class RFA1aBaseEntity extends BaseDTO implements PersistentObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RFA1aBaseEntity base = (RFA1aBaseEntity) o;
+    RFABaseEntity base = (RFABaseEntity) o;
     if (base.getId() == null || getId() == null) {
       return false;
     }

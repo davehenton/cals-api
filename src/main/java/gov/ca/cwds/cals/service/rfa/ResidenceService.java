@@ -4,18 +4,18 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Residence;
-import gov.ca.cwds.cals.service.rfa.configuration.InternalEntityConfiguration;
+import gov.ca.cwds.cals.service.rfa.configuration.RFAInternalEntityConfiguration;
 
 /**
  * @author CWDS CALS API Team.
  */
-public class ResidenceService extends AbstractInternalEntityService<Residence> {
+public class ResidenceService extends AbstractRFAInternalEntityService<Residence> {
 
   @Inject
   public ResidenceService(RFA1aFormsDao applicationDao) {
     super(
         applicationDao,
-        new InternalEntityConfiguration<Residence>(Residence.class) {
+        new RFAInternalEntityConfiguration<Residence>(Residence.class) {
 
           @Override
           protected Residence retrieveEntityFromTheForm(RFA1aForm form) {
