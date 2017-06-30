@@ -10,6 +10,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReason;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
@@ -107,7 +108,9 @@ public final class Constants {
     STATE_TYPE(StateType.class),
     RESIDENCE_OWNERSHIP_TYPE(ResidenceOwnershipType.class),
     APPLICANT_RELATIONSHIP_TYPE(ApplicantRelationshipType.class),
-    LICENSE_TYPE(LicenseType.class)
+    LICENSE_TYPE(LicenseType.class),
+    MARRIAGE_TERMINATION_REASON(MarriageTerminationReason.class)
+
 
     /*
     COUNTY_TYPE("county-type", null),
@@ -133,6 +136,7 @@ public final class Constants {
     public static final String APPLICANT_RELATIONSHIP_TYPE_PATH = "applicant-relationship-types";
     public static final String RELATIONSHIP_EVENT_TYPE_PATH = "relationship-event-types";
     public static final String LICENSE_TYPE_PATH = "license-types";
+    public static final String MARRIAGE_TERMINATION_REASON_PATH = "marriage-termination-reasons";
 
     private Class<? extends BaseDictionary> dictionaryClass;
 
