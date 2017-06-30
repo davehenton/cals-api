@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultsDTO;
-import gov.ca.cwds.cals.web.rest.rfa.configuration.ExternalEntityConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import org.junit.Ignore;
 
 /**
@@ -17,9 +17,9 @@ public class RFAOtherAdultsResourceTest extends
   @Override
   protected BaseExternalEntityApiHelper<OtherAdult, OtherAdultsDTO> getExternalEntityApiHelper() {
 
-    ExternalEntityConfiguration<OtherAdult, OtherAdultsDTO> configuration =
+    TestExternalEntityConfiguration<OtherAdult, OtherAdultsDTO> configuration =
 
-        new ExternalEntityConfiguration<OtherAdult, OtherAdultsDTO>(
+        new TestExternalEntityConfiguration<OtherAdult, OtherAdultsDTO>(
             clientTestRule,
             OtherAdult.class,
             OtherAdultsDTO.class,

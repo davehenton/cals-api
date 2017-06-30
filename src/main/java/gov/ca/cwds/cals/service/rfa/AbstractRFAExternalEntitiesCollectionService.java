@@ -5,7 +5,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.CrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
-import gov.ca.cwds.cals.service.rfa.configuration.RFAExternalEntityConfiguration;
+import gov.ca.cwds.cals.service.rfa.configuration.RFAExternalEntityFactory;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
@@ -22,12 +22,12 @@ public class AbstractRFAExternalEntitiesCollectionService<
     EntitiesDTO extends CollectionDTO<EntityDTO>>
     extends CrudServiceAdapter {
 
-  private RFAExternalEntityDao<Entity> dao;
-  private RFAExternalEntityConfiguration<Entity, EntityDTO, EntitiesDTO> configuration;
+  private RFAExternalEntityDao<Entity, EntityDTO, EntitiesDTO> dao;
+  private RFAExternalEntityFactory<Entity, EntityDTO, EntitiesDTO> configuration;
 
   public AbstractRFAExternalEntitiesCollectionService(
-      RFAExternalEntityDao<Entity> dao,
-      RFAExternalEntityConfiguration<Entity, EntityDTO, EntitiesDTO> configuration) {
+      RFAExternalEntityDao<Entity, EntityDTO, EntitiesDTO> dao,
+      RFAExternalEntityFactory<Entity, EntityDTO, EntitiesDTO> configuration) {
     this.dao = dao;
     this.configuration = configuration;
   }

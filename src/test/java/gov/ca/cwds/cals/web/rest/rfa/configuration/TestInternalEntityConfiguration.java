@@ -10,13 +10,13 @@ import java.io.IOException;
  * @author CWDS CALS API Team
  */
 
-public abstract class InternalEntityConfiguration<T extends BaseDTO> {
+public abstract class TestInternalEntityConfiguration<T extends BaseDTO> {
 
   private RestClientTestRule clientTestRule;
   private Class<T> entityClass;
   private String apiPath;
 
-  public InternalEntityConfiguration(
+  public TestInternalEntityConfiguration(
       RestClientTestRule clientTestRule, Class<T> entityClass, String apiPath) {
     this.clientTestRule = clientTestRule;
     this.entityClass = entityClass;

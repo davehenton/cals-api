@@ -15,6 +15,9 @@ import javax.persistence.MappedSuperclass;
 public abstract class RFAExternalEntity<T extends RFAExternalEntityDTO> extends
     RFABaseEntity {
 
+  public static final String PARAM_FORM_ID = "formId";
+  public static final String PARAM_ENTITY_ID = "entityId";
+
   @Column(name = "application_id")
   private Long formId;
 

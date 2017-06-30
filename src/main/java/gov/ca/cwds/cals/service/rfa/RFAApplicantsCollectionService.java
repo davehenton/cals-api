@@ -5,7 +5,7 @@ import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aApplicantDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDTO;
-import gov.ca.cwds.cals.service.rfa.configuration.ApplicantConfiguration;
+import gov.ca.cwds.cals.service.rfa.configuration.ApplicantFactory;
 
 /**
  * @author CWDS CALS API Team
@@ -15,7 +15,7 @@ public class RFAApplicantsCollectionService
 
   @Inject
   public RFAApplicantsCollectionService(RFA1aApplicantDao dao) {
-    super(dao, ApplicantConfiguration.INSTANCE);
+    super(dao, ApplicantFactory.INSTANCE);
   }
 
 }

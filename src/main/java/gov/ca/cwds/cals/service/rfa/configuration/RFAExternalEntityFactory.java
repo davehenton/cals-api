@@ -9,7 +9,7 @@ import java.util.List;
  * @author CWDS CALS API Team
  */
 @SuppressWarnings("squid:S00119")
-public interface RFAExternalEntityConfiguration<
+public interface RFAExternalEntityFactory<
     Entity extends RFABaseEntity,
     EntityDTO extends BaseDTO,
     EntitiesDTO extends CollectionDTO<EntityDTO>> {
@@ -18,5 +18,12 @@ public interface RFAExternalEntityConfiguration<
 
   Entity createEntity();
 
+  Class<Entity> getEntityClass();
+
   EntitiesDTO createEntitiesDTO(List<EntityDTO> collectDTOs);
+
+  String getFindAllByFormNamedQuery();
+
+  String getFindByFormIdandEntityIdNamedQuesry();
+
 }

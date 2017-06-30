@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
-import gov.ca.cwds.cals.web.rest.rfa.configuration.InternalEntityConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 
 /**
  * @author CWDS CALS API Team
@@ -13,9 +13,9 @@ public class RFARelationshipResourceTest extends
   @Override
   protected BaseInternalEntityApiHelper<ApplicantsRelationship> getInternalEntityApiHelper() {
 
-    InternalEntityConfiguration<ApplicantsRelationship> configuration =
+    TestInternalEntityConfiguration<ApplicantsRelationship> configuration =
 
-        new InternalEntityConfiguration<ApplicantsRelationship>(
+        new TestInternalEntityConfiguration<ApplicantsRelationship>(
             clientTestRule, ApplicantsRelationship.class, API.APPLICANTS_RELATIONSHIP) {
 
           @Override

@@ -9,7 +9,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
-import gov.ca.cwds.cals.web.rest.rfa.configuration.ExternalEntityConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -24,10 +24,10 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO, G exten
     ExternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
-  private ExternalEntityConfiguration<T, G> configuration;
+  private TestExternalEntityConfiguration<T, G> configuration;
 
   public BaseExternalEntityApiHelper(RestClientTestRule clientTestRule,
-      ExternalEntityConfiguration<T, G> configuration) {
+      TestExternalEntityConfiguration<T, G> configuration) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
   }
