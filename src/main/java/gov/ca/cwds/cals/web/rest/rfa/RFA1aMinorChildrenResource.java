@@ -14,7 +14,7 @@ import gov.ca.cwds.cals.inject.RFA1aMinorChildrenCollectionServiceBackendResourc
 import gov.ca.cwds.cals.inject.RFA1aMinorChildrenServiceBackendResource;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildrenDTO;
-import gov.ca.cwds.cals.web.rest.parameter.RFAMinorChildrenParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -71,7 +71,7 @@ public class RFA1aMinorChildrenResource {
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1a MinorChild object")
           MinorChild minorChild) {
     return resourceDelegate.create(
-        new RFAMinorChildrenParameterObject(applicationId, minorChild));
+        new RFAExternalEntityParameterObject<>(applicationId, minorChild));
   }
 
   @UnitOfWork(CALSNS)
@@ -104,7 +104,7 @@ public class RFA1aMinorChildrenResource {
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1a MinorChild object")
           MinorChild minorChild) {
     return resourceDelegate.update(
-        minorChildId, new RFAMinorChildrenParameterObject(applicationId, minorChild));
+        minorChildId, new RFAExternalEntityParameterObject<>(applicationId, minorChild));
   }
 
   @UnitOfWork(CALSNS)
@@ -135,7 +135,8 @@ public class RFA1aMinorChildrenResource {
       )
           Long minorChildId) {
 
-    return resourceDelegate.get(new RFAMinorChildrenParameterObject(applicationId, minorChildId));
+    return resourceDelegate
+        .get(new RFAExternalEntityParameterObject<>(applicationId, minorChildId));
   }
 
   @UnitOfWork(CALSNS)
@@ -160,7 +161,7 @@ public class RFA1aMinorChildrenResource {
           value = "The RFA-1a Application Id"
       )
           Long applicationId) {
-    return collectionResourceDelegate.get(new RFAMinorChildrenParameterObject(applicationId));
+    return collectionResourceDelegate.get(new RFAExternalEntityParameterObject<>(applicationId));
   }
 
   @UnitOfWork(CALSNS)
@@ -186,6 +187,6 @@ public class RFA1aMinorChildrenResource {
       )
           Long minorChildId) {
     return resourceDelegate.delete(
-        new RFAMinorChildrenParameterObject(applicationId, minorChildId));
+        new RFAExternalEntityParameterObject<>(applicationId, minorChildId));
   }
 }

@@ -5,7 +5,7 @@ import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDTO;
-import gov.ca.cwds.cals.service.rfa.configuration.ApplicantFactory;
+import gov.ca.cwds.cals.service.rfa.factory.ApplicantFactory;
 import org.hibernate.SessionFactory;
 
 /**

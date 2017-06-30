@@ -2,10 +2,10 @@ package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.NAMED_QUERY_FIND_ALL_BY_FORM;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID;
-import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.PARAM_CHILD_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.PARAM_FORM_ID;
+import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity.PARAM_ENTITY_ID;
 
-import javax.persistence.Basic;
+import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -19,19 +19,19 @@ import org.hibernate.annotations.Type;
  */
 @NamedQuery(
     name = NAMED_QUERY_FIND_ALL_BY_FORM,
-    query = "FROM RFA1aMinorChild mc WHERE mc.applicationId = :" + PARAM_FORM_ID
+    query = "FROM RFA1aMinorChild mc WHERE mc.formId = :" + PARAM_FORM_ID
 )
 @NamedQuery(
     name = NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID,
     query =
-        "FROM RFA1aMinorChild mc WHERE mc.applicationId = :"
+        "FROM RFA1aMinorChild mc WHERE mc.formId = :"
             + PARAM_FORM_ID
             + " AND mc.id = :"
-            + PARAM_CHILD_ID
+            + PARAM_ENTITY_ID
 )
 @Entity
 @Table(name = "rfa_1a_minor_child")
-public class RFA1aMinorChild extends RFABaseEntity {
+public class RFA1aMinorChild extends RFAExternalEntity<MinorChild> implements PersistentObject {
 
   private static final long serialVersionUID = -2264013085327411067L;
 
@@ -39,24 +39,10 @@ public class RFA1aMinorChild extends RFABaseEntity {
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.find.all.forFormId";
   public static final String NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID =
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.find.by.id";
-  public static final String PARAM_FORM_ID = "applicationId";
-  public static final String PARAM_CHILD_ID = "minorChildId";
-
-  @Basic
-  @Column(name = "application_id")
-  private Long applicationId;
 
   @Column(name = "minor_child")
   @Type(type = "MinorChildJsonType")
   private MinorChild minorChild;
-
-  public Long getApplicationId() {
-    return applicationId;
-  }
-
-  public void setApplicationId(Long applicationId) {
-    this.applicationId = applicationId;
-  }
 
   public void setMinorChild(MinorChild minorChild) {
     this.minorChild = minorChild;
@@ -64,6 +50,16 @@ public class RFA1aMinorChild extends RFABaseEntity {
 
   public MinorChild getMinorChild() {
     return minorChild;
+  }
+
+  @Override
+  public MinorChild getEntityDTO() {
+    return getMinorChild();
+  }
+
+  @Override
+  public void setEntityDTO(MinorChild minorChild) {
+    setMinorChild(minorChild);
   }
 
   @Override
@@ -76,13 +72,4 @@ public class RFA1aMinorChild extends RFABaseEntity {
     return HashCodeBuilder.reflectionHashCode(this);
   }
 
-  @Override
-  public String toString() {
-    return "RFA1aMinorChild{"
-        + "applicationId="
-        + applicationId
-        + ", minorChild="
-        + minorChild
-        + '}';
-  }
 }
