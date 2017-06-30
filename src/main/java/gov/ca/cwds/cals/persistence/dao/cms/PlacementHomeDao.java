@@ -1,12 +1,10 @@
-package gov.ca.cwds.cals.persistence.dao.cms.legacy;
+package gov.ca.cwds.cals.persistence.dao.cms;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
 import gov.ca.cwds.inject.CmsSessionFactory;
-import java.util.stream.Stream;
 import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,9 +12,11 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** @author CWDS CALS API Team */
-public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> implements
-    IPlacementHomeDao<PlacementHome> {
+/**
+ * @author CWDS CALS API Team
+ */
+public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> {
+
   private static final Logger LOG = LoggerFactory.getLogger(PlacementHomeDao.class);
 
   @Inject
@@ -41,11 +41,6 @@ public class PlacementHomeDao extends BaseDaoImpl<PlacementHome> implements
       LOG.debug(e.getMessage(), e);
     }
 
-        return placementHome;
-    }
-
-  @Override
-  public Stream<PlacementHome> stream(FacilityParameterObject parameterObject) {
-   throw new UnsupportedOperationException("Not implemented!");
+    return placementHome;
   }
 }

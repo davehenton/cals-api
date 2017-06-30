@@ -1,9 +1,8 @@
-package gov.ca.cwds.cals.persistence.dao.cms.legacy;
+package gov.ca.cwds.cals.persistence.dao.cms;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.dao.QueryCreator;
-import gov.ca.cwds.cals.persistence.dao.ScalarResultsStreamer;
-import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
+import gov.ca.cwds.cals.persistence.dao.stream.QueryCreator;
+import gov.ca.cwds.cals.persistence.dao.stream.ScalarResultsStreamer;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.Client;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.data.BaseDaoImpl;
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author CWDS CALS API Team
  */
-public class ClientDao extends BaseDaoImpl<Client> implements IClientDao<Client> {
+public class ClientDao extends BaseDaoImpl<Client> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ClientDao.class);
 
@@ -54,11 +53,21 @@ public class ClientDao extends BaseDaoImpl<Client> implements IClientDao<Client>
     return client;
   }
 
-  @Override
-  public Stream<Client> stream(FacilityChildParameterObject parameterObject) {
+  public Stream<Client> streamByLicenseNumber(String licenseNumber) {
     QueryCreator<Client> queryCreator = (session, entityClass) -> session
         .createNamedQuery(entityClass.getSimpleName() + ".findAll", entityClass)
-        .setParameter("licenseNumber", parameterObject.getLicenseNumber());
+        .setParameter("licenseNumber", licenseNumber);
+    return new ScalarResultsStreamer<>(this, queryCreator).createStream();
+  }
+
+  public Stream<Client> streamByLicenseNumber(Integer licenseNumber) {
+    return streamByLicenseNumber(String.valueOf(licenseNumber));
+  }
+
+  public Stream<Client> streamByFacilityId(String facilityId) {
+    QueryCreator<Client> queryCreator = (session, entityClass) -> session
+        .createNamedQuery(entityClass.getSimpleName() + ".findByFacilityId", entityClass)
+        .setParameter("facilityId", facilityId);
     return new ScalarResultsStreamer<>(this, queryCreator).createStream();
   }
 }

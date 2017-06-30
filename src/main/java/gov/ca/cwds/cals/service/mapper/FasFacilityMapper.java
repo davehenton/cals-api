@@ -15,30 +15,28 @@ import java.util.List;
 /**
  * @author CWDS CALS API Team
  */
-@FunctionalInterface
 @Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FasFacilityMapper {
 
-    @Mapping(target = "lastVisitDate", source = "facLastVisitDate")
-    @Mapping(target = "lastVisitReason.code", source = "facLastVisitReason.tblVisitReasonCode")
-    @Mapping(target = "lastVisitReason.description", source = "facLastVisitReason.tblVisitReasonDesc")
-    @Mapping(target = "lastDeferredVisitDate", source = "facLastDeferVisitDate")
-    @Mapping(target = "lastDeferredVisitReason.code", source = "facLastDeferVisitReason.tblVisitReasonCode")
-    @Mapping(target = "lastDeferredVisitReason.description", source = "facLastDeferVisitReason.tblVisitReasonDesc")
-    @Mapping(target = "annualVisitYear", source = "facAnnualVisitYear")
-    @Mapping(target = "prelicensingVisitDate", source = "facPreLicVisitDate")
-    FacilityDTO toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, LisFacFile fasLisFacFile);
+  @Mapping(target = "lastVisitDate", source = "facLastVisitDate")
+  @Mapping(target = "lastVisitReason.code", source = "facLastVisitReason.tblVisitReasonCode")
+  @Mapping(target = "lastVisitReason.description", source = "facLastVisitReason.tblVisitReasonDesc")
+  @Mapping(target = "lastDeferredVisitDate", source = "facLastDeferVisitDate")
+  @Mapping(target = "lastDeferredVisitReason.code", source = "facLastDeferVisitReason.tblVisitReasonCode")
+  @Mapping(target = "lastDeferredVisitReason.description", source = "facLastDeferVisitReason.tblVisitReasonDesc")
+  @Mapping(target = "annualVisitYear", source = "facAnnualVisitYear")
+  @Mapping(target = "prelicensingVisitDate", source = "facPreLicVisitDate")
+  void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, LisFacFile fasLisFacFile);
 
-    @AfterMapping
-    default void after(@MappingTarget FacilityDTO facilityDTO, LisFacFile lisFacFile) {
-        FacilityVisitMapper mapper = Mappers.getMapper(FacilityVisitMapper.class);
-        List<FacilityVisitDTO> facilityVisitDTOs = new ArrayList<>(5);
-        facilityVisitDTOs.add(mapper.toAnnual10MonthFacilityVisitDTO(lisFacFile));
-        facilityVisitDTOs.add(mapper.toAnnual22MonthFacilityVisitDTO(lisFacFile));
-        facilityVisitDTOs.add(mapper.toPostLicensingFacilityVisitDTO(lisFacFile));
-        facilityVisitDTOs.add(mapper.toRenewalFacilityVisitDTO(lisFacFile));
-        facilityVisitDTOs.add(mapper.toMiddleYearVisitDTO(lisFacFile));
-        facilityDTO.setVisits(facilityVisitDTOs);
-    }
-
+  @AfterMapping
+  default void after(@MappingTarget FacilityDTO facilityDTO, LisFacFile lisFacFile) {
+    FacilityVisitMapper mapper = Mappers.getMapper(FacilityVisitMapper.class);
+    List<FacilityVisitDTO> facilityVisitDTOs = new ArrayList<>(5);
+    facilityVisitDTOs.add(mapper.toAnnual10MonthFacilityVisitDTO(lisFacFile));
+    facilityVisitDTOs.add(mapper.toAnnual22MonthFacilityVisitDTO(lisFacFile));
+    facilityVisitDTOs.add(mapper.toPostLicensingFacilityVisitDTO(lisFacFile));
+    facilityVisitDTOs.add(mapper.toRenewalFacilityVisitDTO(lisFacFile));
+    facilityVisitDTOs.add(mapper.toMiddleYearVisitDTO(lisFacFile));
+    facilityDTO.setVisits(facilityVisitDTOs);
+  }
 }

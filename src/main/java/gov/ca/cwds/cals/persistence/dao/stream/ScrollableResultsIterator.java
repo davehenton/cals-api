@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.dao;
+package gov.ca.cwds.cals.persistence.dao.stream;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

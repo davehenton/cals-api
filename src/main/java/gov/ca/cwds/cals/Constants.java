@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
@@ -101,7 +102,8 @@ public final class Constants {
     SIBLING_GROUP_TYPE(SiblingGroupType.class),
     STATE_TYPE(StateType.class),
     RESIDENCE_OWNERSHIP_TYPE(ResidenceOwnershipType.class),
-    APPLICANT_RELATIONSHIP_TYPE(ApplicantRelationshipType.class)
+    APPLICANT_RELATIONSHIP_TYPE(ApplicantRelationshipType.class),
+    LICENSE_TYPE(LicenseType.class)
 
     /*
     COUNTY_TYPE("county-type", null),
@@ -126,6 +128,7 @@ public final class Constants {
     public static final String RESIDENCE_OWNERSHIP_TYPE_PATH = "residence-ownership-types";
     public static final String APPLICANT_RELATIONSHIP_TYPE_PATH = "applicant-relationship-types";
     public static final String RELATIONSHIP_EVENT_TYPE_PATH = "relationship-event-types";
+    public static final String LICENSE_TYPE_PATH = "license-types";
 
     private Class<? extends BaseDictionary> dictionaryClass;
 

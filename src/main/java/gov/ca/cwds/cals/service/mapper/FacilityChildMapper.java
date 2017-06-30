@@ -6,16 +6,14 @@ import gov.ca.cwds.cals.persistence.model.cms.BaseOutOfHomePlacement;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementEpisode;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
-import gov.ca.cwds.cals.persistence.model.cms.rs.ReplicatedClient;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.cals.service.dto.rs.ReplicatedFacilityChildDTO;
-import java.util.Set;
 import org.mapstruct.AfterMapping;
-import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.util.Set;
 
 /**
  *
@@ -33,9 +31,6 @@ public interface FacilityChildMapper {
     @Mapping(target = "facilityId", ignore = true)
     @Mapping(target = "messages", ignore = true)
     FacilityChildDTO toFacilityChildDTO(BaseClient client);
-
-  @InheritConfiguration(name = "toFacilityChildDTO")
-  ReplicatedFacilityChildDTO toReplicatedFacilityChildDTO(ReplicatedClient client);
 
     @Mapping(target = "assignedWorker", source = "staffPerson")
     @Mapping(target = "id", ignore = true)

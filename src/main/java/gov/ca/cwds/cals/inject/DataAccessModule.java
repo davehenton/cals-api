@@ -11,11 +11,9 @@ import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aApplicantDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
+import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.IClientDao;
-import gov.ca.cwds.cals.persistence.dao.cms.IPlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.legacy.ClientDao;
-import gov.ca.cwds.cals.persistence.dao.cms.legacy.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
@@ -28,6 +26,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
@@ -155,6 +154,7 @@ public class DataAccessModule extends AbstractModule {
           StateType.class,
           ResidenceOwnershipType.class,
           ApplicantRelationshipType.class,
+          LicenseType.class,
           //RFA
           RFA1aForm.class,
           RFA1aApplicant.class,
@@ -190,8 +190,8 @@ public class DataAccessModule extends AbstractModule {
     bind(ComplaintReportLic802Dao.class);
     bind(FacilityTypeDao.class);
     bind(CountiesDao.class);
-    bind(IClientDao.class).to(ClientDao.class);
-    bind(IPlacementHomeDao.class).to(PlacementHomeDao.class);
+    bind(ClientDao.class);
+    bind(PlacementHomeDao.class);
     bind(LpaInformationDao.class);
     bind(InspectionDao.class);
     bind(DictionariesDao.class);

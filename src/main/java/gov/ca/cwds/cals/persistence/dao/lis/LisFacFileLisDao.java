@@ -7,10 +7,10 @@ import gov.ca.cwds.data.BaseDaoImpl;
 import org.hibernate.SessionFactory;
 
 /** @author CWDS CALS API Team */
-public class LisFacFileDao extends BaseDaoImpl<LisFacFile> {
+public class LisFacFileLisDao extends BaseDaoImpl<LisFacFile> {
 
   @Inject
-  public LisFacFileDao(@LisSessionFactory SessionFactory sessionFactory) {
+  public LisFacFileLisDao(@LisSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 }

@@ -38,9 +38,6 @@
     "id" : "39",
     "value" : "SAN JOAQUIN"
   },
-  "children" : {
-    "href" : "facilities/193600110/children"
-  },
   "complains" : {
     "href" : "facilities/193600110/complaints"
   },
