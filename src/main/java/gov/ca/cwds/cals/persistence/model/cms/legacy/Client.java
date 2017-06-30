@@ -29,6 +29,14 @@ import org.hibernate.annotations.NamedQuery;
         " WHERE ph.licenseNo = :licenseNumber" +
         " ORDER BY c.identifier "
 )
+@NamedQuery(
+    name = "Client.findByFacilityId",
+    query = "SELECT c FROM Client c" +
+        " JOIN c.placementEpisodes pe" +
+        " JOIN pe.outOfHomePlacements ohp" +
+        " JOIN ohp.placementHome ph" +
+        " WHERE ph.id = :facilityId"
+)
 @Entity
 @javax.persistence.Table(name = "CLIENT_T")
 public class Client extends BaseClient {

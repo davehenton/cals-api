@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.inject.FacilityServiceBackendResource;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
@@ -21,8 +22,6 @@ import javax.ws.rs.core.Response;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  *  @author CALS API Team
@@ -52,19 +51,7 @@ public class FacilityResource {
     public Response getFacilityById(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
             value = "The id of the Facility to find") String facilityNumber) {
 
-        FacilityParameterObject parameterObject = getFacilityParameterObject(facilityNumber);
+        FacilityParameterObject parameterObject = Utils.createFacilityParameterObject(facilityNumber);
         return resourceDelegate.get(parameterObject);
     }
-
-    private FacilityParameterObject getFacilityParameterObject(String facilityNumber) {
-        FacilityParameterObject parameterObject;
-        try {
-            Integer licenseNumber = Integer.valueOf(facilityNumber);
-            parameterObject = new FacilityParameterObject(licenseNumber, LIS);
-        } catch (NumberFormatException e) {
-            parameterObject = new FacilityParameterObject(facilityNumber, CMS);
-        }
-        return parameterObject;
-    }
-
 }
