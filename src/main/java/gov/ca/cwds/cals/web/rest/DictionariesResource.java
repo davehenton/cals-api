@@ -17,6 +17,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE;
@@ -286,6 +288,22 @@ public class DictionariesResource {
   @ApiOperation(value = "Returns Applicant Relationship Types", response = DictionaryValuesDTO.class)
   public Response getApplicantRelationshipTypes() {
     return dictionariesResourceDelegate.get(APPLICANT_RELATIONSHIP_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + LICENSE_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns License Types", response = DictionaryValuesDTO.class)
+  public Response getLicenseTypes() {
+    return dictionariesResourceDelegate.get(LICENSE_TYPE);
   }
 
 }

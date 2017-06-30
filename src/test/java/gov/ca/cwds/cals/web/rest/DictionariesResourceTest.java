@@ -8,6 +8,7 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
@@ -22,12 +23,14 @@ import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
@@ -77,6 +80,9 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "residence-ownership-type-response.json";
   private static final String FIXTURES_APPLICANT_RELATIONSHIP_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "applicant-relationship-type-response.json";
+  private static final String FIXTURES_LICENSE_TYPE_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "license-type-response.json";
+
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -216,7 +222,16 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     baseDictionaryTest(
         APPLICANT_RELATIONSHIP_TYPE_PATH,
         FIXTURES_APPLICANT_RELATIONSHIP_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<ResidenceOwnershipType>>() {
+        new GenericType<CollectionDTO<ApplicantRelationshipType>>() {
+        });
+  }
+
+  @Test
+  public void getLicenseTest() throws Exception {
+    baseDictionaryTest(
+        LICENSE_TYPE_PATH,
+        FIXTURES_LICENSE_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<LicenseType>>() {
         });
   }
 
