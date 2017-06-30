@@ -14,10 +14,12 @@ import org.junit.Rule;
 /** @author CWDS CALS API Team */
 public abstract class BaseCalsApiIntegrationTest {
 
+  private static final String configFile = "config/test-cals-api.yml";
+ 
   @ClassRule
   public static final DropwizardAppRule<CalsApiConfiguration> appRule =
       new DropwizardAppRule<CalsApiConfiguration>(
-          CalsApiApplication.class, ResourceHelpers.resourceFilePath("config/test-cals-api.yml")) {
+          CalsApiApplication.class, ResourceHelpers.resourceFilePath(configFile)) {
 
         @Override
         public Client client() {
@@ -27,6 +29,8 @@ public abstract class BaseCalsApiIntegrationTest {
           }
           return client;
         }
+
+
       };
 
   @Rule public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
