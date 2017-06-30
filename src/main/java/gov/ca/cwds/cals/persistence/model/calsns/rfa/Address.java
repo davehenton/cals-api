@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,6 +27,9 @@ public class Address extends BaseDTO {
 
   @ApiModelProperty(value = "State Type")
   private StateType state;
+
+  @ApiModelProperty(value = "Address Type")
+  private AddressType type;
 
   public String getStreetAddress() {
     return streetAddress;
@@ -57,6 +61,14 @@ public class Address extends BaseDTO {
 
   public void setState(StateType state) {
     this.state = state;
+  }
+
+  public AddressType getType() {
+    return type;
+  }
+
+  public void setType(AddressType type) {
+    this.type = type;
   }
 
   @Override
