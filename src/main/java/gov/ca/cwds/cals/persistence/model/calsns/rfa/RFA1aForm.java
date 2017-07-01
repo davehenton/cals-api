@@ -37,6 +37,10 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   @Type(type = "ApplicantsRelationshipJsonType")
   private ApplicantsRelationship relationships;
 
+  @Type(type = "ApplicantHistoryJsonType")
+  @Column(name = "applicants_history")
+  private ApplicantsHistory applicantsHistory;
+
   @OneToMany
   @JoinColumn(name = "application_id")
   private List<RFA1aApplicant> applicantEntities;
@@ -87,6 +91,16 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
       AdoptionHistory adoptionHistory) {
     this.adoptionHistory = adoptionHistory;
   }
+
+  public ApplicantsHistory getApplicantsHistory() {
+    return applicantsHistory;
+  }
+
+  public void setApplicantsHistory(
+      ApplicantsHistory applicantsHistory) {
+    this.applicantsHistory = applicantsHistory;
+  }
+
 
   @Override
   public boolean equals(Object o) {
