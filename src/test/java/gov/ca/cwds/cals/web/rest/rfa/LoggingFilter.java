@@ -2,14 +2,16 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.client.ClientResponseFilter;
+import org.apache.commons.compress.utils.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * Created by leonid.marushevskiy on 6/30/2017.
  */
 public class LoggingFilter implements ClientRequestFilter, ClientResponseFilter {
+
   private final Logger LOG = LoggerFactory.getLogger(LoggingFilter.class);
 
   @Override
@@ -24,22 +27,34 @@ public class LoggingFilter implements ClientRequestFilter, ClientResponseFilter 
     ObjectMapper mapper = new ObjectMapper();
     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
-    LOG.info("!!! Test Request !!! URL: {}, Method: {}, Body: {}", requestContext.getUri(), requestContext.getMethod(), mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestContext.getEntity()));
+    LOG.info(System.getProperty("line.separator") + "!!! Test Request" + System.getProperty("line.separator") + "!!! URL: {}" + System.getProperty("line.separator") + "!!! Method: {}" + System.getProperty("line.separator") + "!!! Body: {}", requestContext.getUri(),
+        requestContext.getMethod(),
+        mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestContext.getEntity()));
   }
 
   @Override
   public void filter(ClientRequestContext clientRequestContext,
       ClientResponseContext clientResponseContext) throws IOException {
-    LOG.info("!!! Test Response !!! Body: {}, Status: {}", responseToString(clientResponseContext.getEntityStream()), clientResponseContext.getStatus());
+    LOG.info(System.getProperty("line.separator") + "!!! Test Response " + System.getProperty("line.separator") + "!!! Body: {} " + System.getProperty("line.separator") + "!!! Status: {}",
+        responseToString(clientResponseContext),
+        clientResponseContext.getStatus());
   }
 
-  private String responseToString(InputStream inputStream) throws IOException {
-    StringBuilder response = new StringBuilder();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-    String line;
-    while((line = reader.readLine()) != null){
-      response.append(line);
+  private String responseToString(ClientResponseContext clientResponseContext) {
+    InputStream inputStream = clientResponseContext.getEntityStream();
+    if (inputStream == null) {
+      return "";
+    } else {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      try {
+        IOUtils.copy(inputStream, baos);
+        InputStream restoredStream = new ByteArrayInputStream(
+            baos.toString().getBytes(StandardCharsets.UTF_8));
+        clientResponseContext.setEntityStream(restoredStream);
+      } catch (IOException e) {
+        // nothing to do
+      }
+      return baos.toString();
     }
-    return response.toString();
   }
 }

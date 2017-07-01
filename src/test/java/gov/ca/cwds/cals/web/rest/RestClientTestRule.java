@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.web.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.LoggingFilter;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import java.net.URI;
 import java.security.SecureRandom;
@@ -42,7 +43,9 @@ public class RestClientTestRule implements TestRule {
 
   public WebTarget target(String pathInfo) {
     String restUrl = getUriString() + pathInfo;
-    return client.target(restUrl);
+    WebTarget webTarget = client.target(restUrl);
+    webTarget.register(new LoggingFilter());
+    return webTarget;
   }
 
   protected String getUriString() {
