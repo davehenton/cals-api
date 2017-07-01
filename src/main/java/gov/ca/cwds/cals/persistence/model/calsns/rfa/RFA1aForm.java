@@ -45,6 +45,10 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   @JoinColumn(name = "application_id")
   private List<RFA1aApplicant> applicantEntities;
 
+  @Type(type = "AdoptionHistoryJsonType")
+  @Column(name = "adoption_history")
+  private AdoptionHistory adoptionHistory;
+
   public Application getApplication() {
     return application;
   }
@@ -79,6 +83,15 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     this.applicantEntities = applicantEntities;
   }
 
+  public AdoptionHistory getAdoptionHistory() {
+    return adoptionHistory;
+  }
+
+  public void setAdoptionHistory(
+      AdoptionHistory adoptionHistory) {
+    this.adoptionHistory = adoptionHistory;
+  }
+
   public ApplicantsHistory getApplicantsHistory() {
     return applicantsHistory;
   }
@@ -87,6 +100,7 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
       ApplicantsHistory applicantsHistory) {
     this.applicantsHistory = applicantsHistory;
   }
+
 
   @Override
   public boolean equals(Object o) {
@@ -97,5 +111,6 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this, "applicantEntities");
   }
+
 
 }

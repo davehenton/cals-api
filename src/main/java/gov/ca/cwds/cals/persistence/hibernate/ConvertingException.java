@@ -6,5 +6,6 @@ package gov.ca.cwds.cals.persistence.hibernate;
 public class ConvertingException extends RuntimeException {
 
   public ConvertingException(String s, Exception ex) {
+    super(s, ex);
   }
 }

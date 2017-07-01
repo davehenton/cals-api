@@ -45,6 +45,12 @@
         typeClass = MinorChildJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
             value = SQLTypes.CLOB_TYPE_NAME)}
+    ),
+    @TypeDef(
+        name = "AdoptionHistoryJsonType",
+        typeClass = AdoptionHistoryJsonType.class,
+        parameters = {@Parameter(name = SQL_TYPE,
+            value = SQLTypes.CLOB_TYPE_NAME)}
     )
 })
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
