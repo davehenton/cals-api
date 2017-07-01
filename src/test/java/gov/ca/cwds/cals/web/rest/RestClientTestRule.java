@@ -22,7 +22,9 @@ import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class RestClientTestRule implements TestRule {
 
   private static final Logger LOG = LoggerFactory.getLogger(RestClientTestRule.class);
@@ -57,12 +59,8 @@ public class RestClientTestRule implements TestRule {
   }
 
   protected String composeUriString() {
-    URI serverUri = getServerUrl();
     String serverUrlStr =
         String.format("http://localhost:%s/", dropWizardApplication.getLocalPort());
-    if (serverUri != null) {
-      serverUrlStr = serverUri.toString();
-    }
     return serverUrlStr;
   }
 
