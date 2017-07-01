@@ -9,7 +9,7 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfigurati
  * @author CWDS CALS API Team
  */
 
-public class RFAOtherAdultsResourceTest extends
+public class RFA1aOtherAdultsResourceTest extends
     BaseExternalEntityApiTest<OtherAdult, OtherAdultsDTO> {
 
   @Override

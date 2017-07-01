@@ -7,7 +7,7 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfigurati
 /**
  * @author CWDS CALS API Team
  */
-public class RFARelationshipResourceTest extends
+public class RFA1aRelationshipResourceTest extends
     BaseInternalEntityApiTest<ApplicantsRelationship> {
 
   @Override

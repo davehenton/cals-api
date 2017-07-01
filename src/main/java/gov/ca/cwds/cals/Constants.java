@@ -63,7 +63,13 @@ public final class Constants {
 
     public static final String RESIDENCE = "residence";
 
+    public static final String RFA_1A_ADOPTION_HISTORY = "adoption-history";
+
+    public static final String RFA_1A_ADOPTION_HISTORY_API_PARAM = "adoptionHistory";
+
     public static final String SYSTEM_USER_ID = "SYSTEM";
+
+    public static final String APPLICANTS_HISTORY = "applicant-history";
 
     public static class PathParams {
 

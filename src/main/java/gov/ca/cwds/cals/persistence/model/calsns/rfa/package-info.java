@@ -3,6 +3,12 @@
  */
 @TypeDefs(value = {
     @TypeDef(
+        name = "ApplicantHistoryJsonType",
+        typeClass = ApplicantHistoryJsonType.class,
+        parameters = {@Parameter(name = SQL_TYPE,
+            value = SQLTypes.OTHER_TYPE_NAME)}
+    ),
+    @TypeDef(
         name = "OtherAdultJsonType",
         typeClass = OtherAdultJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
@@ -36,6 +42,12 @@
     @TypeDef(
         name = "MinorChildJsonType",
         typeClass = MinorChildJsonType.class,
+        parameters = {@Parameter(name = SQL_TYPE,
+            value = SQLTypes.OTHER_TYPE_NAME)}
+    ),
+    @TypeDef(
+        name = "AdoptionHistoryJsonType",
+        typeClass = AdoptionHistoryJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,
             value = SQLTypes.OTHER_TYPE_NAME)}
     )

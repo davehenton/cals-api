@@ -75,21 +75,4 @@ public class Employment extends BaseDTO {
     return HashCodeBuilder.reflectionHashCode(this);
   }
 
-  @Override
-  public String toString() {
-    return "Employment{"
-        + "employerName='"
-        + employerName
-        + '\''
-        + ", occupation='"
-        + occupation
-        + '\''
-        + ", income="
-        + income
-        + ", incomeType="
-        + incomeType
-        + ", physicalAddress="
-        + physicalAddress
-        + '}';
-  }
 }
