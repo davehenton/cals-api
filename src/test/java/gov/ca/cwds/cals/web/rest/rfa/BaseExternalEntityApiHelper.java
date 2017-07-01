@@ -130,6 +130,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO, G exten
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath());
+    target.register(new LoggingFilter());
     T entity = configuration.createEntity();
     return target.request(MediaType.APPLICATION_JSON).post(
         Entity.entity(entity, MediaType.APPLICATION_JSON_TYPE), configuration.getEntityClass());
@@ -145,6 +146,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO, G exten
                 + configuration.getApiPath()
                 + "/"
                 + entityId);
+    target.register(new LoggingFilter());
     return target.request(MediaType.APPLICATION_JSON).get(configuration.getEntityClass());
   }
 

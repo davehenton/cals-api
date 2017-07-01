@@ -42,7 +42,6 @@ public class RestClientTestRule implements TestRule {
 
   public WebTarget target(String pathInfo) {
     String restUrl = getUriString() + pathInfo;
-    LOG.info("Test URL: " + restUrl);
     return client.target(restUrl);
   }
 

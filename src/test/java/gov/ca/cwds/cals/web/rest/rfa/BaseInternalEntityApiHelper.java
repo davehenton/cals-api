@@ -46,7 +46,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements
   public void putApplicationNotFound() throws Exception {
     WebTarget target =
         clientTestRule.target(API.RFA_1A_FORMS + "/" + -1 + "/" + configuration.getApiPath());
-
+    target.register(new LoggingFilter());
     T entity = configuration.createEntity();
 
     Response response = target.request(MediaType.APPLICATION_JSON)
@@ -62,6 +62,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + configuration.getApiPath());
+    target.register(new LoggingFilter());
     Response response = target.request(MediaType.APPLICATION_JSON).get();
     assertEquals(404, response.getStatus());
   }
@@ -72,6 +73,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + configuration.getApiPath());
+    target.register(new LoggingFilter());
     T putEntity =
         target.request(MediaType.APPLICATION_JSON).put(
             Entity.entity(configuration.createEntity(), MediaType.APPLICATION_JSON_TYPE),
