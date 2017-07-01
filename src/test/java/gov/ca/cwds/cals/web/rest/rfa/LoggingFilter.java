@@ -2,7 +2,10 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.client.ClientResponseContext;
@@ -21,15 +24,22 @@ public class LoggingFilter implements ClientRequestFilter, ClientResponseFilter 
     ObjectMapper mapper = new ObjectMapper();
     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
-    LOG.info("Test URL: {}, API Request: {}", requestContext.getUri(), mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestContext.getEntity()));
+    LOG.info("!!! Test Request !!! URL: {}, Method: {}, Body: {}", requestContext.getUri(), requestContext.getMethod(), mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestContext.getEntity()));
   }
 
   @Override
   public void filter(ClientRequestContext clientRequestContext,
       ClientResponseContext clientResponseContext) throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    LOG.info("!!! Test Response !!! Body: {}, Status: {}", responseToString(clientResponseContext.getEntityStream()), clientResponseContext.getStatus());
+  }
 
-    LOG.info("API Response: {}, Status: {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(clientResponseContext.getEntityStream()), clientResponseContext.getStatus());
+  private String responseToString(InputStream inputStream) throws IOException {
+    StringBuilder response = new StringBuilder();
+    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+    String line;
+    while((line = reader.readLine()) != null){
+      response.append(line);
+    }
+    return response.toString();
   }
 }
