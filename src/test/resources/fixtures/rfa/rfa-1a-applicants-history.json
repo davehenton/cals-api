@@ -37,12 +37,8 @@
         "value": "Child"
       },
       "adult_child_related_to": [
-        {
-          applicantId1
-        },
-        {
-          applicantId2
-        }
+        1234567,
+        8154545
       ]
     }
   ]

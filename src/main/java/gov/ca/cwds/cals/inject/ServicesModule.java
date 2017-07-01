@@ -20,6 +20,7 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsHistoryService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsRelationshipService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormsCollectionService;
@@ -64,6 +65,7 @@ public class ServicesModule extends AbstractModule {
     bind(RFA1aOtherAdultsCollectionService.class);
     bind(RFA1aResidenceService.class);
     bind(RFA1aApplicantsRelationshipService.class);
+    bind(RFA1aApplicantsHistoryService.class);
   }
 
   @Provides

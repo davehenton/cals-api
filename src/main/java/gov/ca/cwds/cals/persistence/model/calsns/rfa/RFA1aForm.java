@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -35,6 +36,10 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
 
   @Type(type = "ApplicantsRelationshipJsonType")
   private ApplicantsRelationship relationships;
+
+  @Type(type = "ApplicantHistoryJsonType")
+  @Column(name = "applicants_history")
+  private ApplicantsHistory applicantsHistory;
 
   @OneToMany
   @JoinColumn(name = "application_id")
@@ -72,6 +77,15 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   public void setApplicantEntities(
       List<RFA1aApplicant> applicantEntities) {
     this.applicantEntities = applicantEntities;
+  }
+
+  public ApplicantsHistory getApplicantsHistory() {
+    return applicantsHistory;
+  }
+
+  public void setApplicantsHistory(
+      ApplicantsHistory applicantsHistory) {
+    this.applicantsHistory = applicantsHistory;
   }
 
   @Override

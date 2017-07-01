@@ -8,7 +8,7 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfigurati
  * @author CWDS CALS API Team
  */
 
-public class ResidenceResourceTest extends BaseInternalEntityApiTest<Residence> {
+public class RFA1aResidenceResourceTest extends BaseInternalEntityApiTest<Residence> {
 
   @Override
   protected BaseInternalEntityApiHelper<Residence> getInternalEntityApiHelper() {

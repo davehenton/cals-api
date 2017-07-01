@@ -65,6 +65,8 @@ public final class Constants {
 
     public static final String SYSTEM_USER_ID = "SYSTEM";
 
+    public static final String APPLICANTS_HISTORY = "applicant-history";
+
     public static class PathParams {
 
       public static final String FACILITY_ID = "facilityId";

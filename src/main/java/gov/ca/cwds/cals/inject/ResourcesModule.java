@@ -17,6 +17,7 @@ import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsHistoryService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsRelationshipService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormsCollectionService;
@@ -33,6 +34,7 @@ import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsHistoryResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsRelationshipResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResource;
@@ -72,6 +74,7 @@ public class ResourcesModule extends AbstractModule {
     bind(RFA1aResidenceResource.class);
     bind(RFA1aApplicantsRelationshipResource.class);
     bind(RFA1aOtherAdultsResource.class);
+    bind(RFA1aApplicantsHistoryResource.class);
   }
 
   @Provides
@@ -154,6 +157,13 @@ public class ResourcesModule extends AbstractModule {
   @ResidenceServiceBackedResource
   public ResourceDelegate residenceServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aResidenceService.class));
+  }
+
+  @Provides
+  @ApplicantsHistoryServiceBackedResource
+  public ResourceDelegate applicantsHistoryServiceBackedResource(Injector injector) {
+    return new ServiceBackedResourceDelegate(
+        injector.getInstance(RFA1aApplicantsHistoryService.class));
   }
 
   @Provides
