@@ -22,7 +22,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm"
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bFormDTO"
                 )
             }
         ),
