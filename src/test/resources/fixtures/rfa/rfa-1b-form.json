@@ -1,0 +1,62 @@
+{
+  "id": 1,
+  "application_county": {
+    "id": 39,
+    "value": "Sacramento"
+  },
+  "lived_in_other_state": true,
+  "other_states_of_leaving": [
+    {
+      "id": 49,
+      "value": "Texas"
+    },
+    {
+      "id": 32,
+      "value": "Nevada"
+    }
+  ],
+  "convicted_in_california": false,
+  "convicted_in_another_state": false,
+  "arrested_for_crime": false,
+  "resource_family_name": "Peterson",
+  "rfa_1a_applicant_id": 123,
+  "applicant_first_name": "Anna",
+  "applicant_middle_name": "M.",
+  "applicant_last_name": "Peterson",
+  "residence_address": {
+    "street_address": "1702 Redoak Ct.",
+    "zip": "98123",
+    "city": "Rocklin",
+    "state": {
+      "id": 0,
+      "value": "string"
+    },
+    "type": {
+      "id": 1,
+      "value": "Residential"
+    }
+  },
+  "ssn": "464-94-2323",
+  "date_of_birth": "12/26/1981",
+  "driver_license": "MD123-1234-585-121",
+  "driver_license_state": {
+    "id": 23,
+    "value": "Maryland"
+  },
+  "signature": "Anna Peterson",
+  "application_date": "07/02/2017",
+  "disclosures": [
+    {
+      "offence": "Offence description",
+      "offence_city": "Sacramento",
+      "offence_state": {
+        "id": 1,
+        "value": "California"
+      },
+      "offence_date": "03/12/2014",
+      "offence_details": "More details about offence",
+      "signature": "Anna Peterson",
+      "application_date": "07/02/2017"
+    }
+  ]
+}
