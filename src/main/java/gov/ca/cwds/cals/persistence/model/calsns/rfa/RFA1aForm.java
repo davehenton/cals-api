@@ -48,6 +48,10 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   @Column(name = "adoption_history")
   private AdoptionHistory adoptionHistory;
 
+  @Type(type = "ChildDesiredJsonType")
+  @Column(name = "child_desired")
+  private ChildDesired childDesired;
+
   @Type(type = "ReferencesJsonType")
   @Column(name = "jhi_references")
   private ReferencesDTO references;
@@ -102,6 +106,14 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   public void setApplicantsHistory(
       ApplicantsHistory applicantsHistory) {
     this.applicantsHistory = applicantsHistory;
+  }
+
+  public ChildDesired getChildDesired() {
+    return childDesired;
+  }
+
+  public void setChildDesired(ChildDesired childDesired) {
+    this.childDesired = childDesired;
   }
 
   public ReferencesDTO getReferences() {

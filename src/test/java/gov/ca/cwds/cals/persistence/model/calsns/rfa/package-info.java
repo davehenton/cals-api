@@ -5,6 +5,17 @@
 @TypeDefs(
     value = {
         @TypeDef(
+            name = "ChildDesiredJsonType",
+            typeClass = JsonType.class,
+            parameters = {@Parameter(name = SQL_TYPE,
+                value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ChildDesired"
+                )
+            }}
+        ),
+        @TypeDef(
             name = "ApplicantHistoryJsonType",
             typeClass = JsonType.class,
             parameters = {

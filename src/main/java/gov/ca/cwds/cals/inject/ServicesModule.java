@@ -22,6 +22,7 @@ import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsHistoryService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsRelationshipService;
+import gov.ca.cwds.cals.service.rfa.RFA1aChildDesiredService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildService;
@@ -68,6 +69,7 @@ public class ServicesModule extends AbstractModule {
     bind(RFA1aApplicantsRelationshipService.class);
     bind(RFA1aApplicantsHistoryService.class);
     bind(RFA1aReferencesService.class);
+    bind(RFA1aChildDesiredService.class);
   }
 
   @Provides

@@ -27,6 +27,10 @@ public final class Constants {
 
   public static final String RETURNED_CLASS_NAME_PARAM = "returnedClassName";
 
+  public static final String SYSTEM_USER_ID = "SYSTEM";
+
+  public static final String RFA = "rfa";
+
   public static class API {
 
     public static final String FACILITIES = "facilities";
@@ -45,11 +49,7 @@ public final class Constants {
 
     public static final String FACILITY_TYPES = "facility-types";
 
-    public static final String RFA = "rfa";
-
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
-
-    public static final String RFA_1A_APPLICANT = "applicant";
 
     public static final String RFA_1A_APPLICANTS = "applicants";
 
@@ -59,21 +59,15 @@ public final class Constants {
 
     public static final String RFA_1A_OTHER_ADULTS = "other-adults";
 
-    public static final String RFA_1A_OTHER_ADULT = "other-adult";
-
-    public static final String RFA_1A_MINOR_CHILD = "minorChild";
-
     public static final String RESIDENCE = "residence";
 
     public static final String RFA_1A_ADOPTION_HISTORY = "adoption-history";
 
     public static final String RFA_1A_REFERENCES = "references";
 
-    public static final String RFA_1A_ADOPTION_HISTORY_API_PARAM = "adoptionHistory";
-
-    public static final String SYSTEM_USER_ID = "SYSTEM";
-
     public static final String APPLICANTS_HISTORY = "applicants-history";
+
+    public static final String CHILD_DESIRED = "child-desired";
 
     public static class PathParams {
 
@@ -85,8 +79,6 @@ public final class Constants {
 
       public static final String INSPECTION_ID = "inspectionId";
 
-      public static final String DICTIONARY_TYPE = "dictionaryType";
-
       public static final String RFA_1A_APPLICATION_ID = "applicationId";
 
       public static final String RFA_1A_APPLICANT_ID = "applicantId";
@@ -94,6 +86,14 @@ public final class Constants {
       public static final String RFA_1A_MINOR_CHILD_ID = "minorChildId";
 
       public static final String RFA_1A_OTHER_ADULT_ID = "otherAdultId";
+
+      public static final String RFA_1A_MINOR_CHILD = "minorChild";
+
+      public static final String RFA_1A_ADOPTION_HISTORY_API_PARAM = "adoptionHistory";
+
+      public static final String RFA_1A_OTHER_ADULT = "other-adult";
+
+      public static final String RFA_1A_APPLICANT = "applicant";
 
       private PathParams() {
       }
@@ -119,16 +119,8 @@ public final class Constants {
     RESIDENCE_OWNERSHIP_TYPE(ResidenceOwnershipType.class),
     APPLICANT_RELATIONSHIP_TYPE(ApplicantRelationshipType.class),
     LICENSE_TYPE(LicenseType.class),
-    MARRIAGE_TERMINATION_REASON(MarriageTerminationReason.class)
+    MARRIAGE_TERMINATION_REASON(MarriageTerminationReason.class);
 
-
-    /*
-    COUNTY_TYPE("county-type", null),
-    APPLICATION_STATUS_TYPE("application-status-type"),
-    RELATIONSHIP_EVENT_TYPE("relationship-event-type"),
-    */
-
-    ;
     public static final String AGE_GROUP_TYPE_PATH = "age-groups";
     public static final String LANGUAGE_TYPE_PATH = "languages";
     public static final String GENDER_TYPE_PATH = "genders";

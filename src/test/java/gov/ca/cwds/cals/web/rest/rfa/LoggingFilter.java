@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,9 +26,12 @@ public class LoggingFilter implements ClientRequestFilter, ClientResponseFilter 
   @Override
   public void filter(ClientRequestContext requestContext) throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    mapper.registerModule(new JavaTimeModule());
 
-    LOG.info(System.getProperty("line.separator") + "!!! Test Request" + System.getProperty("line.separator") + "!!! URL: {}" + System.getProperty("line.separator") + "!!! Method: {}" + System.getProperty("line.separator") + "!!! Body: {}", requestContext.getUri(),
+    LOG.info(System.getProperty("line.separator") + "!!! Test Request" + System
+            .getProperty("line.separator") + "!!! URL: {}" + System.getProperty("line.separator")
+            + "!!! Method: {}" + System.getProperty("line.separator") + "!!! Body: {}",
+        requestContext.getUri(),
         requestContext.getMethod(),
         mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestContext.getEntity()));
   }
@@ -35,7 +39,9 @@ public class LoggingFilter implements ClientRequestFilter, ClientResponseFilter 
   @Override
   public void filter(ClientRequestContext clientRequestContext,
       ClientResponseContext clientResponseContext) throws IOException {
-    LOG.info(System.getProperty("line.separator") + "!!! Test Response " + System.getProperty("line.separator") + "!!! Body: {} " + System.getProperty("line.separator") + "!!! Status: {}",
+    LOG.info(System.getProperty("line.separator") + "!!! Test Response " + System
+            .getProperty("line.separator") + "!!! Body: {} " + System.getProperty("line.separator")
+            + "!!! Status: {}",
         responseToString(clientResponseContext),
         clientResponseContext.getStatus());
   }

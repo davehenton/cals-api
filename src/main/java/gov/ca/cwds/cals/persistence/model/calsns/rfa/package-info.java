@@ -4,6 +4,12 @@
 @TypeDefs(
     value = {
     @TypeDef(
+        name = "ChildDesiredJsonType",
+        typeClass = ChildDesiredJsonType.class,
+        parameters = {@Parameter(name = SQL_TYPE,
+            value = SQLTypes.OTHER_TYPE_NAME)}
+    ),
+    @TypeDef(
         name = "ApplicantHistoryJsonType",
         typeClass = JsonType.class,
         parameters = {
