@@ -2,67 +2,126 @@
 /**
  * @author CWDS CALS API Team
  */
-@TypeDefs(value = {
-    @TypeDef(
-        name = "ChildDesiredJsonType",
-        typeClass = ChildDesiredJsonType.class,
-        parameters = {@Parameter(name = SQL_TYPE,
-            value = SQLTypes.CLOB_TYPE_NAME)}
-    ),
-    @TypeDef(
-        name = "ApplicantHistoryJsonType",
-        typeClass = ApplicantHistoryJsonType.class,
-        parameters = {@Parameter(name = SQL_TYPE,
-            value = SQLTypes.CLOB_TYPE_NAME)}
-    ),
-    @TypeDef(
-        name = "OtherAdultJsonType",
-        typeClass = OtherAdultJsonType.class,
-        parameters = {@Parameter(name = SQL_TYPE,
-            value = SQLTypes.CLOB_TYPE_NAME)}
-    ),
-    @TypeDef(
-        name = "ApplicationJsonType",
-        typeClass = ApplicationJsonType.class,
-        parameters = {@Parameter(name = SQL_TYPE,
-            value = SQLTypes.CLOB_TYPE_NAME)}
-    ),
-    @TypeDef(
-        name = "ApplicantJsonType",
-        typeClass = ApplicantJsonType.class,
-        parameters = {@Parameter(name = SQL_TYPE,
-            value = SQLTypes.CLOB_TYPE_NAME)}
-    ),
-    @TypeDef(
-        name = "ResidenceJsonType",
-        typeClass = ResidenceJsonType.class,
-        parameters = {@Parameter(name = SQL_TYPE,
-            value = SQLTypes.CLOB_TYPE_NAME)}
-
-    ),
-    @TypeDef(
-        name = "ApplicantsRelationshipJsonType",
-        typeClass = ApplicantsRelationshipJsonType.class,
-        parameters = {@Parameter(name = SQL_TYPE,
-            value = SQLTypes.CLOB_TYPE_NAME)}
-    ),
-    @TypeDef(
-        name = "MinorChildJsonType",
-        typeClass = MinorChildJsonType.class,
-        parameters = {@Parameter(name = SQL_TYPE,
-            value = SQLTypes.CLOB_TYPE_NAME)}
-    ),
-    @TypeDef(
-        name = "AdoptionHistoryJsonType",
-        typeClass = AdoptionHistoryJsonType.class,
-        parameters = {@Parameter(name = SQL_TYPE,
-            value = SQLTypes.CLOB_TYPE_NAME)}
-    )
-})
+@TypeDefs(
+    value = {
+        @TypeDef(
+            name = "ChildDesiredJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ChildDesired"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "ApplicantHistoryJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsHistory"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "OtherAdultJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "ApplicationJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.Application"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "ApplicantJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "ResidenceJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.Residence"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "ApplicantsRelationshipJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsRelationship"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "MinorChildJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "AdoptionHistoryJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.AdoptionHistory"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "ReferencesJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ReferencesDTO"
+                )
+            }
+        )
+    }
+)
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import static gov.ca.cwds.cals.Constants.RETURNED_CLASS_NAME_PARAM;
 import static gov.ca.cwds.cals.Constants.SQL_TYPE;
 
+import gov.ca.cwds.cals.persistence.hibernate.JsonType;
 import gov.ca.cwds.cals.persistence.hibernate.SQLTypes;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.TypeDef;
