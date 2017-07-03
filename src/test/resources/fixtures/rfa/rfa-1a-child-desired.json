@@ -1,6 +1,6 @@
 {
-  "is_child_identified": false,
-  "is_child_in_home": false,
+  "child_identified": false,
+  "child_in_home": false,
   "preferred_ages": [
     {
       "id": 1,

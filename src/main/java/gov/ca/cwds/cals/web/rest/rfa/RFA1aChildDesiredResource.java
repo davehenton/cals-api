@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.APPLICANTS_RELATIONSHIP;
+import static gov.ca.cwds.cals.Constants.API.CHILD_DESIRED;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
@@ -8,8 +8,8 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.ApplicantsRelationshipServiceBackedResource;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
+import gov.ca.cwds.cals.inject.ChildDesiredServiceBackedResource;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.ChildDesired;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -30,16 +30,16 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team.
  */
 @Api(tags = {RFA})
-@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + APPLICANTS_RELATIONSHIP)
+@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + CHILD_DESIRED)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RFA1aApplicantsRelationshipResource {
+public class RFA1aChildDesiredResource {
 
   private ResourceDelegate resourceDelegate;
 
   @Inject
-  public RFA1aApplicantsRelationshipResource(
-      @ApplicantsRelationshipServiceBackedResource ResourceDelegate resourceDelegate) {
+  public RFA1aChildDesiredResource(
+      @ChildDesiredServiceBackedResource ResourceDelegate resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
 
@@ -53,8 +53,8 @@ public class RFA1aApplicantsRelationshipResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA-1a Form Applicants Relationship", response = ApplicantsRelationship.class)
-  public Response getApplicantsRelationship(
+  @ApiOperation(value = "Returns Desired Child preferences by RFA-1a Form Id", response = ChildDesired.class)
+  public Response getChildDesired(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId) {
@@ -70,14 +70,14 @@ public class RFA1aApplicantsRelationshipResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Updates Applicants Relationship in RFA 1a Form", response = ApplicantsRelationship.class)
-  public Response updateApplicantsRelationship(
+  @ApiOperation(value = "Update Desired Child Preferences in RFA 1a Form", response = ChildDesired.class)
+  public Response updateDesiredChild(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
-      @ApiParam(required = true, name = APPLICANTS_RELATIONSHIP, value = "The Applicants relationship object")
-          ApplicantsRelationship applicantsRelationship) {
-    return resourceDelegate.update(formId, applicantsRelationship);
+      @ApiParam(required = true, name = CHILD_DESIRED, value = "The RFA-1a Child Desired object")
+          ChildDesired childDesired) {
+    return resourceDelegate.update(formId, childDesired);
   }
 
 }

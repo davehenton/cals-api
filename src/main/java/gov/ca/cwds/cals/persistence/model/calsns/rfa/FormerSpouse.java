@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelations
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReason;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -23,30 +24,42 @@ public class FormerSpouse extends BaseDTO {
 
   private static final long serialVersionUID = 4825726415538736618L;
 
+  @ApiModelProperty("Relationship Type")
   private ApplicantRelationshipType relationshipType;
 
+  @ApiModelProperty(value = "Applicant Id", example = "1234567")
   private Long applicantId;
 
+  @ApiModelProperty(value = "First Name", example = "Anna")
   private String firstName;
 
+  @ApiModelProperty(value = "Middle Name", example = "L.")
   private String middleName;
 
+  @ApiModelProperty(value = "Last Name", example = "Pollen")
   private String lastName;
 
+  @ApiModelProperty(value = "Marriage/Domestic partnership date", example = "2016-12-26")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfMarriage;
 
+  @ApiModelProperty(value = "Marriage/Domestic partnership place: city", example = "Sacramento")
   private String placeOfMarriageCity;
 
+  @ApiModelProperty("Marriage/Domestic partnership place: state")
   private StateType placeOfMarriageState;
 
+  @ApiModelProperty("Divorce/Domestic Partnership Termination reason")
   private MarriageTerminationReason marriageTerminationReason;
 
+  @ApiModelProperty(value = "Divorce/Domestic Partnership Termination Date", example = "2016-12-26")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfMarriageEnd;
 
+  @ApiModelProperty(value = "Divorce/Domestic Partnership Termination City", example = "Sacramento")
   private String placeOfMarriageEndCity;
 
+  @ApiModelProperty("Divorce/Domestic Partnership Termination State")
   private StateType placeOfMarriageEndState;
 
   public ApplicantRelationshipType getRelationshipType() {

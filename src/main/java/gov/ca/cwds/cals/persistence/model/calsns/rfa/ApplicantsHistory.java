@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -17,8 +18,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ApplicantsHistory extends BaseDTO implements Request, Response {
 
+  @ApiModelProperty("List of Former Spouses and Domestic Partners")
   private List<FormerSpouse> formerSpouses = new ArrayList<>();
 
+  @ApiModelProperty("List of Adult Children")
   private List<AdultChild> adultChildren = new ArrayList<>();
 
   public List<FormerSpouse> getFormerSpouses() {

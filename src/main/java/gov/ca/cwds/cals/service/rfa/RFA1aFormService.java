@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.SYSTEM_USER_ID;
+import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
