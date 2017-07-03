@@ -25,6 +25,8 @@ public final class Constants {
 
   public static final String SQL_TYPE = "sqlType";
 
+  public static final String RETURNED_CLASS_NAME_PARAM = "returnedClassName";
+
   public static class API {
 
     public static final String FACILITIES = "facilities";
@@ -64,6 +66,8 @@ public final class Constants {
     public static final String RESIDENCE = "residence";
 
     public static final String RFA_1A_ADOPTION_HISTORY = "adoption-history";
+
+    public static final String RFA_1A_REFERENCES = "references";
 
     public static final String RFA_1A_ADOPTION_HISTORY_API_PARAM = "adoptionHistory";
 

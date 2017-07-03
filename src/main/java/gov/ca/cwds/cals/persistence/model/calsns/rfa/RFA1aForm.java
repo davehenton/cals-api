@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
@@ -48,6 +47,10 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   @Type(type = "AdoptionHistoryJsonType")
   @Column(name = "adoption_history")
   private AdoptionHistory adoptionHistory;
+
+  @Type(type = "ReferencesJsonType")
+  @Column(name = "jhi_references")
+  private ReferencesDTO references;
 
   public Application getApplication() {
     return application;
@@ -101,6 +104,13 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     this.applicantsHistory = applicantsHistory;
   }
 
+  public ReferencesDTO getReferences() {
+    return references;
+  }
+
+  public void setReferences(ReferencesDTO references) {
+    this.references = references;
+  }
 
   @Override
   public boolean equals(Object o) {
