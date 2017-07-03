@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.web.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.LoggingFilter;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import java.net.URI;
 import java.security.SecureRandom;
@@ -22,7 +23,9 @@ import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class RestClientTestRule implements TestRule {
 
   private static final Logger LOG = LoggerFactory.getLogger(RestClientTestRule.class);
@@ -40,8 +43,9 @@ public class RestClientTestRule implements TestRule {
 
   public WebTarget target(String pathInfo) {
     String restUrl = getUriString() + pathInfo;
-    LOG.info("Test URL: " + restUrl);
-    return client.target(restUrl);
+    WebTarget webTarget = client.target(restUrl);
+    webTarget.register(new LoggingFilter());
+    return webTarget;
   }
 
   protected String getUriString() {
@@ -57,12 +61,8 @@ public class RestClientTestRule implements TestRule {
   }
 
   protected String composeUriString() {
-    URI serverUri = getServerUrl();
     String serverUrlStr =
         String.format("http://localhost:%s/", dropWizardApplication.getLocalPort());
-    if (serverUri != null) {
-      serverUrlStr = serverUri.toString();
-    }
     return serverUrlStr;
   }
 

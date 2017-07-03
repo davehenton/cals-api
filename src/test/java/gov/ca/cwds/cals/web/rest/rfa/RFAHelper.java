@@ -22,6 +22,7 @@ public final class RFAHelper {
 
   public static RFA1aFormDTO createForm(RestClientTestRule clientTestRule) {
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+
     RFA1aFormDTO rfaFormDTOBefore = new RFA1aFormDTO();
     CountyType county = new CountyType();
     county.setId(1l);

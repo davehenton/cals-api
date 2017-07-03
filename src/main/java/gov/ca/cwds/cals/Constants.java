@@ -61,7 +61,7 @@ public final class Constants {
 
     public static final String RFA_1A_ADOPTION_HISTORY = "adoption-history";
 
-    public static final String APPLICANTS_HISTORY = "applicant-history";
+    public static final String APPLICANTS_HISTORY = "applicants-history";
 
     public static final String CHILD_DESIRED = "child-desired";
 

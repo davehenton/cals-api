@@ -15,6 +15,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CWDS CALS API Team
@@ -46,7 +48,6 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements
   public void putApplicationNotFound() throws Exception {
     WebTarget target =
         clientTestRule.target(API.RFA_1A_FORMS + "/" + -1 + "/" + configuration.getApiPath());
-
     T entity = configuration.createEntity();
 
     Response response = target.request(MediaType.APPLICATION_JSON)
