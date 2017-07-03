@@ -49,6 +49,8 @@ public final class Constants {
 
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
+    public static final String RFA_1B_FORMS = "rfa-1b-forms";
+
     public static final String RFA_1A_APPLICANTS = "applicants";
 
     public static final String APPLICANTS_RELATIONSHIP = "applicants-relationship";
@@ -87,7 +89,11 @@ public final class Constants {
 
       public static final String RFA_1A_ADOPTION_HISTORY_API_PARAM = "adoptionHistory";
 
-      public static final String RFA_1A_OTHER_ADULT = "other-adult";
+      public static final String RFA_1A_OTHER_ADULT = "otherAdult";
+
+      public static final String RFA_1B_FORM = "rfa1bForm";
+
+      public static final String RFA_1B_FORM_ID = "rfa1bFormId";
 
       public static final String RFA_1A_APPLICANT = "applicant";
 

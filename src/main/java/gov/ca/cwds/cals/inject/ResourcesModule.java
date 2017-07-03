@@ -28,6 +28,8 @@ import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildrenCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultService;
 import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aResidenceService;
+import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1bService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.CountiesResource;
 import gov.ca.cwds.cals.web.rest.DictionariesResource;
@@ -45,6 +47,7 @@ import gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aMinorChildrenResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResource;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1bFormsResource;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
 
@@ -81,6 +84,7 @@ public class ResourcesModule extends AbstractModule {
     bind(RFA1aAdoptionHistoryResource.class);
     bind(RFA1aApplicantsHistoryResource.class);
     bind(RFA1aChildDesiredResource.class);
+    bind(RFA1bFormsResource.class);
   }
 
   @Provides
@@ -237,6 +241,18 @@ public class ResourcesModule extends AbstractModule {
         injector.getInstance(RFA1aOtherAdultsCollectionService.class));
   }
 
+  @Provides
+  @RFA1bServiceBackendResource
+  public ResourceDelegate rfa1bServiceBackendResource(Injector injector) {
+    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1bService.class));
+  }
+
+  @Provides
+  @RFA1bCollectionServiceBackendResource
+  public ResourceDelegate rfa1bCollectionServiceBackendResource(Injector injector) {
+    return new ServiceBackedResourceDelegate(
+        injector.getInstance(RFA1bCollectionService.class));
+  }
 
   @Provides
   @RFA1aAdoptionHistoryServiceBackedResource

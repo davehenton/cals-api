@@ -6,12 +6,12 @@ import java.util.Collection;
 /**
  * @author CWDS CALS API Team
  */
-public final class RFA1aFormsDTO extends CollectionDTO<RFA1aFormDTO> {
+public final class RFA1aFormCollectionDTO extends CollectionDTO<RFA1aFormDTO> {
 
-  public RFA1aFormsDTO() {
+  public RFA1aFormCollectionDTO() {
   }
 
-  public RFA1aFormsDTO(Collection<RFA1aFormDTO> collection) {
+  public RFA1aFormCollectionDTO(Collection<RFA1aFormDTO> collection) {
     super(collection);
   }
 }

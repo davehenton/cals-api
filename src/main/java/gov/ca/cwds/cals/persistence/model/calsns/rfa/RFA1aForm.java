@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationship;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;

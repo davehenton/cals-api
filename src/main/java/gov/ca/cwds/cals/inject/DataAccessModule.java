@@ -38,6 +38,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
@@ -162,7 +163,8 @@ public class DataAccessModule extends AbstractModule {
           RFA1aForm.class,
           RFA1aApplicant.class,
           RFA1aMinorChild.class,
-          RFA1aOtherAdult.class
+          RFA1aOtherAdult.class,
+          RFA1bForm.class
       ) {
 
         @Override

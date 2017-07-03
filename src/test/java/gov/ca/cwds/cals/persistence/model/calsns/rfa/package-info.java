@@ -4,6 +4,12 @@
  */
 @TypeDefs(value = {
     @TypeDef(
+        name = "RFA1bFormJsonType",
+        typeClass = RFA1bFormJsonType.class,
+        parameters = {@Parameter(name = SQL_TYPE,
+            value = SQLTypes.CLOB_TYPE_NAME)}
+    ),
+    @TypeDef(
         name = "ChildDesiredJsonType",
         typeClass = ChildDesiredJsonType.class,
         parameters = {@Parameter(name = SQL_TYPE,

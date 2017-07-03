@@ -4,13 +4,12 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.service.dto.FacilityDeficiencyDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -18,6 +17,8 @@ import java.util.List;
 @Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityInspectionMapper {
 
+    @Mapping(target = "messages", ignore = true)
+    @Mapping(target = "deficiencies", ignore = true)
     @Mapping(target = "id", source = "originalunidkey")
     @Mapping(target = "href", ignore = true)
     @Mapping(target = "representativeSignatureDate", source = "dateSigned")

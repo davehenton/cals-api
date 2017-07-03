@@ -30,6 +30,8 @@ import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildrenCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultService;
 import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aResidenceService;
+import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1bService;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 
 /**
@@ -62,6 +64,8 @@ public class ServicesModule extends AbstractModule {
     bind(RFA1aApplicantsCollectionService.class);
     bind(RFA1aMinorChildService.class);
     bind(RFA1aMinorChildrenCollectionService.class);
+    bind(RFA1bService.class);
+    bind(RFA1bCollectionService.class);
     bind(RFA1aOtherAdultService.class);
     bind(RFA1aOtherAdultsCollectionService.class);
     bind(RFA1aResidenceService.class);
