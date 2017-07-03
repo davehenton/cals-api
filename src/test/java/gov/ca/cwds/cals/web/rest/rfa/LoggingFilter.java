@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

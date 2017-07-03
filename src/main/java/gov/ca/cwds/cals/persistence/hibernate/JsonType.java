@@ -25,7 +25,7 @@ import org.hibernate.usertype.UserType;
 /**
  * @author CWDS CALS API Team.
  */
-public abstract class JsonType implements UserType, ParameterizedType {
+public class JsonType implements UserType, ParameterizedType {
 
   private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -34,6 +34,8 @@ public abstract class JsonType implements UserType, ParameterizedType {
   }
 
   private int sqlType;
+
+  private String returnedClassName;
 
   @Override
   public int[] sqlTypes() {
@@ -48,6 +50,15 @@ public abstract class JsonType implements UserType, ParameterizedType {
   @Override
   public int hashCode(Object x) {
     return x.hashCode();
+  }
+
+  @Override
+  public Class returnedClass() {
+    try {
+      return Class.forName(returnedClassName);
+    } catch (ClassNotFoundException e) {
+      throw new IllegalArgumentException("Class: " + returnedClassName + " is not found.", e);
+    }
   }
 
   @Override
@@ -141,5 +152,8 @@ public abstract class JsonType implements UserType, ParameterizedType {
     } else {
       throw new IllegalArgumentException("The sqlType: " + sqlTypeName + " is not supported");
     }
+
+    returnedClassName = parameters.getProperty(Constants.RETURNED_CLASS_NAME_PARAM);
+    
   }
 }
