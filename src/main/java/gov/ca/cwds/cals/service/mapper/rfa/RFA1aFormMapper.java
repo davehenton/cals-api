@@ -22,6 +22,16 @@ public interface RFA1aFormMapper {
 
   List<RFA1aFormDTO> toRFA1aFormsDTO(List<RFA1aForm> forms);
 
+  @Mapping(target = "applicantsHistory", ignore = true)
+  @Mapping(target = "adoptionHistory", ignore = true)
+  @Mapping(target = "applicantEntities", ignore = true)
+  @Mapping(target = "relationships", ignore = true)
+  @Mapping(target = "residence", ignore = true)
+  @Mapping(target = "childDesired", ignore = true)
+  @Mapping(target = "updateDateTime", ignore = true)
+  @Mapping(target = "updateUserId", ignore = true)
+  @Mapping(target = "createDateTime", ignore = true)
+  @Mapping(target = "createUserId", ignore = true)
   @Mapping(target = "id", ignore = true)
   @InheritInverseConfiguration
   void toRFA1aForm(@MappingTarget RFA1aForm rfa1aForm, RFA1aFormDTO formDTO);

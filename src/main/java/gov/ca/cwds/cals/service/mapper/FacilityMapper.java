@@ -12,15 +12,14 @@ import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.HyperlinkDTO;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -37,6 +36,15 @@ public interface FacilityMapper {
      * @param lpaInformation param to convert
      * @return converted data
      */
+
+    @Mapping(target = "lastVisitDate", ignore = true)
+    @Mapping(target = "lastDeferredVisitDate", ignore = true)
+    @Mapping(target = "lastVisitReason", ignore = true)
+    @Mapping(target = "lastDeferredVisitReason", ignore = true)
+    @Mapping(target = "inspections", ignore = true)
+    @Mapping(target = "visits", ignore = true)
+    @Mapping(target = "annualVisitYear", ignore = true)
+    @Mapping(target = "prelicensingVisitDate", ignore = true)
     @Mapping(target = "messages", ignore = true)
     @Mapping(target = "href", ignore = true)
     @Mapping(target = "address", ignore = true)
@@ -61,9 +69,15 @@ public interface FacilityMapper {
     @Mapping(source = "lisFacFile.facCoNbr.tblCoNbr", target = "county.code")
     @Mapping(source = "lisFacFile.facCoNbr.tblCoDesc", target = "county.description")
     @Mapping(target = "complains", expression = "java(new HyperlinkDTO( String.format(Constants.API.FACILITIES + " +
-            "\"/%s/\" + Constants.API.COMPLAINTS, lisFacFile.getFacNbr())))")
+        "\"/%s/\" + Constants.API.COMPLAINTS, lisFacFile.getFacNbr())))")
     FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
+    @Mapping(target = "prelicensingVisitDate", ignore = true)
+    @Mapping(target = "annualVisitYear", ignore = true)
+    @Mapping(target = "visits", ignore = true)
+    @Mapping(target = "inspections", ignore = true)
+    @Mapping(target = "lastDeferredVisitReason", ignore = true)
+    @Mapping(target = "lastDeferredVisitDate", ignore = true)
     @Mapping(target = "id", source = "identifier")
     @Mapping(target = "name", source = "facltyNm")
     @Mapping(target = "type", source = "facilityType")
@@ -83,11 +97,36 @@ public interface FacilityMapper {
     @Mapping(target = "href", ignore = true)
     @Mapping(target = "licenseeType", ignore = true)
     @Mapping(target = "complains", expression = "java(new HyperlinkDTO( String.format(Constants.API.FACILITIES + " +
-            "\"/%s/\" + Constants.API.COMPLAINTS, placementHome.getIdentifier())))")
+        "\"/%s/\" + Constants.API.COMPLAINTS, placementHome.getIdentifier())))")
     @Mapping(target = "messages", ignore = true)
     @Mapping(target = "emailAddress", ignore = true)
     FacilityDTO toFacilityDTO(BasePlacementHome placementHome);
 
+    @Mapping(target = "messages", ignore = true)
+    @Mapping(target = "phone", ignore = true)
+    @Mapping(target = "prelicensingVisitDate", ignore = true)
+    @Mapping(target = "annualVisitYear", ignore = true)
+    @Mapping(target = "visits", ignore = true)
+    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "inspections", ignore = true)
+    @Mapping(target = "complains", ignore = true)
+    @Mapping(target = "county", ignore = true)
+    @Mapping(target = "lastDeferredVisitReason", ignore = true)
+    @Mapping(target = "emailAddress", ignore = true)
+    @Mapping(target = "lastDeferredVisitDate", ignore = true)
+    @Mapping(target = "originalApplicationRecievedDate", ignore = true)
+    @Mapping(target = "licenseEffectiveDate", ignore = true)
+    @Mapping(target = "capacity", ignore = true)
+    @Mapping(target = "licenseNumber", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "districtOffice", ignore = true)
+    @Mapping(target = "assignedWorker", ignore = true)
+    @Mapping(target = "licenseeType", ignore = true)
+    @Mapping(target = "licenseeName", ignore = true)
+    @Mapping(target = "name", ignore = true)
+    @Mapping(target = "type", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "href", ignore = true)
     @Mapping(target = "lastVisitDate", source = "visitDate")
     @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
     void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);

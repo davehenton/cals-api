@@ -44,10 +44,20 @@ entity Rfa_1a_other_adults {
   updateDatetime ZonedDateTime required
 }
 
+entity Rfa_1b {
+  application TextBlob,
+
+  createUserId String maxlength(50) required,
+  createDatetime ZonedDateTime required,
+  updateUserId String maxlength(50) required,
+  updateDatetime ZonedDateTime required
+}
+
 relationship OneToMany {
   Rfa_1a{applicants} to Rfa_1a_applicant{application},
   Rfa_1a{minorChildren} to Rfa_1a_minor_child{application},
-  Rfa_1a{otherAdults} to Rfa_1a_other_adults{application}
+  Rfa_1a{otherAdults} to Rfa_1a_other_adults{application},
+  Rfa_1a{rfa1BForms} to Rfa_1b{application}
 }
 
 
