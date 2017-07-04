@@ -85,7 +85,7 @@ public class RFA1bFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Updates and returns RFA 1b Form object", response = RFA1bFormDTO.class)
+  @ApiOperation(value = "Updates and returns RFA 1B Form object", response = RFA1bFormDTO.class)
   public Response updateRFA1bForm(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
@@ -178,7 +178,7 @@ public class RFA1bFormsResource {
   @ApiOperation(value = "Deletes RFA 1B Form")
   public Response deleteRFA1bForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA 1B Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA 1A Form Id")
           Long applicationId,
       @PathParam(RFA_1B_FORM_ID)
       @ApiParam(
