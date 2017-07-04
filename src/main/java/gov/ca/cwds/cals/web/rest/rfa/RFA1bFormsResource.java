@@ -131,7 +131,7 @@ public class RFA1bFormsResource {
       @ApiParam(
           required = true,
           name = RFA_1B_FORM_ID,
-          value = "The RFA-1B Form Id"
+          value = "The RFA 1B Form Id"
       )
           Long rfa1BFormId) {
 
@@ -150,7 +150,7 @@ public class RFA1bFormsResource {
       }
   )
   @ApiOperation(
-      value = "Returns RFA 1a Form's Other Adults by Application Id",
+      value = "Returns RFA 1B Forms by Application Id",
       response = RFA1bFormCollectionDTO.class
   )
   public Response getRFA1bFormsByFormRFA1aFormId(
@@ -158,7 +158,7 @@ public class RFA1bFormsResource {
       @ApiParam(
           required = true,
           name = RFA_1A_APPLICATION_ID,
-          value = "The RFA-1a Application Id"
+          value = "The RFA-1A Application Id"
       )
           Long applicationId) {
     return collectionResourceDelegate
@@ -178,13 +178,13 @@ public class RFA1bFormsResource {
   @ApiOperation(value = "Delete RFA 1B Form")
   public Response deleteRFA1bForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1B_FORM_ID, value = "The RFA-1b Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA 1B Form Id")
           Long applicationId,
       @PathParam(RFA_1B_FORM_ID)
       @ApiParam(
           required = true,
           name = RFA_1B_FORM_ID,
-          value = "The RFA-1B Form Id"
+          value = "The RFA 1B Form Id"
       )
           Long rfa1BFormId) {
     return resourceDelegate.delete(
