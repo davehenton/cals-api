@@ -135,8 +135,8 @@ cmsDataSourceFactory:
 #      #hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSINT}
 #      hibernate.connection.autocommit: false
 
-logging:
-  level: ${LOGLEVEL:-DEBUG}
+#logging:
+#  level: ${LOGLEVEL:-WARN}
 #  loggers:
 #    "org.hibernate.SQL":
 #      level: DEBUG
