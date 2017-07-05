@@ -20,7 +20,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ApplicantsDeclaration extends BaseDTO implements Request, Response {
+public class ApplicantsDeclarationDTO extends BaseDTO implements Request, Response {
 
   private static final long serialVersionUID = 6463110475391563958L;
 

@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team.
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class TypedPersonName extends PersonName {
+public class TypedPersonNameDTO extends PersonNameDTO {
 
   private NameType nameType;
 

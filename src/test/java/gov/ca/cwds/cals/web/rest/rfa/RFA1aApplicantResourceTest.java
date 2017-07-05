@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantCollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 
@@ -9,15 +9,15 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfigurati
  * @author CWDS CALS API Team
  */
 public class RFA1aApplicantResourceTest extends
-    BaseExternalEntityApiTest<Applicant, ApplicantCollectionDTO> {
+    BaseExternalEntityApiTest<ApplicantDTO, ApplicantCollectionDTO> {
 
   @Override
-  protected BaseExternalEntityApiHelper<Applicant, ApplicantCollectionDTO> getExternalEntityApiHelper() {
-    TestExternalEntityConfiguration<Applicant, ApplicantCollectionDTO> configuration =
+  protected BaseExternalEntityApiHelper<ApplicantDTO, ApplicantCollectionDTO> getExternalEntityApiHelper() {
+    TestExternalEntityConfiguration<ApplicantDTO, ApplicantCollectionDTO> configuration =
 
-        new TestExternalEntityConfiguration<Applicant, ApplicantCollectionDTO>(
+        new TestExternalEntityConfiguration<ApplicantDTO, ApplicantCollectionDTO>(
             clientTestRule,
-            Applicant.class,
+            ApplicantDTO.class,
             ApplicantCollectionDTO.class,
             API.RFA_1A_APPLICANTS) {
 
@@ -28,7 +28,7 @@ public class RFA1aApplicantResourceTest extends
           }
 
           @Override
-          public void modifyEntity(Applicant entity) {
+          public void modifyEntity(ApplicantDTO entity) {
             entity.setFirstName("testFirstName");
           }
 

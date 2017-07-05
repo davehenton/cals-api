@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class AdoptionHistory extends BaseDTO implements Request, Response {
+public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
 
   private static final long serialVersionUID = 1466581714306274681L;
 
@@ -50,12 +50,12 @@ public class AdoptionHistory extends BaseDTO implements Request, Response {
     this.applicationsForAdoptionQ2 = applicationsForAdoptionQ2;
   }
 
-  public AdoptionHistory.FacilityOperationLicensesQ3 getFacilityOperationLicensesQ3() {
+  public AdoptionHistoryDTO.FacilityOperationLicensesQ3 getFacilityOperationLicensesQ3() {
     return facilityOperationLicensesQ3;
   }
 
   public void setFacilityOperationLicensesQ3(
-      AdoptionHistory.FacilityOperationLicensesQ3 facilityOperationLicensesQ3) {
+      AdoptionHistoryDTO.FacilityOperationLicensesQ3 facilityOperationLicensesQ3) {
     this.facilityOperationLicensesQ3 = facilityOperationLicensesQ3;
   }
 

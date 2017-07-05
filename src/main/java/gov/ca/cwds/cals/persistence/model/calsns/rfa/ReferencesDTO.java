@@ -46,7 +46,7 @@ public class ReferencesDTO extends BaseDTO implements Request, Response {
     private String firstName;
     private String middleName;
     private String lastName;
-    private Address mailingAddress;
+    private AddressDTO mailingAddress;
     private String phoneNumber;
     private String email;
 
@@ -74,11 +74,11 @@ public class ReferencesDTO extends BaseDTO implements Request, Response {
       this.lastName = lastName;
     }
 
-    public Address getMailingAddress() {
+    public AddressDTO getMailingAddress() {
       return mailingAddress;
     }
 
-    public void setMailingAddress(Address mailingAddress) {
+    public void setMailingAddress(AddressDTO mailingAddress) {
       this.mailingAddress = mailingAddress;
     }
 

@@ -17,7 +17,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class OtherAdult extends RFAExternalEntityDTO {
+public class OtherAdultDTO extends RFAExternalEntityDTO {
 
   @ApiModelProperty(value = "First Name", example = "Anna")
   private String firstName;
@@ -33,7 +33,7 @@ public class OtherAdult extends RFAExternalEntityDTO {
   private LocalDate dateOfBirth;
 
   @ApiModelProperty("Relationship to Applicants")
-  private List<RelationshipToApplicant> relationshipToApplicants = new ArrayList<>();
+  private List<RelationshipToApplicantDTO> relationshipToApplicants = new ArrayList<>();
 
   public String getFirstName() {
     return firstName;
@@ -67,12 +67,12 @@ public class OtherAdult extends RFAExternalEntityDTO {
     this.dateOfBirth = dateOfBirth;
   }
 
-  public List<RelationshipToApplicant> getRelationshipToApplicants() {
+  public List<RelationshipToApplicantDTO> getRelationshipToApplicants() {
     return relationshipToApplicants;
   }
 
   public void setRelationshipToApplicants(
-      List<RelationshipToApplicant> relationshipToApplicants) {
+      List<RelationshipToApplicantDTO> relationshipToApplicants) {
     this.relationshipToApplicants = relationshipToApplicants;
   }
 

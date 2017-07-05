@@ -53,6 +53,8 @@ public final class Constants {
 
     public static final String RFA_1B_FORMS = "rfa-1b-forms";
 
+    public static final String RFA_1C_FORMS = "rfa-1c-forms";
+
     public static final String RFA_1A_APPLICANTS = "applicants";
 
     public static final String APPLICANTS_RELATIONSHIP = "applicants-relationship";
@@ -99,7 +101,11 @@ public final class Constants {
 
       public static final String RFA_1B_FORM = "rfa1bForm";
 
+      public static final String RFA_1C_FORM = "rfa1cForm";
+
       public static final String RFA_1B_FORM_ID = "rfa1bFormId";
+
+      public static final String RFA_1C_FORM_ID = "rfa1cFormId";
 
       public static final String RFA_1A_APPLICANT = "applicant";
 

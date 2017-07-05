@@ -17,12 +17,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team.
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Residence extends BaseDTO implements Request, Response {
+public class ResidenceDTO extends BaseDTO implements Request, Response {
 
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "List of Addresses")
-  private List<Address> addresses;
+  private List<AddressDTO> addresses;
 
   @ApiModelProperty(value = "Is Physical Mailing Similar", example = "false")
   private boolean physicalMailingSimilar;
@@ -43,7 +43,7 @@ public class Residence extends BaseDTO implements Request, Response {
   private boolean othersUsingResidenceAsMailing;
 
   @ApiModelProperty(value = "Other People Using Residence As Mailing")
-  private Set<PersonName> otherPeopleUsingResidenceAsMailing;
+  private Set<PersonNameDTO> otherPeopleUsingResidenceAsMailing;
 
   @ApiModelProperty(value = "Directions To Home", example = "Directions here")
   private String directionsToHome;
@@ -51,11 +51,11 @@ public class Residence extends BaseDTO implements Request, Response {
   @ApiModelProperty(value = "Home Languages")
   private Set<LanguageType> homeLanguages;
 
-  public List<Address> getAddresses() {
+  public List<AddressDTO> getAddresses() {
     return addresses;
   }
 
-  public void setAddresses(List<Address> addresses) {
+  public void setAddresses(List<AddressDTO> addresses) {
     this.addresses = addresses;
   }
 
@@ -108,12 +108,12 @@ public class Residence extends BaseDTO implements Request, Response {
     this.othersUsingResidenceAsMailing = othersUsingResidenceAsMailing;
   }
 
-  public Set<PersonName> getOtherPeopleUsingResidenceAsMailing() {
+  public Set<PersonNameDTO> getOtherPeopleUsingResidenceAsMailing() {
     return otherPeopleUsingResidenceAsMailing;
   }
 
   public void setOtherPeopleUsingResidenceAsMailing(
-      Set<PersonName> otherPeopleUsingResidenceAsMailing) {
+      Set<PersonNameDTO> otherPeopleUsingResidenceAsMailing) {
     this.otherPeopleUsingResidenceAsMailing = otherPeopleUsingResidenceAsMailing;
   }
 

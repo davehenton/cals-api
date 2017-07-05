@@ -54,7 +54,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "Peterson")
   private String applicantLastName;
 
-  private Address residenceAddress;
+  private AddressDTO residenceAddress;
 
   @ApiModelProperty(example = "464-94-2323")
   private String ssn;
@@ -167,11 +167,11 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     this.applicantLastName = applicantLastName;
   }
 
-  public Address getResidenceAddress() {
+  public AddressDTO getResidenceAddress() {
     return residenceAddress;
   }
 
-  public void setResidenceAddress(Address residenceAddress) {
+  public void setResidenceAddress(AddressDTO residenceAddress) {
     this.residenceAddress = residenceAddress;
   }
 

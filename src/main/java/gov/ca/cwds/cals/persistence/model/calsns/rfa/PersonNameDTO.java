@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class PersonName extends BaseDTO {
+public class PersonNameDTO extends BaseDTO {
 
   private static final long serialVersionUID = -8654631136147609963L;
 

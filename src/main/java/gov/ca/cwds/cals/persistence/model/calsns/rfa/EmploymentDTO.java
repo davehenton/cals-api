@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Employment extends BaseDTO {
+public class EmploymentDTO extends BaseDTO {
 
   private static final long serialVersionUID = 4050127780486627644L;
 
@@ -23,7 +23,7 @@ public class Employment extends BaseDTO {
 
   private IncomeType incomeType;
 
-  private PhysicalAddress physicalAddress;
+  private PhysicalAddressDTO physicalAddress;
 
   public String getEmployerName() {
     return employerName;
@@ -57,11 +57,11 @@ public class Employment extends BaseDTO {
     this.incomeType = incomeType;
   }
 
-  public PhysicalAddress getPhysicalAddress() {
+  public PhysicalAddressDTO getPhysicalAddress() {
     return physicalAddress;
   }
 
-  public void setPhysicalAddress(PhysicalAddress physicalAddress) {
+  public void setPhysicalAddress(PhysicalAddressDTO physicalAddress) {
     this.physicalAddress = physicalAddress;
   }
 

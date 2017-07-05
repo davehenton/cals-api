@@ -22,7 +22,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ApplicantsRelationship extends BaseDTO implements Serializable, Request, Response {
+public class ApplicantsRelationshipDTO extends BaseDTO implements Serializable, Request, Response {
 
   @ApiModelProperty("Relationship between applicants")
   private ApplicantRelationshipType relationshipType;
@@ -87,7 +87,7 @@ public class ApplicantsRelationship extends BaseDTO implements Serializable, Req
     if (this == o) {
       return true;
     }
-    if (!(o instanceof ApplicantsRelationship)) {
+    if (!(o instanceof ApplicantsRelationshipDTO)) {
       return false;
     }
     return EqualsBuilder.reflectionEquals(this, o);

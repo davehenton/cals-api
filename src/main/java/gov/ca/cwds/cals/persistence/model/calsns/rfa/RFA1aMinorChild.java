@@ -29,7 +29,7 @@ import org.hibernate.annotations.Type;
 )
 @Entity
 @Table(name = "rfa_1a_minor_child")
-public class RFA1aMinorChild extends RFAExternalEntity<MinorChild> implements PersistentObject {
+public class RFA1aMinorChild extends RFAExternalEntity<MinorChildDTO> implements PersistentObject {
 
   private static final long serialVersionUID = -2264013085327411067L;
 
@@ -40,23 +40,23 @@ public class RFA1aMinorChild extends RFAExternalEntity<MinorChild> implements Pe
 
   @Column(name = "minor_child")
   @Type(type = "MinorChildJsonType")
-  private MinorChild minorChild;
+  private MinorChildDTO minorChild;
 
-  public void setMinorChild(MinorChild minorChild) {
+  public void setMinorChild(MinorChildDTO minorChild) {
     this.minorChild = minorChild;
   }
 
-  public MinorChild getMinorChild() {
+  public MinorChildDTO getMinorChild() {
     return minorChild;
   }
 
   @Override
-  public MinorChild getEntityDTO() {
+  public MinorChildDTO getEntityDTO() {
     return getMinorChild();
   }
 
   @Override
-  public void setEntityDTO(MinorChild minorChild) {
+  public void setEntityDTO(MinorChildDTO minorChild) {
     setMinorChild(minorChild);
   }
 

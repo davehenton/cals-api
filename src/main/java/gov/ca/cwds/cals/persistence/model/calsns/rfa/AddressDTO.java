@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team.
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Address extends BaseDTO {
+public class AddressDTO extends BaseDTO {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "Street Address", example = "1702 Redoak Ct.")

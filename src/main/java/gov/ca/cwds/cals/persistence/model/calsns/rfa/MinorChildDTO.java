@@ -17,7 +17,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class MinorChild extends RFAExternalEntityDTO {
+public class MinorChildDTO extends RFAExternalEntityDTO {
 
   private static final long serialVersionUID = 1367746149537559411L;
 

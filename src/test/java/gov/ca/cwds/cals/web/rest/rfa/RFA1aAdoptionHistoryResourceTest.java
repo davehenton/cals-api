@@ -1,20 +1,21 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.AdoptionHistory;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aAdoptionHistoryResourceTest extends BaseInternalEntityApiTest<AdoptionHistory> {
+public class RFA1aAdoptionHistoryResourceTest extends
+    BaseInternalEntityApiTest<AdoptionHistoryDTO> {
 
   @Override
-  protected BaseInternalEntityApiHelper<AdoptionHistory> getInternalEntityApiHelper() {
+  protected BaseInternalEntityApiHelper<AdoptionHistoryDTO> getInternalEntityApiHelper() {
 
-    TestInternalEntityConfiguration<AdoptionHistory> configuration =
-        new TestInternalEntityConfiguration<AdoptionHistory>(
-            clientTestRule, AdoptionHistory.class, API.RFA_1A_ADOPTION_HISTORY) {
+    TestInternalEntityConfiguration<AdoptionHistoryDTO> configuration =
+        new TestInternalEntityConfiguration<AdoptionHistoryDTO>(
+            clientTestRule, AdoptionHistoryDTO.class, API.RFA_1A_ADOPTION_HISTORY) {
 
           @Override
           protected String getCreateFixture() {

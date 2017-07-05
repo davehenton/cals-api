@@ -22,7 +22,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class Applicant extends RFAExternalEntityDTO implements Serializable {
+public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   private static final long serialVersionUID = -4333411852074578122L;
 
@@ -32,7 +32,7 @@ public class Applicant extends RFAExternalEntityDTO implements Serializable {
 
   private String lastName;
 
-  private List<TypedPersonName> otherNames = new ArrayList<>();
+  private List<TypedPersonNameDTO> otherNames = new ArrayList<>();
 
   private EducationLevelType highestEducationLevel;
 
@@ -51,9 +51,9 @@ public class Applicant extends RFAExternalEntityDTO implements Serializable {
 
   private String email;
 
-  private Employment employment;
+  private EmploymentDTO employment;
 
-  private List<Phone> phones = new ArrayList<>();
+  private List<PhoneDTO> phones = new ArrayList<>();
 
   public String getFirstName() {
     return firstName;
@@ -79,11 +79,11 @@ public class Applicant extends RFAExternalEntityDTO implements Serializable {
     this.lastName = lastName;
   }
 
-  public List<TypedPersonName> getOtherNames() {
+  public List<TypedPersonNameDTO> getOtherNames() {
     return otherNames;
   }
 
-  public void setOtherNames(List<TypedPersonName> otherNames) {
+  public void setOtherNames(List<TypedPersonNameDTO> otherNames) {
     this.otherNames = otherNames;
   }
 
@@ -151,19 +151,19 @@ public class Applicant extends RFAExternalEntityDTO implements Serializable {
     this.email = email;
   }
 
-  public Employment getEmployment() {
+  public EmploymentDTO getEmployment() {
     return employment;
   }
 
-  public void setEmployment(Employment employment) {
+  public void setEmployment(EmploymentDTO employment) {
     this.employment = employment;
   }
 
-  public List<Phone> getPhones() {
+  public List<PhoneDTO> getPhones() {
     return phones;
   }
 
-  public void setPhones(List<Phone> phones) {
+  public void setPhones(List<PhoneDTO> phones) {
     this.phones = phones;
   }
 
@@ -172,7 +172,7 @@ public class Applicant extends RFAExternalEntityDTO implements Serializable {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Applicant)) {
+    if (!(o instanceof ApplicantDTO)) {
       return false;
     }
     return EqualsBuilder.reflectionEquals(this, o);

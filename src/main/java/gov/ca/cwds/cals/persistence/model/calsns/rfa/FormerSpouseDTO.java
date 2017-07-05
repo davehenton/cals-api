@@ -20,7 +20,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class FormerSpouse extends BaseDTO {
+public class FormerSpouseDTO extends BaseDTO {
 
   private static final long serialVersionUID = 4825726415538736618L;
 
@@ -167,7 +167,7 @@ public class FormerSpouse extends BaseDTO {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof FormerSpouse)) {
+    if (!(o instanceof FormerSpouseDTO)) {
       return false;
     }
     return EqualsBuilder.reflectionEquals(this, o);

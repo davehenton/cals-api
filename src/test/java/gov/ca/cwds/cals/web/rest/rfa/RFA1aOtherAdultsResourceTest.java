@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultCollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 
@@ -10,16 +10,16 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfigurati
  */
 
 public class RFA1aOtherAdultsResourceTest extends
-    BaseExternalEntityApiTest<OtherAdult, OtherAdultCollectionDTO> {
+    BaseExternalEntityApiTest<OtherAdultDTO, OtherAdultCollectionDTO> {
 
   @Override
-  protected BaseExternalEntityApiHelper<OtherAdult, OtherAdultCollectionDTO> getExternalEntityApiHelper() {
+  protected BaseExternalEntityApiHelper<OtherAdultDTO, OtherAdultCollectionDTO> getExternalEntityApiHelper() {
 
-    TestExternalEntityConfiguration<OtherAdult, OtherAdultCollectionDTO> configuration =
+    TestExternalEntityConfiguration<OtherAdultDTO, OtherAdultCollectionDTO> configuration =
 
-        new TestExternalEntityConfiguration<OtherAdult, OtherAdultCollectionDTO>(
+        new TestExternalEntityConfiguration<OtherAdultDTO, OtherAdultCollectionDTO>(
             clientTestRule,
-            OtherAdult.class,
+            OtherAdultDTO.class,
             OtherAdultCollectionDTO.class,
             API.RFA_1A_OTHER_ADULTS) {
 
@@ -29,7 +29,7 @@ public class RFA1aOtherAdultsResourceTest extends
           }
 
           @Override
-          public void modifyEntity(OtherAdult entity) {
+          public void modifyEntity(OtherAdultDTO entity) {
             entity.setFirstName("FIRST_NAME");
           }
 

@@ -9,7 +9,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackendResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.Application;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicationDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -62,7 +62,7 @@ public class RFA1aFormsResource {
   @ApiOperation(value = "Creates and returns RFA 1a Form", response = RFA1aFormDTO.class)
   public Response createApplicationForm(
       @ApiParam(name = "application", value = "The RFA-1a Application object")
-          Application application) {
+          ApplicationDTO application) {
     return resourceDelegate.create(application);
   }
 

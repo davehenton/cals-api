@@ -10,7 +10,7 @@
       "first_name": "Collin",
       "middle_name": "P.",
       "last_name": "Martin",
-      "date_of_birth": "07/14/2007",
+      "date_of_birth": "2007-07-14",
       "gender": {
         "id": 1,
         "value": "Male"
@@ -19,7 +19,7 @@
         "id": 39,
         "value": "Sacramento"
       },
-      "date_of_placement": "05/14/2017",
+      "date_of_placement": "2017-05-14",
       "relationship_to_applicants": [
         {
           "relationship_to_applicant": {

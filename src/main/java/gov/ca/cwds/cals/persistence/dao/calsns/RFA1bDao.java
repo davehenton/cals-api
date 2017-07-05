@@ -12,11 +12,11 @@ import org.hibernate.SessionFactory;
  * @author CWDS CALS API Team
  */
 
-public class RFA1BDao extends
+public class RFA1bDao extends
     RFAExternalEntityDao<RFA1bForm, RFA1bFormDTO, RFA1bFormCollectionDTO> {
 
   @Inject
-  public RFA1BDao(@CalsnsSessionFactory SessionFactory sessionFactory) {
+  public RFA1bDao(@CalsnsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory, RFA1bFactory.INSTANCE);
   }
 

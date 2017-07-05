@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildrenDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 
@@ -9,15 +9,15 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfigurati
  * @author CWDS CALS API Team
  */
 public class RFA1aMinorChildrenResourceTest extends
-    BaseExternalEntityApiTest<MinorChild, MinorChildrenDTO> {
+    BaseExternalEntityApiTest<MinorChildDTO, MinorChildrenDTO> {
 
   @Override
-  protected BaseExternalEntityApiHelper<MinorChild, MinorChildrenDTO> getExternalEntityApiHelper() {
-    TestExternalEntityConfiguration<MinorChild, MinorChildrenDTO> configuration =
+  protected BaseExternalEntityApiHelper<MinorChildDTO, MinorChildrenDTO> getExternalEntityApiHelper() {
+    TestExternalEntityConfiguration<MinorChildDTO, MinorChildrenDTO> configuration =
 
-        new TestExternalEntityConfiguration<MinorChild, MinorChildrenDTO>(
+        new TestExternalEntityConfiguration<MinorChildDTO, MinorChildrenDTO>(
             clientTestRule,
-            MinorChild.class,
+            MinorChildDTO.class,
             MinorChildrenDTO.class,
             API.RFA_1A_MINOR_CHILDREN) {
 
@@ -28,7 +28,7 @@ public class RFA1aMinorChildrenResourceTest extends
           }
 
           @Override
-          public void modifyEntity(MinorChild entity) {
+          public void modifyEntity(MinorChildDTO entity) {
             entity.setOtherRelativeFirstName("FIRST_NAME");
           }
 

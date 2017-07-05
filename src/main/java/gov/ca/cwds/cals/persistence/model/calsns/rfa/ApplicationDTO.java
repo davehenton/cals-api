@@ -18,7 +18,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({"id", "is_initial_application", "is_other_type", "other_type_description",
     "application_county"})
-public class Application extends BaseDTO implements Request, Response {
+public class ApplicationDTO extends BaseDTO implements Request, Response {
 
   private static final long serialVersionUID = 3691906983136791415L;
 

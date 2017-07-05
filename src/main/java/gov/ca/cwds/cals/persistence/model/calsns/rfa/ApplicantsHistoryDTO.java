@@ -16,29 +16,29 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ApplicantsHistory extends BaseDTO implements Request, Response {
+public class ApplicantsHistoryDTO extends BaseDTO implements Request, Response {
 
   @ApiModelProperty("List of Former Spouses and Domestic Partners")
-  private List<FormerSpouse> formerSpouses = new ArrayList<>();
+  private List<FormerSpouseDTO> formerSpouses = new ArrayList<>();
 
   @ApiModelProperty("List of Adult Children")
-  private List<AdultChild> adultChildren = new ArrayList<>();
+  private List<AdultChildDTO> adultChildren = new ArrayList<>();
 
-  public List<FormerSpouse> getFormerSpouses() {
+  public List<FormerSpouseDTO> getFormerSpouses() {
     return formerSpouses;
   }
 
   public void setFormerSpouses(
-      List<FormerSpouse> formerSpouses) {
+      List<FormerSpouseDTO> formerSpouses) {
     this.formerSpouses = formerSpouses;
   }
 
-  public List<AdultChild> getAdultChildren() {
+  public List<AdultChildDTO> getAdultChildren() {
     return adultChildren;
   }
 
   public void setAdultChildren(
-      List<AdultChild> adultChildren) {
+      List<AdultChildDTO> adultChildren) {
     this.adultChildren = adultChildren;
   }
 
@@ -47,7 +47,7 @@ public class ApplicantsHistory extends BaseDTO implements Request, Response {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof ApplicantsHistory)) {
+    if (!(o instanceof ApplicantsHistoryDTO)) {
       return false;
     }
     return EqualsBuilder.reflectionEquals(this, o);

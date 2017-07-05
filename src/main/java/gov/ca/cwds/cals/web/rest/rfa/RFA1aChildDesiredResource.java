@@ -9,7 +9,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ChildDesiredServiceBackedResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ChildDesired;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.ChildDesiredDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -53,7 +53,7 @@ public class RFA1aChildDesiredResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Desired Child preferences by RFA-1a Form Id", response = ChildDesired.class)
+  @ApiOperation(value = "Returns Desired Child preferences by RFA-1a Form Id", response = ChildDesiredDTO.class)
   public Response getChildDesired(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
@@ -70,13 +70,13 @@ public class RFA1aChildDesiredResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update Desired Child Preferences in RFA 1a Form", response = ChildDesired.class)
+  @ApiOperation(value = "Update Desired Child Preferences in RFA 1a Form", response = ChildDesiredDTO.class)
   public Response updateDesiredChild(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
       @ApiParam(required = true, name = CHILD_DESIRED, value = "The RFA-1a Child Desired object")
-          ChildDesired childDesired) {
+          ChildDesiredDTO childDesired) {
     return resourceDelegate.update(formId, childDesired);
   }
 

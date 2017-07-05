@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class RelationshipToApplicant extends BaseDTO {
+public class RelationshipToApplicantDTO extends BaseDTO {
 
   private static final long serialVersionUID = 8554818249973630219L;
 

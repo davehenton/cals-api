@@ -15,46 +15,47 @@ import org.hibernate.annotations.Type;
  * @author CWDS CALS API Team
  */
 @NamedQuery(
-    name = RFA1bForm.NAMED_QUERY_FIND_ALL_BY_FORM,
-    query = "FROM RFA1bForm f WHERE f.formId = :" + PARAM_FORM_ID
+    name = RFA1cForm.NAMED_QUERY_FIND_ALL_BY_FORM,
+    query = "FROM RFA1cForm f WHERE f.formId = :" + PARAM_FORM_ID
 )
 @NamedQuery(
-    name = RFA1bForm.NAMED_QUERY_FIND_BY_FORMA_ID_AND_FORMB_ID,
+    name = RFA1cForm.NAMED_QUERY_FIND_BY_FORMA_ID_AND_FORMC_ID,
     query =
-        "FROM RFA1bForm f WHERE f.formId = :"
+        "FROM RFA1cForm f WHERE f.formId = :"
             + PARAM_FORM_ID
             + " AND f.id = :"
             + PARAM_ENTITY_ID
 )
 @Entity
-@Table(name = "rfa_1b")
-public class RFA1bForm extends RFAExternalEntity<RFA1bFormDTO> implements PersistentObject {
+@Table(name = "rfa_1c")
+public class RFA1cForm extends RFAExternalEntity<RFA1cFormDTO> implements PersistentObject {
 
-  private static final long serialVersionUID = 5302432042081531320L;
+  private static final long serialVersionUID = -1359830497679298650L;
 
   public static final String NAMED_QUERY_FIND_ALL_BY_FORM =
-      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm.find.all.forFormId";
-  public static final String NAMED_QUERY_FIND_BY_FORMA_ID_AND_FORMB_ID =
-      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm.find.by.id";
+      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm.find.all.forFormId";
+  public static final String NAMED_QUERY_FIND_BY_FORMA_ID_AND_FORMC_ID =
+      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm.find.by.id";
 
-  @Type(type = "RFA1bFormJsonType")
-  private RFA1bFormDTO application;
+
+  @Type(type = "RFA1cFormJsonType")
+  private RFA1cFormDTO application;
 
   @Override
-  public RFA1bFormDTO getEntityDTO() {
+  public RFA1cFormDTO getEntityDTO() {
     return getApplication();
   }
 
   @Override
-  public void setEntityDTO(RFA1bFormDTO formDTO) {
+  public void setEntityDTO(RFA1cFormDTO formDTO) {
     setApplication(formDTO);
   }
 
-  public RFA1bFormDTO getApplication() {
+  public RFA1cFormDTO getApplication() {
     return application;
   }
 
-  public void setApplication(RFA1bFormDTO application) {
+  public void setApplication(RFA1cFormDTO application) {
     this.application = application;
   }
 

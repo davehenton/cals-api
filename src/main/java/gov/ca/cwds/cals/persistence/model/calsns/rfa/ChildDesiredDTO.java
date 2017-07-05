@@ -16,7 +16,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team.
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ChildDesired extends BaseDTO implements Request, Response {
+public class ChildDesiredDTO extends BaseDTO implements Request, Response {
 
   private static final long serialVersionUID = -580792892550002723L;
 

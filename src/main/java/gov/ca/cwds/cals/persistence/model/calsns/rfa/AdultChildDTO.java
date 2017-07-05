@@ -15,7 +15,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class AdultChild extends BaseDTO {
+public class AdultChildDTO extends BaseDTO {
 
   private static final long serialVersionUID = -5382998437450053251L;
 
@@ -79,7 +79,7 @@ public class AdultChild extends BaseDTO {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof AdultChild)) {
+    if (!(o instanceof AdultChildDTO)) {
       return false;
     }
     return EqualsBuilder.reflectionEquals(this, o);
