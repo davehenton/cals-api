@@ -49,7 +49,7 @@ public class FacilityResource {
             @ApiResponse(code = 406, message = "Accept Header not supported")})
     @ApiOperation(value = "Returns Facility by Id", response = FacilityDTO.class)
     public Response getFacilityById(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
-            value = "The id of the Facility to find") String facilityNumber) {
+            value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS") String facilityNumber) {
 
         FacilityParameterObject parameterObject = Utils.createFacilityParameterObject(facilityNumber);
         return resourceDelegate.get(parameterObject);
