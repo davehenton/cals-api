@@ -71,6 +71,8 @@ public final class Constants {
 
     public static final String CHILD_DESIRED = "child-desired";
 
+    public static final String RFA_1A_APPLICANTS_DECLARATION = "applicants-declaration";
+
     public static class PathParams {
 
       public static final String FACILITY_ID = "facilityId";

@@ -56,6 +56,10 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
   @Column(name = "jhi_references")
   private ReferencesDTO references;
 
+  @Type(type = "ApplicantsDeclaration")
+  @Column(name = "applicants_declaration")
+  private ApplicantsDeclaration applicantsDeclaration;
+
   public Application getApplication() {
     return application;
   }
@@ -122,6 +126,14 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
 
   public void setReferences(ReferencesDTO references) {
     this.references = references;
+  }
+
+  public ApplicantsDeclaration getApplicantsDeclaration() {
+    return applicantsDeclaration;
+  }
+
+  public void setApplicantsDeclaration(ApplicantsDeclaration applicantsDeclaration) {
+    this.applicantsDeclaration = applicantsDeclaration;
   }
 
   @Override

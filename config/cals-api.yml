@@ -2,6 +2,7 @@ applicationName: CWDS CALS API
 version: ${APP_VERSION:-local}
 
 server:
+  detailedJsonProcessingExceptionMapper: true
   applicationConnectors:
   - type: http 
     port: 8080
