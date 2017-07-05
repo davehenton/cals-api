@@ -9,12 +9,10 @@ import com.google.inject.BindingAnnotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-/**
- * @author CWDS CALS API Team
- */
+/** @author CWDS CALS API Team */
 @BindingAnnotation
 @Target({FIELD, PARAMETER, METHOD})
 @Retention(RUNTIME)
-public @interface RFA1aMinorChildrenCollectionServiceBackendResource {
+public @interface AgeGroupTypesServiceBackedResource {
 
 }

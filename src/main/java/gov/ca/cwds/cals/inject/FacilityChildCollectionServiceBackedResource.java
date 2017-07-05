@@ -12,10 +12,8 @@ import java.lang.annotation.Target;
 /**
  * @author CWDS CALS API Team
  */
-
 @BindingAnnotation
 @Target({FIELD, PARAMETER, METHOD})
 @Retention(RUNTIME)
-public @interface RFA1bCollectionServiceBackendResource {
-
+public @interface FacilityChildCollectionServiceBackedResource {
 }

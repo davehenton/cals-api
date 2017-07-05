@@ -11,11 +11,14 @@ import java.lang.annotation.Target;
 
 /**
  * @author CWDS CALS API Team
+ *
+ *
+ * Annotation for binding County Backed Resource
+ *
  */
 
 @BindingAnnotation
 @Target({FIELD, PARAMETER, METHOD})
 @Retention(RUNTIME)
-public @interface RFA1bServiceBackendResource {
-
+public @interface CountiesServiceBackedResource {
 }

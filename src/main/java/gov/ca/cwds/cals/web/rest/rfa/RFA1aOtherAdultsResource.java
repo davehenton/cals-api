@@ -10,8 +10,8 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.RFA1aOtherAdultsCollectionServiceBackendResource;
-import gov.ca.cwds.cals.inject.RFA1aOtherAdultsServiceBackendResource;
+import gov.ca.cwds.cals.inject.RFA1aOtherAdultsCollectionServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1aOtherAdultsServiceBackedResource;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
@@ -47,8 +47,8 @@ public class RFA1aOtherAdultsResource {
 
   @Inject
   public RFA1aOtherAdultsResource(
-      @RFA1aOtherAdultsServiceBackendResource ResourceDelegate resourceDelegate,
-      @RFA1aOtherAdultsCollectionServiceBackendResource
+      @RFA1aOtherAdultsServiceBackedResource ResourceDelegate resourceDelegate,
+      @RFA1aOtherAdultsCollectionServiceBackedResource
           ResourceDelegate collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;

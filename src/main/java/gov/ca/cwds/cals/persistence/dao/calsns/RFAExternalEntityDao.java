@@ -51,7 +51,7 @@ public abstract class RFAExternalEntityDao<
     Session session = getSessionFactory().getCurrentSession();
     Query<Entity> query =
         session.createNamedQuery(
-            entityFactory.getFindByFormIdandEntityIdNamedQuesry(), entityFactory.getEntityClass());
+            entityFactory.getFindByFormIdAndEntityIdNamedQuery(), entityFactory.getEntityClass());
     query.setParameter(RFAExternalEntity.PARAM_FORM_ID, formId);
     query.setParameter(RFAExternalEntity.PARAM_ENTITY_ID, entityId);
     Entity res = null;

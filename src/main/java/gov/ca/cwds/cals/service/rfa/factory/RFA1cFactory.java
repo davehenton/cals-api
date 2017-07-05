@@ -44,7 +44,7 @@ public class RFA1cFactory
   }
 
   @Override
-  public String getFindByFormIdandEntityIdNamedQuesry() {
+  public String getFindByFormIdAndEntityIdNamedQuery() {
     return RFA1cForm.NAMED_QUERY_FIND_BY_FORMA_ID_AND_FORMC_ID;
   }
 

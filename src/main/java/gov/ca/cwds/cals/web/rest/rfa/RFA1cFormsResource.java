@@ -10,8 +10,8 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.RFA1cCollectionServiceBackendResource;
-import gov.ca.cwds.cals.inject.RFA1cServiceBackendResource;
+import gov.ca.cwds.cals.inject.RFA1cCollectionServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1cServiceBackedResource;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
@@ -47,8 +47,8 @@ public class RFA1cFormsResource {
 
   @Inject
   public RFA1cFormsResource(
-      @RFA1cServiceBackendResource ResourceDelegate resourceDelegate,
-      @RFA1cCollectionServiceBackendResource
+      @RFA1cServiceBackedResource ResourceDelegate resourceDelegate,
+      @RFA1cCollectionServiceBackedResource
           ResourceDelegate collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
