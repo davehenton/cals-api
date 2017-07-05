@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantCollectionDTO;
 import java.util.List;
@@ -9,17 +9,17 @@ import java.util.List;
  * @author CWDS CALS API Team
  */
 public class ApplicantFactory
-    implements RFAExternalEntityFactory<RFA1aApplicant, Applicant, ApplicantCollectionDTO> {
+    implements RFAExternalEntityFactory<RFA1aApplicant, ApplicantDTO, ApplicantCollectionDTO> {
 
-  public static final RFAExternalEntityFactory<RFA1aApplicant, Applicant, ApplicantCollectionDTO>
+  public static final RFAExternalEntityFactory<RFA1aApplicant, ApplicantDTO, ApplicantCollectionDTO>
       INSTANCE = new ApplicantFactory();
 
   private ApplicantFactory() {
   }
 
   @Override
-  public Applicant createEntityDTO() {
-    return new Applicant();
+  public ApplicantDTO createEntityDTO() {
+    return new ApplicantDTO();
   }
 
   @Override
@@ -33,7 +33,7 @@ public class ApplicantFactory
   }
 
   @Override
-  public ApplicantCollectionDTO createEntitiesDTO(List<Applicant> collectDTOs) {
+  public ApplicantCollectionDTO createEntitiesDTO(List<ApplicantDTO> collectDTOs) {
     return new ApplicantCollectionDTO(collectDTOs);
   }
 
@@ -43,7 +43,7 @@ public class ApplicantFactory
   }
 
   @Override
-  public String getFindByFormIdandEntityIdNamedQuesry() {
+  public String getFindByFormIdAndEntityIdNamedQuery() {
     return RFA1aApplicant.NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID;
   }
 

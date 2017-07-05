@@ -10,9 +10,9 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.RFA1aOtherAdultsCollectionServiceBackendResource;
-import gov.ca.cwds.cals.inject.RFA1aOtherAdultsServiceBackendResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
+import gov.ca.cwds.cals.inject.RFA1aOtherAdultsCollectionServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1aOtherAdultsServiceBackedResource;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -47,8 +47,8 @@ public class RFA1aOtherAdultsResource {
 
   @Inject
   public RFA1aOtherAdultsResource(
-      @RFA1aOtherAdultsServiceBackendResource ResourceDelegate resourceDelegate,
-      @RFA1aOtherAdultsCollectionServiceBackendResource
+      @RFA1aOtherAdultsServiceBackedResource ResourceDelegate resourceDelegate,
+      @RFA1aOtherAdultsCollectionServiceBackedResource
           ResourceDelegate collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
@@ -63,13 +63,13 @@ public class RFA1aOtherAdultsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a Other Adult object", response = OtherAdult.class)
+  @ApiOperation(value = "Creates and returns RFA 1a Other Adult object", response = OtherAdultDTO.class)
   public Response createOtherAdult(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long applicationId,
       @ApiParam(required = true, name = RFA_1A_OTHER_ADULT, value = "The RFA-1a OtherAdult object")
-          OtherAdult otherAdult) {
+          OtherAdultDTO otherAdult) {
     return resourceDelegate.create(
         new RFAExternalEntityParameterObject<>(applicationId, otherAdult));
   }
@@ -85,7 +85,7 @@ public class RFA1aOtherAdultsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update and returns RFA 1a OtherAdult object", response = OtherAdult.class)
+  @ApiOperation(value = "Update and returns RFA 1a OtherAdult object", response = OtherAdultDTO.class)
   public Response updateMinorChild(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
@@ -102,7 +102,7 @@ public class RFA1aOtherAdultsResource {
       )
           Long minorChildId,
       @ApiParam(required = true, name = RFA_1A_OTHER_ADULT, value = "The RFA-1a OtherAdult object")
-          OtherAdult otherAdult) {
+          OtherAdultDTO otherAdult) {
     return resourceDelegate.update(
         minorChildId, new RFAExternalEntityParameterObject<>(applicationId, otherAdult));
   }
@@ -118,7 +118,7 @@ public class RFA1aOtherAdultsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1a Form's OtherAdult by Id", response = OtherAdult.class)
+  @ApiOperation(value = "Returns RFA 1a Form's OtherAdult by Id", response = OtherAdultDTO.class)
   public Response getOtherAdultById(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
@@ -136,7 +136,7 @@ public class RFA1aOtherAdultsResource {
           Long otherAdultId) {
 
     return resourceDelegate
-        .get(new RFAExternalEntityParameterObject<OtherAdult>(applicationId, otherAdultId));
+        .get(new RFAExternalEntityParameterObject<OtherAdultDTO>(applicationId, otherAdultId));
   }
 
   @UnitOfWork(CALSNS)
@@ -162,7 +162,7 @@ public class RFA1aOtherAdultsResource {
       )
           Long applicationId) {
     return collectionResourceDelegate
-        .get(new RFAExternalEntityParameterObject<OtherAdult>(applicationId));
+        .get(new RFAExternalEntityParameterObject<OtherAdultDTO>(applicationId));
   }
 
   @UnitOfWork(CALSNS)
@@ -188,6 +188,6 @@ public class RFA1aOtherAdultsResource {
       )
           Long otherAdultId) {
     return resourceDelegate.delete(
-        new RFAExternalEntityParameterObject<OtherAdult>(applicationId, otherAdultId));
+        new RFAExternalEntityParameterObject<OtherAdultDTO>(applicationId, otherAdultId));
   }
 }

@@ -46,8 +46,8 @@ public class RFA1bForm extends RFAExternalEntity<RFA1bFormDTO> implements Persis
   }
 
   @Override
-  public void setEntityDTO(RFA1bFormDTO otherAdult) {
-    setApplication(otherAdult);
+  public void setEntityDTO(RFA1bFormDTO formDTO) {
+    setApplication(formDTO);
   }
 
   public RFA1bFormDTO getApplication() {

@@ -32,6 +32,8 @@ import gov.ca.cwds.cals.service.rfa.RFA1aReferencesService;
 import gov.ca.cwds.cals.service.rfa.RFA1aResidenceService;
 import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1bService;
+import gov.ca.cwds.cals.service.rfa.RFA1cCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1cService;
 import gov.ca.cwds.cals.web.rest.ApplicationResource;
 import gov.ca.cwds.cals.web.rest.CountiesResource;
 import gov.ca.cwds.cals.web.rest.DictionariesResource;
@@ -52,6 +54,7 @@ import gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aReferencesResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1bFormsResource;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1cFormsResource;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
 
@@ -91,6 +94,7 @@ public class ResourcesModule extends AbstractModule {
     bind(RFA1aChildDesiredResource.class);
     bind(RFA1aApplicantsDeclarationResource.class);
     bind(RFA1bFormsResource.class);
+    bind(RFA1cFormsResource.class);
   }
 
   @Provides
@@ -106,27 +110,27 @@ public class ResourcesModule extends AbstractModule {
   }
 
   @Provides
-  @FacilityServiceBackendResource
-  public ResourceDelegate facilityServiceBackendResource(Injector injector) {
+  @FacilityServiceBackedResource
+  public ResourceDelegate facilityServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(FacilityService.class));
   }
 
   @Provides
-  @FacilityChildServiceBackendResource
-  public ResourceDelegate facilityChildServiceBackendResource(Injector injector) {
+  @FacilityChildServiceBackedResource
+  public ResourceDelegate facilityChildServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(FacilityChildService.class));
   }
 
   @Provides
-  @FacilityChildCollectionServiceBackendResource
-  public ResourceDelegate facilityChildServiceCollectionBackendResource(Injector injector) {
+  @FacilityChildCollectionServiceBackedResource
+  public ResourceDelegate facilityChildServiceCollectionBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(FacilityChildCollectionService.class));
   }
 
   @Provides
-  @FacilityTypeCollectionServiceBackendResource
-  public ResourceDelegate facilityTypeServiceCollectionBackendResource(Injector injector) {
+  @FacilityTypeCollectionServiceBackedResource
+  public ResourceDelegate facilityTypeServiceCollectionBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(FacilityTypeCollectionService.class));
   }
@@ -145,27 +149,27 @@ public class ResourcesModule extends AbstractModule {
   }
 
   @Provides
-  @FacilityInspectionCollectionServiceBackendResource
-  public ResourceDelegate facilityInspectionCollectionServiceBackendResource(Injector injector) {
+  @FacilityInspectionCollectionServiceBackedResource
+  public ResourceDelegate facilityInspectionCollectionServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(FacilityInspectionCollectionService.class));
   }
 
   @Provides
-  @FacilityInspectionServiceBackendResource
-  public ResourceDelegate facilityInspectionServiceBackendResource(Injector injector) {
+  @FacilityInspectionServiceBackedResource
+  public ResourceDelegate facilityInspectionServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(FacilityInspectionService.class));
   }
 
   @Provides
-  @CountiesServiceBackendResource
-  public ResourceDelegate countiesServiceBackendResource(Injector injector) {
+  @CountiesServiceBackedResource
+  public ResourceDelegate countiesServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(CountiesService.class));
   }
 
   @Provides
-  @DictionariesServiceBackendResource
-  public ResourceDelegate dictionariesServiceBackendResource(Injector injector) {
+  @DictionariesServiceBackedResource
+  public ResourceDelegate dictionariesServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(DictionariesService.class));
   }
 
@@ -196,87 +200,100 @@ public class ResourcesModule extends AbstractModule {
   }
 
   @Provides
-  @RFA1aFormServiceBackendResource
-  public ResourceDelegate rfa1aFormsServiceBackendResource(Injector injector) {
+  @RFA1aFormServiceBackedResource
+  public ResourceDelegate rfa1aFormsServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aFormService.class));
   }
 
   @Provides
-  @RFA1aFormCollectionServiceBackendResource
-  public ResourceDelegate rfa1aFormsCollectionServiceBackendResource(Injector injector) {
+  @RFA1aFormCollectionServiceBackedResource
+  public ResourceDelegate rfa1aFormsCollectionServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFA1aFormsCollectionService.class));
   }
 
   @Provides
-  @RFA1aApplicantServiceBackendResource
-  public ResourceDelegate rfa1aApplicantServiceBackendResource(Injector injector) {
+  @RFA1aApplicantServiceBackedResource
+  public ResourceDelegate rfa1aApplicantServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aApplicantService.class));
   }
 
   @Provides
-  @RFA1aApplicantsCollectionServiceBackendResource
-  public ResourceDelegate rfa1aApplicantsCollectionServiceBackendResource(Injector injector) {
+  @RFA1aApplicantsCollectionServiceBackedResource
+  public ResourceDelegate rfa1aApplicantsCollectionServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFA1aApplicantsCollectionService.class));
   }
 
   @Provides
-  @RFA1aMinorChildrenServiceBackendResource
-  public ResourceDelegate rfa1aMinorChildServiceBackendResource(Injector injector) {
+  @RFA1aMinorChildrenServiceBackedResource
+  public ResourceDelegate rfa1aMinorChildServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aMinorChildService.class));
   }
 
   @Provides
-  @RFA1aMinorChildrenCollectionServiceBackendResource
-  public ResourceDelegate rfa1aMinorChildrenCollectionServiceBackendResource(Injector injector) {
+  @RFA1aMinorChildrenCollectionServiceBackedResource
+  public ResourceDelegate rfa1aMinorChildrenCollectionServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFA1aMinorChildrenCollectionService.class));
   }
 
   @Provides
-  @RFA1aOtherAdultsServiceBackendResource
-  public ResourceDelegate rfa1aOtherAdultServiceBackendResource(Injector injector) {
+  @RFA1aOtherAdultsServiceBackedResource
+  public ResourceDelegate rfa1aOtherAdultServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aOtherAdultService.class));
   }
 
   @Provides
-  @RFA1aOtherAdultsCollectionServiceBackendResource
-  public ResourceDelegate rfa1aOtherAdultsCollectionServiceBackendResource(Injector injector) {
+  @RFA1aOtherAdultsCollectionServiceBackedResource
+  public ResourceDelegate rfa1aOtherAdultsCollectionServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFA1aOtherAdultsCollectionService.class));
   }
 
   @Provides
-  @RFA1bServiceBackendResource
-  public ResourceDelegate rfa1bServiceBackendResource(Injector injector) {
+  @RFA1bServiceBackedResource
+  public ResourceDelegate rfa1bServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(injector.getInstance(RFA1bService.class));
   }
 
   @Provides
-  @RFA1bCollectionServiceBackendResource
-  public ResourceDelegate rfa1bCollectionServiceBackendResource(Injector injector) {
+  @RFA1bCollectionServiceBackedResource
+  public ResourceDelegate rfa1bCollectionServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFA1bCollectionService.class));
   }
 
   @Provides
+  @RFA1cServiceBackedResource
+  public ResourceDelegate rfa1cServiceBackedResource(Injector injector) {
+    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1cService.class));
+  }
+
+  @Provides
+  @RFA1cCollectionServiceBackedResource
+  public ResourceDelegate rfa1cCollectionServiceBackedResource(Injector injector) {
+    return new ServiceBackedResourceDelegate(
+        injector.getInstance(RFA1cCollectionService.class));
+  }
+
+  @Provides
   @RFA1aAdoptionHistoryServiceBackedResource
-  public ResourceDelegate rfa1aAdoptionHistoryServiceBackendResource(Injector injector) {
+  public ResourceDelegate rfa1aAdoptionHistoryServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFA1aAdoptionHistoryService.class));
   }
 
   @Provides
   @RFA1aReferencesServiceBackedResource
-  public ResourceDelegate rfa1aReferencesServiceBackendResource(Injector injector) {
+  public ResourceDelegate rfa1aReferencesServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFA1aReferencesService.class));
   }
 
   @Provides
   @RFA1aApplicantsDeclarationServiceBackedResource
-  public ResourceDelegate rfa1aApplicantsDeclarationServiceBackendResource(Injector injector) {
+  public ResourceDelegate rfa1aApplicantsDeclarationServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(RFA1aApplicantsDeclarationService.class));
   }

@@ -1,8 +1,12 @@
 package gov.ca.cwds.cals.web.rest;
 
+import static gov.ca.cwds.cals.Constants.API.COUNTIES;
+import static gov.ca.cwds.cals.Constants.API.DICTIONARIES;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.CountiesServiceBackendResource;
+import gov.ca.cwds.cals.inject.CountiesServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.CountiesDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -10,16 +14,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import static gov.ca.cwds.cals.Constants.API.COUNTIES;
-import static gov.ca.cwds.cals.Constants.API.DICTIONARIES;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 
 /**
  * @author CWDS CALS API Team
@@ -33,7 +32,8 @@ public class CountiesResource {
     private ResourceDelegate countiesResourceDeledate;
 
     @Inject
-    public CountiesResource(@CountiesServiceBackendResource ResourceDelegate countiesResourceDeledate) {
+    public CountiesResource(
+        @CountiesServiceBackedResource ResourceDelegate countiesResourceDeledate) {
         this.countiesResourceDeledate = countiesResourceDeledate;
     }
 

@@ -30,7 +30,7 @@ import org.hibernate.annotations.Type;
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @Entity
 @Table(name = "rfa_1a_applicant")
-public class RFA1aApplicant extends RFAExternalEntity<Applicant> implements PersistentObject {
+public class RFA1aApplicant extends RFAExternalEntity<ApplicantDTO> implements PersistentObject {
   private static final long serialVersionUID = 7581768715451007632L;
 
   public static final java.lang.String NAMED_QUERY_FIND_ALL_BY_FORM =
@@ -40,23 +40,23 @@ public class RFA1aApplicant extends RFAExternalEntity<Applicant> implements Pers
 
   @Column(name = "applicant")
   @Type(type = "ApplicantJsonType")
-  private Applicant applicant;
+  private ApplicantDTO applicant;
 
-  public Applicant getApplicant() {
+  public ApplicantDTO getApplicant() {
     return applicant;
   }
 
-  public void setApplicant(Applicant applicant) {
+  public void setApplicant(ApplicantDTO applicant) {
     this.applicant = applicant;
   }
 
   @Override
-  public Applicant getEntityDTO() {
+  public ApplicantDTO getEntityDTO() {
     return getApplicant();
   }
 
   @Override
-  public void setEntityDTO(Applicant applicant) {
+  public void setEntityDTO(ApplicantDTO applicant) {
     setApplicant(applicant);
   }
 
