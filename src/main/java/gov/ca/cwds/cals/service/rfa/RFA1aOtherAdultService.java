@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aOtherAdultDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
-import gov.ca.cwds.cals.service.dto.rfa.OtherAdultsDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultCollectionDTO;
 import gov.ca.cwds.cals.service.rfa.factory.OtherAdultFactory;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 
@@ -13,7 +13,7 @@ import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
  */
 public class RFA1aOtherAdultService
     extends AbstractRFAExternalEntityService<
-    RFA1aOtherAdult, OtherAdult, RFAExternalEntityParameterObject<OtherAdult>, OtherAdultsDTO> {
+    RFA1aOtherAdult, OtherAdult, RFAExternalEntityParameterObject<OtherAdult>, OtherAdultCollectionDTO> {
 
   @Inject
   public RFA1aOtherAdultService(RFA1aOtherAdultDao dao) {

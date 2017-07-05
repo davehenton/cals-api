@@ -5,9 +5,10 @@ import gov.ca.cwds.cals.persistence.hibernate.JsonType;
 /**
  * @author CWDS CALS API Team
  */
-public class OtherAdultJsonType extends JsonType {
+public class RFA1bFormJsonType extends JsonType {
 
-  public Class<OtherAdult> returnedClass() {
-    return OtherAdult.class;
+  public Class<RFA1bFormDTO> returnedClass() {
+    return RFA1bFormDTO.class;
   }
+
 }

@@ -25,6 +25,8 @@ public final class Constants {
 
   public static final String SQL_TYPE = "sqlType";
 
+  public static final String RETURNED_CLASS_NAME_PARAM = "returnedClassName";
+
   public static final String SYSTEM_USER_ID = "SYSTEM";
 
   public static final String RFA = "rfa";
@@ -49,6 +51,8 @@ public final class Constants {
 
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
+    public static final String RFA_1B_FORMS = "rfa-1b-forms";
+
     public static final String RFA_1A_APPLICANTS = "applicants";
 
     public static final String APPLICANTS_RELATIONSHIP = "applicants-relationship";
@@ -60,6 +64,8 @@ public final class Constants {
     public static final String RESIDENCE = "residence";
 
     public static final String RFA_1A_ADOPTION_HISTORY = "adoption-history";
+
+    public static final String RFA_1A_REFERENCES = "references";
 
     public static final String APPLICANTS_HISTORY = "applicants-history";
 
@@ -87,7 +93,11 @@ public final class Constants {
 
       public static final String RFA_1A_ADOPTION_HISTORY_API_PARAM = "adoptionHistory";
 
-      public static final String RFA_1A_OTHER_ADULT = "other-adult";
+      public static final String RFA_1A_OTHER_ADULT = "otherAdult";
+
+      public static final String RFA_1B_FORM = "rfa1bForm";
+
+      public static final String RFA_1B_FORM_ID = "rfa1bFormId";
 
       public static final String RFA_1A_APPLICANT = "applicant";
 

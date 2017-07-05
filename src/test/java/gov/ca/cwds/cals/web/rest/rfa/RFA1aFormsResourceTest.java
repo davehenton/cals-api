@@ -8,8 +8,8 @@ import static org.junit.Assert.assertTrue;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants.API;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormsDTO;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -81,7 +81,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
     target = clientTestRule.target(API.RFA_1A_FORMS);
     invocation = target.request(MediaType.APPLICATION_JSON);
-    RFA1aFormsDTO rfaForms = invocation.get(RFA1aFormsDTO.class);
+    RFA1aFormCollectionDTO rfaForms = invocation.get(RFA1aFormCollectionDTO.class);
 
     assertTrue(rfaForms.getCollection().size() >= 3);
   }

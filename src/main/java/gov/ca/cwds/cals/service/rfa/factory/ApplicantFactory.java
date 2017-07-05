@@ -2,16 +2,16 @@ package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantCollectionDTO;
 import java.util.List;
 
 /**
  * @author CWDS CALS API Team
  */
 public class ApplicantFactory
-    implements RFAExternalEntityFactory<RFA1aApplicant, Applicant, ApplicantsDTO> {
+    implements RFAExternalEntityFactory<RFA1aApplicant, Applicant, ApplicantCollectionDTO> {
 
-  public static final RFAExternalEntityFactory<RFA1aApplicant, Applicant, ApplicantsDTO>
+  public static final RFAExternalEntityFactory<RFA1aApplicant, Applicant, ApplicantCollectionDTO>
       INSTANCE = new ApplicantFactory();
 
   private ApplicantFactory() {
@@ -33,8 +33,8 @@ public class ApplicantFactory
   }
 
   @Override
-  public ApplicantsDTO createEntitiesDTO(List<Applicant> collectDTOs) {
-    return new ApplicantsDTO(collectDTOs);
+  public ApplicantCollectionDTO createEntitiesDTO(List<Applicant> collectDTOs) {
+    return new ApplicantCollectionDTO(collectDTOs);
   }
 
   @Override

@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
-import gov.ca.cwds.cals.service.dto.rfa.OtherAdultsDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultCollectionDTO;
 import java.util.List;
 
 /**
@@ -10,9 +10,9 @@ import java.util.List;
  */
 
 public class OtherAdultFactory
-    implements RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdult, OtherAdultsDTO> {
+    implements RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdult, OtherAdultCollectionDTO> {
 
-  public static final RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdult, OtherAdultsDTO>
+  public static final RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdult, OtherAdultCollectionDTO>
       INSTANCE = new OtherAdultFactory();
 
   private OtherAdultFactory() {
@@ -34,8 +34,8 @@ public class OtherAdultFactory
   }
 
   @Override
-  public OtherAdultsDTO createEntitiesDTO(List<OtherAdult> collectDTOs) {
-    return new OtherAdultsDTO(collectDTOs);
+  public OtherAdultCollectionDTO createEntitiesDTO(List<OtherAdult> collectDTOs) {
+    return new OtherAdultCollectionDTO(collectDTOs);
   }
 
   @Override

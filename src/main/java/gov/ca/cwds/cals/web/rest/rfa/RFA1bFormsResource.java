@@ -1,19 +1,19 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_OTHER_ADULT;
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_OTHER_ADULT_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1B_FORM;
+import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1B_FORM_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
-import static gov.ca.cwds.cals.Constants.API.RFA_1A_OTHER_ADULTS;
+import static gov.ca.cwds.cals.Constants.API.RFA_1B_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.RFA1aOtherAdultsCollectionServiceBackendResource;
-import gov.ca.cwds.cals.inject.RFA1aOtherAdultsServiceBackendResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
-import gov.ca.cwds.cals.service.dto.rfa.OtherAdultCollectionDTO;
+import gov.ca.cwds.cals.inject.RFA1bCollectionServiceBackendResource;
+import gov.ca.cwds.cals.inject.RFA1bServiceBackendResource;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -37,18 +37,18 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 @Api(tags = {RFA})
-@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RFA_1A_OTHER_ADULTS)
+@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RFA_1B_FORMS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RFA1aOtherAdultsResource {
+public class RFA1bFormsResource {
 
   private ResourceDelegate resourceDelegate;
   private ResourceDelegate collectionResourceDelegate;
 
   @Inject
-  public RFA1aOtherAdultsResource(
-      @RFA1aOtherAdultsServiceBackendResource ResourceDelegate resourceDelegate,
-      @RFA1aOtherAdultsCollectionServiceBackendResource
+  public RFA1bFormsResource(
+      @RFA1bServiceBackendResource ResourceDelegate resourceDelegate,
+      @RFA1bCollectionServiceBackendResource
           ResourceDelegate collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
@@ -63,20 +63,20 @@ public class RFA1aOtherAdultsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a Other Adult object", response = OtherAdult.class)
-  public Response createOtherAdult(
+  @ApiOperation(value = "Creates and returns RFA 1B form", response = RFA1bFormDTO.class)
+  public Response createRFA1bForm(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long applicationId,
-      @ApiParam(required = true, name = RFA_1A_OTHER_ADULT, value = "The RFA-1a OtherAdult object")
-          OtherAdult otherAdult) {
+      @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1b Form object")
+          RFA1bFormDTO rfa1bForm) {
     return resourceDelegate.create(
-        new RFAExternalEntityParameterObject<>(applicationId, otherAdult));
+        new RFAExternalEntityParameterObject<>(applicationId, rfa1bForm));
   }
 
   @UnitOfWork(CALSNS)
   @PUT
-  @Path("/{" + RFA_1A_OTHER_ADULT_ID + "}")
+  @Path("/{" + RFA_1B_FORM_ID + "}")
   @Timed
   @ApiResponses(
       value = {
@@ -85,8 +85,8 @@ public class RFA1aOtherAdultsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update and returns RFA 1a OtherAdult object", response = OtherAdult.class)
-  public Response updateMinorChild(
+  @ApiOperation(value = "Updates and returns RFA 1B Form object", response = RFA1bFormDTO.class)
+  public Response updateRFA1bForm(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
           required = true,
@@ -94,22 +94,22 @@ public class RFA1aOtherAdultsResource {
           value = "The RFA-1a Application Id"
       )
           Long applicationId,
-      @PathParam(RFA_1A_OTHER_ADULT_ID)
+      @PathParam(RFA_1B_FORM_ID)
       @ApiParam(
           required = true,
-          name = RFA_1A_OTHER_ADULT_ID,
-          value = "The RFA-1a OtherAdult Id"
+          name = RFA_1B_FORM_ID,
+          value = "The RFA-1a Form Id"
       )
-          Long minorChildId,
-      @ApiParam(required = true, name = RFA_1A_OTHER_ADULT, value = "The RFA-1a OtherAdult object")
-          OtherAdult otherAdult) {
+          Long rfa1BId,
+      @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
+          RFA1bFormDTO rfa1bFormDTO) {
     return resourceDelegate.update(
-        minorChildId, new RFAExternalEntityParameterObject<>(applicationId, otherAdult));
+        rfa1BId, new RFAExternalEntityParameterObject<>(applicationId, rfa1bFormDTO));
   }
 
   @UnitOfWork(CALSNS)
   @GET
-  @Path("/{" + RFA_1A_OTHER_ADULT_ID + "}")
+  @Path("/{" + RFA_1B_FORM_ID + "}")
   @Timed
   @ApiResponses(
       value = {
@@ -118,8 +118,8 @@ public class RFA1aOtherAdultsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1a Form's OtherAdult by Id", response = OtherAdult.class)
-  public Response getOtherAdultById(
+  @ApiOperation(value = "Returns RFA 1B Form by RFA 1A id and RFA 1B id", response = RFA1bFormDTO.class)
+  public Response getRFA1BFormById(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
           required = true,
@@ -127,16 +127,16 @@ public class RFA1aOtherAdultsResource {
           value = "The RFA-1a Application Id"
       )
           Long applicationId,
-      @PathParam(RFA_1A_OTHER_ADULT_ID)
+      @PathParam(RFA_1B_FORM_ID)
       @ApiParam(
           required = true,
-          name = RFA_1A_OTHER_ADULT_ID,
-          value = "The RFA-1a OtherAdult Id"
+          name = RFA_1B_FORM_ID,
+          value = "The RFA 1B Form Id"
       )
-          Long otherAdultId) {
+          Long rfa1BFormId) {
 
     return resourceDelegate
-        .get(new RFAExternalEntityParameterObject<OtherAdult>(applicationId, otherAdultId));
+        .get(new RFAExternalEntityParameterObject<RFA1bFormDTO>(applicationId, rfa1BFormId));
   }
 
   @UnitOfWork(CALSNS)
@@ -150,24 +150,24 @@ public class RFA1aOtherAdultsResource {
       }
   )
   @ApiOperation(
-      value = "Returns RFA 1a Form's Other Adults by Application Id",
-      response = OtherAdultCollectionDTO.class
+      value = "Returns RFA 1B Forms by Application Id",
+      response = RFA1bFormCollectionDTO.class
   )
-  public Response getOtherAdultsByFormId(
+  public Response getRFA1bFormsByFormRFA1aFormId(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
           required = true,
           name = RFA_1A_APPLICATION_ID,
-          value = "The RFA-1a Application Id"
+          value = "The RFA-1A Application Id"
       )
           Long applicationId) {
     return collectionResourceDelegate
-        .get(new RFAExternalEntityParameterObject<OtherAdult>(applicationId));
+        .get(new RFAExternalEntityParameterObject<RFA1bFormDTO>(applicationId));
   }
 
   @UnitOfWork(CALSNS)
   @DELETE
-  @Path("/{" + RFA_1A_OTHER_ADULT_ID + "}")
+  @Path("/{" + RFA_1B_FORM_ID + "}")
   @Timed
   @ApiResponses(
       value = {
@@ -175,19 +175,19 @@ public class RFA1aOtherAdultsResource {
           @ApiResponse(code = 404, message = "Not found")
       }
   )
-  @ApiOperation(value = "Delete RFA 1a Form's OtherAdult by Id")
-  public Response deleteOtherAdult(
+  @ApiOperation(value = "Deletes RFA 1B Form")
+  public Response deleteRFA1bForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA 1A Form Id")
           Long applicationId,
-      @PathParam(RFA_1A_OTHER_ADULT_ID)
+      @PathParam(RFA_1B_FORM_ID)
       @ApiParam(
           required = true,
-          name = RFA_1A_OTHER_ADULT_ID,
-          value = "The RFA-1a OtherAdult Id"
+          name = RFA_1B_FORM_ID,
+          value = "The RFA 1B Form Id"
       )
-          Long otherAdultId) {
+          Long rfa1BFormId) {
     return resourceDelegate.delete(
-        new RFAExternalEntityParameterObject<OtherAdult>(applicationId, otherAdultId));
+        new RFAExternalEntityParameterObject<RFA1bFormDTO>(applicationId, rfa1BFormId));
   }
 }

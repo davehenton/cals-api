@@ -7,15 +7,15 @@ import java.util.Collection;
 /**
  * @author CWDS CALS API Team
  */
-public class OtherAdultsDTO extends CollectionDTO<OtherAdult> {
+public class OtherAdultCollectionDTO extends CollectionDTO<OtherAdult> {
 
 
   private static final long serialVersionUID = -1828042079375417193L;
 
-  public OtherAdultsDTO() {
+  public OtherAdultCollectionDTO() {
   }
 
-  public OtherAdultsDTO(Collection<OtherAdult> collection) {
+  public OtherAdultCollectionDTO(Collection<OtherAdult> collection) {
     super(collection);
   }
 }
