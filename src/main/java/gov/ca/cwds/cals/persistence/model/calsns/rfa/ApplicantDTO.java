@@ -10,10 +10,13 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -34,25 +37,33 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   private List<TypedPersonNameDTO> otherNames = new ArrayList<>();
 
+  @CheckReferentialIntegrity
   private EducationLevelType highestEducationLevel;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
+  @Past
   private LocalDate dateOfBirth;
 
+  @CheckReferentialIntegrity
   private GenderType gender;
 
+  @CheckReferentialIntegrity
   private RaceType race;
 
+  @CheckReferentialIntegrity
   private EthnicityType ethnicity;
 
   private String driverLicenseNumber;
 
+  @CheckReferentialIntegrity
   private StateType driverLicenseState;
 
   private String email;
 
+  @Valid
   private EmploymentDTO employment;
 
+  @Valid
   private List<PhoneDTO> phones = new ArrayList<>();
 
   public String getFirstName() {
