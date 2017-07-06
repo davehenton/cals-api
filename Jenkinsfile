@@ -4,7 +4,6 @@ node ('tpt2-slave'){
    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')), disableConcurrentBuilds(), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
    parameters([
       string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
-      string(defaultValue: 'v21', description: '', name: 'DB2_VERSION'),
       string(defaultValue: 'development', description: '', name: 'branch'),
       string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory')
       ]), pipelineTriggers([pollSCM('H/5 * * * *')])])
@@ -48,7 +47,7 @@ node ('tpt2-slave'){
 	}
 	stage('Deploy Application'){
 	   checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', url: 'git@github.com:ca-cwds/de-ansible.git']]]
-	   sh 'ansible-playbook -vv -e VERSION_NUMBER=$DB2_VERSION -i $inventory deploy-db2-docker.yml  --vault-password-file ~/.ssh/vault.txt'
+	   sh 'ansible-playbook -vv -e VERSION_NUMBER="v21" -i $inventory deploy-db2-docker.yml  --vault-password-file ~/.ssh/vault.txt'
 	   sh 'ansible-playbook -e CALS_API_VERSION=$APP_VERSION -i $inventory deploy-calsapi.yml --vault-password-file ~/.ssh/vault.txt -vv'
 	   cleanWs()
 	   sleep (20)
