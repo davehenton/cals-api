@@ -13,7 +13,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team.
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class AddressDTO extends BaseDTO {
+/**
+ * Do not rename class to AddressDTO.
+ * In this case swagger will not work properly for some APIs
+ */
+public class RFAAddressDTO extends BaseDTO {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "Street Address", example = "1702 Redoak Ct.")
