@@ -22,6 +22,8 @@ public interface RFA1aFormMapper {
 
   List<RFA1aFormDTO> toRFA1aFormsDTO(List<RFA1aForm> forms);
 
+  @Mapping(target = "applicantsDeclaration", ignore = true)
+  @Mapping(target = "references", ignore = true)
   @Mapping(target = "applicantsHistory", ignore = true)
   @Mapping(target = "adoptionHistory", ignore = true)
   @Mapping(target = "applicantEntities", ignore = true)

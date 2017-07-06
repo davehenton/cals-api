@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team.
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class RFA1aFormDTO extends Application {
+public class RFA1aFormDTO extends ApplicationDTO {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "Application Id")

@@ -6,7 +6,7 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.Application;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicationDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.CrudServiceAdapter;
@@ -34,14 +34,14 @@ public class RFA1aFormService extends CrudServiceAdapter {
   @Override
   public Response create(Request request) {
     RFA1aForm form = new RFA1aForm();
-    Application application;
+    ApplicationDTO application;
 
     if (request == null) {
-      application = new Application();
-    } else if (!(request instanceof Application)) {
+      application = new ApplicationDTO();
+    } else if (!(request instanceof ApplicationDTO)) {
       throw new IllegalArgumentException("Cannot convert request to Application");
     } else {
-      application = (Application) request;
+      application = (ApplicationDTO) request;
     }
 
     LocalDateTime now = LocalDateTime.now();

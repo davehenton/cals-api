@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import javax.ws.rs.core.GenericType;
@@ -11,16 +11,16 @@ import javax.ws.rs.core.GenericType;
  */
 
 public class RFA1aOtherAdultsResourceTest extends
-    BaseExternalEntityApiTest<OtherAdult> {
+    BaseExternalEntityApiTest<OtherAdultDTO> {
 
   @Override
-  protected BaseExternalEntityApiHelper<OtherAdult> getExternalEntityApiHelper() {
+  protected BaseExternalEntityApiHelper<OtherAdultDTO> getExternalEntityApiHelper() {
 
-    TestExternalEntityConfiguration<OtherAdult> configuration =
+    TestExternalEntityConfiguration<OtherAdultDTO> configuration =
 
-        new TestExternalEntityConfiguration<OtherAdult>(
+        new TestExternalEntityConfiguration<OtherAdultDTO>(
             clientTestRule,
-            OtherAdult.class,
+            OtherAdultDTO.class,
             API.RFA_1A_OTHER_ADULTS) {
 
           @Override
@@ -29,13 +29,13 @@ public class RFA1aOtherAdultsResourceTest extends
           }
 
           @Override
-          public GenericType<CollectionDTO<OtherAdult>> getCollectionDTOGenericType() {
-            return new GenericType<CollectionDTO<OtherAdult>>() {
+          public GenericType<CollectionDTO<OtherAdultDTO>> getCollectionDTOGenericType() {
+            return new GenericType<CollectionDTO<OtherAdultDTO>>() {
             };
           }
 
           @Override
-          public void modifyEntity(OtherAdult entity) {
+          public void modifyEntity(OtherAdultDTO entity) {
             entity.setFirstName("FIRST_NAME");
           }
 

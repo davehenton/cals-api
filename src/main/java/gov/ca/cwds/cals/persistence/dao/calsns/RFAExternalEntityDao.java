@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 /**
  * @author CWDS CALS API Team
  */
-@SuppressWarnings("squid:S00119")
 public abstract class RFAExternalEntityDao<
     T extends RFAExternalEntity,
     D extends RFAExternalEntityDTO>
@@ -49,7 +48,7 @@ public abstract class RFAExternalEntityDao<
     Session session = getSessionFactory().getCurrentSession();
     Query<T> query =
         session.createNamedQuery(
-            entityFactory.getFindByFormIdandEntityIdNamedQuesry(), entityFactory.getEntityClass());
+            entityFactory.getFindByFormIdAndEntityIdNamedQuery(), entityFactory.getEntityClass());
     query.setParameter(RFAExternalEntity.PARAM_FORM_ID, formId);
     query.setParameter(RFAExternalEntity.PARAM_ENTITY_ID, entityId);
     T res = null;

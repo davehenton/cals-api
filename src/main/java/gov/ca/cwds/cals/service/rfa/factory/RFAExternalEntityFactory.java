@@ -18,6 +18,6 @@ public interface RFAExternalEntityFactory<
 
   String getFindAllByFormNamedQuery();
 
-  String getFindByFormIdandEntityIdNamedQuesry();
+  String getFindByFormIdAndEntityIdNamedQuery();
 
 }

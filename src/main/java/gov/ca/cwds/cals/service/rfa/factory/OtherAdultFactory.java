@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
 
 /**
@@ -8,17 +8,17 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
  */
 
 public class OtherAdultFactory
-    implements RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdult> {
+    implements RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdultDTO> {
 
-  public static final RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdult>
+  public static final RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdultDTO>
       INSTANCE = new OtherAdultFactory();
 
   private OtherAdultFactory() {
   }
 
   @Override
-  public OtherAdult createEntityDTO() {
-    return new OtherAdult();
+  public OtherAdultDTO createEntityDTO() {
+    return new OtherAdultDTO();
   }
 
   @Override
@@ -37,7 +37,7 @@ public class OtherAdultFactory
   }
 
   @Override
-  public String getFindByFormIdandEntityIdNamedQuesry() {
+  public String getFindByFormIdAndEntityIdNamedQuery() {
     return RFA1aOtherAdult.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID;
   }
 

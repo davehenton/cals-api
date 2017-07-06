@@ -37,7 +37,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.DictionariesServiceBackendResource;
+import gov.ca.cwds.cals.inject.DictionariesServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.DictionaryValuesDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -64,7 +64,7 @@ public class DictionariesResource {
 
   @Inject
   public DictionariesResource(
-      @DictionariesServiceBackendResource ResourceDelegate dictionariesResourceDelegate) {
+      @DictionariesServiceBackedResource ResourceDelegate dictionariesResourceDelegate) {
     this.dictionariesResourceDelegate = dictionariesResourceDelegate;
   }
 
