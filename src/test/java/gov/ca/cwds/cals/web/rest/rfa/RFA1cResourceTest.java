@@ -2,31 +2,37 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormCollectionDTO;
+import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
+import javax.ws.rs.core.GenericType;
 
 /**
  * @author CWDS CALS API Team
  */
 
 public class RFA1cResourceTest extends
-    BaseExternalEntityApiTest<RFA1cFormDTO, RFA1cFormCollectionDTO> {
+    BaseExternalEntityApiTest<RFA1cFormDTO> {
 
   @Override
-  protected BaseExternalEntityApiHelper<RFA1cFormDTO, RFA1cFormCollectionDTO> getExternalEntityApiHelper() {
+  protected BaseExternalEntityApiHelper<RFA1cFormDTO> getExternalEntityApiHelper() {
 
-    TestExternalEntityConfiguration<RFA1cFormDTO, RFA1cFormCollectionDTO> configuration =
+    TestExternalEntityConfiguration<RFA1cFormDTO> configuration =
 
-        new TestExternalEntityConfiguration<RFA1cFormDTO, RFA1cFormCollectionDTO>(
+        new TestExternalEntityConfiguration<RFA1cFormDTO>(
             clientTestRule,
             RFA1cFormDTO.class,
-            RFA1cFormCollectionDTO.class,
             API.RFA_1C_FORMS) {
 
           @Override
           protected String getCreateFixture() {
             return "fixtures/rfa/rfa-1c-form.json";
+          }
+
+          @Override
+          public GenericType<CollectionDTO<RFA1cFormDTO>> getCollectionDTOGenericType() {
+            return new GenericType<CollectionDTO<RFA1cFormDTO>>() {
+            };
           }
 
           @Override

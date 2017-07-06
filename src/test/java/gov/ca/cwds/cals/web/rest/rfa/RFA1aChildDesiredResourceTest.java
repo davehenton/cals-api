@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ChildDesiredDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 
 /**

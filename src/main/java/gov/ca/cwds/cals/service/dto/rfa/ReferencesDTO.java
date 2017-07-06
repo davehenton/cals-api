@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.model.calsns.rfa;
+package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -46,7 +46,7 @@ public class ReferencesDTO extends BaseDTO implements Request, Response {
     private String firstName;
     private String middleName;
     private String lastName;
-    private AddressDTO mailingAddress;
+    private RFAAddressDTO mailingAddress;
     private String phoneNumber;
     private String email;
 
@@ -74,11 +74,11 @@ public class ReferencesDTO extends BaseDTO implements Request, Response {
       this.lastName = lastName;
     }
 
-    public AddressDTO getMailingAddress() {
+    public RFAAddressDTO getMailingAddress() {
       return mailingAddress;
     }
 
-    public void setMailingAddress(AddressDTO mailingAddress) {
+    public void setMailingAddress(RFAAddressDTO mailingAddress) {
       this.mailingAddress = mailingAddress;
     }
 

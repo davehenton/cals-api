@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.PARAM_FORM_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity.PARAM_ENTITY_ID;
 
+import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.persistence.Entity;
 import javax.persistence.Table;

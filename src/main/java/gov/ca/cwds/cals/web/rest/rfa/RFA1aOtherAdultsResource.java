@@ -12,8 +12,8 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aOtherAdultsCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aOtherAdultsServiceBackedResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdultDTO;
-import gov.ca.cwds.cals.service.dto.rfa.OtherAdultCollectionDTO;
+import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -151,7 +151,7 @@ public class RFA1aOtherAdultsResource {
   )
   @ApiOperation(
       value = "Returns RFA 1a Form's Other Adults by Application Id",
-      response = OtherAdultCollectionDTO.class
+      response = CollectionDTO.class
   )
   public Response getOtherAdultsByFormId(
       @PathParam(RFA_1A_APPLICATION_ID)

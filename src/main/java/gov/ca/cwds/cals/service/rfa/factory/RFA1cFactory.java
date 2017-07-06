@@ -1,18 +1,16 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormCollectionDTO;
-import java.util.List;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 
 /**
  * @author CWDS CALS API Team
  */
 
 public class RFA1cFactory
-    implements RFAExternalEntityFactory<RFA1cForm, RFA1cFormDTO, RFA1cFormCollectionDTO> {
+    implements RFAExternalEntityFactory<RFA1cForm, RFA1cFormDTO> {
 
-  public static final RFAExternalEntityFactory<RFA1cForm, RFA1cFormDTO, RFA1cFormCollectionDTO>
+  public static final RFAExternalEntityFactory<RFA1cForm, RFA1cFormDTO>
       INSTANCE = new RFA1cFactory();
 
   private RFA1cFactory() {
@@ -31,11 +29,6 @@ public class RFA1cFactory
   @Override
   public Class<RFA1cForm> getEntityClass() {
     return RFA1cForm.class;
-  }
-
-  @Override
-  public RFA1cFormCollectionDTO createEntitiesDTO(List<RFA1cFormDTO> collectDTOs) {
-    return new RFA1cFormCollectionDTO(collectDTOs);
   }
 
   @Override
