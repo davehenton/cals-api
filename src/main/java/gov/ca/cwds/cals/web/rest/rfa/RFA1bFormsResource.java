@@ -13,7 +13,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1bCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.RFA1bServiceBackendResource;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormCollectionDTO;
+import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -151,7 +151,7 @@ public class RFA1bFormsResource {
   )
   @ApiOperation(
       value = "Returns RFA 1B Forms by Application Id",
-      response = RFA1bFormCollectionDTO.class
+      response = CollectionDTO.class
   )
   public Response getRFA1bFormsByFormRFA1aFormId(
       @PathParam(RFA_1A_APPLICATION_ID)

@@ -2,17 +2,15 @@ package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
-import gov.ca.cwds.cals.service.dto.rfa.MinorChildrenDTO;
-import java.util.List;
 
 /**
  * @author CWDS CALS API Team
  */
 
 public class MinorChildFactory
-    implements RFAExternalEntityFactory<RFA1aMinorChild, MinorChild, MinorChildrenDTO> {
+    implements RFAExternalEntityFactory<RFA1aMinorChild, MinorChild> {
 
-  public static final RFAExternalEntityFactory<RFA1aMinorChild, MinorChild, MinorChildrenDTO>
+  public static final RFAExternalEntityFactory<RFA1aMinorChild, MinorChild>
       INSTANCE = new MinorChildFactory();
 
   private MinorChildFactory() {
@@ -31,11 +29,6 @@ public class MinorChildFactory
   @Override
   public Class<RFA1aMinorChild> getEntityClass() {
     return RFA1aMinorChild.class;
-  }
-
-  @Override
-  public MinorChildrenDTO createEntitiesDTO(List<MinorChild> collectDTOs) {
-    return new MinorChildrenDTO(collectDTOs);
   }
 
   @Override

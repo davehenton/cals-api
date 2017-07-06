@@ -13,7 +13,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aMinorChildrenCollectionServiceBackendResource;
 import gov.ca.cwds.cals.inject.RFA1aMinorChildrenServiceBackendResource;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
-import gov.ca.cwds.cals.service.dto.rfa.MinorChildrenDTO;
+import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -151,7 +151,7 @@ public class RFA1aMinorChildrenResource {
   )
   @ApiOperation(
       value = "Returns RFA 1a Form's MinorChild by Application Id",
-      response = MinorChildrenDTO.class
+      response = CollectionDTO.class
   )
   public Response getMinorChildByFormId(
       @PathParam(RFA_1A_APPLICATION_ID)

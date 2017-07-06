@@ -2,25 +2,19 @@ package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFABaseEntity;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
-import java.util.List;
 
 /**
  * @author CWDS CALS API Team
  */
-@SuppressWarnings("squid:S00119")
 public interface RFAExternalEntityFactory<
-    Entity extends RFABaseEntity,
-    EntityDTO extends BaseDTO,
-    EntitiesDTO extends CollectionDTO<EntityDTO>> {
+    T extends RFABaseEntity,
+    D extends BaseDTO> {
 
-  EntityDTO createEntityDTO();
+  D createEntityDTO();
 
-  Entity createEntity();
+  T createEntity();
 
-  Class<Entity> getEntityClass();
-
-  EntitiesDTO createEntitiesDTO(List<EntityDTO> collectDTOs);
+  Class<T> getEntityClass();
 
   String getFindAllByFormNamedQuery();
 

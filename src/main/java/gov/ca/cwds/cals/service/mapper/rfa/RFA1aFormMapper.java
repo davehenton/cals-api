@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.mapper.rfa;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aFormDTO;
 import java.util.List;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

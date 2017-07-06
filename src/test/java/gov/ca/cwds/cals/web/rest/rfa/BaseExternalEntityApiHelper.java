@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import gov.ca.cwds.cals.Constants.API;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import java.io.IOException;
@@ -20,14 +20,14 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 
-public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO, G extends CollectionDTO<T>> implements
+public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> implements
     ExternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
-  private TestExternalEntityConfiguration<T, G> configuration;
+  private TestExternalEntityConfiguration<T> configuration;
 
   public BaseExternalEntityApiHelper(RestClientTestRule clientTestRule,
-      TestExternalEntityConfiguration<T, G> configuration) {
+      TestExternalEntityConfiguration<T> configuration) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
   }
@@ -96,8 +96,8 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO, G exten
                 + form.getId()
                 + "/"
                 + configuration.getApiPath());
-    G entityCollectionDTO = target.request(MediaType.APPLICATION_JSON)
-        .get(configuration.getCollectionDTOClass());
+    CollectionDTO<T> entityCollectionDTO = target.request(MediaType.APPLICATION_JSON)
+        .get(configuration.getCollectionDTOGenericType());
 
     assertThat(entityCollectionDTO.getCollection().size()).isEqualTo(3);
   }
