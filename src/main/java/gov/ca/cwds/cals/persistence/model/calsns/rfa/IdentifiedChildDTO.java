@@ -54,7 +54,7 @@ public class IdentifiedChildDTO extends BaseDTO {
   @ApiModelProperty(example = "White Oaks High")
   private String schoolName;
 
-  private AddressDTO schoolAddress;
+  private RFAAddressDTO schoolAddress;
 
   public String getFirstName() {
     return firstName;
@@ -139,11 +139,11 @@ public class IdentifiedChildDTO extends BaseDTO {
     this.schoolName = schoolName;
   }
 
-  public AddressDTO getSchoolAddress() {
+  public RFAAddressDTO getSchoolAddress() {
     return schoolAddress;
   }
 
-  public void setSchoolAddress(AddressDTO schoolAddress) {
+  public void setSchoolAddress(RFAAddressDTO schoolAddress) {
     this.schoolAddress = schoolAddress;
   }
 

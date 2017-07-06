@@ -22,7 +22,7 @@ public class ResidenceDTO extends BaseDTO implements Request, Response {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "List of Addresses")
-  private List<AddressDTO> addresses;
+  private List<RFAAddressDTO> addresses;
 
   @ApiModelProperty(value = "Is Physical Mailing Similar", example = "false")
   private boolean physicalMailingSimilar;
@@ -51,11 +51,11 @@ public class ResidenceDTO extends BaseDTO implements Request, Response {
   @ApiModelProperty(value = "Home Languages")
   private Set<LanguageType> homeLanguages;
 
-  public List<AddressDTO> getAddresses() {
+  public List<RFAAddressDTO> getAddresses() {
     return addresses;
   }
 
-  public void setAddresses(List<AddressDTO> addresses) {
+  public void setAddresses(List<RFAAddressDTO> addresses) {
     this.addresses = addresses;
   }
 
