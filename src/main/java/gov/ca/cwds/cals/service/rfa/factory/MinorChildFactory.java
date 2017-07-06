@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 
 /**
  * @author CWDS CALS API Team

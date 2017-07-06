@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import javax.ws.rs.core.GenericType;
 

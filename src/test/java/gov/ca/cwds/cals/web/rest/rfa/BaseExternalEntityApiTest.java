@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

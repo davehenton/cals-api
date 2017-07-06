@@ -1,27 +1,39 @@
-package gov.ca.cwds.cals.persistence.model.calsns.rfa;
+package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * @author CWDS CALS API Team
+ * @author CWDS CALS API Team.
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class PhysicalAddressDTO extends BaseDTO {
+/**
+ * Do not rename class to AddressDTO.
+ * In this case swagger will not work properly for some APIs
+ */
+public class RFAAddressDTO extends BaseDTO {
+  private static final long serialVersionUID = 1L;
 
-  private static final long serialVersionUID = 9003280821142481526L;
-
+  @ApiModelProperty(value = "Street Address", example = "1702 Redoak Ct.")
   private String streetAddress;
 
+  @ApiModelProperty(value = "zip", example = "98123")
+  private String zip;
+
+  @ApiModelProperty(value = "City", example = "Rocklin")
   private String city;
 
+  @ApiModelProperty(value = "State Type")
   private StateType state;
 
-  private String zip;
+  @ApiModelProperty(value = "Address Type")
+  private AddressType type;
 
   public String getStreetAddress() {
     return streetAddress;
@@ -29,6 +41,14 @@ public class PhysicalAddressDTO extends BaseDTO {
 
   public void setStreetAddress(String streetAddress) {
     this.streetAddress = streetAddress;
+  }
+
+  public String getZip() {
+    return zip;
+  }
+
+  public void setZip(String zip) {
+    this.zip = zip;
   }
 
   public String getCity() {
@@ -47,12 +67,12 @@ public class PhysicalAddressDTO extends BaseDTO {
     this.state = state;
   }
 
-  public String getZip() {
-    return zip;
+  public AddressType getType() {
+    return type;
   }
 
-  public void setZip(String zip) {
-    this.zip = zip;
+  public void setType(AddressType type) {
+    this.type = type;
   }
 
   @Override
@@ -63,22 +83,5 @@ public class PhysicalAddressDTO extends BaseDTO {
   @Override
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this);
-  }
-
-  @Override
-  public String toString() {
-    return "PhysicalAddress{"
-        + "streeAddress='"
-        + streetAddress
-        + '\''
-        + ", city='"
-        + city
-        + '\''
-        + ", state="
-        + state
-        + ", zip='"
-        + zip
-        + '\''
-        + '}';
   }
 }

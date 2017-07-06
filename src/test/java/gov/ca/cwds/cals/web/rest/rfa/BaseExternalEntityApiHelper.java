@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import java.io.IOException;

@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.service.rfa;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aMinorChildDao;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.rfa.factory.MinorChildFactory;
 
 /**

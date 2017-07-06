@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 
 /**
  * @author CWDS CALS API Team

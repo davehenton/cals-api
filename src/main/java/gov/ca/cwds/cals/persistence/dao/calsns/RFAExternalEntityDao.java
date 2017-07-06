@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.persistence.dao.calsns;
 import com.google.common.collect.ImmutableList;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.rfa.factory.RFAExternalEntityFactory;
 import gov.ca.cwds.data.BaseDaoImpl;
 import java.util.List;

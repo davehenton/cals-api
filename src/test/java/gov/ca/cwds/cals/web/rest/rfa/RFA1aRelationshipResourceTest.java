@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsRelationshipDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationshipDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 
 /**

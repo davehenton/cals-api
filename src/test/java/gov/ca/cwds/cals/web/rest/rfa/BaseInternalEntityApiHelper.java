@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 import javax.ws.rs.client.Entity;

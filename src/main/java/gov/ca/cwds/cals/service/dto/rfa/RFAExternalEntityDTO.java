@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.model.calsns.rfa;
+package gov.ca.cwds.cals.service.dto.rfa;
 
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;

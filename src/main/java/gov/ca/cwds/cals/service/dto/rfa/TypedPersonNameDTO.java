@@ -1,8 +1,8 @@
-package gov.ca.cwds.cals.persistence.model.calsns.rfa;
+package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import io.swagger.annotations.ApiModelProperty;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,18 +10,16 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author CWDS CALS API Team.
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class RFA1aFormDTO extends ApplicationDTO {
-  private static final long serialVersionUID = 1L;
+public class TypedPersonNameDTO extends PersonNameDTO {
 
-  @ApiModelProperty(value = "Application Id")
-  private Long id;
+  private NameType nameType;
 
-  public Long getId() {
-    return id;
+  public NameType getNameType() {
+    return nameType;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setNameType(NameType nameType) {
+    this.nameType = nameType;
   }
 
   @Override
@@ -33,5 +31,4 @@ public class RFA1aFormDTO extends ApplicationDTO {
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this);
   }
-
 }

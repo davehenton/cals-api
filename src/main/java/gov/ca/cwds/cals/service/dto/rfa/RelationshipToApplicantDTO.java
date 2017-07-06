@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.persistence.model.calsns.rfa;
+package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;

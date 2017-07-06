@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.persistence.dao.calsns;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.rfa.factory.OtherAdultFactory;
 import org.hibernate.SessionFactory;
 

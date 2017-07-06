@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.service.rfa;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ReferencesDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.rfa.factory.RFAInternalEntityConfiguration;
 
 /**
