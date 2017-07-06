@@ -8,16 +8,6 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
-import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aApplicantDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
-import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
-import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
-import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
-import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
@@ -195,19 +185,7 @@ public class DataAccessModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    bind(ComplaintReportLic802Dao.class);
-    bind(FacilityTypeDao.class);
-    bind(CountiesDao.class);
-    bind(ClientDao.class);
-    bind(PlacementHomeDao.class);
-    bind(LpaInformationDao.class);
-    bind(InspectionDao.class);
-    bind(DictionariesDao.class);
-
-    // RFA
-    bind(RFA1aFormsDao.class);
-    bind(RFA1aApplicantDao.class);
-
+    //do nothing
   }
 
   @Provides
