@@ -153,7 +153,7 @@ public class RFA1cFormsResource {
       value = "Returns RFA 1C Forms by Application Id",
       response = RFA1cFormCollectionDTO.class
   )
-  public Response getRFA1bFormsByFormRFA1aFormId(
+  public Response getRFA1cFormsByFormRFA1aFormId(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
           required = true,
