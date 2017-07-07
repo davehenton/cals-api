@@ -5,12 +5,8 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.Identified;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.api.Response;
 import java.time.LocalDate;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -21,11 +17,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class MinorChild extends BaseDTO implements Request, Response, Identified<Long> {
+public class MinorChild extends RFAExternalEntityDTO {
 
   private static final long serialVersionUID = 1367746149537559411L;
-
-  private Long id;
 
   private ApplicantRelationshipType relationshipToApplicant;
 
@@ -45,15 +39,6 @@ public class MinorChild extends BaseDTO implements Request, Response, Identified
   private boolean childFinanciallySupported;
 
   private boolean childAdopted;
-
-  @Override
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public ApplicantRelationshipType getRelationshipToApplicant() {
     return relationshipToApplicant;
@@ -137,32 +122,4 @@ public class MinorChild extends BaseDTO implements Request, Response, Identified
     return HashCodeBuilder.reflectionHashCode(this);
   }
 
-  @Override
-  public String toString() {
-    return "MinorChild{"
-        + "id="
-        + id
-        + ", relationshipToApplicant="
-        + relationshipToApplicant
-        + ", childRelatedTo="
-        + childRelatedTo
-        + ", otherRelativeFirstName='"
-        + otherRelativeFirstName
-        + '\''
-        + ", otherRelativeMiddleName='"
-        + otherRelativeMiddleName
-        + '\''
-        + ", otherRelativeLastName='"
-        + otherRelativeLastName
-        + '\''
-        + ", dateOfBirth="
-        + dateOfBirth
-        + ", gender="
-        + gender
-        + ", childFinanciallySupported="
-        + childFinanciallySupported
-        + ", childAdopted="
-        + childAdopted
-        + '}';
-  }
 }

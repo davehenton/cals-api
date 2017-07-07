@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aMinorChildrenParameterObject implements Request, Serializable {
+public class RFAMinorChildrenParameterObject implements Request, Serializable {
 
   private static final long serialVersionUID = 6694171109010473069L;
 
@@ -15,19 +15,19 @@ public class RFA1aMinorChildrenParameterObject implements Request, Serializable 
   private Long minorChildId;
   private MinorChild minorChild;
 
-  public RFA1aMinorChildrenParameterObject(Long applicationId) {
+  public RFAMinorChildrenParameterObject(Long applicationId) {
     this.applicationId = applicationId;
     this.minorChild = null;
     this.minorChildId = null;
   }
 
-  public RFA1aMinorChildrenParameterObject(Long applicationId, MinorChild minorChild) {
+  public RFAMinorChildrenParameterObject(Long applicationId, MinorChild minorChild) {
     this.applicationId = applicationId;
     this.minorChild = minorChild;
     this.minorChildId = null;
   }
 
-  public RFA1aMinorChildrenParameterObject(Long applicationId, Long minorChildId) {
+  public RFAMinorChildrenParameterObject(Long applicationId, Long minorChildId) {
     this.applicationId = applicationId;
     this.minorChild = null;
     this.minorChildId = minorChildId;

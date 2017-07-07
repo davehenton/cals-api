@@ -8,7 +8,7 @@ import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.CrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.cals.service.rfa.configuration.InternalEntityConfiguration;
+import gov.ca.cwds.cals.service.rfa.configuration.RFAInternalEntityConfiguration;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
@@ -18,13 +18,14 @@ import java.time.LocalDateTime;
 /**
  * @author CWDS CALS API Team.
  */
-public abstract class AbstractInternalEntityService<T extends BaseDTO> extends CrudServiceAdapter {
+public abstract class AbstractRFAInternalEntityService<T extends BaseDTO> extends
+    CrudServiceAdapter {
 
   private final RFA1aFormsDao applicationDao;
-  private InternalEntityConfiguration<T> configuration;
+  private RFAInternalEntityConfiguration<T> configuration;
 
-  public AbstractInternalEntityService(RFA1aFormsDao applicationDao,
-      InternalEntityConfiguration<T> configuration) {
+  public AbstractRFAInternalEntityService(RFA1aFormsDao applicationDao,
+      RFAInternalEntityConfiguration<T> configuration) {
     this.applicationDao = applicationDao;
     this.configuration = configuration;
   }
