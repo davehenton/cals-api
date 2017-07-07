@@ -21,7 +21,7 @@ public @interface CheckReferentialIntegrity {
 
   boolean checkEquality() default true;
 
-  String message() default "Constraint violated Referential Integrity is not confirmed";
+  String message() default "Object is not found in database";
 
   Class<?>[] groups() default {};
 

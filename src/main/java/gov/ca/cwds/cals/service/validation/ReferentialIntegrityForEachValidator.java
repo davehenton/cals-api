@@ -14,12 +14,12 @@ import org.hibernate.SessionFactory;
 /** @author CWDS CALS API Team */
 public class ReferentialIntegrityForEachValidator extends AbstractReferentialIntegrityValidator
     implements ConstraintValidator<
-        CheckReferentialIntegrity, Collection<? extends PersistentObject>> {
+        CheckReferentialIntegrityForEach, Collection<? extends PersistentObject>> {
 
   private SessionFactory sessionFactory;
   private boolean checkEquality;
 
-  public void initialize(CheckReferentialIntegrity constraint) {
+  public void initialize(CheckReferentialIntegrityForEach constraint) {
     checkEquality = constraint.checkEquality();
     Injector injector = InjectorHolder.INSTANCE.getInjector();
     sessionFactory =
@@ -37,6 +37,7 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
       currentSession = sessionFactory.openSession();
       Session finalCurrentSession = currentSession;
       boolean[] result = new boolean[]{true};
+      int[] index = new int[]{0};
       collection.forEach(
           o -> {
             boolean valid = checkReferentialIntegrity(finalCurrentSession, o);
@@ -44,9 +45,10 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
             if (!valid) {
               context
                   .buildConstraintViolationWithTemplate(
-                      context.getDefaultConstraintMessageTemplate())
+                      "[" + index[0] +"] object " + o.toString() + "  is not found in DataBase ")
                   .addConstraintViolation();
             }
+            index[0]++;
           });
       return result[0];
     } finally {
