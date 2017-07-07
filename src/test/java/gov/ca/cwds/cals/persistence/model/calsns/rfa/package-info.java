@@ -11,7 +11,18 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ChildDesired"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO"
+                )
+            }
+        ),
+        @TypeDef(
+            name = "RFA1cFormJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO"
                 )
             }
         ),
@@ -22,7 +33,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bFormDTO"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO"
                 )
             }
         ),
@@ -33,7 +44,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsHistory"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO"
                 )
             }
         ),
@@ -44,7 +55,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdult"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO"
                 )
             }
         ),
@@ -55,7 +66,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.Application"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.ApplicationDTO"
                 )
             }
         ),
@@ -66,7 +77,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO"
                 )
             }
         ),
@@ -77,7 +88,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.Residence"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO"
                 )
             }
         ),
@@ -88,7 +99,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsRelationship"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationshipDTO"
                 )
             }
         ),
@@ -99,7 +110,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO"
                 )
             }
         ),
@@ -110,7 +121,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.AdoptionHistory"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO"
                 )
             }
         ),
@@ -121,7 +132,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ReferencesDTO"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO"
                 )
             }
         ),
@@ -132,7 +143,7 @@
                 @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
                 @Parameter(
                     name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsDeclaration"
+                    value = "gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO"
                 )
             }
         )

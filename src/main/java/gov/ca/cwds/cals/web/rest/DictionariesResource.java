@@ -29,6 +29,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SCHOOL_GRADE_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SCHOOL_GRADE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE;
@@ -37,7 +39,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.DictionariesServiceBackendResource;
+import gov.ca.cwds.cals.inject.DictionariesServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.DictionaryValuesDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -64,7 +66,7 @@ public class DictionariesResource {
 
   @Inject
   public DictionariesResource(
-      @DictionariesServiceBackendResource ResourceDelegate dictionariesResourceDelegate) {
+      @DictionariesServiceBackedResource ResourceDelegate dictionariesResourceDelegate) {
     this.dictionariesResourceDelegate = dictionariesResourceDelegate;
   }
 
@@ -329,4 +331,24 @@ public class DictionariesResource {
   public Response getMarriageTerminationReasons() {
     return dictionariesResourceDelegate.get(MARRIAGE_TERMINATION_REASON);
   }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + SCHOOL_GRADE_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(
+      value = "Returns School Grade Dictionary Values",
+      response = DictionaryValuesDTO.class
+  )
+  public Response getSchoolGrades() {
+    return dictionariesResourceDelegate.get(SCHOOL_GRADE_TYPE);
+  }
+
 }

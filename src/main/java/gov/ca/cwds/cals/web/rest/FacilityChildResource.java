@@ -1,9 +1,15 @@
 package gov.ca.cwds.cals.web.rest;
 
+import static gov.ca.cwds.cals.Constants.API.CHILDREN;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.Constants.API.PathParams.CHILD_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.FacilityChildCollectionServiceBackendResource;
-import gov.ca.cwds.cals.inject.FacilityChildServiceBackendResource;
+import gov.ca.cwds.cals.inject.FacilityChildCollectionServiceBackedResource;
+import gov.ca.cwds.cals.inject.FacilityChildServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
@@ -14,19 +20,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import static gov.ca.cwds.cals.Constants.API.FACILITIES;
-import static gov.ca.cwds.cals.Constants.API.CHILDREN;
-import static gov.ca.cwds.cals.Constants.API.PathParams.CHILD_ID;
-import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 
 /**
  * @author CWDS CALS API Team
@@ -39,8 +38,9 @@ public class FacilityChildResource {
     private ResourceDelegate collectionResourceDelegate;
 
     @Inject
-    public FacilityChildResource(@FacilityChildServiceBackendResource ResourceDelegate resourceDelegate,
-                                 @FacilityChildCollectionServiceBackendResource ResourceDelegate collectionResourceDelegate) {
+    public FacilityChildResource(
+        @FacilityChildServiceBackedResource ResourceDelegate resourceDelegate,
+        @FacilityChildCollectionServiceBackedResource ResourceDelegate collectionResourceDelegate) {
         this.resourceDelegate = resourceDelegate;
         this.collectionResourceDelegate = collectionResourceDelegate;
     }

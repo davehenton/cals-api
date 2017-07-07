@@ -10,11 +10,12 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReason;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 
@@ -52,6 +53,8 @@ public final class Constants {
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
     public static final String RFA_1B_FORMS = "rfa-1b-forms";
+
+    public static final String RFA_1C_FORMS = "rfa-1c-forms";
 
     public static final String RFA_1A_APPLICANTS = "applicants";
 
@@ -99,11 +102,19 @@ public final class Constants {
 
       public static final String RFA_1B_FORM = "rfa1bForm";
 
+      public static final String RFA_1C_FORM = "rfa1cForm";
+
       public static final String RFA_1B_FORM_ID = "rfa1bFormId";
 
-      public static final String RFA_1A_APPLICANT = "applicant";
+      public static final String RFA_1C_FORM_ID = "rfa1cFormId";
 
-      private PathParams() {
+      public static final String RFA_1A_APPLICANT = "applicant";
+    }
+
+    public static class QueryParams {
+      public static final String EXPANDED = "expanded";
+
+      private QueryParams() {
       }
     }
 
@@ -127,7 +138,8 @@ public final class Constants {
     RESIDENCE_OWNERSHIP_TYPE(ResidenceOwnershipType.class),
     APPLICANT_RELATIONSHIP_TYPE(ApplicantRelationshipType.class),
     LICENSE_TYPE(LicenseType.class),
-    MARRIAGE_TERMINATION_REASON(MarriageTerminationReason.class);
+    MARRIAGE_TERMINATION_REASON(MarriageTerminationReasonType.class),
+    SCHOOL_GRADE_TYPE(SchoolGradeType.class);
 
     public static final String AGE_GROUP_TYPE_PATH = "age-groups";
     public static final String LANGUAGE_TYPE_PATH = "languages";
@@ -147,6 +159,7 @@ public final class Constants {
     public static final String RELATIONSHIP_EVENT_TYPE_PATH = "relationship-event-types";
     public static final String LICENSE_TYPE_PATH = "license-types";
     public static final String MARRIAGE_TERMINATION_REASON_PATH = "marriage-termination-reasons";
+    public static final String SCHOOL_GRADE_TYPE_PATH = "school-grades";
 
     private Class<? extends BaseDictionary> dictionaryClass;
 

@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsHistory;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 
 /**
@@ -9,15 +9,15 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfigurati
  */
 
 public class RFA1aApplicantsHistoryResourceTest extends
-    BaseInternalEntityApiTest<ApplicantsHistory> {
+    BaseInternalEntityApiTest<ApplicantsHistoryDTO> {
 
   @Override
-  protected BaseInternalEntityApiHelper<ApplicantsHistory> getInternalEntityApiHelper() {
+  protected BaseInternalEntityApiHelper<ApplicantsHistoryDTO> getInternalEntityApiHelper() {
 
-    TestInternalEntityConfiguration<ApplicantsHistory> configuration =
+    TestInternalEntityConfiguration<ApplicantsHistoryDTO> configuration =
 
-        new TestInternalEntityConfiguration<ApplicantsHistory>(
-            clientTestRule, ApplicantsHistory.class, API.APPLICANTS_HISTORY) {
+        new TestInternalEntityConfiguration<ApplicantsHistoryDTO>(
+            clientTestRule, ApplicantsHistoryDTO.class, API.APPLICANTS_HISTORY) {
 
           @Override
           protected String getCreateFixture() {

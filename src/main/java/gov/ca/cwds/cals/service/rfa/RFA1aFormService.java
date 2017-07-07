@@ -6,12 +6,13 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.Application;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.CrudServiceAdapter;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicationDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
+import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
@@ -33,16 +34,13 @@ public class RFA1aFormService extends CrudServiceAdapter {
 
   @Override
   public Response create(Request request) {
-    RFA1aForm form = new RFA1aForm();
-    Application application;
-
-    if (request == null) {
-      application = new Application();
-    } else if (!(request instanceof Application)) {
-      throw new IllegalArgumentException("Cannot convert request to Application");
-    } else {
-      application = (Application) request;
+    if (!(request instanceof RFA1aFormDTO)) {
+      throw new IllegalArgumentException("Cannot convert request to Application Form");
     }
+    RFA1aFormDTO formDTO = (RFA1aFormDTO) request;
+
+    RFA1aForm form = new RFA1aForm();
+    mapper.toRFA1aForm(form, formDTO);
 
     LocalDateTime now = LocalDateTime.now();
     form.setCreateDateTime(now);
@@ -50,33 +48,46 @@ public class RFA1aFormService extends CrudServiceAdapter {
     form.setUpdateDateTime(now);
     form.setUpdateUserId(SYSTEM_USER_ID);
 
-    form.setApplication(application);
     form = dao.create(form);
 
     return mapper.toRFA1aFormDTO(form);
   }
 
   @Override
-  public Response find(Serializable formId) {
-    RFA1aForm form = dao.find(formId);
-    return mapper.toRFA1aFormDTO(form);
+  public Response find(Serializable parameter) {
+    RFA1aFormsParameterObject parameterObject;
+    if (!(parameter instanceof RFA1aFormsParameterObject)) {
+      throw new IllegalArgumentException();
+    }
+    parameterObject = (RFA1aFormsParameterObject) parameter;
+
+    RFA1aForm form = dao.find(parameterObject.getFormId());
+
+    RFA1aFormDTO formDTO;
+    if (parameterObject.isExpanded()) {
+      formDTO = mapper.toExpandedRFA1aFormDTO(form);
+    } else {
+      formDTO = mapper.toRFA1aFormDTO(form);
+    }
+
+    return formDTO;
   }
 
   @Override
   public Response update(Serializable formId, Request request) {
-    RFA1aForm rfa1aForm = dao.find(formId);
-    if (rfa1aForm == null) {
+    RFA1aForm form = dao.find(formId);
+    if (form == null) {
       throw new UserFriendlyException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
     }
     if (!(request instanceof RFA1aFormDTO)) {
       throw new IllegalArgumentException("request is not of expected type: RFA1aFormDTO");
     }
     RFA1aFormDTO formDTO = (RFA1aFormDTO) request;
-    mapper.toRFA1aForm(rfa1aForm, formDTO);
-    rfa1aForm.setUpdateDateTime(LocalDateTime.now());
-    rfa1aForm.setUpdateUserId(SYSTEM_USER_ID);
-    dao.update(rfa1aForm);
-    return mapper.toRFA1aFormDTO(dao.find(formId));
+    mapper.toRFA1aForm(form, formDTO);
+    form.setUpdateDateTime(LocalDateTime.now());
+    form.setUpdateUserId(SYSTEM_USER_ID);
+    dao.update(form);
+    return mapper.toRFA1aFormDTO(form);
   }
 
 }

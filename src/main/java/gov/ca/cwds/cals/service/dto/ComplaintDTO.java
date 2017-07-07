@@ -1,25 +1,22 @@
 package gov.ca.cwds.cals.service.dto;
 
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.validation.Date;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
-import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
 
 /**
  * @author CWDS CALS API Team
  */
 
-@SuppressWarnings("squid:S3437")  //LocalDateTime is serializable
+@SuppressWarnings({"squid:S3437", "squid:S2160"})  //LocalDateTime is serializable
 public class ComplaintDTO extends BaseDTO implements Response {
 
     private static final long serialVersionUID = 5198076888434433809L;
@@ -164,16 +161,5 @@ public class ComplaintDTO extends BaseDTO implements Response {
     public void setAllegations(List<AllegationDTO> allegations) {
         this.allegations = allegations;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
 
 }

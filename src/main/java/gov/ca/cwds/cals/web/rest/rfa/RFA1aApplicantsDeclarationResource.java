@@ -10,7 +10,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aApplicantsDeclarationServiceBackedResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsDeclaration;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -56,7 +56,7 @@ public class RFA1aApplicantsDeclarationResource {
   )
   @ApiOperation(
       value = "Returns Applicants Declaration by RFA-1a Form Id",
-      response = ApplicantsDeclaration.class
+      response = ApplicantsDeclarationDTO.class
   )
   public Response getApplicantsDeclaration(
       @PathParam(RFA_1A_APPLICATION_ID)
@@ -76,7 +76,7 @@ public class RFA1aApplicantsDeclarationResource {
   )
   @ApiOperation(
       value = "Update Applicants Declaration in RFA 1a Form",
-      response = ApplicantsDeclaration.class
+      response = ApplicantsDeclarationDTO.class
   )
   public Response updateApplicantsDeclaration(
       @PathParam(RFA_1A_APPLICATION_ID)
@@ -87,7 +87,7 @@ public class RFA1aApplicantsDeclarationResource {
           name = RESIDENCE,
           value = "The RFA-1a Applicants Declaration object"
       )
-          ApplicantsDeclaration applicantsDeclaration) {
+          ApplicantsDeclarationDTO applicantsDeclaration) {
     return resourceDelegate.update(formId, applicantsDeclaration);
   }
 }

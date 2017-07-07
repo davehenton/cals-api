@@ -9,7 +9,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ApplicantsHistoryServiceBackedResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsHistory;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -53,7 +53,7 @@ public class RFA1aApplicantsHistoryResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Applicants History by RFA-1a Form Id", response = ApplicantsHistory.class)
+  @ApiOperation(value = "Returns Applicants History by RFA-1a Form Id", response = ApplicantsHistoryDTO.class)
   public Response getApplicantsHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
@@ -70,13 +70,13 @@ public class RFA1aApplicantsHistoryResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update Applicants History in RFA 1a Form", response = ApplicantsHistory.class)
+  @ApiOperation(value = "Update Applicants History in RFA 1a Form", response = ApplicantsHistoryDTO.class)
   public Response updateApplicantsHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
       @ApiParam(required = true, name = APPLICANTS_HISTORY, value = "The RFA-1a ApplicantsHistory object")
-          ApplicantsHistory applicantsHistory) {
+          ApplicantsHistoryDTO applicantsHistory) {
     return resourceDelegate.update(formId, applicantsHistory);
   }
 

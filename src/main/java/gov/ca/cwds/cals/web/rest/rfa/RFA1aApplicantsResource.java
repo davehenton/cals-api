@@ -10,10 +10,10 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.RFA1aApplicantServiceBackendResource;
-import gov.ca.cwds.cals.inject.RFA1aApplicantsCollectionServiceBackendResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.Applicant;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantCollectionDTO;
+import gov.ca.cwds.cals.inject.RFA1aApplicantServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1aApplicantsCollectionServiceBackedResource;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.ApplicantCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -47,8 +47,8 @@ public class RFA1aApplicantsResource {
 
   @Inject
   public RFA1aApplicantsResource(
-      @RFA1aApplicantServiceBackendResource ResourceDelegate resourceDelegate,
-      @RFA1aApplicantsCollectionServiceBackendResource
+      @RFA1aApplicantServiceBackedResource ResourceDelegate resourceDelegate,
+      @RFA1aApplicantsCollectionServiceBackedResource
           ResourceDelegate collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
@@ -63,13 +63,13 @@ public class RFA1aApplicantsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a Applicant", response = Applicant.class)
+  @ApiOperation(value = "Creates and returns RFA 1a Applicant", response = ApplicantDTO.class)
   public Response createApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
       @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1a Applicant object")
-          Applicant applicant) {
+          ApplicantDTO applicant) {
     return resourceDelegate.create(new RFAExternalEntityParameterObject<>(formId, applicant));
   }
 
@@ -84,7 +84,7 @@ public class RFA1aApplicantsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update and returns RFA 1a Applicant", response = Applicant.class)
+  @ApiOperation(value = "Update and returns RFA 1a Applicant", response = ApplicantDTO.class)
   public Response updateApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
@@ -93,7 +93,7 @@ public class RFA1aApplicantsResource {
       @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1a Applicant Id")
           Long applicantId,
       @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1a Applicant object")
-          Applicant applicant) {
+          ApplicantDTO applicant) {
     return resourceDelegate.update(
         applicantId, new RFAExternalEntityParameterObject<>(formId, applicant));
   }
@@ -109,7 +109,7 @@ public class RFA1aApplicantsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1a Form's Applicant by Id", response = Applicant.class)
+  @ApiOperation(value = "Returns RFA 1a Form's Applicant by Id", response = ApplicantDTO.class)
   public Response getApplicantById(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
@@ -119,7 +119,7 @@ public class RFA1aApplicantsResource {
           Long applicantId) {
 
     return resourceDelegate
-        .get(new RFAExternalEntityParameterObject<Applicant>(formId, applicantId));
+        .get(new RFAExternalEntityParameterObject<ApplicantDTO>(formId, applicantId));
   }
 
   @UnitOfWork(CALSNS)
@@ -140,7 +140,8 @@ public class RFA1aApplicantsResource {
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId) {
-    return collectionResourceDelegate.get(new RFAExternalEntityParameterObject<Applicant>(formId));
+    return collectionResourceDelegate
+        .get(new RFAExternalEntityParameterObject<ApplicantDTO>(formId));
   }
 
   @UnitOfWork(CALSNS)
@@ -162,6 +163,6 @@ public class RFA1aApplicantsResource {
       @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1a Applicant Id")
           Long applicantId) {
     return resourceDelegate
-        .delete(new RFAExternalEntityParameterObject<Applicant>(formId, applicantId));
+        .delete(new RFAExternalEntityParameterObject<ApplicantDTO>(formId, applicantId));
   }
 }

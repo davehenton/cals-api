@@ -10,7 +10,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aAdoptionHistoryServiceBackedResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.AdoptionHistory;
+import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -56,7 +56,7 @@ public class RFA1aAdoptionHistoryResource {
   )
   @ApiOperation(
       value = "Returns Adoption History by RFA-1a Form Id",
-      response = AdoptionHistory.class
+      response = AdoptionHistoryDTO.class
   )
   public Response getAdoptionHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
@@ -74,7 +74,7 @@ public class RFA1aAdoptionHistoryResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update Adoption History in RFA 1a Form", response = AdoptionHistory.class)
+  @ApiOperation(value = "Update Adoption History in RFA 1a Form", response = AdoptionHistoryDTO.class)
   public Response updateAdoptionHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
@@ -84,7 +84,7 @@ public class RFA1aAdoptionHistoryResource {
           name = RFA_1A_ADOPTION_HISTORY_API_PARAM,
           value = "The RFA-1a Adoption History object"
       )
-          AdoptionHistory adoptionHistory) {
+          AdoptionHistoryDTO adoptionHistory) {
     return resourceDelegate.update(formId, adoptionHistory);
   }
 }

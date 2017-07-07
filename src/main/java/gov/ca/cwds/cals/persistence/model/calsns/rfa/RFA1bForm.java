@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.PARAM_FORM_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity.PARAM_ENTITY_ID;
 
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -46,8 +47,8 @@ public class RFA1bForm extends RFAExternalEntity<RFA1bFormDTO> implements Persis
   }
 
   @Override
-  public void setEntityDTO(RFA1bFormDTO otherAdult) {
-    setApplication(otherAdult);
+  public void setEntityDTO(RFA1bFormDTO formDTO) {
+    setApplication(formDTO);
   }
 
   public RFA1bFormDTO getApplication() {

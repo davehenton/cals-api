@@ -122,6 +122,7 @@ dependencies {
     testCompile group: 'org.hamcrest', name: 'hamcrest-junit', version: '2.0.0.0'
     testCompile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.194'
+    testCompile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
     testCompile('org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:2.23.2') {
         exclude group: 'javax.servlet', module: 'javax.servlet-api'
         exclude group: 'junit', module: 'junit'

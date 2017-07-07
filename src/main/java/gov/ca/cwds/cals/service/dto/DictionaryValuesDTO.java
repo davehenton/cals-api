@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
+import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import java.util.Collection;
 
 /**

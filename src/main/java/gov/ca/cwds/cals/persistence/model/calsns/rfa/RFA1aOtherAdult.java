@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild.PARAM_FORM_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity.PARAM_ENTITY_ID;
 
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ import org.hibernate.annotations.Type;
 )
 @Entity
 @Table(name = "rfa_1a_other_adult")
-public class RFA1aOtherAdult extends RFAExternalEntity<OtherAdult> implements PersistentObject {
+public class RFA1aOtherAdult extends RFAExternalEntity<OtherAdultDTO> implements PersistentObject {
 
   private static final long serialVersionUID = -972723567173544641L;
 
@@ -41,23 +42,23 @@ public class RFA1aOtherAdult extends RFAExternalEntity<OtherAdult> implements Pe
 
   @Column(name = "other_adult")
   @Type(type = "OtherAdultJsonType")
-  private OtherAdult otherAdult;
+  private OtherAdultDTO otherAdult;
 
-  public void setOtherAdult(OtherAdult otherAdult) {
+  public void setOtherAdult(OtherAdultDTO otherAdult) {
     this.otherAdult = otherAdult;
   }
 
-  public OtherAdult getOtherAdult() {
+  public OtherAdultDTO getOtherAdult() {
     return otherAdult;
   }
 
   @Override
-  public OtherAdult getEntityDTO() {
+  public OtherAdultDTO getEntityDTO() {
     return getOtherAdult();
   }
 
   @Override
-  public void setEntityDTO(OtherAdult otherAdult) {
+  public void setEntityDTO(OtherAdultDTO otherAdult) {
     setOtherAdult(otherAdult);
   }
 

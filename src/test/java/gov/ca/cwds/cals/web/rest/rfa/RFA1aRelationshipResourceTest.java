@@ -1,22 +1,22 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsRelationship;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationshipDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 
 /**
  * @author CWDS CALS API Team
  */
 public class RFA1aRelationshipResourceTest extends
-    BaseInternalEntityApiTest<ApplicantsRelationship> {
+    BaseInternalEntityApiTest<ApplicantsRelationshipDTO> {
 
   @Override
-  protected BaseInternalEntityApiHelper<ApplicantsRelationship> getInternalEntityApiHelper() {
+  protected BaseInternalEntityApiHelper<ApplicantsRelationshipDTO> getInternalEntityApiHelper() {
 
-    TestInternalEntityConfiguration<ApplicantsRelationship> configuration =
+    TestInternalEntityConfiguration<ApplicantsRelationshipDTO> configuration =
 
-        new TestInternalEntityConfiguration<ApplicantsRelationship>(
-            clientTestRule, ApplicantsRelationship.class, API.APPLICANTS_RELATIONSHIP) {
+        new TestInternalEntityConfiguration<ApplicantsRelationshipDTO>(
+            clientTestRule, ApplicantsRelationshipDTO.class, API.APPLICANTS_RELATIONSHIP) {
 
           @Override
           protected String getCreateFixture() {

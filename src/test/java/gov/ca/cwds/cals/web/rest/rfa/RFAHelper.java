@@ -25,7 +25,7 @@ public final class RFAHelper {
 
     RFA1aFormDTO rfaFormDTOBefore = new RFA1aFormDTO();
     CountyType county = new CountyType();
-    county.setId(1l);
+    county.setId(1L);
     county.setValue("Alameda");
     rfaFormDTOBefore.setApplicationCounty(county);
     rfaFormDTOBefore.setInitialApplication(true);

@@ -1,6 +1,15 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationshipDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicationDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
+import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
 import javax.persistence.Column;
@@ -8,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.NamedQuery;
@@ -20,25 +30,24 @@ import org.hibernate.annotations.Type;
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm ORDER BY id ASC")
 @Entity
 @Table(name = "rfa_1a")
-public class RFA1aForm extends RFABaseEntity implements PersistentObject, Response {
+public class RFA1aForm extends RFABaseEntity implements PersistentObject, Request, Response {
 
   private static final long serialVersionUID = -6201382973500280111L;
   public static final String NAMED_QUERY_FIND_ALL =
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.all";
 
-
   @Type(type = "ApplicationJsonType")
-  private Application application;
+  private ApplicationDTO application;
 
   @Type(type = "ResidenceJsonType")
-  private Residence residence;
+  private ResidenceDTO residence;
 
   @Type(type = "ApplicantsRelationshipJsonType")
-  private ApplicantsRelationship relationships;
+  private ApplicantsRelationshipDTO relationships;
 
   @Type(type = "ApplicantHistoryJsonType")
   @Column(name = "applicants_history")
-  private ApplicantsHistory applicantsHistory;
+  private ApplicantsHistoryDTO applicantsHistory;
 
   @OneToMany
   @JoinColumn(name = "application_id")
@@ -46,11 +55,11 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
 
   @Type(type = "AdoptionHistoryJsonType")
   @Column(name = "adoption_history")
-  private AdoptionHistory adoptionHistory;
+  private AdoptionHistoryDTO adoptionHistory;
 
   @Type(type = "ChildDesiredJsonType")
   @Column(name = "child_desired")
-  private ChildDesired childDesired;
+  private ChildDesiredDTO childDesired;
 
   @Type(type = "ReferencesJsonType")
   @Column(name = "jhi_references")
@@ -58,30 +67,29 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
 
   @Type(type = "ApplicantsDeclaration")
   @Column(name = "applicants_declaration")
-  private ApplicantsDeclaration applicantsDeclaration;
+  private ApplicantsDeclarationDTO applicantsDeclaration;
 
-  public Application getApplication() {
+  public ApplicationDTO getApplication() {
     return application;
   }
 
-  public void setApplication(Application application) {
+  public void setApplication(ApplicationDTO application) {
     this.application = application;
   }
 
-  public Residence getResidence() {
+  public ResidenceDTO getResidence() {
     return residence;
   }
 
-  public void setResidence(Residence residence) {
+  public void setResidence(ResidenceDTO residence) {
     this.residence = residence;
   }
 
-  public ApplicantsRelationship getRelationships() {
+  public ApplicantsRelationshipDTO getRelationships() {
     return relationships;
   }
 
-  public void setRelationships(
-      ApplicantsRelationship relationships) {
+  public void setRelationships(ApplicantsRelationshipDTO relationships) {
     this.relationships = relationships;
   }
 
@@ -89,34 +97,31 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     return applicantEntities;
   }
 
-  public void setApplicantEntities(
-      List<RFA1aApplicant> applicantEntities) {
+  public void setApplicantEntities(List<RFA1aApplicant> applicantEntities) {
     this.applicantEntities = applicantEntities;
   }
 
-  public AdoptionHistory getAdoptionHistory() {
+  public AdoptionHistoryDTO getAdoptionHistory() {
     return adoptionHistory;
   }
 
-  public void setAdoptionHistory(
-      AdoptionHistory adoptionHistory) {
+  public void setAdoptionHistory(AdoptionHistoryDTO adoptionHistory) {
     this.adoptionHistory = adoptionHistory;
   }
 
-  public ApplicantsHistory getApplicantsHistory() {
+  public ApplicantsHistoryDTO getApplicantsHistory() {
     return applicantsHistory;
   }
 
-  public void setApplicantsHistory(
-      ApplicantsHistory applicantsHistory) {
+  public void setApplicantsHistory(ApplicantsHistoryDTO applicantsHistory) {
     this.applicantsHistory = applicantsHistory;
   }
 
-  public ChildDesired getChildDesired() {
+  public ChildDesiredDTO getChildDesired() {
     return childDesired;
   }
 
-  public void setChildDesired(ChildDesired childDesired) {
+  public void setChildDesired(ChildDesiredDTO childDesired) {
     this.childDesired = childDesired;
   }
 
@@ -128,11 +133,11 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     this.references = references;
   }
 
-  public ApplicantsDeclaration getApplicantsDeclaration() {
+  public ApplicantsDeclarationDTO getApplicantsDeclaration() {
     return applicantsDeclaration;
   }
 
-  public void setApplicantsDeclaration(ApplicantsDeclaration applicantsDeclaration) {
+  public void setApplicantsDeclaration(ApplicantsDeclarationDTO applicantsDeclaration) {
     this.applicantsDeclaration = applicantsDeclaration;
   }
 
