@@ -55,51 +55,51 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
         .post(Entity.entity(postRequest, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
     Long id = postResponseForm.getId();
 
-    VelocityHelper postVelocityResponseHelper =
-        new VelocityHelper("fixtures/rfa/rfa-1a-form-post-response.json");
+    VelocityHelper postVelocityResponseHelper = new VelocityHelper();
     postVelocityResponseHelper.setParameter("id", id);
-    String expectedPostResponse = postVelocityResponseHelper.process();
+    String expectedPostResponse =
+        postVelocityResponseHelper.process("fixtures/rfa/rfa-1a-form-post-response.json");
 
     assertEqualsResponse(expectedPostResponse, transformDTOtoJSON(postResponseForm));
 
 
-    String putResidenceRequest = fixture("fixtures/rfa/rfa-1a-residence-request.json");
+    String putResidenceFixture = fixture("fixtures/rfa/rfa-1a-residence-request.json");
     WebTarget putResidenceTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/residence");
     putResidenceTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(putResidenceRequest, MediaType.APPLICATION_JSON_TYPE), ResidenceDTO.class);
+        .put(Entity.entity(putResidenceFixture, MediaType.APPLICATION_JSON_TYPE), ResidenceDTO.class);
 
 
-    String putApplicantsHistoryRequest = fixture("fixtures/rfa/rfa-1a-applicants-history.json");
+    String putApplicantsHistoryFixture = fixture("fixtures/rfa/rfa-1a-applicants-history.json");
     WebTarget putApplicantsHistoryTarget =
         clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/applicants-history");
     putApplicantsHistoryTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(putApplicantsHistoryRequest, MediaType.APPLICATION_JSON_TYPE), ApplicantsHistoryDTO.class);
+        .put(Entity.entity(putApplicantsHistoryFixture, MediaType.APPLICATION_JSON_TYPE), ApplicantsHistoryDTO.class);
 
 
-    String putChildDesiredRequest = fixture("fixtures/rfa/rfa-1a-child-desired.json");
+    String putChildDesiredFixture = fixture("fixtures/rfa/rfa-1a-child-desired.json");
     WebTarget putChildDesiredTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/child-desired");
     putChildDesiredTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(putChildDesiredRequest, MediaType.APPLICATION_JSON_TYPE), ChildDesiredDTO.class);
+        .put(Entity.entity(putChildDesiredFixture, MediaType.APPLICATION_JSON_TYPE), ChildDesiredDTO.class);
 
 
-    String putAdoptionHistoryRequest = fixture("fixtures/rfa/rfa-1a-adoption-history.json");
+    String putAdoptionHistoryFixture = fixture("fixtures/rfa/rfa-1a-adoption-history.json");
     WebTarget putAdoptionHistoryTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/adoption-history");
     putAdoptionHistoryTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(putAdoptionHistoryRequest, MediaType.APPLICATION_JSON_TYPE), AdoptionHistoryDTO.class);
+        .put(Entity.entity(putAdoptionHistoryFixture, MediaType.APPLICATION_JSON_TYPE), AdoptionHistoryDTO.class);
 
 
-    String putReferencesRequest = fixture("fixtures/rfa/rfa-1a-references.json");
+    String putReferencesFixture = fixture("fixtures/rfa/rfa-1a-references.json");
     WebTarget putReferencesTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/references");
     putReferencesTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(putReferencesRequest, MediaType.APPLICATION_JSON_TYPE), ReferencesDTO.class);
+        .put(Entity.entity(putReferencesFixture, MediaType.APPLICATION_JSON_TYPE), ReferencesDTO.class);
 
 
-    String putApplicantsDeclarationRequest = fixture("fixtures/rfa/rfa-1a-applicants-declaration.json");
+    String putApplicantsDeclarationFixture = fixture("fixtures/rfa/rfa-1a-applicants-declaration.json");
     WebTarget putApplicantsDeclarationTarget =
         clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/applicants-declaration");
     putApplicantsDeclarationTarget.request(MediaType.APPLICATION_JSON)
         .put(
-            Entity.entity(putApplicantsDeclarationRequest, MediaType.APPLICATION_JSON_TYPE),
+            Entity.entity(putApplicantsDeclarationFixture, MediaType.APPLICATION_JSON_TYPE),
             ApplicantsDeclarationDTO.class
         );
 
@@ -107,9 +107,9 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     WebTarget getTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id);
     RFA1aFormDTO getResponseForm = getTarget.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
 
-    VelocityHelper getVelocityResponseHelper = new VelocityHelper("fixtures/rfa/rfa-1a-form-get-response.json");
+    VelocityHelper getVelocityResponseHelper = new VelocityHelper();
     getVelocityResponseHelper.setParameter("id", id);
-    String expectedGetResponse = getVelocityResponseHelper.process();
+    String expectedGetResponse = getVelocityResponseHelper.process("fixtures/rfa/rfa-1a-form-get-response.json");
 
     assertEqualsResponse(expectedGetResponse, transformDTOtoJSON(getResponseForm));
 
@@ -119,10 +119,16 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     RFA1aFormDTO getExpandedResponseForm =
         getExpandedTarget.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
 
-    VelocityHelper getVelocityExpandedResponseHelper =
-        new VelocityHelper("fixtures/rfa/rfa-1a-form-get-expanded-response.json");
+    VelocityHelper getVelocityExpandedResponseHelper = new VelocityHelper();
     getVelocityExpandedResponseHelper.setParameter("id", id);
-    String expectedGetExpandedResponse = getVelocityExpandedResponseHelper.process();
+    getVelocityExpandedResponseHelper.setParameter("residence", putResidenceFixture);
+    getVelocityExpandedResponseHelper.setParameter("applicantsHistory", putApplicantsHistoryFixture);
+    getVelocityExpandedResponseHelper.setParameter("adoptionHistory", putAdoptionHistoryFixture);
+    getVelocityExpandedResponseHelper.setParameter("childDesired", putChildDesiredFixture);
+    getVelocityExpandedResponseHelper.setParameter("references", putReferencesFixture);
+    getVelocityExpandedResponseHelper.setParameter("applicantsDeclaration", putApplicantsDeclarationFixture);
+    String expectedGetExpandedResponse =
+        getVelocityExpandedResponseHelper.process("fixtures/rfa/rfa-1a-form-get-expanded-response.json");
 
     assertEqualsResponse(expectedGetExpandedResponse, transformDTOtoJSON(getExpandedResponseForm));
 
@@ -138,10 +144,11 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     getExpandedCollectionResponseForm.getCollection().clear();
     getExpandedCollectionResponseForm.getCollection().addAll(filtered);
 
-    VelocityHelper getVelocityExpandedCollectionResponseHelper =
-        new VelocityHelper("fixtures/rfa/rfa-1a-form-get-expanded-collection-response.json");
-    getVelocityExpandedCollectionResponseHelper.setParameter("id", id);
-    String expectedGetExpandedCollectionResponse = getVelocityExpandedCollectionResponseHelper.process();
+    VelocityHelper getVelocityExpandedCollectionResponseHelper = new VelocityHelper();
+    getVelocityExpandedCollectionResponseHelper.setParameter("form", expectedGetExpandedResponse);
+    String expectedGetExpandedCollectionResponse =
+        getVelocityExpandedCollectionResponseHelper
+            .process("fixtures/rfa/rfa-1a-form-get-expanded-collection-response.json");
 
     assertEqualsResponse(expectedGetExpandedCollectionResponse, transformDTOtoJSON(getExpandedCollectionResponseForm));
   }
