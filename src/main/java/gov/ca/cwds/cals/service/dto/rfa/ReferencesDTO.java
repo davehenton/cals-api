@@ -6,12 +6,11 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S2160") //Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ReferencesDTO extends BaseDTO implements Request, Response {
 
@@ -26,17 +25,6 @@ public class ReferencesDTO extends BaseDTO implements Request, Response {
   public void setReferences(List<Reference> references) {
     this.references = references;
   }
-
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
-  }
-
 
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
   public static class Reference extends BaseDTO {
@@ -98,14 +86,5 @@ public class ReferencesDTO extends BaseDTO implements Request, Response {
       this.email = email;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-      return HashCodeBuilder.reflectionHashCode(this);
-    }
   }
 }
