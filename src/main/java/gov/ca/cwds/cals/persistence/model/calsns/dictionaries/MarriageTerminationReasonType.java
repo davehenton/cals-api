@@ -18,6 +18,5 @@ public class MarriageTerminationReasonType extends BaseDictionary {
   private static final long serialVersionUID = 1351466432617639006L;
 
   public static final String NAMED_QUERY_FIND_ALL =
-      NAMED_QUERY_PREFIX + ".MarriageTerminationReason" + NAMED_QUERY_FIND_ALL_SUFFIX;
-
+      NAMED_QUERY_PREFIX + ".MarriageTerminationReasonType" + NAMED_QUERY_FIND_ALL_SUFFIX;
 }
