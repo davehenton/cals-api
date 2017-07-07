@@ -112,6 +112,15 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     String expectedGetExpandedResponse = getVelocityExpandedResponseHelper.process();
 
     assertEqualsResponse(expectedGetExpandedResponse, transformDTOtoJSON(getExpandedResponseForm));
+
+    WebTarget getExpandedCollectionTarget = clientTestRule.target(API.RFA_1A_FORMS + "?" + API.QueryParams.EXPANDED + "=true");
+    RFA1aFormCollectionDTO getExpandedCollectionResponseForm = getExpandedCollectionTarget.request(MediaType.APPLICATION_JSON).get(RFA1aFormCollectionDTO.class);
+
+    VelocityHelper getVelocityExpandedCollectionResponseHelper = new VelocityHelper("fixtures/rfa/rfa-1a-form-get-expanded-collection-response.json");
+    getVelocityExpandedCollectionResponseHelper.setParameter("id", id);
+    String expectedGetExpandedCollectionResponse = getVelocityExpandedCollectionResponseHelper.process();
+
+    assertEqualsResponse(expectedGetExpandedCollectionResponse, transformDTOtoJSON(getExpandedCollectionResponseForm));
   }
 
   @Test

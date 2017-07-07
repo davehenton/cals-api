@@ -101,7 +101,7 @@ public class RFA1aFormsResource {
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long formId,
       @QueryParam(EXPANDED)
-      @ApiParam(name = EXPANDED, value = "Use 'true' To get form with all parts of form included")
+      @ApiParam(name = EXPANDED, value = "Use 'true' to get form with all parts of form included")
           boolean expanded) {
     return resourceDelegate.get(new RFA1aFormsParameterObject(formId, expanded));
   }
@@ -119,6 +119,7 @@ public class RFA1aFormsResource {
   @ApiOperation(value = "Returns all available RFA 1a Forms", response = RFA1aFormCollectionDTO.class)
   public Response getAllApplicationForms(
       @QueryParam(EXPANDED)
+      @ApiParam(name = EXPANDED, value = "Use 'true' to get forms with all parts of form included")
           boolean expanded) {
     return collectionResourceDelegate.get(expanded);
   }
