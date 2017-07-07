@@ -9,8 +9,7 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfigurati
  * @author CWDS CALS API Team
  */
 
-public class RFA1bResourceTest extends
-    BaseExternalEntityApiTest<RFA1bFormDTO, RFA1bFormCollectionDTO> {
+public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO, RFA1bFormCollectionDTO> {
 
   @Override
   protected BaseExternalEntityApiHelper<RFA1bFormDTO, RFA1bFormCollectionDTO> getExternalEntityApiHelper() {

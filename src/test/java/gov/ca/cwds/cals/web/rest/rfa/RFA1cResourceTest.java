@@ -10,8 +10,7 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfigurati
  * @author CWDS CALS API Team
  */
 
-public class RFA1cResourceTest extends
-    BaseExternalEntityApiTest<RFA1cFormDTO, RFA1cFormCollectionDTO> {
+public class RFA1cResourceTest extends BaseExternalEntityApiTest<RFA1cFormDTO, RFA1cFormCollectionDTO> {
 
   @Override
   protected BaseExternalEntityApiHelper<RFA1cFormDTO, RFA1cFormCollectionDTO> getExternalEntityApiHelper() {
@@ -32,7 +31,7 @@ public class RFA1cResourceTest extends
           @Override
           public void modifyEntity(RFA1cFormDTO rfa1cFormDTO) {
             CountyType applicationCounty = new CountyType();
-            applicationCounty.setId(1000l);
+            applicationCounty.setId(1000L);
             applicationCounty.setValue("Some county");
             rfa1cFormDTO.setApplicationCounty(applicationCounty);
           }

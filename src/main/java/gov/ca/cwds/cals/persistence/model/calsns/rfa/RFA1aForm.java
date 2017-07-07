@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
+import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.NamedQuery;
@@ -20,7 +22,7 @@ import org.hibernate.annotations.Type;
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm ORDER BY id ASC")
 @Entity
 @Table(name = "rfa_1a")
-public class RFA1aForm extends RFABaseEntity implements PersistentObject, Response {
+public class RFA1aForm extends RFABaseEntity implements PersistentObject, Request, Response {
 
   private static final long serialVersionUID = -6201382973500280111L;
   public static final String NAMED_QUERY_FIND_ALL =
@@ -79,8 +81,7 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     return relationships;
   }
 
-  public void setRelationships(
-      ApplicantsRelationshipDTO relationships) {
+  public void setRelationships(ApplicantsRelationshipDTO relationships) {
     this.relationships = relationships;
   }
 
@@ -88,8 +89,7 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     return applicantEntities;
   }
 
-  public void setApplicantEntities(
-      List<RFA1aApplicant> applicantEntities) {
+  public void setApplicantEntities(List<RFA1aApplicant> applicantEntities) {
     this.applicantEntities = applicantEntities;
   }
 
@@ -97,8 +97,7 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     return adoptionHistory;
   }
 
-  public void setAdoptionHistory(
-      AdoptionHistoryDTO adoptionHistory) {
+  public void setAdoptionHistory(AdoptionHistoryDTO adoptionHistory) {
     this.adoptionHistory = adoptionHistory;
   }
 
@@ -106,8 +105,7 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Respon
     return applicantsHistory;
   }
 
-  public void setApplicantsHistory(
-      ApplicantsHistoryDTO applicantsHistory) {
+  public void setApplicantsHistory(ApplicantsHistoryDTO applicantsHistory) {
     this.applicantsHistory = applicantsHistory;
   }
 

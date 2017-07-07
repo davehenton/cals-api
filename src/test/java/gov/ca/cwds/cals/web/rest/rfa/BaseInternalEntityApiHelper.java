@@ -20,8 +20,7 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 
-public class BaseInternalEntityApiHelper<T extends BaseDTO> implements
-    InternalEntityApiHelper {
+public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
   private TestInternalEntityConfiguration<T> configuration;
