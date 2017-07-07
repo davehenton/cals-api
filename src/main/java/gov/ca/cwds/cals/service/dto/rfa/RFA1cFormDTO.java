@@ -7,12 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S2160") //Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RFA1cFormDTO extends RFAExternalEntityDTO {
 
@@ -62,16 +61,6 @@ public class RFA1cFormDTO extends RFAExternalEntityDTO {
   public void setApplicationCounty(
       CountyType applicationCounty) {
     this.applicationCounty = applicationCounty;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
   }
 
 }

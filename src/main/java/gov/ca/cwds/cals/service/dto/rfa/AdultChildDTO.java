@@ -8,13 +8,12 @@ import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
 
+@SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class AdultChildDTO extends BaseDTO {
 
@@ -74,22 +73,6 @@ public class AdultChildDTO extends BaseDTO {
 
   public void setAdultChildRelatedTo(List<Long> adultChildRelatedTo) {
     this.adultChildRelatedTo = adultChildRelatedTo;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof AdultChildDTO)) {
-      return false;
-    }
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
   }
 
 }

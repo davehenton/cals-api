@@ -9,12 +9,11 @@ import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
 import javax.validation.Valid;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
 
@@ -102,17 +101,6 @@ public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
     this.wasSubjectForExclusionOrderQ7 = wasSubjectForExclusionOrderQ7;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
-  }
-
-
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
   public static class FosterCareLicensesQ1 extends BaseDTO {
 
@@ -148,15 +136,6 @@ public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
       this.licenseType = licenseType;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-      return HashCodeBuilder.reflectionHashCode(this);
-    }
   }
 
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -184,15 +163,6 @@ public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
       this.nameOfAgencies = nameOfAgencies;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-      return HashCodeBuilder.reflectionHashCode(this);
-    }
   }
 
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -222,15 +192,6 @@ public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
       this.licenseType = licenseType;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-      return HashCodeBuilder.reflectionHashCode(this);
-    }
   }
 
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -258,15 +219,6 @@ public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
       this.nameOfFacilities = nameOfFacilities;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-      return HashCodeBuilder.reflectionHashCode(this);
-    }
   }
 
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -293,15 +245,6 @@ public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
       this.nameOfAgencies = nameOfAgencies;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-      return HashCodeBuilder.reflectionHashCode(this);
-    }
   }
 
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -330,15 +273,6 @@ public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
       this.nameOfAgencies = nameOfAgencies;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-      return HashCodeBuilder.reflectionHashCode(this);
-    }
   }
 
 

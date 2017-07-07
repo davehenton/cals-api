@@ -7,8 +7,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team.
@@ -18,6 +16,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * Do not rename class to AddressDTO.
  * In this case swagger will not work properly for some APIs
  */
+@SuppressWarnings("squid:S2160") //Default reflection hashcode and equals resides in BaseDTO
 public class RFAAddressDTO extends BaseDTO {
   private static final long serialVersionUID = 1L;
 
@@ -78,13 +77,4 @@ public class RFAAddressDTO extends BaseDTO {
     this.type = type;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
-  }
 }

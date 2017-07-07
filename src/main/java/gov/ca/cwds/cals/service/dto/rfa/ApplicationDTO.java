@@ -9,8 +9,6 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team.
@@ -18,6 +16,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({"id", "is_initial_application", "is_other_type", "other_type_description",
     "application_county"})
+@SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 public class ApplicationDTO extends BaseDTO implements Request, Response {
 
   private static final long serialVersionUID = 3691906983136791415L;
@@ -69,13 +68,4 @@ public class ApplicationDTO extends BaseDTO implements Request, Response {
     this.applicationCounty = applicationCounty;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
-  }
 }

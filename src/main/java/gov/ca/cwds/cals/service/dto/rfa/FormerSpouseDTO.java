@@ -6,20 +6,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReason;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
 
-@SuppressWarnings("squid:S3437") // Dates should be serialized
+@SuppressWarnings({"squid:S3437", "squid:S2160"}) // Dates should be serialized
+//Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class FormerSpouseDTO extends BaseDTO {
 
@@ -54,7 +53,7 @@ public class FormerSpouseDTO extends BaseDTO {
 
   @ApiModelProperty("Divorce/Domestic Partnership Termination reason")
   @CheckReferentialIntegrity
-  private MarriageTerminationReason marriageTerminationReason;
+  private MarriageTerminationReasonType marriageTerminationReason;
 
   @ApiModelProperty(value = "Divorce/Domestic Partnership Termination Date", example = "2016-12-26")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
@@ -133,12 +132,12 @@ public class FormerSpouseDTO extends BaseDTO {
     this.placeOfMarriageState = placeOfMarriageState;
   }
 
-  public MarriageTerminationReason getMarriageTerminationReason() {
+  public MarriageTerminationReasonType getMarriageTerminationReason() {
     return marriageTerminationReason;
   }
 
   public void setMarriageTerminationReason(
-      MarriageTerminationReason marriageTerminationReason) {
+      MarriageTerminationReasonType marriageTerminationReason) {
     this.marriageTerminationReason = marriageTerminationReason;
   }
 
@@ -166,22 +165,5 @@ public class FormerSpouseDTO extends BaseDTO {
       StateType placeOfMarriageEndState) {
     this.placeOfMarriageEndState = placeOfMarriageEndState;
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof FormerSpouseDTO)) {
-      return false;
-    }
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
-  }
-
 
 }

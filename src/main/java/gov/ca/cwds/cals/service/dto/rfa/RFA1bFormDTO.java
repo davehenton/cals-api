@@ -14,13 +14,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
-@SuppressWarnings("squid:S3437") // Dates should be serialized
+@SuppressWarnings({"squid:S3437", "squid:S2160"}) // Dates should be serialized
+//Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RFA1bFormDTO extends RFAExternalEntityDTO {
 
@@ -239,16 +238,6 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   public void setDisclosures(
       List<DisclosureDTO> disclosures) {
     this.disclosures = disclosures;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
   }
 
 }

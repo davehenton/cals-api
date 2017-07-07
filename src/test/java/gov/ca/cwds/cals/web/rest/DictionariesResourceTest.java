@@ -14,6 +14,7 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SCHOOL_GRADE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE_PATH;
 import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
@@ -32,11 +33,12 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReason;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
@@ -86,6 +88,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "license-type-response.json";
   private static final String FIXTURES_MARRIAGE_TERMINATION_REASON_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "marriage-termination-reason-response.json";
+  private static final String FIXTURES_SCHOOL_GRADE_TYPE_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "school-grade-type-response.json";
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -239,13 +243,21 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
-  public void getMarriageTerminationReasonTest() throws Exception {
+  public void getMarriageTerminationReasonTypeTest() throws Exception {
     baseDictionaryTest(
         MARRIAGE_TERMINATION_REASON_PATH,
         FIXTURES_MARRIAGE_TERMINATION_REASON_RESPONSE_JSON,
-        new GenericType<CollectionDTO<MarriageTerminationReason>>() {
+        new GenericType<CollectionDTO<MarriageTerminationReasonType>>() {
         });
   }
 
+  @Test
+  public void getSchoolGradeTypeTest() throws Exception {
+    baseDictionaryTest(
+        SCHOOL_GRADE_TYPE_PATH,
+        FIXTURES_SCHOOL_GRADE_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<SchoolGradeType>>() {
+        });
+  }
 
 }
