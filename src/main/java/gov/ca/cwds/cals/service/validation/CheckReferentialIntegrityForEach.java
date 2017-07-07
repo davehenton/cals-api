@@ -15,9 +15,9 @@ import javax.validation.Payload;
 /** @author CWDS CALS API Team */
 @Target({FIELD, METHOD, PARAMETER, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = ReferentialIntegrityValidator.class)
+@Constraint(validatedBy = ReferentialIntegrityForEachValidator.class)
 @Documented
-public @interface CheckReferentialIntegrity {
+public @interface CheckReferentialIntegrityForEach {
 
   boolean checkEquality() default true;
 
@@ -31,6 +31,6 @@ public @interface CheckReferentialIntegrity {
   @Retention(RUNTIME)
   @Documented
   @interface List {
-    CheckReferentialIntegrity[] value();
+    CheckReferentialIntegrityForEach[] value();
   }
 }

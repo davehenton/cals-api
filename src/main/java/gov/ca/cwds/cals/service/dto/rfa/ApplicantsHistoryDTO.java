@@ -8,6 +8,7 @@ import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -24,6 +25,7 @@ public class ApplicantsHistoryDTO extends BaseDTO implements Request, Response {
   @ApiModelProperty("List of Adult Children")
   private List<AdultChildDTO> adultChildren = new ArrayList<>();
 
+  @Valid
   public List<FormerSpouseDTO> getFormerSpouses() {
     return formerSpouses;
   }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,9 +28,11 @@ public class ChildDesiredDTO extends BaseDTO implements Request, Response {
   private boolean childInHome;
 
   @ApiModelProperty(value = "Preferred Age(s)")
+  @CheckReferentialIntegrityForEach
   private List<AgeGroupType> preferredAges = new ArrayList<>();
 
   @ApiModelProperty(value = "Preferred Sibling(Group Of)")
+  @CheckReferentialIntegrityForEach
   private List<AgeGroupType> preferredSiblingGroups = new ArrayList<>();
 
   public boolean isChildInHome() {

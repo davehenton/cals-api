@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -30,9 +31,11 @@ public class RFAAddressDTO extends BaseDTO {
   private String city;
 
   @ApiModelProperty(value = "State Type")
+  @CheckReferentialIntegrity
   private StateType state;
 
   @ApiModelProperty(value = "Address Type")
+  @CheckReferentialIntegrity
   private AddressType type;
 
   public String getStreetAddress() {

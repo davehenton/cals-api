@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class AdultChildDTO extends BaseDTO {
   private String lastName;
 
   @ApiModelProperty("Relationship to applicant")
+  @CheckReferentialIntegrity
   private RelationshipToApplicantType relationshipToApplicant;
 
   private List<Long> adultChildRelatedTo = new ArrayList<>();

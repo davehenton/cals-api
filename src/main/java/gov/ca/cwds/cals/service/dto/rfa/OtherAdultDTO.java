@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -33,6 +34,7 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
   private LocalDate dateOfBirth;
 
   @ApiModelProperty("Relationship to Applicants")
+  @Valid
   private List<RelationshipToApplicantDTO> relationshipToApplicants = new ArrayList<>();
 
   public String getFirstName() {

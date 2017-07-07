@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
-import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -41,7 +40,6 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   private EducationLevelType highestEducationLevel;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
-  @Past
   private LocalDate dateOfBirth;
 
   @CheckReferentialIntegrity

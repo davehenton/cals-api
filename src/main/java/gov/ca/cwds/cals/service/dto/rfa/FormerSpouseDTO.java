@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelations
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReason;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -25,6 +26,7 @@ public class FormerSpouseDTO extends BaseDTO {
   private static final long serialVersionUID = 4825726415538736618L;
 
   @ApiModelProperty("Relationship Type")
+  @CheckReferentialIntegrity
   private ApplicantRelationshipType relationshipType;
 
   @ApiModelProperty(value = "Applicant Id", example = "1234567")
@@ -47,9 +49,11 @@ public class FormerSpouseDTO extends BaseDTO {
   private String placeOfMarriageCity;
 
   @ApiModelProperty("Marriage/Domestic partnership place: state")
+  @CheckReferentialIntegrity
   private StateType placeOfMarriageState;
 
   @ApiModelProperty("Divorce/Domestic Partnership Termination reason")
+  @CheckReferentialIntegrity
   private MarriageTerminationReason marriageTerminationReason;
 
   @ApiModelProperty(value = "Divorce/Domestic Partnership Termination Date", example = "2016-12-26")
@@ -60,6 +64,7 @@ public class FormerSpouseDTO extends BaseDTO {
   private String placeOfMarriageEndCity;
 
   @ApiModelProperty("Divorce/Domestic Partnership Termination State")
+  @CheckReferentialIntegrity
   private StateType placeOfMarriageEndState;
 
   public ApplicantRelationshipType getRelationshipType() {
