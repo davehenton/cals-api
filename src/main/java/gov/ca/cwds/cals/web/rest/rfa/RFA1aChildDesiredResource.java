@@ -9,7 +9,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ChildDesiredServiceBackedResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ChildDesiredDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;

@@ -16,4 +16,5 @@ import java.lang.annotation.Target;
 @Target({FIELD, PARAMETER, METHOD})
 @Retention(RUNTIME)
 public @interface FacilityTypeCollectionServiceBackedResource {
+
 }

@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.web.rest.parameter;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.rest.api.Request;
 import java.io.Serializable;
 
