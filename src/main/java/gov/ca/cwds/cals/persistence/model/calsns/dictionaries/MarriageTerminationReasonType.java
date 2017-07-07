@@ -8,12 +8,12 @@ import org.hibernate.annotations.NamedQuery;
  * @author CWDS CALS API Team.
  */
 @NamedQuery(
-    name = MarriageTerminationReason.NAMED_QUERY_FIND_ALL,
-    query = "FROM MarriageTerminationReason ORDER BY id ASC"
+    name = MarriageTerminationReasonType.NAMED_QUERY_FIND_ALL,
+    query = "FROM MarriageTerminationReasonType ORDER BY id ASC"
 )
 @Entity
 @Table(name = "marriage_termination_reason")
-public class MarriageTerminationReason extends BaseDictionary {
+public class MarriageTerminationReasonType extends BaseDictionary {
 
   private static final long serialVersionUID = 1351466432617639006L;
 
