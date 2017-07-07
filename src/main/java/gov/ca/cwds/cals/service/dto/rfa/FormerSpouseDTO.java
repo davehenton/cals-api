@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReason;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
@@ -49,7 +49,7 @@ public class FormerSpouseDTO extends BaseDTO {
   private StateType placeOfMarriageState;
 
   @ApiModelProperty("Divorce/Domestic Partnership Termination reason")
-  private MarriageTerminationReason marriageTerminationReason;
+  private MarriageTerminationReasonType marriageTerminationReason;
 
   @ApiModelProperty(value = "Divorce/Domestic Partnership Termination Date", example = "2016-12-26")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
@@ -127,12 +127,12 @@ public class FormerSpouseDTO extends BaseDTO {
     this.placeOfMarriageState = placeOfMarriageState;
   }
 
-  public MarriageTerminationReason getMarriageTerminationReason() {
+  public MarriageTerminationReasonType getMarriageTerminationReason() {
     return marriageTerminationReason;
   }
 
   public void setMarriageTerminationReason(
-      MarriageTerminationReason marriageTerminationReason) {
+      MarriageTerminationReasonType marriageTerminationReason) {
     this.marriageTerminationReason = marriageTerminationReason;
   }
 
