@@ -1,26 +1,24 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormCollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
+import javax.ws.rs.core.GenericType;
 
 /**
  * @author CWDS CALS API Team
  */
 
-public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO, RFA1bFormCollectionDTO> {
+@SuppressWarnings("squid:S2187")
+public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
 
   @Override
-  protected BaseExternalEntityApiHelper<RFA1bFormDTO, RFA1bFormCollectionDTO> getExternalEntityApiHelper() {
+  protected BaseExternalEntityApiHelper<RFA1bFormDTO> getExternalEntityApiHelper() {
 
-    TestExternalEntityConfiguration<RFA1bFormDTO, RFA1bFormCollectionDTO> configuration =
-
-        new TestExternalEntityConfiguration<RFA1bFormDTO, RFA1bFormCollectionDTO>(
-            clientTestRule,
-            RFA1bFormDTO.class,
-            RFA1bFormCollectionDTO.class,
-            API.RFA_1B_FORMS) {
+    TestExternalEntityConfiguration<RFA1bFormDTO> configuration =
+        new TestExternalEntityConfiguration<RFA1bFormDTO>(
+            clientTestRule, RFA1bFormDTO.class, API.RFA_1B_FORMS) {
 
           @Override
           protected String getCreateFixture() {
@@ -28,13 +26,17 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO, R
           }
 
           @Override
+          public GenericType<CollectionDTO<RFA1bFormDTO>> getCollectionDTOGenericType() {
+            return new GenericType<CollectionDTO<RFA1bFormDTO>>() {
+            };
+          }
+
+          @Override
           public void modifyEntity(RFA1bFormDTO rfa1bFormDTO) {
             rfa1bFormDTO.setApplicantFirstName("Petya");
           }
-
         };
 
     return new BaseExternalEntityApiHelper<>(clientTestRule, configuration);
   }
-
 }

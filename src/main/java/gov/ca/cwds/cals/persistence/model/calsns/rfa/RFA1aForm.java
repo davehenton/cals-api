@@ -1,5 +1,13 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationshipDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicationDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;

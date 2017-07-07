@@ -39,7 +39,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;

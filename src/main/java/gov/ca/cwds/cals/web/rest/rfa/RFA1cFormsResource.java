@@ -12,8 +12,8 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1cCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1cServiceBackedResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormCollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1cFormCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -153,7 +153,7 @@ public class RFA1cFormsResource {
       value = "Returns RFA 1C Forms by Application Id",
       response = RFA1cFormCollectionDTO.class
   )
-  public Response getRFA1bFormsByFormRFA1aFormId(
+  public Response getRFA1cFormsByFormRFA1aFormId(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
           required = true,

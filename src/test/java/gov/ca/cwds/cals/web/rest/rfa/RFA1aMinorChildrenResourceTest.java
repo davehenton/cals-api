@@ -1,30 +1,37 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChildDTO;
-import gov.ca.cwds.cals.service.dto.rfa.MinorChildrenDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
+import javax.ws.rs.core.GenericType;
 
 /**
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S2187")
 public class RFA1aMinorChildrenResourceTest extends
-    BaseExternalEntityApiTest<MinorChildDTO, MinorChildrenDTO> {
+    BaseExternalEntityApiTest<MinorChildDTO> {
 
   @Override
-  protected BaseExternalEntityApiHelper<MinorChildDTO, MinorChildrenDTO> getExternalEntityApiHelper() {
-    TestExternalEntityConfiguration<MinorChildDTO, MinorChildrenDTO> configuration =
+  protected BaseExternalEntityApiHelper<MinorChildDTO> getExternalEntityApiHelper() {
+    TestExternalEntityConfiguration<MinorChildDTO> configuration =
 
-        new TestExternalEntityConfiguration<MinorChildDTO, MinorChildrenDTO>(
+        new TestExternalEntityConfiguration<MinorChildDTO>(
             clientTestRule,
             MinorChildDTO.class,
-            MinorChildrenDTO.class,
             API.RFA_1A_MINOR_CHILDREN) {
 
           @Override
           protected String getCreateFixture() {
             //return "fixtures/rfa/rfa-1a-minor_children.json";
             return "fixtures/rfa/stub.json";
+          }
+
+          @Override
+          public GenericType<CollectionDTO<MinorChildDTO>> getCollectionDTOGenericType() {
+            return new GenericType<CollectionDTO<MinorChildDTO>>() {
+            };
           }
 
           @Override

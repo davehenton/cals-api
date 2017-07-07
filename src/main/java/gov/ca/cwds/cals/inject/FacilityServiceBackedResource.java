@@ -10,10 +10,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- *  Annotation for binding to our Facility Backed resource
+ * Annotation for binding to our Facility Backed resource
  *
- *  @author CALS API Team
- *
+ * @author CALS API Team
  */
 @BindingAnnotation
 @Target({FIELD, PARAMETER, METHOD})

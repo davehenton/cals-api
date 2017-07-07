@@ -11,17 +11,18 @@ import static org.junit.Assert.assertTrue;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.VelocityHelper;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.AdoptionHistoryDTO;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsDeclarationDTO;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ApplicantsHistoryDTO;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ChildDesiredDTO;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ReferencesDTO;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.ResidenceDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormCollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -114,7 +115,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     assertEqualsResponse(expectedGetExpandedResponse, transformDTOtoJSON(getExpandedResponseForm));
 
     WebTarget getExpandedCollectionTarget = clientTestRule.target(API.RFA_1A_FORMS + "?" + API.QueryParams.EXPANDED + "=true");
-    RFA1aFormCollectionDTO getExpandedCollectionResponseForm = getExpandedCollectionTarget.request(MediaType.APPLICATION_JSON).get(RFA1aFormCollectionDTO.class);
+    CollectionDTO<RFA1aFormDTO> getExpandedCollectionResponseForm = getExpandedCollectionTarget.request(MediaType.APPLICATION_JSON).get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {});
 
     VelocityHelper getVelocityExpandedCollectionResponseHelper = new VelocityHelper("fixtures/rfa/rfa-1a-form-get-expanded-collection-response.json");
     getVelocityExpandedCollectionResponseHelper.setParameter("id", id);
@@ -150,8 +151,10 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
     target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     rfaFormCreate.setOtherTypeDescription("newOtherTypeDescription");
-    RFA1aFormDTO rfaFormGet = target.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(rfaFormCreate, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
+    RFA1aFormDTO rfaFormGet =
+        target
+            .request(MediaType.APPLICATION_JSON)
+            .put(Entity.entity(rfaFormCreate, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
 
     assertNotNull(rfaFormGet);
     assertEquals(rfaFormCreate, rfaFormGet);
@@ -171,7 +174,8 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
     target = clientTestRule.target(API.RFA_1A_FORMS);
     invocation = target.request(MediaType.APPLICATION_JSON);
-    RFA1aFormCollectionDTO rfaForms = invocation.get(RFA1aFormCollectionDTO.class);
+    CollectionDTO<RFA1aFormDTO> rfaForms =
+        invocation.get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {});
 
     assertTrue(rfaForms.getCollection().size() >= 3);
   }

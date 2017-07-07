@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
-import gov.ca.cwds.cals.service.dto.rfa.OtherAdultCollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.OtherAdultCollectionDTO;
 import java.util.List;
 
 /**
@@ -10,9 +10,9 @@ import java.util.List;
  */
 
 public class OtherAdultFactory
-    implements RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdultDTO, OtherAdultCollectionDTO> {
+    implements RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdultDTO> {
 
-  public static final RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdultDTO, OtherAdultCollectionDTO>
+  public static final RFAExternalEntityFactory<RFA1aOtherAdult, OtherAdultDTO>
       INSTANCE = new OtherAdultFactory();
 
   private OtherAdultFactory() {
@@ -34,11 +34,6 @@ public class OtherAdultFactory
   }
 
   @Override
-  public OtherAdultCollectionDTO createEntitiesDTO(List<OtherAdultDTO> collectDTOs) {
-    return new OtherAdultCollectionDTO(collectDTOs);
-  }
-
-  @Override
   public String getFindAllByFormNamedQuery() {
     return RFA1aOtherAdult.NAMED_QUERY_FIND_ALL_BY_FORM;
   }
@@ -46,6 +41,11 @@ public class OtherAdultFactory
   @Override
   public String getFindByFormIdAndEntityIdNamedQuery() {
     return RFA1aOtherAdult.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID;
+  }
+
+  @Override
+  public OtherAdultCollectionDTO createCollectionDTO(List<OtherAdultDTO> collectDTOs) {
+    return new OtherAdultCollectionDTO(collectDTOs);
   }
 
 }

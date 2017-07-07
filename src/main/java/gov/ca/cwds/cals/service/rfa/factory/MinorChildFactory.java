@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
-import gov.ca.cwds.cals.service.dto.rfa.MinorChildrenDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.MinorChildrenCollectionDTO;
 import java.util.List;
 
 /**
@@ -10,9 +10,9 @@ import java.util.List;
  */
 
 public class MinorChildFactory
-    implements RFAExternalEntityFactory<RFA1aMinorChild, MinorChildDTO, MinorChildrenDTO> {
+    implements RFAExternalEntityFactory<RFA1aMinorChild, MinorChildDTO> {
 
-  public static final RFAExternalEntityFactory<RFA1aMinorChild, MinorChildDTO, MinorChildrenDTO>
+  public static final RFAExternalEntityFactory<RFA1aMinorChild, MinorChildDTO>
       INSTANCE = new MinorChildFactory();
 
   private MinorChildFactory() {
@@ -34,11 +34,6 @@ public class MinorChildFactory
   }
 
   @Override
-  public MinorChildrenDTO createEntitiesDTO(List<MinorChildDTO> collectDTOs) {
-    return new MinorChildrenDTO(collectDTOs);
-  }
-
-  @Override
   public String getFindAllByFormNamedQuery() {
     return RFA1aMinorChild.NAMED_QUERY_FIND_ALL_BY_FORM;
   }
@@ -46,6 +41,11 @@ public class MinorChildFactory
   @Override
   public String getFindByFormIdAndEntityIdNamedQuery() {
     return RFA1aMinorChild.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID;
+  }
+
+  @Override
+  public MinorChildrenCollectionDTO createCollectionDTO(List<MinorChildDTO> collectDTOs) {
+    return new MinorChildrenCollectionDTO(collectDTOs);
   }
 
 }

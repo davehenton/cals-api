@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormCollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1cFormCollectionDTO;
 import java.util.List;
 
 /**
@@ -10,9 +10,9 @@ import java.util.List;
  */
 
 public class RFA1cFactory
-    implements RFAExternalEntityFactory<RFA1cForm, RFA1cFormDTO, RFA1cFormCollectionDTO> {
+    implements RFAExternalEntityFactory<RFA1cForm, RFA1cFormDTO> {
 
-  public static final RFAExternalEntityFactory<RFA1cForm, RFA1cFormDTO, RFA1cFormCollectionDTO>
+  public static final RFAExternalEntityFactory<RFA1cForm, RFA1cFormDTO>
       INSTANCE = new RFA1cFactory();
 
   private RFA1cFactory() {
@@ -34,11 +34,6 @@ public class RFA1cFactory
   }
 
   @Override
-  public RFA1cFormCollectionDTO createEntitiesDTO(List<RFA1cFormDTO> collectDTOs) {
-    return new RFA1cFormCollectionDTO(collectDTOs);
-  }
-
-  @Override
   public String getFindAllByFormNamedQuery() {
     return RFA1cForm.NAMED_QUERY_FIND_ALL_BY_FORM;
   }
@@ -46,6 +41,11 @@ public class RFA1cFactory
   @Override
   public String getFindByFormIdAndEntityIdNamedQuery() {
     return RFA1cForm.NAMED_QUERY_FIND_BY_FORMA_ID_AND_FORMC_ID;
+  }
+
+  @Override
+  public RFA1cFormCollectionDTO createCollectionDTO(List<RFA1cFormDTO> collectDTOs) {
+    return new RFA1cFormCollectionDTO(collectDTOs);
   }
 
 }
