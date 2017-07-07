@@ -29,6 +29,9 @@ import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * @author CWDS CALS API Team
  */
@@ -52,7 +55,8 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
         .post(Entity.entity(postRequest, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
     Long id = postResponseForm.getId();
 
-    VelocityHelper postVelocityResponseHelper = new VelocityHelper("fixtures/rfa/rfa-1a-form-post-response.json");
+    VelocityHelper postVelocityResponseHelper =
+        new VelocityHelper("fixtures/rfa/rfa-1a-form-post-response.json");
     postVelocityResponseHelper.setParameter("id", id);
     String expectedPostResponse = postVelocityResponseHelper.process();
 
@@ -66,7 +70,8 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
 
     String putApplicantsHistoryRequest = fixture("fixtures/rfa/rfa-1a-applicants-history.json");
-    WebTarget putApplicantsHistoryTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/applicants-history");
+    WebTarget putApplicantsHistoryTarget =
+        clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/applicants-history");
     putApplicantsHistoryTarget.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(putApplicantsHistoryRequest, MediaType.APPLICATION_JSON_TYPE), ApplicantsHistoryDTO.class);
 
@@ -90,9 +95,13 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
 
     String putApplicantsDeclarationRequest = fixture("fixtures/rfa/rfa-1a-applicants-declaration.json");
-    WebTarget putApplicantsDeclarationTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/applicants-declaration");
+    WebTarget putApplicantsDeclarationTarget =
+        clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/applicants-declaration");
     putApplicantsDeclarationTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(putApplicantsDeclarationRequest, MediaType.APPLICATION_JSON_TYPE), ApplicantsDeclarationDTO.class);
+        .put(
+            Entity.entity(putApplicantsDeclarationRequest, MediaType.APPLICATION_JSON_TYPE),
+            ApplicantsDeclarationDTO.class
+        );
 
 
     WebTarget getTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id);
@@ -105,19 +114,32 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     assertEqualsResponse(expectedGetResponse, transformDTOtoJSON(getResponseForm));
 
 
-    WebTarget getExpandedTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "?" + API.QueryParams.EXPANDED + "=true");
-    RFA1aFormDTO getExpandedResponseForm = getExpandedTarget.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
+    WebTarget getExpandedTarget =
+        clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "?" + API.QueryParams.EXPANDED + "=true");
+    RFA1aFormDTO getExpandedResponseForm =
+        getExpandedTarget.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
 
-    VelocityHelper getVelocityExpandedResponseHelper = new VelocityHelper("fixtures/rfa/rfa-1a-form-get-expanded-response.json");
+    VelocityHelper getVelocityExpandedResponseHelper =
+        new VelocityHelper("fixtures/rfa/rfa-1a-form-get-expanded-response.json");
     getVelocityExpandedResponseHelper.setParameter("id", id);
     String expectedGetExpandedResponse = getVelocityExpandedResponseHelper.process();
 
     assertEqualsResponse(expectedGetExpandedResponse, transformDTOtoJSON(getExpandedResponseForm));
 
-    WebTarget getExpandedCollectionTarget = clientTestRule.target(API.RFA_1A_FORMS + "?" + API.QueryParams.EXPANDED + "=true");
-    CollectionDTO<RFA1aFormDTO> getExpandedCollectionResponseForm = getExpandedCollectionTarget.request(MediaType.APPLICATION_JSON).get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {});
+    WebTarget getExpandedCollectionTarget =
+        clientTestRule.target(API.RFA_1A_FORMS + "?" + API.QueryParams.EXPANDED + "=true");
+    CollectionDTO<RFA1aFormDTO> getExpandedCollectionResponseForm =
+        getExpandedCollectionTarget.request(MediaType.APPLICATION_JSON)
+            .get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {});
 
-    VelocityHelper getVelocityExpandedCollectionResponseHelper = new VelocityHelper("fixtures/rfa/rfa-1a-form-get-expanded-collection-response.json");
+    Collection<RFA1aFormDTO> filtered = getExpandedCollectionResponseForm.getCollection().stream()
+        .filter(b -> b.getId().equals(id))
+        .collect(Collectors.toCollection(ArrayList::new));
+    getExpandedCollectionResponseForm.getCollection().clear();
+    getExpandedCollectionResponseForm.getCollection().addAll(filtered);
+
+    VelocityHelper getVelocityExpandedCollectionResponseHelper =
+        new VelocityHelper("fixtures/rfa/rfa-1a-form-get-expanded-collection-response.json");
     getVelocityExpandedCollectionResponseHelper.setParameter("id", id);
     String expectedGetExpandedCollectionResponse = getVelocityExpandedCollectionResponseHelper.process();
 
