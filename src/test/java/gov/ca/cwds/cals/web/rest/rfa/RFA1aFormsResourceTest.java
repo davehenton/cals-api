@@ -94,21 +94,6 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
         .put(Entity.entity(putApplicantsDeclarationRequest, MediaType.APPLICATION_JSON_TYPE), ApplicantsDeclarationDTO.class);
 
 
-    VelocityHelper putVelocityRequestHelper = new VelocityHelper("fixtures/rfa/rfa-1a-form-put-request.json");
-    putVelocityRequestHelper.setParameter("id", id);
-    String putRequest = putVelocityRequestHelper.process();
-
-    WebTarget putTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id);
-    RFA1aFormDTO putResponseForm = putTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(putRequest, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
-
-    VelocityHelper putVelocityResponseHelper = new VelocityHelper("fixtures/rfa/rfa-1a-form-put-response.json");
-    putVelocityResponseHelper.setParameter("id", id);
-    String expectedPutResponse = putVelocityResponseHelper.process();
-
-    assertEqualsResponse(expectedPutResponse, transformDTOtoJSON(putResponseForm));
-
-
     WebTarget getTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id);
     RFA1aFormDTO getResponseForm = getTarget.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
 
