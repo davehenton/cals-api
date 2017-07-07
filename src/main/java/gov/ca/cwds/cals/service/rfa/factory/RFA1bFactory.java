@@ -2,6 +2,8 @@ package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1bFormCollectionDTO;
+import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -39,6 +41,11 @@ public class RFA1bFactory
   @Override
   public String getFindByFormIdAndEntityIdNamedQuery() {
     return RFA1bForm.NAMED_QUERY_FIND_BY_FORMA_ID_AND_FORMB_ID;
+  }
+
+  @Override
+  public RFA1bFormCollectionDTO createCollectionDTO(List<RFA1bFormDTO> collectDTOs) {
+    return new RFA1bFormCollectionDTO(collectDTOs);
   }
 
 }

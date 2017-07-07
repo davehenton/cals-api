@@ -12,8 +12,8 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aApplicantServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aApplicantsCollectionServiceBackedResource;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.ApplicantCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -135,7 +135,7 @@ public class RFA1aApplicantsResource {
   )
   @ApiOperation(
       value = "Returns RFA 1a Form's Applicants by Form Id",
-      response = CollectionDTO.class
+      response = ApplicantCollectionDTO.class
   )
   public Response getApplicantsByFormId(
       @PathParam(RFA_1A_APPLICATION_ID)

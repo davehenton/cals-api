@@ -9,9 +9,9 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicationDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -117,7 +117,7 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns all available RFA 1a Forms", response = CollectionDTO.class)
+  @ApiOperation(value = "Returns all available RFA 1a Forms", response = RFA1aFormCollectionDTO.class)
   public Response getAllApplicationForms() {
     return collectionResourceDelegate.get(null);
   }

@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aMinorChildDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.rfa.factory.MinorChildFactory;
 
 /**
  * @author CWDS CALS API Team
@@ -13,6 +14,6 @@ public class RFA1aMinorChildrenCollectionService
 
   @Inject
   public RFA1aMinorChildrenCollectionService(RFA1aMinorChildDao dao) {
-    super(dao);
+    super(dao, MinorChildFactory.INSTANCE);
   }
 }
