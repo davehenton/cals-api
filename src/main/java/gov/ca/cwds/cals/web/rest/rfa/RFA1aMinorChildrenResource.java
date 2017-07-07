@@ -1,20 +1,20 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_MINOR_CHILD;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_MINOR_CHILD_ID;
-import static gov.ca.cwds.cals.Constants.API.RFA;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
-import static gov.ca.cwds.cals.Constants.API.RFA_1A_MINOR_CHILD;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_MINOR_CHILDREN;
+import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.RFAMinorChildrenCollectionServiceBackendResource;
-import gov.ca.cwds.cals.inject.RFAMinorChildrenServiceBackendResource;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
-import gov.ca.cwds.cals.service.dto.rfa.MinorChildrenDTO;
-import gov.ca.cwds.cals.web.rest.parameter.RFAMinorChildrenParameterObject;
+import gov.ca.cwds.cals.inject.RFA1aMinorChildrenCollectionServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1aMinorChildrenServiceBackedResource;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.MinorChildrenCollectionDTO;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -47,8 +47,8 @@ public class RFA1aMinorChildrenResource {
 
   @Inject
   public RFA1aMinorChildrenResource(
-      @RFAMinorChildrenServiceBackendResource ResourceDelegate resourceDelegate,
-      @RFAMinorChildrenCollectionServiceBackendResource
+      @RFA1aMinorChildrenServiceBackedResource ResourceDelegate resourceDelegate,
+      @RFA1aMinorChildrenCollectionServiceBackedResource
           ResourceDelegate collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
@@ -63,15 +63,15 @@ public class RFA1aMinorChildrenResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a MinorChild object", response = MinorChild.class)
+  @ApiOperation(value = "Creates and returns RFA 1a MinorChild object", response = MinorChildDTO.class)
   public Response createMinorChild(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
           Long applicationId,
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1a MinorChild object")
-          MinorChild minorChild) {
+          MinorChildDTO minorChild) {
     return resourceDelegate.create(
-        new RFAMinorChildrenParameterObject(applicationId, minorChild));
+        new RFAExternalEntityParameterObject<>(applicationId, minorChild));
   }
 
   @UnitOfWork(CALSNS)
@@ -85,7 +85,7 @@ public class RFA1aMinorChildrenResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update and returns RFA 1a MinorChild object", response = MinorChild.class)
+  @ApiOperation(value = "Update and returns RFA 1a MinorChild object", response = MinorChildDTO.class)
   public Response updateMinorChild(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
@@ -102,9 +102,9 @@ public class RFA1aMinorChildrenResource {
       )
           Long minorChildId,
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1a MinorChild object")
-          MinorChild minorChild) {
+          MinorChildDTO minorChild) {
     return resourceDelegate.update(
-        minorChildId, new RFAMinorChildrenParameterObject(applicationId, minorChild));
+        minorChildId, new RFAExternalEntityParameterObject<>(applicationId, minorChild));
   }
 
   @UnitOfWork(CALSNS)
@@ -118,7 +118,7 @@ public class RFA1aMinorChildrenResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1a Form's MinorChild by Id", response = MinorChild.class)
+  @ApiOperation(value = "Returns RFA 1a Form's MinorChild by Id", response = MinorChildDTO.class)
   public Response getMinorChildById(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
@@ -135,7 +135,8 @@ public class RFA1aMinorChildrenResource {
       )
           Long minorChildId) {
 
-    return resourceDelegate.get(new RFAMinorChildrenParameterObject(applicationId, minorChildId));
+    return resourceDelegate
+        .get(new RFAExternalEntityParameterObject<MinorChildDTO>(applicationId, minorChildId));
   }
 
   @UnitOfWork(CALSNS)
@@ -150,7 +151,7 @@ public class RFA1aMinorChildrenResource {
   )
   @ApiOperation(
       value = "Returns RFA 1a Form's MinorChild by Application Id",
-      response = MinorChildrenDTO.class
+      response = MinorChildrenCollectionDTO.class
   )
   public Response getMinorChildByFormId(
       @PathParam(RFA_1A_APPLICATION_ID)
@@ -160,7 +161,8 @@ public class RFA1aMinorChildrenResource {
           value = "The RFA-1a Application Id"
       )
           Long applicationId) {
-    return collectionResourceDelegate.get(new RFAMinorChildrenParameterObject(applicationId));
+    return collectionResourceDelegate
+        .get(new RFAExternalEntityParameterObject<MinorChildDTO>(applicationId));
   }
 
   @UnitOfWork(CALSNS)
@@ -186,6 +188,6 @@ public class RFA1aMinorChildrenResource {
       )
           Long minorChildId) {
     return resourceDelegate.delete(
-        new RFAMinorChildrenParameterObject(applicationId, minorChildId));
+        new RFAExternalEntityParameterObject<MinorChildDTO>(applicationId, minorChildId));
   }
 }

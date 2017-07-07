@@ -10,7 +10,7 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
-import gov.ca.cwds.cals.web.rest.rfa.configuration.InternalEntityConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -20,14 +20,13 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team
  */
 
-public class BaseInternalEntityApiHelper<T extends BaseDTO> implements
-    InternalEntityApiHelper {
+public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalEntityApiHelper {
 
   private RestClientTestRule clientTestRule;
-  private InternalEntityConfiguration<T> configuration;
+  private TestInternalEntityConfiguration<T> configuration;
 
   public BaseInternalEntityApiHelper(RestClientTestRule clientTestRule,
-      InternalEntityConfiguration<T> configuration) {
+      TestInternalEntityConfiguration<T> configuration) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
   }
@@ -46,7 +45,6 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements
   public void putApplicationNotFound() throws Exception {
     WebTarget target =
         clientTestRule.target(API.RFA_1A_FORMS + "/" + -1 + "/" + configuration.getApiPath());
-
     T entity = configuration.createEntity();
 
     Response response = target.request(MediaType.APPLICATION_JSON)

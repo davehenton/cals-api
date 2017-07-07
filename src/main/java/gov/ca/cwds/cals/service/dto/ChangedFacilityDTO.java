@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
  * @author CWDS TPT-2
  */
 public class ChangedFacilityDTO implements ChangedDTO, Serializable {
+
   private static final long serialVersionUID = 1L;
 
   @NotNull
@@ -47,8 +48,8 @@ public class ChangedFacilityDTO implements ChangedDTO, Serializable {
       return false;
     }
     ChangedFacilityDTO that = (ChangedFacilityDTO) o;
-    return Objects.equals(facilityDTO, that.facilityDTO) &&
-        recordChangeOperation == that.recordChangeOperation;
+    return recordChangeOperation == that.recordChangeOperation && Objects
+        .equals(facilityDTO, that.facilityDTO);
   }
 
   @Override

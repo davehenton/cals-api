@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class FacilityParameterObject implements Serializable {
     public static final long serialVersionUID = 42L;
 
-    private Boolean expanded = false;
+    private Boolean expanded = Boolean.FALSE;
     private String facilityId;
     private Integer licenseNumber;
     private String unitOfWork;
@@ -27,11 +27,11 @@ public class FacilityParameterObject implements Serializable {
         this.unitOfWork = unitOfWork;
     }
 
-    public boolean isExpanded() {
+    public Boolean isExpanded() {
         return expanded;
     }
 
-    public void setExpanded(boolean expanded) {
+    public void setExpanded(Boolean expanded) {
         this.expanded = expanded;
     }
 

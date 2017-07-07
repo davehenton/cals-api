@@ -1,14 +1,13 @@
 package gov.ca.cwds.cals.service.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.SYSTEM_USER_ID;
+import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import gov.ca.cwds.cals.persistence.dao.calsns.RFAExternalEntityDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.CrudServiceAdapter;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
-import gov.ca.cwds.cals.service.rfa.configuration.RFAExternalEntityConfiguration;
+import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
+import gov.ca.cwds.cals.service.rfa.factory.RFAExternalEntityFactory;
 import gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
@@ -20,34 +19,30 @@ import java.time.LocalDateTime;
 /**
  * @author CWDS CALS API Team.
  */
-@SuppressWarnings("squid:S00119")
 public abstract class AbstractRFAExternalEntityService<
-    Entity extends RFAExternalEntity<EntityDTO>,
-    EntityDTO extends RFAExternalEntityDTO,
-    ParameterObject extends RFAExternalEntityParameterObject<EntityDTO>,
-    EntitiesDTO extends CollectionDTO<EntityDTO>
-    > extends CrudServiceAdapter {
+    T extends RFAExternalEntity<D>,
+    D extends RFAExternalEntityDTO> extends CrudServiceAdapter {
 
-  private RFAExternalEntityDao<Entity> dao;
-  private RFAExternalEntityConfiguration<Entity, EntityDTO, EntitiesDTO> configuration;
+  private RFAExternalEntityDao<T, D> dao;
+  private RFAExternalEntityFactory<T, D> configuration;
 
   public AbstractRFAExternalEntityService(
-      RFAExternalEntityDao<Entity> dao,
-      RFAExternalEntityConfiguration<Entity, EntityDTO, EntitiesDTO> configuration) {
+      RFAExternalEntityDao<T, D> dao,
+      RFAExternalEntityFactory<T, D> configuration) {
     this.dao = dao;
     this.configuration = configuration;
   }
 
   @Override
   public Response create(Request request) {
-    ParameterObject params = getParamObject(request);
-    EntityDTO entityDTO = params.getEntityDTO();
+    RFAExternalEntityParameterObject<D> params = getParamObject(request);
+    D entityDTO = params.getEntityDTO();
 
     if (entityDTO == null) {
       entityDTO = configuration.createEntityDTO();
     }
 
-    Entity entity = configuration.createEntity();
+    T entity = configuration.createEntity();
 
     RFAServiceHelper.fillCreateBaseFields(entity, SYSTEM_USER_ID);
 
@@ -61,15 +56,15 @@ public abstract class AbstractRFAExternalEntityService<
 
   @Override
   public Response find(Serializable params) {
-    ParameterObject entityParams = getParamObject(params);
-    Entity entity =
+    RFAExternalEntityParameterObject<D> entityParams = getParamObject(params);
+    T entity =
         dao.findEntityByFormIdAndEntityId(
             entityParams.getFormId(), entityParams.getEntityId());
     if (entity == null) {
       throw new UserFriendlyException(
           CalsExceptionInfo.RFA_1A_APPLICANT_NOT_FOUND_BY_ID, NOT_FOUND);
     } else {
-      EntityDTO entityDto = entity.getEntityDTO();
+      D entityDto = entity.getEntityDTO();
       entityDto.setId(entity.getId());
       return entityDto;
     }
@@ -77,10 +72,10 @@ public abstract class AbstractRFAExternalEntityService<
 
   @Override
   public Response delete(Serializable params) {
-    ParameterObject entityParams = getParamObject(params);
-    Entity entity =
+    RFAExternalEntityParameterObject<D> entityParams = getParamObject(params);
+    T entity =
         dao.deleteApplicant(entityParams.getFormId(), entityParams.getEntityId());
-    EntityDTO deleted = null;
+    D deleted = null;
     if (entity != null) {
       deleted = entity.getEntityDTO();
     }
@@ -89,8 +84,8 @@ public abstract class AbstractRFAExternalEntityService<
 
   @Override
   public Response update(Serializable entityId, Request params) {
-    ParameterObject entityParams = getParamObject(params);
-    Entity entity = null;
+    RFAExternalEntityParameterObject<D> entityParams = getParamObject(params);
+    T entity = null;
     if (entityId instanceof Long) {
       entity =
           dao.findEntityByFormIdAndEntityId(entityParams.getFormId(), (Long) entityId);
@@ -101,9 +96,9 @@ public abstract class AbstractRFAExternalEntityService<
       entity.setUpdateUserId(SYSTEM_USER_ID);
     }
 
-    Entity updated = dao.update(entity);
+    T updated = dao.update(entity);
 
-    EntityDTO entityDTO = null;
+    D entityDTO = null;
     // Update RFA 1a Form
     if (updated != null) {
       entityDTO = updated.getEntityDTO();
@@ -113,11 +108,11 @@ public abstract class AbstractRFAExternalEntityService<
     return entityDTO;
   }
 
-  private ParameterObject getParamObject(Object params) {
+  private RFAExternalEntityParameterObject<D> getParamObject(Object params) {
     if (!(params instanceof RFAExternalEntityParameterObject)) {
       throw new IllegalStateException("RFA1aApplicantParameterObject is expected here");
     }
-    return (ParameterObject) params;
+    return (RFAExternalEntityParameterObject<D>) params;
   }
 
 }

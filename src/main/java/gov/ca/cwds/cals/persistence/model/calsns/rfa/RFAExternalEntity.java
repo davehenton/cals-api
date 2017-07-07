@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Inheritance;
@@ -14,6 +15,9 @@ import javax.persistence.MappedSuperclass;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class RFAExternalEntity<T extends RFAExternalEntityDTO> extends
     RFABaseEntity {
+
+  public static final String PARAM_FORM_ID = "formId";
+  public static final String PARAM_ENTITY_ID = "entityId";
 
   @Column(name = "application_id")
   private Long formId;

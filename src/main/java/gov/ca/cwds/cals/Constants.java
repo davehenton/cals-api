@@ -9,10 +9,13 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 
@@ -22,6 +25,12 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 public final class Constants {
 
   public static final String SQL_TYPE = "sqlType";
+
+  public static final String RETURNED_CLASS_NAME_PARAM = "returnedClassName";
+
+  public static final String SYSTEM_USER_ID = "SYSTEM";
+
+  public static final String RFA = "rfa";
 
   public static class API {
 
@@ -41,11 +50,11 @@ public final class Constants {
 
     public static final String FACILITY_TYPES = "facility-types";
 
-    public static final String RFA = "rfa";
-
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
-    public static final String RFA_1A_APPLICANT = "applicant";
+    public static final String RFA_1B_FORMS = "rfa-1b-forms";
+
+    public static final String RFA_1C_FORMS = "rfa-1c-forms";
 
     public static final String RFA_1A_APPLICANTS = "applicants";
 
@@ -55,11 +64,17 @@ public final class Constants {
 
     public static final String RFA_1A_OTHER_ADULTS = "other-adults";
 
-    public static final String RFA_1A_MINOR_CHILD = "minorChild";
-
     public static final String RESIDENCE = "residence";
 
-    public static final String SYSTEM_USER_ID = "SYSTEM";
+    public static final String RFA_1A_ADOPTION_HISTORY = "adoption-history";
+
+    public static final String RFA_1A_REFERENCES = "references";
+
+    public static final String APPLICANTS_HISTORY = "applicants-history";
+
+    public static final String CHILD_DESIRED = "child-desired";
+
+    public static final String RFA_1A_APPLICANTS_DECLARATION = "applicants-declaration";
 
     public static class PathParams {
 
@@ -71,15 +86,35 @@ public final class Constants {
 
       public static final String INSPECTION_ID = "inspectionId";
 
-      public static final String DICTIONARY_TYPE = "dictionaryType";
-
       public static final String RFA_1A_APPLICATION_ID = "applicationId";
 
       public static final String RFA_1A_APPLICANT_ID = "applicantId";
 
       public static final String RFA_1A_MINOR_CHILD_ID = "minorChildId";
 
-      private PathParams() {
+      public static final String RFA_1A_OTHER_ADULT_ID = "otherAdultId";
+
+      public static final String RFA_1A_MINOR_CHILD = "minorChild";
+
+      public static final String RFA_1A_ADOPTION_HISTORY_API_PARAM = "adoptionHistory";
+
+      public static final String RFA_1A_OTHER_ADULT = "otherAdult";
+
+      public static final String RFA_1B_FORM = "rfa1bForm";
+
+      public static final String RFA_1C_FORM = "rfa1cForm";
+
+      public static final String RFA_1B_FORM_ID = "rfa1bFormId";
+
+      public static final String RFA_1C_FORM_ID = "rfa1cFormId";
+
+      public static final String RFA_1A_APPLICANT = "applicant";
+    }
+
+    public static class QueryParams {
+      public static final String EXPANDED = "expanded";
+
+      private QueryParams() {
       }
     }
 
@@ -101,15 +136,11 @@ public final class Constants {
     SIBLING_GROUP_TYPE(SiblingGroupType.class),
     STATE_TYPE(StateType.class),
     RESIDENCE_OWNERSHIP_TYPE(ResidenceOwnershipType.class),
-    APPLICANT_RELATIONSHIP_TYPE(ApplicantRelationshipType.class)
+    APPLICANT_RELATIONSHIP_TYPE(ApplicantRelationshipType.class),
+    LICENSE_TYPE(LicenseType.class),
+    MARRIAGE_TERMINATION_REASON(MarriageTerminationReasonType.class),
+    SCHOOL_GRADE_TYPE(SchoolGradeType.class);
 
-    /*
-    COUNTY_TYPE("county-type", null),
-    APPLICATION_STATUS_TYPE("application-status-type"),
-    RELATIONSHIP_EVENT_TYPE("relationship-event-type"),
-    */
-
-    ;
     public static final String AGE_GROUP_TYPE_PATH = "age-groups";
     public static final String LANGUAGE_TYPE_PATH = "languages";
     public static final String GENDER_TYPE_PATH = "genders";
@@ -126,6 +157,9 @@ public final class Constants {
     public static final String RESIDENCE_OWNERSHIP_TYPE_PATH = "residence-ownership-types";
     public static final String APPLICANT_RELATIONSHIP_TYPE_PATH = "applicant-relationship-types";
     public static final String RELATIONSHIP_EVENT_TYPE_PATH = "relationship-event-types";
+    public static final String LICENSE_TYPE_PATH = "license-types";
+    public static final String MARRIAGE_TERMINATION_REASON_PATH = "marriage-termination-reasons";
+    public static final String SCHOOL_GRADE_TYPE_PATH = "school-grades";
 
     private Class<? extends BaseDictionary> dictionaryClass;
 

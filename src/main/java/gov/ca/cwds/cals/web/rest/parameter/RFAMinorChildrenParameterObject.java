@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.web.rest.parameter;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.MinorChild;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.rest.api.Request;
 import java.io.Serializable;
 
@@ -13,7 +13,7 @@ public class RFAMinorChildrenParameterObject implements Request, Serializable {
 
   private Long applicationId;
   private Long minorChildId;
-  private MinorChild minorChild;
+  private MinorChildDTO minorChild;
 
   public RFAMinorChildrenParameterObject(Long applicationId) {
     this.applicationId = applicationId;
@@ -21,7 +21,7 @@ public class RFAMinorChildrenParameterObject implements Request, Serializable {
     this.minorChildId = null;
   }
 
-  public RFAMinorChildrenParameterObject(Long applicationId, MinorChild minorChild) {
+  public RFAMinorChildrenParameterObject(Long applicationId, MinorChildDTO minorChild) {
     this.applicationId = applicationId;
     this.minorChild = minorChild;
     this.minorChildId = null;
@@ -41,7 +41,7 @@ public class RFAMinorChildrenParameterObject implements Request, Serializable {
     return minorChildId;
   }
 
-  public MinorChild getMinorChild() {
+  public MinorChildDTO getMinorChild() {
     return minorChild;
   }
 }

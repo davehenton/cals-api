@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.SYSTEM_USER_ID;
+import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
@@ -8,7 +8,7 @@ import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.CrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.cals.service.rfa.configuration.RFAInternalEntityConfiguration;
+import gov.ca.cwds.cals.service.rfa.factory.RFAInternalEntityConfiguration;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;

@@ -1,38 +1,64 @@
 package gov.ca.cwds.cals.service.dto.rfa;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.Application;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import io.swagger.annotations.ApiModelProperty;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team.
  */
+@SuppressWarnings("squid:S2160") //Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class RFA1aFormDTO extends Application {
+public class RFA1aFormDTO extends RFA1aForm {
   private static final long serialVersionUID = 1L;
 
-  @ApiModelProperty(value = "Application Id")
-  private Long id;
+  @JsonProperty("is_initial_application")
+  @ApiModelProperty(value = "Is Initial Application Id", example = "false")
+  private boolean initialApplication;
 
-  public Long getId() {
-    return id;
+  @JsonProperty("is_other_type")
+  @ApiModelProperty(value = "Is Other Type", example = "false")
+  private boolean otherType;
+
+  @ApiModelProperty(value = "Other Type Description", example = "Description")
+  private String otherTypeDescription;
+
+  @ApiModelProperty(value = "County Type")
+  private CountyType applicationCounty;
+
+  public boolean isInitialApplication() {
+    return initialApplication;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setInitialApplication(boolean initialApplication) {
+    this.initialApplication = initialApplication;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o);
+  public boolean isOtherType() {
+    return otherType;
   }
 
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
+  public void setOtherType(boolean otherType) {
+    this.otherType = otherType;
+  }
+
+  public String getOtherTypeDescription() {
+    return otherTypeDescription;
+  }
+
+  public void setOtherTypeDescription(String otherTypeDescription) {
+    this.otherTypeDescription = otherTypeDescription;
+  }
+
+  public CountyType getApplicationCounty() {
+    return applicationCounty;
+  }
+
+  public void setApplicationCounty(CountyType applicationCounty) {
+    this.applicationCounty = applicationCounty;
   }
 
 }

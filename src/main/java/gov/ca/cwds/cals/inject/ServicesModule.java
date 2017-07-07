@@ -18,14 +18,24 @@ import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
-import gov.ca.cwds.cals.service.rfa.ApplicantsRelationshipService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsDeclarationService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsHistoryService;
+import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsRelationshipService;
+import gov.ca.cwds.cals.service.rfa.RFA1aChildDesiredService;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
-import gov.ca.cwds.cals.service.rfa.RFAApplicantService;
-import gov.ca.cwds.cals.service.rfa.RFAApplicantsCollectionService;
-import gov.ca.cwds.cals.service.rfa.RFAFormsCollectionService;
-import gov.ca.cwds.cals.service.rfa.RFAMinorChildService;
-import gov.ca.cwds.cals.service.rfa.RFAMinorChildrenCollectionService;
-import gov.ca.cwds.cals.service.rfa.ResidenceService;
+import gov.ca.cwds.cals.service.rfa.RFA1aFormsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildService;
+import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildrenCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultService;
+import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aReferencesService;
+import gov.ca.cwds.cals.service.rfa.RFA1aResidenceService;
+import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1bService;
+import gov.ca.cwds.cals.service.rfa.RFA1cCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1cService;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 
 /**
@@ -53,13 +63,23 @@ public class ServicesModule extends AbstractModule {
 
     // RFA
     bind(RFA1aFormService.class);
-    bind(RFAFormsCollectionService.class);
-    bind(RFAApplicantService.class);
-    bind(RFAApplicantsCollectionService.class);
-    bind(RFAMinorChildService.class);
-    bind(RFAMinorChildrenCollectionService.class);
-    bind(ResidenceService.class);
-    bind(ApplicantsRelationshipService.class);
+    bind(RFA1aFormsCollectionService.class);
+    bind(RFA1aApplicantService.class);
+    bind(RFA1aApplicantsCollectionService.class);
+    bind(RFA1aMinorChildService.class);
+    bind(RFA1aMinorChildrenCollectionService.class);
+    bind(RFA1bService.class);
+    bind(RFA1bCollectionService.class);
+    bind(RFA1cService.class);
+    bind(RFA1cCollectionService.class);
+    bind(RFA1aOtherAdultService.class);
+    bind(RFA1aOtherAdultsCollectionService.class);
+    bind(RFA1aResidenceService.class);
+    bind(RFA1aApplicantsRelationshipService.class);
+    bind(RFA1aApplicantsHistoryService.class);
+    bind(RFA1aReferencesService.class);
+    bind(RFA1aChildDesiredService.class);
+    bind(RFA1aApplicantsDeclarationService.class);
   }
 
   @Provides

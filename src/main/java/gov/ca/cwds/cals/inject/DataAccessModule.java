@@ -8,16 +8,6 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
-import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aApplicantDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
-import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
-import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
-import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
@@ -26,15 +16,21 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
 import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
@@ -153,10 +149,16 @@ public class DataAccessModule extends AbstractModule {
           StateType.class,
           ResidenceOwnershipType.class,
           ApplicantRelationshipType.class,
+          LicenseType.class,
+          MarriageTerminationReasonType.class,
+          SchoolGradeType.class,
           //RFA
           RFA1aForm.class,
           RFA1aApplicant.class,
-          RFA1aMinorChild.class
+          RFA1aMinorChild.class,
+          RFA1aOtherAdult.class,
+          RFA1bForm.class,
+          RFA1cForm.class
       ) {
 
         @Override
@@ -185,19 +187,7 @@ public class DataAccessModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    bind(ComplaintReportLic802Dao.class);
-    bind(FacilityTypeDao.class);
-    bind(CountiesDao.class);
-    bind(ClientDao.class);
-    bind(PlacementHomeDao.class);
-    bind(LpaInformationDao.class);
-    bind(InspectionDao.class);
-    bind(DictionariesDao.class);
-
-    // RFA
-    bind(RFA1aFormsDao.class);
-    bind(RFA1aApplicantDao.class);
-
+    //do nothing
   }
 
   @Provides
