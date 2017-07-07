@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa.configuration;
 
 import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.cals.service.dto.CollectionDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import javax.ws.rs.core.GenericType;
 

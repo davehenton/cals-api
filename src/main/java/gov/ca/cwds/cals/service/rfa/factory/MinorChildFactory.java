@@ -2,6 +2,8 @@ package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.MinorChildrenCollectionDTO;
+import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -39,6 +41,11 @@ public class MinorChildFactory
   @Override
   public String getFindByFormIdAndEntityIdNamedQuery() {
     return RFA1aMinorChild.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID;
+  }
+
+  @Override
+  public MinorChildrenCollectionDTO createCollectionDTO(List<MinorChildDTO> collectDTOs) {
+    return new MinorChildrenCollectionDTO(collectDTOs);
   }
 
 }

@@ -2,6 +2,8 @@ package gov.ca.cwds.cals.service.rfa.factory;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.OtherAdultCollectionDTO;
+import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -39,6 +41,11 @@ public class OtherAdultFactory
   @Override
   public String getFindByFormIdAndEntityIdNamedQuery() {
     return RFA1aOtherAdult.NAMED_QUERY_FIND_BY_FORM_ID_AND_CHILD_ID;
+  }
+
+  @Override
+  public OtherAdultCollectionDTO createCollectionDTO(List<OtherAdultDTO> collectDTOs) {
+    return new OtherAdultCollectionDTO(collectDTOs);
   }
 
 }
