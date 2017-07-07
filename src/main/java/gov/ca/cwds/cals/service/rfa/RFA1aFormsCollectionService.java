@@ -10,7 +10,6 @@ import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 /**
  * @author CWDS CALS API Team
