@@ -10,6 +10,7 @@ import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 /**
  * @author CWDS CALS API Team
@@ -27,8 +28,14 @@ public class RFA1aFormsCollectionService extends CrudServiceAdapter {
 
   @Override
   public Response find(Serializable params) {
+    Boolean expanded = (Boolean) params;
     List<RFA1aForm> forms = dao.findAll();
-    List<RFA1aFormDTO> formDTOs = rfa1aFormMapper.toRFA1aFormsDTO(forms);
+    List<RFA1aFormDTO> formDTOs;
+    if (expanded) {
+      formDTOs = rfa1aFormMapper.toExpandedRFA1aFormsDTO(forms);
+    } else {
+      formDTOs = rfa1aFormMapper.toRFA1aFormsDTO(forms);
+    }
     return new RFA1aFormCollectionDTO(formDTOs);
   }
 
