@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 
 /**
@@ -14,17 +14,17 @@ public class PhoneDTO extends BaseDTO {
 
   private static final long serialVersionUID = 3691096439228739229L;
 
-  private PhoneType phoneType;
+  private PhoneNumberType phoneType;
 
   private String number;
 
   private boolean preferred;
 
-  public PhoneType getPhoneType() {
+  public PhoneNumberType getPhoneType() {
     return phoneType;
   }
 
-  public void setPhoneType(PhoneType phoneType) {
+  public void setPhoneType(PhoneNumberType phoneType) {
     this.phoneType = phoneType;
   }
 
