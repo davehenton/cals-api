@@ -12,13 +12,12 @@ import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.List;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
-@SuppressWarnings("squid:S3437") // Dates should be serialized
+@SuppressWarnings({"squid:S3437", "squid:S2160"}) // Dates should be serialized
+//Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ApplicantsDeclarationDTO extends BaseDTO implements Request, Response {
 
@@ -36,17 +35,6 @@ public class ApplicantsDeclarationDTO extends BaseDTO implements Request, Respon
       List<ApplicantSignature> applicantSignatures) {
     this.applicantSignatures = applicantSignatures;
   }
-
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
-  }
-
 
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
   public static class ApplicantSignature extends BaseDTO {
@@ -99,15 +87,6 @@ public class ApplicantsDeclarationDTO extends BaseDTO implements Request, Respon
       this.signatureDate = signatureDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      return EqualsBuilder.reflectionEquals(this, o);
-    }
-
-    @Override
-    public int hashCode() {
-      return HashCodeBuilder.reflectionHashCode(this);
-    }
   }
 
 }

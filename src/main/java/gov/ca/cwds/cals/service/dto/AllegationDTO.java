@@ -1,9 +1,8 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+@SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 /** @author CWDS CALS API Team */
 public class AllegationDTO extends BaseDTO {
 
@@ -64,13 +63,4 @@ public class AllegationDTO extends BaseDTO {
     this.resolutionCodeUnsub = resolutionCodeUnsub;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o);
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this);
-  }
 }
