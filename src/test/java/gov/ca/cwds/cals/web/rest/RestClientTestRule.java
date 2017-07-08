@@ -77,8 +77,8 @@ public class RestClientTestRule implements TestRule {
       public void evaluate() throws Throwable {
 
         JerseyClientBuilder clientBuilder = new JerseyClientBuilder()
-            .property(ClientProperties.CONNECT_TIMEOUT, 10000)
-            .property(ClientProperties.READ_TIMEOUT, 10000).hostnameVerifier(new HostnameVerifier() {
+            .property(ClientProperties.CONNECT_TIMEOUT, 5000)
+            .property(ClientProperties.READ_TIMEOUT, 20000).hostnameVerifier(new HostnameVerifier() {
               @Override
               public boolean verify(String hostName, SSLSession sslSession) {
                 // Just ignore host verification for test purposes
