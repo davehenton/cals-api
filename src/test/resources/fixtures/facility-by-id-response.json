@@ -19,9 +19,6 @@
     "id" : "34",
     "value" : "Sacramento"
   },
-  "complains" : {
-    "href" : "facilities/E6tloOO0Ql/complaints"
-  },
   "phones" : [ ],
   "addresses" : [ {
     "type" : "residential",

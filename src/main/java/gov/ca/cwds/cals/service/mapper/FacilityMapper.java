@@ -125,6 +125,7 @@ public interface FacilityMapper {
   @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
   void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);
 
+  @Mapping(target = "complaints", ignore = true)
   ExpandedFacilityDTO toExpandedFacilityDTO(FacilityDTO facilityDTO,
       List<FacilityChildDTO> children, List<Rr809Dn> inspections);
 
