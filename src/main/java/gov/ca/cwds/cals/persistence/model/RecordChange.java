@@ -16,11 +16,11 @@ import org.hibernate.annotations.NamedNativeQuery;
 @NamedNativeQuery(
     name = "RecordChange.findChangedFacilityRecordsInCWSCMS",
     query =
-        "SELECT PlacementHome.IDENTIFIER AS ID, PlacementHome.IBMSNAP_OPERATION AS IBMSNAP_OPERATION"
+        "SELECT PlacementHome.IDENTIFIER AS ID, PlacementHome.IBMSNAP_OPERATION AS CHANGE_OPERATION"
             + " FROM {h-schema}PLC_HM_T PlacementHome"
             + " WHERE PlacementHome.LICENSE_NO IS NULL AND PlacementHome.IBMSNAP_LOGMARKER > :dateAfter"
             + " UNION"
-            + " SELECT DISTINCT PlacementHome.IDENTIFIER AS ID, 'U' AS IBMSNAP_OPERATION"
+            + " SELECT DISTINCT PlacementHome.IDENTIFIER AS ID, 'U' AS CHANGE_OPERATION"
             + " FROM {h-schema}CLIENT_T Client"
             + " INNER JOIN {h-schema}PLC_EPST PlacementEpisode ON Client.IDENTIFIER=PlacementEpisode.FKCLIENT_T"
             + " INNER JOIN {h-schema}O_HM_PLT OutOfHomePlacement ON PlacementEpisode.THIRD_ID=OutOfHomePlacement.FKPLC_EPS0"
@@ -34,8 +34,21 @@ import org.hibernate.annotations.NamedNativeQuery;
 )
 @NamedNativeQuery(
     name = "RecordChange.findChangedFacilityRecordsInLIS",
-    query = "SELECT f.fac_nbr as ID, 'U' AS IBMSNAP_OPERATION"
+    query = "SELECT f.fac_nbr as ID, 'U' AS CHANGE_OPERATION"
         + " FROM {h-schema}lis_fac_file f WHERE f.fac_last_upd_date > :dateAfter",
+    resultClass = RecordChange.class,
+    readOnly = true
+)
+@NamedNativeQuery(
+    name = "RecordChange.findChangedFacilityRecordsInFAS",
+    query = "SELECT DISTINCT f.fac_nbr AS ID, 'U' AS CHANGE_OPERATION"
+        + " FROM facility_info_lis f"
+        + " LEFT JOIN Rr809Dn rr809dn ON TRIM(rr809dn.facility_number_text) = TRIM(CAST (f.fac_nbr AS VARCHAR(254)))"
+        + " LEFT JOIN Rrcpoc rrcpoc ON TRIM(rrcpoc.facility_number_text) = TRIM(CAST (f.fac_nbr AS VARCHAR(254)))"
+        + " WHERE"
+        + " f.dt_modified > :dateAfter"
+        + " OR rr809dn.dt_created > :dateAfter OR rr809dn.dt_modified > :dateAfter"
+        + " OR rrcpoc.dt_created > :dateAfter OR rrcpoc.dt_modified > :dateAfter",
     resultClass = RecordChange.class,
     readOnly = true
 )
@@ -47,7 +60,7 @@ public class RecordChange implements PersistentObject {
   private String id;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "IBMSNAP_OPERATION", updatable = false)
+  @Column(name = "CHANGE_OPERATION", updatable = false)
   private RecordChangeOperation recordChangeOperation;
 
   public String getId() {
