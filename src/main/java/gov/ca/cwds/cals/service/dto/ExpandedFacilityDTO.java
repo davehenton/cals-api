@@ -1,6 +1,8 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +14,12 @@ public class ExpandedFacilityDTO extends FacilityDTO {
   @JsonProperty("children")
   private List<FacilityChildDTO> children = new ArrayList<>();
 
+  @JsonProperty("inspections")
+  private List<Rr809Dn> inspections = new ArrayList<>();
+
+  @JsonProperty("complaints")
+  private List<ComplaintReportLic802> complaints = new ArrayList<>();
+
   public List<FacilityChildDTO> getChildren() {
     return children;
   }
@@ -19,6 +27,23 @@ public class ExpandedFacilityDTO extends FacilityDTO {
   public void setChildren(
       List<FacilityChildDTO> children) {
     this.children = children;
+  }
+
+  public List<Rr809Dn> getInspections() {
+    return inspections;
+  }
+
+  public void setInspections(List<Rr809Dn> inspections) {
+    this.inspections = inspections;
+  }
+
+  public List<ComplaintReportLic802> getComplaints() {
+    return complaints;
+  }
+
+  public void setComplaints(
+      List<ComplaintReportLic802> complaints) {
+    this.complaints = complaints;
   }
 
   @Override
@@ -33,11 +58,13 @@ public class ExpandedFacilityDTO extends FacilityDTO {
       return false;
     }
     ExpandedFacilityDTO that = (ExpandedFacilityDTO) o;
-    return Objects.equals(children, that.children);
+    return Objects.equals(children, that.children) &&
+        Objects.equals(inspections, that.inspections) &&
+        Objects.equals(complaints, that.complaints);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), children);
+    return Objects.hash(super.hashCode(), children, inspections, complaints);
   }
 }

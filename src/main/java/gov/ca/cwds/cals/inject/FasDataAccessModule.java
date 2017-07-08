@@ -38,7 +38,6 @@ public class FasDataAccessModule extends AbstractModule {
         .addAnnotatedClass(ComplaintReportLic802.class)
         .addAnnotatedClass(LpaInformation.class)
         .addAnnotatedClass(Rrcpoc.class)
-        .addAnnotatedClass(Rrcpoc.class)
         .addAnnotatedClass(Rr809Dn.class)
         .buildSessionFactory();
 
