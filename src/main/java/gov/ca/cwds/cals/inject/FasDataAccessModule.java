@@ -5,6 +5,8 @@ import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
+import gov.ca.cwds.cals.persistence.dao.fas.RecordChangeFasDao;
+import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
@@ -28,6 +30,7 @@ public class FasDataAccessModule extends AbstractModule {
 
   public FasDataAccessModule(String hibernateCfg) {
     this.fasSessionFactory = new Configuration().configure(hibernateCfg)
+        .addAnnotatedClass(RecordChange.class)
         .addAnnotatedClass(LisFacFile.class)
         .addAnnotatedClass(LisTableFile.class)
         .addAnnotatedClass(FacilityType.class)
@@ -48,6 +51,7 @@ public class FasDataAccessModule extends AbstractModule {
     bind(SessionFactory.class).annotatedWith(FasSessionFactory.class).toInstance(fasSessionFactory);
 
     // schema: fas
+    bind(RecordChangeFasDao.class);
     bind(ComplaintReportLic802Dao.class);
     bind(LpaInformationDao.class);
     bind(InspectionDao.class);

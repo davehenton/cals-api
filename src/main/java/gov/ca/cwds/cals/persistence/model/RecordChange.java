@@ -42,7 +42,7 @@ import org.hibernate.annotations.NamedNativeQuery;
 @NamedNativeQuery(
     name = "RecordChange.findChangedFacilityRecordsInFAS",
     query = "SELECT DISTINCT f.fac_nbr AS ID, 'U' AS CHANGE_OPERATION"
-        + " FROM facility_info_lis f"
+        + " FROM {h-schema}facility_info_lis f"
         + " LEFT JOIN Rr809Dn rr809dn ON TRIM(rr809dn.facility_number_text) = TRIM(CAST (f.fac_nbr AS VARCHAR(254)))"
         + " LEFT JOIN Rrcpoc rrcpoc ON TRIM(rrcpoc.facility_number_text) = TRIM(CAST (f.fac_nbr AS VARCHAR(254)))"
         + " WHERE"

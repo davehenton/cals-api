@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.persistence.dao.fas;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.LisSessionFactory;
+import gov.ca.cwds.cals.inject.FasSessionFactory;
 import gov.ca.cwds.cals.persistence.dao.stream.QueryCreator;
 import gov.ca.cwds.cals.persistence.dao.stream.RecordChangesStreamer;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
@@ -14,7 +14,7 @@ import org.hibernate.SessionFactory;
 public class RecordChangeFasDao extends BaseDaoImpl<RecordChange> {
 
   @Inject
-  public RecordChangeFasDao(@LisSessionFactory SessionFactory sessionFactory) {
+  public RecordChangeFasDao(@FasSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 
