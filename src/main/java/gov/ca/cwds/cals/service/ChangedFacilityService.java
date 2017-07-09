@@ -65,11 +65,21 @@ public class ChangedFacilityService extends FacilityService {
     recordChangeLisDao.streamChangedFacilityRecords(after).forEach(lisFasRecordChanges::add);
     recordChangeFasDao.streamChangedFacilityRecords(after).forEach(lisFasRecordChanges::add);
 
-    return Stream.concat(cwsCmsRecordChanges.newStream(), lisFasRecordChanges.newStream()).map(
-        recordChange -> {
+    return Stream.concat(cwsCmsRecordChanges.newStream(), lisFasRecordChanges.newStream())
+        .map(recordChange -> {
           LOG.info("Getting facility by ID: {}", recordChange.getId());
           FacilityDTO facilityDTO = findExpandedById(recordChange.getId());
+          LOG.info("Find facility by ID {} returned FacilityDTO with ID {}", recordChange.getId(),
+              facilityDTO.getId());
           return new ChangedFacilityDTO(facilityDTO, recordChange.getRecordChangeOperation());
+        })
+        .filter(facilityDTO -> {
+          if (facilityDTO.getId() == null) {
+            LOG.error("Find facility by ID returned incorrect FacilityDTO with NULL id. Skipped.");
+            return false;
+          } else {
+            return true;
+          }
         });
   }
 
