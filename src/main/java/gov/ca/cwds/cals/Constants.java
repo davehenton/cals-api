@@ -30,7 +30,7 @@ public final class Constants {
 
   public static final String SYSTEM_USER_ID = "SYSTEM";
 
-  public static final String RFA = "RFA 1 A/B/C";
+  public static final String RFA = "rfa-1a";
 
   public static class API {
 
