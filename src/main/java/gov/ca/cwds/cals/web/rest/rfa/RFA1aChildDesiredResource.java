@@ -53,10 +53,10 @@ public class RFA1aChildDesiredResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Desired Child preferences by RFA-1a Form Id", response = ChildDesiredDTO.class)
+  @ApiOperation(value = "Returns Desired Child preferences by RFA-1A Form Id", response = ChildDesiredDTO.class)
   public Response getChildDesired(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -70,12 +70,12 @@ public class RFA1aChildDesiredResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update Desired Child Preferences in RFA 1a Form", response = ChildDesiredDTO.class)
+  @ApiOperation(value = "Update Desired Child Preferences in RFA 1A Form", response = ChildDesiredDTO.class)
   public Response updateDesiredChild(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = CHILD_DESIRED, value = "The RFA-1a Child Desired object")
+      @ApiParam(required = true, name = CHILD_DESIRED, value = "The RFA-1A Child Desired object")
           ChildDesiredDTO childDesired) {
     return resourceDelegate.update(formId, childDesired);
   }

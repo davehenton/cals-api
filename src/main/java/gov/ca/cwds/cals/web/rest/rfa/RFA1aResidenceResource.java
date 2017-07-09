@@ -51,10 +51,10 @@ public class RFA1aResidenceResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Residence by RFA-1a Form Id", response = ResidenceDTO.class)
+  @ApiOperation(value = "Returns Residence by RFA-1A Form Id", response = ResidenceDTO.class)
   public Response getResidence(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -71,9 +71,9 @@ public class RFA1aResidenceResource {
   @ApiOperation(value = "Update Residence in RFA 1a Form", response = ResidenceDTO.class)
   public Response updateResidence(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1a Residence object")
+      @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1A Residence object")
           ResidenceDTO residence) {
     return resourceDelegate.update(formId, residence);
   }
