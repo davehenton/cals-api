@@ -45,10 +45,12 @@ import org.hibernate.annotations.NamedNativeQuery;
         + " FROM {h-schema}facility_info_lis f"
         + " LEFT JOIN Rr809Dn rr809dn ON TRIM(rr809dn.facility_number_text) = TRIM(CAST (f.fac_nbr AS VARCHAR(254)))"
         + " LEFT JOIN Rrcpoc rrcpoc ON TRIM(rrcpoc.facility_number_text) = TRIM(CAST (f.fac_nbr AS VARCHAR(254)))"
+        + " LEFT JOIN complaint_report_lic802 compl ON f.fac_nbr = compl.crp2_facility_number"
         + " WHERE"
         + " f.dt_modified > :dateAfter"
         + " OR rr809dn.dt_created > :dateAfter OR rr809dn.dt_modified > :dateAfter"
-        + " OR rrcpoc.dt_created > :dateAfter OR rrcpoc.dt_modified > :dateAfter",
+        + " OR rrcpoc.dt_created > :dateAfter OR rrcpoc.dt_modified > :dateAfter"
+        + " OR compl.dt_created > :dateAfter OR compl.dt_modified > :dateAfter",
     resultClass = RecordChange.class,
     readOnly = true
 )
