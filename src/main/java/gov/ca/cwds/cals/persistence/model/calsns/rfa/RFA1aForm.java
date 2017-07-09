@@ -43,6 +43,7 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Reques
   private ResidenceDTO residence;
 
   @Type(type = "ApplicantsRelationshipJsonType")
+  @Column(name = "relationships")
   private ApplicantsRelationshipDTO applicantsRelationship;
 
   @Type(type = "ApplicantHistoryJsonType")
@@ -52,6 +53,22 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Reques
   @OneToMany
   @JoinColumn(name = "application_id")
   private List<RFA1aApplicant> applicants;
+
+  @OneToMany
+  @JoinColumn(name = "application_id")
+  private List<RFA1aMinorChild> minorChildren;
+
+  @OneToMany
+  @JoinColumn(name = "application_id")
+  private List<RFA1aOtherAdult> otherAdults;
+
+  @OneToMany
+  @JoinColumn(name = "application_id")
+  private List<RFA1bForm> rfa1bForms;
+
+  @OneToMany
+  @JoinColumn(name = "application_id")
+  private List<RFA1cForm> rfa1cForms;
 
   @Type(type = "AdoptionHistoryJsonType")
   @Column(name = "adoption_history")
@@ -101,6 +118,42 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Reques
     this.applicants = applicants;
   }
 
+  public List<RFA1aMinorChild> getMinorChildren() {
+    return minorChildren;
+  }
+
+  public void setMinorChildren(
+      List<RFA1aMinorChild> minorChildren) {
+    this.minorChildren = minorChildren;
+  }
+
+  public List<RFA1aOtherAdult> getOtherAdults() {
+    return otherAdults;
+  }
+
+  public void setOtherAdults(
+      List<RFA1aOtherAdult> otherAdults) {
+    this.otherAdults = otherAdults;
+  }
+
+  public List<RFA1bForm> getRfa1bForms() {
+    return rfa1bForms;
+  }
+
+  public void setRfa1bForms(
+      List<RFA1bForm> rfa1bForms) {
+    this.rfa1bForms = rfa1bForms;
+  }
+
+  public List<RFA1cForm> getRfa1cForms() {
+    return rfa1cForms;
+  }
+
+  public void setRfa1cForms(
+      List<RFA1cForm> rfa1cForms) {
+    this.rfa1cForms = rfa1cForms;
+  }
+
   public AdoptionHistoryDTO getAdoptionHistory() {
     return adoptionHistory;
   }
@@ -143,12 +196,12 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Reques
 
   @Override
   public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o, "applicants");
+    return EqualsBuilder.reflectionEquals(this, o, "applicants", "minorChildren", "otherAdults", "rfa1bForms", "rfa1cForms");
   }
 
   @Override
   public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, "applicants");
+    return HashCodeBuilder.reflectionHashCode(this, "applicants", "minorChildren", "otherAdults", "rfa1bForms", "rfa1cForms");
   }
 
 
