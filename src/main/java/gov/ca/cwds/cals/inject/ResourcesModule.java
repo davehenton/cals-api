@@ -17,11 +17,19 @@ import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
+import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationshipDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aAdoptionHistoryService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
@@ -49,6 +57,7 @@ import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
+import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResource;
@@ -189,40 +198,48 @@ public class ResourcesModule extends AbstractModule {
 
   @Provides
   @ResidenceServiceBackedResource
-  public ResourceDelegate residenceServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aResidenceService.class));
+  public TypedResourceDelegate<Long, ResidenceDTO> residenceServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(RFA1aResidenceService.class));
   }
 
   @Provides
   @ChildDesiredServiceBackedResource
-  public ResourceDelegate childDesiredServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aChildDesiredService.class));
+  public TypedResourceDelegate<Long, ChildDesiredDTO> childDesiredServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(RFA1aChildDesiredService.class));
   }
 
   @Provides
   @ApplicantsHistoryServiceBackedResource
-  public ResourceDelegate applicantsHistoryServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, ApplicantsHistoryDTO> applicantsHistoryServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aApplicantsHistoryService.class));
   }
 
   @Provides
   @ApplicantsRelationshipServiceBackedResource
-  public ResourceDelegate applicantsRelationshipServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, ApplicantsRelationshipDTO> applicantsRelationshipServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aApplicantsRelationshipService.class));
   }
 
   @Provides
   @RFA1aFormServiceBackedResource
-  public ResourceDelegate rfa1aFormsServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aFormService.class));
+  public TypedResourceDelegate<RFA1aFormsParameterObject, RFA1aFormDTO> rfa1aFormsServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(injector.getInstance(RFA1aFormService.class));
   }
 
   @Provides
   @RFA1aFormCollectionServiceBackedResource
-  public ResourceDelegate rfa1aFormsCollectionServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Boolean, Request> rfa1aFormsCollectionServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aFormsCollectionService.class));
   }
 
@@ -311,22 +328,25 @@ public class ResourcesModule extends AbstractModule {
 
   @Provides
   @RFA1aAdoptionHistoryServiceBackedResource
-  public ResourceDelegate rfa1aAdoptionHistoryServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, AdoptionHistoryDTO> rfa1aAdoptionHistoryServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aAdoptionHistoryService.class));
   }
 
   @Provides
   @RFA1aReferencesServiceBackedResource
-  public ResourceDelegate rfa1aReferencesServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, ReferencesDTO> rfa1aReferencesServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aReferencesService.class));
   }
 
   @Provides
   @RFA1aApplicantsDeclarationServiceBackedResource
-  public ResourceDelegate rfa1aApplicantsDeclarationServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, ApplicantsDeclarationDTO> rfa1aApplicantsDeclarationServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aApplicantsDeclarationService.class));
   }
 

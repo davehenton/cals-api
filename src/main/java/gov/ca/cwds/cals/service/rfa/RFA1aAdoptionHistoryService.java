@@ -20,12 +20,12 @@ public class RFA1aAdoptionHistoryService extends
         new RFAInternalEntityConfiguration<AdoptionHistoryDTO>(AdoptionHistoryDTO.class) {
 
           @Override
-          protected AdoptionHistoryDTO retrieveEntityFromTheForm(RFA1aForm form) {
+          public AdoptionHistoryDTO getEntityFromTheForm(RFA1aForm form) {
             return form.getAdoptionHistory();
           }
 
           @Override
-          protected void saveEntityToTheForm(RFA1aForm form, AdoptionHistoryDTO entity) {
+          public void putEntityToTheForm(RFA1aForm form, AdoptionHistoryDTO entity) {
             form.setAdoptionHistory(entity);
           }
         });

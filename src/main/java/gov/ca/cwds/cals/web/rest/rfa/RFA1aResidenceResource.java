@@ -10,7 +10,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ResidenceServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,10 +34,12 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aResidenceResource {
-  private ResourceDelegate resourceDelegate;
+
+  private TypedResourceDelegate<Long, ResidenceDTO> resourceDelegate;
 
   @Inject
-  public RFA1aResidenceResource(@ResidenceServiceBackedResource ResourceDelegate resourceDelegate) {
+  public RFA1aResidenceResource(
+      @ResidenceServiceBackedResource TypedResourceDelegate<Long, ResidenceDTO> resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
 

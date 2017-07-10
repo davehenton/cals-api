@@ -18,12 +18,12 @@ public class RFA1aReferencesService extends AbstractRFAInternalEntityService<Ref
         new RFAInternalEntityConfiguration<ReferencesDTO>(ReferencesDTO.class) {
 
           @Override
-          protected ReferencesDTO retrieveEntityFromTheForm(RFA1aForm form) {
+          public ReferencesDTO getEntityFromTheForm(RFA1aForm form) {
             return form.getReferences();
           }
 
           @Override
-          protected void saveEntityToTheForm(RFA1aForm form, ReferencesDTO entity) {
+          public void putEntityToTheForm(RFA1aForm form, ReferencesDTO entity) {
             form.setReferences(entity);
           }
         });

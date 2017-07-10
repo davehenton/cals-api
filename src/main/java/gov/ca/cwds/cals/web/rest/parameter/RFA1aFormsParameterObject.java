@@ -11,6 +11,10 @@ public class RFA1aFormsParameterObject implements Serializable {
   private Long formId;
   private boolean expanded;
 
+  public RFA1aFormsParameterObject(Long formId) {
+    this.formId = formId;
+  }
+
   public RFA1aFormsParameterObject(Long formId, boolean expanded) {
     this.formId = formId;
     this.expanded = expanded;

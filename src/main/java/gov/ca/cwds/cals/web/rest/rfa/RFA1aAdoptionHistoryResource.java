@@ -11,7 +11,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aAdoptionHistoryServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,11 +36,12 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aAdoptionHistoryResource {
 
-  private ResourceDelegate resourceDelegate;
+  private TypedResourceDelegate<Long, AdoptionHistoryDTO> resourceDelegate;
 
   @Inject
   public RFA1aAdoptionHistoryResource(
-      @RFA1aAdoptionHistoryServiceBackedResource ResourceDelegate resourceDelegate) {
+      @RFA1aAdoptionHistoryServiceBackedResource
+          TypedResourceDelegate<Long, AdoptionHistoryDTO> resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
 
