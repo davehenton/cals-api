@@ -5,12 +5,12 @@
       "zip": "98123",
       "city": "Rocklin",
       "state": {
-        "id": 0,
-        "value": "string"
+        "id": 6,
+        "value": "California"
       },
       "type": {
         "id": 1,
-        "value": "Physical"
+        "value": "Residential"
       }
     },
     {
@@ -18,19 +18,19 @@
       "zip": "98123",
       "city": "Rocklin",
       "state": {
-        "id": 0,
-        "value": "string"
+        "id": 6,
+        "value": "California"
       },
       "type": {
-        "id": 2,
+        "id": 3,
         "value": "Mailing"
       }
     }
   ],
   "physical_mailing_similar": false,
   "residence_ownership": {
-    "id": 0,
-    "value": "string"
+    "id": 1,
+    "value": "Own"
   },
   "weapon_in_home": false,
   "body_of_water_exist": true,
@@ -46,8 +46,8 @@
   "directions_to_home": "Directions here",
   "home_languages": [
     {
-      "id": 0,
-      "value": "string"
+      "id": 2,
+      "value": "English"
     }
   ]
 }

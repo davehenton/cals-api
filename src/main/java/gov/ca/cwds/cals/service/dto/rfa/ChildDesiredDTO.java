@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto.rfa;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
 import gov.ca.cwds.rest.api.Request;
@@ -32,7 +33,7 @@ public class ChildDesiredDTO extends BaseDTO implements Request, Response {
 
   @ApiModelProperty(value = "Preferred Sibling(Group Of)")
   @CheckReferentialIntegrityForEach
-  private List<AgeGroupType> preferredSiblingGroups = new ArrayList<>();
+  private List<SiblingGroupType> preferredSiblingGroups = new ArrayList<>();
 
   public boolean isChildInHome() {
     return childInHome;
@@ -59,12 +60,12 @@ public class ChildDesiredDTO extends BaseDTO implements Request, Response {
     this.preferredAges = preferredAges;
   }
 
-  public List<AgeGroupType> getPreferredSiblingGroups() {
+  public List<SiblingGroupType> getPreferredSiblingGroups() {
     return preferredSiblingGroups;
   }
 
   public void setPreferredSiblingGroups(
-      List<AgeGroupType> preferredSiblingGroups) {
+      List<SiblingGroupType> preferredSiblingGroups) {
     this.preferredSiblingGroups = preferredSiblingGroups;
   }
 

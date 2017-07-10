@@ -31,7 +31,17 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
     Session currentSession = null;
     try {
       currentSession = sessionFactory.openSession();
-      return checkReferentialIntegrity(currentSession, obj);
+      boolean valid = checkReferentialIntegrity(currentSession, obj);
+      if (!valid) {
+        context.disableDefaultConstraintViolation();
+        context
+            .buildConstraintViolationWithTemplate(
+                " object: "
+                    + obj.toString()
+                    + "  is not found in DataBase referential integrity is not confirmed.")
+            .addConstraintViolation();
+      }
+      return valid;
     } finally {
       if (currentSession != null) {
         currentSession.close();
@@ -39,10 +49,8 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
     }
   }
 
-
   @Override
   boolean isCheckEqualityRequired() {
     return checkEquality;
   }
-
 }

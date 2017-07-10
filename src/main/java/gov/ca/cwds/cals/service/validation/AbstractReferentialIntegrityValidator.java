@@ -17,6 +17,7 @@ public abstract class AbstractReferentialIntegrityValidator {
     if (valid && isCheckEqualityRequired()) {
       valid &= found.equals(obj);
     }
+
     return valid;
   }
 
