@@ -18,9 +18,6 @@
   "capacity" : 0,
   "license_effective_date" : "1996-09-13",
   "original_application_recieved_date" : "1995-10-03",
-  "complains" : {
-    "href" : "facilities/BITrEV40OU/complaints"
-  },
   "phones" : [ {
     "relation" : "primary",
     "number" : "9164578228"

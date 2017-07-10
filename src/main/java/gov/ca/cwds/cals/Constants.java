@@ -30,7 +30,7 @@ public final class Constants {
 
   public static final String SYSTEM_USER_ID = "SYSTEM";
 
-  public static final String RFA = "rfa";
+  public static final String RFA = "rfa-1a";
 
   public static class API {
 
@@ -109,8 +109,12 @@ public final class Constants {
       public static final String RFA_1C_FORM_ID = "rfa1cFormId";
 
       public static final String RFA_1A_APPLICANT = "applicant";
+    }
 
-      private PathParams() {
+    public static class QueryParams {
+      public static final String EXPANDED = "expanded";
+
+      private QueryParams() {
       }
     }
 

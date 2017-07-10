@@ -55,10 +55,10 @@ public class RFA1aReferencesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns References by RFA-1a Form Id", response = ReferencesDTO.class)
+  @ApiOperation(value = "Returns References by RFA-1A Form Id", response = ReferencesDTO.class)
   public Response getReferences(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -72,12 +72,12 @@ public class RFA1aReferencesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update References in RFA 1a Form", response = ReferencesDTO.class)
+  @ApiOperation(value = "Update References in RFA 1A Form", response = ReferencesDTO.class)
   public Response updateReferences(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1a References object")
+      @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1A References object")
       @Valid
       ReferencesDTO references) {
     return resourceDelegate.update(formId, references);

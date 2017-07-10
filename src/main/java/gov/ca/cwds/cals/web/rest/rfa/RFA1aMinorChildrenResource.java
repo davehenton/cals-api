@@ -64,12 +64,12 @@ public class RFA1aMinorChildrenResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a MinorChild object", response = MinorChildDTO.class)
+  @ApiOperation(value = "Creates and returns RFA 1A MinorChild object", response = MinorChildDTO.class)
   public Response createMinorChild(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long applicationId,
-      @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1a MinorChild object")
+      @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1A MinorChild object")
       @Valid
       MinorChildDTO minorChild) {
     return resourceDelegate.create(
@@ -87,23 +87,23 @@ public class RFA1aMinorChildrenResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update and returns RFA 1a MinorChild object", response = MinorChildDTO.class)
+  @ApiOperation(value = "Update and returns RFA 1A MinorChild object", response = MinorChildDTO.class)
   public Response updateMinorChild(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
           required = true,
           name = RFA_1A_APPLICATION_ID,
-          value = "The RFA-1a Application Id"
+          value = "The RFA-1A Application Id"
       )
           Long applicationId,
       @PathParam(RFA_1A_MINOR_CHILD_ID)
       @ApiParam(
           required = true,
           name = RFA_1A_MINOR_CHILD_ID,
-          value = "The RFA-1a MinorChild Id"
+          value = "The RFA-1A MinorChild Id"
       )
           Long minorChildId,
-      @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1a MinorChild object")
+      @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1A MinorChild object")
       @Valid
       MinorChildDTO minorChild) {
     return resourceDelegate.update(
@@ -121,20 +121,20 @@ public class RFA1aMinorChildrenResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1a Form's MinorChild by Id", response = MinorChildDTO.class)
+  @ApiOperation(value = "Returns RFA 1A Form's MinorChild by Id", response = MinorChildDTO.class)
   public Response getMinorChildById(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
           required = true,
           name = RFA_1A_APPLICATION_ID,
-          value = "The RFA-1a Application Id"
+          value = "The RFA-1A Application Id"
       )
           Long applicationId,
       @PathParam(RFA_1A_MINOR_CHILD_ID)
       @ApiParam(
           required = true,
           name = RFA_1A_MINOR_CHILD_ID,
-          value = "The RFA-1a MinorChild Id"
+          value = "The RFA-1A MinorChild Id"
       )
           Long minorChildId) {
 
@@ -153,7 +153,7 @@ public class RFA1aMinorChildrenResource {
       }
   )
   @ApiOperation(
-      value = "Returns RFA 1a Form's MinorChild by Application Id",
+      value = "Returns RFA 1A Form's MinorChild by Application Id",
       response = MinorChildrenCollectionDTO.class
   )
   public Response getMinorChildByFormId(
@@ -161,7 +161,7 @@ public class RFA1aMinorChildrenResource {
       @ApiParam(
           required = true,
           name = RFA_1A_APPLICATION_ID,
-          value = "The RFA-1a Application Id"
+          value = "The RFA-1A Application Id"
       )
           Long applicationId) {
     return collectionResourceDelegate
@@ -178,16 +178,16 @@ public class RFA1aMinorChildrenResource {
           @ApiResponse(code = 404, message = "Not found")
       }
   )
-  @ApiOperation(value = "Delete RFA 1a Form's MinorChild by Id")
+  @ApiOperation(value = "Delete RFA 1A Form's MinorChild by Id")
   public Response deleteMinorChild(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long applicationId,
       @PathParam(RFA_1A_MINOR_CHILD_ID)
       @ApiParam(
           required = true,
           name = RFA_1A_MINOR_CHILD_ID,
-          value = "The RFA-1a MinorChild Id"
+          value = "The RFA-1A MinorChild Id"
       )
           Long minorChildId) {
     return resourceDelegate.delete(

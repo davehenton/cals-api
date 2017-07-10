@@ -35,7 +35,7 @@
   "weapon_in_home": false,
   "body_of_water_exist": true,
   "body_of_water_description": "Description here",
-  "others_using_residence_as_mailing": "true",
+  "others_using_residence_as_mailing": true,
   "other_people_using_residence_as_mailing": [
     {
       "first_name": "string",

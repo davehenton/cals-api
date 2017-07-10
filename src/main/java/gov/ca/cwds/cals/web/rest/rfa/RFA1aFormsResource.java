@@ -1,17 +1,20 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
+import static gov.ca.cwds.cals.Constants.API.QueryParams.EXPANDED;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicationDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
+import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
@@ -58,10 +61,17 @@ public class RFA1aFormsResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a Form", response = RFA1aFormDTO.class)
+  @ApiOperation(value = "Creates and returns RFA 1A Form", response = RFA1aFormDTO.class)
   public Response createApplicationForm(
-      @ApiParam(name = "application", value = "The RFA-1a Application object") @Valid
-          ApplicationDTO application) {
+      @ApiParam(name = "application", value = "The RFA-1A Application object") @Valid
+          RFA1aFormDTO application) {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new JavaTimeModule());
+    // TODO: remove this temporary fix to support older versions of CALS DS
+    if (application == null) {
+      application = new RFA1aFormDTO();
+      application.setInitialApplication(true);
+    }
     return resourceDelegate.create(application);
   }
 
@@ -77,12 +87,12 @@ public class RFA1aFormsResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Updates RFA 1a Form", response = RFA1aFormDTO.class)
+  @ApiOperation(value = "Updates RFA 1A Form", response = RFA1aFormDTO.class)
   public Response updateApplicationForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
       Long formId,
-      @ApiParam(name = "application", value = "The RFA-1a Application object")
+      @ApiParam(name = "application", value = "The RFA-1A Application object")
       @Valid
       RFA1aFormDTO formDTO) {
     return resourceDelegate.update(formId, formDTO);
@@ -99,12 +109,15 @@ public class RFA1aFormsResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Returns RFA 1a Form by Id", response = RFA1aFormDTO.class)
+  @ApiOperation(value = "Returns RFA 1A Form by Id", response = RFA1aFormDTO.class)
   public Response getApplicationForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
-          Long formId) {
-    return resourceDelegate.get(formId);
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long formId,
+      @QueryParam(EXPANDED)
+      @ApiParam(name = EXPANDED, value = "Use 'true' to get form with all parts of form included")
+          boolean expanded) {
+    return resourceDelegate.get(new RFA1aFormsParameterObject(formId, expanded));
   }
 
   @UnitOfWork(CALSNS)
@@ -118,10 +131,13 @@ public class RFA1aFormsResource {
     }
   )
   @ApiOperation(
-    value = "Returns all available RFA 1a Forms",
+    value = "Returns all available RFA 1A Forms",
     response = RFA1aFormCollectionDTO.class
   )
-  public Response getAllApplicationForms() {
-    return collectionResourceDelegate.get(null);
+  public Response getAllApplicationForms(
+      @QueryParam(EXPANDED)
+      @ApiParam(name = EXPANDED, value = "Use 'true' to get forms with all parts of form included")
+          boolean expanded) {
+    return collectionResourceDelegate.get(expanded);
   }
 }

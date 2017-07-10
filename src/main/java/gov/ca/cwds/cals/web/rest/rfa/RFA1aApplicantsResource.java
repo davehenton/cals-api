@@ -61,12 +61,12 @@ public class RFA1aApplicantsResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a Applicant", response = ApplicantDTO.class)
+  @ApiOperation(value = "Creates and returns RFA 1A Applicant", response = ApplicantDTO.class)
   public Response createApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1a Applicant object")
+      @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1A Applicant object")
           @Valid
           ApplicantDTO applicant) {
     return resourceDelegate.create(new RFAExternalEntityParameterObject<>(formId, applicant));
@@ -83,15 +83,15 @@ public class RFA1aApplicantsResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Update and returns RFA 1a Applicant", response = ApplicantDTO.class)
+  @ApiOperation(value = "Update and returns RFA 1A Applicant", response = ApplicantDTO.class)
   public Response updateApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @PathParam(RFA_1A_APPLICANT_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1a Applicant Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1A Applicant Id")
           Long applicantId,
-      @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1a Applicant object")
+      @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1A Applicant object")
           @Valid
           ApplicantDTO applicant) {
     return resourceDelegate.update(
@@ -109,13 +109,13 @@ public class RFA1aApplicantsResource {
       @ApiResponse(code = 406, message = "Accept Header not supported")
     }
   )
-  @ApiOperation(value = "Returns RFA 1a Form's Applicant by Id", response = ApplicantDTO.class)
+  @ApiOperation(value = "Returns RFA 1A Form's Applicant by Id", response = ApplicantDTO.class)
   public Response getApplicantById(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @PathParam(RFA_1A_APPLICANT_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1a Applicant Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1A Applicant Id")
           Long applicantId) {
 
     return resourceDelegate.get(
@@ -133,12 +133,12 @@ public class RFA1aApplicantsResource {
     }
   )
   @ApiOperation(
-    value = "Returns RFA 1a Form's Applicants by Form Id",
+    value = "Returns RFA 1A Form's Applicants by Form Id",
     response = ApplicantCollectionDTO.class
   )
   public Response getApplicantsByFormId(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return collectionResourceDelegate.get(
         new RFAExternalEntityParameterObject<ApplicantDTO>(formId));
@@ -154,13 +154,13 @@ public class RFA1aApplicantsResource {
       @ApiResponse(code = 404, message = "Not found")
     }
   )
-  @ApiOperation(value = "Delete RFA 1a Form's Applicant by Id")
+  @ApiOperation(value = "Delete RFA 1A Form's Applicant by Id")
   public Response deleteApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @PathParam(RFA_1A_APPLICANT_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1a Applicant Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1A Applicant Id")
           Long applicantId) {
     return resourceDelegate.delete(
         new RFAExternalEntityParameterObject<ApplicantDTO>(formId, applicantId));

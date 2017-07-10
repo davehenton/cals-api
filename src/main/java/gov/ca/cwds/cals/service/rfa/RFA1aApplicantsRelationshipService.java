@@ -21,13 +21,13 @@ public class RFA1aApplicantsRelationshipService
 
           @Override
           protected ApplicantsRelationshipDTO retrieveEntityFromTheForm(RFA1aForm form) {
-            return form.getRelationships();
+            return form.getApplicantsRelationship();
           }
 
           @Override
           protected void saveEntityToTheForm(RFA1aForm form,
               ApplicantsRelationshipDTO relationship) {
-            form.setRelationships(relationship);
+            form.setApplicantsRelationship(relationship);
           }
 
         });

@@ -54,12 +54,12 @@ public class RFA1aAdoptionHistoryResource {
     }
   )
   @ApiOperation(
-    value = "Returns Adoption History by RFA-1a Form Id",
+    value = "Returns Adoption History by RFA-1A Form Id",
     response = AdoptionHistoryDTO.class
   )
   public Response getAdoptionHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -74,12 +74,12 @@ public class RFA1aAdoptionHistoryResource {
     }
   )
   @ApiOperation(
-    value = "Update Adoption History in RFA 1a Form",
+    value = "Update Adoption History in RFA 1A Form",
     response = AdoptionHistoryDTO.class
   )
   public Response updateAdoptionHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(
             required = true,

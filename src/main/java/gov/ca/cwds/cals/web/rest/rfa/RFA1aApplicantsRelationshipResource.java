@@ -54,10 +54,10 @@ public class RFA1aApplicantsRelationshipResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA-1a Form Applicants Relationship", response = ApplicantsRelationshipDTO.class)
+  @ApiOperation(value = "Returns RFA-1A Form Applicants Relationship", response = ApplicantsRelationshipDTO.class)
   public Response getApplicantsRelationship(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -71,10 +71,10 @@ public class RFA1aApplicantsRelationshipResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Updates Applicants Relationship in RFA 1a Form", response = ApplicantsRelationshipDTO.class)
+  @ApiOperation(value = "Updates Applicants Relationship in RFA 1A Form", response = ApplicantsRelationshipDTO.class)
   public Response updateApplicantsRelationship(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(required = true, name = APPLICANTS_RELATIONSHIP, value = "The Applicants relationship object")
           @Valid ApplicantsRelationshipDTO applicantsRelationship) {

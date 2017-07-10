@@ -67,9 +67,9 @@ public class RFA1bFormsResource {
   @ApiOperation(value = "Creates and returns RFA 1B form", response = RFA1bFormDTO.class)
   public Response createRFA1bForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long applicationId,
-      @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1b Form object")
+      @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
       RFA1bFormDTO rfa1bForm) {
     return resourceDelegate.create(
@@ -93,14 +93,14 @@ public class RFA1bFormsResource {
       @ApiParam(
           required = true,
           name = RFA_1A_APPLICATION_ID,
-          value = "The RFA-1a Application Id"
+          value = "The RFA-1A Application Id"
       )
           Long applicationId,
       @PathParam(RFA_1B_FORM_ID)
       @ApiParam(
           required = true,
           name = RFA_1B_FORM_ID,
-          value = "The RFA-1a Form Id"
+          value = "The RFA-1A Form Id"
       )
           Long rfa1BId,
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
@@ -127,7 +127,7 @@ public class RFA1bFormsResource {
       @ApiParam(
           required = true,
           name = RFA_1A_APPLICATION_ID,
-          value = "The RFA-1a Application Id"
+          value = "The RFA-1A Application Id"
       )
           Long applicationId,
       @PathParam(RFA_1B_FORM_ID)
