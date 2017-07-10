@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -19,7 +20,7 @@ public class RelationshipToApplicantDTO extends BaseDTO {
 
   @JsonProperty("relationship_to_applicant")
   @ApiModelProperty(value = "Relationship to Applicant")
-  //@CheckReferentialIntegrity //Waiting for dictionary implementation
+  @CheckReferentialIntegrity
   private RelationshipToApplicantType relationshipToApplicantType;
 
   @ApiModelProperty(value = "Applicant Id", example = "1234567")
