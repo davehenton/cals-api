@@ -40,6 +40,7 @@ public class ChangedFacilityService extends FacilityService {
   private RecordChangeFasDao recordChangeFasDao;
 
   @Inject
+  @SuppressWarnings("squid:S00107")
   public ChangedFacilityService(
       LisFacFileLisDao lisFacFileLisDao,
       LisFacFileFasDao lisFacFileFasDao,
