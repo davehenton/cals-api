@@ -45,7 +45,7 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
             if (!valid) {
               context.disableDefaultConstraintViolation();
               StringBuilder sb = new StringBuilder();
-              sb.append("[")
+              sb.append('[')
                   .append(index[0])
                   .append("] object ")
                   .append(o)
