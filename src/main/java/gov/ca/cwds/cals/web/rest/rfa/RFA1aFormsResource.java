@@ -61,8 +61,6 @@ public class RFA1aFormsResource {
   public Response createApplicationForm(
       @ApiParam(name = "application", value = "The RFA-1A Application object")
           RFA1aFormDTO application) {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule(new JavaTimeModule());
     // TODO: remove this temporary fix to support older versions of CALS DS
     if (application == null) {
       application = new RFA1aFormDTO();
