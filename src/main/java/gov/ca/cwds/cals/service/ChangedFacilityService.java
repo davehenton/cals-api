@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.CompositeIterator;
 import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
+import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
 import gov.ca.cwds.cals.persistence.dao.fas.RecordChangeFasDao;
@@ -39,6 +40,7 @@ public class ChangedFacilityService extends FacilityService {
   private RecordChangeFasDao recordChangeFasDao;
 
   @Inject
+  @SuppressWarnings("squid:S00107")
   public ChangedFacilityService(
       LisFacFileLisDao lisFacFileLisDao,
       LisFacFileFasDao lisFacFileFasDao,
@@ -49,9 +51,11 @@ public class ChangedFacilityService extends FacilityService {
       RecordChangeCwsCmsDao recordChangeCwsCmsDao,
       RecordChangeLisDao recordChangeLisDao,
       RecordChangeFasDao recordChangeFasDao,
-      ClientDao clientDao, FacilityChildMapper facilityChildMapper, InspectionDao inspectionDao) {
+      ClientDao clientDao, FacilityChildMapper facilityChildMapper,
+      InspectionDao inspectionDao, ComplaintReportLic802Dao complaintReportLic802Dao) {
     super(lisFacFileLisDao, lisFacFileFasDao, placementHomeDao, lpaInformationDao, countiesDao,
-        facilityMapper, fasFacilityMapper, clientDao, facilityChildMapper, inspectionDao);
+        facilityMapper, fasFacilityMapper, clientDao, facilityChildMapper, inspectionDao,
+        complaintReportLic802Dao);
     this.recordChangeCwsCmsDao = recordChangeCwsCmsDao;
     this.recordChangeLisDao = recordChangeLisDao;
     this.recordChangeFasDao = recordChangeFasDao;

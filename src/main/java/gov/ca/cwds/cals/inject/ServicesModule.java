@@ -6,6 +6,7 @@ import com.google.inject.Provides;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
@@ -98,7 +99,8 @@ public class ServicesModule extends AbstractModule {
       FasFacilityMapper fasFacilityMapper,
       ClientDao clientDao,
       FacilityChildMapper facilityChildMapper,
-      InspectionDao inspectionDao) {
+      InspectionDao inspectionDao,
+      ComplaintReportLic802Dao complaintReportLic802Dao) {
     return unitOfWorkAwareProxyFactory.create(
         FacilityService.class,
         new Class[]{
@@ -111,7 +113,8 @@ public class ServicesModule extends AbstractModule {
             FasFacilityMapper.class,
             ClientDao.class,
             FacilityChildMapper.class,
-            InspectionDao.class
+            InspectionDao.class,
+            ComplaintReportLic802Dao.class
         },
         new Object[]{
             lisFacFileLisDao,
@@ -123,7 +126,8 @@ public class ServicesModule extends AbstractModule {
             fasFacilityMapper,
             clientDao,
             facilityChildMapper,
-            inspectionDao
+            inspectionDao,
+            complaintReportLic802Dao
         });
   }
 }

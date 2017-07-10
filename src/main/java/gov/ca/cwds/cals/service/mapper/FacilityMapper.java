@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
+import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
@@ -125,9 +126,9 @@ public interface FacilityMapper {
   @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
   void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);
 
-  @Mapping(target = "complaints", ignore = true)
   ExpandedFacilityDTO toExpandedFacilityDTO(FacilityDTO facilityDTO,
-      List<FacilityChildDTO> children, List<Rr809Dn> inspections);
+      List<FacilityChildDTO> children, List<Rr809Dn> inspections,
+      List<ComplaintReportLic802> complaints);
 
   @AfterMapping
   default void after(@MappingTarget FacilityDTO facilityDTO, BasePlacementHome placementHome) {

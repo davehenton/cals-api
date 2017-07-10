@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
@@ -11,6 +12,7 @@ import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
+import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
@@ -55,13 +57,15 @@ public class FacilityService implements CrudsService {
   private ClientDao clientDao;
   private FacilityChildMapper facilityChildMapper;
   private InspectionDao inspectionDao;
+  private ComplaintReportLic802Dao complaintReportLic802Dao;
 
 
   @Inject
   public FacilityService(LisFacFileLisDao lisFacFileLisDao, LisFacFileFasDao lisFacFileFasDao,
       PlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
       CountiesDao countiesDao, FacilityMapper facilityMapper, FasFacilityMapper fasFacilityMapper,
-      ClientDao clientDao, FacilityChildMapper facilityChildMapper, InspectionDao inspectionDao) {
+      ClientDao clientDao, FacilityChildMapper facilityChildMapper, InspectionDao inspectionDao,
+      ComplaintReportLic802Dao complaintReportLic802Dao) {
     this.lisFacFileLisDao = lisFacFileLisDao;
     this.lisFacFileFasDao = lisFacFileFasDao;
     this.placementHomeDao = placementHomeDao;
@@ -72,6 +76,7 @@ public class FacilityService implements CrudsService {
     this.clientDao = clientDao;
     this.facilityChildMapper = facilityChildMapper;
     this.inspectionDao = inspectionDao;
+    this.complaintReportLic802Dao = complaintReportLic802Dao;
   }
 
   @Override
@@ -110,8 +115,11 @@ public class FacilityService implements CrudsService {
       List<Rr809Dn> inspections = inspectionDao
           .findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber());
 
+      List<ComplaintReportLic802> complaints = complaintReportLic802Dao
+          .findComplaintsByFacilityNumber(parameterObject.getLicenseNumber());
+
       facilityDTO = facilityMapper
-          .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections);
+          .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections, complaints);
     }
 
     return facilityDTO;
@@ -129,8 +137,11 @@ public class FacilityService implements CrudsService {
       List<Rr809Dn> inspections = inspectionDao
           .findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber());
 
+      List<ComplaintReportLic802> complaints = complaintReportLic802Dao
+          .findComplaintsByFacilityNumber(parameterObject.getLicenseNumber());
+
       facilityDTO = facilityMapper
-          .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections);
+          .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections, complaints);
     }
 
     return facilityDTO;
