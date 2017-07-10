@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "relationship_to_applicant_type")
 public class RelationshipToApplicantType extends BaseDictionary {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = -4887203144793399786L;
 
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".RelationshipToApplicantType" + NAMED_QUERY_FIND_ALL_SUFFIX;
