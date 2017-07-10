@@ -80,7 +80,7 @@ public class RFA1aReferencesResource {
           Long formId,
       @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1A References object")
       @Valid
-      ReferencesDTO references) {
+          ReferencesDTO references) {
     return resourceDelegate.update(formId, references);
   }
 

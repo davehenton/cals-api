@@ -10,7 +10,9 @@ import javax.validation.ConstraintValidatorContext;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityValidator
     implements ConstraintValidator<CheckReferentialIntegrity, PersistentObject> {
 

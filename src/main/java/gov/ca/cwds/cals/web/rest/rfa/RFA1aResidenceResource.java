@@ -78,7 +78,7 @@ public class RFA1aResidenceResource {
           Long formId,
       @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1A Residence object")
       @Valid
-      ResidenceDTO residence) {
+          ResidenceDTO residence) {
     return resourceDelegate.update(formId, residence);
   }
 

@@ -77,7 +77,7 @@ public class RFA1aMinorChildrenResource {
           Long applicationId,
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1A MinorChild object")
       @Valid
-      MinorChildDTO minorChild) {
+          MinorChildDTO minorChild) {
     return resourceDelegate.create(
         new RFAExternalEntityUpdateObject<>(applicationId, minorChild));
   }
@@ -111,7 +111,7 @@ public class RFA1aMinorChildrenResource {
           Long minorChildId,
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1A MinorChild object")
       @Valid
-      MinorChildDTO minorChild) {
+          MinorChildDTO minorChild) {
     return resourceDelegate.update(
         new RFAExternalEntityGetObject(applicationId, minorChildId),
         new RFAExternalEntityUpdateObject<>(applicationId, minorChild));

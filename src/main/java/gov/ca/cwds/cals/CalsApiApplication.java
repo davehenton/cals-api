@@ -15,8 +15,11 @@ import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration> {
+
   private static final Logger LOG = LoggerFactory.getLogger(CalsApiApplication.class);
 
   public static void main(String[] args) throws Exception {

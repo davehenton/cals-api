@@ -78,7 +78,7 @@ public class RFA1bFormsResource {
           Long applicationId,
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
-      RFA1bFormDTO rfa1bForm) {
+          RFA1bFormDTO rfa1bForm) {
     return resourceDelegate.create(
         new RFAExternalEntityUpdateObject<>(applicationId, rfa1bForm));
   }
@@ -112,7 +112,7 @@ public class RFA1bFormsResource {
           Long rfa1BId,
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
-      RFA1bFormDTO rfa1bFormDTO) {
+          RFA1bFormDTO rfa1bFormDTO) {
     return resourceDelegate.update(new RFAExternalEntityGetObject(applicationId, rfa1BId),
         new RFAExternalEntityUpdateObject<>(applicationId, rfa1bFormDTO));
   }

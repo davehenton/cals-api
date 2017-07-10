@@ -11,10 +11,12 @@ import javax.validation.ConstraintValidatorContext;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class ReferentialIntegrityForEachValidator extends AbstractReferentialIntegrityValidator
     implements ConstraintValidator<
-        CheckReferentialIntegrityForEach, Collection<? extends PersistentObject>> {
+    CheckReferentialIntegrityForEach, Collection<? extends PersistentObject>> {
 
   private SessionFactory sessionFactory;
   private boolean checkEquality;
@@ -45,7 +47,7 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
             if (!valid) {
               context
                   .buildConstraintViolationWithTemplate(
-                      "[" + index[0] +"] object " + o.toString() + "  is not found in DataBase ")
+                      "[" + index[0] + "] object " + o.toString() + "  is not found in DataBase ")
                   .addConstraintViolation();
             }
             index[0]++;

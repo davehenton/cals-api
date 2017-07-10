@@ -28,7 +28,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 @Api(tags = {RFA})
 @Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RFA_1A_APPLICANTS_DECLARATION)
 @Produces(MediaType.APPLICATION_JSON)
@@ -48,19 +50,19 @@ public class RFA1aApplicantsDeclarationResource {
   @GET
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(
-    value = "Returns Applicants Declaration by RFA-1A Form Id",
-    response = ApplicantsDeclarationDTO.class
+      value = "Returns Applicants Declaration by RFA-1A Form Id",
+      response = ApplicantsDeclarationDTO.class
   )
   public Response getApplicantsDeclaration(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -69,25 +71,25 @@ public class RFA1aApplicantsDeclarationResource {
   @PUT
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(
-    value = "Update Applicants Declaration in RFA 1A Form",
-    response = ApplicantsDeclarationDTO.class
+      value = "Update Applicants Declaration in RFA 1A Form",
+      response = ApplicantsDeclarationDTO.class
   )
   public Response updateApplicantsDeclaration(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(
-            required = true,
-            name = RESIDENCE,
-            value = "The RFA-1A Applicants Declaration object"
-          )
-          @Valid
+          required = true,
+          name = RESIDENCE,
+          value = "The RFA-1A Applicants Declaration object"
+      )
+      @Valid
           ApplicantsDeclarationDTO applicantsDeclaration) {
     return resourceDelegate.update(formId, applicantsDeclaration);
   }

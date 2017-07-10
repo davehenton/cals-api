@@ -78,7 +78,7 @@ public class RFA1aApplicantsRelationshipResource {
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(required = true, name = APPLICANTS_RELATIONSHIP, value = "The Applicants relationship object")
-          @Valid ApplicantsRelationshipDTO applicantsRelationship) {
+      @Valid ApplicantsRelationshipDTO applicantsRelationship) {
     return resourceDelegate.update(formId, applicantsRelationship);
   }
 

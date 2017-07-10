@@ -27,7 +27,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/** @author CWDS CALS API Team. */
+/**
+ * @author CWDS CALS API Team.
+ */
 @Api(tags = {RFA})
 @Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + CHILD_DESIRED)
 @Produces(MediaType.APPLICATION_JSON)
@@ -47,16 +49,16 @@ public class RFA1aChildDesiredResource {
   @GET
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Desired Child preferences by RFA-1A Form Id", response = ChildDesiredDTO.class)
   public Response getChildDesired(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -65,18 +67,18 @@ public class RFA1aChildDesiredResource {
   @PUT
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Update Desired Child Preferences in RFA 1A Form", response = ChildDesiredDTO.class)
   public Response updateDesiredChild(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(required = true, name = CHILD_DESIRED, value = "The RFA-1A Child Desired object")
-          @Valid
+      @Valid
           ChildDesiredDTO childDesired) {
     return resourceDelegate.update(formId, childDesired);
   }
