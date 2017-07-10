@@ -7,6 +7,9 @@ import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
@@ -24,6 +27,8 @@ import io.swagger.annotations.ApiResponses;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CWDS CALS API Team
@@ -36,6 +41,8 @@ public class RFA1aFormsResource {
 
   private ResourceDelegate resourceDelegate;
   private ResourceDelegate collectionResourceDelegate;
+
+  private final Logger LOG = LoggerFactory.getLogger(RFA1aFormsResource.class);
 
   @Inject
   public RFA1aFormsResource(
@@ -59,6 +66,15 @@ public class RFA1aFormsResource {
   public Response createApplicationForm(
       @ApiParam(name = "application", value = "The RFA-1A Application object")
           RFA1aFormDTO application) {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new JavaTimeModule());
+
+    try {
+      LOG.info(System.getProperty("line.separator") + "!!! Test Request" + System.getProperty("line.separator") + "!!! Body: {}",
+          mapper.writerWithDefaultPrettyPrinter().writeValueAsString(application));
+    } catch (JsonProcessingException e) {
+      LOG.error(e.getMessage(), e);
+    }
     return resourceDelegate.create(application);
   }
 
