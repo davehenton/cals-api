@@ -68,6 +68,10 @@ public class RFA1aFormsResource {
           RFA1aFormDTO application) {
     ObjectMapper mapper = new ObjectMapper();
     mapper.registerModule(new JavaTimeModule());
+    if (application == null) {
+      application = new RFA1aFormDTO();
+      application.setInitialApplication(true);
+    }
 
     try {
       LOG.info(System.getProperty("line.separator") + "!!! Test Request" + System.getProperty("line.separator") + "!!! Body: {}",
