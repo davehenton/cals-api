@@ -19,12 +19,12 @@ public class RFA1aChildDesiredService
         new RFAInternalEntityConfiguration<ChildDesiredDTO>(ChildDesiredDTO.class) {
 
           @Override
-          protected ChildDesiredDTO retrieveEntityFromTheForm(RFA1aForm form) {
+          public ChildDesiredDTO getEntityFromTheForm(RFA1aForm form) {
             return form.getChildDesired();
           }
 
           @Override
-          protected void saveEntityToTheForm(RFA1aForm form, ChildDesiredDTO childDesired) {
+          public void putEntityToTheForm(RFA1aForm form, ChildDesiredDTO childDesired) {
             form.setChildDesired(childDesired);
           }
 

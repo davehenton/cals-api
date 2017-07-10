@@ -12,7 +12,9 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 @Target({FIELD, METHOD, PARAMETER, ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Constraint(validatedBy = ReferentialIntegrityValidator.class)
@@ -31,6 +33,7 @@ public @interface CheckReferentialIntegrity {
   @Retention(RUNTIME)
   @Documented
   @interface List {
+
     CheckReferentialIntegrity[] value();
   }
 }

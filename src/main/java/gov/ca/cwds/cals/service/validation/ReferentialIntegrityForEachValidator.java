@@ -11,10 +11,12 @@ import javax.validation.ConstraintValidatorContext;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class ReferentialIntegrityForEachValidator extends AbstractReferentialIntegrityValidator
     implements ConstraintValidator<
-        CheckReferentialIntegrityForEach, Collection<? extends PersistentObject>> {
+    CheckReferentialIntegrityForEach, Collection<? extends PersistentObject>> {
 
   private SessionFactory sessionFactory;
   private boolean checkEquality;
@@ -36,8 +38,8 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
     try {
       currentSession = sessionFactory.openSession();
       Session finalCurrentSession = currentSession;
-      boolean[] result = new boolean[] {true};
-      int[] index = new int[] {0};
+      boolean[] result = new boolean[]{true};
+      int[] index = new int[]{0};
       collection.forEach(
           o -> {
             boolean valid = checkReferentialIntegrity(finalCurrentSession, o);

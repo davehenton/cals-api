@@ -10,7 +10,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ApplicantsRelationshipServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationshipDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,11 +36,12 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aApplicantsRelationshipResource {
 
-  private ResourceDelegate resourceDelegate;
+  private TypedResourceDelegate<Long, ApplicantsRelationshipDTO> resourceDelegate;
 
   @Inject
   public RFA1aApplicantsRelationshipResource(
-      @ApplicantsRelationshipServiceBackedResource ResourceDelegate resourceDelegate) {
+      @ApplicantsRelationshipServiceBackedResource
+          TypedResourceDelegate<Long, ApplicantsRelationshipDTO> resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
 
@@ -77,7 +78,7 @@ public class RFA1aApplicantsRelationshipResource {
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(required = true, name = APPLICANTS_RELATIONSHIP, value = "The Applicants relationship object")
-          @Valid ApplicantsRelationshipDTO applicantsRelationship) {
+      @Valid ApplicantsRelationshipDTO applicantsRelationship) {
     return resourceDelegate.update(formId, applicantsRelationship);
   }
 

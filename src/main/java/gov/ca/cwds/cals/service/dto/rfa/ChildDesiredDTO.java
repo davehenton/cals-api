@@ -2,12 +2,11 @@ package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.RequestResponseEntity;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
  */
 @SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ChildDesiredDTO extends BaseDTO implements Request, Response {
+public class ChildDesiredDTO extends BaseDTO implements RequestResponseEntity {
 
   private static final long serialVersionUID = -580792892550002723L;
 

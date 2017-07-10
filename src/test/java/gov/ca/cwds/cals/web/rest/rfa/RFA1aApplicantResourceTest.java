@@ -40,6 +40,5 @@ public class RFA1aApplicantResourceTest extends
     return new BaseExternalEntityApiHelper<>(clientTestRule, configuration);
   }
 
-  
 
 }

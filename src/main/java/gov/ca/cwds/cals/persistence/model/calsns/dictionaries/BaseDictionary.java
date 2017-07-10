@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
+import gov.ca.cwds.rest.api.Request;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class BaseDictionary extends BaseDTO implements PersistentObject {
+public abstract class BaseDictionary extends BaseDTO implements PersistentObject, Request {
 
   private static final long serialVersionUID = 1405907682848102125L;
 

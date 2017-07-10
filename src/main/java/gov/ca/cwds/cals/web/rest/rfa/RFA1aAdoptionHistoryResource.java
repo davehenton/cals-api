@@ -11,7 +11,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aAdoptionHistoryServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,18 +28,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/** @author CWDS CALS API Team. */
+/**
+ * @author CWDS CALS API Team.
+ */
 @Api(tags = {RFA})
 @Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RFA_1A_ADOPTION_HISTORY)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aAdoptionHistoryResource {
 
-  private ResourceDelegate resourceDelegate;
+  private TypedResourceDelegate<Long, AdoptionHistoryDTO> resourceDelegate;
 
   @Inject
   public RFA1aAdoptionHistoryResource(
-      @RFA1aAdoptionHistoryServiceBackedResource ResourceDelegate resourceDelegate) {
+      @RFA1aAdoptionHistoryServiceBackedResource
+          TypedResourceDelegate<Long, AdoptionHistoryDTO> resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
 
@@ -47,19 +50,19 @@ public class RFA1aAdoptionHistoryResource {
   @GET
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(
-    value = "Returns Adoption History by RFA-1A Form Id",
-    response = AdoptionHistoryDTO.class
+      value = "Returns Adoption History by RFA-1A Form Id",
+      response = AdoptionHistoryDTO.class
   )
   public Response getAdoptionHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -68,25 +71,25 @@ public class RFA1aAdoptionHistoryResource {
   @PUT
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(
-    value = "Update Adoption History in RFA 1A Form",
-    response = AdoptionHistoryDTO.class
+      value = "Update Adoption History in RFA 1A Form",
+      response = AdoptionHistoryDTO.class
   )
   public Response updateAdoptionHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
-          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(
-            required = true,
-            name = RFA_1A_ADOPTION_HISTORY_API_PARAM,
-            value = "The RFA-1a Adoption History object"
-          )
-          @Valid
+          required = true,
+          name = RFA_1A_ADOPTION_HISTORY_API_PARAM,
+          value = "The RFA-1a Adoption History object"
+      )
+      @Valid
           AdoptionHistoryDTO adoptionHistory) {
     return resourceDelegate.update(formId, adoptionHistory);
   }

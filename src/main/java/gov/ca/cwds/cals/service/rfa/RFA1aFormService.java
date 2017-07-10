@@ -7,20 +7,18 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
-import gov.ca.cwds.cals.service.CrudServiceAdapter;
+import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.api.Response;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aFormService extends CrudServiceAdapter {
+public class RFA1aFormService
+    extends TypedCrudServiceAdapter<RFA1aFormsParameterObject, RFA1aFormDTO, RFA1aFormDTO> {
 
   private RFA1aFormsDao dao;
   private RFA1aFormMapper mapper;
@@ -32,11 +30,7 @@ public class RFA1aFormService extends CrudServiceAdapter {
   }
 
   @Override
-  public Response create(Request request) {
-    if (!(request instanceof RFA1aFormDTO)) {
-      throw new IllegalArgumentException("Cannot convert request to Application Form");
-    }
-    RFA1aFormDTO formDTO = (RFA1aFormDTO) request;
+  public RFA1aFormDTO create(RFA1aFormDTO formDTO) {
 
     RFA1aForm form = new RFA1aForm();
     mapper.toRFA1aForm(form, formDTO);
@@ -53,13 +47,7 @@ public class RFA1aFormService extends CrudServiceAdapter {
   }
 
   @Override
-  public Response find(Serializable parameter) {
-    RFA1aFormsParameterObject parameterObject;
-    if (!(parameter instanceof RFA1aFormsParameterObject)) {
-      throw new IllegalArgumentException();
-    }
-    parameterObject = (RFA1aFormsParameterObject) parameter;
-
+  public RFA1aFormDTO find(RFA1aFormsParameterObject parameterObject) {
     RFA1aForm form = dao.find(parameterObject.getFormId());
 
     RFA1aFormDTO formDTO;
@@ -73,20 +61,15 @@ public class RFA1aFormService extends CrudServiceAdapter {
   }
 
   @Override
-  public Response update(Serializable formId, Request request) {
-    RFA1aForm form = dao.find(formId);
+  public RFA1aFormDTO update(RFA1aFormsParameterObject parameterObject, RFA1aFormDTO formDTO) {
+    RFA1aForm form = dao.find(parameterObject.getFormId());
     if (form == null) {
       throw new UserFriendlyException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
     }
-    if (!(request instanceof RFA1aFormDTO)) {
-      throw new IllegalArgumentException("request is not of expected type: RFA1aFormDTO");
-    }
-    RFA1aFormDTO formDTO = (RFA1aFormDTO) request;
     mapper.toRFA1aForm(form, formDTO);
     form.setUpdateDateTime(LocalDateTime.now());
     form.setUpdateUserId(SYSTEM_USER_ID);
     dao.update(form);
     return mapper.toRFA1aFormDTO(form);
   }
-
 }

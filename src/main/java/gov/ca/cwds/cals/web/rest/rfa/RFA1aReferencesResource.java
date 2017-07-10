@@ -11,7 +11,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aReferencesServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,11 +37,12 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aReferencesResource {
 
-  private ResourceDelegate resourceDelegate;
+  private TypedResourceDelegate<Long, ReferencesDTO> resourceDelegate;
 
   @Inject
   public RFA1aReferencesResource(
-      @RFA1aReferencesServiceBackedResource ResourceDelegate resourceDelegate) {
+      @RFA1aReferencesServiceBackedResource
+          TypedResourceDelegate<Long, ReferencesDTO> resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
 
@@ -79,7 +80,7 @@ public class RFA1aReferencesResource {
           Long formId,
       @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1A References object")
       @Valid
-      ReferencesDTO references) {
+          ReferencesDTO references) {
     return resourceDelegate.update(formId, references);
   }
 

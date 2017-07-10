@@ -14,8 +14,10 @@ import gov.ca.cwds.cals.inject.RFA1aOtherAdultsCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aOtherAdultsServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.OtherAdultCollectionDTO;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
+import gov.ca.cwds.rest.api.Request;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,14 +45,18 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aOtherAdultsResource {
 
-  private ResourceDelegate resourceDelegate;
-  private ResourceDelegate collectionResourceDelegate;
+  private TypedResourceDelegate<RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<OtherAdultDTO>>
+      resourceDelegate;
+  private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
   @Inject
   public RFA1aOtherAdultsResource(
-      @RFA1aOtherAdultsServiceBackedResource ResourceDelegate resourceDelegate,
+      @RFA1aOtherAdultsServiceBackedResource
+          TypedResourceDelegate<
+              RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<OtherAdultDTO>>
+          resourceDelegate,
       @RFA1aOtherAdultsCollectionServiceBackedResource
-          ResourceDelegate collectionResourceDelegate) {
+          TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
   }
@@ -71,9 +77,9 @@ public class RFA1aOtherAdultsResource {
           Long applicationId,
       @ApiParam(required = true, name = RFA_1A_OTHER_ADULT, value = "The RFA-1A OtherAdult object")
       @Valid
-      OtherAdultDTO otherAdult) {
+          OtherAdultDTO otherAdult) {
     return resourceDelegate.create(
-        new RFAExternalEntityParameterObject<>(applicationId, otherAdult));
+        new RFAExternalEntityUpdateObject<>(applicationId, otherAdult));
   }
 
   @UnitOfWork(CALSNS)
@@ -105,9 +111,10 @@ public class RFA1aOtherAdultsResource {
           Long minorChildId,
       @ApiParam(required = true, name = RFA_1A_OTHER_ADULT, value = "The RFA-1A OtherAdult object")
       @Valid
-      OtherAdultDTO otherAdult) {
+          OtherAdultDTO otherAdult) {
     return resourceDelegate.update(
-        minorChildId, new RFAExternalEntityParameterObject<>(applicationId, otherAdult));
+        new RFAExternalEntityGetObject(applicationId, minorChildId),
+        new RFAExternalEntityUpdateObject<>(applicationId, otherAdult));
   }
 
   @UnitOfWork(CALSNS)
@@ -138,8 +145,7 @@ public class RFA1aOtherAdultsResource {
       )
           Long otherAdultId) {
 
-    return resourceDelegate
-        .get(new RFAExternalEntityParameterObject<OtherAdultDTO>(applicationId, otherAdultId));
+    return resourceDelegate.get(new RFAExternalEntityGetObject(applicationId, otherAdultId));
   }
 
   @UnitOfWork(CALSNS)
@@ -164,8 +170,7 @@ public class RFA1aOtherAdultsResource {
           value = "The RFA-1A Application Id"
       )
           Long applicationId) {
-    return collectionResourceDelegate
-        .get(new RFAExternalEntityParameterObject<OtherAdultDTO>(applicationId));
+    return collectionResourceDelegate.get(applicationId);
   }
 
   @UnitOfWork(CALSNS)
@@ -191,6 +196,6 @@ public class RFA1aOtherAdultsResource {
       )
           Long otherAdultId) {
     return resourceDelegate.delete(
-        new RFAExternalEntityParameterObject<OtherAdultDTO>(applicationId, otherAdultId));
+        new RFAExternalEntityGetObject(applicationId, otherAdultId));
   }
 }
