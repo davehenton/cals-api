@@ -11,6 +11,7 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
@@ -22,8 +23,8 @@ public class ApplicantsDeclarationDTO extends BaseDTO implements RequestResponse
 
   private static final long serialVersionUID = 6463110475391563958L;
 
-
   @ApiModelProperty(value = "List of applicant's signatures")
+  @Valid
   private List<ApplicantSignature> applicantSignatures;
 
   public List<ApplicantSignature> getApplicantSignatures() {
@@ -47,6 +48,7 @@ public class ApplicantsDeclarationDTO extends BaseDTO implements RequestResponse
     private String signatureCity;
 
     @ApiModelProperty(value = "County of signature")
+    //@CheckReferentialIntegrity
     private CountyType signatureCounty;
 
     @ApiModelProperty(value = "Date of signature", example = "2015-03-25")

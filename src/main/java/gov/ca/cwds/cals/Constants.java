@@ -14,6 +14,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminatio
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
@@ -130,6 +131,7 @@ public final class Constants {
     EDUCATION_LEVEL_TYPE(EducationLevelType.class),
     ETHNICITY_TYPE(EthnicityType.class),
     RACE_TYPE(RaceType.class),
+    RELATIONSHIP_TO_APPLICANT_TYPE(RelationshipToApplicantType.class),
     INCOME_TYPE(IncomeType.class),
     PHONE_NUMBER_TYPE(PhoneNumberType.class),
     ADDRESS_TYPE(AddressType.class),
@@ -148,6 +150,7 @@ public final class Constants {
     public static final String EDUCATION_LEVEL_TYPE_PATH = "education-level-types";
     public static final String ETHNICITY_TYPE_PATH = "ethnicity-types";
     public static final String RACE_TYPE_PATH = "race-types";
+    public static final String RELATIONSHIP_TO_APPLICANT_TYPE_PATH = "relationships-to-applicant";
     public static final String INCOME_TYPE_PATH = "income-types";
     public static final String PHONE_NUMBER_TYPE_PATH = "phone-number-types";
     public static final String ADDRESS_TYPE_PATH = "address-types";

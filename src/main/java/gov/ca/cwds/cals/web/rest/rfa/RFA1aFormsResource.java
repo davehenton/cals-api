@@ -23,6 +23,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -34,9 +36,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * @author CWDS CALS API Team
- */
+/** @author CWDS CALS API Team */
 @Api(tags = {RFA})
 @Path(RFA_1A_FORMS)
 @Produces(MediaType.APPLICATION_JSON)
@@ -60,18 +60,16 @@ public class RFA1aFormsResource {
   @POST
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 201, message = "Created"),
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 201, message = "Created"),
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
   @ApiOperation(value = "Creates and returns RFA 1A Form", response = RFA1aFormDTO.class)
   public Response createApplicationForm(
-      @ApiParam(name = "application", value = "The RFA-1A Application object")
+      @ApiParam(name = "application", value = "The RFA-1A Application object") @Valid
           RFA1aFormDTO application) {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule(new JavaTimeModule());
     // TODO: remove this temporary fix to support older versions of CALS DS
     if (application == null) {
       application = new RFA1aFormDTO();
@@ -85,20 +83,21 @@ public class RFA1aFormsResource {
   @Path("/{" + RFA_1A_APPLICATION_ID + "}")
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 400, message = "Bad request"),
-          @ApiResponse(code = 404, message = "Not Found"),
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 400, message = "Bad request"),
+      @ApiResponse(code = 404, message = "Not Found"),
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
   @ApiOperation(value = "Updates RFA 1A Form", response = RFA1aFormDTO.class)
   public Response updateApplicationForm(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
-          Long formId,
+      Long formId,
       @ApiParam(name = "application", value = "The RFA-1A Application object")
-          RFA1aFormDTO formDTO) {
+      @Valid
+      RFA1aFormDTO formDTO) {
     return resourceDelegate.update(new RFA1aFormsParameterObject(formId), formDTO);
   }
 
@@ -107,16 +106,16 @@ public class RFA1aFormsResource {
   @Path("/{" + RFA_1A_APPLICATION_ID + "}")
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 404, message = "Not found"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
   @ApiOperation(value = "Returns RFA 1A Form by Id", response = RFA1aFormDTO.class)
   public Response getApplicationForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @QueryParam(EXPANDED)
       @ApiParam(name = EXPANDED, value = "Use 'true' to get form with all parts of form included")
@@ -128,18 +127,20 @@ public class RFA1aFormsResource {
   @GET
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 404, message = "Not found"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
-  @ApiOperation(value = "Returns all available RFA 1A Forms", response = RFA1aFormCollectionDTO.class)
+  @ApiOperation(
+    value = "Returns all available RFA 1A Forms",
+    response = RFA1aFormCollectionDTO.class
+  )
   public Response getAllApplicationForms(
       @QueryParam(EXPANDED)
       @ApiParam(name = EXPANDED, value = "Use 'true' to get forms with all parts of form included")
           boolean expanded) {
     return collectionResourceDelegate.get(expanded);
   }
-
 }

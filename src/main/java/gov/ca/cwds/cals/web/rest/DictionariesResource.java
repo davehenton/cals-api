@@ -27,6 +27,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RELATIONSHIP_TO_APPLICANT_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RELATIONSHIP_TO_APPLICANT_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SCHOOL_GRADE_TYPE;
@@ -182,6 +184,22 @@ public class DictionariesResource {
   @ApiOperation(value = "Returns Races", response = DictionaryValuesDTO.class)
   public Response getRaceType() {
     return dictionariesResourceDelegate.get(RACE_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + RELATIONSHIP_TO_APPLICANT_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Races", response = DictionaryValuesDTO.class)
+  public Response getRelationshipToApplicantType() {
+    return dictionariesResourceDelegate.get(RELATIONSHIP_TO_APPLICANT_TYPE);
   }
 
   @UnitOfWork(CALSNS)

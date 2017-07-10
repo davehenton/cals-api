@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponseEntity;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
@@ -31,10 +32,15 @@ public class ReferencesDTO extends BaseDTO implements RequestResponseEntity {
     private static final long serialVersionUID = -6715371392246671568L;
 
     private String firstName;
+
     private String middleName;
+
     private String lastName;
+    @Valid
     private RFAAddressDTO mailingAddress;
+
     private String phoneNumber;
+
     private String email;
 
     public String getFirstName() {

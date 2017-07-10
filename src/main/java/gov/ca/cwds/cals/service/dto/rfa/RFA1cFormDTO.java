@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
@@ -16,6 +17,7 @@ public class RFA1cFormDTO extends RFAExternalEntityDTO {
 
   private static final long serialVersionUID = 6758484594804680344L;
 
+  //@CheckReferentialIntegrity //Waiting for dictionary implemetation
   private CountyType applicationCounty;
 
   @ApiModelProperty(example = "true")
@@ -24,6 +26,7 @@ public class RFA1cFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "true")
   private boolean childInHome;
 
+  @Valid
   private List<IdentifiedChildDTO> identifiedChildren = new ArrayList<>();
 
   public List<IdentifiedChildDTO> getIdentifiedChildren() {

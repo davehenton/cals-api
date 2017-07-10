@@ -21,6 +21,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminatio
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
@@ -142,6 +143,7 @@ public class DataAccessModule extends AbstractModule {
           EducationLevelType.class,
           EthnicityType.class,
           RaceType.class,
+          RelationshipToApplicantType.class,
           IncomeType.class,
           PhoneNumberType.class,
           AddressType.class,

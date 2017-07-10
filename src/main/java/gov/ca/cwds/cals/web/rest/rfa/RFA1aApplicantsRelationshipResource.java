@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -77,7 +78,7 @@ public class RFA1aApplicantsRelationshipResource {
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(required = true, name = APPLICANTS_RELATIONSHIP, value = "The Applicants relationship object")
-          ApplicantsRelationshipDTO applicantsRelationship) {
+          @Valid ApplicantsRelationshipDTO applicantsRelationship) {
     return resourceDelegate.update(formId, applicantsRelationship);
   }
 

@@ -24,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -75,7 +76,8 @@ public class RFA1aMinorChildrenResource {
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long applicationId,
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1A MinorChild object")
-          MinorChildDTO minorChild) {
+      @Valid
+      MinorChildDTO minorChild) {
     return resourceDelegate.create(
         new RFAExternalEntityUpdateObject<>(applicationId, minorChild));
   }
@@ -108,7 +110,8 @@ public class RFA1aMinorChildrenResource {
       )
           Long minorChildId,
       @ApiParam(required = true, name = RFA_1A_MINOR_CHILD, value = "The RFA-1A MinorChild object")
-          MinorChildDTO minorChild) {
+      @Valid
+      MinorChildDTO minorChild) {
     return resourceDelegate.update(
         new RFAExternalEntityGetObject(applicationId, minorChildId),
         new RFAExternalEntityUpdateObject<>(applicationId, minorChild));
