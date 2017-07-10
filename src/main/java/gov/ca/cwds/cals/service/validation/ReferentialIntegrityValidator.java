@@ -35,13 +35,13 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
       currentSession = sessionFactory.openSession();
       boolean valid = checkReferentialIntegrity(currentSession, obj);
       if (!valid) {
+        StringBuilder sb =
+            new StringBuilder(" object: ")
+                .append(obj)
+                .append("  is not found in DataBase referential integrity is not confirmed.");
+
         context.disableDefaultConstraintViolation();
-        context
-            .buildConstraintViolationWithTemplate(
-                " object: "
-                    + obj.toString()
-                    + "  is not found in DataBase referential integrity is not confirmed.")
-            .addConstraintViolation();
+        context.buildConstraintViolationWithTemplate(sb.toString()).addConstraintViolation();
       }
       return valid;
     } finally {
