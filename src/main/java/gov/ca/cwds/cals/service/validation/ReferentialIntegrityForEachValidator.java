@@ -38,21 +38,21 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
     try {
       currentSession = sessionFactory.openSession();
       Session finalCurrentSession = currentSession;
-      boolean[] result = new boolean[] {true};
-      int[] index = new int[] {0};
+      boolean[] result = new boolean[]{true};
+      int[] index = new int[]{0};
       collection.forEach(
           o -> {
             boolean valid = checkReferentialIntegrity(finalCurrentSession, o);
             result[0] &= valid;
             if (!valid) {
               context.disableDefaultConstraintViolation();
-                  StringBuilder sb = new StringBuilder();
-                      sb.append("[")
-                  .append( index[0] )
-                  .append("] object " )
-                  .append( o)
-                  .append( "  is not found in DataBase ");
-                  context.buildConstraintViolationWithTemplate(sb.toString()).addConstraintViolation();
+              StringBuilder sb = new StringBuilder();
+              sb.append("[")
+                  .append(index[0])
+                  .append("] object ")
+                  .append(o)
+                  .append("  is not found in DataBase ");
+              context.buildConstraintViolationWithTemplate(sb.toString()).addConstraintViolation();
             }
             index[0]++;
           });
