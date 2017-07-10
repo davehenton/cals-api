@@ -14,8 +14,10 @@ import gov.ca.cwds.cals.inject.RFA1cCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1cServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1cFormCollectionDTO;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
+import gov.ca.cwds.rest.api.Request;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,14 +44,19 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1cFormsResource {
 
-  private ResourceDelegate resourceDelegate;
-  private ResourceDelegate collectionResourceDelegate;
+  private TypedResourceDelegate<
+      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<RFA1cFormDTO>>
+      resourceDelegate;
+  private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
   @Inject
   public RFA1cFormsResource(
-      @RFA1cServiceBackedResource ResourceDelegate resourceDelegate,
+      @RFA1cServiceBackedResource
+          TypedResourceDelegate<
+              RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<RFA1cFormDTO>>
+          resourceDelegate,
       @RFA1cCollectionServiceBackedResource
-          ResourceDelegate collectionResourceDelegate) {
+          TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
   }
@@ -70,8 +77,7 @@ public class RFA1cFormsResource {
           Long applicationId,
       @ApiParam(required = true, name = RFA_1C_FORM, value = "The RFA-1C Form object")
           RFA1cFormDTO rfa1cForm) {
-    return resourceDelegate.create(
-        new RFAExternalEntityParameterObject<>(applicationId, rfa1cForm));
+    return resourceDelegate.create(new RFAExternalEntityUpdateObject<>(applicationId, rfa1cForm));
   }
 
   @UnitOfWork(CALSNS)
@@ -104,7 +110,8 @@ public class RFA1cFormsResource {
       @ApiParam(required = true, name = RFA_1C_FORM, value = "The RFA-1C Form object")
           RFA1cFormDTO rfa1cFormDTO) {
     return resourceDelegate.update(
-        rfa1cId, new RFAExternalEntityParameterObject<>(applicationId, rfa1cFormDTO));
+        new RFAExternalEntityGetObject(applicationId, rfa1cId),
+        new RFAExternalEntityUpdateObject<>(applicationId, rfa1cFormDTO));
   }
 
   @UnitOfWork(CALSNS)
@@ -136,7 +143,7 @@ public class RFA1cFormsResource {
           Long rfa1CFormId) {
 
     return resourceDelegate
-        .get(new RFAExternalEntityParameterObject<RFA1cFormDTO>(applicationId, rfa1CFormId));
+        .get(new RFAExternalEntityGetObject(applicationId, rfa1CFormId));
   }
 
   @UnitOfWork(CALSNS)
@@ -161,8 +168,7 @@ public class RFA1cFormsResource {
           value = "The RFA-1A Application Id"
       )
           Long applicationId) {
-    return collectionResourceDelegate
-        .get(new RFAExternalEntityParameterObject<RFA1cFormDTO>(applicationId));
+    return collectionResourceDelegate.get(applicationId);
   }
 
   @UnitOfWork(CALSNS)
@@ -188,6 +194,6 @@ public class RFA1cFormsResource {
       )
           Long rfa1cFormId) {
     return resourceDelegate.delete(
-        new RFAExternalEntityParameterObject<RFA1cFormDTO>(applicationId, rfa1cFormId));
+        new RFAExternalEntityGetObject(applicationId, rfa1cFormId));
   }
 }

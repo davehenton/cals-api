@@ -5,13 +5,13 @@ import gov.ca.cwds.cals.Constants.DictionaryType;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.service.dto.DictionaryValuesDTO;
-import gov.ca.cwds.rest.api.Response;
-import gov.ca.cwds.rest.services.CrudsService;
-import java.io.Serializable;
+import gov.ca.cwds.rest.services.TypedCrudsService;
 import java.util.List;
 
 /** @author CWDS CALS API Team */
-public class DictionariesService extends CrudServiceAdapter implements CrudsService {
+public class DictionariesService
+    extends TypedCrudServiceAdapter<DictionaryType, BaseDictionary, DictionaryValuesDTO>
+    implements TypedCrudsService<DictionaryType, BaseDictionary, DictionaryValuesDTO> {
 
   private DictionariesDao dao;
 
@@ -21,9 +21,8 @@ public class DictionariesService extends CrudServiceAdapter implements CrudsServ
   }
 
   @Override
-  public Response find(Serializable dictionaryType) {
-    DictionaryType type = (DictionaryType) dictionaryType;
-    List<BaseDictionary> dictionariesByType = dao.findDictionariesByType(type);
+  public DictionaryValuesDTO find(DictionaryType dictionaryType) {
+    List<BaseDictionary> dictionariesByType = dao.findDictionariesByType(dictionaryType);
     return new DictionaryValuesDTO(dictionariesByType);
   }
 }

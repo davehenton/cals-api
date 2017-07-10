@@ -5,6 +5,8 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.Constants.DictionaryType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.ComplaintsCollectionService;
 import gov.ca.cwds.cals.service.CountiesService;
@@ -15,6 +17,11 @@ import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FacilityTypeCollectionService;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aAdoptionHistoryService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
@@ -42,6 +49,8 @@ import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsHistoryResource;
@@ -55,8 +64,11 @@ import gov.ca.cwds.cals.web.rest.rfa.RFA1aReferencesResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1bFormsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1cFormsResource;
+import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedServiceBackedResourceDelegate;
 
 /**
  * Identifies all CALS API domain resource classes available for dependency injection by Guice.
@@ -169,8 +181,10 @@ public class ResourcesModule extends AbstractModule {
 
   @Provides
   @DictionariesServiceBackedResource
-  public ResourceDelegate dictionariesServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(DictionariesService.class));
+  public TypedResourceDelegate<DictionaryType, BaseDictionary>
+  dictionariesServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(DictionariesService.class));
   }
 
   @Provides
@@ -214,66 +228,84 @@ public class ResourcesModule extends AbstractModule {
 
   @Provides
   @RFA1aApplicantServiceBackedResource
-  public ResourceDelegate rfa1aApplicantServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aApplicantService.class));
+  public TypedResourceDelegate<
+      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<ApplicantDTO>>
+  rfa1aApplicantServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(RFA1aApplicantService.class));
   }
 
   @Provides
   @RFA1aApplicantsCollectionServiceBackedResource
-  public ResourceDelegate rfa1aApplicantsCollectionServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, Request> rfa1aApplicantsCollectionServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aApplicantsCollectionService.class));
   }
 
   @Provides
   @RFA1aMinorChildrenServiceBackedResource
-  public ResourceDelegate rfa1aMinorChildServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aMinorChildService.class));
+  public TypedResourceDelegate<
+      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<MinorChildDTO>>
+  rfa1aMinorChildServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(RFA1aMinorChildService.class));
   }
 
   @Provides
   @RFA1aMinorChildrenCollectionServiceBackedResource
-  public ResourceDelegate rfa1aMinorChildrenCollectionServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, Request> rfa1aMinorChildrenCollectionServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aMinorChildrenCollectionService.class));
   }
 
   @Provides
   @RFA1aOtherAdultsServiceBackedResource
-  public ResourceDelegate rfa1aOtherAdultServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1aOtherAdultService.class));
+  public TypedResourceDelegate<
+      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<OtherAdultDTO>>
+  rfa1aOtherAdultServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(RFA1aOtherAdultService.class));
   }
 
   @Provides
   @RFA1aOtherAdultsCollectionServiceBackedResource
-  public ResourceDelegate rfa1aOtherAdultsCollectionServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, Request> rfa1aOtherAdultsCollectionServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aOtherAdultsCollectionService.class));
   }
 
   @Provides
   @RFA1bServiceBackedResource
-  public ResourceDelegate rfa1bServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1bService.class));
+  public TypedResourceDelegate<
+      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<RFA1bFormDTO>>
+  rfa1bServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(injector.getInstance(RFA1bService.class));
   }
 
   @Provides
   @RFA1bCollectionServiceBackedResource
-  public ResourceDelegate rfa1bCollectionServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, Request> rfa1bCollectionServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1bCollectionService.class));
   }
 
   @Provides
   @RFA1cServiceBackedResource
-  public ResourceDelegate rfa1cServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(RFA1cService.class));
+  public TypedResourceDelegate<
+      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<RFA1cFormDTO>>
+  rfa1cServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(injector.getInstance(RFA1cService.class));
   }
 
   @Provides
   @RFA1cCollectionServiceBackedResource
-  public ResourceDelegate rfa1cCollectionServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
+  public TypedResourceDelegate<Long, Request> rfa1cCollectionServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1cCollectionService.class));
   }
 

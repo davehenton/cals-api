@@ -39,9 +39,11 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants.DictionaryType;
 import gov.ca.cwds.cals.inject.DictionariesServiceBackedResource;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.service.dto.DictionaryValuesDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -62,11 +64,11 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class DictionariesResource {
 
-  private ResourceDelegate dictionariesResourceDelegate;
+  private TypedResourceDelegate<DictionaryType, BaseDictionary> dictionariesResourceDelegate;
 
   @Inject
   public DictionariesResource(
-      @DictionariesServiceBackedResource ResourceDelegate dictionariesResourceDelegate) {
+      @DictionariesServiceBackedResource TypedResourceDelegate<DictionaryType, BaseDictionary> dictionariesResourceDelegate) {
     this.dictionariesResourceDelegate = dictionariesResourceDelegate;
   }
 
