@@ -1,0 +1,478 @@
+{
+  "id": 0,
+  "application": {
+    "is_initial_application": true,
+    "is_other_type": false,
+    "other_type_description": "Description",
+    "application_county": {
+      "id": 34,
+      "value": "Sacramento"
+    }
+  },
+  "residence": {
+    "addresses": [
+      {
+        "street_address": "1702 Redoak Ct.",
+        "zip": "98123",
+        "city": "Rocklin",
+        "state": {
+          "id": 6,
+          "value": "California"
+        },
+        "type": {
+          "id": 1,
+          "value": "Residential"
+        }
+      }
+    ],
+    "physical_mailing_similar": true,
+    "residence_ownership": {
+      "id": 0,
+      "value": "string"
+    },
+    "weapon_in_home": false,
+    "body_of_water_exist": true,
+    "body_of_water_description": "Description here",
+    "others_using_residence_as_mailing": true,
+    "other_people_using_residence_as_mailing": [
+      {
+        "first_name": "string",
+        "middle_name": "string",
+        "last_name": "string"
+      }
+    ],
+    "directions_to_home": "Directions here",
+    "home_languages": [
+      {
+        "id": 0,
+        "value": "string"
+      }
+    ]
+  },
+  "applicants_relationship": {
+    "relationship_type": {
+      "id": 1,
+      "value": "Married"
+    },
+    "other_relationship": "string",
+    "date_of_relationship": "2015-03-25",
+    "place_of_relationship_city": "Sacramento",
+    "place_of_relationship_state": {
+      "id": 6,
+      "value": "California"
+    }
+  },
+  "applicants_history": {
+    "former_spouses": [
+      {
+        "relationship_type": {
+          "id": 0,
+          "value": "string"
+        },
+        "applicant_id": 1234567,
+        "first_name": "Anna",
+        "middle_name": "L.",
+        "last_name": "Pollen",
+        "date_of_marriage": "2016-12-26",
+        "place_of_marriage_city": "Sacramento",
+        "place_of_marriage_state": {
+          "id": 6,
+          "value": "California"
+        },
+        "marriage_termination_reason": {
+          "id": 1,
+          "value": "Marriage Dissolution (Divorce)"
+        },
+        "date_of_marriage_end": "2016-12-26",
+        "place_of_marriage_end_city": "Sacramento",
+        "place_of_marriage_end_state": {
+          "id": 6,
+          "value": "California"
+        }
+      }
+    ],
+    "adult_children": [
+      {
+        "first_name": "Andrew",
+        "middle_name": "",
+        "last_name": "Pollen",
+        "relationship_to_applicant": {
+          "id": 1,
+          "value": "Child"
+        },
+        "adult_child_related_to": [
+          12345678
+        ]
+      }
+    ]
+  },
+  "applicants": [
+    {
+      "id": 12345678,
+      "formId": 0,
+      "applicant": {
+        "id": 0,
+        "first_name": "string",
+        "middle_name": "string",
+        "last_name": "string",
+        "other_names": [
+          {
+            "first_name": "string",
+            "middle_name": "string",
+            "last_name": "string",
+            "name_type": {
+              "id": 0,
+              "value": "string"
+            }
+          }
+        ],
+        "highest_education_level": {
+          "id": 0,
+          "value": "string"
+        },
+        "date_of_birth": "2017-07-10",
+        "gender": {
+          "id": 0,
+          "value": "string"
+        },
+        "race": {
+          "id": 0,
+          "value": "string"
+        },
+        "ethnicity": {
+          "id": 0,
+          "value": "string"
+        },
+        "driver_license_number": "string",
+        "driver_license_state": {
+          "id": 0,
+          "value": "string"
+        },
+        "email": "string",
+        "employment": {
+          "employer_name": "string",
+          "occupation": "string",
+          "income": 0,
+          "income_type": {
+            "id": 0,
+            "value": "string"
+          },
+          "physical_address": {
+            "street_address": "string",
+            "city": "string",
+            "state": {
+              "id": 0,
+              "value": "string"
+            },
+            "zip": "string"
+          }
+        },
+        "phones": [
+          {
+            "id": 0,
+            "relation": "Alternative",
+            "type": "Cell",
+            "number": "(494) 823-8588"
+          }
+        ]
+      },
+      "createUserId": "string",
+      "createDateTime": "2000-01-01 15:11:46",
+      "updateUserId": "string",
+      "updateDateTime": "2000-01-01 15:11:46"
+    }
+  ],
+  "minor_children": [
+    {
+      "id": 0,
+      "formId": 0,
+      "minorChild": {
+        "id": 0,
+        "relationship_to_applicant": {
+          "id": 0,
+          "value": "string"
+        },
+        "child_related_to": [
+          0
+        ],
+        "other_relative_first_name": "string",
+        "other_relative_middle_name": "string",
+        "other_relative_last_name": "string",
+        "date_of_birth": "2017-07-10",
+        "gender": {
+          "id": 0,
+          "value": "string"
+        },
+        "child_financially_supported": false,
+        "child_adopted": false
+      },
+      "createUserId": "string",
+      "createDateTime": "2000-01-01 15:11:46",
+      "updateUserId": "string",
+      "updateDateTime": "2000-01-01 15:11:46"
+    }
+  ],
+  "other_adults": [
+    {
+      "id": 0,
+      "formId": 0,
+      "otherAdult": {
+        "id": 0,
+        "first_name": "Anna",
+        "middle_name": "L.",
+        "last_name": "Pollen",
+        "date_of_birth": "1995-07-14",
+        "relationship_to_applicants": [
+          {
+            "applicant_id": 1234567,
+            "relationship_to_applicant": {
+              "id": 0,
+              "value": "string"
+            }
+          }
+        ]
+      },
+      "createUserId": "string",
+      "createDateTime": "2000-01-01 15:11:46",
+      "updateUserId": "string",
+      "updateDateTime": "2000-01-01 15:11:46"
+    }
+  ],
+  "rfa1b_forms": [
+    {
+      "id": 0,
+      "formId": 0,
+      "application": {
+        "id": 0,
+        "application_county": {
+          "id": 0,
+          "value": "string"
+        },
+        "lived_in_other_state": true,
+        "other_states_of_living": [
+          {
+            "id": 0,
+            "value": "string"
+          }
+        ],
+        "convicted_in_california": false,
+        "convicted_in_another_state": false,
+        "arrested_for_crime": false,
+        "resource_family_name": "Peterson",
+        "rfa1a_applicant_id": false,
+        "applicant_first_name": "Anna",
+        "applicant_middle_name": "M.",
+        "applicant_last_name": "Peterson",
+        "residence_address": {
+          "street_address": "1702 Redoak Ct.",
+          "zip": "98123",
+          "city": "Rocklin",
+          "state": {
+            "id": 0,
+            "value": "string"
+          },
+          "type": {
+            "id": 0,
+            "value": "string"
+          }
+        },
+        "ssn": "464-94-2323",
+        "date_of_birth": "1981-12-26",
+        "driver_license": "MD123-1234-585-121",
+        "driver_license_state": {
+          "id": 0,
+          "value": "string"
+        },
+        "signature": "Anna Peterson",
+        "application_date": "2017-07-02",
+        "disclosures": [
+          {
+            "offense": "Offence description",
+            "offense_city": "Sacramento",
+            "offense_state": {
+              "id": 0,
+              "value": "string"
+            },
+            "offense_date": "2014-12-26",
+            "offense_details": "More details about offence",
+            "signature": "Anna Peterson",
+            "application_date": "2017-07-02"
+          }
+        ]
+      },
+      "createUserId": "string",
+      "createDateTime": "2000-01-01 15:11:46",
+      "updateUserId": "string",
+      "updateDateTime": "2000-01-01 15:11:46"
+    }
+  ],
+  "rfa1c_forms": [
+    {
+      "id": 0,
+      "formId": 0,
+      "application": {
+        "id": 0,
+        "application_county": {
+          "id": 0,
+          "value": "string"
+        },
+        "child_identified": true,
+        "child_in_home": true,
+        "identified_children": [
+          {
+            "first_name": "Collin",
+            "middle_name": "P.",
+            "last_name": "Martin",
+            "date_of_birth": "2007-07-14",
+            "gender": {
+              "id": 0,
+              "value": "string"
+            },
+            "county_of_jurisdiction": {
+              "id": 0,
+              "value": "string"
+            },
+            "date_of_placement": "2017-05-14",
+            "relationship_to_applicants": [
+              {
+                "applicant_id": 1234567,
+                "relationship_to_applicant": {
+                  "id": 0,
+                  "value": "string"
+                }
+              }
+            ],
+            "school_grade": {
+              "id": 0,
+              "value": "string"
+            },
+            "school_name": "White Oaks High",
+            "school_address": {
+              "street_address": "1702 Redoak Ct.",
+              "zip": "98123",
+              "city": "Rocklin",
+              "state": {
+                "id": 0,
+                "value": "string"
+              },
+              "type": {
+                "id": 0,
+                "value": "string"
+              }
+            }
+          }
+        ]
+      },
+      "createUserId": "string",
+      "createDateTime": "2000-01-01 15:11:46",
+      "updateUserId": "string",
+      "updateDateTime": "2000-01-01 15:11:46"
+    }
+  ],
+  "adoption_history": {
+    "foster_care_licenses_q1": {
+      "was_previously_licensed": false,
+      "agency_name": "string",
+      "license_type": {
+        "id": 0,
+        "value": "string"
+      }
+    },
+    "applications_for_adoption_q2": {
+      "have_applied_for_adoption": false,
+      "name_of_agencies": [
+        "string"
+      ]
+    },
+    "facility_operation_licenses_q3": {
+      "was_previously_licensed": false,
+      "license_type": {
+        "id": 0,
+        "value": "string"
+      }
+    },
+    "employment_in_facilities_q4": {
+      "was_employed_or_volunteered": false,
+      "name_of_facilities": [
+        "string"
+      ]
+    },
+    "denial_history_q5": {
+      "had_denials": false,
+      "name_of_agencies": [
+        "string"
+      ]
+    },
+    "suspension_revocation_history_q6": {
+      "had_suspensions_revocations": false,
+      "name_of_agencies": [
+        "string"
+      ]
+    },
+    "was_subject_for_exclusion_order_q7": false
+  },
+  "child_desired": {
+    "child_identified": false,
+    "child_in_home": false,
+    "preferred_ages": [
+      {
+        "id": 0,
+        "value": "string"
+      }
+    ],
+    "preferred_sibling_groups": [
+      {
+        "id": 0,
+        "value": "string"
+      }
+    ]
+  },
+  "references": {
+    "references": [
+      {
+        "first_name": "string",
+        "middle_name": "string",
+        "last_name": "string",
+        "mailing_address": {
+          "street_address": "1702 Redoak Ct.",
+          "zip": "98123",
+          "city": "Rocklin",
+          "state": {
+            "id": 0,
+            "value": "string"
+          },
+          "type": {
+            "id": 0,
+            "value": "string"
+          }
+        },
+        "phone_number": "string",
+        "email": "string"
+      }
+    ]
+  },
+  "applicants_declaration": {
+    "applicant_signatures": [
+      {
+        "applicant_id": 0,
+        "signature_city": "string",
+        "signature_county": {
+          "id": 0,
+          "value": "string"
+        },
+        "signature_date": "2015-03-25"
+      }
+    ]
+  },
+  "other_type_description": "Description",
+  "application_county": {
+    "id": 0,
+    "value": "string"
+  },
+  "is_initial_application": true,
+  "is_other_type": false,
+  "create_user_id": "string",
+  "create_date_time": "2000-01-01 15:11:46",
+  "update_user_id": "string",
+  "update_date_time": "2000-01-01 15:11:46"
+}
