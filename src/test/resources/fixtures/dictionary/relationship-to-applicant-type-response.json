@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "value": "Child"
+    },
+    {
+      "id": 2,
+      "value": "Sibling"
+    },
+    {
+      "id": 3,
+      "value": "Cousin"
+    },
+    {
+      "id": 4,
+      "value": "Niece"
+    },
+    {
+      "id": 5,
+      "value": "Nephew"
+    }
+  ]
+}
