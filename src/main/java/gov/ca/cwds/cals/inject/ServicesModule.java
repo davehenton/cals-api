@@ -6,6 +6,8 @@ import com.google.inject.Provides;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
@@ -96,7 +98,9 @@ public class ServicesModule extends AbstractModule {
       FacilityMapper facilityMapper,
       FasFacilityMapper fasFacilityMapper,
       ClientDao clientDao,
-      FacilityChildMapper facilityChildMapper) {
+      FacilityChildMapper facilityChildMapper,
+      InspectionDao inspectionDao,
+      ComplaintReportLic802Dao complaintReportLic802Dao) {
     return unitOfWorkAwareProxyFactory.create(
         FacilityService.class,
         new Class[]{
@@ -108,7 +112,9 @@ public class ServicesModule extends AbstractModule {
             FacilityMapper.class,
             FasFacilityMapper.class,
             ClientDao.class,
-            FacilityChildMapper.class
+            FacilityChildMapper.class,
+            InspectionDao.class,
+            ComplaintReportLic802Dao.class
         },
         new Object[]{
             lisFacFileLisDao,
@@ -119,7 +125,9 @@ public class ServicesModule extends AbstractModule {
             facilityMapper,
             fasFacilityMapper,
             clientDao,
-            facilityChildMapper
+            facilityChildMapper,
+            inspectionDao,
+            complaintReportLic802Dao
         });
   }
 }

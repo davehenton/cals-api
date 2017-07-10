@@ -10,13 +10,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ApplicantsRelationshipServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationshipDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -35,11 +36,12 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aApplicantsRelationshipResource {
 
-  private ResourceDelegate resourceDelegate;
+  private TypedResourceDelegate<Long, ApplicantsRelationshipDTO> resourceDelegate;
 
   @Inject
   public RFA1aApplicantsRelationshipResource(
-      @ApplicantsRelationshipServiceBackedResource ResourceDelegate resourceDelegate) {
+      @ApplicantsRelationshipServiceBackedResource
+          TypedResourceDelegate<Long, ApplicantsRelationshipDTO> resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
 
@@ -53,10 +55,10 @@ public class RFA1aApplicantsRelationshipResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA-1a Form Applicants Relationship", response = ApplicantsRelationshipDTO.class)
+  @ApiOperation(value = "Returns RFA-1A Form Applicants Relationship", response = ApplicantsRelationshipDTO.class)
   public Response getApplicantsRelationship(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -70,13 +72,13 @@ public class RFA1aApplicantsRelationshipResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Updates Applicants Relationship in RFA 1a Form", response = ApplicantsRelationshipDTO.class)
+  @ApiOperation(value = "Updates Applicants Relationship in RFA 1A Form", response = ApplicantsRelationshipDTO.class)
   public Response updateApplicantsRelationship(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(required = true, name = APPLICANTS_RELATIONSHIP, value = "The Applicants relationship object")
-          ApplicantsRelationshipDTO applicantsRelationship) {
+      @Valid ApplicantsRelationshipDTO applicantsRelationship) {
     return resourceDelegate.update(formId, applicantsRelationship);
   }
 

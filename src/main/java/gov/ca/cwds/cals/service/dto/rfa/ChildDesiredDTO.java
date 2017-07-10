@@ -2,10 +2,11 @@ package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.RequestResponseEntity;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.api.Response;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ChildDesiredDTO extends BaseDTO implements Request, Response {
+public class ChildDesiredDTO extends BaseDTO implements RequestResponseEntity {
 
   private static final long serialVersionUID = -580792892550002723L;
 
@@ -26,10 +27,12 @@ public class ChildDesiredDTO extends BaseDTO implements Request, Response {
   private boolean childInHome;
 
   @ApiModelProperty(value = "Preferred Age(s)")
+  @CheckReferentialIntegrityForEach
   private List<AgeGroupType> preferredAges = new ArrayList<>();
 
   @ApiModelProperty(value = "Preferred Sibling(Group Of)")
-  private List<AgeGroupType> preferredSiblingGroups = new ArrayList<>();
+  @CheckReferentialIntegrityForEach
+  private List<SiblingGroupType> preferredSiblingGroups = new ArrayList<>();
 
   public boolean isChildInHome() {
     return childInHome;
@@ -56,12 +59,12 @@ public class ChildDesiredDTO extends BaseDTO implements Request, Response {
     this.preferredAges = preferredAges;
   }
 
-  public List<AgeGroupType> getPreferredSiblingGroups() {
+  public List<SiblingGroupType> getPreferredSiblingGroups() {
     return preferredSiblingGroups;
   }
 
   public void setPreferredSiblingGroups(
-      List<AgeGroupType> preferredSiblingGroups) {
+      List<SiblingGroupType> preferredSiblingGroups) {
     this.preferredSiblingGroups = preferredSiblingGroups;
   }
 

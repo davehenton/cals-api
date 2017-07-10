@@ -4,20 +4,22 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.CompositeIterator;
 import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
-import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
-import gov.ca.cwds.cals.persistence.dao.lis.RecordChangeLisDao;
-import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
+import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
+import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
+import gov.ca.cwds.cals.persistence.dao.fas.RecordChangeFasDao;
+import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
+import gov.ca.cwds.cals.persistence.dao.lis.RecordChangeLisDao;
+import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.service.dto.ChangedFacilityDTO;
+import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -32,10 +34,12 @@ public class ChangedFacilityService extends FacilityService {
 
   private static final Logger LOG = LoggerFactory.getLogger(ChangedFacilityService.class);
 
-  private RecordChangeLisDao recordChangeLisDao;
   private RecordChangeCwsCmsDao recordChangeCwsCmsDao;
+  private RecordChangeLisDao recordChangeLisDao;
+  private RecordChangeFasDao recordChangeFasDao;
 
   @Inject
+  @SuppressWarnings("squid:S00107")
   public ChangedFacilityService(
       LisFacFileLisDao lisFacFileLisDao,
       LisFacFileFasDao lisFacFileFasDao,
@@ -43,29 +47,42 @@ public class ChangedFacilityService extends FacilityService {
       LpaInformationDao lpaInformationDao,
       CountiesDao countiesDao, FacilityMapper facilityMapper,
       FasFacilityMapper fasFacilityMapper,
-      RecordChangeLisDao recordChangeLisDao,
       RecordChangeCwsCmsDao recordChangeCwsCmsDao,
-      ClientDao clientDao, FacilityChildMapper facilityChildMapper) {
+      RecordChangeLisDao recordChangeLisDao,
+      RecordChangeFasDao recordChangeFasDao,
+      ClientDao clientDao, FacilityChildMapper facilityChildMapper,
+      InspectionDao inspectionDao, ComplaintReportLic802Dao complaintReportLic802Dao) {
     super(lisFacFileLisDao, lisFacFileFasDao, placementHomeDao, lpaInformationDao, countiesDao,
-        facilityMapper, fasFacilityMapper, clientDao, facilityChildMapper);
-    this.recordChangeLisDao = recordChangeLisDao;
+        facilityMapper, fasFacilityMapper, clientDao, facilityChildMapper, inspectionDao,
+        complaintReportLic802Dao);
     this.recordChangeCwsCmsDao = recordChangeCwsCmsDao;
+    this.recordChangeLisDao = recordChangeLisDao;
+    this.recordChangeFasDao = recordChangeFasDao;
   }
 
   public Stream<ChangedFacilityDTO> changedFacilitiesStream(Date after) {
-    Stream<RecordChange> lisRecordChangesStream = recordChangeLisDao
-        .streamChangedFacilityRecords(after);
-
     RecordChanges cwsCmsRecordChanges = new RecordChanges();
     recordChangeCwsCmsDao.streamChangedFacilityRecords(after).forEach(cwsCmsRecordChanges::add);
-    Stream<RecordChange> cwsCmsRecordChangesStream = StreamSupport
-        .stream(cwsCmsRecordChanges.newIterable().spliterator(), false);
 
-    return Stream.concat(lisRecordChangesStream, cwsCmsRecordChangesStream).map(
-        recordChange -> {
+    RecordChanges lisFasRecordChanges = new RecordChanges();
+    recordChangeLisDao.streamChangedFacilityRecords(after).forEach(lisFasRecordChanges::add);
+    recordChangeFasDao.streamChangedFacilityRecords(after).forEach(lisFasRecordChanges::add);
+
+    return Stream.concat(cwsCmsRecordChanges.newStream(), lisFasRecordChanges.newStream())
+        .map(recordChange -> {
           LOG.info("Getting facility by ID: {}", recordChange.getId());
           FacilityDTO facilityDTO = findExpandedById(recordChange.getId());
+          LOG.info("Find facility by ID {} returned FacilityDTO with ID {}", recordChange.getId(),
+              facilityDTO.getId());
           return new ChangedFacilityDTO(facilityDTO, recordChange.getRecordChangeOperation());
+        })
+        .filter(facilityDTO -> {
+          if (facilityDTO.getId() == null) {
+            LOG.error("Find facility by ID returned incorrect FacilityDTO with NULL id. Skipped.");
+            return false;
+          } else {
+            return true;
+          }
         });
   }
 
@@ -85,13 +102,17 @@ public class ChangedFacilityService extends FacilityService {
       }
     }
 
-    Iterable<RecordChange> newIterable() {
+    private Iterable<RecordChange> newIterable() {
       compact();
       return () -> new CompositeIterator<>(
           toBeDeleted.values().iterator(),
           toBeInserted.values().iterator(),
           toBeUpdated.values().iterator()
       );
+    }
+
+    Stream<RecordChange> newStream() {
+      return StreamSupport.stream(this.newIterable().spliterator(), false);
     }
 
     private void compact() {

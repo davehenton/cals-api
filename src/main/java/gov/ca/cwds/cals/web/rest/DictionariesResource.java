@@ -27,6 +27,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RELATIONSHIP_TO_APPLICANT_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RELATIONSHIP_TO_APPLICANT_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SCHOOL_GRADE_TYPE;
@@ -39,9 +41,11 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants.DictionaryType;
 import gov.ca.cwds.cals.inject.DictionariesServiceBackedResource;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.service.dto.DictionaryValuesDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -62,11 +66,11 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class DictionariesResource {
 
-  private ResourceDelegate dictionariesResourceDelegate;
+  private TypedResourceDelegate<DictionaryType, BaseDictionary> dictionariesResourceDelegate;
 
   @Inject
   public DictionariesResource(
-      @DictionariesServiceBackedResource ResourceDelegate dictionariesResourceDelegate) {
+      @DictionariesServiceBackedResource TypedResourceDelegate<DictionaryType, BaseDictionary> dictionariesResourceDelegate) {
     this.dictionariesResourceDelegate = dictionariesResourceDelegate;
   }
 
@@ -180,6 +184,22 @@ public class DictionariesResource {
   @ApiOperation(value = "Returns Races", response = DictionaryValuesDTO.class)
   public Response getRaceType() {
     return dictionariesResourceDelegate.get(RACE_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + RELATIONSHIP_TO_APPLICANT_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Races", response = DictionaryValuesDTO.class)
+  public Response getRelationshipToApplicantType() {
+    return dictionariesResourceDelegate.get(RELATIONSHIP_TO_APPLICANT_TYPE);
   }
 
   @UnitOfWork(CALSNS)

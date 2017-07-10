@@ -14,14 +14,17 @@ import gov.ca.cwds.cals.inject.RFA1bCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1bServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1bFormCollectionDTO;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityParameterObject;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
+import gov.ca.cwds.rest.api.Request;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -42,14 +45,19 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1bFormsResource {
 
-  private ResourceDelegate resourceDelegate;
-  private ResourceDelegate collectionResourceDelegate;
+  private TypedResourceDelegate<
+      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<RFA1bFormDTO>>
+      resourceDelegate;
+  private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
   @Inject
   public RFA1bFormsResource(
-      @RFA1bServiceBackedResource ResourceDelegate resourceDelegate,
+      @RFA1bServiceBackedResource
+          TypedResourceDelegate<
+              RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<RFA1bFormDTO>>
+          resourceDelegate,
       @RFA1bCollectionServiceBackedResource
-          ResourceDelegate collectionResourceDelegate) {
+          TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
   }
@@ -66,12 +74,13 @@ public class RFA1bFormsResource {
   @ApiOperation(value = "Creates and returns RFA 1B form", response = RFA1bFormDTO.class)
   public Response createRFA1bForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long applicationId,
-      @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1b Form object")
+      @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
+      @Valid
           RFA1bFormDTO rfa1bForm) {
     return resourceDelegate.create(
-        new RFAExternalEntityParameterObject<>(applicationId, rfa1bForm));
+        new RFAExternalEntityUpdateObject<>(applicationId, rfa1bForm));
   }
 
   @UnitOfWork(CALSNS)
@@ -91,20 +100,21 @@ public class RFA1bFormsResource {
       @ApiParam(
           required = true,
           name = RFA_1A_APPLICATION_ID,
-          value = "The RFA-1a Application Id"
+          value = "The RFA-1A Application Id"
       )
           Long applicationId,
       @PathParam(RFA_1B_FORM_ID)
       @ApiParam(
           required = true,
           name = RFA_1B_FORM_ID,
-          value = "The RFA-1a Form Id"
+          value = "The RFA-1A Form Id"
       )
           Long rfa1BId,
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
+      @Valid
           RFA1bFormDTO rfa1bFormDTO) {
-    return resourceDelegate.update(
-        rfa1BId, new RFAExternalEntityParameterObject<>(applicationId, rfa1bFormDTO));
+    return resourceDelegate.update(new RFAExternalEntityGetObject(applicationId, rfa1BId),
+        new RFAExternalEntityUpdateObject<>(applicationId, rfa1bFormDTO));
   }
 
   @UnitOfWork(CALSNS)
@@ -124,7 +134,7 @@ public class RFA1bFormsResource {
       @ApiParam(
           required = true,
           name = RFA_1A_APPLICATION_ID,
-          value = "The RFA-1a Application Id"
+          value = "The RFA-1A Application Id"
       )
           Long applicationId,
       @PathParam(RFA_1B_FORM_ID)
@@ -136,7 +146,7 @@ public class RFA1bFormsResource {
           Long rfa1BFormId) {
 
     return resourceDelegate
-        .get(new RFAExternalEntityParameterObject<RFA1bFormDTO>(applicationId, rfa1BFormId));
+        .get(new RFAExternalEntityGetObject(applicationId, rfa1BFormId));
   }
 
   @UnitOfWork(CALSNS)
@@ -161,8 +171,7 @@ public class RFA1bFormsResource {
           value = "The RFA-1A Application Id"
       )
           Long applicationId) {
-    return collectionResourceDelegate
-        .get(new RFAExternalEntityParameterObject<RFA1bFormDTO>(applicationId));
+    return collectionResourceDelegate.get(applicationId);
   }
 
   @UnitOfWork(CALSNS)
@@ -187,7 +196,6 @@ public class RFA1bFormsResource {
           value = "The RFA 1B Form Id"
       )
           Long rfa1BFormId) {
-    return resourceDelegate.delete(
-        new RFAExternalEntityParameterObject<RFA1bFormDTO>(applicationId, rfa1BFormId));
+    return resourceDelegate.delete(new RFAExternalEntityGetObject(applicationId, rfa1BFormId));
   }
 }

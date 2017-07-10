@@ -1,19 +1,29 @@
 package gov.ca.cwds.cals.service;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
+import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
+
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
+import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
+import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
+import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
+import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
-import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
@@ -25,16 +35,9 @@ import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
-import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 /**
  * CRUD service for {@link gov.ca.cwds.cals.service.dto.FacilityDTO}
@@ -52,13 +55,16 @@ public class FacilityService implements CrudsService {
   private LpaInformationDao lpaInformationDao;
   private ClientDao clientDao;
   private FacilityChildMapper facilityChildMapper;
+  private InspectionDao inspectionDao;
+  private ComplaintReportLic802Dao complaintReportLic802Dao;
 
 
   @Inject
   public FacilityService(LisFacFileLisDao lisFacFileLisDao, LisFacFileFasDao lisFacFileFasDao,
       PlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
       CountiesDao countiesDao, FacilityMapper facilityMapper, FasFacilityMapper fasFacilityMapper,
-      ClientDao clientDao, FacilityChildMapper facilityChildMapper) {
+      ClientDao clientDao, FacilityChildMapper facilityChildMapper, InspectionDao inspectionDao,
+      ComplaintReportLic802Dao complaintReportLic802Dao) {
     this.lisFacFileLisDao = lisFacFileLisDao;
     this.lisFacFileFasDao = lisFacFileFasDao;
     this.placementHomeDao = placementHomeDao;
@@ -68,6 +74,8 @@ public class FacilityService implements CrudsService {
     this.fasFacilityMapper = fasFacilityMapper;
     this.clientDao = clientDao;
     this.facilityChildMapper = facilityChildMapper;
+    this.inspectionDao = inspectionDao;
+    this.complaintReportLic802Dao = complaintReportLic802Dao;
   }
 
   @Override
@@ -99,9 +107,18 @@ public class FacilityService implements CrudsService {
     fasFacilityMapper.toFacilityDTO(facilityDTO, fasDsLisFacFile);
 
     if (parameterObject.isExpanded()) {
-      List<FacilityChildDTO> facilityChildren = clientDao.streamByLicenseNumber(parameterObject.getLicenseNumber())
+      List<FacilityChildDTO> facilityChildren = clientDao
+          .streamByLicenseNumber(parameterObject.getLicenseNumber())
           .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
-      facilityDTO = facilityMapper.toExpandedFacilityDTO(facilityDTO, facilityChildren);
+
+      List<Rr809Dn> inspections = inspectionDao
+          .findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber());
+
+      List<ComplaintReportLic802> complaints = complaintReportLic802Dao
+          .findComplaintsByFacilityNumber(parameterObject.getLicenseNumber());
+
+      facilityDTO = facilityMapper
+          .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections, complaints);
     }
 
     return facilityDTO;
@@ -109,12 +126,21 @@ public class FacilityService implements CrudsService {
 
   private FacilityDTO loadFacilityFromCwsCms(FacilityParameterObject parameterObject) {
     BasePlacementHome placementHome = findFacilityById(parameterObject);
-    FacilityDTO facilityDTO =facilityMapper.toFacilityDTO(placementHome);
+    FacilityDTO facilityDTO = facilityMapper.toFacilityDTO(placementHome);
 
     if (parameterObject.isExpanded()) {
-      List<FacilityChildDTO> facilityChildren = clientDao.streamByFacilityId(parameterObject.getFacilityId())
+      List<FacilityChildDTO> facilityChildren = clientDao
+          .streamByFacilityId(parameterObject.getFacilityId())
           .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
-      facilityDTO = facilityMapper.toExpandedFacilityDTO(facilityDTO, facilityChildren);
+
+      List<Rr809Dn> inspections = inspectionDao
+          .findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber());
+
+      List<ComplaintReportLic802> complaints = complaintReportLic802Dao
+          .findComplaintsByFacilityNumber(parameterObject.getLicenseNumber());
+
+      facilityDTO = facilityMapper
+          .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections, complaints);
     }
 
     return facilityDTO;

@@ -19,12 +19,12 @@ public class RFA1aApplicantsDeclarationService
         new RFAInternalEntityConfiguration<ApplicantsDeclarationDTO>(
             ApplicantsDeclarationDTO.class) {
           @Override
-          protected ApplicantsDeclarationDTO retrieveEntityFromTheForm(RFA1aForm form) {
+          public ApplicantsDeclarationDTO getEntityFromTheForm(RFA1aForm form) {
             return form.getApplicantsDeclaration();
           }
 
           @Override
-          protected void saveEntityToTheForm(RFA1aForm form, ApplicantsDeclarationDTO entity) {
+          public void putEntityToTheForm(RFA1aForm form, ApplicantsDeclarationDTO entity) {
             form.setApplicantsDeclaration(entity);
           }
         });

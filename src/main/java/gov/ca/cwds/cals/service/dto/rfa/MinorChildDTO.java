@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
 
   private static final long serialVersionUID = 1367746149537559411L;
 
+  @CheckReferentialIntegrity
   private ApplicantRelationshipType relationshipToApplicant;
 
   private List<Long> childRelatedTo;
@@ -33,6 +35,7 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
 
+  @CheckReferentialIntegrity
   private GenderType gender;
 
   private boolean childFinanciallySupported;

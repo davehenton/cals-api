@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 
 /**
  * @author CWDS CALS API Team
@@ -14,6 +15,7 @@ public class PhoneDTO extends BaseDTO {
 
   private static final long serialVersionUID = 3691096439228739229L;
 
+  @CheckReferentialIntegrity
   private PhoneNumberType phoneType;
 
   private String number;

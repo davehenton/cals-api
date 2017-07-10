@@ -20,14 +20,14 @@ public class RFA1aApplicantsRelationshipService
             ApplicantsRelationshipDTO.class) {
 
           @Override
-          protected ApplicantsRelationshipDTO retrieveEntityFromTheForm(RFA1aForm form) {
-            return form.getRelationships();
+          public ApplicantsRelationshipDTO getEntityFromTheForm(RFA1aForm form) {
+            return form.getApplicantsRelationship();
           }
 
           @Override
-          protected void saveEntityToTheForm(RFA1aForm form,
+          public void putEntityToTheForm(RFA1aForm form,
               ApplicantsRelationshipDTO relationship) {
-            form.setRelationships(relationship);
+            form.setApplicantsRelationship(relationship);
           }
 
         });
