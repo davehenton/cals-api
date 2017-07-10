@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 public class ApplicantsRelationshipDTO extends BaseDTO implements Serializable, Request, Response {
 
   @ApiModelProperty("Relationship between applicants")
+  @CheckReferentialIntegrity
   private ApplicantRelationshipType relationshipType;
 
   @ApiModelProperty(value = "Other type of relationship if it's not in the list", example = "")
@@ -37,6 +39,7 @@ public class ApplicantsRelationshipDTO extends BaseDTO implements Serializable, 
   private String placeOfRelationshipCity;
 
   @ApiModelProperty("Place of current marriage/Domestic partnership: state")
+  @CheckReferentialIntegrity
   private StateType placeOfRelationshipState;
 
   public ApplicantRelationshipType getRelationshipType() {

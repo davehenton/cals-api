@@ -28,8 +28,8 @@
     "zip": "98123",
     "city": "Rocklin",
     "state": {
-      "id": 0,
-      "value": "string"
+      "id": 6,
+      "value": "California"
     },
     "type": {
       "id": 1,
@@ -40,7 +40,7 @@
   "date_of_birth": "1981-12-26",
   "driver_license": "MD123-1234-585-121",
   "driver_license_state": {
-    "id": 23,
+    "id": 24,
     "value": "Maryland"
   },
   "signature": "Anna Peterson",
@@ -50,7 +50,7 @@
       "offense": "Offense description",
       "offense_city": "Sacramento",
       "offense_state": {
-        "id": 1,
+        "id": 6,
         "value": "California"
       },
       "offense_date": "2014-03-12",

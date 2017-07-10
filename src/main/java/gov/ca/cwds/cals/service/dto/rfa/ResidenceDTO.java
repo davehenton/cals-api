@@ -5,11 +5,14 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import java.util.Set;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team.
@@ -21,12 +24,14 @@ public class ResidenceDTO extends BaseDTO implements Request, Response {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "List of Addresses")
+  @Valid
   private List<RFAAddressDTO> addresses;
 
   @ApiModelProperty(value = "Is Physical Mailing Similar", example = "false")
   private boolean physicalMailingSimilar;
 
   @ApiModelProperty(value = "Residence Ownership Type")
+  @CheckReferentialIntegrity
   private ResidenceOwnershipType residenceOwnership;
 
   @ApiModelProperty(value = "Is Weapon In Home", example = "false")
@@ -42,12 +47,14 @@ public class ResidenceDTO extends BaseDTO implements Request, Response {
   private boolean othersUsingResidenceAsMailing;
 
   @ApiModelProperty(value = "Other People Using Residence As Mailing")
+  @Valid
   private Set<PersonNameDTO> otherPeopleUsingResidenceAsMailing;
 
   @ApiModelProperty(value = "Directions To Home", example = "Directions here")
   private String directionsToHome;
 
   @ApiModelProperty(value = "Home Languages")
+  @CheckReferentialIntegrityForEach
   private Set<LanguageType> homeLanguages;
 
   public List<RFAAddressDTO> getAddresses() {

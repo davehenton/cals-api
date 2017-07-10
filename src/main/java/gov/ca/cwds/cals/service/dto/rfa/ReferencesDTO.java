@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
@@ -32,10 +33,15 @@ public class ReferencesDTO extends BaseDTO implements Request, Response {
     private static final long serialVersionUID = -6715371392246671568L;
 
     private String firstName;
+
     private String middleName;
+
     private String lastName;
+    @Valid
     private RFAAddressDTO mailingAddress;
+
     private String phoneNumber;
+
     private String email;
 
     public String getFirstName() {

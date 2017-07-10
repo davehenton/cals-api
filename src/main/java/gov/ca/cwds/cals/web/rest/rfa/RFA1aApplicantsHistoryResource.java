@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -26,9 +27,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * @author CWDS CALS API Team.
- */
+/** @author CWDS CALS API Team. */
 @Api(tags = {RFA})
 @Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + APPLICANTS_HISTORY)
 @Produces(MediaType.APPLICATION_JSON)
@@ -47,16 +46,19 @@ public class RFA1aApplicantsHistoryResource {
   @GET
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 404, message = "Not found"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
-  @ApiOperation(value = "Returns Applicants History by RFA-1A Form Id", response = ApplicantsHistoryDTO.class)
+  @ApiOperation(
+    value = "Returns Applicants History by RFA-1A Form Id",
+    response = ApplicantsHistoryDTO.class
+  )
   public Response getApplicantsHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -65,19 +67,26 @@ public class RFA1aApplicantsHistoryResource {
   @PUT
   @Timed
   @ApiResponses(
-      value = {
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
+    value = {
+      @ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")
+    }
   )
-  @ApiOperation(value = "Update Applicants History in RFA 1A Form", response = ApplicantsHistoryDTO.class)
+  @ApiOperation(
+    value = "Update Applicants History in RFA 1A Form",
+    response = ApplicantsHistoryDTO.class
+  )
   public Response updateApplicantsHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = APPLICANTS_HISTORY, value = "The RFA-1A ApplicantsHistory object")
+      @ApiParam(
+            required = true,
+            name = APPLICANTS_HISTORY,
+            value = "The RFA-1A ApplicantsHistory object"
+          )
+          @Valid
           ApplicantsHistoryDTO applicantsHistory) {
     return resourceDelegate.update(formId, applicantsHistory);
   }
-
 }

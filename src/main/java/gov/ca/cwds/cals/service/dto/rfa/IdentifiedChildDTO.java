@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,8 +39,10 @@ public class IdentifiedChildDTO extends BaseDTO {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
 
+  @CheckReferentialIntegrity
   private GenderType gender;
 
+  //@CheckReferentialIntegrity
   private CountyType countyOfJurisdiction;
 
   @ApiModelProperty(example = "2017-05-14")
