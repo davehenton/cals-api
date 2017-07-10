@@ -5,7 +5,7 @@
 entity Rfa_1a {
   application TextBlob,
   residence TextBlob,
-  relationships TextBlob,
+  applicantsRelationship TextBlob,
   applicantHistory TextBlob,
   childDesired TextBlob,
   adoptionHistory TextBlob,

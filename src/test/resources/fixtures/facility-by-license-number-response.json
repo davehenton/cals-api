@@ -38,9 +38,6 @@
     "id" : "39",
     "value" : "SAN JOAQUIN"
   },
-  "complains" : {
-    "href" : "facilities/193600110/complaints"
-  },
   "phones" : [ {
     "relation" : "primary",
     "type" : "Cell",

@@ -55,12 +55,12 @@ public class RFA1aApplicantsDeclarationResource {
       }
   )
   @ApiOperation(
-      value = "Returns Applicants Declaration by RFA-1a Form Id",
+      value = "Returns Applicants Declaration by RFA-1A Form Id",
       response = ApplicantsDeclarationDTO.class
   )
   public Response getApplicantsDeclaration(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -75,17 +75,17 @@ public class RFA1aApplicantsDeclarationResource {
       }
   )
   @ApiOperation(
-      value = "Update Applicants Declaration in RFA 1a Form",
+      value = "Update Applicants Declaration in RFA 1A Form",
       response = ApplicantsDeclarationDTO.class
   )
   public Response updateApplicantsDeclaration(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(
           required = true,
           name = RESIDENCE,
-          value = "The RFA-1a Applicants Declaration object"
+          value = "The RFA-1A Applicants Declaration object"
       )
           ApplicantsDeclarationDTO applicantsDeclaration) {
     return resourceDelegate.update(formId, applicantsDeclaration);

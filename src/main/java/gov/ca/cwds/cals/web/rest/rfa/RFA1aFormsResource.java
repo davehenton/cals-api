@@ -7,6 +7,8 @@ import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
@@ -55,10 +57,17 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1a Form", response = RFA1aFormDTO.class)
+  @ApiOperation(value = "Creates and returns RFA 1A Form", response = RFA1aFormDTO.class)
   public Response createApplicationForm(
-      @ApiParam(name = "application", value = "The RFA-1a Application object")
+      @ApiParam(name = "application", value = "The RFA-1A Application object")
           RFA1aFormDTO application) {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new JavaTimeModule());
+    // TODO: remove this temporary fix to support older versions of CALS DS
+    if (application == null) {
+      application = new RFA1aFormDTO();
+      application.setInitialApplication(true);
+    }
     return resourceDelegate.create(application);
   }
 
@@ -74,12 +83,12 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Updates RFA 1a Form", response = RFA1aFormDTO.class)
+  @ApiOperation(value = "Updates RFA 1A Form", response = RFA1aFormDTO.class)
   public Response updateApplicationForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(name = "application", value = "The RFA-1a Application object")
+      @ApiParam(name = "application", value = "The RFA-1A Application object")
           RFA1aFormDTO formDTO) {
     return resourceDelegate.update(formId, formDTO);
   }
@@ -95,10 +104,10 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1a Form by Id", response = RFA1aFormDTO.class)
+  @ApiOperation(value = "Returns RFA 1A Form by Id", response = RFA1aFormDTO.class)
   public Response getApplicationForm(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @QueryParam(EXPANDED)
       @ApiParam(name = EXPANDED, value = "Use 'true' to get form with all parts of form included")
@@ -116,7 +125,7 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns all available RFA 1a Forms", response = RFA1aFormCollectionDTO.class)
+  @ApiOperation(value = "Returns all available RFA 1A Forms", response = RFA1aFormCollectionDTO.class)
   public Response getAllApplicationForms(
       @QueryParam(EXPANDED)
       @ApiParam(name = EXPANDED, value = "Use 'true' to get forms with all parts of form included")

@@ -53,10 +53,10 @@ public class RFA1aApplicantsHistoryResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Applicants History by RFA-1a Form Id", response = ApplicantsHistoryDTO.class)
+  @ApiOperation(value = "Returns Applicants History by RFA-1A Form Id", response = ApplicantsHistoryDTO.class)
   public Response getApplicantsHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
     return resourceDelegate.get(formId);
   }
@@ -70,12 +70,12 @@ public class RFA1aApplicantsHistoryResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update Applicants History in RFA 1a Form", response = ApplicantsHistoryDTO.class)
+  @ApiOperation(value = "Update Applicants History in RFA 1A Form", response = ApplicantsHistoryDTO.class)
   public Response updateApplicantsHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
-      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1a Form Id")
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = APPLICANTS_HISTORY, value = "The RFA-1a ApplicantsHistory object")
+      @ApiParam(required = true, name = APPLICANTS_HISTORY, value = "The RFA-1A ApplicantsHistory object")
           ApplicantsHistoryDTO applicantsHistory) {
     return resourceDelegate.update(formId, applicantsHistory);
   }

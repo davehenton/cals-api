@@ -4,6 +4,7 @@ import static junit.framework.TestCase.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,6 +42,11 @@ public class CompositeIteratorTest {
   @Test(expected = IllegalArgumentException.class)
   public void testEmpty() {
     new CompositeIterator<>();
+  }
+
+  @Test(expected = NoSuchElementException.class)
+  public void testNoSuchElement() {
+    new CompositeIterator<>(iterator2).next();
   }
 
   @Test

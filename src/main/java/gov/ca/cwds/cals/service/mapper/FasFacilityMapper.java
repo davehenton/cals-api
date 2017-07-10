@@ -22,8 +22,6 @@ public interface FasFacilityMapper {
   @Mapping(target = "phone", ignore = true)
   @Mapping(target = "visits", ignore = true)
   @Mapping(target = "address", ignore = true)
-  @Mapping(target = "inspections", ignore = true)
-  @Mapping(target = "complains", ignore = true)
   @Mapping(target = "county", ignore = true)
   @Mapping(target = "emailAddress", ignore = true)
   @Mapping(target = "originalApplicationRecievedDate", ignore = true)

@@ -136,18 +136,6 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
   @ApiModelProperty(required = false, readOnly = false, value = "County")
   private CountyDTO county;
 
-  @JsonProperty("complains")
-  @NotNull
-  @ApiModelProperty(required = true, readOnly = true, value = "Complains hyperlink", example =
-      Constants.API.FACILITIES + "/193600010/" + Constants.API.COMPLAINTS)
-  private HyperlinkDTO complains;
-
-  @JsonProperty("inspections")
-  @NotNull
-  @ApiModelProperty(required = true, readOnly = true, value = "Inspections hyperlink", example =
-      Constants.API.FACILITIES + "/193600010/" + Constants.API.INSPECTIONS)
-  private HyperlinkDTO inspections;
-
   @JsonProperty("phones")
   @ApiModelProperty(required = true, readOnly = true, value = "Facility Phones")
   private ArrayList<PhoneDTO> phone;
@@ -318,22 +306,6 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
 
   public void setCounty(CountyDTO county) {
     this.county = county;
-  }
-
-  public HyperlinkDTO getComplains() {
-    return complains;
-  }
-
-  public void setComplains(HyperlinkDTO complains) {
-    this.complains = complains;
-  }
-
-  public HyperlinkDTO getInspections() {
-    return inspections;
-  }
-
-  public void setInspections(HyperlinkDTO inspections) {
-    this.inspections = inspections;
   }
 
   public List<FacilityAddressDTO> getAddress() {
