@@ -7,6 +7,8 @@ import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
@@ -59,6 +61,13 @@ public class RFA1aFormsResource {
   public Response createApplicationForm(
       @ApiParam(name = "application", value = "The RFA-1A Application object")
           RFA1aFormDTO application) {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new JavaTimeModule());
+    // TODO: remove this temporary fix to support older versions of CALS DS
+    if (application == null) {
+      application = new RFA1aFormDTO();
+      application.setInitialApplication(true);
+    }
     return resourceDelegate.create(application);
   }
 
