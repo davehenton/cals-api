@@ -4,7 +4,7 @@ import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
-import gov.ca.cwds.cals.RequestResponseEntity;
+import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 /**
  * @author CWDS CALS API Team.
  */
-public abstract class AbstractRFAInternalEntityService<T extends RequestResponseEntity> extends
+public abstract class AbstractRFAInternalEntityService<T extends RequestResponse> extends
     TypedCrudServiceAdapter<Long, T, T> {
 
   private final RFA1aFormsDao applicationDao;

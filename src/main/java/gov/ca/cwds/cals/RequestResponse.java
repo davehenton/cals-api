@@ -7,6 +7,6 @@ import gov.ca.cwds.rest.api.Response;
  * @author CWDS CALS API Team
  */
 
-public interface RequestResponseEntity extends Request, Response {
+public interface RequestResponse extends Request, Response {
 
 }
