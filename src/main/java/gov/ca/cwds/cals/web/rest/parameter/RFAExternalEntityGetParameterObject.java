@@ -5,14 +5,14 @@ import java.io.Serializable;
 /**
  * @author CWDS CALS API Team
  */
-public class RFAExternalEntityGetObject implements Serializable {
+public class RFAExternalEntityGetParameterObject implements Serializable {
 
   private static final long serialVersionUID = -531872197296633529L;
 
   private Long formId;
   private Long entityId;
 
-  public RFAExternalEntityGetObject(Long formId, Long entityId) {
+  public RFAExternalEntityGetParameterObject(Long formId, Long entityId) {
     this.formId = formId;
     this.entityId = entityId;
   }

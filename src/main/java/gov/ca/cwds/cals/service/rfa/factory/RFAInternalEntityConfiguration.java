@@ -1,12 +1,12 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
-import gov.ca.cwds.cals.RequestResponseEntity;
+import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 
 /**
  * @author CWDS CALS API Team
  */
-public abstract class RFAInternalEntityConfiguration<T extends RequestResponseEntity> {
+public abstract class RFAInternalEntityConfiguration<T extends RequestResponse> {
 
   private Class<T> entityClass;
 

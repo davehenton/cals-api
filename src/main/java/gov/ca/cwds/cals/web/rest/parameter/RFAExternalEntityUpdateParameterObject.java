@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * @author CWDS CALS API Team
  */
-public class RFAExternalEntityUpdateObject<T extends BaseDTO> implements Request,
+public class RFAExternalEntityUpdateParameterObject<T extends BaseDTO> implements Request,
     Serializable {
 
   private static final long serialVersionUID = -531872197296633529L;
@@ -15,7 +15,7 @@ public class RFAExternalEntityUpdateObject<T extends BaseDTO> implements Request
   private Long formId;
   private T entityDTO;
 
-  public RFAExternalEntityUpdateObject(Long formId, T entityDTO) {
+  public RFAExternalEntityUpdateParameterObject(Long formId, T entityDTO) {
     this.formId = formId;
     this.entityDTO = entityDTO;
   }
