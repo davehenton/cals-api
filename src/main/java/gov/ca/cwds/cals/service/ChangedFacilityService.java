@@ -3,23 +3,13 @@ package gov.ca.cwds.cals.service;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.CompositeIterator;
 import gov.ca.cwds.cals.RecordChangeOperation;
-import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
-import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
-import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
-import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.RecordChangeFasDao;
-import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.RecordChangeLisDao;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
-import gov.ca.cwds.cals.service.dto.ChangedFacilityDTO;
+import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
-import gov.ca.cwds.cals.service.mapper.FacilityMapper;
-import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
+import gov.ca.cwds.cals.service.dto.ChangedFacilityDTO;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -34,30 +24,17 @@ public class ChangedFacilityService extends FacilityService {
 
   private static final Logger LOG = LoggerFactory.getLogger(ChangedFacilityService.class);
 
+  @Inject
   private RecordChangeCwsCmsDao recordChangeCwsCmsDao;
-  private RecordChangeLisDao recordChangeLisDao;
-  private RecordChangeFasDao recordChangeFasDao;
 
   @Inject
-  @SuppressWarnings("squid:S00107")
-  public ChangedFacilityService(
-      LisFacFileLisDao lisFacFileLisDao,
-      LisFacFileFasDao lisFacFileFasDao,
-      PlacementHomeDao placementHomeDao,
-      LpaInformationDao lpaInformationDao,
-      CountiesDao countiesDao, FacilityMapper facilityMapper,
-      FasFacilityMapper fasFacilityMapper,
-      RecordChangeCwsCmsDao recordChangeCwsCmsDao,
-      RecordChangeLisDao recordChangeLisDao,
-      RecordChangeFasDao recordChangeFasDao,
-      ClientDao clientDao, FacilityChildMapper facilityChildMapper,
-      InspectionDao inspectionDao, ComplaintReportLic802Dao complaintReportLic802Dao) {
-    super(lisFacFileLisDao, lisFacFileFasDao, placementHomeDao, lpaInformationDao, countiesDao,
-        facilityMapper, fasFacilityMapper, clientDao, facilityChildMapper, inspectionDao,
-        complaintReportLic802Dao);
-    this.recordChangeCwsCmsDao = recordChangeCwsCmsDao;
-    this.recordChangeLisDao = recordChangeLisDao;
-    this.recordChangeFasDao = recordChangeFasDao;
+  private RecordChangeLisDao recordChangeLisDao;
+
+  @Inject
+  private RecordChangeFasDao recordChangeFasDao;
+
+  public ChangedFacilityService() {
+    // default constructor
   }
 
   public Stream<ChangedFacilityDTO> changedFacilitiesStream(Date after) {
