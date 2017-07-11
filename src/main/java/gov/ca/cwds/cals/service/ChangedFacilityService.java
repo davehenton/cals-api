@@ -10,6 +10,8 @@ import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.ChangedFacilityDTO;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -43,7 +45,8 @@ public class ChangedFacilityService extends FacilityService {
 
     RecordChanges lisFasRecordChanges = new RecordChanges();
     recordChangeLisDao.streamChangedFacilityRecords(after).forEach(lisFasRecordChanges::add);
-    recordChangeFasDao.streamChangedFacilityRecords(after).forEach(lisFasRecordChanges::add);
+    recordChangeFasDao.streamChangedFacilityRecords(after == null, evalDateAfter(after))
+        .forEach(lisFasRecordChanges::add);
 
     return Stream.concat(cwsCmsRecordChanges.newStream(), lisFasRecordChanges.newStream())
         .map(recordChange -> {
@@ -61,6 +64,11 @@ public class ChangedFacilityService extends FacilityService {
             return true;
           }
         });
+  }
+
+  private Date evalDateAfter(Date after) {
+    return after != null ? after
+        : Date.from(LocalDateTime.now().minusYears(100).atZone(ZoneId.systemDefault()).toInstant());
   }
 
   private static class RecordChanges {
