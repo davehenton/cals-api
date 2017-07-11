@@ -19,12 +19,12 @@ public class RFA1aApplicantsHistoryService
         new RFAInternalEntityConfiguration<ApplicantsHistoryDTO>(ApplicantsHistoryDTO.class) {
 
           @Override
-          protected ApplicantsHistoryDTO retrieveEntityFromTheForm(RFA1aForm form) {
+          public ApplicantsHistoryDTO getEntityFromTheForm(RFA1aForm form) {
             return form.getApplicantsHistory();
           }
 
           @Override
-          protected void saveEntityToTheForm(RFA1aForm form,
+          public void putEntityToTheForm(RFA1aForm form,
               ApplicantsHistoryDTO applicantsHistory) {
             form.setApplicantsHistory(applicantsHistory);
           }

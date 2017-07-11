@@ -6,7 +6,6 @@ import gov.ca.cwds.cals.persistence.model.cms.BaseClient;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.rest.api.Response;
-
 import java.io.Serializable;
 
 /**

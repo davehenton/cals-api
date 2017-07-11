@@ -10,13 +10,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ResidenceServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -34,10 +35,12 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aResidenceResource {
-  private ResourceDelegate resourceDelegate;
+
+  private TypedResourceDelegate<Long, ResidenceDTO> resourceDelegate;
 
   @Inject
-  public RFA1aResidenceResource(@ResidenceServiceBackedResource ResourceDelegate resourceDelegate) {
+  public RFA1aResidenceResource(
+      @ResidenceServiceBackedResource TypedResourceDelegate<Long, ResidenceDTO> resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
 
@@ -74,6 +77,7 @@ public class RFA1aResidenceResource {
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1A Residence object")
+      @Valid
           ResidenceDTO residence) {
     return resourceDelegate.update(formId, residence);
   }

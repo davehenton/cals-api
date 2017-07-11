@@ -10,13 +10,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ApplicantsHistoryServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -35,11 +36,12 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aApplicantsHistoryResource {
 
-  private ResourceDelegate resourceDelegate;
+  private TypedResourceDelegate<Long, ApplicantsHistoryDTO> resourceDelegate;
 
   @Inject
   public RFA1aApplicantsHistoryResource(
-      @ApplicantsHistoryServiceBackedResource ResourceDelegate resourceDelegate) {
+      @ApplicantsHistoryServiceBackedResource
+          TypedResourceDelegate<Long, ApplicantsHistoryDTO> resourceDelegate) {
     this.resourceDelegate = resourceDelegate;
   }
 
@@ -53,7 +55,10 @@ public class RFA1aApplicantsHistoryResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Applicants History by RFA-1A Form Id", response = ApplicantsHistoryDTO.class)
+  @ApiOperation(
+      value = "Returns Applicants History by RFA-1A Form Id",
+      response = ApplicantsHistoryDTO.class
+  )
   public Response getApplicantsHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
@@ -70,14 +75,21 @@ public class RFA1aApplicantsHistoryResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Update Applicants History in RFA 1A Form", response = ApplicantsHistoryDTO.class)
+  @ApiOperation(
+      value = "Update Applicants History in RFA 1A Form",
+      response = ApplicantsHistoryDTO.class
+  )
   public Response updateApplicantsHistory(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = APPLICANTS_HISTORY, value = "The RFA-1A ApplicantsHistory object")
+      @ApiParam(
+          required = true,
+          name = APPLICANTS_HISTORY,
+          value = "The RFA-1A ApplicantsHistory object"
+      )
+      @Valid
           ApplicantsHistoryDTO applicantsHistory) {
     return resourceDelegate.update(formId, applicantsHistory);
   }
-
 }

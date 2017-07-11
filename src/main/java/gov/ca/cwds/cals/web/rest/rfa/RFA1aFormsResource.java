@@ -7,23 +7,29 @@ import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
-import gov.ca.cwds.rest.resources.ResourceDelegate;
+import gov.ca.cwds.rest.api.Request;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
-import javax.ws.rs.*;
+import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -36,13 +42,15 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aFormsResource {
 
-  private ResourceDelegate resourceDelegate;
-  private ResourceDelegate collectionResourceDelegate;
+  private TypedResourceDelegate<RFA1aFormsParameterObject, RFA1aFormDTO> resourceDelegate;
+  private TypedResourceDelegate<Boolean, Request> collectionResourceDelegate;
 
   @Inject
   public RFA1aFormsResource(
-      @RFA1aFormServiceBackedResource ResourceDelegate resourceDelegate,
-      @RFA1aFormCollectionServiceBackedResource ResourceDelegate collectionResourceDelegate) {
+      @RFA1aFormServiceBackedResource
+          TypedResourceDelegate<RFA1aFormsParameterObject, RFA1aFormDTO> resourceDelegate,
+      @RFA1aFormCollectionServiceBackedResource
+          TypedResourceDelegate<Boolean, Request> collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
   }
@@ -59,7 +67,7 @@ public class RFA1aFormsResource {
   )
   @ApiOperation(value = "Creates and returns RFA 1A Form", response = RFA1aFormDTO.class)
   public Response createApplicationForm(
-      @ApiParam(name = "application", value = "The RFA-1A Application object")
+      @ApiParam(name = "application", value = "The RFA-1A Application object") @Valid
           RFA1aFormDTO application) {
     // TODO: remove this temporary fix to support older versions of CALS DS
     if (application == null) {
@@ -87,8 +95,9 @@ public class RFA1aFormsResource {
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
       @ApiParam(name = "application", value = "The RFA-1A Application object")
+      @Valid
           RFA1aFormDTO formDTO) {
-    return resourceDelegate.update(formId, formDTO);
+    return resourceDelegate.update(new RFA1aFormsParameterObject(formId), formDTO);
   }
 
   @UnitOfWork(CALSNS)
@@ -123,12 +132,14 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns all available RFA 1A Forms", response = RFA1aFormCollectionDTO.class)
+  @ApiOperation(
+      value = "Returns all available RFA 1A Forms",
+      response = RFA1aFormCollectionDTO.class
+  )
   public Response getAllApplicationForms(
       @QueryParam(EXPANDED)
       @ApiParam(name = EXPANDED, value = "Use 'true' to get forms with all parts of form included")
           boolean expanded) {
     return collectionResourceDelegate.get(expanded);
   }
-
 }

@@ -22,8 +22,7 @@ public class RFA1aApplicantResourceTest extends
 
           @Override
           protected String getCreateFixture() {
-            //return "fixtures/rfa/rfa-1a-applicant.json";
-            return "fixtures/rfa/stub.json";
+            return "fixtures/rfa/rfa-1a-applicant.json";
           }
 
           @Override
@@ -40,4 +39,6 @@ public class RFA1aApplicantResourceTest extends
 
     return new BaseExternalEntityApiHelper<>(clientTestRule, configuration);
   }
+
+
 }
