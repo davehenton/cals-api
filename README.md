@@ -34,22 +34,22 @@ In order for the CALS API successfully connect to the above databases the follow
 - DB_CMS_PASSWORD -- the CMS database password
 - DB_CMS_JDBC_URL -- the CMS database URL in Java Database Connectivity format
 - DB_CMS_SCHEMA -- the CMS database schema the tables belong to.
-- DB_CMS_CP_INITIAL_SIZE -- the CMS connections pool iniitial size  
-- DB_CMS_CP_MIN_SIZE -- the CMS connections pool minimum size
-- DB_CMS_CP_MAX_SIZE -- the CMS connections pool maximum size
+- DB_CMS_CP_INITIAL_SIZE -- the CMS connections pool iniitial size (default: 2)  
+- DB_CMS_CP_MIN_SIZE -- the CMS connections pool minimum size (default: 2)
+- DB_CMS_CP_MAX_SIZE -- the CMS connections pool maximum size (default: 8)
 
 
 - DB_NS_USER -- the NS database username
 - DB_NS_PASSWORD -- the NS database password
 - DB_NS_JDBC_URL -- the NS database URL in Java Database Connectivity format
-- DB_NS_CP_INITIAL_SIZE -- the NS connections pool iniitial size  
-- DB_NS_CP_MIN_SIZE -- the NS connections pool minimum size
-- DB_NS_CP_MAX_SIZE -- the NS connections pool maximum size
+- DB_NS_CP_INITIAL_SIZE -- the NS connections pool iniitial size (default: 2) 
+- DB_NS_CP_MIN_SIZE -- the NS connections pool minimum size (default: 2)
+- DB_NS_CP_MAX_SIZE -- the NS connections pool maximum size (default: 8)
 
 **Swagger Configuration Parameters**
 
-- LOGIN_URL -- Login URL
-- SHOW_SWAGGER -- Show swagger (true | false)
+- LOGIN_URL -- Login URL 
+- SHOW_SWAGGER -- Show swagger (true | false) default - true
 
 **Shiro Configuration Parameters**
 - SHIRO_CONFIG_PATH -- path to Shiro configuration file
