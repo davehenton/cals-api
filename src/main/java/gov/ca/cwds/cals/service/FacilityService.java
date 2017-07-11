@@ -47,36 +47,41 @@ import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
  */
 public class FacilityService implements CrudsService {
 
+  @Inject
   private LisFacFileLisDao lisFacFileLisDao;
-  private LisFacFileFasDao lisFacFileFasDao;
-  private PlacementHomeDao placementHomeDao;
-  private CountiesDao countiesDao;
-  private FacilityMapper facilityMapper;
-  private FasFacilityMapper fasFacilityMapper;
-  private LpaInformationDao lpaInformationDao;
-  private ClientDao clientDao;
-  private FacilityChildMapper facilityChildMapper;
-  private InspectionDao inspectionDao;
-  private ComplaintReportLic802Dao complaintReportLic802Dao;
-
 
   @Inject
-  public FacilityService(LisFacFileLisDao lisFacFileLisDao, LisFacFileFasDao lisFacFileFasDao,
-      PlacementHomeDao placementHomeDao, LpaInformationDao lpaInformationDao,
-      CountiesDao countiesDao, FacilityMapper facilityMapper, FasFacilityMapper fasFacilityMapper,
-      ClientDao clientDao, FacilityChildMapper facilityChildMapper, InspectionDao inspectionDao,
-      ComplaintReportLic802Dao complaintReportLic802Dao) {
-    this.lisFacFileLisDao = lisFacFileLisDao;
-    this.lisFacFileFasDao = lisFacFileFasDao;
-    this.placementHomeDao = placementHomeDao;
-    this.lpaInformationDao = lpaInformationDao;
-    this.countiesDao = countiesDao;
-    this.facilityMapper = facilityMapper;
-    this.fasFacilityMapper = fasFacilityMapper;
-    this.clientDao = clientDao;
-    this.facilityChildMapper = facilityChildMapper;
-    this.inspectionDao = inspectionDao;
-    this.complaintReportLic802Dao = complaintReportLic802Dao;
+  private LisFacFileFasDao lisFacFileFasDao;
+
+  @Inject
+  private PlacementHomeDao placementHomeDao;
+
+  @Inject
+  private CountiesDao countiesDao;
+
+  @Inject
+  private FacilityMapper facilityMapper;
+
+  @Inject
+  private FasFacilityMapper fasFacilityMapper;
+
+  @Inject
+  private LpaInformationDao lpaInformationDao;
+
+  @Inject
+  private ClientDao clientDao;
+
+  @Inject
+  private FacilityChildMapper facilityChildMapper;
+
+  @Inject
+  private InspectionDao inspectionDao;
+
+  @Inject
+  private ComplaintReportLic802Dao complaintReportLic802Dao;
+
+  public FacilityService() {
+    // default constructor
   }
 
   @Override
