@@ -39,12 +39,12 @@ public class ChangedFacilityService extends FacilityService {
     // default constructor
   }
 
-  public Stream<ChangedFacilityDTO> changedFacilitiesStream(Date after) {
+  public Stream<ChangedFacilityDTO> changedFacilitiesStream(Date after, Date lisAfter) {
     RecordChanges cwsCmsRecordChanges = new RecordChanges();
     recordChangeCwsCmsDao.streamChangedFacilityRecords(after).forEach(cwsCmsRecordChanges::add);
 
     RecordChanges lisFasRecordChanges = new RecordChanges();
-    recordChangeLisDao.streamChangedFacilityRecords(after).forEach(lisFasRecordChanges::add);
+    recordChangeLisDao.streamChangedFacilityRecords(lisAfter).forEach(lisFasRecordChanges::add);
     recordChangeFasDao.streamChangedFacilityRecords(after == null, evalDateAfter(after))
         .forEach(lisFasRecordChanges::add);
 
