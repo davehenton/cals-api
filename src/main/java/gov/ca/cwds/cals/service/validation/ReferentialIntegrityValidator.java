@@ -38,7 +38,7 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
         StringBuilder sb =
             new StringBuilder(" object: ")
                 .append(obj)
-                .append("  is not found in DataBase referential integrity is not confirmed.");
+                .append(" is not found in database. Referential integrity was not confirmed.");
 
         context.disableDefaultConstraintViolation();
         context.buildConstraintViolationWithTemplate(sb.toString()).addConstraintViolation();

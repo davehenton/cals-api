@@ -14,8 +14,8 @@ import gov.ca.cwds.cals.inject.RFA1aOtherAdultsCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aOtherAdultsServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.OtherAdultCollectionDTO;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -45,7 +45,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aOtherAdultsResource {
 
-  private TypedResourceDelegate<RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<OtherAdultDTO>>
+  private TypedResourceDelegate<RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<OtherAdultDTO>>
       resourceDelegate;
   private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
@@ -53,7 +53,7 @@ public class RFA1aOtherAdultsResource {
   public RFA1aOtherAdultsResource(
       @RFA1aOtherAdultsServiceBackedResource
           TypedResourceDelegate<
-              RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<OtherAdultDTO>>
+              RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<OtherAdultDTO>>
           resourceDelegate,
       @RFA1aOtherAdultsCollectionServiceBackedResource
           TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
@@ -79,7 +79,7 @@ public class RFA1aOtherAdultsResource {
       @Valid
           OtherAdultDTO otherAdult) {
     return resourceDelegate.create(
-        new RFAExternalEntityUpdateObject<>(applicationId, otherAdult));
+        new RFAExternalEntityUpdateParameterObject<>(applicationId, otherAdult));
   }
 
   @UnitOfWork(CALSNS)
@@ -113,8 +113,8 @@ public class RFA1aOtherAdultsResource {
       @Valid
           OtherAdultDTO otherAdult) {
     return resourceDelegate.update(
-        new RFAExternalEntityGetObject(applicationId, minorChildId),
-        new RFAExternalEntityUpdateObject<>(applicationId, otherAdult));
+        new RFAExternalEntityGetParameterObject(applicationId, minorChildId),
+        new RFAExternalEntityUpdateParameterObject<>(applicationId, otherAdult));
   }
 
   @UnitOfWork(CALSNS)
@@ -145,7 +145,8 @@ public class RFA1aOtherAdultsResource {
       )
           Long otherAdultId) {
 
-    return resourceDelegate.get(new RFAExternalEntityGetObject(applicationId, otherAdultId));
+    return resourceDelegate
+        .get(new RFAExternalEntityGetParameterObject(applicationId, otherAdultId));
   }
 
   @UnitOfWork(CALSNS)
@@ -196,6 +197,6 @@ public class RFA1aOtherAdultsResource {
       )
           Long otherAdultId) {
     return resourceDelegate.delete(
-        new RFAExternalEntityGetObject(applicationId, otherAdultId));
+        new RFAExternalEntityGetParameterObject(applicationId, otherAdultId));
   }
 }

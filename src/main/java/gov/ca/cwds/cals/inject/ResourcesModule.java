@@ -58,8 +58,8 @@ import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.FacilityTypeResource;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsHistoryResource;
@@ -246,7 +246,7 @@ public class ResourcesModule extends AbstractModule {
   @Provides
   @RFA1aApplicantServiceBackedResource
   public TypedResourceDelegate<
-      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<ApplicantDTO>>
+      RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<ApplicantDTO>>
   rfa1aApplicantServiceBackedResource(Injector injector) {
     return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aApplicantService.class));
@@ -263,7 +263,7 @@ public class ResourcesModule extends AbstractModule {
   @Provides
   @RFA1aMinorChildrenServiceBackedResource
   public TypedResourceDelegate<
-      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<MinorChildDTO>>
+      RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<MinorChildDTO>>
   rfa1aMinorChildServiceBackedResource(Injector injector) {
     return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aMinorChildService.class));
@@ -280,7 +280,7 @@ public class ResourcesModule extends AbstractModule {
   @Provides
   @RFA1aOtherAdultsServiceBackedResource
   public TypedResourceDelegate<
-      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<OtherAdultDTO>>
+      RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<OtherAdultDTO>>
   rfa1aOtherAdultServiceBackedResource(Injector injector) {
     return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aOtherAdultService.class));
@@ -297,7 +297,7 @@ public class ResourcesModule extends AbstractModule {
   @Provides
   @RFA1bServiceBackedResource
   public TypedResourceDelegate<
-      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<RFA1bFormDTO>>
+      RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<RFA1bFormDTO>>
   rfa1bServiceBackedResource(Injector injector) {
     return new TypedServiceBackedResourceDelegate<>(injector.getInstance(RFA1bService.class));
   }
@@ -313,7 +313,7 @@ public class ResourcesModule extends AbstractModule {
   @Provides
   @RFA1cServiceBackedResource
   public TypedResourceDelegate<
-      RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<RFA1cFormDTO>>
+      RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<RFA1cFormDTO>>
   rfa1cServiceBackedResource(Injector injector) {
     return new TypedServiceBackedResourceDelegate<>(injector.getInstance(RFA1cService.class));
   }
