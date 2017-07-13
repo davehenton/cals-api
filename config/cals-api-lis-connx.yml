@@ -48,7 +48,7 @@ nsDataSourceFactory:
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
 
-connxDataSourceFactory:
+lisDataSourceFactory:
   autoCommitByDefault: false
   driverClass: com.Connx.jdbc.TCJdbc.TCJdbcDriver
   user: ${DB_CONXX_USER:-CWDS_Admin}
