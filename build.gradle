@@ -1,5 +1,6 @@
-import static org.gradle.api.logging.LogLevel.*
-import org.apache.tools.ant.filters.ReplaceTokens
+import static org.gradle.api.logging.LogLevel.*;
+import org.apache.tools.ant.filters.ReplaceTokens;
+import org.apache.tools.ant.filters.FixCrLfFilter;
 
 buildscript {
     repositories {
@@ -145,6 +146,7 @@ shadowJar {
 
 run {
     args 'server', './config/cals-api.yml'
+//    args 'server', './config/cals-api-lis-connx.yml'
 }
 
 test {
@@ -169,6 +171,8 @@ task integrationTest(type: Test, dependsOn: testClasses) {
 task copyConfig(type: Copy) {
     from 'config'
     into 'build/docker/config'
+    include 'entrypoint.sh'
+    filter(FixCrLfFilter.class, eol:FixCrLfFilter.CrLf.newInstance("lf"))
 }
 
 task copyDist(type: Copy, dependsOn: shadowJar) {
