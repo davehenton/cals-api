@@ -29,7 +29,7 @@ import org.hibernate.annotations.Type;
 @SuppressWarnings("squid:S3437") //LocalDateTime is serializable
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm ORDER BY id ASC")
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_UPDATED_AFTER,
-    query = "FROM RFA1aForm WHERE updateDateTime > :dateAfter")
+    query = "FROM RFA1aForm WHERE createDateTime > :dateAfter OR updateDateTime > :dateAfter")
 @Entity
 @Table(name = "rfa_1a")
 public class RFA1aForm extends RFABaseEntity implements PersistentObject, Request, Response {

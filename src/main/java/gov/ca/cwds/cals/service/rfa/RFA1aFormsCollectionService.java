@@ -1,9 +1,11 @@
 package gov.ca.cwds.cals.service.rfa;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
+import gov.ca.cwds.cals.service.dto.changed.ChangedRFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
@@ -39,7 +41,9 @@ public class RFA1aFormsCollectionService
     return new RFA1aFormCollectionDTO(formDTOs);
   }
 
-  public Stream<RFA1aForm> streamChangedRFA1aForms(Date after) {
-    return dao.streamChangedRFA1aForms(after).map(rfa1aFormMapper::toExpandedRFA1aFormDTO);
+  public Stream<ChangedRFA1aFormDTO> streamChangedRFA1aForms(Date after) {
+    return dao.streamChangedRFA1aForms(after).map(
+        rfa1aForm -> new ChangedRFA1aFormDTO(rfa1aFormMapper.toExpandedRFA1aFormDTO(rfa1aForm),
+            RecordChangeOperation.I));
   }
 }
