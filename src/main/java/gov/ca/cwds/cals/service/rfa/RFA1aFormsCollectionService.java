@@ -8,7 +8,9 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 import gov.ca.cwds.rest.api.Request;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author CWDS CALS API Team
@@ -35,5 +37,9 @@ public class RFA1aFormsCollectionService
       formDTOs = rfa1aFormMapper.toRFA1aFormsDTO(forms);
     }
     return new RFA1aFormCollectionDTO(formDTOs);
+  }
+
+  public Stream<RFA1aForm> streamChangedRFA1aForms(Date after) {
+    return dao.streamChangedRFA1aForms(after).map(rfa1aFormMapper::toExpandedRFA1aFormDTO);
   }
 }

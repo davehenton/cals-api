@@ -28,13 +28,17 @@ import org.hibernate.annotations.Type;
  */
 @SuppressWarnings("squid:S3437") //LocalDateTime is serializable
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm ORDER BY id ASC")
+@NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_UPDATED_AFTER,
+    query = "FROM RFA1aForm WHERE updateDateTime > :dateAfter")
 @Entity
 @Table(name = "rfa_1a")
 public class RFA1aForm extends RFABaseEntity implements PersistentObject, Request, Response {
 
-  private static final long serialVersionUID = -6201382973500280111L;
+  private static final long serialVersionUID = -6201382973500280112L;
   public static final String NAMED_QUERY_FIND_ALL =
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.all";
+  public static final String NAMED_QUERY_FIND_UPDATED_AFTER =
+      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.updated.after";
 
   @Type(type = "ApplicationJsonType")
   private ApplicationDTO application;
@@ -196,12 +200,16 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Reques
 
   @Override
   public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o, "applicants", "minorChildren", "otherAdults", "rfa1bForms", "rfa1cForms");
+    return EqualsBuilder
+        .reflectionEquals(this, o, "applicants", "minorChildren", "otherAdults", "rfa1bForms",
+            "rfa1cForms");
   }
 
   @Override
   public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, "applicants", "minorChildren", "otherAdults", "rfa1bForms", "rfa1cForms");
+    return HashCodeBuilder
+        .reflectionHashCode(this, "applicants", "minorChildren", "otherAdults", "rfa1bForms",
+            "rfa1cForms");
   }
 
 
