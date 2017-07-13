@@ -34,8 +34,8 @@ swagger:
 
 nsDataSourceFactory:
   driverClass: org.postgresql.Driver
-  user: ${DB_NS_USER:-postgres}
-  password: ${DB_NS_PASSWORD:-postgres}
+  user: ${DB_NS_USER:-postgres_data}
+  password: ${DB_NS_PASSWORD:-postgres_data}
   url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres}
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
