@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#The file should have UNIX-style EOL
+
 if [ -z "$CALS_API_CONFIG" ]
 then
   CALS_API_CONFIG="cals-api.yml"
