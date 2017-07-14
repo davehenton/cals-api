@@ -61,7 +61,7 @@ lisDataSourceFactory:
   maxSize: ${DB_CMS_CP_MAX_SIZE:-8}
   minIdleTime: 1 minute
   properties:
-      hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.CONNXDialect.java
+      hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.CONNXDialect
       hibernate.show_sql: true
       #hibernate.default_schema:
       hibernate.connection.autocommit: false
