@@ -57,6 +57,8 @@ public class CalsnsDataAccessModule extends AbstractModule {
         .addAnnotatedClass(LicenseType.class)
         .addAnnotatedClass(MarriageTerminationReasonType.class)
         .addAnnotatedClass(SchoolGradeType.class)
+        // for JsonType
+        .addPackage("gov.ca.cwds.cals.persistence.model.calsns.rfa")
         //RFA
         .addAnnotatedClass(RFA1aForm.class)
         .addAnnotatedClass(RFA1aApplicant.class)

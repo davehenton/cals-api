@@ -10,7 +10,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 import gov.ca.cwds.rest.api.Request;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -41,7 +41,7 @@ public class RFA1aFormsCollectionService
     return new RFA1aFormCollectionDTO(formDTOs);
   }
 
-  public Stream<ChangedRFA1aFormDTO> streamChangedRFA1aForms(Date after) {
+  public Stream<ChangedRFA1aFormDTO> streamChangedRFA1aForms(LocalDateTime after) {
     return dao.streamChangedRFA1aForms(after).map(
         rfa1aForm -> new ChangedRFA1aFormDTO(rfa1aFormMapper.toExpandedRFA1aFormDTO(rfa1aForm),
             RecordChangeOperation.I));

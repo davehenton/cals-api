@@ -7,7 +7,7 @@ import gov.ca.cwds.cals.persistence.dao.stream.QueryCreator;
 import gov.ca.cwds.cals.persistence.dao.stream.ScalarResultsStreamer;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.data.BaseDaoImpl;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 import org.hibernate.Session;
@@ -34,7 +34,7 @@ public class RFA1aFormsDao extends BaseDaoImpl<RFA1aForm> {
     return entities.build();
   }
 
-  public Stream<RFA1aForm> streamChangedRFA1aForms(final Date after) {
+  public Stream<RFA1aForm> streamChangedRFA1aForms(final LocalDateTime after) {
     QueryCreator<RFA1aForm> queryCreator = (session, entityClass) -> session
         .createNamedQuery(RFA1aForm.NAMED_QUERY_FIND_UPDATED_AFTER, entityClass)
         .setParameter("dateAfter", after).setReadOnly(true);
