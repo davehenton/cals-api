@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "value": "Foster Family Agency"
+    },
+    {
+      "id": 2,
+      "value": "Small Family Home"
+    },
+    {
+      "id": 3,
+      "value": "Foster Family Home"
+    },
+    {
+      "id": 4,
+      "value": "Group Home"
+    },
+    {
+      "id": 5,
+      "value": "County Shelter/Recving Home(Non EA/AFDC)"
+    },
+    {
+      "id": 6,
+      "value": "Court Specified Home"
+    },
+    {
+      "id": 7,
+      "value": "Medical Facility"
+    },
+    {
+      "id": 8,
+      "value": "Tribe Specified Home"
+    },
+    {
+      "id": 9,
+      "value": "Foster Family Agency Certified Home"
+    },
+    {
+      "id": 10,
+      "value": "Guardian Home"
+    },
+    {
+      "id": 11,
+      "value": "Relative/NREFM Home"
+    },
+    {
+      "id": 12,
+      "value": "Supervised Independent Living Placement"
+    }
+  ]
+}

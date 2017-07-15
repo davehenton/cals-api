@@ -25,10 +25,10 @@ import org.hibernate.cfg.Configuration;
 /**
  * @author CWDS TPT-2
  */
-public class ReplicatedCwsCmsDataAccessModule extends AbstractModule {
+public class CwsCmsDataAccessModule extends AbstractModule {
   private SessionFactory cmsSessionFactory;
 
-  public ReplicatedCwsCmsDataAccessModule(String hibernateCfg) {
+  public CwsCmsDataAccessModule(String hibernateCfg) {
     this.cmsSessionFactory = new Configuration().configure(hibernateCfg)
         .addAnnotatedClass(RecordChange.class)
         .addAnnotatedClass(Client.class)

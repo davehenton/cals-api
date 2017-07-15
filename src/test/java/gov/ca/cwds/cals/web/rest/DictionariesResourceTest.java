@@ -5,6 +5,7 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.FACILITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
@@ -30,6 +31,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelations
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
@@ -70,6 +72,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "education-level-type-response.json";
   private static final String FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "ethnicity-type-response.json";
+  private static final String FIXTURES_FACILITY_TYPE_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "facility-type-response.json";
   private static final String FIXTURES_RACE_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "race-type-response.json";
   private static final String FIXTURES_RELATIONSHIP_TO_APPLICANT_TYPE_RESPONSE_JSON =
@@ -180,6 +184,15 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
         ETHNICITY_TYPE_PATH,
         FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON,
         new GenericType<CollectionDTO<EthnicityType>>() {
+        });
+  }
+
+  @Test
+  public void getDictionaryFacilityTypeTest() throws Exception {
+    baseDictionaryTest(
+        FACILITY_TYPE_PATH,
+        FIXTURES_FACILITY_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<FacilityType>>() {
         });
   }
 

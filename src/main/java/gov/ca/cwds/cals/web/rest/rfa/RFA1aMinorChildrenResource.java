@@ -14,8 +14,8 @@ import gov.ca.cwds.cals.inject.RFA1aMinorChildrenCollectionServiceBackedResource
 import gov.ca.cwds.cals.inject.RFA1aMinorChildrenServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.MinorChildrenCollectionDTO;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -45,7 +45,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aMinorChildrenResource {
 
-  private TypedResourceDelegate<RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<MinorChildDTO>>
+  private TypedResourceDelegate<RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<MinorChildDTO>>
       resourceDelegate;
   private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
@@ -53,7 +53,7 @@ public class RFA1aMinorChildrenResource {
   public RFA1aMinorChildrenResource(
       @RFA1aMinorChildrenServiceBackedResource
           TypedResourceDelegate<
-              RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<MinorChildDTO>>
+              RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<MinorChildDTO>>
           resourceDelegate,
       @RFA1aMinorChildrenCollectionServiceBackedResource
           TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
@@ -79,7 +79,7 @@ public class RFA1aMinorChildrenResource {
       @Valid
           MinorChildDTO minorChild) {
     return resourceDelegate.create(
-        new RFAExternalEntityUpdateObject<>(applicationId, minorChild));
+        new RFAExternalEntityUpdateParameterObject<>(applicationId, minorChild));
   }
 
   @UnitOfWork(CALSNS)
@@ -113,8 +113,8 @@ public class RFA1aMinorChildrenResource {
       @Valid
           MinorChildDTO minorChild) {
     return resourceDelegate.update(
-        new RFAExternalEntityGetObject(applicationId, minorChildId),
-        new RFAExternalEntityUpdateObject<>(applicationId, minorChild));
+        new RFAExternalEntityGetParameterObject(applicationId, minorChildId),
+        new RFAExternalEntityUpdateParameterObject<>(applicationId, minorChild));
   }
 
   @UnitOfWork(CALSNS)
@@ -146,7 +146,7 @@ public class RFA1aMinorChildrenResource {
           Long minorChildId) {
 
     return resourceDelegate
-        .get(new RFAExternalEntityGetObject(applicationId, minorChildId));
+        .get(new RFAExternalEntityGetParameterObject(applicationId, minorChildId));
   }
 
   @UnitOfWork(CALSNS)
@@ -197,6 +197,6 @@ public class RFA1aMinorChildrenResource {
       )
           Long minorChildId) {
     return resourceDelegate.delete(
-        new RFAExternalEntityGetObject(applicationId, minorChildId));
+        new RFAExternalEntityGetParameterObject(applicationId, minorChildId));
   }
 }

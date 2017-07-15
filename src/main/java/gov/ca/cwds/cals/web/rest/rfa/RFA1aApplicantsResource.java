@@ -14,8 +14,8 @@ import gov.ca.cwds.cals.inject.RFA1aApplicantServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aApplicantsCollectionServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.ApplicantCollectionDTO;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -45,14 +45,14 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aApplicantsResource {
 
-  private TypedResourceDelegate<RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<ApplicantDTO>>
+  private TypedResourceDelegate<RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<ApplicantDTO>>
       resourceDelegate;
   private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
   @Inject
   public RFA1aApplicantsResource(
       @RFA1aApplicantServiceBackedResource TypedResourceDelegate<
-          RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<ApplicantDTO>> resourceDelegate,
+          RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<ApplicantDTO>> resourceDelegate,
       @RFA1aApplicantsCollectionServiceBackedResource
           TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
@@ -76,7 +76,7 @@ public class RFA1aApplicantsResource {
       @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1A Applicant object")
       @Valid
           ApplicantDTO applicant) {
-    return resourceDelegate.create(new RFAExternalEntityUpdateObject<>(formId, applicant));
+    return resourceDelegate.create(new RFAExternalEntityUpdateParameterObject<>(formId, applicant));
   }
 
   @UnitOfWork(CALSNS)
@@ -102,8 +102,8 @@ public class RFA1aApplicantsResource {
       @Valid
           ApplicantDTO applicant) {
     return resourceDelegate.update(
-        new RFAExternalEntityGetObject(formId, applicantId),
-        new RFAExternalEntityUpdateObject<>(formId, applicant));
+        new RFAExternalEntityGetParameterObject(formId, applicantId),
+        new RFAExternalEntityUpdateParameterObject<>(formId, applicant));
   }
 
   @UnitOfWork(CALSNS)
@@ -127,7 +127,7 @@ public class RFA1aApplicantsResource {
           Long applicantId) {
 
     return resourceDelegate.get(
-        new RFAExternalEntityGetObject(formId, applicantId));
+        new RFAExternalEntityGetParameterObject(formId, applicantId));
   }
 
   @UnitOfWork(CALSNS)
@@ -171,6 +171,6 @@ public class RFA1aApplicantsResource {
       @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The RFA-1A Applicant Id")
           Long applicantId) {
     return resourceDelegate.delete(
-        new RFAExternalEntityGetObject(formId, applicantId));
+        new RFAExternalEntityGetParameterObject(formId, applicantId));
   }
 }

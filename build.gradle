@@ -83,7 +83,7 @@ jmeter {
 
 
 configurations.all {
-    // Check for updates every build
+    // Check for updates every  build
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 

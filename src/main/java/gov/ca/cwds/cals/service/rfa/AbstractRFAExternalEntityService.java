@@ -10,8 +10,8 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.rfa.factory.RFAExternalEntityFactory;
 import gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetObject;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import java.time.LocalDateTime;
 
 /**
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public abstract class AbstractRFAExternalEntityService<
     T extends RFAExternalEntity<D>, D extends RFAExternalEntityDTO>
     extends TypedCrudServiceAdapter<
-    RFAExternalEntityGetObject, RFAExternalEntityUpdateObject<D>, D> {
+    RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<D>, D> {
 
   private RFAExternalEntityDao<T, D> dao;
   private RFAExternalEntityFactory<T, D> configuration;
@@ -33,7 +33,7 @@ public abstract class AbstractRFAExternalEntityService<
   }
 
   @Override
-  public D create(RFAExternalEntityUpdateObject<D> request) {
+  public D create(RFAExternalEntityUpdateParameterObject<D> request) {
     D entityDTO = request.getEntityDTO();
 
     if (entityDTO == null) {
@@ -53,7 +53,7 @@ public abstract class AbstractRFAExternalEntityService<
   }
 
   @Override
-  public D find(RFAExternalEntityGetObject params) {
+  public D find(RFAExternalEntityGetParameterObject params) {
     T entity =
         dao.findEntityByFormIdAndEntityId(
             params.getFormId(), params.getEntityId());
@@ -68,7 +68,7 @@ public abstract class AbstractRFAExternalEntityService<
   }
 
   @Override
-  public D delete(RFAExternalEntityGetObject params) {
+  public D delete(RFAExternalEntityGetParameterObject params) {
     T entity =
         dao.deleteApplicant(params.getFormId(), params.getEntityId());
     D deleted = null;
@@ -79,7 +79,8 @@ public abstract class AbstractRFAExternalEntityService<
   }
 
   @Override
-  public D update(RFAExternalEntityGetObject params, RFAExternalEntityUpdateObject<D> request) {
+  public D update(RFAExternalEntityGetParameterObject params,
+      RFAExternalEntityUpdateParameterObject<D> request) {
     T entity = dao.findEntityByFormIdAndEntityId(params.getFormId(), params.getEntityId());
     if (entity != null) {
       entity.setEntityDTO(request.getEntityDTO());

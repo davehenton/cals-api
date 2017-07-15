@@ -32,7 +32,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
-import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
 import gov.ca.cwds.cals.persistence.model.cms.VisitType;
@@ -115,7 +114,7 @@ public class DataAccessModule extends AbstractModule {
           PlacementEpisode.class,
           PlacementHome.class,
           StaffPerson.class,
-          FacilityType.class,
+          gov.ca.cwds.cals.persistence.model.cms.FacilityType.class,
           gov.ca.cwds.cals.persistence.model.cms.County.class,
           CountyLicenseCase.class,
           LicensingVisit.class,
@@ -142,6 +141,7 @@ public class DataAccessModule extends AbstractModule {
           NameType.class,
           EducationLevelType.class,
           EthnicityType.class,
+          gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType.class,
           RaceType.class,
           RelationshipToApplicantType.class,
           IncomeType.class,
@@ -241,7 +241,7 @@ public class DataAccessModule extends AbstractModule {
   }
 
   @Provides
-  UnitOfWorkAwareProxyFactory lisUnitOfWorkAwareProxyFactory() {
+  UnitOfWorkAwareProxyFactory provideUnitOfWorkAwareProxyFactory() {
     return new UnitOfWorkAwareProxyFactory(
         lisHibernateBundle, fasHibernateBundle, cmsHibernateBundle, calsnsHibernateBundle);
   }

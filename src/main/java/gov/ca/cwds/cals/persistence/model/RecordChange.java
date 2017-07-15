@@ -47,7 +47,7 @@ import org.hibernate.annotations.NamedNativeQuery;
         + " LEFT JOIN Rrcpoc rrcpoc ON TRIM(rrcpoc.facility_number_text) = TRIM(CAST (f.fac_nbr AS VARCHAR(254)))"
         + " LEFT JOIN complaint_report_lic802 compl ON f.fac_nbr = compl.crp2_facility_number"
         + " WHERE"
-        + " f.dt_modified > :dateAfter"
+        + " (:initialLoad = 1 AND f.dt_modified IS NULL) OR f.dt_modified > :dateAfter"
         + " OR rr809dn.dt_created > :dateAfter OR rr809dn.dt_modified > :dateAfter"
         + " OR rrcpoc.dt_created > :dateAfter OR rrcpoc.dt_modified > :dateAfter"
         + " OR compl.dt_created > :dateAfter OR compl.dt_modified > :dateAfter",

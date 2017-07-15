@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.RequestResponseEntity;
+import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import javax.validation.Valid;
 //Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @SuppressWarnings("squid:S2160") //Default reflection hashcode and equals resides in BaseDTO
-public class ApplicantsHistoryDTO extends BaseDTO implements RequestResponseEntity {
+public class ApplicantsHistoryDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty("List of Former Spouses and Domestic Partners")
   private List<FormerSpouseDTO> formerSpouses = new ArrayList<>();

@@ -5,7 +5,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.RequestResponseEntity;
+import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @SuppressWarnings({"squid:S3437", "squid:S2160"}) // Dates should be serialized
 //Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ApplicantsRelationshipDTO extends BaseDTO implements RequestResponseEntity {
+public class ApplicantsRelationshipDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty("Relationship between applicants")
   @CheckReferentialIntegrity
