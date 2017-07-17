@@ -46,6 +46,16 @@ In order for the CALS API successfully connect to the above databases the follow
 - DB_NS_CP_MIN_SIZE -- the NS connections pool minimum size (default: 2)
 - DB_NS_CP_MAX_SIZE -- the NS connections pool maximum size (default: 8)
 
+3. CONNX - LIS database
+Set environment variable CALS_API_CONFIG to cals-api-lis-connx.yml to run docker container with CONNX connection to LIS datasource
+
+- DB_CONXX_USER -- the CONXX datasource username
+- DB_CONXX_PASSWORD -- the CONXX datasource password
+- DB_CONXX_JDBC_URL -- the CONXX datasource URL in Java Database Connectivity format
+- DB_CONXX_CP_INITIAL_SIZE -- the CONXX connections pool iniitial size (default: 2)
+- DB_CONXX_CP_MIN_SIZE -- the CONXX connections pool minimum size (default: 2)
+- DB_CONXX_CP_MAX_SIZE -- the CONXX connections pool maximum size (default: 8)
+
 **Swagger Configuration Parameters**
 
 - LOGIN_URL -- Login URL 
