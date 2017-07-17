@@ -1,5 +1,6 @@
-import static org.gradle.api.logging.LogLevel.*
-import org.apache.tools.ant.filters.ReplaceTokens
+import static org.gradle.api.logging.LogLevel.*;
+import org.apache.tools.ant.filters.ReplaceTokens;
+import org.apache.tools.ant.filters.FixCrLfFilter;
 
 buildscript {
     repositories {
@@ -25,10 +26,10 @@ project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
-    projectVersion = '3.3-SNAPSHOT'
+    projectVersion = '3.4-SNAPSHOT'
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.21.216'
-    calsModelVersion = '3.3-SNAPSHOT'
+    coreApiVersion = '0.27.363'
+    calsModelVersion = '3.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
 }
@@ -111,6 +112,8 @@ dependencies {
     )
     compile 'org.mapstruct:mapstruct-jdk8:' + mapstructVersion
     compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compile group: 'org.apache.commons', name: 'commons-compress', version: '1.14'
+
 
     testCompile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: calsModelVersion, changing: true)
     testCompile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: calsModelVersion, changing: true)
@@ -133,6 +136,13 @@ dependencies {
 
 mainClassName = mainClass
 
+task convertEntrypointToLF (type: Copy) {
+    from projectDir
+    into project.buildDir
+    include 'entrypoint.sh'
+    filter(FixCrLfFilter.class, eol:FixCrLfFilter.CrLf.newInstance("lf"))
+}
+
 shadowJar {
     classifier = 'dist'
     baseName = 'cals-api'
@@ -145,6 +155,7 @@ shadowJar {
 
 run {
     args 'server', './config/cals-api.yml'
+//    args 'server', './config/cals-api-lis-connx.yml'
 }
 
 test {
@@ -184,7 +195,7 @@ task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
     tagVersion = version + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
 }
 
-task createDockerImage(type:Exec, dependsOn: shadowJar) {
+task createDockerImage(type:Exec, dependsOn: [convertEntrypointToLF, shadowJar]) {
     commandLine 'docker',  'build',  '-t',  'cwds/cals-api', '.'
 }
 

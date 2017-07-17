@@ -3,7 +3,7 @@
   "application": {
     "is_initial_application": true,
     "is_other_type": false,
-    "other_type_description": "Description",
+    "other_type_description": "",
     "application_county": {
       "id": 34,
       "value": "Sacramento"
@@ -27,8 +27,8 @@
     ],
     "physical_mailing_similar": true,
     "residence_ownership": {
-      "id": 0,
-      "value": "string"
+      "id": 1,
+      "value": "Own"
     },
     "weapon_in_home": false,
     "body_of_water_exist": true,
@@ -44,8 +44,8 @@
     "directions_to_home": "Directions here",
     "home_languages": [
       {
-        "id": 0,
-        "value": "string"
+        "id": 2,
+        "value": "English"
       }
     ]
   },
@@ -66,8 +66,8 @@
     "former_spouses": [
       {
         "relationship_type": {
-          "id": 0,
-          "value": "string"
+          "id": 1,
+          "value": "Married"
         },
         "applicant_id": 1234567,
         "first_name": "Anna",
@@ -109,73 +109,69 @@
   "applicants": [
     {
       "id": 12345678,
-      "formId": 0,
-      "applicant": {
-        "id": 0,
-        "first_name": "string",
-        "middle_name": "string",
-        "last_name": "string",
-        "other_names": [
-          {
-            "first_name": "string",
-            "middle_name": "string",
-            "last_name": "string",
-            "name_type": {
-              "id": 0,
-              "value": "string"
-            }
+      "first_name": "string",
+      "middle_name": "string",
+      "last_name": "string",
+      "other_names": [
+        {
+          "first_name": "string",
+          "middle_name": "string",
+          "last_name": "string",
+          "name_type": {
+            "id": 0,
+            "value": "string"
           }
-        ],
-        "highest_education_level": {
+        }
+      ],
+      "highest_education_level": {
+        "id": 0,
+        "value": "string"
+      },
+      "date_of_birth": "2017-07-10",
+      "gender": {
+        "id": 0,
+        "value": "string"
+      },
+      "race": {
+        "id": 0,
+        "value": "string"
+      },
+      "ethnicity": {
+        "id": 0,
+        "value": "string"
+      },
+      "driver_license_number": "string",
+      "driver_license_state": {
+        "id": 0,
+        "value": "string"
+      },
+      "email": "string",
+      "employment": {
+        "employer_name": "string",
+        "occupation": "string",
+        "income": 0,
+        "income_type": {
           "id": 0,
           "value": "string"
         },
-        "date_of_birth": "2017-07-10",
-        "gender": {
-          "id": 0,
-          "value": "string"
-        },
-        "race": {
-          "id": 0,
-          "value": "string"
-        },
-        "ethnicity": {
-          "id": 0,
-          "value": "string"
-        },
-        "driver_license_number": "string",
-        "driver_license_state": {
-          "id": 0,
-          "value": "string"
-        },
-        "email": "string",
-        "employment": {
-          "employer_name": "string",
-          "occupation": "string",
-          "income": 0,
-          "income_type": {
+        "physical_address": {
+          "street_address": "string",
+          "city": "string",
+          "state": {
             "id": 0,
             "value": "string"
           },
-          "physical_address": {
-            "street_address": "string",
-            "city": "string",
-            "state": {
-              "id": 0,
-              "value": "string"
-            },
-            "zip": "string"
-          }
-        },
-        "phones": [
-          {
-            "id": 0,
-            "relation": "Alternative",
-            "type": "Cell",
-            "number": "(494) 823-8588"
-          }
-        ]
+          "zip": "string"
+        }
       },
+      "phones": [
+        {
+          "id": 0,
+          "relation": "Alternative",
+          "type": "Cell",
+          "number": "(494) 823-8588"
+        }
+      ],
       "createUserId": "string",
       "createDateTime": "2000-01-01 15:11:46",
       "updateUserId": "string",
@@ -466,8 +462,8 @@
   },
   "other_type_description": "Description",
   "application_county": {
-    "id": 0,
-    "value": "string"
+    "id": 34,
+    "value": "Sacramento"
   },
   "is_initial_application": true,
   "is_other_type": false,
