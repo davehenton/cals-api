@@ -9,26 +9,14 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * @author CWDS CALS API Team
  */
-public class PlacementHomeProfilePK implements Serializable {
+public class PlacementHomeInformationPK implements Serializable {
 
-  private static final long serialVersionUID = -1338578310179366105L;
+  private String thirdId;
+  private String fksbPvdrt;
+  private String fkplcHmT;
 
   @Column(name = "THIRD_ID", nullable = false, length = 10)
   @Id
-  private String thirdId;
-
-  @Column(name = "FKPLC_HM_T", nullable = false, length = 10)
-  @Id
-  private String fkplcHmT;
-
-  public PlacementHomeProfilePK() {
-  }
-
-  public PlacementHomeProfilePK(String thirdId, String fkplcHmT) {
-    this.thirdId = thirdId;
-    this.fkplcHmT = fkplcHmT;
-  }
-
   public String getThirdId() {
     return thirdId;
   }
@@ -37,6 +25,18 @@ public class PlacementHomeProfilePK implements Serializable {
     this.thirdId = thirdId;
   }
 
+  @Column(name = "FKSB_PVDRT", nullable = false, length = 10)
+  @Id
+  public String getFksbPvdrt() {
+    return fksbPvdrt;
+  }
+
+  public void setFksbPvdrt(String fksbPvdrt) {
+    this.fksbPvdrt = fksbPvdrt;
+  }
+
+  @Column(name = "FKPLC_HM_T", nullable = false, length = 10)
+  @Id
   public String getFkplcHmT() {
     return fkplcHmT;
   }

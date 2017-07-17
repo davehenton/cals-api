@@ -3,6 +3,8 @@ package gov.ca.cwds.cals.persistence.model.cms;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Id;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
@@ -22,6 +24,15 @@ public class AddressPhoneticNamePK implements Serializable {
   @Id
   @Column(name = "PRMRY_NMCD", nullable = false, length = 1)
   private String prmryNmcd;
+
+  public AddressPhoneticNamePK() {
+  }
+
+  public AddressPhoneticNamePK(String phonetcNm, String prmryNmid, String prmryNmcd) {
+    this.phonetcNm = phonetcNm;
+    this.prmryNmid = prmryNmid;
+    this.prmryNmcd = prmryNmcd;
+  }
 
   public String getPhonetcNm() {
     return phonetcNm;
@@ -49,33 +60,11 @@ public class AddressPhoneticNamePK implements Serializable {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
-    AddressPhoneticNamePK that = (AddressPhoneticNamePK) o;
-
-    if (phonetcNm != null ? !phonetcNm.equals(that.phonetcNm) : that.phonetcNm != null) {
-      return false;
-    }
-    if (prmryNmid != null ? !prmryNmid.equals(that.prmryNmid) : that.prmryNmid != null) {
-      return false;
-    }
-    if (prmryNmcd != null ? !prmryNmcd.equals(that.prmryNmcd) : that.prmryNmcd != null) {
-      return false;
-    }
-
-    return true;
+    return EqualsBuilder.reflectionEquals(this, o);
   }
 
   @Override
   public int hashCode() {
-    int result = phonetcNm != null ? phonetcNm.hashCode() : 0;
-    result = 31 * result + (prmryNmid != null ? prmryNmid.hashCode() : 0);
-    result = 31 * result + (prmryNmcd != null ? prmryNmcd.hashCode() : 0);
-    return result;
+    return HashCodeBuilder.reflectionHashCode(this);
   }
 }
