@@ -4,22 +4,19 @@ import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
-import gov.ca.cwds.cals.service.CrudServiceAdapter;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.rfa.factory.RFAInternalEntityConfiguration;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.api.Response;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @author CWDS CALS API Team.
  */
-public abstract class AbstractRFAInternalEntityService<T extends BaseDTO> extends
-    CrudServiceAdapter {
+public abstract class AbstractRFAInternalEntityService<T extends RequestResponse> extends
+    TypedCrudServiceAdapter<Long, T, T> {
 
   private final RFA1aFormsDao applicationDao;
   private RFAInternalEntityConfiguration<T> configuration;
@@ -31,7 +28,7 @@ public abstract class AbstractRFAInternalEntityService<T extends BaseDTO> extend
   }
 
   @Override
-  public Response find(Serializable applicationId) {
+  public T find(Long applicationId) {
     RFA1aForm form = applicationDao.find(applicationId);
     if (form == null) {
       throw new UserFriendlyException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
@@ -40,7 +37,7 @@ public abstract class AbstractRFAInternalEntityService<T extends BaseDTO> extend
   }
 
   @Override
-  public Response update(Serializable applicationId, Request request) {
+  public T update(Long applicationId, T request) {
     RFA1aForm form = applicationDao.find(applicationId);
     if (form == null) {
       throw new UserFriendlyException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);

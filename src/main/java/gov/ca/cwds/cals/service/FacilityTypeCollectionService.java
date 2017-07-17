@@ -1,13 +1,12 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.model.lisfas.FacilityType;
 import gov.ca.cwds.cals.persistence.dao.lis.FacilityTypeDao;
+import gov.ca.cwds.cals.persistence.model.lisfas.FacilityType;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
 import gov.ca.cwds.cals.service.dto.FacilityTypesDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityTypeMapper;
 import gov.ca.cwds.rest.api.Response;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;

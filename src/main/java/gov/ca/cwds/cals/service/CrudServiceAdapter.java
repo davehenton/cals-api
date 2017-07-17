@@ -3,7 +3,6 @@ package gov.ca.cwds.cals.service;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
-
 import java.io.Serializable;
 
 /**

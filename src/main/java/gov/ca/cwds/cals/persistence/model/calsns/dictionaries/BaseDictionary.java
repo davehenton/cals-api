@@ -3,9 +3,9 @@ package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
+import gov.ca.cwds.rest.api.Request;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,13 +16,13 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/**
- * @author CWDS CALS API Team
- */
+/** @author CWDS CALS API Team */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class BaseDictionary extends BaseDTO implements PersistentObject {
+public abstract class BaseDictionary extends BaseDTO implements PersistentObject, Request {
 
   private static final long serialVersionUID = 1405907682848102125L;
 
@@ -41,6 +41,18 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
   @Column(name = "description", length = 100, nullable = false)
   private String value;
 
+  @JsonIgnore
+  @Column(name = "cws_id")
+  private Integer cwsId;
+
+  @JsonIgnore
+  @Column(name = "cws_short_code", length = 2)
+  private String cwsShortCode;
+
+  @JsonIgnore
+  @Column(name = "lis_id", length = 4)
+  private String lisId;
+
   public Long getId() {
     return id;
   }
@@ -57,24 +69,38 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
     this.value = value;
   }
 
+  public int getCwsId() {
+    return cwsId;
+  }
+
+  public void setCwsId(int cwsId) {
+    this.cwsId = cwsId;
+  }
+
+  public String getCwsShortCode() {
+    return cwsShortCode;
+  }
+
+  public void setCwsShortCode(String cwsShortCode) {
+    this.cwsShortCode = cwsShortCode;
+  }
+
+  public String getLisId() {
+    return lisId;
+  }
+
+  public void setLisId(String lisId) {
+    this.lisId = lisId;
+  }
+
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    BaseDictionary dictionary = (BaseDictionary) o;
-    if (dictionary.getId() == null || getId() == null) {
-      return false;
-    }
-    return Objects.equals(getId(), dictionary.getId());
+    return EqualsBuilder.reflectionEquals(this, o, "cwsId", "cwsShortCode", "lisId");
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(getId());
+    return HashCodeBuilder.reflectionHashCode(this, "cwsId", "cwsShortCode", "lisId");
   }
 
   @Override

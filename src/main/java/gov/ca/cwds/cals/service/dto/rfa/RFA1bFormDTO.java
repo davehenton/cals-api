@@ -7,10 +7,13 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
@@ -22,11 +25,13 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
 
   private static final long serialVersionUID = 2700499740023492461L;
 
+  //@CheckReferentialIntegrity //Waiting for dictionary implemetation
   private CountyType applicationCounty;
 
   @ApiModelProperty(example = "true")
   private boolean livedInOtherState;
 
+  @CheckReferentialIntegrityForEach
   private List<StateType> otherStatesOfLiving;
 
   @ApiModelProperty(example = "false")
@@ -53,6 +58,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "Peterson")
   private String applicantLastName;
 
+  @Valid
   private RFAAddressDTO residenceAddress;
 
   @ApiModelProperty(example = "464-94-2323")
@@ -65,6 +71,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "MD123-1234-585-121")
   private String driverLicense;
 
+  @CheckReferentialIntegrity
   private StateType driverLicenseState;
 
   @ApiModelProperty(example = "Anna Peterson")
@@ -74,6 +81,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate applicationDate;
 
+  @Valid
   private List<DisclosureDTO> disclosures = new ArrayList<>();
 
   public CountyType getApplicationCounty() {

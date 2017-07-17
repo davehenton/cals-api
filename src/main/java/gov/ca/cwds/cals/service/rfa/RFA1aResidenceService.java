@@ -18,12 +18,12 @@ public class RFA1aResidenceService extends AbstractRFAInternalEntityService<Resi
         new RFAInternalEntityConfiguration<ResidenceDTO>(ResidenceDTO.class) {
 
           @Override
-          protected ResidenceDTO retrieveEntityFromTheForm(RFA1aForm form) {
+          public ResidenceDTO getEntityFromTheForm(RFA1aForm form) {
             return form.getResidence();
           }
 
           @Override
-          protected void saveEntityToTheForm(RFA1aForm form, ResidenceDTO residence) {
+          public void putEntityToTheForm(RFA1aForm form, ResidenceDTO residence) {
             form.setResidence(residence);
           }
         });

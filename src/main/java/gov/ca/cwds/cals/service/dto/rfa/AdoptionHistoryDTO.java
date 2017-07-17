@@ -2,31 +2,38 @@ package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.api.Response;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
  */
 @SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
+public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
   private static final long serialVersionUID = 1466581714306274681L;
 
+  @Valid
   private FosterCareLicensesQ1 fosterCareLicensesQ1;
 
+  @Valid
   private ApplicationsForAdoptionQ2 applicationsForAdoptionQ2;
 
+  @Valid
   private FacilityOperationLicensesQ3 facilityOperationLicensesQ3;
 
+  @Valid
   private EmploymentInFacilitiesQ4 employmentInFacilitiesQ4;
 
+  @Valid
   private DenialHistoryQ5 denialHistoryQ5;
 
+  @Valid
   private SuspensionRevocationHistoryQ6 suspensionRevocationHistoryQ6;
 
   private boolean wasSubjectForExclusionOrderQ7;
@@ -100,6 +107,8 @@ public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
 
     private boolean wasPreviouslyLicensed;
     private String agencyName;
+
+    @CheckReferentialIntegrity
     private LicenseType licenseType;
 
     public boolean isWasPreviouslyLicensed() {
@@ -162,6 +171,7 @@ public class AdoptionHistoryDTO extends BaseDTO implements Request, Response {
 
     private boolean wasPreviouslyLicensed;
 
+    @CheckReferentialIntegrity
     private LicenseType licenseType;
 
     public boolean isWasPreviouslyLicensed() {

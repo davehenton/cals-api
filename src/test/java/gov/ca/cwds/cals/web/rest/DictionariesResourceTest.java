@@ -1,13 +1,50 @@
 package gov.ca.cwds.cals.web.rest;
 
-import static gov.ca.cwds.cals.Constants.DictionaryType.*;
+import static gov.ca.cwds.cals.Constants.DictionaryType.ADDRESS_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.FACILITY_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.MARRIAGE_TERMINATION_REASON_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RELATIONSHIP_TO_APPLICANT_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SCHOOL_GRADE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE_PATH;
 import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertNotNull;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.*;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -35,6 +72,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "education-level-type-response.json";
   private static final String FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "ethnicity-type-response.json";
+  private static final String FIXTURES_FACILITY_TYPE_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "facility-type-response.json";
   private static final String FIXTURES_RACE_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "race-type-response.json";
   private static final String FIXTURES_RELATIONSHIP_TO_APPLICANT_TYPE_RESPONSE_JSON =
@@ -145,6 +184,15 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
         ETHNICITY_TYPE_PATH,
         FIXTURES_ETHNICITY_TYPE_RESPONSE_JSON,
         new GenericType<CollectionDTO<EthnicityType>>() {
+        });
+  }
+
+  @Test
+  public void getDictionaryFacilityTypeTest() throws Exception {
+    baseDictionaryTest(
+        FACILITY_TYPE_PATH,
+        FIXTURES_FACILITY_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<FacilityType>>() {
         });
   }
 

@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.stream.Stream;
 import org.hibernate.SessionFactory;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class RecordChangeFasDao extends BaseDaoImpl<RecordChange> {
 
   @Inject
@@ -19,10 +21,13 @@ public class RecordChangeFasDao extends BaseDaoImpl<RecordChange> {
   }
 
   @SuppressWarnings("unchecked") // because of getNamedNativeQuery
-  public Stream<RecordChange> streamChangedFacilityRecords(final Date after) {
+  public Stream<RecordChange> streamChangedFacilityRecords(final boolean initialLoad,
+      final Date after) {
     QueryCreator<RecordChange> queryCreator = (session, entityClass) -> session
         .getNamedNativeQuery(entityClass.getSimpleName() + ".findChangedFacilityRecordsInFAS")
-        .setParameter("dateAfter", after).setReadOnly(true);
+        .setParameter("initialLoad", initialLoad ? 1 : 0)
+        .setParameter("dateAfter", after)
+        .setReadOnly(true);
     return new RecordChangesStreamer(this, queryCreator).createStream();
   }
 }
