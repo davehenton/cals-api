@@ -11,9 +11,20 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public class PlacementHomeInformationPK implements Serializable {
 
+  private static final long serialVersionUID = -7640982561710880631L;
+
   private String thirdId;
   private String fksbPvdrt;
   private String fkplcHmT;
+
+  public PlacementHomeInformationPK() {
+  }
+
+  public PlacementHomeInformationPK(String thirdId, String fksbPvdrt, String fkplcHmT) {
+    this.thirdId = thirdId;
+    this.fksbPvdrt = fksbPvdrt;
+    this.fkplcHmT = fkplcHmT;
+  }
 
   @Column(name = "THIRD_ID", nullable = false, length = 10)
   @Id

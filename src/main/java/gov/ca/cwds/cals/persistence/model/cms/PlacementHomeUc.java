@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.LocalDateTime;
 
 /**
@@ -14,6 +16,7 @@ import org.joda.time.LocalDateTime;
 @Table(name = "PLCHM_UC")
 public class PlacementHomeUc {
 
+  
   @Id
   @Column(name = "PKPLC_HMT", nullable = false, length = 10)
   private String pkplcHmt;
@@ -136,61 +139,11 @@ public class PlacementHomeUc {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
-    PlacementHomeUc that = (PlacementHomeUc) o;
-
-    if (pkplcHmt != null ? !pkplcHmt.equals(that.pkplcHmt) : that.pkplcHmt != null) {
-      return false;
-    }
-    if (cityNm != null ? !cityNm.equals(that.cityNm) : that.cityNm != null) {
-      return false;
-    }
-    if (geoRgntcd != null ? !geoRgntcd.equals(that.geoRgntcd) : that.geoRgntcd != null) {
-      return false;
-    }
-    if (laVndrId != null ? !laVndrId.equals(that.laVndrId) : that.laVndrId != null) {
-      return false;
-    }
-    if (lstUpdId != null ? !lstUpdId.equals(that.lstUpdId) : that.lstUpdId != null) {
-      return false;
-    }
-    if (lstUpdTs != null ? !lstUpdTs.equals(that.lstUpdTs) : that.lstUpdTs != null) {
-      return false;
-    }
-    if (licenseNo != null ? !licenseNo.equals(that.licenseNo) : that.licenseNo != null) {
-      return false;
-    }
-    if (facltyNm != null ? !facltyNm.equals(that.facltyNm) : that.facltyNm != null) {
-      return false;
-    }
-    if (streetNo != null ? !streetNo.equals(that.streetNo) : that.streetNo != null) {
-      return false;
-    }
-    if (streetNm != null ? !streetNm.equals(that.streetNm) : that.streetNm != null) {
-      return false;
-    }
-
-    return true;
+    return EqualsBuilder.reflectionEquals(this, o);
   }
 
   @Override
   public int hashCode() {
-    int result = pkplcHmt != null ? pkplcHmt.hashCode() : 0;
-    result = 31 * result + (cityNm != null ? cityNm.hashCode() : 0);
-    result = 31 * result + (geoRgntcd != null ? geoRgntcd.hashCode() : 0);
-    result = 31 * result + (laVndrId != null ? laVndrId.hashCode() : 0);
-    result = 31 * result + (lstUpdId != null ? lstUpdId.hashCode() : 0);
-    result = 31 * result + (lstUpdTs != null ? lstUpdTs.hashCode() : 0);
-    result = 31 * result + (licenseNo != null ? licenseNo.hashCode() : 0);
-    result = 31 * result + (facltyNm != null ? facltyNm.hashCode() : 0);
-    result = 31 * result + (streetNo != null ? streetNo.hashCode() : 0);
-    result = 31 * result + (streetNm != null ? streetNm.hashCode() : 0);
-    return result;
+    return HashCodeBuilder.reflectionHashCode(this);
   }
 }
