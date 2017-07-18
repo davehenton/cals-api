@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 /**
  * @author CWDS TPT-2
  */
-public class ChangedFacilityDTO implements ChangedDTO, Serializable {
+public class ChangedFacilityDTO implements ChangedDTO<FacilityDTO>, Serializable {
 
   private static final long serialVersionUID = 1L;
 

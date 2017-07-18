@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.dto.changed;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
@@ -10,15 +11,19 @@ import javax.validation.constraints.NotNull;
 /**
  * @author CWDS TPT-2
  */
-public class ChangedRFA1aFormDTO implements ChangedDTO, Serializable {
+public class ChangedRFA1aFormDTO extends BaseDTO implements ChangedDTO<RFA1aFormDTO>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   @NotNull
   private RFA1aFormDTO rfa1aFormDTO;
 
   @NotNull
   private RecordChangeOperation recordChangeOperation;
+
+  public ChangedRFA1aFormDTO() {
+    // default constructor
+  }
 
   public ChangedRFA1aFormDTO(RFA1aFormDTO rfa1aFormDTO,
       RecordChangeOperation recordChangeOperation) {
@@ -27,6 +32,7 @@ public class ChangedRFA1aFormDTO implements ChangedDTO, Serializable {
   }
 
   @Override
+  @JsonIgnore
   public String getId() {
     return String.valueOf(rfa1aFormDTO.getId());
   }
@@ -36,9 +42,17 @@ public class ChangedRFA1aFormDTO implements ChangedDTO, Serializable {
     return recordChangeOperation;
   }
 
+  public void setRecordChangeOperation(RecordChangeOperation recordChangeOperation) {
+    this.recordChangeOperation = recordChangeOperation;
+  }
+
   @Override
-  public BaseDTO getDTO() {
+  public RFA1aFormDTO getDTO() {
     return rfa1aFormDTO;
+  }
+
+  public void setDTO(RFA1aFormDTO rfa1aFormDTO) {
+    this.rfa1aFormDTO = rfa1aFormDTO;
   }
 
   @Override

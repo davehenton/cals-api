@@ -28,7 +28,7 @@ project.ext {
     projectVersion = '3.3-SNAPSHOT'
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.21.216'
-    calsModelVersion = '3.3-SNAPSHOT'
+    calsModelVersion = '3.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
 }

@@ -155,8 +155,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getApplicationFormNotFound() throws Exception {
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    target = clientTestRule.target(API.RFA_1A_FORMS + "/9999999");
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/9999999");
     Response response = target.request(MediaType.APPLICATION_JSON).get();
     assertEquals(404, response.getStatus());
   }
@@ -165,8 +164,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   public void getApplicationFormTest() throws Exception {
     RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
 
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     RFA1aFormDTO rfaFormGet = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
 
     assertNotNull(rfaFormGet);
@@ -177,8 +175,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   public void updateApplicationFormTest() throws Exception {
     RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
 
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     rfaFormCreate.setOtherTypeDescription("newOtherTypeDescription");
     RFA1aFormDTO rfaFormGet =
         target
@@ -191,8 +188,6 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getAllApplicationFormsTest() throws Exception {
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     RFA1aFormDTO rfaFormCreate1 = createForm(clientTestRule);
     RFA1aFormDTO rfaFormCreate2 = createForm(clientTestRule);
     RFA1aFormDTO rfaFormCreate3 = createForm(clientTestRule);
@@ -201,8 +196,8 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);
     assertNotEquals(rfaFormCreate3, rfaFormCreate1);
 
-    target = clientTestRule.target(API.RFA_1A_FORMS);
-    invocation = target.request(MediaType.APPLICATION_JSON);
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     CollectionDTO<RFA1aFormDTO> rfaForms =
         invocation.get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {});
 

@@ -5,17 +5,24 @@ import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.ws.rs.client.Client;
 import org.glassfish.jersey.client.JerseyClient;
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public abstract class BaseCalsApiIntegrationTest {
 
+  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+      .ofPattern("yyyy-MM-dd HH:mm:ss");
+
   private static final String configFile = "config/test-cals-api.yml";
- 
+
   @ClassRule
   public static final DropwizardAppRule<CalsApiConfiguration> appRule =
       new DropwizardAppRule<CalsApiConfiguration>(
@@ -29,11 +36,10 @@ public abstract class BaseCalsApiIntegrationTest {
           }
           return client;
         }
-
-
       };
 
-  @Rule public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
+  @Rule
+  public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
 
   protected static DatabaseHelper getFasDatabaseHelper() {
     DataSourceFactory dataSourceFactory = appRule.getConfiguration().getFasDataSourceFactory();
@@ -87,8 +93,13 @@ public abstract class BaseCalsApiIntegrationTest {
     return clientTestRule.getMapper().writeValueAsString(dto);
   }
 
+  public static LocalDateTime toLocalDateTime(String dateTime) {
+    return LocalDateTime.parse(dateTime, DATE_TIME_FORMATTER);
+  }
+
   @After
-  public void tearDown() throws Exception {}
+  public void tearDown() throws Exception {
+  }
 
   private static boolean isIntegrationTestsRunning() {
     return System.getProperty("cals.api.url") != null;
