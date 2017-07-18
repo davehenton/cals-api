@@ -31,7 +31,7 @@ import static gov.ca.cwds.cals.persistence.model.fas.Rrcpoc.NQ_FIND_BY_FACILITY_
                 "AND pocs.createDateTime = :inspectionId"
 )
 @Entity
-@Table(name = "rrcpoc", schema = "fas")
+@Table(name = "rrcpoc")
 @SuppressWarnings("squid:S3437") //LocalDate is serializable
 public class Rrcpoc implements PersistentObject {
 

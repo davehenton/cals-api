@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
 )
 @Entity
 @Access(AccessType.FIELD)
-@Table(name = "complaint_report_lic802", schema = "fas")
+@Table(name = "complaint_report_lic802")
 @SuppressWarnings("squid:S3437") //LocalDate is serializable
 public class ComplaintReportLic802 implements PersistentObject {
 

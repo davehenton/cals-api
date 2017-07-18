@@ -36,7 +36,7 @@ import static gov.ca.cwds.cals.persistence.model.fas.Rr809Dn.NQ_FIND_BY_FACILITY
 )
 
 @Entity
-@Table(name = "rr809dn", schema = "fas")
+@Table(name = "rr809dn")
 @SuppressWarnings("squid:S3437") //LocalDate is serializable
 public class Rr809Dn implements PersistentObject {
 
