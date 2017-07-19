@@ -11,6 +11,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.FACILITY_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.FACILITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.GENDER_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE;
@@ -168,6 +170,22 @@ public class DictionariesResource {
   @ApiOperation(value = "Returns Ethnicity Types", response = DictionaryValuesDTO.class)
   public Response getDictionaryEthnicityType() {
     return dictionariesResourceDelegate.get(ETHNICITY_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + FACILITY_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Facility Types", response = DictionaryValuesDTO.class)
+  public Response getDictionaryFacilityType() {
+    return dictionariesResourceDelegate.get(FACILITY_TYPE);
   }
 
   @UnitOfWork(CALSNS)

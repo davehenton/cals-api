@@ -1,0 +1,123 @@
+applicationName: CWDS CALS API
+version: ${APP_VERSION:-local}
+
+server:
+  detailedJsonProcessingExceptionMapper: true
+  applicationConnectors:
+  - type: http
+    port: 8080
+  - type: https
+    port: 8443
+    keyStorePath: ${KEY_STORE_FILE:-./config/testKeyStore.jks}
+    keyStorePassword: ${KEY_STORE_PASSWORD:-testPass}
+    keyStoreType: JKS
+    supportedProtocols: [TLSv1, TLSv1.1, TLSv1.2]
+  adminConnectors:
+  - type: http
+    port: 9081
+
+  requestLog:
+    appenders:
+      - type: console
+shiro:
+  iniConfigs: ["file:${SHIRO_CONFIG_PATH:-config/shiro.ini}"]
+
+swagger:
+  templateName: swagger.mustache
+  assetsPath: /static
+  resourcePackage: gov.ca.cwds.cals.web.rest
+  title: CWDS CALC API
+  description: RESTful API definitions for the CWS New System.
+  logo: images/CWDS-API-Logo-Horizontal.png
+  loginUrl: ${LOGIN_URL:-http://localhost:8090/authn/login}
+  showSwagger: ${SHOW_SWAGGER:-true}
+  jsonUrl: ${SWAGGER_JSON_URL:-http://localhost:8080/swagger.json}
+  callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
+
+lisDataSourceFactory:
+  autoCommitByDefault: false
+  driverClass: com.Connx.jdbc.TCJdbc.TCJdbcDriver
+  user: ${DB_CONXX_USER:-CWDS_Admin}
+  password: ${DB_CONXX_USER:-broomfield2017}
+  url: ${DB_CONXX_JDBC_URL:-jdbc:connx:DD=CX_All;Gateway=10.211.5.29;port=7502}
+  # validationQuery:
+  logValidationErrors: true
+  initialSize: ${DB_CONXX_CP_INITIAL_SIZE:-2}
+  minSize: $DB_CONXX_CMS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_CONXX_CMS_CP_MAX_SIZE:-8}
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.CONNXDialect
+      hibernate.show_sql: true
+      #hibernate.default_schema:
+      hibernate.connection.autocommit: false
+
+fasDataSourceFactory:
+  driverClass: org.postgresql.Driver
+  user: ${DB_NS_USER:-postgres_data}
+  password: ${DB_NS_PASSWORD:-postgres_data}
+  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  logValidationErrors: true
+  initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
+  minSize: ${DB_NS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_NS_CP_MAX_SIZE:-8}
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
+      hibernate.id.new_generator_mappings: false
+      hibernate.show_sql: false
+      hibernate.default_schema: fas
+
+calsnsDataSourceFactory:
+  driverClass: org.postgresql.Driver
+  user: ${DB_NS_USER:-postgres_data}
+  password: ${DB_NS_PASSWORD:-postgres_data}
+  url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  logValidationErrors: true
+  initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
+  minSize: ${DB_NS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_NS_CP_MAX_SIZE:-8}
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.JsonbSupportPostgreSQL9Dialect
+      hibernate.id.new_generator_mappings: false
+      hibernate.show_sql: false
+      hibernate.default_schema: calsns
+
+cmsDataSourceFactory:
+  autoCommitByDefault: false
+  driverClass: com.ibm.db2.jcc.DB2Driver
+  user: ${DB_CMS_USER:-db2inst1}
+  password: ${DB_CMS_PASSWORD:-db2inst1-pwd}
+  url: ${DB_CMS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/DB0TDEV}
+  validationQuery: "/* MyService Health Check */ SELECT 1 FROM sysibm.sysdummy1 for read only"
+  logValidationErrors: true
+  initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
+  minSize: ${DB_CMS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_CMS_CP_MAX_SIZE:-8}
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: org.hibernate.dialect.DB2Dialect
+      hibernate.show_sql: false
+      hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSCMS}
+      hibernate.connection.autocommit: false
+
+#logging:
+#  level: ${LOGLEVEL:-DEBUG}
+#  loggers:
+#    "org.hibernate.SQL":
+#      level: DEBUG
+#    "org.hibernate.type.descriptor.sql":
+#      level: DEBUG
+#    "AUDIT":
+#      level: ALL
+#    "gov.ca.cwds":
+#      level: DEBUG
+#  appenders:
+#    - type: console
+#      threshold: WARN
+#      timeZone: UTC
+#      target: stdout
+#      logFormat: '%X{remoteAddress} [%date{ISO8601}] %level "%thread" "%X{uniqueId}" %logger: "%message%n"'
