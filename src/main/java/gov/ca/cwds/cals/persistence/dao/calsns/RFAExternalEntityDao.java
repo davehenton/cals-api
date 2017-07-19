@@ -61,7 +61,7 @@ public abstract class RFAExternalEntityDao<
     return res;
   }
 
-  public T deleteApplicant(Long formId, Long entityId) {
+  public T deleteEntity(Long formId, Long entityId) {
     T entity = findEntityByFormIdAndEntityId(formId, entityId);
     if (entity != null) {
       entity = delete(entity.getId());

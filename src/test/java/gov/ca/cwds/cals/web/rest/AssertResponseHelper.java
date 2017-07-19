@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.dropwizard.jackson.Jackson;
 import java.io.IOException;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public final class AssertResponseHelper {
 
   @SuppressWarnings("unchecked")
   public static void assertEqualsResponse(String fixture, String actualString) throws IOException {
-    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper = Jackson.newObjectMapper();
     Map<String, String> expectedMap = (Map<String, String>) objectMapper
         .readValue(fixture, Map.class);
     Map<String, String> actualMap = (Map<String, String>) objectMapper

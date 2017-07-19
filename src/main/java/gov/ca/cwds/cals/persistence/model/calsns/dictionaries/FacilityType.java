@@ -1,9 +1,8 @@
 package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
-import org.hibernate.annotations.NamedQuery;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  * @author CWDS CALS API Team

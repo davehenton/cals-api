@@ -70,7 +70,7 @@ public abstract class AbstractRFAExternalEntityService<
   @Override
   public D delete(RFAExternalEntityGetParameterObject params) {
     T entity =
-        dao.deleteApplicant(params.getFormId(), params.getEntityId());
+        dao.deleteEntity(params.getFormId(), params.getEntityId());
     D deleted = null;
     if (entity != null) {
       deleted = entity.getEntityDTO();

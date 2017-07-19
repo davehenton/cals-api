@@ -19,7 +19,10 @@ public enum CalsExceptionInfo {
 
   RFA_1A_APPLICANT_NOT_FOUND_BY_ID("3", "Applicant is not found by Form Id and Applicant Id"),
 
-  RFA_1A_APPLICATION_NOT_FOUND_BY_ID("5", "Application is not found by Form Id");
+  RFA_1A_APPLICATION_NOT_FOUND_BY_ID("5", "Application is not found by Form Id"),
+
+  TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED(
+      "6", "Transition Submitted Application to Draft status is not allowed");
 
   @JsonProperty("code")
   private final String code;

@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals;
 
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.testing.ResourceHelpers;
@@ -83,8 +82,8 @@ public abstract class BaseCalsApiIntegrationTest {
     }
   }
 
-  public String transformDTOtoJSON(BaseDTO dto) throws Exception {
-    return clientTestRule.getMapper().writeValueAsString(dto);
+  public String transformDTOtoJSON(Object o) throws Exception {
+    return clientTestRule.getMapper().writeValueAsString(o);
   }
 
   @After
