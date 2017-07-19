@@ -77,6 +77,8 @@ public final class Constants {
 
     public static final String RFA_1A_APPLICANTS_DECLARATION = "applicants-declaration";
 
+    public static final String STATUS = "status";
+
     public static class PathParams {
 
       public static final String FACILITY_ID = "facilityId";
@@ -110,6 +112,10 @@ public final class Constants {
       public static final String RFA_1C_FORM_ID = "rfa1cFormId";
 
       public static final String RFA_1A_APPLICANT = "applicant";
+
+      private PathParams() {
+      }
+
     }
 
     public static class QueryParams {

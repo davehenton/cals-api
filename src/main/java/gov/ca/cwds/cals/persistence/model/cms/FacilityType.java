@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.persistence.model.cms;
 import javax.persistence.Cacheable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import org.hibernate.annotations.NamedQuery;
 
 
 /**
@@ -11,6 +12,11 @@ import javax.persistence.Entity;
 @Entity
 @Cacheable
 @DiscriminatorValue(value = "PLC_FCLC")
+@NamedQuery(name = FacilityType.NQ_ALL, query = "FROM FacilityType")
 public class FacilityType extends SystemCodeTable {
-    private static final long serialVersionUID = 42L;
+
+    public static final String NQ_ALL = "FacilityType.all";
+
+    private static final long serialVersionUID = -532213571875852577L;
+
 }

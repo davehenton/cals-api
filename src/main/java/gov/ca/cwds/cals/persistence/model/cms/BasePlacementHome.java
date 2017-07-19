@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.persistence.model.cms;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -82,7 +82,7 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
     private String streetNo;
     private Integer zipNo;
     private String lstUpdId;
-    private Timestamp lstUpdTs;
+    private LocalDateTime lstUpdTs;
     private String addrDsc;
     private String spcharDsc;
     private String ctyprfDsc;
@@ -698,11 +698,11 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
 
     @Basic
     @javax.persistence.Column(name = "LST_UPD_TS", nullable = false)
-    public Timestamp getLstUpdTs() {
+    public LocalDateTime getLstUpdTs() {
         return lstUpdTs;
     }
 
-    public void setLstUpdTs(Timestamp lstUpdTs) {
+    public void setLstUpdTs(LocalDateTime lstUpdTs) {
         this.lstUpdTs = lstUpdTs;
     }
 
