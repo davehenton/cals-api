@@ -22,7 +22,6 @@ public interface RFA1aFormMapper {
   @Mapping(target = "otherType", source = "application.otherType")
   @Mapping(target = "otherTypeDescription", source = "application.otherTypeDescription")
   @Mapping(target = "applicationCounty", source = "application.applicationCounty")
-  @Mapping(target = "application", ignore = true)
   @Mapping(target = "applicantsDeclaration", ignore = true)
   @Mapping(target = "references", ignore = true)
   @Mapping(target = "applicantsHistory", ignore = true)

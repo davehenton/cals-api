@@ -23,6 +23,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   private static final long serialVersionUID = -3006256329006945860L;
 
+  @ApiModelProperty(hidden = true)
   private Long id;
 
   @JsonProperty("is_initial_application")
@@ -39,32 +40,43 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   @ApiModelProperty(value = "County Type")
   private CountyType applicationCounty;
 
-  private ApplicationDTO application;
-
+  @ApiModelProperty(hidden = true)
   private ResidenceDTO residence;
 
+  @ApiModelProperty(hidden = true)
   private ApplicantsRelationshipDTO applicantsRelationship;
 
+  @ApiModelProperty(hidden = true)
   private ApplicantsHistoryDTO applicantsHistory;
 
+  @ApiModelProperty(hidden = true)
   private List<RFA1aApplicant> applicants;
 
+  @ApiModelProperty(hidden = true)
   private List<RFA1aMinorChild> minorChildren;
 
+  @ApiModelProperty(hidden = true)
   private List<RFA1aOtherAdult> otherAdults;
 
+  @ApiModelProperty(hidden = true)
   private List<RFA1bForm> rfa1bForms;
 
+  @ApiModelProperty(hidden = true)
   private List<RFA1cForm> rfa1cForms;
 
+  @ApiModelProperty(hidden = true)
   private AdoptionHistoryDTO adoptionHistory;
 
+  @ApiModelProperty(hidden = true)
   private ChildDesiredDTO childDesired;
 
+  @ApiModelProperty(hidden = true)
   private ReferencesDTO references;
 
+  @ApiModelProperty(hidden = true)
   private ApplicantsDeclarationDTO applicantsDeclaration;
 
+  @ApiModelProperty(hidden = true)
   private String placementHomeId;
 
   public boolean isInitialApplication() {
@@ -73,14 +85,6 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   public void setInitialApplication(boolean initialApplication) {
     this.initialApplication = initialApplication;
-  }
-
-  public ApplicationDTO getApplication() {
-    return application;
-  }
-
-  public void setApplication(ApplicationDTO application) {
-    this.application = application;
   }
 
   public ResidenceDTO getResidence() {

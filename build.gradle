@@ -1,6 +1,6 @@
-import static org.gradle.api.logging.LogLevel.*;
-import org.apache.tools.ant.filters.ReplaceTokens;
-import org.apache.tools.ant.filters.FixCrLfFilter;
+import static org.gradle.api.logging.LogLevel.*
+import org.apache.tools.ant.filters.ReplaceTokens
+import org.apache.tools.ant.filters.FixCrLfFilter
 
 buildscript {
     repositories {
