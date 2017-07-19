@@ -31,6 +31,8 @@ swagger:
   logo: images/CWDS-API-Logo-Horizontal.png
   loginUrl: ${LOGIN_URL:-http://localhost:8090/authn/login}
   showSwagger: ${SHOW_SWAGGER:-true}
+  jsonUrl: ${SWAGGER_JSON_URL:-http://localhost:8080/swagger.json}
+  callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
 
 lisDataSourceFactory:
   driverClass: org.postgresql.Driver
@@ -101,27 +103,8 @@ cmsDataSourceFactory:
       hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSCMS}
       hibernate.connection.autocommit: false
 
-# Leave it for future connx connection
-#connxDataSourceFactory:
-#  autoCommitByDefault: false
-#  driverClass: com.Connx.jdbc.TCJdbc.TCJdbcDriver
-#  user: ${DB_CONXX_USER}
-#  password: ${DB_CONXX_USER}
-#  url: ${DB_CMS_JDBC_URL:-jdbc:conxx:DD=<DBName>;Gateway=<ServerName>}
-#  # validationQuery: "/* MyService Health Check */ SELECT 1 FROM sysibm.sysdummy1 for read only"
-#  logValidationErrors: true
-#  initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
-#  minSize: ${DB_CMS_CP_MIN_SIZE:-2}
-#  maxSize: ${DB_CMS_CP_MAX_SIZE:-8}
-#  minIdleTime: 1 minute
-#  properties:
-#      hibernate.dialect: org.hibernate.dialect.CONNXDialect
-#      hibernate.show_sql: true
-#      #hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSINT}
-#      hibernate.connection.autocommit: false
-
 logging:
-  level: ${LOGLEVEL:-DEBUG}
+  level: ${LOGLEVEL:-INFO}
 #  loggers:
 #    "org.hibernate.SQL":
 #      level: DEBUG
