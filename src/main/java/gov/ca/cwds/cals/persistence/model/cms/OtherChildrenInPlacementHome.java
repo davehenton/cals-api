@@ -5,13 +5,17 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Where;
 
 /**
  * @author CWDS CALS API Team
@@ -91,6 +95,15 @@ public class OtherChildrenInPlacementHome implements PersistentObject {
   @Column(name = "YR_INC_AMT", nullable = true, precision = 2)
   private BigDecimal yrIncAmt;
 
+  @OneToMany
+  @JoinColumn(name = "FKOTH_KIDT")
+  private List<OtherPeopleScpRelationship> otherPeopleScpRelationships;
+
+  @OneToMany
+  @JoinColumn(name = "RCPNT_ID")
+  @Where(clause = "RCPNT_CD = 'H'") // RECIPIENT_CODE for Other Children in Placement Home (H)
+  private List<BackgroundCheck> backgroundChecks;
+
   public String getIdentifier() {
     return identifier;
   }
@@ -153,6 +166,24 @@ public class OtherChildrenInPlacementHome implements PersistentObject {
 
   public void setYrIncAmt(BigDecimal yrIncAmt) {
     this.yrIncAmt = yrIncAmt;
+  }
+
+  public List<OtherPeopleScpRelationship> getOtherPeopleScpRelationships() {
+    return otherPeopleScpRelationships;
+  }
+
+  public void setOtherPeopleScpRelationships(
+      List<OtherPeopleScpRelationship> otherPeopleScpRelationships) {
+    this.otherPeopleScpRelationships = otherPeopleScpRelationships;
+  }
+
+  public List<BackgroundCheck> getBackgroundChecks() {
+    return backgroundChecks;
+  }
+
+  public void setBackgroundChecks(
+      List<BackgroundCheck> backgroundChecks) {
+    this.backgroundChecks = backgroundChecks;
   }
 
   @Override

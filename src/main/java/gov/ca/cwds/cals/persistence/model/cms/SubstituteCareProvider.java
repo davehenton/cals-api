@@ -5,13 +5,17 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Where;
 
 /**
  * @author CWDS CALS API Team
@@ -328,6 +332,17 @@ public class SubstituteCareProvider implements PersistentObject {
   @Column(name = "PASSBC_CD", nullable = true, length = 1)
   private String passbcCd;
 
+  @OneToMany
+  @JoinColumn(name = "RCPNT_ID")
+  @Where(clause = "RCPNT_CD = 'S'") // RECIPIENT_CODE for Substitute Care Providers (S)
+  private List<BackgroundCheck> backgroundChecks;
+
+
+  @OneToMany
+  @JoinColumn(name = "RCPNT_ID")
+  @Where(clause = "RCPNT_CD = 'S'") // RECIPIENT_CODE for Substitute Care Providers (S)
+  private List<OutOfStateCheck> outOfStateChecks;
+
   public String getIdentifier() {
     return identifier;
   }
@@ -622,6 +637,24 @@ public class SubstituteCareProvider implements PersistentObject {
 
   public void setPassbcCd(String passbcCd) {
     this.passbcCd = passbcCd;
+  }
+
+  public List<BackgroundCheck> getBackgroundChecks() {
+    return backgroundChecks;
+  }
+
+  public void setBackgroundChecks(
+      List<BackgroundCheck> backgroundChecks) {
+    this.backgroundChecks = backgroundChecks;
+  }
+
+  public List<OutOfStateCheck> getOutOfStateChecks() {
+    return outOfStateChecks;
+  }
+
+  public void setOutOfStateChecks(
+      List<OutOfStateCheck> outOfStateChecks) {
+    this.outOfStateChecks = outOfStateChecks;
   }
 
   @Override

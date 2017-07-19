@@ -4,12 +4,14 @@ import gov.ca.cwds.data.persistence.PersistentObject;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -108,6 +110,20 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
   @Id
   @Column(name = "IDENTIFIER", nullable = false, length = 10)
   private String identifier;
+
+  /**
+   * Placement Home Profiles
+   */
+  @OneToMany
+  @JoinColumn(name = "FKPLC_HM_T")
+  private List<PlacementHomeProfile> placementHomeProfiles;
+
+  /**
+   * Additional notes for  a Placement Home
+   */
+  @OneToMany
+  @JoinColumn(name = "FKPLC_HM_T")
+  private List<PlacementHomeNotes> placementHomeNotes;
 
   /**
    * LICENSE_NUMBER - The number identifying a specific License issued by either the State of
@@ -451,8 +467,7 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
    * entity of the Primary Care Provider for a particular PLACEMENT HOME.
    *
    * @Basic
-   * @Column(name = "PRM_SUBSID", nullable = true, length = 10)
-   * private String prmSubsid;
+   * @Column(name = "PRM_SUBSID", nullable = true, length = 10) private String prmSubsid;
    */
   @NotFound(action = NotFoundAction.IGNORE)
   @ManyToOne
@@ -882,6 +897,14 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
   @Column(name = "END_COMDSC", nullable = true, length = 254)
   private String endComdsc;
 
+  @OneToMany
+  @JoinColumn(name = "FKPLC_HM_T")
+  private List<OtherAdultsInPlacementHome> otherAdultsInPlacementHomes;
+
+  @OneToMany
+  @JoinColumn(name = "FKPLC_HM_T")
+  private List<OtherChildrenInPlacementHome> otherChildrenInPlacementHomes;
+
   public FacilityType getFacilityType() {
     return facilityType;
   }
@@ -928,6 +951,24 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
 
   public void setIdentifier(String identifier) {
     this.identifier = identifier;
+  }
+
+  public List<PlacementHomeProfile> getPlacementHomeProfiles() {
+    return placementHomeProfiles;
+  }
+
+  public void setPlacementHomeProfiles(
+      List<PlacementHomeProfile> placementHomeProfiles) {
+    this.placementHomeProfiles = placementHomeProfiles;
+  }
+
+  public List<PlacementHomeNotes> getPlacementHomeNotes() {
+    return placementHomeNotes;
+  }
+
+  public void setPlacementHomeNotes(
+      List<PlacementHomeNotes> placementHomeNotes) {
+    this.placementHomeNotes = placementHomeNotes;
   }
 
   public String getLicenseNo() {
@@ -1658,6 +1699,24 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
 
   public void setEndComdsc(String endComdsc) {
     this.endComdsc = endComdsc;
+  }
+
+  public List<OtherAdultsInPlacementHome> getOtherAdultsInPlacementHomes() {
+    return otherAdultsInPlacementHomes;
+  }
+
+  public void setOtherAdultsInPlacementHomes(
+      List<OtherAdultsInPlacementHome> otherAdultsInPlacementHomes) {
+    this.otherAdultsInPlacementHomes = otherAdultsInPlacementHomes;
+  }
+
+  public List<OtherChildrenInPlacementHome> getOtherChildrenInPlacementHomes() {
+    return otherChildrenInPlacementHomes;
+  }
+
+  public void setOtherChildrenInPlacementHomes(
+      List<OtherChildrenInPlacementHome> otherChildrenInPlacementHomes) {
+    this.otherChildrenInPlacementHomes = otherChildrenInPlacementHomes;
   }
 
   @Override

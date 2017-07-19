@@ -7,9 +7,15 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /**
  * @author CWDS CALS API Team
@@ -80,10 +86,16 @@ public class OtherPeopleScpRelationship implements PersistentObject {
   /**
    * FKSB_PVDRT - Mandatory Foreign key that RELATES_ADULT_OR_CHILD_TO_SCP_IN a
    * SUBSTITUTE_CARE_PROVIDER.
+   * @Basic
+   * @Column(name = "FKSB_PVDRT", nullable = false, length = 10)
+   * private String fksbPvdrt;
    */
-  @Basic
-  @Column(name = "FKSB_PVDRT", nullable = false, length = 10)
-  private String fksbPvdrt;
+  @NotFound(action = NotFoundAction.IGNORE)
+  @ManyToOne
+  @Fetch(FetchMode.SELECT)
+  @JoinColumn(name = "FKSB_PVDRT", referencedColumnName = "IDENTIFIER")
+  private SubstituteCareProvider substituteCareProvider;
+
 
   public String getIdentifier() {
     return identifier;
@@ -133,12 +145,13 @@ public class OtherPeopleScpRelationship implements PersistentObject {
     this.fkothKidt = fkothKidt;
   }
 
-  public String getFksbPvdrt() {
-    return fksbPvdrt;
+  public SubstituteCareProvider getSubstituteCareProvider() {
+    return substituteCareProvider;
   }
 
-  public void setFksbPvdrt(String fksbPvdrt) {
-    this.fksbPvdrt = fksbPvdrt;
+  public void setSubstituteCareProvider(
+      SubstituteCareProvider substituteCareProvider) {
+    this.substituteCareProvider = substituteCareProvider;
   }
 
   @Override
