@@ -3,11 +3,15 @@ package gov.ca.cwds.cals.persistence.model.cms;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Id;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
 public class SubCareProviderPhoneticNamePK implements Serializable {
+
+  private static final long serialVersionUID = 5116558959190291210L;
 
   @Column(name = "PHONETC_NM", nullable = false, length = 8)
   @Id
@@ -16,6 +20,14 @@ public class SubCareProviderPhoneticNamePK implements Serializable {
   @Column(name = "FKSB_PVDRT", nullable = false, length = 10)
   @Id
   private String fksbPvdrt;
+
+  public SubCareProviderPhoneticNamePK() {
+  }
+
+  public SubCareProviderPhoneticNamePK(String phonetcNm, String fksbPvdrt) {
+    this.phonetcNm = phonetcNm;
+    this.fksbPvdrt = fksbPvdrt;
+  }
 
   public String getPhonetcNm() {
     return phonetcNm;
@@ -35,29 +47,11 @@ public class SubCareProviderPhoneticNamePK implements Serializable {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
-    SubCareProviderPhoneticNamePK that = (SubCareProviderPhoneticNamePK) o;
-
-    if (phonetcNm != null ? !phonetcNm.equals(that.phonetcNm) : that.phonetcNm != null) {
-      return false;
-    }
-    if (fksbPvdrt != null ? !fksbPvdrt.equals(that.fksbPvdrt) : that.fksbPvdrt != null) {
-      return false;
-    }
-
-    return true;
+    return EqualsBuilder.reflectionEquals(this, o);
   }
 
   @Override
   public int hashCode() {
-    int result = phonetcNm != null ? phonetcNm.hashCode() : 0;
-    result = 31 * result + (fksbPvdrt != null ? fksbPvdrt.hashCode() : 0);
-    return result;
+    return HashCodeBuilder.reflectionHashCode(this);
   }
 }

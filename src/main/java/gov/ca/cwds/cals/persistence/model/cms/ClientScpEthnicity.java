@@ -1,5 +1,7 @@
 package gov.ca.cwds.cals.persistence.model.cms;
 
+import gov.ca.cwds.data.persistence.PersistentObject;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -9,10 +11,17 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ *
+ * Associates a specific ethnicity (e.g., Black, Chinese, Hawaiian) with a specific CLIENT or SCP.
+ */
 @Entity
 @Table(name = "CLSCP_ET")
-public class ClientScpEthnicity {
+@SuppressWarnings({"squid:S3437"}) //LocalDate is serializable
+public class ClientScpEthnicity implements PersistentObject {
+
+  private static final long serialVersionUID = -3907876485597227714L;
 
   /**
    * ID - A system generated number used to uniquely identify each CLIENT_SCP_ETHNICITY. This ID is
@@ -121,5 +130,10 @@ public class ClientScpEthnicity {
   @Override
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this);
+  }
+
+  @Override
+  public Serializable getPrimaryKey() {
+    return getIdentifier();
   }
 }

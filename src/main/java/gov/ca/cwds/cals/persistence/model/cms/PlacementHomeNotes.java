@@ -12,11 +12,19 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ *
+ * Any general comments regarding a particular PLACEMENT HOME, documented description and associated
+ * resolution of dissatisfaction about an occurrence, or feature of a licensed or nonlicensed home,
+ * which has been brought to the attention of a STAFF PERSON. This general information are used when
+ * reviewing homes for  potential placements.  It is the social worker's  responsibility to
+ * communicate a complaint to the  licensing workers for investigation when deem  necessary.
+ */
 @Entity
 @Table(name = "HMNOTE_T")
 @SuppressWarnings({"squid:S3437"}) //LocalDate is serializable
-public class PlacementHomeNotes implements PersistentObject{
+public class PlacementHomeNotes implements PersistentObject {
 
   private static final long serialVersionUID = -6583999584863835466L;
 
@@ -70,7 +78,9 @@ public class PlacementHomeNotes implements PersistentObject{
   @Column(name = "LST_UPD_TS", nullable = false)
   private LocalDateTime lstUpdTs;
 
-  /** FKPLC_HM_T - Mandatory Foreign key that PROVIDES_ADDITIONAL_INFO_ABOUT a PLACEMENT_HOME. */
+  /**
+   * FKPLC_HM_T - Mandatory Foreign key that PROVIDES_ADDITIONAL_INFO_ABOUT a PLACEMENT_HOME.
+   */
   @Basic
   @Column(name = "FKPLC_HM_T", nullable = false, length = 10)
   private String fkplcHmT;

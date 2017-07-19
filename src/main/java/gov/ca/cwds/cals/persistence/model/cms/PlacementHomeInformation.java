@@ -13,7 +13,12 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ *
+ * An adult who is either the home licensee and/or a home resident care provider.
+ *
+ */
 @Entity
 @Table(name = "HM_SCP_T")
 @IdClass(PlacementHomeInformationPK.class)

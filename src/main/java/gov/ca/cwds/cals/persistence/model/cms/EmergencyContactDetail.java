@@ -1,5 +1,7 @@
 package gov.ca.cwds.cals.persistence.model.cms;
 
+import gov.ca.cwds.data.persistence.PersistentObject;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -9,10 +11,18 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ *
+ * Contact information to be used in the event of an emergency.
+ *
+ */
 @Entity
 @Table(name = "EM_CNT_T")
-public class EmergencyContactDetail {
+@SuppressWarnings({"squid:S3437"}) //LocalDate is serializable
+public class EmergencyContactDetail implements PersistentObject {
+
+  private static final long serialVersionUID = -5970396226634857223L;
 
   /**
    * ID - A system generated number used to uniquely identify each EMERGENCY CONTACT DETAIL. This ID
@@ -306,5 +316,10 @@ public class EmergencyContactDetail {
   @Override
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this);
+  }
+
+  @Override
+  public Serializable getPrimaryKey() {
+    return getIdentifier();
   }
 }

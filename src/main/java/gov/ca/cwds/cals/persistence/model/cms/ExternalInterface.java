@@ -12,7 +12,13 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ *
+ * This entity is used to trigger the external interfaces. When changes
+ * occur to a database entity, which are of interest to one of the external interface systems, a row
+ * is written to this entity.
+ */
 @Entity
 @Table(name = "EXTINF_T")
 @IdClass(ExternalInterfacePK.class)
@@ -39,7 +45,9 @@ public class ExternalInterface implements PersistentObject {
   @Column(name = "SUBMTL_TS", nullable = false)
   private LocalDateTime submtlTs;
 
-  /** INTERFACE_TABLE_NAME - Contains the name of the entity being processed. */
+  /**
+   * INTERFACE_TABLE_NAME - Contains the name of the entity being processed.
+   */
   @Basic
   @Column(name = "TABLE_NAME", nullable = false, length = 8)
   private String tableName;
@@ -173,27 +181,37 @@ public class ExternalInterface implements PersistentObject {
   @Column(name = "LICENSE_NO", nullable = false, length = 9)
   private String licenseNo;
 
-  /** INTERFACE_CLEARANCE_RESPNSE_DATE - Attribute no longer in use. */
+  /**
+   * INTERFACE_CLEARANCE_RESPNSE_DATE - Attribute no longer in use.
+   */
   @Basic
   @Column(name = "RESPONS_DT", nullable = false, length = 10)
   private String responsDt;
 
-  /** INTERFACE_RESPONSE_RECEIVED_DATE - Attribute no longer in use. */
+  /**
+   * INTERFACE_RESPONSE_RECEIVED_DATE - Attribute no longer in use.
+   */
   @Basic
   @Column(name = "RECEIVE_DT", nullable = false, length = 10)
   private String receiveDt;
 
-  /** INTERFACE_RAP_IDENTIFIER - Attribute no longer in use. */
+  /**
+   * INTERFACE_RAP_IDENTIFIER - Attribute no longer in use.
+   */
   @Basic
   @Column(name = "RAP_ID", nullable = false, length = 10)
   private String rapId;
 
-  /** INTERFACE_FBI_INDICATOR - Attribute no longer in use. */
+  /**
+   * INTERFACE_FBI_INDICATOR - Attribute no longer in use.
+   */
   @Basic
   @Column(name = "FBI_IND", nullable = false, length = 1)
   private String fbiInd;
 
-  /** INTERFACE_CLEARANCE_RESPNSE_TYPE - Attribute no longer in use. */
+  /**
+   * INTERFACE_CLEARANCE_RESPNSE_TYPE - Attribute no longer in use.
+   */
   @Basic
   @Column(name = "CRSP_TPC", nullable = false)
   private Short crspTpc;
@@ -425,7 +443,6 @@ public class ExternalInterface implements PersistentObject {
   @Override
   public boolean equals(Object o) {
     return EqualsBuilder.reflectionEquals(this, o);
-
   }
 
   @Override

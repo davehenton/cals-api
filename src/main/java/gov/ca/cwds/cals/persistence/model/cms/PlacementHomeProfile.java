@@ -12,7 +12,15 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ *
+ * This delineates the specific ethnic groups, religions that a specific PLACEMENT HOME is
+ * affiliated with, the specific language spoken within a specific PLACEMENT HOME, the special
+ * services that a specific PLACEMENT HOME provide (e.g., drug counseling, etc.).  More than one
+ * ethnicity, religion, language, special service may be listed for a PLACEMENT HOME.  This
+ * information may be used when searching for a  PLACEMENT HOME for a child.
+ */
 @Entity
 @Table(name = "HM_PRFT")
 @IdClass(PlacementHomeProfilePK.class)
