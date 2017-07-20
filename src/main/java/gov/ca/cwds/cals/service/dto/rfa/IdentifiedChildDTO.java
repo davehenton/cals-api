@@ -42,7 +42,7 @@ public class IdentifiedChildDTO extends BaseDTO {
   @CheckReferentialIntegrity
   private GenderType gender;
 
-  //@CheckReferentialIntegrity
+  @CheckReferentialIntegrity
   private CountyType countyOfJurisdiction;
 
   @ApiModelProperty(example = "2017-05-14")
@@ -51,6 +51,7 @@ public class IdentifiedChildDTO extends BaseDTO {
 
   private List<RelationshipToApplicantDTO> relationshipToApplicants = new ArrayList<>();
 
+  @CheckReferentialIntegrity
   private SchoolGradeType schoolGrade;
 
   @ApiModelProperty(example = "White Oaks High")

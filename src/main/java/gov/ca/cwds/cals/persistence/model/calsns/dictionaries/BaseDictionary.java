@@ -46,10 +46,6 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
   private Integer cwsId;
 
   @JsonIgnore
-  @Column(name = "cws_short_code", length = 2)
-  private String cwsShortCode;
-
-  @JsonIgnore
   @Column(name = "lis_id", length = 4)
   private String lisId;
 
@@ -75,14 +71,6 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
 
   public void setCwsId(int cwsId) {
     this.cwsId = cwsId;
-  }
-
-  public String getCwsShortCode() {
-    return cwsShortCode;
-  }
-
-  public void setCwsShortCode(String cwsShortCode) {
-    this.cwsShortCode = cwsShortCode;
   }
 
   public String getLisId() {

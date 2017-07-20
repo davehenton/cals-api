@@ -1,6 +1,6 @@
 {
   "application_county": {
-    "id": 39,
+    "id": 34,
     "value": "Sacramento"
   },
   "child_identified": true,
@@ -16,7 +16,7 @@
         "value": "Male"
       },
       "county_of_jurisdiction": {
-        "id": 39,
+        "id": 34,
         "value": "Sacramento"
       },
       "date_of_placement": "2017-05-14",
@@ -30,8 +30,8 @@
         }
       ],
       "school_grade": {
-        "id": 1,
-        "value": "11"
+        "id": 6,
+        "value": "4"
       },
       "school_name": "White Oaks High",
       "school_address": {

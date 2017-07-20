@@ -11,6 +11,7 @@ import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
@@ -202,6 +203,7 @@ public class DataAccessModule extends AbstractModule {
           LicenseType.class,
           MarriageTerminationReasonType.class,
           SchoolGradeType.class,
+          CountyType.class,
           //RFA
           RFA1aForm.class,
           RFA1aApplicant.class,
