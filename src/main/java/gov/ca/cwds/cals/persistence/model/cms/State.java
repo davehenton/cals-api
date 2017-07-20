@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.persistence.model.cms;
 import javax.persistence.Cacheable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  * @author CWDS CALS API Team
@@ -10,6 +11,11 @@ import javax.persistence.Entity;
 @Entity
 @Cacheable
 @DiscriminatorValue(value = "STATE_C ")
+@NamedQuery(name = State.NQ_ALL, query = "FROM State")
 public class State extends SystemCodeTable {
-    private static final long serialVersionUID = 42L;
+
+  public static final String NQ_ALL = "State.all";
+
+  private static final long serialVersionUID = -6062856327873602890L;
+
 }

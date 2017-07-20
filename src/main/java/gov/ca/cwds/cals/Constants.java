@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelations
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
@@ -49,7 +50,7 @@ public final class Constants {
 
     public static final String INSPECTIONS = "inspections";
 
-    public static final String FACILITY_TYPES = "facility-types";
+    public static final String FACILITY_TYPES = "facility-types-depricated";
 
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
@@ -76,6 +77,8 @@ public final class Constants {
     public static final String CHILD_DESIRED = "child-desired";
 
     public static final String RFA_1A_APPLICANTS_DECLARATION = "applicants-declaration";
+
+    public static final String STATUS = "status";
 
     public static class PathParams {
 
@@ -110,6 +113,10 @@ public final class Constants {
       public static final String RFA_1C_FORM_ID = "rfa1cFormId";
 
       public static final String RFA_1A_APPLICANT = "applicant";
+
+      private PathParams() {
+      }
+
     }
 
     public static class QueryParams {
@@ -130,6 +137,7 @@ public final class Constants {
     NAME_TYPE(NameType.class),
     EDUCATION_LEVEL_TYPE(EducationLevelType.class),
     ETHNICITY_TYPE(EthnicityType.class),
+    FACILITY_TYPE(FacilityType.class),
     RACE_TYPE(RaceType.class),
     RELATIONSHIP_TO_APPLICANT_TYPE(RelationshipToApplicantType.class),
     INCOME_TYPE(IncomeType.class),
@@ -149,6 +157,7 @@ public final class Constants {
     public static final String NAME_TYPE_PATH = "name-types";
     public static final String EDUCATION_LEVEL_TYPE_PATH = "education-level-types";
     public static final String ETHNICITY_TYPE_PATH = "ethnicity-types";
+    public static final String FACILITY_TYPE_PATH = "facility-types";
     public static final String RACE_TYPE_PATH = "race-types";
     public static final String RELATIONSHIP_TO_APPLICANT_TYPE_PATH = "relationships-to-applicant";
     public static final String INCOME_TYPE_PATH = "income-types";
