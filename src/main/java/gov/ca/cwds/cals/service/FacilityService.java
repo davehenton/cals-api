@@ -10,16 +10,21 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.StateDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
+import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
@@ -36,6 +41,7 @@ import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,6 +84,15 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private ComplaintReportLic802Dao complaintReportLic802Dao;
+
+  @Inject
+  private FacilityTypeDao facilityTypeDao;
+
+  @Inject
+  private LicenseStatusDao licenseStatusDao;
+
+  @Inject
+  private StateDao stateDao;
 
   public FacilityService() {
     // default constructor
@@ -202,4 +217,16 @@ public class FacilityService implements CrudsService {
   public Response update(Serializable serializable, Request request) {
     throw new UnsupportedOperationException();
   }
+
+  @UnitOfWork(CMS)
+  public PlacementHome createPlacementHomeByRfaApplication(RFA1aForm form) {
+    PlacementHome placementHome = facilityMapper.toPlacementHome(form);
+    placementHome.setFacilityType(facilityTypeDao.findAll().get(0));
+    placementHome.setCounty(countiesDao.findAll().get(0));
+    placementHome.setLicenseStatus(licenseStatusDao.findAll().get(0));
+    placementHome.setStateCode(stateDao.findAll().get(0));
+    placementHome.setLstUpdTs(LocalDateTime.now());
+    return placementHomeDao.create(placementHome);
+  }
+
 }
