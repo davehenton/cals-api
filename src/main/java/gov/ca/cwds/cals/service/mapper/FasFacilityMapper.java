@@ -38,9 +38,9 @@ public interface FasFacilityMapper {
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "href", ignore = true)
   @Mapping(target = "lastVisitDate", source = "facLastVisitDate")
-  @Mapping(target = "lastVisitReason", source = "facLastVisitReason", qualifiedByName = "facilityVisitReason")
+//  @Mapping(target = "lastVisitReason", source = "facLastVisitReason", qualifiedByName = "facilityVisitReason")
   @Mapping(target = "lastDeferredVisitDate", source = "facLastDeferVisitDate")
-  @Mapping(target = "lastDeferredVisitReason", source = "facLastDeferVisitReason", qualifiedByName = "facilityVisitReason")
+//  @Mapping(target = "lastDeferredVisitReason", source = "facLastDeferVisitReason", qualifiedByName = "facilityVisitReason")
   @Mapping(target = "annualVisitYear", source = "facAnnualVisitYear")
   @Mapping(target = "prelicensingVisitDate", source = "facPreLicVisitDate")
   void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, LisFacFile fasLisFacFile);
