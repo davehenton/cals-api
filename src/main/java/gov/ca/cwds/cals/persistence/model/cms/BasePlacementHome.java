@@ -469,6 +469,7 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
    * @Basic
    * @Column(name = "PRM_SUBSID", nullable = true, length = 10) private String prmSubsid;
    */
+
   @NotFound(action = NotFoundAction.IGNORE)
   @ManyToOne
   @Fetch(FetchMode.SELECT)

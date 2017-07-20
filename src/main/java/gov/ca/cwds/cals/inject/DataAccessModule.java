@@ -167,7 +167,8 @@ public class DataAccessModule extends AbstractModule {
           PlacementHomeUc.class,
           SubstituteCareProvider.class,
           SubstituteCareProviderUc.class,
-          SubCareProviderPhoneticName.class) {
+          SubCareProviderPhoneticName.class
+      ) {
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
           return configuration.getCmsDataSourceFactory();
