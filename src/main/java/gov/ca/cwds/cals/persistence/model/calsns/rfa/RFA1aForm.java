@@ -29,13 +29,29 @@ import org.hibernate.annotations.Type;
  */
 @SuppressWarnings("squid:S3437") //LocalDateTime is serializable
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm ORDER BY id ASC")
+@NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_UPDATED_AFTER,
+    query = "SELECT form FROM RFA1aForm form"
+        + " LEFT JOIN RFA1aApplicant applicant ON applicant.formId = form.id"
+        + " LEFT JOIN RFA1aMinorChild minorChild ON minorChild.formId = form.id"
+        + " LEFT JOIN RFA1aOtherAdult otherAdult ON otherAdult.formId = form.id"
+        + " LEFT JOIN RFA1bForm _1bForm ON _1bForm.formId = form.id"
+        + " LEFT JOIN RFA1cForm _1cForm ON _1cForm.formId = form.id"
+        + " WHERE form.createDateTime > :dateAfter OR form.updateDateTime > :dateAfter"
+        + " OR applicant.createDateTime > :dateAfter OR applicant.updateDateTime > :dateAfter"
+        + " OR minorChild.createDateTime > :dateAfter OR minorChild.updateDateTime > :dateAfter"
+        + " OR otherAdult.createDateTime > :dateAfter OR otherAdult.updateDateTime > :dateAfter"
+        + " OR _1bForm.createDateTime > :dateAfter OR _1bForm.updateDateTime > :dateAfter"
+        + " OR _1cForm.createDateTime > :dateAfter OR _1cForm.updateDateTime > :dateAfter"
+)
 @Entity
 @Table(name = "rfa_1a")
 public class RFA1aForm extends RFABaseEntity implements PersistentObject {
 
-  private static final long serialVersionUID = -6201382973500280111L;
+  private static final long serialVersionUID = -6201382973500280112L;
   public static final String NAMED_QUERY_FIND_ALL =
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.all";
+  public static final String NAMED_QUERY_FIND_UPDATED_AFTER =
+      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.updated.after";
 
   @NotNull
   @Enumerated(EnumType.STRING)
@@ -220,12 +236,16 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject {
 
   @Override
   public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o, "applicants", "minorChildren", "otherAdults", "rfa1bForms", "rfa1cForms");
+    return EqualsBuilder
+        .reflectionEquals(this, o, "applicants", "minorChildren", "otherAdults", "rfa1bForms",
+            "rfa1cForms");
   }
 
   @Override
   public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, "applicants", "minorChildren", "otherAdults", "rfa1bForms", "rfa1cForms");
+    return HashCodeBuilder
+        .reflectionHashCode(this, "applicants", "minorChildren", "otherAdults", "rfa1bForms",
+            "rfa1cForms");
   }
 
 
