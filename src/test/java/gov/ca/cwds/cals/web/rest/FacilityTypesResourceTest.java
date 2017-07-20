@@ -10,6 +10,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -23,6 +24,7 @@ public class FacilityTypesResourceTest extends BaseCalsApiIntegrationTest {
     }
 
     @Test
+    @Ignore //https://www.pivotaltracker.com/story/show/148550507
     public void testGetFacilityTypes() throws Exception {
         WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + Constants.API.FACILITY_TYPES);
         Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);

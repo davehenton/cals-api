@@ -14,7 +14,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class})
+@Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class, DictionaryMapper.class})
 @FunctionalInterface
 public interface FasFacilityMapper {
 
@@ -38,11 +38,9 @@ public interface FasFacilityMapper {
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "href", ignore = true)
   @Mapping(target = "lastVisitDate", source = "facLastVisitDate")
-  @Mapping(target = "lastVisitReason.code", source = "facLastVisitReason.tblVisitReasonCode")
-  @Mapping(target = "lastVisitReason.description", source = "facLastVisitReason.tblVisitReasonDesc")
+  @Mapping(target = "lastVisitReason", source = "facLastVisitReason", qualifiedByName = "facilityVisitReason")
   @Mapping(target = "lastDeferredVisitDate", source = "facLastDeferVisitDate")
-  @Mapping(target = "lastDeferredVisitReason.code", source = "facLastDeferVisitReason.tblVisitReasonCode")
-  @Mapping(target = "lastDeferredVisitReason.description", source = "facLastDeferVisitReason.tblVisitReasonDesc")
+  @Mapping(target = "lastDeferredVisitReason", source = "facLastDeferVisitReason", qualifiedByName = "facilityVisitReason")
   @Mapping(target = "annualVisitYear", source = "facAnnualVisitYear")
   @Mapping(target = "prelicensingVisitDate", source = "facPreLicVisitDate")
   void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, LisFacFile fasLisFacFile);

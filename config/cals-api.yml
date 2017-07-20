@@ -4,7 +4,7 @@ version: ${APP_VERSION:-local}
 server:
   detailedJsonProcessingExceptionMapper: true
   applicationConnectors:
-  - type: http 
+  - type: http
     port: 8080
   - type: https
     port: 8443
