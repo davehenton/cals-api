@@ -25,7 +25,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
 
   private static final long serialVersionUID = 2700499740023492461L;
 
-  //@CheckReferentialIntegrity //Waiting for dictionary implemetation
+  @CheckReferentialIntegrity
   private CountyType applicationCounty;
 
   @ApiModelProperty(example = "true")

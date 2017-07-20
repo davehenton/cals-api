@@ -39,8 +39,8 @@ public class RFA1cResourceTest extends
           @Override
           public void modifyEntity(RFA1cFormDTO rfa1cFormDTO) {
             CountyType applicationCounty = new CountyType();
-            applicationCounty.setId(1000L);
-            applicationCounty.setValue("Some county");
+            applicationCounty.setId(35L);
+            applicationCounty.setValue("San Benito");
             rfa1cFormDTO.setApplicationCounty(applicationCounty);
           }
 

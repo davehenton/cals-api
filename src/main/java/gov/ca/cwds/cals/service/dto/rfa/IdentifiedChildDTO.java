@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
@@ -42,7 +43,7 @@ public class IdentifiedChildDTO extends BaseDTO {
   @CheckReferentialIntegrity
   private GenderType gender;
 
-  //@CheckReferentialIntegrity
+  @CheckReferentialIntegrity
   private CountyType countyOfJurisdiction;
 
   @ApiModelProperty(example = "2017-05-14")
@@ -51,11 +52,13 @@ public class IdentifiedChildDTO extends BaseDTO {
 
   private List<RelationshipToApplicantDTO> relationshipToApplicants = new ArrayList<>();
 
+  @CheckReferentialIntegrity
   private SchoolGradeType schoolGrade;
 
   @ApiModelProperty(example = "White Oaks High")
   private String schoolName;
 
+  @Valid
   private RFAAddressDTO schoolAddress;
 
   public String getFirstName() {
