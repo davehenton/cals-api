@@ -50,8 +50,6 @@ public final class Constants {
 
     public static final String INSPECTIONS = "inspections";
 
-    public static final String FACILITY_TYPES = "facility-types-depricated";
-
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
     public static final String RFA_1B_FORMS = "rfa-1b-forms";
