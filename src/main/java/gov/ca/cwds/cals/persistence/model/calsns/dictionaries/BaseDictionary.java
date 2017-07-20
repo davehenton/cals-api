@@ -83,12 +83,12 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
 
   @Override
   public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o, "cwsId", "cwsShortCode", "lisId");
+    return EqualsBuilder.reflectionEquals(this, o, "cwsId", "lisId");
   }
 
   @Override
   public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, "cwsId", "cwsShortCode", "lisId");
+    return HashCodeBuilder.reflectionHashCode(this, "cwsId", "lisId");
   }
 
   @Override
