@@ -49,7 +49,7 @@ lisDataSourceFactory:
   properties:
       hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.CONNXDialect
       hibernate.show_sql: true
-      #hibernate.default_schema:
+      hibernate.default_schema: ${DB_LIS_SCHEMA:-dbo}
       hibernate.connection.autocommit: false
 
 fasDataSourceFactory:
