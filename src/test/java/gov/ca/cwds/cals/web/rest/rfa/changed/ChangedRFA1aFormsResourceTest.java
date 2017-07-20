@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.RecordChangeOperation;
 import gov.ca.cwds.cals.service.dto.changed.ChangedRFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -31,12 +32,14 @@ public class ChangedRFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   public void getChangedRFA1aFormsTest() throws Exception {
     CollectionDTO<ChangedRFA1aFormDTO> rfaForms = getChangedRFA1aFormsAfter("1970-01-01 00:00:00");
     assertTrue(rfaForms.getCollection().size() == 2);
-    assertTrue(RecordChangeOperation.I == rfaForms.getCollection().iterator().next()
-        .getRecordChangeOperation());
+    ChangedRFA1aFormDTO changedRFA1aFormDTO = rfaForms.getCollection().iterator().next();
+    assertTrue(RecordChangeOperation.I == changedRFA1aFormDTO.getRecordChangeOperation());
 
-    rfaForms = getChangedRFA1aFormsAfter("2017-07-18 10:01:00");
+    String after = "2017-07-18 10:01:00";
+    rfaForms = getChangedRFA1aFormsAfter(after);
     assertTrue(rfaForms.getCollection().size() == 1);
-    assertTrue(2 == rfaForms.getCollection().iterator().next().getDTO().getId());
+    RFA1aFormDTO rfa1aFormDTO = rfaForms.getCollection().iterator().next().getDTO();
+    assertTrue(0 > toLocalDateTime(after).compareTo(rfa1aFormDTO.getApplicants().get(0).getUpdateDateTime()));
 
     rfaForms = getChangedRFA1aFormsAfter("2222-01-01 00:00:00");
     assertTrue(rfaForms.getCollection().size() == 0);
