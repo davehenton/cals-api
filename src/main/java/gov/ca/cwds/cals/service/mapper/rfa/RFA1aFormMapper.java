@@ -38,7 +38,6 @@ public interface RFA1aFormMapper {
   RFA1aFormDTO toRFA1aFormDTO(RFA1aForm form);
 
   @Named("toExpandedRFA1aFormDTO")
-  @Mapping(target = "application", source = "application")
   @Mapping(target = "applicantsDeclaration", source = "applicantsDeclaration")
   @Mapping(target = "references", source = "references")
   @Mapping(target = "applicantsHistory", source = "applicantsHistory")
