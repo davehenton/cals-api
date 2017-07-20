@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
@@ -57,6 +58,7 @@ public class IdentifiedChildDTO extends BaseDTO {
   @ApiModelProperty(example = "White Oaks High")
   private String schoolName;
 
+  @Valid
   private RFAAddressDTO schoolAddress;
 
   public String getFirstName() {

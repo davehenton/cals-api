@@ -39,11 +39,11 @@
         "zip": "98123",
         "city": "Rocklin",
         "state": {
-          "id": 0,
-          "value": "string"
+          "id": 6,
+          "value": "California"
         },
         "type": {
-          "id": 1,
+          "id": 3,
           "value": "Mailing"
         }
       }
