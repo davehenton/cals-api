@@ -37,14 +37,14 @@ swagger:
 lisDataSourceFactory:
   autoCommitByDefault: false
   driverClass: com.Connx.jdbc.TCJdbc.TCJdbcDriver
-  user: ${DB_CONXX_USER:-CWDS_Admin}
-  password: ${DB_CONXX_USER:-broomfield2017}
-  url: ${DB_CONXX_JDBC_URL:-jdbc:connx:DD=CX_All;Gateway=10.211.5.29;port=7502}
+  user: ${DB_LIS_USER:-CWDS_Admin}
+  password: ${DB_LIS_PASSWORD:-x}
+  url: ${DB_LIS_JDBC_URL:-jdbc:connx:DD=CX_All;Gateway=10.211.5.29;port=7502}
   # validationQuery:
   logValidationErrors: true
-  initialSize: ${DB_CONXX_CP_INITIAL_SIZE:-2}
-  minSize: ${DB_CONXX_CMS_CP_MIN_SIZE:-2}
-  maxSize: ${DB_CONXX_CMS_CP_MAX_SIZE:-8}
+  initialSize: ${DB_LIS_CP_INITIAL_SIZE:-2}
+  minSize: ${DB_LIS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_LIS_CP_MAX_SIZE:-8}
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.CONNXDialect
