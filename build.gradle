@@ -175,7 +175,7 @@ task integrationTest(type: Test, dependsOn: testClasses) {
     // URL where integration tests will be pointed to (may change it in gradle.properties)
     systemProperty 'cals.api.url', project.property('cals.api.url')
 
-    exclude '**/ChangedRFA1aFormsResourceTest'
+    exclude '**/ChangedRFA1aFormsResourceTest.class'
 }
 
 task copyConfig(type: Copy) {
