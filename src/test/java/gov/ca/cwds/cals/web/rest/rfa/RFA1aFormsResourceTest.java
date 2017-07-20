@@ -15,22 +15,21 @@ import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Collectors;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author CWDS CALS API Team
@@ -42,12 +41,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     setUpCalsns();
   }
 
-  @Test
-  public void createApplicationForm() throws Exception {
-    createForm(clientTestRule);
-  }
-
-  @Test
+  @Test()
   public void testApplicationWithParts() throws Exception {
     String postRequest = fixture("fixtures/rfa/rfa-1a-form-post-request.json");
     WebTarget postTarget = clientTestRule.target(API.RFA_1A_FORMS);
@@ -155,8 +149,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getApplicationFormNotFound() throws Exception {
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    target = clientTestRule.target(API.RFA_1A_FORMS + "/9999999");
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/9999999");
     Response response = target.request(MediaType.APPLICATION_JSON).get();
     assertEquals(404, response.getStatus());
   }
@@ -165,8 +158,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   public void getApplicationFormTest() throws Exception {
     RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
 
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     RFA1aFormDTO rfaFormGet = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
 
     assertNotNull(rfaFormGet);
@@ -177,8 +169,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
   public void updateApplicationFormTest() throws Exception {
     RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
 
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     rfaFormCreate.setOtherTypeDescription("newOtherTypeDescription");
     RFA1aFormDTO rfaFormGet =
         target
@@ -191,8 +182,6 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getAllApplicationFormsTest() throws Exception {
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     RFA1aFormDTO rfaFormCreate1 = createForm(clientTestRule);
     RFA1aFormDTO rfaFormCreate2 = createForm(clientTestRule);
     RFA1aFormDTO rfaFormCreate3 = createForm(clientTestRule);
@@ -201,8 +190,8 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);
     assertNotEquals(rfaFormCreate3, rfaFormCreate1);
 
-    target = clientTestRule.target(API.RFA_1A_FORMS);
-    invocation = target.request(MediaType.APPLICATION_JSON);
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     CollectionDTO<RFA1aFormDTO> rfaForms =
         invocation.get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {});
 

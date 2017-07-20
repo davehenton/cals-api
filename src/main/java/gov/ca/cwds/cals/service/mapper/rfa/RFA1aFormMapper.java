@@ -3,7 +3,6 @@ package gov.ca.cwds.cals.service.mapper.rfa;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import java.util.List;
-
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -23,7 +22,6 @@ public interface RFA1aFormMapper {
   @Mapping(target = "otherType", source = "application.otherType")
   @Mapping(target = "otherTypeDescription", source = "application.otherTypeDescription")
   @Mapping(target = "applicationCounty", source = "application.applicationCounty")
-  @Mapping(target = "application", ignore = true)
   @Mapping(target = "applicantsDeclaration", ignore = true)
   @Mapping(target = "references", ignore = true)
   @Mapping(target = "applicantsHistory", ignore = true)
@@ -36,10 +34,7 @@ public interface RFA1aFormMapper {
   @Mapping(target = "applicantsRelationship", ignore = true)
   @Mapping(target = "residence", ignore = true)
   @Mapping(target = "childDesired", ignore = true)
-  @Mapping(target = "updateDateTime", ignore = true)
-  @Mapping(target = "updateUserId", ignore = true)
-  @Mapping(target = "createDateTime", ignore = true)
-  @Mapping(target = "createUserId", ignore = true)
+  @Mapping(target = "messages", ignore = true)
   RFA1aFormDTO toRFA1aFormDTO(RFA1aForm form);
 
   @Named("toExpandedRFA1aFormDTO")
@@ -85,5 +80,6 @@ public interface RFA1aFormMapper {
   @Mapping(target = "updateUserId", ignore = true)
   @Mapping(target = "createDateTime", ignore = true)
   @Mapping(target = "createUserId", ignore = true)
+  @Mapping(target = "status", ignore = true)
   void toRFA1aForm(@MappingTarget RFA1aForm rfa1aForm, RFA1aFormDTO formDTO);
 }

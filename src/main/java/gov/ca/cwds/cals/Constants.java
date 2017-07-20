@@ -50,8 +50,6 @@ public final class Constants {
 
     public static final String INSPECTIONS = "inspections";
 
-    public static final String FACILITY_TYPES = "facility-types-depricated";
-
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
     public static final String RFA_1B_FORMS = "rfa-1b-forms";
@@ -77,6 +75,8 @@ public final class Constants {
     public static final String CHILD_DESIRED = "child-desired";
 
     public static final String RFA_1A_APPLICANTS_DECLARATION = "applicants-declaration";
+
+    public static final String STATUS = "status";
 
     public static class PathParams {
 
@@ -111,6 +111,10 @@ public final class Constants {
       public static final String RFA_1C_FORM_ID = "rfa1cFormId";
 
       public static final String RFA_1A_APPLICANT = "applicant";
+
+      private PathParams() {
+      }
+
     }
 
     public static class QueryParams {

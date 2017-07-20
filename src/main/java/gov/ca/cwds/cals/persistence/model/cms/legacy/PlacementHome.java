@@ -26,12 +26,12 @@ import org.hibernate.annotations.NotFoundAction;
 public class PlacementHome extends BasePlacementHome {
     private static final long serialVersionUID = 8516376534560115439L;
 
-    private CountyLicenseCase countyLicenseCase;
-
-    @Override
     @NotFound(action = NotFoundAction.IGNORE)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FKCNTY_CST", referencedColumnName = "IDENTIFIER")
+    private CountyLicenseCase countyLicenseCase;
+
+    @Override
     public CountyLicenseCase getCountyLicenseCase() {
         return countyLicenseCase;
     }

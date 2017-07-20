@@ -8,7 +8,7 @@ import gov.ca.cwds.cals.persistence.dao.lis.RecordChangeLisDao;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import gov.ca.cwds.cals.service.dto.ChangedFacilityDTO;
+import gov.ca.cwds.cals.service.dto.changed.ChangedFacilityDTO;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

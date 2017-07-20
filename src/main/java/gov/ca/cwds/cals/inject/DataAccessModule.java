@@ -32,8 +32,31 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
+import gov.ca.cwds.cals.persistence.model.cms.AddressPhoneticName;
+import gov.ca.cwds.cals.persistence.model.cms.AddressPhoneticNamePK;
+import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
+import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
+import gov.ca.cwds.cals.persistence.model.cms.CountyOwnership;
+import gov.ca.cwds.cals.persistence.model.cms.CountyOwnershipPK;
+import gov.ca.cwds.cals.persistence.model.cms.EmergencyContactDetail;
+import gov.ca.cwds.cals.persistence.model.cms.ExternalInterface;
+import gov.ca.cwds.cals.persistence.model.cms.ExternalInterfacePK;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
+import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
+import gov.ca.cwds.cals.persistence.model.cms.OutOfStateCheck;
+import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformationPK;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeNotes;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeProfile;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeProfilePK;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.State;
+import gov.ca.cwds.cals.persistence.model.cms.SubCareProviderPhoneticName;
+import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
+import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
 import gov.ca.cwds.cals.persistence.model.cms.VisitType;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.Client;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.CountyLicenseCase;
@@ -114,7 +137,32 @@ public class DataAccessModule extends AbstractModule {
           LicensingVisit.class,
           VisitType.class,
           State.class,
-          LicenseStatus.class) {
+          LicenseStatus.class,
+
+          AddressPhoneticName.class,
+          AddressPhoneticNamePK.class,
+          BackgroundCheck.class,
+          ClientScpEthnicity.class,
+          CountyOwnership.class,
+          CountyOwnershipPK.class,
+          EmergencyContactDetail.class,
+          ExternalInterface.class,
+          ExternalInterfacePK.class,
+          PlacementHomeProfile.class,
+          PlacementHomeProfilePK.class,
+          PlacementHomeInformation.class,
+          PlacementHomeInformationPK.class,
+          PlacementHomeNotes.class,
+          OtherPeopleScpRelationship.class,
+          OutOfStateCheck.class,
+          OtherAdultsInPlacementHome.class,
+          OtherChildrenInPlacementHome.class,
+          PhoneContactDetail.class,
+          PlacementHomeUc.class,
+          SubstituteCareProvider.class,
+          SubstituteCareProviderUc.class,
+          SubCareProviderPhoneticName.class
+      ) {
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
           return configuration.getCmsDataSourceFactory();
