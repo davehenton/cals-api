@@ -226,6 +226,8 @@ public class FacilityService implements CrudsService {
     placementHome.setLicenseStatus(licenseStatusDao.findAll().get(0));
     placementHome.setStateCode(stateDao.findAll().get(0));
     placementHome.setLstUpdTs(LocalDateTime.now());
+    placementHome.setLaPayeeState(stateDao.findAll().get(0));
+    //
     return placementHomeDao.create(placementHome);
   }
 
