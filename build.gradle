@@ -131,6 +131,8 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
 
+    testCompile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
+
     apt 'org.mapstruct:mapstruct-processor:' + mapstructVersion
 }
 

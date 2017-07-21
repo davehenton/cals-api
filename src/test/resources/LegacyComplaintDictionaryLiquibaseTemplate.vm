@@ -1,0 +1,8 @@
+#foreach($item in $dictItems)
+<insert tableName="$tableName">
+  <column name="id" value="$foreach.count"/>
+  <column name="cws_id" value="$item.cwsId"/>
+  <column name="lis_id" value="$item.lisId"/>
+  <column name="description" value="$item.value"/>
+</insert>
+#end
