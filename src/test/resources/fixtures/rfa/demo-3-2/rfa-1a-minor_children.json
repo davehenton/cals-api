@@ -1,12 +1,11 @@
 {
-  "id": 0,
   "relationship_to_applicant": {
     "id": 1,
     "value": "Child"
   },
   "child_related_to": [
-    2,
-    3
+    1234567,
+    8154545
   ],
   "other_relative_first_name": "",
   "other_relative_middle_name": "",
@@ -15,7 +14,7 @@
     "id": 5,
     "value": "Jr"
   },
-  "date_of_birth": "2007-06-28",
+  "date_of_birth": "2007-07-14",
   "gender": {
     "id": 1,
     "value": "Male"
