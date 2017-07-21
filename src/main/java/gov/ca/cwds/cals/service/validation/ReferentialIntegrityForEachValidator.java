@@ -34,9 +34,7 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
       return true;
     }
 
-    Session currentSession = null;
-    try {
-      currentSession = sessionFactory.openSession();
+    try (Session currentSession = sessionFactory.openSession()) {
       Session finalCurrentSession = currentSession;
       boolean[] result = new boolean[]{true};
       int[] index = new int[]{0};
@@ -57,10 +55,6 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
             index[0]++;
           });
       return result[0];
-    } finally {
-      if (currentSession != null) {
-        currentSession.close();
-      }
     }
   }
 

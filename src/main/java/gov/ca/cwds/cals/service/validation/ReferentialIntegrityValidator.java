@@ -30,9 +30,9 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
     if (obj == null) {
       return true;
     }
-    Session currentSession = null;
-    try {
-      currentSession = sessionFactory.openSession();
+
+    try (Session currentSession = sessionFactory.openSession()) {
+
       boolean valid = checkReferentialIntegrity(currentSession, obj);
       if (!valid) {
         StringBuilder sb =
@@ -44,10 +44,6 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
         context.buildConstraintViolationWithTemplate(sb.toString()).addConstraintViolation();
       }
       return valid;
-    } finally {
-      if (currentSession != null) {
-        currentSession.close();
-      }
     }
   }
 

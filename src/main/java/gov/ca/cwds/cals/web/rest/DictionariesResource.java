@@ -7,6 +7,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.COUNTY_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.COUNTY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE;
@@ -72,7 +74,8 @@ public class DictionariesResource {
 
   @Inject
   public DictionariesResource(
-      @DictionariesServiceBackedResource TypedResourceDelegate<DictionaryType, BaseDictionary> dictionariesResourceDelegate) {
+      @DictionariesServiceBackedResource
+          TypedResourceDelegate<DictionaryType, BaseDictionary> dictionariesResourceDelegate) {
     this.dictionariesResourceDelegate = dictionariesResourceDelegate;
   }
 
@@ -389,4 +392,19 @@ public class DictionariesResource {
     return dictionariesResourceDelegate.get(SCHOOL_GRADE_TYPE);
   }
 
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + COUNTY_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Counties Dictionary Values", response = DictionaryValuesDTO.class)
+  public Response getCounties() {
+    return dictionariesResourceDelegate.get(COUNTY_TYPE);
+  }
 }

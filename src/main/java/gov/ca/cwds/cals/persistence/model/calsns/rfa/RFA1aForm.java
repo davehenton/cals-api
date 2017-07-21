@@ -8,16 +8,17 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicationDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.data.persistence.PersistentObject;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.api.Response;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.NamedQuery;
@@ -28,13 +29,36 @@ import org.hibernate.annotations.Type;
  */
 @SuppressWarnings("squid:S3437") //LocalDateTime is serializable
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm ORDER BY id ASC")
+@NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_UPDATED_AFTER,
+    query = "SELECT form FROM RFA1aForm form"
+        + " LEFT JOIN RFA1aApplicant applicant ON applicant.formId = form.id"
+        + " LEFT JOIN RFA1aMinorChild minorChild ON minorChild.formId = form.id"
+        + " LEFT JOIN RFA1aOtherAdult otherAdult ON otherAdult.formId = form.id"
+        + " LEFT JOIN RFA1bForm _1bForm ON _1bForm.formId = form.id"
+        + " LEFT JOIN RFA1cForm _1cForm ON _1cForm.formId = form.id"
+        + " WHERE form.createDateTime > :dateAfter OR form.updateDateTime > :dateAfter"
+        + " OR applicant.createDateTime > :dateAfter OR applicant.updateDateTime > :dateAfter"
+        + " OR minorChild.createDateTime > :dateAfter OR minorChild.updateDateTime > :dateAfter"
+        + " OR otherAdult.createDateTime > :dateAfter OR otherAdult.updateDateTime > :dateAfter"
+        + " OR _1bForm.createDateTime > :dateAfter OR _1bForm.updateDateTime > :dateAfter"
+        + " OR _1cForm.createDateTime > :dateAfter OR _1cForm.updateDateTime > :dateAfter"
+)
 @Entity
 @Table(name = "rfa_1a")
-public class RFA1aForm extends RFABaseEntity implements PersistentObject, Request, Response {
+public class RFA1aForm extends RFABaseEntity implements PersistentObject {
 
-  private static final long serialVersionUID = -6201382973500280111L;
+  private static final long serialVersionUID = -6201382973500280112L;
   public static final String NAMED_QUERY_FIND_ALL =
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.all";
+  public static final String NAMED_QUERY_FIND_UPDATED_AFTER =
+      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.updated.after";
+
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private RFAApplicationStatus status;
+
+  @Column(name = "placement_home_id", length = 10)
+  private String placementHomeId;
 
   @Type(type = "ApplicationJsonType")
   private ApplicationDTO application;
@@ -85,6 +109,22 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Reques
   @Type(type = "ApplicantsDeclaration")
   @Column(name = "applicants_declaration")
   private ApplicantsDeclarationDTO applicantsDeclaration;
+
+  public String getPlacementHomeId() {
+    return placementHomeId;
+  }
+
+  public void setPlacementHomeId(String placementHomeId) {
+    this.placementHomeId = placementHomeId;
+  }
+
+  public RFAApplicationStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(RFAApplicationStatus status) {
+    this.status = status;
+  }
 
   public ApplicationDTO getApplication() {
     return application;
@@ -196,12 +236,16 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject, Reques
 
   @Override
   public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o, "applicants", "minorChildren", "otherAdults", "rfa1bForms", "rfa1cForms");
+    return EqualsBuilder
+        .reflectionEquals(this, o, "applicants", "minorChildren", "otherAdults", "rfa1bForms",
+            "rfa1cForms");
   }
 
   @Override
   public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, "applicants", "minorChildren", "otherAdults", "rfa1bForms", "rfa1cForms");
+    return HashCodeBuilder
+        .reflectionHashCode(this, "applicants", "minorChildren", "otherAdults", "rfa1bForms",
+            "rfa1cForms");
   }
 
 

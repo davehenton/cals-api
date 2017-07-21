@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
@@ -46,11 +47,7 @@ public final class Constants {
 
     public static final String DICTIONARIES = "dictionaries";
 
-    public static final String COUNTIES = "counties";
-
     public static final String INSPECTIONS = "inspections";
-
-    public static final String FACILITY_TYPES = "facility-types-depricated";
 
     public static final String RFA_1A_FORMS = "rfa-1a-forms";
 
@@ -77,6 +74,8 @@ public final class Constants {
     public static final String CHILD_DESIRED = "child-desired";
 
     public static final String RFA_1A_APPLICANTS_DECLARATION = "applicants-declaration";
+
+    public static final String STATUS = "status";
 
     public static class PathParams {
 
@@ -111,6 +110,10 @@ public final class Constants {
       public static final String RFA_1C_FORM_ID = "rfa1cFormId";
 
       public static final String RFA_1A_APPLICANT = "applicant";
+
+      private PathParams() {
+      }
+
     }
 
     public static class QueryParams {
@@ -143,7 +146,8 @@ public final class Constants {
     APPLICANT_RELATIONSHIP_TYPE(ApplicantRelationshipType.class),
     LICENSE_TYPE(LicenseType.class),
     MARRIAGE_TERMINATION_REASON(MarriageTerminationReasonType.class),
-    SCHOOL_GRADE_TYPE(SchoolGradeType.class);
+    SCHOOL_GRADE_TYPE(SchoolGradeType.class),
+    COUNTY_TYPE(CountyType.class);
 
     public static final String AGE_GROUP_TYPE_PATH = "age-groups";
     public static final String LANGUAGE_TYPE_PATH = "languages";
@@ -166,6 +170,7 @@ public final class Constants {
     public static final String LICENSE_TYPE_PATH = "license-types";
     public static final String MARRIAGE_TERMINATION_REASON_PATH = "marriage-termination-reasons";
     public static final String SCHOOL_GRADE_TYPE_PATH = "school-grades";
+    public static final String COUNTY_TYPE_PATH = "counties";
 
     private Class<? extends BaseDictionary> dictionaryClass;
 
