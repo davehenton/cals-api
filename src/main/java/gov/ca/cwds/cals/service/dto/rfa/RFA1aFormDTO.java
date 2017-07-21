@@ -14,6 +14,7 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team.
@@ -43,21 +44,27 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   private CountyType applicationCounty;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private ResidenceDTO residence;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private ApplicantsRelationshipDTO applicantsRelationship;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private ApplicantsHistoryDTO applicantsHistory;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private List<RFA1aApplicant> applicants;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private List<RFA1aMinorChild> minorChildren;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private List<RFA1aOtherAdult> otherAdults;
 
   @ApiModelProperty(hidden = true)
@@ -67,15 +74,19 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   private List<RFA1cForm> rfa1cForms;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private AdoptionHistoryDTO adoptionHistory;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private ChildDesiredDTO childDesired;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private ReferencesDTO references;
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private ApplicantsDeclarationDTO applicantsDeclaration;
 
   @ApiModelProperty(hidden = true)

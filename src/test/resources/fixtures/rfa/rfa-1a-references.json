@@ -4,6 +4,10 @@
       "first_name": "Anna",
       "middle_name": "N.",
       "last_name": "Smith",
+      "suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
       "mailing_address": {
         "type": {
           "id": 1,

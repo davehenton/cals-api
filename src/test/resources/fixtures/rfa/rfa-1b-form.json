@@ -23,6 +23,10 @@
   "applicant_first_name": "Anna",
   "applicant_middle_name": "M.",
   "applicant_last_name": "Peterson",
+  "applicant_suffix": {
+    "id": 5,
+    "value": "Jr"
+  },
   "residence_address": {
     "street_address": "1702 Redoak Ct.",
     "zip": "98123",

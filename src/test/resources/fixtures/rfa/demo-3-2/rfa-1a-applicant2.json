@@ -2,6 +2,10 @@
   "first_name": "Peter",
   "middle_name": "J.",
   "last_name": "Smith",
+  "suffix": {
+    "id": 5,
+    "value": "Jr"
+  },
   "highest_education_level": {
     "id": 2,
     "value": "High School"
