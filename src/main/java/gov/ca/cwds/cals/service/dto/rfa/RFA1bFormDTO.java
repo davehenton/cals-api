@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
@@ -57,6 +58,10 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
 
   @ApiModelProperty(example = "Peterson")
   private String applicantLastName;
+
+  @ApiModelProperty(value = "Suffix", example = "Jr.")
+  @CheckReferentialIntegrity
+  private SuffixType applicantSuffix;
 
   @Valid
   private RFAAddressDTO residenceAddress;
@@ -240,4 +245,12 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     this.disclosures = disclosures;
   }
 
+  public SuffixType getApplicantSuffix() {
+    return applicantSuffix;
+  }
+
+  public void setApplicantSuffix(
+      SuffixType applicantSuffix) {
+    this.applicantSuffix = applicantSuffix;
+  }
 }

@@ -20,6 +20,7 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE
 import static gov.ca.cwds.cals.Constants.DictionaryType.SCHOOL_GRADE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SUFFIX_TYPE_PATH;
 import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertNotNull;
@@ -47,6 +48,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnership
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -102,6 +104,11 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "school-grade-type-response.json";
   private static final String FIXTURES_COUNTY_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "county-type-response.json";
+  private static final String FIXTURES_SUFFIX_TYPE_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "suffix-type-response.json";
+
+
+
 
 
   @BeforeClass
@@ -299,5 +306,15 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
         new GenericType<CollectionDTO<CountyType>>() {
         });
   }
+
+  @Test
+  public void getSuffixTypesTest() throws Exception {
+    baseDictionaryTest(
+        SUFFIX_TYPE_PATH,
+        FIXTURES_SUFFIX_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<SuffixType>>() {
+        });
+  }
+
 
 }

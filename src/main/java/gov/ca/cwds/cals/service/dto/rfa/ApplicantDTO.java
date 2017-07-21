@@ -10,7 +10,9 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,6 +34,10 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   private String middleName;
 
   private String lastName;
+
+  @ApiModelProperty(value = "Suffix", example = "Jr.")
+  @CheckReferentialIntegrity
+  private SuffixType suffix;
 
   private List<TypedPersonNameDTO> otherNames = new ArrayList<>();
 
@@ -175,4 +181,11 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
     this.phones = phones;
   }
 
+  public SuffixType getSuffix() {
+    return suffix;
+  }
+
+  public void setSuffix(SuffixType suffix) {
+    this.suffix = suffix;
+  }
 }

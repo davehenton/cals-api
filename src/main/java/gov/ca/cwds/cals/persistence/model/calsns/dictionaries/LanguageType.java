@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = LanguageType.NAMED_QUERY_FIND_ALL, query = "FROM LanguageType ORDER BY id ASC")
 @Entity
 @Table(name = "language_type")
-public class LanguageType extends BaseDictionary {
+public class LanguageType extends LegacyComplaintDictionary {
 
   private static final long serialVersionUID = 6826680604709572750L;
 

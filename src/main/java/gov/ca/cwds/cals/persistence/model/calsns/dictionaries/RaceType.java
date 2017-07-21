@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = RaceType.NAMED_QUERY_FIND_ALL, query = "FROM RaceType ORDER BY id ASC")
 @Entity
 @Table(name = "race_type")
-public class RaceType extends BaseDictionary {
+public class RaceType extends LegacyComplaintDictionary {
 
   private static final long serialVersionUID = -1974798271404624843L;
 

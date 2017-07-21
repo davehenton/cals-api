@@ -14,7 +14,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = CountyType.NAMED_QUERY_FIND_ALL, query = "FROM CountyType ORDER BY id ASC")
 @Entity
 @Table(name = "county_type")
-public class CountyType extends BaseDictionary {
+public class CountyType extends LegacyComplaintDictionary {
 
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".CountyType" + NAMED_QUERY_FIND_ALL_SUFFIX;

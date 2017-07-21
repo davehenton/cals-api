@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = GenderType.NAMED_QUERY_FIND_ALL, query = "FROM GenderType ORDER BY id ASC")
 @Entity
 @Table(name = "gender_type")
-public class GenderType extends BaseDictionary {
+public class GenderType extends LegacyComplaintDictionary {
 
   private static final long serialVersionUID = 1879954465871059275L;
 
