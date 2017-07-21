@@ -12,12 +12,8 @@ import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.persistence.model.lisfas.County;
-import gov.ca.cwds.cals.persistence.model.lisfas.FacilityStatusType;
-import gov.ca.cwds.cals.persistence.model.lisfas.FacilityType;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
-import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
-import gov.ca.cwds.cals.persistence.model.lisfas.VisitReasonType;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -32,11 +28,7 @@ public class FasDataAccessModule extends AbstractModule {
     this.fasSessionFactory = new Configuration().configure(hibernateCfg)
         .addAnnotatedClass(RecordChange.class)
         .addAnnotatedClass(LisFacFile.class)
-        .addAnnotatedClass(LisTableFile.class)
-        .addAnnotatedClass(FacilityType.class)
         .addAnnotatedClass(LisDoFile.class)
-        .addAnnotatedClass(FacilityStatusType.class)
-        .addAnnotatedClass(VisitReasonType.class)
         .addAnnotatedClass(County.class)
         .addAnnotatedClass(ComplaintReportLic802.class)
         .addAnnotatedClass(LpaInformation.class)
