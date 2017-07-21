@@ -41,7 +41,7 @@ public class FormerSpouseDTO extends BaseDTO {
   @ApiModelProperty(value = "Last Name", example = "Pollen")
   private String lastName;
 
-  @ApiModelProperty(value = "Suffix", example = "Jr.")
+  @ApiModelProperty(value = "Suffix")
   @CheckReferentialIntegrity
   private NameSuffixType nameSuffix;
 

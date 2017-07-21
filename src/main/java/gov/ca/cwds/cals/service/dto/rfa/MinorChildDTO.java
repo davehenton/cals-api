@@ -34,7 +34,7 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
 
   private String otherRelativeLastName;
 
-  @ApiModelProperty(value = "Suffix", example = "Jr.")
+  @ApiModelProperty(value = "Suffix")
   @CheckReferentialIntegrity
   private NameSuffixType otherRelativeNameSuffix;
 

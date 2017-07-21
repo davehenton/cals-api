@@ -40,7 +40,7 @@ public class ReferencesDTO extends BaseDTO implements RequestResponse {
 
     private String lastName;
 
-    @ApiModelProperty(value = "Suffix", example = "Jr.")
+    @ApiModelProperty(value = "Suffix")
     @CheckReferentialIntegrity
     private NameSuffixType nameSuffix;
 

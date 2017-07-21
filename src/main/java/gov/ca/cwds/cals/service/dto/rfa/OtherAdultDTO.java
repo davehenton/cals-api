@@ -30,7 +30,7 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(value = "Last Name", example = "Pollen")
   private String lastName;
 
-  @ApiModelProperty(value = "Suffix", example = "Jr.")
+  @ApiModelProperty(value = "Suffix")
   @CheckReferentialIntegrity
   private NameSuffixType nameSuffix;
 

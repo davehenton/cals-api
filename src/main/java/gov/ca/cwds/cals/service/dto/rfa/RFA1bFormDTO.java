@@ -59,7 +59,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "Peterson")
   private String applicantLastName;
 
-  @ApiModelProperty(value = "Suffix", example = "Jr.")
+  @ApiModelProperty(value = "Suffix")
   @CheckReferentialIntegrity
   private NameSuffixType applicantNameSuffix;
 

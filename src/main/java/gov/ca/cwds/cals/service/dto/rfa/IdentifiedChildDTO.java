@@ -37,7 +37,7 @@ public class IdentifiedChildDTO extends BaseDTO {
   @ApiModelProperty(example = "Martin")
   private String lastName;
 
-  @ApiModelProperty(value = "Suffix", example = "Jr.")
+  @ApiModelProperty(value = "Suffix")
   @CheckReferentialIntegrity
   private NameSuffixType nameSuffix;
 

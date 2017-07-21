@@ -20,7 +20,7 @@ public class PersonNameDTO extends BaseDTO {
   private String middleName;
   private String lastName;
 
-  @ApiModelProperty(value = "Suffix", example = "Jr.")
+  @ApiModelProperty(value = "Suffix")
   @CheckReferentialIntegrity
   private NameSuffixType nameSuffix;
 
