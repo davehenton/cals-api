@@ -5,7 +5,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
@@ -32,7 +32,7 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
 
   @ApiModelProperty(value = "Suffix", example = "Jr.")
   @CheckReferentialIntegrity
-  private SuffixType suffix;
+  private NameSuffixType nameSuffix;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   @ApiModelProperty(value = "Date of Birth", example = "1995-07-14")
@@ -83,11 +83,11 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
     this.relationshipToApplicants = relationshipToApplicants;
   }
 
-  public SuffixType getSuffix() {
-    return suffix;
+  public NameSuffixType getNameSuffix() {
+    return nameSuffix;
   }
 
-  public void setSuffix(SuffixType suffix) {
-    this.suffix = suffix;
+  public void setNameSuffix(NameSuffixType nameSuffix) {
+    this.nameSuffix = nameSuffix;
   }
 }

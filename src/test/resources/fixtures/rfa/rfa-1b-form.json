@@ -23,7 +23,7 @@
   "applicant_first_name": "Anna",
   "applicant_middle_name": "M.",
   "applicant_last_name": "Peterson",
-  "applicant_suffix": {
+  "applicant_name_suffix": {
     "id": 5,
     "value": "Jr"
   },

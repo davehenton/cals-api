@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
@@ -61,7 +61,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
 
   @ApiModelProperty(value = "Suffix", example = "Jr.")
   @CheckReferentialIntegrity
-  private SuffixType applicantSuffix;
+  private NameSuffixType applicantNameSuffix;
 
   @Valid
   private RFAAddressDTO residenceAddress;
@@ -245,12 +245,12 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     this.disclosures = disclosures;
   }
 
-  public SuffixType getApplicantSuffix() {
-    return applicantSuffix;
+  public NameSuffixType getApplicantNameSuffix() {
+    return applicantNameSuffix;
   }
 
-  public void setApplicantSuffix(
-      SuffixType applicantSuffix) {
-    this.applicantSuffix = applicantSuffix;
+  public void setApplicantNameSuffix(
+      NameSuffixType applicantNameSuffix) {
+    this.applicantNameSuffix = applicantNameSuffix;
   }
 }

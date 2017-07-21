@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,7 +31,7 @@ public class AdultChildDTO extends BaseDTO {
 
   @ApiModelProperty(value = "Suffix", example = "Jr.")
   @CheckReferentialIntegrity
-  private SuffixType suffix;
+  private NameSuffixType nameSuffix;
 
   @ApiModelProperty("Relationship to applicant")
   @CheckReferentialIntegrity
@@ -80,11 +80,11 @@ public class AdultChildDTO extends BaseDTO {
     this.adultChildRelatedTo = adultChildRelatedTo;
   }
 
-  public SuffixType getSuffix() {
-    return suffix;
+  public NameSuffixType getNameSuffix() {
+    return nameSuffix;
   }
 
-  public void setSuffix(SuffixType suffix) {
-    this.suffix = suffix;
+  public void setNameSuffix(NameSuffixType nameSuffix) {
+    this.nameSuffix = nameSuffix;
   }
 }
