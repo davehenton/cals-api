@@ -46,10 +46,6 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
   private Integer cwsId;
 
   @JsonIgnore
-  @Column(name = "cws_short_code", length = 2)
-  private String cwsShortCode;
-
-  @JsonIgnore
   @Column(name = "lis_id", length = 4)
   private String lisId;
 
@@ -77,14 +73,6 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
     this.cwsId = cwsId;
   }
 
-  public String getCwsShortCode() {
-    return cwsShortCode;
-  }
-
-  public void setCwsShortCode(String cwsShortCode) {
-    this.cwsShortCode = cwsShortCode;
-  }
-
   public String getLisId() {
     return lisId;
   }
@@ -95,12 +83,12 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
 
   @Override
   public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o, "cwsId", "cwsShortCode", "lisId");
+    return EqualsBuilder.reflectionEquals(this, o, "cwsId", "lisId");
   }
 
   @Override
   public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, "cwsId", "cwsShortCode", "lisId");
+    return HashCodeBuilder.reflectionHashCode(this, "cwsId", "lisId");
   }
 
   @Override

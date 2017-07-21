@@ -11,6 +11,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   private String otherTypeDescription;
 
   @ApiModelProperty(value = "County Type")
+  @CheckReferentialIntegrity
   private CountyType applicationCounty;
 
   @ApiModelProperty(hidden = true)
