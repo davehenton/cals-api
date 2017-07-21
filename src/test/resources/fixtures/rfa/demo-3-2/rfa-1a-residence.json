@@ -31,7 +31,7 @@
       "first_name": "Tom",
       "middle_name": "",
       "last_name": "Smith",
-      "suffix": {
+      "name_suffix": {
         "id": 4,
         "value": "Jr"
       }

@@ -2,7 +2,7 @@
   "first_name": "Peter",
   "middle_name": "J.",
   "last_name": "Smith",
-  "suffix": {
+  "name_suffix": {
     "id": 5,
     "value": "Jr"
   },

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
@@ -36,7 +36,7 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
 
   @ApiModelProperty(value = "Suffix", example = "Jr.")
   @CheckReferentialIntegrity
-  private SuffixType otherRelativeSuffix;
+  private NameSuffixType otherRelativeNameSuffix;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
@@ -120,12 +120,12 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
     this.childAdopted = childAdopted;
   }
 
-  public SuffixType getOtherRelativeSuffix() {
-    return otherRelativeSuffix;
+  public NameSuffixType getOtherRelativeNameSuffix() {
+    return otherRelativeNameSuffix;
   }
 
-  public void setOtherRelativeSuffix(
-      SuffixType otherRelativeSuffix) {
-    this.otherRelativeSuffix = otherRelativeSuffix;
+  public void setOtherRelativeNameSuffix(
+      NameSuffixType otherRelativeNameSuffix) {
+    this.otherRelativeNameSuffix = otherRelativeNameSuffix;
   }
 }

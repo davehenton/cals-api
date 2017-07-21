@@ -8,9 +8,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
@@ -37,7 +37,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   @ApiModelProperty(value = "Suffix", example = "Jr.")
   @CheckReferentialIntegrity
-  private SuffixType suffix;
+  private NameSuffixType nameSuffix;
 
   private List<TypedPersonNameDTO> otherNames = new ArrayList<>();
 
@@ -181,11 +181,11 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
     this.phones = phones;
   }
 
-  public SuffixType getSuffix() {
-    return suffix;
+  public NameSuffixType getNameSuffix() {
+    return nameSuffix;
   }
 
-  public void setSuffix(SuffixType suffix) {
-    this.suffix = suffix;
+  public void setNameSuffix(NameSuffixType nameSuffix) {
+    this.nameSuffix = nameSuffix;
   }
 }

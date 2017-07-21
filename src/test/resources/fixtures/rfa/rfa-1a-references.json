@@ -4,7 +4,7 @@
       "first_name": "Anna",
       "middle_name": "N.",
       "last_name": "Smith",
-      "suffix": {
+      "name_suffix": {
         "id": 5,
         "value": "Jr"
       },

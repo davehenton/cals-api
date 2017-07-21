@@ -13,6 +13,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
@@ -21,7 +22,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnership
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 
 /**
  * @author CWDS CALS API Team
@@ -149,7 +149,7 @@ public final class Constants {
     MARRIAGE_TERMINATION_REASON(MarriageTerminationReasonType.class),
     SCHOOL_GRADE_TYPE(SchoolGradeType.class),
     COUNTY_TYPE(CountyType.class),
-    SUFFIX_TYPE(SuffixType.class);
+    SUFFIX_TYPE(NameSuffixType.class);
 
     public static final String AGE_GROUP_TYPE_PATH = "age-groups";
     public static final String LANGUAGE_TYPE_PATH = "languages";
