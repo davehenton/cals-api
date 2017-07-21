@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.List;
@@ -48,7 +49,7 @@ public class ApplicantsDeclarationDTO extends BaseDTO implements RequestResponse
     private String signatureCity;
 
     @ApiModelProperty(value = "County of signature")
-    //@CheckReferentialIntegrity
+    @CheckReferentialIntegrity
     private CountyType signatureCounty;
 
     @ApiModelProperty(value = "Date of signature", example = "2015-03-25")

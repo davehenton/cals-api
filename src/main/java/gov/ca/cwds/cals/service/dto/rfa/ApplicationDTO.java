@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;
@@ -33,7 +34,7 @@ public class ApplicationDTO extends BaseDTO implements Request, Response {
   private String otherTypeDescription;
 
   @ApiModelProperty(value = "County Type")
-  //@CheckReferentialIntegrity
+  @CheckReferentialIntegrity
   private CountyType applicationCounty;
 
   public boolean isInitialApplication() {

@@ -57,7 +57,7 @@ sonarqube {
         property "sonar.projectName", "${name}"
         property "sonar.projectKey", "${group}:${name}"
         property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
-        property "sonar.exclusions", "src/test/resources/liquibase/cms/dml/*.xml, src/test/resources/liquibase/fas/dml/*.xml, src/test/resources/liquibase/lis/dml/*.xml"
+        property "sonar.exclusions", "src/main/java/gov/ca/cwds/cals/persistence/model/cms/*.*, src/test/resources/liquibase/cms/dml/*.xml, src/test/resources/liquibase/fas/dml/*.xml, src/test/resources/liquibase/lis/dml/*.xml"
     }
 }
 
@@ -175,6 +175,7 @@ task integrationTest(type: Test, dependsOn: testClasses) {
     // URL where integration tests will be pointed to (may change it in gradle.properties)
     systemProperty 'cals.api.url', project.property('cals.api.url')
 
+    exclude '**/ChangedRFA1aFormsResourceTest.class'
 }
 
 task copyConfig(type: Copy) {

@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.web.rest;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ADDRESS_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.AGE_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.APPLICANT_RELATIONSHIP_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.COUNTY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.EDUCATION_LEVEL_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.ETHNICITY_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.FACILITY_TYPE_PATH;
@@ -29,6 +30,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
@@ -98,6 +100,9 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "marriage-termination-reason-response.json";
   private static final String FIXTURES_SCHOOL_GRADE_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "school-grade-type-response.json";
+  private static final String FIXTURES_COUNTY_TYPE_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "county-type-response.json";
+
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -283,6 +288,15 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
         SCHOOL_GRADE_TYPE_PATH,
         FIXTURES_SCHOOL_GRADE_TYPE_RESPONSE_JSON,
         new GenericType<CollectionDTO<SchoolGradeType>>() {
+        });
+  }
+
+  @Test
+  public void getCountyTypeTest() throws Exception {
+    baseDictionaryTest(
+        COUNTY_TYPE_PATH,
+        FIXTURES_COUNTY_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<CountyType>>() {
         });
   }
 

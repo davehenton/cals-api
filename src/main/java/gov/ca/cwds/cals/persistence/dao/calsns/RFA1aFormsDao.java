@@ -3,9 +3,13 @@ package gov.ca.cwds.cals.persistence.dao.calsns;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
+import gov.ca.cwds.cals.persistence.dao.stream.QueryCreator;
+import gov.ca.cwds.cals.persistence.dao.stream.ScalarResultsStreamer;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.data.BaseDaoImpl;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -28,5 +32,12 @@ public class RFA1aFormsDao extends BaseDaoImpl<RFA1aForm> {
     ImmutableList.Builder<RFA1aForm> entities = new ImmutableList.Builder<>();
     entities.addAll(query.list());
     return entities.build();
+  }
+
+  public Stream<RFA1aForm> streamChangedRFA1aForms(final LocalDateTime after) {
+    QueryCreator<RFA1aForm> queryCreator = (session, entityClass) -> session
+        .createNamedQuery(RFA1aForm.NAMED_QUERY_FIND_UPDATED_AFTER, entityClass)
+        .setParameter("dateAfter", after).setReadOnly(true);
+    return new ScalarResultsStreamer<>(this, queryCreator).createStream();
   }
 }
