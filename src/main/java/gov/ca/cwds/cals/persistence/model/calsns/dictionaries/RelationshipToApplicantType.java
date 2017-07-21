@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = RelationshipToApplicantType.NAMED_QUERY_FIND_ALL, query = "FROM RelationshipToApplicantType ORDER BY id ASC")
 @Entity
 @Table(name = "relationship_to_applicant_type")
-public class RelationshipToApplicantType extends BaseDictionary {
+public class RelationshipToApplicantType extends LegacyComplaintDictionary {
 
   private static final long serialVersionUID = -4887203144793399786L;
 

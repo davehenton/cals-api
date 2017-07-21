@@ -30,7 +30,11 @@
     {
       "first_name": "Tom",
       "middle_name": "",
-      "last_name": "Smith"
+      "last_name": "Smith",
+      "suffix": {
+        "id": 4,
+        "value": "Jr"
+      }
     }
   ],
   "directions_to_home": "Near Junction West Park",

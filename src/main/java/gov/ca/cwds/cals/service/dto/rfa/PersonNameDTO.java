@@ -2,7 +2,10 @@ package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author CWDS CALS API Team
@@ -16,6 +19,10 @@ public class PersonNameDTO extends BaseDTO {
   private String firstName;
   private String middleName;
   private String lastName;
+
+  @ApiModelProperty(value = "Suffix", example = "Jr.")
+  @CheckReferentialIntegrity
+  private SuffixType suffix;
 
   public String getFirstName() {
     return firstName;
@@ -41,4 +48,11 @@ public class PersonNameDTO extends BaseDTO {
     this.lastName = lastName;
   }
 
+  public SuffixType getSuffix() {
+    return suffix;
+  }
+
+  public void setSuffix(SuffixType suffix) {
+    this.suffix = suffix;
+  }
 }

@@ -8,7 +8,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = AgeGroupType.NAMED_QUERY_FIND_ALL, query = "FROM AgeGroupType ORDER BY id ASC")
 @Entity
 @Table(name = "age_group_type")
-public class AgeGroupType extends BaseDictionary {
+public class AgeGroupType extends LegacyComplaintDictionary {
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".AgeGroupType" + NAMED_QUERY_FIND_ALL_SUFFIX;
 

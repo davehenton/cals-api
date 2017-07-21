@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = LicenseType.NAMED_QUERY_FIND_ALL, query = "FROM LicenseType ORDER BY id ASC")
 @Entity
 @Table(name = "license_type")
-public class LicenseType extends BaseDictionary {
+public class LicenseType extends LegacyComplaintDictionary {
 
   private static final long serialVersionUID = -3278919966978860583L;
 

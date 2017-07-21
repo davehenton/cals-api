@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = SiblingGroupType.NAMED_QUERY_FIND_ALL, query = "FROM SiblingGroupType ORDER BY id ASC")
 @Entity
 @Table(name = "sibling_group_type")
-public class SiblingGroupType extends BaseDictionary {
+public class SiblingGroupType extends LegacyComplaintDictionary {
 
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".SiblingGroupType" + NAMED_QUERY_FIND_ALL_SUFFIX;

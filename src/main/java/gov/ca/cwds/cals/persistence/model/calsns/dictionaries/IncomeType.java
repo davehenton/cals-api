@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = IncomeType.NAMED_QUERY_FIND_ALL, query = "FROM IncomeType ORDER BY id ASC")
 @Entity
 @Table(name = "income_type")
-public class IncomeType extends BaseDictionary {
+public class IncomeType extends LegacyComplaintDictionary {
 
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".IncomeType" + NAMED_QUERY_FIND_ALL_SUFFIX;

@@ -3,7 +3,10 @@ package gov.ca.cwds.cals.service.dto.rfa;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -36,6 +39,11 @@ public class ReferencesDTO extends BaseDTO implements RequestResponse {
     private String middleName;
 
     private String lastName;
+
+    @ApiModelProperty(value = "Suffix", example = "Jr.")
+    @CheckReferentialIntegrity
+    private SuffixType suffix;
+
     @Valid
     private RFAAddressDTO mailingAddress;
 
@@ -91,5 +99,12 @@ public class ReferencesDTO extends BaseDTO implements RequestResponse {
       this.email = email;
     }
 
+    public SuffixType getSuffix() {
+      return suffix;
+    }
+
+    public void setSuffix(SuffixType suffix) {
+      this.suffix = suffix;
+    }
   }
 }

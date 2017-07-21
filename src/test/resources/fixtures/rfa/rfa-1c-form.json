@@ -10,6 +10,10 @@
       "first_name": "Collin",
       "middle_name": "P.",
       "last_name": "Martin",
+      "suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
       "date_of_birth": "2007-07-14",
       "gender": {
         "id": 1,

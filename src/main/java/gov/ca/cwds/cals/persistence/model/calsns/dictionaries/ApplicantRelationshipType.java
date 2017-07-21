@@ -13,7 +13,7 @@ import org.hibernate.annotations.NamedQuery;
 )
 @Entity
 @Table(name = "applicant_relationship_type")
-public class ApplicantRelationshipType extends BaseDictionary {
+public class ApplicantRelationshipType extends LegacyComplaintDictionary {
 
   private static final long serialVersionUID = -129674356484145734L;
 

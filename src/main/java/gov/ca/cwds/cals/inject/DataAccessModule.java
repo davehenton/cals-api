@@ -27,6 +27,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnership
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
@@ -204,6 +205,7 @@ public class DataAccessModule extends AbstractModule {
           MarriageTerminationReasonType.class,
           SchoolGradeType.class,
           CountyType.class,
+          SuffixType.class,
           //RFA
           RFA1aForm.class,
           RFA1aApplicant.class,
