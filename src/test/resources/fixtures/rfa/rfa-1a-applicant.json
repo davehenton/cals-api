@@ -14,8 +14,8 @@
     }
   ],
   "highest_education_level": {
-    "id": 1,
-    "value": "High School"
+    "id": 3,
+    "value": "High School or Equivalent"
   },
   "date_of_birth": "1981-12-26",
   "gender": {
