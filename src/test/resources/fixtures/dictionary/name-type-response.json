@@ -2,23 +2,19 @@
   "items": [
     {
       "id": 1,
-      "value": "Alias"
+      "value": "AKA"
     },
     {
       "id": 2,
-      "value": "Legal"
+      "value": "Doe"
     },
     {
       "id": 3,
-      "value": "Maiden"
+      "value": "Legal"
     },
     {
       "id": 4,
-      "value": "Preferred"
-    },
-    {
-      "id": 5,
-      "value": "Other"
+      "value": "Maiden"
     }
   ]
 }
