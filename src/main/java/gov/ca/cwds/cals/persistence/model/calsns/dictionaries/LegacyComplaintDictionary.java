@@ -14,6 +14,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class LegacyComplaintDictionary extends BaseDictionary {
+    private static final long serialVersionUID = -8303234812509304380L;
 
   @JsonIgnore
   @Column(name = "cws_id")
