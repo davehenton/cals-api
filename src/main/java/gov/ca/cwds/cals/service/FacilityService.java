@@ -15,6 +15,7 @@ import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.StateDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.dao.fas.FacilityInfoLisDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
@@ -26,6 +27,7 @@ import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
@@ -56,10 +58,8 @@ public class FacilityService implements CrudsService {
   @Inject
   private LisFacFileLisDao lisFacFileLisDao;
 
-/*
   @Inject
-  private LisFacFileFasDao lisFacFileFasDao;
-*/
+  private FacilityInfoLisDao facilityInfoLisDao;
 
   @Inject
   private LisTableFileDao lisTableFileDao;
@@ -129,8 +129,12 @@ public class FacilityService implements CrudsService {
         lisDsLisFacFile != null ? findAssignedWorkerInformation(lisDsLisFacFile) : null;
     FacilityDTO facilityDTO = facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
 
-    LisFacFile fasDsLisFacFile = findFasFacilityByLicenseNumber(parameterObject);
-    fasFacilityMapper.toFacilityDTO(facilityDTO, fasDsLisFacFile);
+    FacilityInfoLis facilityInfoLis = findFacilityInfoByLicenseNumber(parameterObject);
+    if (facilityInfoLis != null) {
+      attachVisitsData(facilityInfoLis);
+    }
+
+    fasFacilityMapper.toFacilityDTO(facilityDTO, facilityInfoLis);
 
     if (parameterObject.isExpanded()) {
       List<FacilityChildDTO> facilityChildren = clientDao
@@ -200,29 +204,24 @@ public class FacilityService implements CrudsService {
     return lisFacFile;
   }
 
-  @UnitOfWork(FAS)
-  protected LisFacFile findFasFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
-/*
-    LisFacFile lisFacFile = lisFacFileFasDao.find(parameterObject.getLicenseNumber());
-    if (lisFacFile == null) {
-      return null;
-    }
-
-    Integer facilityLastVisitReasonCode = lisFacFile.getFacilityLastVisitReasonCode();
+  @UnitOfWork(LIS)
+  protected void attachVisitsData(FacilityInfoLis facilityInfoLis) {
+    Integer facilityLastVisitReasonCode = facilityInfoLis.getFacLastVisitReason();
     if (facilityLastVisitReasonCode != null) {
-      LisTableFile facilityLastVisitReason = lisTableFileDao.findFacilityVisitReason(facilityLastVisitReasonCode);
-      lisFacFile.setFacilityLastVisitReason(facilityLastVisitReason);
+      LisTableFile facilityLastVisitReason = lisTableFileDao.findVisitReasonType(facilityLastVisitReasonCode);
+      facilityInfoLis.setFacilityLastVisitReason(facilityLastVisitReason);
     }
 
-    Integer facilityLastDeferredVisitReasonCode = lisFacFile.getFacilityLastDeferredVisitReasonCode();
+    Integer facilityLastDeferredVisitReasonCode = facilityInfoLis.getFacLastDeferVisitReason();
     if (facilityLastDeferredVisitReasonCode != null) {
-      LisTableFile facilityLastDeferredVisitReason = lisTableFileDao.findFacilityVisitReason(facilityLastVisitReasonCode);
-      lisFacFile.setFacilityLastDeferredVisitReason(facilityLastDeferredVisitReason);
+      LisTableFile facilityLastDeferredVisitReason = lisTableFileDao.findVisitReasonType(facilityLastDeferredVisitReasonCode);
+      facilityInfoLis.setFacilityLastDeferredVisitReason(facilityLastDeferredVisitReason);
     }
+  }
 
-    return lisFacFile;
-*/
-    return null;
+  @UnitOfWork(FAS)
+  protected FacilityInfoLis findFacilityInfoByLicenseNumber(FacilityParameterObject parameterObject) {
+    return facilityInfoLisDao.find(parameterObject.getLicenseNumber());
   }
 
   @UnitOfWork(FAS)

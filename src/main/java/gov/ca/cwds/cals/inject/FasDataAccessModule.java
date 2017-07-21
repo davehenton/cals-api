@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.dao.fas.FacilityInfoLisDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.RecordChangeFasDao;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
@@ -47,6 +47,6 @@ public class FasDataAccessModule extends AbstractModule {
     bind(ComplaintReportLic802Dao.class);
     bind(LpaInformationDao.class);
     bind(InspectionDao.class);
-    bind(LisFacFileFasDao.class);
+    bind(FacilityInfoLisDao.class);
   }
 }

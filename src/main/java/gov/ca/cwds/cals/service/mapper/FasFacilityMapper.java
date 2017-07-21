@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityVisitDTO;
 import java.util.ArrayList;
@@ -38,22 +38,21 @@ public interface FasFacilityMapper {
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "href", ignore = true)
   @Mapping(target = "lastVisitDate", source = "facLastVisitDate")
-//  @Mapping(target = "lastVisitReason", source = "facLastVisitReason", qualifiedByName = "facilityVisitReason")
+  @Mapping(target = "lastVisitReason", source = "facilityLastVisitReason", qualifiedByName = "facilityVisitReason")
   @Mapping(target = "lastDeferredVisitDate", source = "facLastDeferVisitDate")
-//  @Mapping(target = "lastDeferredVisitReason", source = "facLastDeferVisitReason", qualifiedByName = "facilityVisitReason")
+  @Mapping(target = "lastDeferredVisitReason", source = "facilityLastDeferredVisitReason", qualifiedByName = "facilityVisitReason")
   @Mapping(target = "annualVisitYear", source = "facAnnualVisitYear")
   @Mapping(target = "prelicensingVisitDate", source = "facPreLicVisitDate")
-  void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, LisFacFile fasLisFacFile);
+  void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, FacilityInfoLis facilityInfoLis);
 
   @AfterMapping
-  default void after(@MappingTarget FacilityDTO facilityDTO, LisFacFile lisFacFile) {
+  default void after(@MappingTarget FacilityDTO facilityDTO, FacilityInfoLis facilityInfoLis) {
     FacilityVisitMapper mapper = Mappers.getMapper(FacilityVisitMapper.class);
     List<FacilityVisitDTO> facilityVisitDTOs = new ArrayList<>(5);
-    facilityVisitDTOs.add(mapper.toAnnual10MonthFacilityVisitDTO(lisFacFile));
-    facilityVisitDTOs.add(mapper.toAnnual22MonthFacilityVisitDTO(lisFacFile));
-    facilityVisitDTOs.add(mapper.toPostLicensingFacilityVisitDTO(lisFacFile));
-    facilityVisitDTOs.add(mapper.toRenewalFacilityVisitDTO(lisFacFile));
-    facilityVisitDTOs.add(mapper.toMiddleYearVisitDTO(lisFacFile));
+    facilityVisitDTOs.add(mapper.toAnnual10MonthFacilityVisitDTO(facilityInfoLis));
+    facilityVisitDTOs.add(mapper.toAnnual22MonthFacilityVisitDTO(facilityInfoLis));
+    facilityVisitDTOs.add(mapper.toPostLicensingFacilityVisitDTO(facilityInfoLis));
+    facilityVisitDTOs.add(mapper.toRenewalFacilityVisitDTO(facilityInfoLis));
     facilityDTO.setVisits(facilityVisitDTOs);
   }
 }

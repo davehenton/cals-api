@@ -1157,10 +1157,6 @@ public class LisFacFile implements PersistentObject {
 
   private LisTableFile facilityType;
 
-  private LisTableFile facilityLastVisitReason;
-
-  private LisTableFile facilityLastDeferredVisitReason;
-
   public void setCounty(LisTableFile county) {
     this.county = county;
   }
@@ -1186,23 +1182,5 @@ public class LisFacFile implements PersistentObject {
   @Transient
   public LisTableFile getFacilityType() {
     return facilityType;
-  }
-
-  @Transient
-  public LisTableFile getFacilityLastVisitReason() {
-    return facilityLastVisitReason;
-  }
-
-  public void setFacilityLastVisitReason(LisTableFile facilityLastVisitReason) {
-    this.facilityLastVisitReason = facilityLastVisitReason;
-  }
-
-  @Transient
-  public LisTableFile getFacilityLastDeferredVisitReason() {
-    return facilityLastDeferredVisitReason;
-  }
-
-  public void setFacilityLastDeferredVisitReason(LisTableFile facilityLastDeferredVisitReason) {
-    this.facilityLastDeferredVisitReason = facilityLastDeferredVisitReason;
   }
 }

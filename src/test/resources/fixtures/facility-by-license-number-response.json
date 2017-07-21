@@ -24,6 +24,16 @@
   "capacity" : 8,
   "license_effective_date" : "2004-05-27",
   "original_application_recieved_date" : "2004-01-26",
+  "last_visit_date" : "1998-06-18",
+  "last_deferred_visit_date" : "1998-07-18",
+  "last_visit_reason" : {
+    "id" : "4",
+    "value" : "ANNUAL"
+  },
+  "last_deferred_visit_reason" : {
+    "id" : "1",
+    "value" : "PRELICENSING"
+  },
   "county" : {
     "id" : "39",
     "value" : "SAN JOAQUIN"
@@ -49,5 +59,28 @@
       "state" : "CA",
       "zip_code" : "91950"
     }
-  } ]
+  } ],
+  "visits" : [ {
+    "approval" : "appr 10_mo",
+    "visit_type" : "Annual 10 month",
+    "visit_date" : "1998-06-18",
+    "visit_deferred_date" : "1998-10-18"
+  }, {
+    "approval" : "appr 22_mo",
+    "visit_type" : "Annual 22 month",
+    "visit_date" : "1998-12-18",
+    "visit_deferred_date" : "1998-11-18"
+  }, {
+    "approval" : "appr post_lic",
+    "visit_type" : "Post Licensing",
+    "visit_date" : "1991-11-07",
+    "visit_deferred_date" : "1991-11-06"
+  }, {
+    "approval" : "appr renewal_visit",
+    "visit_type" : "Renewal",
+    "visit_date" : "1991-11-08",
+    "visit_deferred_date" : "1991-11-09"
+  } ],
+  "annual_visit_year" : 4,
+  "prelicensing_visit_date" : [ 1992, 11, 6 ]
 }

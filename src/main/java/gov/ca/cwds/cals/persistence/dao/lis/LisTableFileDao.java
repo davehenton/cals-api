@@ -32,16 +32,23 @@ public class LisTableFileDao extends BaseDaoImpl<LisTableFile> {
 
   public LisTableFile findFacilityStatus(Integer facilityStatusCode) {
     return getLisTableFile(
-        LisTableFile.FIND_FACILITY_TYPE_QUERY_PARAM_NAME,
+        LisTableFile.FIND_FACILITY_STATUS_QUERY_PARAM_NAME,
         facilityStatusCode,
         LisTableFile.FIND_FACILITY_STATUS_QUERY_SUFFIX);
   }
 
   public LisTableFile findFacilityType(Integer facilityTypeCode) {
     return getLisTableFile(
-        LisTableFile.FIND_FACILITY_STATUS_QUERY_PARAM_NAME,
+        LisTableFile.FIND_FACILITY_TYPE_QUERY_PARAM_NAME,
         facilityTypeCode,
         LisTableFile.FIND_FACILITY_TYPE_QUERY_SUFFIX);
+  }
+
+  public LisTableFile findVisitReasonType(Integer visitReasonCode) {
+    return getLisTableFile(
+        LisTableFile.FIND_VISIT_REASON_QUERY_PARAM_NAME,
+        visitReasonCode,
+        LisTableFile.FIND_VISIT_REASON_QUERY_SUFFIX);
   }
 
   private LisTableFile getLisTableFile(String paramName, Integer paramCode, String querySuffix) {

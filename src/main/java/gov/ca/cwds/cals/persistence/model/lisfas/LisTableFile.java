@@ -19,9 +19,11 @@ import java.io.Serializable;
 @NamedQuery(name = LisTableFile.FIND_COUNTY_QUERY,
     query = "FROM LisTableFile WHERE tblCoNbr = :" + LisTableFile.FIND_COUNTY_QUERY_PARAM_NAME)
 @NamedQuery(name = LisTableFile.FIND_FACILITY_STATUS_QUERY,
-    query = "FROM LisTableFile WHERE tblFacStatusCode = :" + LisTableFile.FIND_FACILITY_TYPE_QUERY_PARAM_NAME)
+    query = "FROM LisTableFile WHERE tblFacStatusCode = :" + LisTableFile.FIND_FACILITY_STATUS_QUERY_PARAM_NAME)
 @NamedQuery(name = LisTableFile.FIND_FACILITY_TYPE_QUERY,
-    query = "FROM LisTableFile WHERE tblFacTypeCode = :" + LisTableFile.FIND_FACILITY_STATUS_QUERY_PARAM_NAME)
+    query = "FROM LisTableFile WHERE tblFacTypeCode = :" + LisTableFile.FIND_FACILITY_TYPE_QUERY_PARAM_NAME)
+@NamedQuery(name = LisTableFile.FIND_VISIT_REASON_QUERY,
+    query = "FROM LisTableFile WHERE tblVisitReasonCode = :" + LisTableFile.FIND_VISIT_REASON_QUERY_PARAM_NAME)
 @Entity
 @Table(name = "lis_table_file")
 public class LisTableFile implements PersistentObject {
@@ -31,13 +33,17 @@ public class LisTableFile implements PersistentObject {
   public static final String FIND_COUNTY_QUERY_SUFFIX = ".findCounty";
   public static final String FIND_COUNTY_QUERY = "LisTableFile" + FIND_COUNTY_QUERY_SUFFIX;
 
-  public static final String FIND_FACILITY_TYPE_QUERY_PARAM_NAME = "facilityStatusCode";
+  public static final String FIND_FACILITY_TYPE_QUERY_PARAM_NAME = "facilityTypeCode";
   public static final String FIND_FACILITY_TYPE_QUERY_SUFFIX = ".findFacilityType";
   public static final String FIND_FACILITY_TYPE_QUERY = "LisTableFile" + FIND_FACILITY_TYPE_QUERY_SUFFIX;
 
-  public static final String FIND_FACILITY_STATUS_QUERY_PARAM_NAME = "facilityTypeCode";
+  public static final String FIND_FACILITY_STATUS_QUERY_PARAM_NAME = "facilityStatusCode";
   public static final String FIND_FACILITY_STATUS_QUERY_SUFFIX = ".findFacilityStatus";
   public static final String FIND_FACILITY_STATUS_QUERY = "LisTableFile" + FIND_FACILITY_STATUS_QUERY_SUFFIX;
+
+  public static final String FIND_VISIT_REASON_QUERY_PARAM_NAME = "visitReasonCode";
+  public static final String FIND_VISIT_REASON_QUERY_SUFFIX = ".findVisitReason";
+  public static final String FIND_VISIT_REASON_QUERY = "LisTableFile" + FIND_VISIT_REASON_QUERY_SUFFIX;
 
   private Integer isnLisTableFile;
   private Integer tblCoNbr;
