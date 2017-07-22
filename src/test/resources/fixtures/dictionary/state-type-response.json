@@ -2,11 +2,11 @@
   "items": [
     {
       "id": 1,
-      "value": "Alabama"
+      "value": "Alaska"
     },
     {
       "id": 2,
-      "value": "Alaska"
+      "value": "Alabama"
     },
     {
       "id": 3,
@@ -14,11 +14,11 @@
     },
     {
       "id": 4,
-      "value": "Arizona"
+      "value": "Arkansas"
     },
     {
       "id": 5,
-      "value": "Arkansas"
+      "value": "Arizona"
     },
     {
       "id": 6,
@@ -26,7 +26,7 @@
     },
     {
       "id": 7,
-      "value": "Canal Zone"
+      "value": "Northern Marianas Islands"
     },
     {
       "id": 8,
@@ -38,7 +38,7 @@
     },
     {
       "id": 10,
-      "value": "Delaware"
+      "value": "Canal Zone"
     },
     {
       "id": 11,
@@ -46,71 +46,71 @@
     },
     {
       "id": 12,
-      "value": "Florida"
+      "value": "Delaware"
     },
     {
       "id": 13,
-      "value": "Georgia"
+      "value": "Florida"
     },
     {
       "id": 14,
-      "value": "Guam"
+      "value": "Georgia"
     },
     {
       "id": 15,
-      "value": "Hawaii"
+      "value": "Guam"
     },
     {
       "id": 16,
-      "value": "Idaho"
+      "value": "Hawaii"
     },
     {
       "id": 17,
-      "value": "Illinois"
-    },
-    {
-      "id": 18,
-      "value": "Indiana"
-    },
-    {
-      "id": 19,
       "value": "Iowa"
     },
     {
+      "id": 18,
+      "value": "Idaho"
+    },
+    {
+      "id": 19,
+      "value": "Illinois"
+    },
+    {
       "id": 20,
-      "value": "Kansas"
+      "value": "Indiana"
     },
     {
       "id": 21,
-      "value": "Kentucky"
+      "value": "Kansas"
     },
     {
       "id": 22,
-      "value": "Louisiana"
+      "value": "Kentucky"
     },
     {
       "id": 23,
-      "value": "Maine"
+      "value": "Louisiana"
     },
     {
       "id": 24,
-      "value": "Maryland"
-    },
-    {
-      "id": 25,
       "value": "Massachusetts"
     },
     {
+      "id": 25,
+      "value": "Maryland"
+    },
+    {
       "id": 26,
-      "value": "Michigan"
+      "value": "Maine"
     },
     {
       "id": 27,
-      "value": "Minnesota"
+      "value": "Michigan"
     },
     {
       "id": 28,
-      "value": "Mississippi"
+      "value": "Minnesota"
     },
     {
       "id": 29,
@@ -118,43 +118,43 @@
     },
     {
       "id": 30,
-      "value": "Montana"
+      "value": "Mississippi"
     },
     {
       "id": 31,
-      "value": "Nebraska"
+      "value": "Montana"
     },
     {
       "id": 32,
-      "value": "Nevada"
-    },
-    {
-      "id": 33,
-      "value": "New Hampshire"
-    },
-    {
-      "id": 34,
-      "value": "New Jersey"
-    },
-    {
-      "id": 35,
-      "value": "New Mexico"
-    },
-    {
-      "id": 36,
-      "value": "New York"
-    },
-    {
-      "id": 37,
       "value": "North Carolina"
     },
     {
-      "id": 38,
+      "id": 33,
       "value": "North Dakota"
     },
     {
+      "id": 34,
+      "value": "Nebraska"
+    },
+    {
+      "id": 35,
+      "value": "New Hampshire"
+    },
+    {
+      "id": 36,
+      "value": "New Jersey"
+    },
+    {
+      "id": 37,
+      "value": "New Mexico"
+    },
+    {
+      "id": 38,
+      "value": "Nevada"
+    },
+    {
       "id": 39,
-      "value": "Northern Marianas Islands"
+      "value": "New York"
     },
     {
       "id": 40,
@@ -194,11 +194,11 @@
     },
     {
       "id": 49,
-      "value": "Texas"
+      "value": "Trust Territories"
     },
     {
       "id": 50,
-      "value": "Trust Territories"
+      "value": "Texas"
     },
     {
       "id": 51,
@@ -206,7 +206,7 @@
     },
     {
       "id": 52,
-      "value": "Vermont"
+      "value": "Virginia"
     },
     {
       "id": 53,
@@ -214,7 +214,7 @@
     },
     {
       "id": 54,
-      "value": "Virginia"
+      "value": "Vermont"
     },
     {
       "id": 55,
@@ -222,11 +222,11 @@
     },
     {
       "id": 56,
-      "value": "West Virginia"
+      "value": "Wisconsin"
     },
     {
       "id": 57,
-      "value": "Wisconsin"
+      "value": "West Virginia"
     },
     {
       "id": 58,
