@@ -2,6 +2,10 @@
   "first_name": "Anna",
   "middle_name": "L.",
   "last_name": "Pollen",
+  "name_suffix": {
+    "id": 5,
+    "value": "Jr"
+  },
   "date_of_birth": "1995-07-14",
   "relationship_to_applicants": [
     {

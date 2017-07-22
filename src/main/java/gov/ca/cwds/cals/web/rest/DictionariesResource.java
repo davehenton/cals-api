@@ -41,6 +41,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SUFFIX_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.SUFFIX_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
@@ -407,4 +409,21 @@ public class DictionariesResource {
   public Response getCounties() {
     return dictionariesResourceDelegate.get(COUNTY_TYPE);
   }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + SUFFIX_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Nmae Suffix Dictionary Values", response = DictionaryValuesDTO.class)
+  public Response getNameSuffixes() {
+    return dictionariesResourceDelegate.get(SUFFIX_TYPE);
+  }
+
 }

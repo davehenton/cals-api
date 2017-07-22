@@ -2,11 +2,19 @@
   "first_name": "Anna",
   "middle_name": "N.",
   "last_name": "Smith",
+  "name_suffix": {
+    "id": 5,
+    "value": "Jr"
+  },
   "other_names": [
     {
       "first_name": "Anna",
       "middle_name": "N.",
       "last_name": "Peterson",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
       "name_type": {
         "id": 2,
         "value": "Maiden"
@@ -14,8 +22,8 @@
     }
   ],
   "highest_education_level": {
-    "id": 1,
-    "value": "High School"
+    "id": 3,
+    "value": "High School or Equivalent"
   },
   "date_of_birth": "1981-12-26",
   "gender": {

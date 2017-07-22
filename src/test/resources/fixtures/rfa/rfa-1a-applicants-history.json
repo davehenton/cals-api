@@ -9,6 +9,10 @@
       "first_name": "Anna",
       "middle_name": "L.",
       "last_name": "Pollen",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
       "date_of_marriage": "2016-12-26",
       "place_of_marriage_city": "Sacramento",
       "place_of_marriage_state": {

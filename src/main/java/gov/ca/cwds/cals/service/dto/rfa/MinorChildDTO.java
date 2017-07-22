@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,6 +33,10 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   private String otherRelativeMiddleName;
 
   private String otherRelativeLastName;
+
+  @ApiModelProperty(value = "Suffix")
+  @CheckReferentialIntegrity
+  private NameSuffixType otherRelativeNameSuffix;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
@@ -114,4 +120,12 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
     this.childAdopted = childAdopted;
   }
 
+  public NameSuffixType getOtherRelativeNameSuffix() {
+    return otherRelativeNameSuffix;
+  }
+
+  public void setOtherRelativeNameSuffix(
+      NameSuffixType otherRelativeNameSuffix) {
+    this.otherRelativeNameSuffix = otherRelativeNameSuffix;
+  }
 }

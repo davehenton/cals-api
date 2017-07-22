@@ -2,11 +2,19 @@
   "first_name": "Anna",
   "middle_name": "N.",
   "last_name": "Smith",
+  "name_suffix": {
+    "id": 5,
+    "value": "Jr"
+  },
   "other_names": [
     {
       "first_name": "Anna",
       "middle_name": "N.",
       "last_name": "Peterson",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
       "name_type": {
         "id": 2,
         "value": "Maiden"

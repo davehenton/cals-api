@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
@@ -35,6 +36,10 @@ public class IdentifiedChildDTO extends BaseDTO {
 
   @ApiModelProperty(example = "Martin")
   private String lastName;
+
+  @ApiModelProperty(value = "Suffix")
+  @CheckReferentialIntegrity
+  private NameSuffixType nameSuffix;
 
   @ApiModelProperty(example = "2007-07-14")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
@@ -152,4 +157,11 @@ public class IdentifiedChildDTO extends BaseDTO {
     this.schoolAddress = schoolAddress;
   }
 
+  public NameSuffixType getNameSuffix() {
+    return nameSuffix;
+  }
+
+  public void setNameSuffix(NameSuffixType nameSuffix) {
+    this.nameSuffix = nameSuffix;
+  }
 }

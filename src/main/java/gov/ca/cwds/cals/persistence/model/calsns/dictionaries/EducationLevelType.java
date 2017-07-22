@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = EducationLevelType.NAMED_QUERY_FIND_ALL, query = "FROM EducationLevelType ORDER BY id ASC")
 @Entity
 @Table(name = "education_level_type")
-public class EducationLevelType extends BaseDictionary {
+public class EducationLevelType extends LegacyComplaintDictionary {
 
   private static final long serialVersionUID = -1861709811537318045L;
 

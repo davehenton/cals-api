@@ -16,12 +16,11 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /** @author CWDS CALS API Team */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 public abstract class BaseDictionary extends BaseDTO implements PersistentObject, Request {
 
   private static final long serialVersionUID = 1405907682848102125L;
@@ -41,14 +40,6 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
   @Column(name = "description", length = 100, nullable = false)
   private String value;
 
-  @JsonIgnore
-  @Column(name = "cws_id")
-  private Integer cwsId;
-
-  @JsonIgnore
-  @Column(name = "lis_id", length = 4)
-  private String lisId;
-
   public Long getId() {
     return id;
   }
@@ -63,32 +54,6 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
 
   public void setValue(String value) {
     this.value = value;
-  }
-
-  public int getCwsId() {
-    return cwsId;
-  }
-
-  public void setCwsId(int cwsId) {
-    this.cwsId = cwsId;
-  }
-
-  public String getLisId() {
-    return lisId;
-  }
-
-  public void setLisId(String lisId) {
-    this.lisId = lisId;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    return EqualsBuilder.reflectionEquals(this, o, "cwsId", "lisId");
-  }
-
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, "cwsId", "lisId");
   }
 
   @Override

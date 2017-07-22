@@ -14,6 +14,10 @@
   "other_relative_first_name": "",
   "other_relative_middle_name": "",
   "other_relative_last_name": "",
+  "other_relative_name_suffix": {
+    "id": 5,
+    "value": "Jr"
+  },
   "date_of_birth": "2007-07-14",
   "gender": {
     "id": 1,

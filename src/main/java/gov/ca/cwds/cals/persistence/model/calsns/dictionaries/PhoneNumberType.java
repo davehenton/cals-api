@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = PhoneNumberType.NAMED_QUERY_FIND_ALL, query = "FROM PhoneNumberType ORDER BY id ASC")
 @Entity
 @Table(name = "phone_number_type")
-public class PhoneNumberType extends BaseDictionary {
+public class PhoneNumberType extends ShortCodeComplaintDictionary {
 
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".PhoneNumberType" + NAMED_QUERY_FIND_ALL_SUFFIX;

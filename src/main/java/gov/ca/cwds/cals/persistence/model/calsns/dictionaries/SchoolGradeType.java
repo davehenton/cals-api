@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = SchoolGradeType.NAMED_QUERY_FIND_ALL, query = "FROM SchoolGradeType ORDER BY id ASC")
 @Entity
 @Table(name = "school_grade_type")
-public class SchoolGradeType extends BaseDictionary {
+public class SchoolGradeType extends LegacyComplaintDictionary {
 
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".SchoolGradeType" + NAMED_QUERY_FIND_ALL_SUFFIX;

@@ -2,31 +2,31 @@
   "items": [
     {
       "id": 1,
-      "value": "High School"
+      "value": "Eighth Grade or Less"
     },
     {
       "id": 2,
-      "value": "GED"
+      "value": "Some High School"
     },
     {
       "id": 3,
-      "value": "Some College"
+      "value": "High School or Equivalent"
     },
     {
       "id": 4,
-      "value": "College - Bachelors"
+      "value": "Technical Training beyond High School"
     },
     {
       "id": 5,
-      "value": "College - Masters"
+      "value": "Some College or College-Level courses"
     },
     {
       "id": 6,
-      "value": "College - PhD"
+      "value": "College Graduate"
     },
     {
       "id": 7,
-      "value": "Medical School"
+      "value": "Post-Graduate Education"
     }
   ]
 }

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
@@ -39,6 +40,10 @@ public class FormerSpouseDTO extends BaseDTO {
 
   @ApiModelProperty(value = "Last Name", example = "Pollen")
   private String lastName;
+
+  @ApiModelProperty(value = "Suffix")
+  @CheckReferentialIntegrity
+  private NameSuffixType nameSuffix;
 
   @ApiModelProperty(value = "Marriage/Domestic partnership date", example = "2016-12-26")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
@@ -164,6 +169,14 @@ public class FormerSpouseDTO extends BaseDTO {
   public void setPlaceOfMarriageEndState(
       StateType placeOfMarriageEndState) {
     this.placeOfMarriageEndState = placeOfMarriageEndState;
+  }
+
+  public NameSuffixType getNameSuffix() {
+    return nameSuffix;
+  }
+
+  public void setNameSuffix(NameSuffixType nameSuffix) {
+    this.nameSuffix = nameSuffix;
   }
 
 }

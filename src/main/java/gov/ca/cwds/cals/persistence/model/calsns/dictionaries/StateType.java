@@ -10,7 +10,7 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = StateType.NAMED_QUERY_FIND_ALL, query = "FROM StateType ORDER BY id ASC")
 @Entity
 @Table(name = "state_type")
-public class StateType extends BaseDictionary {
+public class StateType extends LegacyComplaintDictionary {
 
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".StateType" + NAMED_QUERY_FIND_ALL_SUFFIX;
