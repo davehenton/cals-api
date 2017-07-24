@@ -49,6 +49,7 @@ lisDataSourceFactory:
   properties:
       hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.CONNXDialect
       hibernate.show_sql: true
+      hibernate.default_catalog: ${DB_LIS_CATALOG:-hwdcs1_cahwnet_gov}
       hibernate.default_schema: ${DB_LIS_SCHEMA:-dbo}
       hibernate.connection.autocommit: false
 
