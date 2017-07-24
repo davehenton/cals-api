@@ -19,6 +19,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
@@ -201,6 +202,7 @@ public class DataAccessModule extends AbstractModule {
           SchoolGradeType.class,
           CountyType.class,
           NameSuffixType.class,
+          NamePrefixType.class,
           //RFA
           RFA1aForm.class,
           RFA1aApplicant.class,

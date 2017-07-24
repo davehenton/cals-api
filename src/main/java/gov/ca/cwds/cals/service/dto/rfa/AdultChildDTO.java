@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
@@ -19,6 +20,10 @@ import java.util.List;
 public class AdultChildDTO extends BaseDTO {
 
   private static final long serialVersionUID = -5382998437450053251L;
+
+  @ApiModelProperty(value = "Prefix")
+  @CheckReferentialIntegrity
+  private NamePrefixType namePrefix;
 
   @ApiModelProperty(value = "First Name", example = "Andrew")
   private String firstName;
@@ -38,6 +43,15 @@ public class AdultChildDTO extends BaseDTO {
   private RelationshipToApplicantType relationshipToApplicant;
 
   private List<Long> adultChildRelatedTo = new ArrayList<>();
+
+  public NamePrefixType getNamePrefix() {
+    return namePrefix;
+  }
+
+  public void setNamePrefix(
+      NamePrefixType namePrefix) {
+    this.namePrefix = namePrefix;
+  }
 
   public String getFirstName() {
     return firstName;

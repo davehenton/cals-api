@@ -25,6 +25,8 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.MARRIAGE_TERMINATION_REASON;
 import static gov.ca.cwds.cals.Constants.DictionaryType.MARRIAGE_TERMINATION_REASON_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_PREFIX_TYPE;
+import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_PREFIX_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE;
@@ -61,10 +63,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 @Api(
-  value = DICTIONARIES,
-  tags = {DICTIONARIES}
+    value = DICTIONARIES,
+    tags = {DICTIONARIES}
 )
 @Path(DICTIONARIES)
 @Produces(MediaType.APPLICATION_JSON)
@@ -84,11 +88,11 @@ public class DictionariesResource {
   @Path("/" + AGE_GROUP_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Age Group Types", response = DictionaryValuesDTO.class)
   public Response getDictionaryAgeGroupTypes() {
@@ -100,11 +104,11 @@ public class DictionariesResource {
   @Path("/" + LANGUAGE_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Languages", response = DictionaryValuesDTO.class)
   public Response getDictionaryLanguageTypes() {
@@ -116,11 +120,11 @@ public class DictionariesResource {
   @Path("/" + GENDER_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Genders", response = DictionaryValuesDTO.class)
   public Response getDictionaryGenderTypes() {
@@ -132,11 +136,11 @@ public class DictionariesResource {
   @Path("/" + NAME_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Name Types", response = DictionaryValuesDTO.class)
   public Response getDictionaryNameTypes() {
@@ -148,11 +152,11 @@ public class DictionariesResource {
   @Path("/" + EDUCATION_LEVEL_TYPE_PATH)
   @Timed
   @ApiResponses(
-    value = {
-      @ApiResponse(code = 401, message = "Not Authorized"),
-      @ApiResponse(code = 404, message = "Not found"),
-      @ApiResponse(code = 406, message = "Accept Header not supported")
-    }
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
   )
   @ApiOperation(value = "Returns Education Level Types", response = DictionaryValuesDTO.class)
   public Response getDictionaryEducationLevelType() {
@@ -190,23 +194,6 @@ public class DictionariesResource {
   public Response getDictionaryFacilityType() {
     return dictionariesResourceDelegate.get(FACILITY_TYPE);
   }
-
-  /*
-  @UnitOfWork(CALSNS)
-  @GET
-  @Path("/" + RACE_TYPE_PATH)
-  @Timed
-  @ApiResponses(
-      value = {
-          @ApiResponse(code = 401, message = "Not Authorized"),
-          @ApiResponse(code = 404, message = "Not found"),
-          @ApiResponse(code = 406, message = "Accept Header not supported")
-      }
-  )
-  @ApiOperation(value = "Returns Races", response = DictionaryValuesDTO.class)
-  public Response getRaceType() {
-    return dictionariesResourceDelegate.get(RACE_TYPE);
-  }*/
 
   @UnitOfWork(CALSNS)
   @GET
@@ -420,9 +407,25 @@ public class DictionariesResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns Nmae Suffix Dictionary Values", response = DictionaryValuesDTO.class)
+  @ApiOperation(value = "Returns Name Suffix Dictionary Values", response = DictionaryValuesDTO.class)
   public Response getNameSuffixes() {
     return dictionariesResourceDelegate.get(SUFFIX_TYPE);
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + NAME_PREFIX_TYPE_PATH)
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns Name Prefix Dictionary Values", response = DictionaryValuesDTO.class)
+  public Response getNamePrefixes() {
+    return dictionariesResourceDelegate.get(NAME_PREFIX_TYPE);
   }
 
 }

@@ -28,6 +28,10 @@
   "is_others_using_residence_as_mailing": true,
   "other_people_using_residence_as_mailing": [
     {
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
       "first_name": "string",
       "middle_name": "string",
       "last_name": "string",
