@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "facility_info_lis")
+@SuppressWarnings("squid:S3437") //LocalDate is serializable
 public class FacilityInfoLis implements PersistentObject {
   private String facActionCode;
 
