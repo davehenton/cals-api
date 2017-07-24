@@ -24,7 +24,7 @@ import java.io.Serializable;
                 LpaInformation.PARAM_LPA_CODE
 )
 @Entity
-@Table(name = "lpa_information", schema = "fas")
+@Table(name = "lpa_information")
 public class LpaInformation implements PersistentObject {
 
     private static final long serialVersionUID = -3566583736496919788L;

@@ -24,15 +24,15 @@
   "capacity" : 8,
   "license_effective_date" : "2004-05-27",
   "original_application_recieved_date" : "2004-01-26",
-  "last_visit_date" : "2004-12-22",
-  "last_deferred_visit_date" : "2005-04-02",
+  "last_visit_date" : "1998-06-18",
+  "last_deferred_visit_date" : "1998-07-18",
   "last_visit_reason" : {
-    "id" : "1",
-    "value" : "PRELICENSING"
+    "id" : "4",
+    "value" : "ANNUAL"
   },
   "last_deferred_visit_reason" : {
-    "id" : "2",
-    "value" : "POST LICENSING"
+    "id" : "1",
+    "value" : "PRELICENSING"
   },
   "county" : {
     "id" : "39",
@@ -61,31 +61,26 @@
     }
   } ],
   "visits" : [ {
-    "approval" : "a01",
+    "approval" : "appr 10_mo",
     "visit_type" : "Annual 10 month",
-    "visit_date" : "2004-05-01",
-    "visit_deferred_date" : "2004-05-03"
+    "visit_date" : "1998-06-18",
+    "visit_deferred_date" : "1998-10-18"
   }, {
-    "approval" : "a02",
+    "approval" : "appr 22_mo",
     "visit_type" : "Annual 22 month",
-    "visit_date" : "2004-05-02",
-    "visit_deferred_date" : "2004-05-04"
+    "visit_date" : "1998-12-18",
+    "visit_deferred_date" : "1998-11-18"
   }, {
-    "approval" : "a04",
+    "approval" : "appr post_lic",
     "visit_type" : "Post Licensing",
-    "visit_date" : "2004-12-22",
-    "visit_deferred_date" : "2004-05-07"
+    "visit_date" : "1991-11-07",
+    "visit_deferred_date" : "1991-11-06"
   }, {
-    "approval" : "a05",
+    "approval" : "appr renewal_visit",
     "visit_type" : "Renewal",
-    "visit_date" : "2004-05-09",
-    "visit_deferred_date" : "2004-05-08"
-  }, {
-    "approval" : "a03",
-    "visit_type" : "Middle Year",
-    "visit_date" : "2004-05-06",
-    "visit_deferred_date" : "2004-05-05"
+    "visit_date" : "1991-11-08",
+    "visit_deferred_date" : "1991-11-09"
   } ],
-  "annual_visit_year" : 5,
-  "prelicensing_visit_date" : [ 2004, 4, 2 ]
+  "annual_visit_year" : 4,
+  "prelicensing_visit_date" : [ 1992, 11, 6 ]
 }

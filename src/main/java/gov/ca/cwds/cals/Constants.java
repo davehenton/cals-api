@@ -217,8 +217,6 @@ public final class Constants {
 
     public static final String RENEWAL = "Renewal";
 
-    public static final String MIDDLE_YEAR = "Middle Year";
-
     private VisitTypes() {
     }
   }

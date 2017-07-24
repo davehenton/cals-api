@@ -2,31 +2,28 @@ package gov.ca.cwds.cals.persistence.model.lisfas;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 
 /**
  * @author CWDS CALS API Team
  */
-
-@NamedQuery(name = "FacilityType.findAll",
-        query = "FROM FacilityType order by tblFacTypeDesc")
-
-@Entity
-@DiscriminatorValue("FACILITY_TYPE")
-public class FacilityType extends LisTableFile {
+@Deprecated //https://www.pivotaltracker.com/story/show/148550507
+@Embeddable
+public class FacilityType {
 
     private static final long serialVersionUID = -3760714538653384441L;
 
+    @Basic
+    @Column(name = "tbl_fac_type_code")
     private Integer tblFacTypeCode;
-    private String tblFacTypeDesc;
 
     @Basic
-    @Column(name = "tbl_fac_type_code", nullable = true)
+    @Column(name = "tbl_fac_type_desc", length = 70)
+    private String tblFacTypeDesc;
+
     public Integer getTblFacTypeCode() {
         return tblFacTypeCode;
     }
@@ -35,8 +32,6 @@ public class FacilityType extends LisTableFile {
         this.tblFacTypeCode = tblFacTypeCode;
     }
 
-    @Basic
-    @Column(name = "tbl_fac_type_desc", nullable = true, length = 70)
     public String getTblFacTypeDesc() {
         return tblFacTypeDesc;
     }

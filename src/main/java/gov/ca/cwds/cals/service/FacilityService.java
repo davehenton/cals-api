@@ -15,20 +15,23 @@ import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.StateDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.dao.fas.FacilityInfoLisDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
-import gov.ca.cwds.cals.persistence.dao.fas.LisFacFileFasDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
+import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
@@ -56,7 +59,10 @@ public class FacilityService implements CrudsService {
   private LisFacFileLisDao lisFacFileLisDao;
 
   @Inject
-  private LisFacFileFasDao lisFacFileFasDao;
+  private FacilityInfoLisDao facilityInfoLisDao;
+
+  @Inject
+  private LisTableFileDao lisTableFileDao;
 
   @Inject
   private PlacementHomeDao placementHomeDao;
@@ -123,8 +129,12 @@ public class FacilityService implements CrudsService {
         lisDsLisFacFile != null ? findAssignedWorkerInformation(lisDsLisFacFile) : null;
     FacilityDTO facilityDTO = facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
 
-    LisFacFile fasDsLisFacFile = findFasFacilityByLicenseNumber(parameterObject);
-    fasFacilityMapper.toFacilityDTO(facilityDTO, fasDsLisFacFile);
+    FacilityInfoLis facilityInfoLis = findFacilityInfoByLicenseNumber(parameterObject);
+    if (facilityInfoLis != null) {
+      attachVisitsData(facilityInfoLis);
+    }
+
+    fasFacilityMapper.toFacilityDTO(facilityDTO, facilityInfoLis);
 
     if (parameterObject.isExpanded()) {
       List<FacilityChildDTO> facilityChildren = clientDao
@@ -168,12 +178,50 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(LIS)
   protected LisFacFile findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
-    return lisFacFileLisDao.find(parameterObject.getLicenseNumber());
+    LisFacFile lisFacFile = lisFacFileLisDao.find(parameterObject.getLicenseNumber());
+    if (lisFacFile == null) {
+      return null;
+    }
+
+    Integer countyCode = lisFacFile.getCountyCode();
+    if (countyCode != null) {
+      LisTableFile county = lisTableFileDao.findCounty(countyCode);
+      lisFacFile.setCounty(county);
+    }
+
+    Integer facilityStatusCode = lisFacFile.getFacilityStatusCode();
+    if (facilityStatusCode != null) {
+      LisTableFile facilityStatus = lisTableFileDao.findFacilityStatus(facilityStatusCode);
+      lisFacFile.setFacilityStatus(facilityStatus);
+    }
+
+    Integer facilityTypeCode = lisFacFile.getFacilityTypeCode();
+    if (facilityTypeCode != null) {
+      LisTableFile facilityType = lisTableFileDao.findFacilityType(facilityTypeCode);
+      lisFacFile.setFacilityType(facilityType);
+    }
+
+    return lisFacFile;
+  }
+
+  @UnitOfWork(LIS)
+  protected void attachVisitsData(FacilityInfoLis facilityInfoLis) {
+    Integer facilityLastVisitReasonCode = facilityInfoLis.getFacLastVisitReason();
+    if (facilityLastVisitReasonCode != null) {
+      LisTableFile facilityLastVisitReason = lisTableFileDao.findVisitReasonType(facilityLastVisitReasonCode);
+      facilityInfoLis.setFacilityLastVisitReason(facilityLastVisitReason);
+    }
+
+    Integer facilityLastDeferredVisitReasonCode = facilityInfoLis.getFacLastDeferVisitReason();
+    if (facilityLastDeferredVisitReasonCode != null) {
+      LisTableFile facilityLastDeferredVisitReason = lisTableFileDao.findVisitReasonType(facilityLastDeferredVisitReasonCode);
+      facilityInfoLis.setFacilityLastDeferredVisitReason(facilityLastDeferredVisitReason);
+    }
   }
 
   @UnitOfWork(FAS)
-  protected LisFacFile findFasFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
-    return lisFacFileFasDao.find(parameterObject.getLicenseNumber());
+  protected FacilityInfoLis findFacilityInfoByLicenseNumber(FacilityParameterObject parameterObject) {
+    return facilityInfoLisDao.find(parameterObject.getLicenseNumber());
   }
 
   @UnitOfWork(FAS)

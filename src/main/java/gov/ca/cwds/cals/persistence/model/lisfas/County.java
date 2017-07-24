@@ -5,24 +5,26 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 
 /**
  * @author CWDS CALS API Team
  */
 
-@Entity
-@DiscriminatorValue("COUNTY")
-public class County extends LisTableFile {
+@Deprecated //https://www.pivotaltracker.com/story/show/148551617
+@Embeddable
+public class County {
 
     private static final long serialVersionUID = 8555919317317204161L;
 
+    @Basic
+    @Column(name = "tbl_co_nbr")
     private Integer tblCoNbr;
-    private String tblCoDesc;
 
     @Basic
-    @Column(name = "tbl_co_nbr", nullable = true)
+    @Column(name = "tbl_co_desc", length = 20)
+    private String tblCoDesc;
+
     public Integer getTblCoNbr() {
         return tblCoNbr;
     }
@@ -31,8 +33,6 @@ public class County extends LisTableFile {
         this.tblCoNbr = tblCoNbr;
     }
 
-    @Basic
-    @Column(name = "tbl_co_desc", nullable = true, length = 20)
     public String getTblCoDesc() {
         return tblCoDesc;
     }

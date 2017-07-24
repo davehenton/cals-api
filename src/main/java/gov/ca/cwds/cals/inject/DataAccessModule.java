@@ -68,15 +68,14 @@ import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementEpisode;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.StaffPerson;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
+import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.persistence.model.lisfas.County;
-import gov.ca.cwds.cals.persistence.model.lisfas.FacilityStatusType;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
-import gov.ca.cwds.cals.persistence.model.lisfas.VisitReasonType;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.DataSourceFactory;
@@ -94,8 +93,6 @@ public class DataAccessModule extends AbstractModule {
           LisTableFile.class,
           gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
           LisDoFile.class,
-          FacilityStatusType.class,
-          VisitReasonType.class,
           County.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -110,12 +107,10 @@ public class DataAccessModule extends AbstractModule {
 
   private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(
-          LisFacFile.class,
+          FacilityInfoLis.class,
           LisTableFile.class,
           gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
           LisDoFile.class,
-          FacilityStatusType.class,
-          VisitReasonType.class,
           County.class,
           ComplaintReportLic802.class,
           LpaInformation.class,
