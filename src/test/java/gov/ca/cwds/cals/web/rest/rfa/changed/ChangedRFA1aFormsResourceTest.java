@@ -48,8 +48,6 @@ public class ChangedRFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
     assertTrue(optional.isPresent());
     RFA1aFormDTO rfa1aFormDTO = optional.get();
     assertTrue(rfa1aFormDTO.getApplicants().size() > 0);
-    assertTrue(0 > toLocalDateTime(after).compareTo(rfa1aFormDTO.getApplicants().get(0).getUpdateDateTime()));
-
     rfaForms = getChangedRFA1aFormsAfter("2222-01-01 00:00:00");
     assertTrue(rfaForms.getCollection().size() == 0);
   }
