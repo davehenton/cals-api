@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.validation.Date;
-import java.time.LocalDate;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,10 +25,11 @@ public class ComplaintDTO extends BaseDTO implements Response {
     @JsonProperty("id")
     private String id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
-    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
     @JsonProperty("complaint_date")
-    private LocalDate complaintDate;
+    @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
+    @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
+    private LocalDateTime complaintDate;
 
     @RemoveTrailingSpaces
     @JsonProperty("assigned_worker")
@@ -47,7 +49,8 @@ public class ComplaintDTO extends BaseDTO implements Response {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
     @JsonProperty("approval_date")
-    @Date(format = DATE_FORMAT + " " + TIME_FORMAT, required = false)
+    @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
+    @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
     private LocalDateTime approvalDate;
 
     @JsonProperty("pre_investigation_comments")
@@ -73,11 +76,11 @@ public class ComplaintDTO extends BaseDTO implements Response {
         this.id = id;
     }
 
-    public LocalDate getComplaintDate() {
+    public LocalDateTime getComplaintDate() {
         return complaintDate;
     }
 
-    public void setComplaintDate(LocalDate complaintDate) {
+    public void setComplaintDate(LocalDateTime complaintDate) {
         this.complaintDate = complaintDate;
     }
 

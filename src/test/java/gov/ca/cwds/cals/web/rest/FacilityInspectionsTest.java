@@ -27,8 +27,8 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
     private static final String INSPECTIONS_RESPONSE_JSON = "fixtures/facility-inspections-response.json";
     private static final String INSPECTION_RESPONSE_JSON = "fixtures/facility-inspection-response.json";
 
-    public static final Integer FACILITY_NUMBER = 11400218;
-    public static final String INSPECTION_ID = "14-CR-MHRO-8WZSF8-20120809134525";
+    public static final Integer FACILITY_NUMBER = 100001732;
+    public static final String INSPECTION_ID = "24-CR-CCHR-6T5TUV-20060829145639";
 
     @BeforeClass
     public static void beforeClass() throws Exception {
@@ -82,7 +82,7 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
         FacilityInspectionsDTO inspectionsDTO = invocation.get(FacilityInspectionsDTO.class);
         assertTrue(inspectionsDTO != null);
         assertTrue(inspectionsDTO.getInspections() != null);
-        assertTrue(inspectionsDTO.getInspections().size() == 3);
+        assertTrue(inspectionsDTO.getInspections().size() == 1);
 
         FacilityInspectionDTO inspectionDTO0 = inspectionsDTO.getInspections().get(0);
         String inspectionId = inspectionDTO0.getId();
@@ -92,7 +92,7 @@ public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
         final FacilityInspectionDTO inspectionDTO = invocation.get(FacilityInspectionDTO.class);
 
         // Expected only 1 deficiency object
-        assertTrue(inspectionDTO.getDeficiencies().size() == 1);
+        assertTrue(inspectionDTO.getDeficiencies().size() == 2);
 
         inspectionsDTO.getInspections().forEach(inspection -> {
             if (INSPECTION_ID.equals(inspection.getId())) {
