@@ -1,29 +1,24 @@
 package gov.ca.cwds.cals.service.validation;
 
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
-import gov.ca.cwds.cals.inject.InjectorHolder;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 /**
  * @author CWDS CALS API Team
  */
 public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityValidator
-    implements ConstraintValidator<CheckReferentialIntegrity, PersistentObject> {
+    implements ConstraintValidator<CheckReferentialIntegrity, PersistentObject>,
+    CalsSessionFactoryAware {
 
-  private SessionFactory sessionFactory;
+  private static final String VALIDATION_MESSAGE =
+      " Object %s is not found in database. Referential integrity was not confirmed.";
+
   private boolean checkEquality;
 
   public void initialize(CheckReferentialIntegrity constraint) {
     checkEquality = constraint.checkEquality();
-    Injector injector = InjectorHolder.INSTANCE.getInjector();
-    sessionFactory =
-        injector.getInstance(Key.get(SessionFactory.class, CalsnsSessionFactory.class));
   }
 
   public boolean isValid(PersistentObject obj, ConstraintValidatorContext context) {
@@ -31,19 +26,15 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
       return true;
     }
 
-    try (Session currentSession = sessionFactory.openSession()) {
+    try (Session currentSession = openSession()) {
 
-      boolean valid = checkReferentialIntegrity(currentSession, obj);
-      if (!valid) {
-        StringBuilder sb =
-            new StringBuilder(" object: ")
-                .append(obj)
-                .append(" is not found in database. Referential integrity was not confirmed.");
-
+      if (!checkReferentialIntegrity(currentSession, obj)) {
         context.disableDefaultConstraintViolation();
-        context.buildConstraintViolationWithTemplate(sb.toString()).addConstraintViolation();
+        context.buildConstraintViolationWithTemplate(String.format(VALIDATION_MESSAGE, obj))
+            .addConstraintViolation();
+        return false;
       }
-      return valid;
+      return true;
     }
   }
 

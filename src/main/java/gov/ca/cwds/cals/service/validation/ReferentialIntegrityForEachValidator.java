@@ -1,31 +1,23 @@
 package gov.ca.cwds.cals.service.validation;
 
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
-import gov.ca.cwds.cals.inject.InjectorHolder;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.util.Collection;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 /**
  * @author CWDS CALS API Team
  */
 public class ReferentialIntegrityForEachValidator extends AbstractReferentialIntegrityValidator
     implements ConstraintValidator<
-    CheckReferentialIntegrityForEach, Collection<? extends PersistentObject>> {
+    CheckReferentialIntegrityForEach, Collection<? extends PersistentObject>>,
+    CalsSessionFactoryAware {
 
-  private SessionFactory sessionFactory;
   private boolean checkEquality;
 
   public void initialize(CheckReferentialIntegrityForEach constraint) {
     checkEquality = constraint.checkEquality();
-    Injector injector = InjectorHolder.INSTANCE.getInjector();
-    sessionFactory =
-        injector.getInstance(Key.get(SessionFactory.class, CalsnsSessionFactory.class));
   }
 
   public boolean isValid(
@@ -34,13 +26,12 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
       return true;
     }
 
-    try (Session currentSession = sessionFactory.openSession()) {
-      Session finalCurrentSession = currentSession;
+    try (Session currentSession = openSession()) {
       boolean[] result = new boolean[]{true};
       int[] index = new int[]{0};
       collection.forEach(
           o -> {
-            boolean valid = checkReferentialIntegrity(finalCurrentSession, o);
+            boolean valid = checkReferentialIntegrity(currentSession, o);
             result[0] &= valid;
             if (!valid) {
               context.disableDefaultConstraintViolation();

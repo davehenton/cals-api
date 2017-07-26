@@ -1,0 +1,23 @@
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.*
+import gov.ca.cwds.cals.service.dto.rfa.*
+import gov.ca.cwds.cals.Constants;
+
+global java.util.Set validationMessages;
+
+rule "Check Applicant names for duplication"
+      dialect "mvel"
+  agenda-group "applicant-duplicate-names-check"
+  when
+      $form : RFA1aForm()
+      $firstApplicant: RFA1aApplicant() from $form.applicants
+      $secondApplicant: RFA1aApplicant(this != $firstApplicant) from $form.applicants
+      $firstApplicantDTO: ApplicantDTO() from $firstApplicant.applicant
+      exists ApplicantDTO(firstName == $firstApplicantDTO.firstName,
+       lastName == $firstApplicantDTO.lastName,
+       nameSuffix.id == $firstApplicantDTO.nameSuffix.id) from $secondApplicant.applicant
+  then
+      validationMessages.add(String.format(Constants.BusinessValidationMessages.APPLICANT_DUPLICATE_NAMES_MESSAGE,
+       $firstApplicantDTO.getFirstName(),
+       $firstApplicantDTO.getLastName(),
+       $firstApplicantDTO.getNameSuffix().getValue()));
+end

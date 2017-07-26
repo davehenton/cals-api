@@ -1,0 +1,5 @@
+<kmodule xmlns="http://www.drools.org/xsd/kmodule">
+  <kbase name="inProgressValidation" packages="rules">
+    <ksession name="inProgressValidationSession"/>
+  </kbase>
+</kmodule>
