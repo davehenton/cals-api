@@ -6,7 +6,7 @@ import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrityForEach;
+import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;

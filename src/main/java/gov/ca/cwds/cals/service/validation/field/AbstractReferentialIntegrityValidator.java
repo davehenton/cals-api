@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.service.validation;
+package gov.ca.cwds.cals.service.validation.field;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.io.Serializable;

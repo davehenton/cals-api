@@ -12,7 +12,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDate;

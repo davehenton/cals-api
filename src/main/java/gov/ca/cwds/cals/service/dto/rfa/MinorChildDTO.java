@@ -9,7 +9,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelations
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
-import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.List;

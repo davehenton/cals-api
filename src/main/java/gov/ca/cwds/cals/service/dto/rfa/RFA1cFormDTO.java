@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.service.dto.rfa;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
