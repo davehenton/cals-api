@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import io.swagger.annotations.ApiModelProperty;

@@ -5,21 +5,14 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
 /**
  * @author CWDS CALS API Team
  */
-public final class ThreeParametersRetrievingStrategy implements RetrievingParametersStrategy {
+public final class ThreeParametersRetrievingStrategy<T extends BaseDTO>
+    extends AbstractRetrievingParametersStrategy<T> {
 
-  public static final RetrievingParametersStrategy INSTANCE = new ThreeParametersRetrievingStrategy();
+  public static final RetrievingParametersStrategy INSTANCE =
+      new ThreeParametersRetrievingStrategy();
 
   private ThreeParametersRetrievingStrategy() {
+    super((byte) 2);
   }
 
-  public <T extends BaseDTO> BusinessValidationParameterObject<T> retrieveParameters(
-      Object[] parameters, Class<T> clazz) {
-    if (!(parameters[0] instanceof Long) ||
-        !(parameters[1] instanceof Long) ||
-        !(parameters[2].getClass().isAssignableFrom(clazz))) {
-      throw new IllegalArgumentException(
-          "Illegal method signature");
-    }
-    return new BusinessValidationParameterObject<>((Long) parameters[0], (T) parameters[2]);
-  }
 }

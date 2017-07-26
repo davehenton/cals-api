@@ -1,5 +1,6 @@
-package gov.ca.cwds.cals.service.validation;
+package gov.ca.cwds.cals.service.validation.field;
 
+import gov.ca.cwds.cals.service.validation.CalsSessionFactoryAware;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

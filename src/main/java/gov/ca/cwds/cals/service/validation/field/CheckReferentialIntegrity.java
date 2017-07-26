@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.service.validation;
+package gov.ca.cwds.cals.service.validation.field;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -17,13 +17,13 @@ import javax.validation.Payload;
  */
 @Target({FIELD, METHOD, PARAMETER, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = ReferentialIntegrityForEachValidator.class)
+@Constraint(validatedBy = ReferentialIntegrityValidator.class)
 @Documented
-public @interface CheckReferentialIntegrityForEach {
+public @interface CheckReferentialIntegrity {
 
   boolean checkEquality() default true;
 
-  String message() default "Constraint violated Referential Integrity is not confirmed";
+  String message() default "Object is not found in database";
 
   Class<?>[] groups() default {};
 
@@ -34,6 +34,6 @@ public @interface CheckReferentialIntegrityForEach {
   @Documented
   @interface List {
 
-    CheckReferentialIntegrityForEach[] value();
+    CheckReferentialIntegrity[] value();
   }
 }

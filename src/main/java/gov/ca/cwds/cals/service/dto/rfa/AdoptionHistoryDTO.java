@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import java.util.List;
 import javax.validation.Valid;
 
