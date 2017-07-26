@@ -31,8 +31,7 @@ public abstract class TestInternalEntityConfiguration<T extends BaseDTO> {
 
   public T createEntity() throws IOException {
     String fixture = fixture(getCreateFixture());
-    T entity = clientTestRule.getMapper().readValue(fixture, getEntityClass());
-    return entity;
+    return clientTestRule.getMapper().readValue(fixture, getEntityClass());
   }
 
   public void setEntityClass(Class<T> entityClass) {

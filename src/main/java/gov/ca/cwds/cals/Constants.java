@@ -114,7 +114,6 @@ public final class Constants {
 
       private PathParams() {
       }
-
     }
 
     public static class QueryParams {
@@ -184,7 +183,6 @@ public final class Constants {
     public Class<? extends BaseDictionary> getDictionaryClass() {
       return dictionaryClass;
     }
-
   }
 
   public static class AddressTypes {
@@ -234,6 +232,24 @@ public final class Constants {
     public static final String CALSNS = "calsns";
 
     private UnitOfWork() {
+    }
+  }
+
+  public static class BusinessRulesAgendaGroups {
+
+    public static final String APPLICANT_DUPLICATE_NAMES_CHECK = "applicant-duplicate-names-check";
+
+    private BusinessRulesAgendaGroups() {
+    }
+  }
+
+  public static class BusinessValidationMessages {
+
+    public static final String APPLICANT_DUPLICATE_NAMES_MESSAGE =
+        "Applicant with firstName - [%s],"
+            + " last name - [%s] and name suffix - [%s] already exists in application";
+
+    private BusinessValidationMessages() {
     }
   }
 
