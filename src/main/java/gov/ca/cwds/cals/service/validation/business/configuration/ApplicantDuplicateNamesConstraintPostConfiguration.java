@@ -34,6 +34,7 @@ public final class ApplicantDuplicateNamesConstraintPostConfiguration
   @Override
   public RFA1aForm buildModifiedForm(RFA1aForm form, ApplicantDTO applicantDTO) {
     RFA1aApplicant newApplicant = new RFA1aApplicant();
+    newApplicant.setApplicant(applicantDTO);
     Hibernate.initialize(form.getApplicants());
     getCurrentSession().detach(form);
     form.getApplicants().add(newApplicant);
