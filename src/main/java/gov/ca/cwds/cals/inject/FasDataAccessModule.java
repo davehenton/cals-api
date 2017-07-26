@@ -11,7 +11,6 @@ import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
-import gov.ca.cwds.cals.persistence.model.lisfas.County;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import org.hibernate.SessionFactory;
@@ -29,7 +28,6 @@ public class FasDataAccessModule extends AbstractModule {
         .addAnnotatedClass(RecordChange.class)
         .addAnnotatedClass(LisFacFile.class)
         .addAnnotatedClass(LisDoFile.class)
-        .addAnnotatedClass(County.class)
         .addAnnotatedClass(ComplaintReportLic802.class)
         .addAnnotatedClass(LpaInformation.class)
         .addAnnotatedClass(Rrcpoc.class)
