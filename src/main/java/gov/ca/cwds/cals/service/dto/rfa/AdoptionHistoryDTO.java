@@ -100,16 +100,17 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
     this.wasSubjectForExclusionOrderQ7 = wasSubjectForExclusionOrderQ7;
   }
 
+  /**
+   * @author CWDS CALS API Team
+   */
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
   public static class FosterCareLicensesQ1 extends BaseDTO {
 
     private static final long serialVersionUID = 2997447845465265427L;
 
     private boolean wasPreviouslyLicensed;
-    private String agencyName;
 
-    @CheckReferentialIntegrity
-    private LicenseType licenseType;
+    private List<AgencyDTO> agencies;
 
     public boolean isWasPreviouslyLicensed() {
       return wasPreviouslyLicensed;
@@ -119,24 +120,18 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
       this.wasPreviouslyLicensed = wasPreviouslyLicensed;
     }
 
-    public String getAgencyName() {
-      return agencyName;
+    public List<AgencyDTO> getAgencies() {
+      return agencies;
     }
 
-    public void setAgencyName(String agencyName) {
-      this.agencyName = agencyName;
+    public void setAgencies(List<AgencyDTO> agencies) {
+      this.agencies = agencies;
     }
-
-    public LicenseType getLicenseType() {
-      return licenseType;
-    }
-
-    public void setLicenseType(LicenseType licenseType) {
-      this.licenseType = licenseType;
-    }
-
   }
 
+  /**
+   * @author CWDS CALS API Team
+   */
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
   public static class ApplicationsForAdoptionQ2 extends BaseDTO {
 
@@ -144,7 +139,7 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private boolean haveAppliedForAdoption;
 
-    private List<String> nameOfAgencies;
+    private List<String> facilities;
 
     public boolean isHaveAppliedForAdoption() {
       return haveAppliedForAdoption;
@@ -154,16 +149,19 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
       this.haveAppliedForAdoption = haveAppliedForAdoption;
     }
 
-    public List<String> getNameOfAgencies() {
-      return nameOfAgencies;
+    public List<String> getFacilities() {
+      return facilities;
     }
 
-    public void setNameOfAgencies(List<String> nameOfAgencies) {
-      this.nameOfAgencies = nameOfAgencies;
+    public void setFacilities(List<String> facilities) {
+      this.facilities = facilities;
     }
 
   }
 
+  /**
+   * @author CWDS CALS API Team
+   */
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
   public static class FacilityOperationLicensesQ3 extends BaseDTO {
 
@@ -171,8 +169,7 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private boolean wasPreviouslyLicensed;
 
-    @CheckReferentialIntegrity
-    private LicenseType licenseType;
+    private List<AgencyDTO> agencies;
 
     public boolean isWasPreviouslyLicensed() {
       return wasPreviouslyLicensed;
@@ -182,17 +179,18 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
       this.wasPreviouslyLicensed = wasPreviouslyLicensed;
     }
 
-    public LicenseType getLicenseType() {
-      return licenseType;
+    public List<AgencyDTO> getAgencies() {
+      return agencies;
     }
 
-    public void setLicenseType(
-        LicenseType licenseType) {
-      this.licenseType = licenseType;
+    public void setAgencies(List<AgencyDTO> agencies) {
+      this.agencies = agencies;
     }
-
   }
 
+  /**
+   * @author CWDS CALS API Team
+   */
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
   public static class EmploymentInFacilitiesQ4 extends BaseDTO {
 
@@ -200,7 +198,7 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private boolean wasEmployedOrVolunteered;
 
-    private List<String> nameOfFacilities;
+    private List<String> facilities;
 
     public boolean isWasEmployedOrVolunteered() {
       return wasEmployedOrVolunteered;
@@ -210,23 +208,26 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
       this.wasEmployedOrVolunteered = wasEmployedOrVolunteered;
     }
 
-    public List<String> getNameOfFacilities() {
-      return nameOfFacilities;
+    public List<String> getFacilities() {
+      return facilities;
     }
 
-    public void setNameOfFacilities(List<String> nameOfFacilities) {
-      this.nameOfFacilities = nameOfFacilities;
+    public void setFacilities(List<String> facilities) {
+      this.facilities = facilities;
     }
-
   }
 
+  /**
+   * @author CWDS CALS API Team
+   */
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
   public static class DenialHistoryQ5 extends BaseDTO {
 
     private static final long serialVersionUID = 6797171388514466929L;
 
     private boolean hadDenials;
-    private List<String> nameOfAgencies;
+
+    private List<AgencyDTO> agencies;
 
     public boolean isHadDenials() {
       return hadDenials;
@@ -236,16 +237,18 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
       this.hadDenials = hadDenials;
     }
 
-    public List<String> getNameOfAgencies() {
-      return nameOfAgencies;
+    public List<AgencyDTO> getAgencies() {
+      return agencies;
     }
 
-    public void setNameOfAgencies(List<String> nameOfAgencies) {
-      this.nameOfAgencies = nameOfAgencies;
+    public void setAgencies(List<AgencyDTO> agencies) {
+      this.agencies = agencies;
     }
-
   }
 
+  /**
+   * @author CWDS CALS API Team
+   */
   @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
   public static class SuspensionRevocationHistoryQ6 extends BaseDTO {
 
@@ -253,8 +256,7 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private boolean hadSuspensionsRevocations;
 
-    private List<String> nameOfAgencies;
-
+    private List<AgencyDTO> agencies;
 
     public boolean isHadSuspensionsRevocations() {
       return hadSuspensionsRevocations;
@@ -264,15 +266,38 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
       this.hadSuspensionsRevocations = hadSuspensionsRevocations;
     }
 
-    public List<String> getNameOfAgencies() {
-      return nameOfAgencies;
+    public List<AgencyDTO> getAgencies() {
+      return agencies;
     }
 
-    public void setNameOfAgencies(List<String> nameOfAgencies) {
-      this.nameOfAgencies = nameOfAgencies;
+    public void setAgencies(List<AgencyDTO> agencies) {
+      this.agencies = agencies;
     }
-
   }
 
+  /**
+   * @author CWDS CALS API Team
+   */
+  public static class AgencyDTO extends BaseDTO {
+    private String name;
 
+    @CheckReferentialIntegrity
+    private LicenseType type;
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+
+    public LicenseType getType() {
+      return type;
+    }
+
+    public void setType(LicenseType type) {
+      this.type = type;
+    }
+  }
 }
