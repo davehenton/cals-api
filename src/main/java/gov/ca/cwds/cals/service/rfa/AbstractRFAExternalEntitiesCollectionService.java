@@ -32,6 +32,6 @@ public class AbstractRFAExternalEntitiesCollectionService<
     Stream<T> entities =
         dao.findAllByFormId(formId);
     List<D> collectDTOs = entities.map(T::getEntityDTO).collect(Collectors.toList());
-    return factory.createCollectionDTO(collectDTOs);
+    return collectDTOs.isEmpty() ? null : factory.createCollectionDTO(collectDTOs);
   }
 }

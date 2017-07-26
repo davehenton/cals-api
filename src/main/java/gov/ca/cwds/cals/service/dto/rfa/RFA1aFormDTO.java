@@ -5,11 +5,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
@@ -57,21 +52,21 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty(hidden = true)
   @Valid
-  private List<RFA1aApplicant> applicants;
+  private List<ApplicantDTO> applicants;
 
   @ApiModelProperty(hidden = true)
   @Valid
-  private List<RFA1aMinorChild> minorChildren;
+  private List<MinorChildDTO> minorChildren;
 
   @ApiModelProperty(hidden = true)
   @Valid
-  private List<RFA1aOtherAdult> otherAdults;
+  private List<OtherAdultDTO> otherAdults;
 
   @ApiModelProperty(hidden = true)
-  private List<RFA1bForm> rfa1bForms;
+  private List<RFA1bFormDTO> rfa1bForms;
 
   @ApiModelProperty(hidden = true)
-  private List<RFA1cForm> rfa1cForms;
+  private List<RFA1cFormDTO> rfa1cForms;
 
   @ApiModelProperty(hidden = true)
   @Valid
@@ -125,48 +120,48 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
     this.applicantsHistory = applicantsHistory;
   }
 
-  public List<RFA1aApplicant> getApplicants() {
+  public List<ApplicantDTO> getApplicants() {
     return applicants;
   }
 
   public void setApplicants(
-      List<RFA1aApplicant> applicants) {
+      List<ApplicantDTO> applicants) {
     this.applicants = applicants;
   }
 
-  public List<RFA1aMinorChild> getMinorChildren() {
+  public List<MinorChildDTO> getMinorChildren() {
     return minorChildren;
   }
 
   public void setMinorChildren(
-      List<RFA1aMinorChild> minorChildren) {
+      List<MinorChildDTO> minorChildren) {
     this.minorChildren = minorChildren;
   }
 
-  public List<RFA1aOtherAdult> getOtherAdults() {
+  public List<OtherAdultDTO> getOtherAdults() {
     return otherAdults;
   }
 
   public void setOtherAdults(
-      List<RFA1aOtherAdult> otherAdults) {
+      List<OtherAdultDTO> otherAdults) {
     this.otherAdults = otherAdults;
   }
 
-  public List<RFA1bForm> getRfa1bForms() {
+  public List<RFA1bFormDTO> getRfa1bForms() {
     return rfa1bForms;
   }
 
   public void setRfa1bForms(
-      List<RFA1bForm> rfa1bForms) {
+      List<RFA1bFormDTO> rfa1bForms) {
     this.rfa1bForms = rfa1bForms;
   }
 
-  public List<RFA1cForm> getRfa1cForms() {
+  public List<RFA1cFormDTO> getRfa1cForms() {
     return rfa1cForms;
   }
 
   public void setRfa1cForms(
-      List<RFA1cForm> rfa1cForms) {
+      List<RFA1cFormDTO> rfa1cForms) {
     this.rfa1cForms = rfa1cForms;
   }
 

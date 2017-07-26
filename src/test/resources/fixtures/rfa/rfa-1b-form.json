@@ -19,6 +19,10 @@
   "arrested_for_crime": false,
   "resource_family_name": "Peterson",
   "rfa1a_applicant_id": 123,
+  "applicant_name_prefix": {
+    "id": 2,
+    "value": "Ms."
+  },
   "applicant_first_name": "Anna",
   "applicant_middle_name": "M.",
   "applicant_last_name": "Peterson",

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
@@ -28,6 +29,10 @@ import javax.validation.Valid;
 public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   private static final long serialVersionUID = -4333411852074578122L;
+
+  @ApiModelProperty(value = "Prefix")
+  @CheckReferentialIntegrity
+  private NamePrefixType namePrefix;
 
   private String firstName;
 
@@ -68,6 +73,15 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   @Valid
   private List<PhoneDTO> phones = new ArrayList<>();
+
+  public NamePrefixType getNamePrefix() {
+    return namePrefix;
+  }
+
+  public void setNamePrefix(
+      NamePrefixType namePrefix) {
+    this.namePrefix = namePrefix;
+  }
 
   public String getFirstName() {
     return firstName;

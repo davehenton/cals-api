@@ -12,9 +12,9 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.INCOME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LANGUAGE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.LICENSE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.MARRIAGE_TERMINATION_REASON_PATH;
+import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_PREFIX_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.NAME_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.PHONE_NUMBER_TYPE_PATH;
-import static gov.ca.cwds.cals.Constants.DictionaryType.RACE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RELATIONSHIP_TO_APPLICANT_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.RESIDENCE_OWNERSHIP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SCHOOL_GRADE_TYPE_PATH;
@@ -40,10 +40,10 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
@@ -106,6 +106,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "county-type-response.json";
   private static final String FIXTURES_SUFFIX_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "suffix-type-response.json";
+  private static final String FIXTURES_NAME_PREFIX_TYPE_RESPONSE_JSON =
+      BASE_DICTIONARY_PATH + "name-prefix-type-response.json";
 
 
 
@@ -125,15 +127,6 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     assertNotNull(collectionDTO);
     String fixture = fixture(fixturePath);
     assertEqualsResponse(fixture, transformDTOtoJSON(collectionDTO));
-  }
-
-  @Test
-  public void getDictionaryRaceTypeTest() throws Exception {
-    baseDictionaryTest(
-        RACE_TYPE_PATH,
-        FIXTURES_RACE_TYPE_RESPONSE_JSON,
-        new GenericType<CollectionDTO<RaceType>>() {
-        });
   }
 
   @Test
@@ -313,6 +306,15 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
         SUFFIX_TYPE_PATH,
         FIXTURES_SUFFIX_TYPE_RESPONSE_JSON,
         new GenericType<CollectionDTO<NameSuffixType>>() {
+        });
+  }
+
+  @Test
+  public void getNamePrefixTypesTest() throws Exception {
+    baseDictionaryTest(
+        NAME_PREFIX_TYPE_PATH,
+        FIXTURES_NAME_PREFIX_TYPE_RESPONSE_JSON,
+        new GenericType<CollectionDTO<NamePrefixType>>() {
         });
   }
 

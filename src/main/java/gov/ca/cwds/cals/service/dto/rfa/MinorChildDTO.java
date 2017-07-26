@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,6 +28,10 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   private ApplicantRelationshipType relationshipToApplicant;
 
   private List<Long> childRelatedTo;
+
+  @ApiModelProperty(value = "Other Relative Prefix")
+  @CheckReferentialIntegrity
+  private NamePrefixType otherRelativeNamePrefix;
 
   private String otherRelativeFirstName;
 
@@ -62,6 +67,15 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
 
   public void setChildRelatedTo(List<Long> childRelatedTo) {
     this.childRelatedTo = childRelatedTo;
+  }
+
+  public NamePrefixType getOtherRelativeNamePrefix() {
+    return otherRelativeNamePrefix;
+  }
+
+  public void setOtherRelativeNamePrefix(
+      NamePrefixType otherRelativeNamePrefix) {
+    this.otherRelativeNamePrefix = otherRelativeNamePrefix;
   }
 
   public String getOtherRelativeFirstName() {

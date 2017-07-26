@@ -1,7 +1,17 @@
 package gov.ca.cwds.cals.service.mapper.rfa;
 
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import java.util.List;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.IterableMapping;
@@ -82,4 +92,36 @@ public interface RFA1aFormMapper {
   @Mapping(target = "createUserId", ignore = true)
   @Mapping(target = "status", ignore = true)
   void toRFA1aForm(@MappingTarget RFA1aForm rfa1aForm, RFA1aFormDTO formDTO);
+
+  default ApplicantDTO toApplicantDTO(RFA1aApplicant entity) {
+    return entity.getApplicant();
+  }
+
+  default MinorChildDTO toMinorChildDTO(RFA1aMinorChild entity) {
+    return entity.getMinorChild();
+  }
+
+  default OtherAdultDTO toOtherAdultDTO(RFA1aOtherAdult entity) {
+    return entity.getOtherAdult();
+  }
+
+  default RFA1bFormDTO toRFA1bFormDTO(RFA1bForm entity) {
+    return entity.getEntityDTO();
+  }
+
+  default RFA1cFormDTO toRFA1cFormDTO(RFA1cForm entity) {
+    return entity.getEntityDTO();
+  }
+
+  List<ApplicantDTO> toListApplicantDTO(List<RFA1aApplicant> list);
+
+  List<MinorChildDTO> toListMinorChildDTO(List<RFA1aMinorChild> list);
+
+  List<OtherAdultDTO> toListOtherAdultDTO(List<RFA1aOtherAdult> list);
+
+  List<RFA1bFormDTO> toListRFA1bFormDTO(List<RFA1bForm> list);
+
+  List<RFA1cFormDTO> toListRFA1cFormDTO(List<RFA1cForm> list);
+
+
 }
