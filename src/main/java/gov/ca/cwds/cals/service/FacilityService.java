@@ -44,6 +44,7 @@ import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -125,8 +126,8 @@ public class FacilityService implements CrudsService {
 
   private FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
     LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
-    LpaInformation lpaInformation =
-        lisDsLisFacFile != null ? findAssignedWorkerInformation(lisDsLisFacFile) : null;
+    LpaInformation lpaInformation = lisDsLisFacFile != null && lisDsLisFacFile.getFacDoEvalCode() != null ?
+            findAssignedWorkerInformation(lisDsLisFacFile) : null;
     FacilityDTO facilityDTO = facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
 
     FacilityInfoLis facilityInfoLis = findFacilityInfoByLicenseNumber(parameterObject);
@@ -206,22 +207,22 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(LIS)
   protected void attachVisitsData(FacilityInfoLis facilityInfoLis) {
-    Integer facilityLastVisitReasonCode = facilityInfoLis.getFacLastVisitReason();
+    BigInteger facilityLastVisitReasonCode = facilityInfoLis.getFacLastVisitReason();
     if (facilityLastVisitReasonCode != null) {
-      LisTableFile facilityLastVisitReason = lisTableFileDao.findVisitReasonType(facilityLastVisitReasonCode);
+      LisTableFile facilityLastVisitReason = lisTableFileDao.findVisitReasonType(facilityLastVisitReasonCode.intValue());
       facilityInfoLis.setFacilityLastVisitReason(facilityLastVisitReason);
     }
 
-    Integer facilityLastDeferredVisitReasonCode = facilityInfoLis.getFacLastDeferVisitReason();
+    BigInteger facilityLastDeferredVisitReasonCode = facilityInfoLis.getFacLastDeferVisitReason();
     if (facilityLastDeferredVisitReasonCode != null) {
-      LisTableFile facilityLastDeferredVisitReason = lisTableFileDao.findVisitReasonType(facilityLastDeferredVisitReasonCode);
+      LisTableFile facilityLastDeferredVisitReason = lisTableFileDao.findVisitReasonType(facilityLastDeferredVisitReasonCode.intValue());
       facilityInfoLis.setFacilityLastDeferredVisitReason(facilityLastDeferredVisitReason);
     }
   }
 
   @UnitOfWork(FAS)
   protected FacilityInfoLis findFacilityInfoByLicenseNumber(FacilityParameterObject parameterObject) {
-    return facilityInfoLisDao.find(parameterObject.getLicenseNumber());
+    return facilityInfoLisDao.find(BigInteger.valueOf(parameterObject.getLicenseNumber()));
   }
 
   @UnitOfWork(FAS)

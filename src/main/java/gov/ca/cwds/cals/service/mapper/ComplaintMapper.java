@@ -42,57 +42,57 @@ public interface ComplaintMapper {
     @Mapping(target = "complaintCode", source = "crCode")
     @Mapping(target = "allegation", source = "crAllegation")
     @Mapping(target = "resolutionCodeSub", source = "crSub")
-    @Mapping(target = "resolutionCodeInsub", source = "crInSub")
-    @Mapping(target = "resolutionCodeUnsub", source = "crUnSub")
+    @Mapping(target = "resolutionCodeInsub", source = "crInsub")
+    @Mapping(target = "resolutionCodeUnsub", source = "crUnsub")
     AllegationDTO entityToAlligationDTO(ComplaintReportLic802 complaint);
 
     @Mapping(target = "complaintCode", source = "crCode1")
     @Mapping(target = "allegation", source = "crAllegation1")
     @Mapping(target = "resolutionCodeSub", source = "crSub1")
-    @Mapping(target = "resolutionCodeInsub", source = "crInSub1")
-    @Mapping(target = "resolutionCodeUnsub", source = "crUnSub1")
+    @Mapping(target = "resolutionCodeInsub", source = "crInsub1")
+    @Mapping(target = "resolutionCodeUnsub", source = "crUnsub1")
     AllegationDTO entityToAlligationDTO1(ComplaintReportLic802 complaint);
 
     @Mapping(target = "complaintCode", source = "crCode2")
     @Mapping(target = "allegation", source = "crAllegation2")
     @Mapping(target = "resolutionCodeSub", source = "crSub2")
-    @Mapping(target = "resolutionCodeInsub", source = "crInSub2")
-    @Mapping(target = "resolutionCodeUnsub", source = "crUnSub2")
+    @Mapping(target = "resolutionCodeInsub", source = "crInsub2")
+    @Mapping(target = "resolutionCodeUnsub", source = "crUnsub2")
     AllegationDTO entityToAlligationDTO2(ComplaintReportLic802 complaint);
 
     @Mapping(target = "complaintCode", source = "crCode3")
     @Mapping(target = "allegation", source = "crAllegation3")
     @Mapping(target = "resolutionCodeSub", source = "crSub3")
-    @Mapping(target = "resolutionCodeInsub", source = "crInSub3")
-    @Mapping(target = "resolutionCodeUnsub", source = "crUnSub3")
+    @Mapping(target = "resolutionCodeInsub", source = "crInsub3")
+    @Mapping(target = "resolutionCodeUnsub", source = "crUnsub3")
     AllegationDTO entityToAlligationDTO3(ComplaintReportLic802 complaint);
 
     @Mapping(target = "complaintCode", source = "crCode4")
     @Mapping(target = "allegation", source = "crAllegation4")
     @Mapping(target = "resolutionCodeSub", source = "crSub4")
-    @Mapping(target = "resolutionCodeInsub", source = "crInSub4")
-    @Mapping(target = "resolutionCodeUnsub", source = "crUnSub4")
+    @Mapping(target = "resolutionCodeInsub", source = "crInsub4")
+    @Mapping(target = "resolutionCodeUnsub", source = "crUnsub4")
     AllegationDTO entityToAlligationDTO4(ComplaintReportLic802 complaint);
 
     @Mapping(target = "complaintCode", source = "crCode5")
     @Mapping(target = "allegation", source = "crAllegation5")
     @Mapping(target = "resolutionCodeSub", source = "crSub5")
-    @Mapping(target = "resolutionCodeInsub", source = "crInSub5")
-    @Mapping(target = "resolutionCodeUnsub", source = "crUnSub5")
+    @Mapping(target = "resolutionCodeInsub", source = "crInsub5")
+    @Mapping(target = "resolutionCodeUnsub", source = "crUnsub5")
     AllegationDTO entityToAlligationDTO5(ComplaintReportLic802 complaint);
 
     @Mapping(target = "complaintCode", source = "crCode6")
     @Mapping(target = "allegation", source = "crAllegation6")
     @Mapping(target = "resolutionCodeSub", source = "crSub6")
-    @Mapping(target = "resolutionCodeInsub", source = "crInSub6")
-    @Mapping(target = "resolutionCodeUnsub", source = "crUnSub6")
+    @Mapping(target = "resolutionCodeInsub", source = "crInsub6")
+    @Mapping(target = "resolutionCodeUnsub", source = "crUnsub6")
     AllegationDTO entityToAlligationDTO6(ComplaintReportLic802 complaint);
 
     @Mapping(target = "complaintCode", source = "crCode7")
     @Mapping(target = "allegation", source = "crAllegation7")
     @Mapping(target = "resolutionCodeSub", source = "crSub7")
-    @Mapping(target = "resolutionCodeInsub", source = "crInSub7")
-    @Mapping(target = "resolutionCodeUnsub", source = "crUnSub7")
+    @Mapping(target = "resolutionCodeInsub", source = "crInsub7")
+    @Mapping(target = "resolutionCodeUnsub", source = "crUnsub7")
     AllegationDTO entityToAlligationDTO7(ComplaintReportLic802 complaint);
 
 

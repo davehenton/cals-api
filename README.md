@@ -23,12 +23,11 @@ NOTE : At this time there is not a publicy available link to the documentation, 
 
 **Data Stores Configuration Parameters**
 
-The CWDS API currently utilizes two persistent stores:
-
-1. DB2 - CMS database
-2. Postgres - NS database
+The CWDS API currently utilizes four persistent stores:
 
 In order for the CALS API successfully connect to the above databases the following environment variables are required to be set:
+
+1. DB2 - CMS database
 
 - DB_CMS_USER -- the CMS database username
 - DB_CMS_PASSWORD -- the CMS database password
@@ -38,6 +37,7 @@ In order for the CALS API successfully connect to the above databases the follow
 - DB_CMS_CP_MIN_SIZE -- the CMS connections pool minimum size (default: 2)
 - DB_CMS_CP_MAX_SIZE -- the CMS connections pool maximum size (default: 8)
 
+2. Postgres - NS database
 
 - DB_NS_USER -- the NS database username
 - DB_NS_PASSWORD -- the NS database password
@@ -55,6 +55,15 @@ Set environment variable CALS_API_CONFIG to cals-api-lis-connx.yml to run docker
 - DB_CONXX_CP_INITIAL_SIZE -- the CONXX connections pool iniitial size (default: 2)
 - DB_CONXX_CP_MIN_SIZE -- the CONXX connections pool minimum size (default: 2)
 - DB_CONXX_CP_MAX_SIZE -- the CONXX connections pool maximum size (default: 8)
+
+4. Postgres - FAS Legacy database
+
+- DB_FAS_USER -- the FAS datasource username
+- DB_FAS_PASSWORD -- the FAS datasource password
+- DB_FAS_JDBC_URL -- the FAS datasource URL in Java Database Connectivity format
+- DB_FAS_CP_INITIAL_SIZE -- the FAS connections pool iniitial size (default: 2)
+- DB_FAS_CP_MIN_SIZE -- the FAS connections pool minimum size (default: 2)
+- DB_FAS_CP_MAX_SIZE -- the FAS connections pool maximum size (default: 8)
 
 **Swagger Configuration Parameters**
 

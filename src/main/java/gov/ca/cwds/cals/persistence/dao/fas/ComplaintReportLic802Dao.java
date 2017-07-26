@@ -28,7 +28,7 @@ public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802>
     Class<ComplaintReportLic802> entityClass = getEntityClass();
     Query<ComplaintReportLic802> query =
         session.createNamedQuery(ComplaintReportLic802.FIND_COMPLAINTS_BY_FACILITY_ID, entityClass);
-    query.setParameter(ComplaintReportLic802.PARAM_FACILITY_NUMBER, facilityNumber);
+    query.setParameter(ComplaintReportLic802.PARAM_FACILITY_NUMBER, String.valueOf(facilityNumber));
     return query.getResultList();
   }
 
@@ -39,7 +39,7 @@ public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802>
     Query<ComplaintReportLic802> query =
         session.createNamedQuery(
             ComplaintReportLic802.FIND_COMPLAINTS_BY_FACILITY_ID_AND_COMPLAINT_NUMBER, entityClass);
-    query.setParameter(ComplaintReportLic802.PARAM_FACILITY_NUMBER, facilityId);
+    query.setParameter(ComplaintReportLic802.PARAM_FACILITY_NUMBER, String.valueOf(facilityId));
     query.setParameter(ComplaintReportLic802.PARAM_COMPLAINT_ID, complaintId);
     ComplaintReportLic802 res = null;
     try {
