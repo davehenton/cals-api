@@ -7,9 +7,9 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
  */
 
 @FunctionalInterface
-public interface RetrievingParametersStrategy {
+public interface RetrievingParametersStrategy<T extends BaseDTO> {
 
-  <T extends BaseDTO> BusinessValidationParameterObject<T> retrieveParameters(Object[] parameters,
-      Class<T> clazz);
+  BusinessValidationParameterObject<T> retrieveParameters(Object[] parameters,
+      Class<T> cazz);
 
 }
