@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 )
 @Entity
 @Table(name = "lpa_information")
+@SuppressWarnings("squid:S3437") //LocalDate is serializable
 public class LpaInformation implements PersistentObject {
   private static final long serialVersionUID = -3566583736496919788L;
 

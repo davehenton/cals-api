@@ -5,8 +5,6 @@ import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
 import gov.ca.cwds.cals.persistence.dao.lis.RecordChangeLisDao;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
-import gov.ca.cwds.cals.persistence.model.lisfas.County;
-import gov.ca.cwds.cals.persistence.model.lisfas.FacilityType;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
@@ -25,9 +23,7 @@ public class LisDataAccessModule extends AbstractModule {
         .addAnnotatedClass(RecordChange.class)
         .addAnnotatedClass(LisFacFile.class)
         .addAnnotatedClass(LisTableFile.class)
-        .addAnnotatedClass(FacilityType.class)
         .addAnnotatedClass(LisDoFile.class)
-        .addAnnotatedClass(County.class)
         .buildSessionFactory();
   }
 

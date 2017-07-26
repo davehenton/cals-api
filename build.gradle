@@ -58,7 +58,13 @@ sonarqube {
         property "sonar.projectName", "${name}"
         property "sonar.projectKey", "${group}:${name}"
         property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
-        property "sonar.exclusions", "src/main/java/gov/ca/cwds/cals/persistence/model/cms/*.*, src/test/resources/liquibase/cms/dml/*.xml, src/test/resources/liquibase/fas/dml/*.xml, src/test/resources/liquibase/lis/dml/*.xml"
+        property "sonar.exclusions",
+                "src/main/java/gov/ca/cwds/cals/persistence/model/cms/*.*, " +
+                "src/main/java/gov/ca/cwds/cals/persistence/model/fas/*.*, " +
+                "src/main/java/gov/ca/cwds/cals/persistence/model/lisfas/*.*, " +
+                "src/test/resources/liquibase/cms/dml/*.xml, " +
+                "src/test/resources/liquibase/fas/dml/*.xml, " +
+                "src/test/resources/liquibase/lis/dml/*.xml"
     }
 }
 

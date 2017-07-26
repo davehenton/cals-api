@@ -73,7 +73,6 @@ import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
-import gov.ca.cwds.cals.persistence.model.lisfas.County;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
@@ -92,9 +91,7 @@ public class DataAccessModule extends AbstractModule {
       new HibernateBundle<CalsApiConfiguration>(
           LisFacFile.class,
           LisTableFile.class,
-          gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
-          LisDoFile.class,
-          County.class) {
+          LisDoFile.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
           return configuration.getLisDataSourceFactory();
@@ -110,9 +107,7 @@ public class DataAccessModule extends AbstractModule {
       new HibernateBundle<CalsApiConfiguration>(
           FacilityInfoLis.class,
           LisTableFile.class,
-          gov.ca.cwds.cals.persistence.model.lisfas.FacilityType.class,
           LisDoFile.class,
-          County.class,
           ComplaintReportLic802.class,
           LpaInformation.class,
           Rrcpoc.class,
