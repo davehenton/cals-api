@@ -68,6 +68,7 @@ public class RFA1aApplicantResourceTest extends
       RFA1aFormDTO form = createForm(clientTestRule);
       postApplicant(form, getApplicantDTO());
       postApplicant(form, getApplicantDTO());
+      fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
     }
@@ -89,6 +90,7 @@ public class RFA1aApplicantResourceTest extends
       secondApplicant = postApplicant(form, secondApplicant);
       secondApplicant.setLastName(firstApplicant.getLastName());
       putApplicant(form, secondApplicant);
+      fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
@@ -108,6 +110,7 @@ public class RFA1aApplicantResourceTest extends
       secondApplicant = postApplicant(form, secondApplicant);
       secondApplicant.setFirstName(firstApplicant.getFirstName());
       putApplicant(form, secondApplicant);
+      fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
