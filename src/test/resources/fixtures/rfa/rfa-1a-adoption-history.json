@@ -1,45 +1,64 @@
 {
   "foster_care_licenses_q1": {
     "was_previously_licensed": true,
-    "agency_name": "Agency Name",
-    "license_type": {
-      "id": 3,
-      "value": "Approval"
-    }
+    "agencies": [
+      {
+        "name": "Agency Name",
+        "type": {
+          "id": 3,
+          "value": "Approval"
+        }
+      }
+    ]
   },
   "applications_for_adoption_q2": {
     "have_applied_for_adoption": true,
-    "name_of_agencies": [
-      "Agency 1",
-      "Agency 2"
+    "facilities": [
+      "Facility1 Name",
+      "Facility2 Name"
     ]
   },
   "facility_operation_licenses_q3": {
     "was_previously_licensed": true,
-    "license_type": {
-      "id": 1,
-      "value": "License"
-    }
+    "agencies": [
+      {
+        "name": "Agency Name",
+        "type": {
+          "id": 3,
+          "value": "Approval"
+        }
+      }
+    ]
   },
   "employment_in_facilities_q4": {
     "was_employed_or_volunteered": true,
-    "name_of_facilities": [
-      "Agency 1",
-      "Agency 2"
+    "facilities": [
+      "Facility1 Name",
+      "Facility2 Name"
     ]
   },
   "denial_history_q5": {
     "had_denials": true,
-    "name_of_agencies": [
-      "Agency 1",
-      "Agency 2"
+    "agencies": [
+      {
+        "name": "Agency Name",
+        "type": {
+          "id": 3,
+          "value": "Approval"
+        }
+      }
     ]
   },
   "suspension_revocation_history_q6": {
     "had_suspensions_revocations": true,
-    "name_of_agencies": [
-      "Agency 1",
-      "Agency 2"
+    "agencies": [
+      {
+        "name": "Agency Name",
+        "type": {
+          "id": 3,
+          "value": "Approval"
+        }
+      }
     ]
   },
   "was_subject_for_exclusion_order_q7": true
