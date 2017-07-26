@@ -4,7 +4,7 @@ version: ${APP_VERSION:-local}
 server:
   detailedJsonProcessingExceptionMapper: true
   applicationConnectors:
-  - type: http 
+  - type: http
     port: 8080
   - type: https
     port: 8443
@@ -29,10 +29,10 @@ swagger:
   title: CWDS CALC API
   description: RESTful API definitions for the CWS New System.
   logo: images/CWDS-API-Logo-Horizontal.png
-  loginUrl: ${LOGIN_URL:-http://localhost:8090/authn/login}
+  loginUrl: ${LOGIN_URL:-http://localhost:8080/authn/login}
   showSwagger: ${SHOW_SWAGGER:-true}
-  jsonUrl: ${SWAGGER_JSON_URL:-http://localhost:8090/swagger.json}
-  callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8090/swagger}
+  jsonUrl: ${SWAGGER_JSON_URL:-http://localhost:8080/swagger.json}
+  callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
 
 lisDataSourceFactory:
   driverClass: org.postgresql.Driver
@@ -67,6 +67,23 @@ fasDataSourceFactory:
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
       hibernate.default_schema: fas
+
+#fasDataSourceFactory:
+#  driverClass: org.postgresql.Driver
+#  user: ${DB_FAS_USER:-dcorbett}
+#  password: ${DB_FAS_PASSWORD:-broomfield2017}
+#  url: ${DB_FAS_JDBC_URL:-jdbc:postgresql://10.211.5.29:5432/FAS_ChildRes}
+#  validationQuery: "/* MyService Health Check */ SELECT 1"
+#  logValidationErrors: true
+#  initialSize: ${DB_FAS_CP_INITIAL_SIZE:-2}
+#  minSize: ${DB_FAS_CP_MIN_SIZE:-2}
+#  maxSize: ${DB_FAS_CP_MAX_SIZE:-8}
+#  minIdleTime: 1 minute
+#  properties:
+#      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
+#      hibernate.id.new_generator_mappings: false
+#      hibernate.show_sql: false
+#      hibernate.default_schema: ${DB_FAS_DEFAULT_SCHEMA:-public}
 
 calsnsDataSourceFactory:
   driverClass: org.postgresql.Driver

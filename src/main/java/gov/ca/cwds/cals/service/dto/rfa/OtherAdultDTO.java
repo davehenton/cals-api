@@ -5,6 +5,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +21,12 @@ import javax.validation.Valid;
 //Default reflection hashcode and equals resides in BaseDTO
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class OtherAdultDTO extends RFAExternalEntityDTO {
+
+  private static final long serialVersionUID = 3030580167004311781L;
+
+  @ApiModelProperty(value = "Prefix")
+  @CheckReferentialIntegrity
+  private NamePrefixType namePrefix;
 
   @ApiModelProperty(value = "First Name", example = "Anna")
   private String firstName;
@@ -41,6 +48,15 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
   @ApiModelProperty("Relationship to Applicants")
   @Valid
   private List<RelationshipToApplicantDTO> relationshipToApplicants = new ArrayList<>();
+
+  public NamePrefixType getNamePrefix() {
+    return namePrefix;
+  }
+
+  public void setNamePrefix(
+      NamePrefixType namePrefix) {
+    this.namePrefix = namePrefix;
+  }
 
   public String getFirstName() {
     return firstName;

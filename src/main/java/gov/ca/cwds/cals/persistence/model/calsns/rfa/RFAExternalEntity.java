@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -30,6 +31,7 @@ public abstract class RFAExternalEntity<T extends RFAExternalEntityDTO> extends
     this.formId = formId;
   }
 
+  @JsonIgnore
   public abstract T getEntityDTO();
 
   public abstract void setEntityDTO(T entityDTO);

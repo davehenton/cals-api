@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
 import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +14,7 @@ import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.api.domain.DomainObject;
 import io.swagger.annotations.ApiModelProperty;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,107 +35,107 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
 
   @JsonProperty("href")
   @InjectLink(value = Constants.API.FACILITIES + "/${instance.id}", style = RELATIVE_PATH)
-  @ApiModelProperty(required = true, readOnly = false, value = "Link to current resource", example =
+  @ApiModelProperty(required = true, value = "Link to current resource", example =
       Constants.API.FACILITIES + "/193600010")
   private URI href;
 
   @RemoveTrailingSpaces
   @JsonProperty("id")
   @NotNull
-  @ApiModelProperty(required = true, readOnly = false, value = "Facility ID", example = "193600010")
+  @ApiModelProperty(required = true, value = "Facility ID", example = "193600010")
   private String id;
 
   @JsonProperty("type")
   @NotNull
-  @ApiModelProperty(required = true, readOnly = false, value = "Facility Type")
+  @ApiModelProperty(required = true, value = "Facility Type")
   private FacilityTypeDTO type;
 
   @RemoveTrailingSpaces
   @JsonProperty("name")
   @NotNull
   @Size(max = 50)
-  @ApiModelProperty(required = true, readOnly = false, value = "Facility Name", example = "LITTLE ROADRUNNERS INFANT CARE")
+  @ApiModelProperty(required = true, value = "Facility Name", example = "LITTLE ROADRUNNERS INFANT CARE")
   private String name;
 
   @RemoveTrailingSpaces
   @JsonProperty("licensee_name")
   @NotNull
   @Size(max = 50)
-  @ApiModelProperty(required = false, readOnly = false, value = "Licensee Name", example = "BROWN, KIMBERLY")
+  @ApiModelProperty(value = "Licensee Name", example = "BROWN, KIMBERLY")
   private String licenseeName;
 
   @RemoveTrailingSpaces
   @JsonProperty("license_type")
-  @ApiModelProperty(required = false, readOnly = false, value = "Licensee Type", example = "A")
+  @ApiModelProperty(value = "Licensee Type", example = "A")
   private String licenseeType;
 
   @JsonProperty("assigned_worker")
-  @ApiModelProperty(required = false, readOnly = false, value = "Assigned Worker")
+  @ApiModelProperty(value = "Assigned Worker")
   private DictionaryDTO assignedWorker;
 
   @JsonProperty("district_office")
-  @ApiModelProperty(required = false, readOnly = false, value = "District Office", example = "MISSION VALLEY")
+  @ApiModelProperty(value = "District Office", example = "MISSION VALLEY")
   private DistrictOfficeDTO districtOffice;
 
   @RemoveTrailingSpaces
   @JsonProperty("license_number")
   @NotNull
-  @ApiModelProperty(required = false, readOnly = false, value = "License Number", example = "193600161")
+  @ApiModelProperty(value = "License Number", example = "193600161")
   private String licenseNumber;
 
   @JsonProperty("status")
   @NotNull
-  @ApiModelProperty(required = false, readOnly = false, value = "Facility Status")
+  @ApiModelProperty(value = "Facility Status")
   private DictionaryDTO status;
 
   @JsonProperty("capacity")
   @NotNull
-  @ApiModelProperty(required = false, readOnly = false, value = "Capacity", example = "10")
+  @ApiModelProperty(value = "Capacity", example = "10")
   private Integer capacity;
 
   @JsonProperty("license_effective_date")
   @NotNull
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
-  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
-  @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
+  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT)
+  @ApiModelProperty(value = "yyyy-MM-dd", example = "2000-01-01")
   private LocalDate licenseEffectiveDate;
 
   @JsonProperty("original_application_recieved_date")
   @NotNull
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
-  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
-  @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
+  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT)
+  @ApiModelProperty(value = "yyyy-MM-dd", example = "2000-01-01")
   private LocalDate originalApplicationRecievedDate;
 
   @JsonProperty("last_visit_date")
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
-  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
-  @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-  private LocalDate lastVisitDate;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
+  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT + " " + TIME_FORMAT)
+  @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
+  private LocalDateTime lastVisitDate;
 
   @JsonProperty("last_deferred_visit_date")
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
-  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
-  @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-  private LocalDate lastDeferredVisitDate;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
+  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT + " " + TIME_FORMAT)
+  @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
+  private LocalDateTime lastDeferredVisitDate;
 
   @RemoveTrailingSpaces
   @JsonProperty("email_address")
   @Size(max = 50)
-  @ApiModelProperty(required = false, readOnly = false, value = "Email Address", example = "name@mail.com")
+  @ApiModelProperty(value = "Email Address", example = "name@mail.com")
   private String emailAddress;
 
   @JsonProperty("last_visit_reason")
-  @ApiModelProperty(required = false, readOnly = false, value = "Last Visit Reason")
+  @ApiModelProperty(value = "Last Visit Reason")
   private DictionaryDTO lastVisitReason;
 
   @JsonProperty("last_deferred_visit_reason")
-  @ApiModelProperty(required = false, readOnly = false, value = "Last Deferred Visit Reason")
+  @ApiModelProperty(value = "Last Deferred Visit Reason")
   private DictionaryDTO lastDeferredVisitReason;
 
   @JsonProperty("county")
   @NotNull
-  @ApiModelProperty(required = false, readOnly = false, value = "County")
+  @ApiModelProperty(value = "County")
   private CountyDTO county;
 
   @JsonProperty("phones")
@@ -153,8 +155,10 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
   private Integer annualVisitYear;
 
   @JsonProperty("prelicensing_visit_date")
-  @ApiModelProperty(required = true, readOnly = true, value = "2000-01-01")
-  private LocalDate prelicensingVisitDate;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
+  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT + " " + TIME_FORMAT)
+  @ApiModelProperty(required = true, readOnly = true, value = "2000-01-01 00:00:00")
+  private LocalDateTime prelicensingVisitDate;
 
   public URI getHref() {
     return href;
@@ -260,19 +264,19 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
     this.originalApplicationRecievedDate = originalApplicationRecievedDate;
   }
 
-  public LocalDate getLastVisitDate() {
+  public LocalDateTime getLastVisitDate() {
     return lastVisitDate;
   }
 
-  public void setLastVisitDate(LocalDate lastVisitDate) {
+  public void setLastVisitDate(LocalDateTime lastVisitDate) {
     this.lastVisitDate = lastVisitDate;
   }
 
-  public LocalDate getLastDeferredVisitDate() {
+  public LocalDateTime getLastDeferredVisitDate() {
     return lastDeferredVisitDate;
   }
 
-  public void setLastDeferredVisitDate(LocalDate lastDeferredVisitDate) {
+  public void setLastDeferredVisitDate(LocalDateTime lastDeferredVisitDate) {
     this.lastDeferredVisitDate = lastDeferredVisitDate;
   }
 
@@ -332,11 +336,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
     this.annualVisitYear = annualVisitYear;
   }
 
-  public LocalDate getPrelicensingVisitDate() {
+  public LocalDateTime getPrelicensingVisitDate() {
     return prelicensingVisitDate;
   }
 
-  public void setPrelicensingVisitDate(LocalDate prelicensingVisitDate) {
+  public void setPrelicensingVisitDate(LocalDateTime prelicensingVisitDate) {
     this.prelicensingVisitDate = prelicensingVisitDate;
   }
 

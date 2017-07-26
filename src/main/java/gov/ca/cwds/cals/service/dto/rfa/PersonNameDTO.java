@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.CheckReferentialIntegrity;
@@ -16,6 +17,10 @@ public class PersonNameDTO extends BaseDTO {
 
   private static final long serialVersionUID = -8654631136147609963L;
 
+  @ApiModelProperty(value = "Prefix")
+  @CheckReferentialIntegrity
+  private NamePrefixType namePrefix;
+
   private String firstName;
   private String middleName;
   private String lastName;
@@ -23,6 +28,15 @@ public class PersonNameDTO extends BaseDTO {
   @ApiModelProperty(value = "Suffix")
   @CheckReferentialIntegrity
   private NameSuffixType nameSuffix;
+
+  public NamePrefixType getNamePrefix() {
+    return namePrefix;
+  }
+
+  public void setNamePrefix(
+      NamePrefixType namePrefix) {
+    this.namePrefix = namePrefix;
+  }
 
   public String getFirstName() {
     return firstName;

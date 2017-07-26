@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
@@ -14,8 +13,9 @@ import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import gov.ca.cwds.cals.service.dto.HyperlinkDTO;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
@@ -28,7 +28,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = {Constants.class, HyperlinkDTO.class},
+@Mapper(imports = LocalDateTime.class,
     uses = {FacilityPostMappingProcessor.class, FacilityTypeMapper.class, CountyMapper.class,
         DistrictOfficeMapper.class, DictionaryMapper.class,
         TrailingSpacesRemovalPostMappingProcessor.class})
@@ -54,8 +54,7 @@ public interface FacilityMapper {
   @Mapping(target = "address", ignore = true)
   @Mapping(target = "phone", ignore = true)
   @Mapping(source = "lisFacFile.facNbr", target = "id")
-  @Mapping(source = "lisFacFile.facType.tblFacTypeCode", target = "type.code")
-  @Mapping(source = "lisFacFile.facType.tblFacTypeDesc", target = "type.description")
+  @Mapping(source = "lisFacFile.facilityType", target = "type")
   @Mapping(source = "lisFacFile.facName", target = "name")
   @Mapping(source = "lisFacFile.facLicenseeName", target = "licenseeName")
   @Mapping(source = "lisFacFile.facLicenseeType", target = "licenseeType")
@@ -64,14 +63,12 @@ public interface FacilityMapper {
   @Mapping(source = "lisFacFile.facDoNbr.doNbr", target = "districtOffice.number")
   @Mapping(source = "lisFacFile.facDoNbr.doName", target = "districtOffice.name")
   @Mapping(source = "lisFacFile.facNbr", target = "licenseNumber")
-  @Mapping(source = "lisFacFile.facStatus.tblFacStatusCode", target = "status.code")
-  @Mapping(source = "lisFacFile.facStatus.tblFacStatusDesc", target = "status.description")
+  @Mapping(source = "lisFacFile.facilityStatus", target = "status", qualifiedByName = "facilityStatus")
   @Mapping(source = "lisFacFile.facCapacity", target = "capacity")
   @Mapping(source = "lisFacFile.facLicEffDate", target = "licenseEffectiveDate")
   @Mapping(source = "lisFacFile.facOrigApplRecDate", target = "originalApplicationRecievedDate")
   @Mapping(source = "lisFacFile.facEmailAddress", target = "emailAddress")
-  @Mapping(source = "lisFacFile.facCoNbr.tblCoNbr", target = "county.code")
-  @Mapping(source = "lisFacFile.facCoNbr.tblCoDesc", target = "county.description")
+  @Mapping(source = "lisFacFile.county", target = "county")
   FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
   @Mapping(target = "prelicensingVisitDate", ignore = true)
@@ -124,7 +121,9 @@ public interface FacilityMapper {
   @Mapping(target = "type", ignore = true)
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "href", ignore = true)
-  @Mapping(target = "lastVisitDate", source = "visitDate")
+  @Mapping(target = "lastVisitDate",
+      expression = "java(licensingVisit.getVisitDate() == null? " +
+          "null : LocalDateTime.of(licensingVisit.getVisitDate(), java.time.LocalTime.MIN))")
   @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
   void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);
 

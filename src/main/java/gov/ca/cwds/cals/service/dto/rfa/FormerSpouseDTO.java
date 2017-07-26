@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
@@ -31,6 +32,10 @@ public class FormerSpouseDTO extends BaseDTO {
 
   @ApiModelProperty(value = "Applicant Id", example = "1234567")
   private Long applicantId;
+
+  @ApiModelProperty(value = "Prefix")
+  @CheckReferentialIntegrity
+  private NamePrefixType namePrefix;
 
   @ApiModelProperty(value = "First Name", example = "Anna")
   private String firstName;
@@ -86,6 +91,15 @@ public class FormerSpouseDTO extends BaseDTO {
 
   public void setApplicantId(Long applicantId) {
     this.applicantId = applicantId;
+  }
+
+  public NamePrefixType getNamePrefix() {
+    return namePrefix;
+  }
+
+  public void setNamePrefix(
+      NamePrefixType namePrefix) {
+    this.namePrefix = namePrefix;
   }
 
   public String getFirstName() {

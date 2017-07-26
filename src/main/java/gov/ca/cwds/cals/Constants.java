@@ -13,6 +13,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
@@ -148,7 +149,8 @@ public final class Constants {
     MARRIAGE_TERMINATION_REASON(MarriageTerminationReasonType.class),
     SCHOOL_GRADE_TYPE(SchoolGradeType.class),
     COUNTY_TYPE(CountyType.class),
-    SUFFIX_TYPE(NameSuffixType.class);
+    SUFFIX_TYPE(NameSuffixType.class),
+    NAME_PREFIX_TYPE(NamePrefixType.class);
 
     public static final String AGE_GROUP_TYPE_PATH = "age-groups";
     public static final String LANGUAGE_TYPE_PATH = "languages";
@@ -173,6 +175,7 @@ public final class Constants {
     public static final String SCHOOL_GRADE_TYPE_PATH = "school-grades";
     public static final String COUNTY_TYPE_PATH = "counties";
     public static final String SUFFIX_TYPE_PATH = "name-suffix-types";
+    public static final String NAME_PREFIX_TYPE_PATH = "name-prefix-types";
 
     private Class<? extends BaseDictionary> dictionaryClass;
 
@@ -214,8 +217,6 @@ public final class Constants {
     public static final String POST_LICENSING = "Post Licensing";
 
     public static final String RENEWAL = "Renewal";
-
-    public static final String MIDDLE_YEAR = "Middle Year";
 
     private VisitTypes() {
     }
