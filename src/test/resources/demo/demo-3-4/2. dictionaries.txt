@@ -1,0 +1,2 @@
+1. Show table county_type
+2. Show Dictionary API https://cals-api.dev.cwds.io/swagger#!/dictionaries/getCounties

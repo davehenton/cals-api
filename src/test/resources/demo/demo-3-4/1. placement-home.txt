@@ -1,0 +1,32 @@
+1. Show Database: 22 tables created in CALS DEV DB2 container to support Placement Home creation
+2. Show number of records in PLC_HM_T table
+3. Show API
+
+3.1 Create RFA
+https://cals-api.dev.cwds.io/swagger#!/rfa-1a/createApplicationForm
+{
+  "is_initial_application": true,
+  "is_other_type": false,
+  "other_type_description": "",
+  "application_county": {
+    "id": 34,
+    "value": "Sacramento"
+  }
+}
+
+3.2 Check status
+https://cals-api.dev.cwds.io/swagger#!/rfa-1a/getApplicationStatus
+
+3.3 change status to SUBMITTED
+https://cals-api.dev.cwds.io/swagger#!/rfa-1a/changeApplicationStatus
+
+{
+  "status": "SUBMITTED"
+}
+
+4. Show number of records in PLC_HM_T table. We have one more record
+
+
+
+
+

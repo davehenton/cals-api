@@ -1,0 +1,25 @@
+1. Type address prefix
+http://localhost:8080/swagger#!/address/suggestAddress
+"202 Spurlock"
+
+2. Get list of results and copy second result. Use validate API to get full address
+http://localhost:8080/swagger#!/address/validateSingleAddress
+{
+  "street_address": "202 Spurlock Ct",
+  "city": "Roseville",
+  "state": "CA"
+}
+
+3. Show result
+[
+  {
+    "street_address": "202 Spurlock Ct",
+    "city": "Roseville",
+    "state": "CA",
+    "zip": "95661",
+    "zip_extension": "3714",
+    "longitude": -121.25118,
+    "lattitude": 38.74037,
+    "deliverable": true
+  }
+]

@@ -1,0 +1,98 @@
+1. Create RFA
+https://cals-api.dev.cwds.io/swagger#!/rfa-1a/createApplicationForm
+{
+  "is_initial_application": true,
+  "is_other_type": false,
+  "other_type_description": "",
+  "application_county": {
+    "id": 34,
+    "value": "Sacramento"
+  }
+}
+
+2. Create Appplicant 1
+https://cals-api.dev.cwds.io/swagger#!/rfa-1a/createApplicant
+{
+  "name_prefix": {
+    "id": 2,
+    "value": "Ms."
+  },
+  "first_name": "Anna",
+  "middle_name": "N.",
+  "last_name": "Smith",
+  "name_suffix": {
+    "id": 5,
+    "value": "Jr"
+  },
+  "other_names": [
+    {
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "first_name": "Anna",
+      "middle_name": "N.",
+      "last_name": "Peterson",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
+      "name_type": {
+        "id": 2,
+        "value": "Maiden"
+      }
+    }
+  ],
+  "highest_education_level": {
+    "id": 3,
+    "value": "High School or Equivalent"
+  },
+  "date_of_birth": "1981-12-26",
+  "gender": {
+    "id": 2,
+    "value": "Female"
+  },
+  "race": {
+    "id": 1,
+    "value": "American Indian or Alaska Native"
+  },
+  "ethnicity": {
+    "id": 1,
+    "value": "Alaskan Native"
+  },
+  "driver_license_number": "MD123G3333232",
+  "driver_license_state": {
+    "id": 6,
+    "value": "California"
+  },
+  "email": "anna.smith@gmail.com",
+  "employment": {
+    "employer_name": "HSH Inc.",
+    "occupation": "Sr. Analyst",
+    "income": 98000.00,
+    "income_type": {
+      "id": 1,
+      "value": "yearly"
+    },
+    "physical_address": {
+      "street_address": "1702 Redoak Ct.",
+      "zip": "98123",
+      "city": "Rocklin",
+      "state": {
+        "id": 2,
+        "value": "CA - California"
+      }
+    }
+  },
+  "phones": [
+    {
+      "phone_type": {
+        "id": 1,
+        "value": "Cell"
+      },
+      "number": "(534) 758-9802",
+      "preferred": true
+    }
+  ]
+}
+3. Try to create similar and show validation error
