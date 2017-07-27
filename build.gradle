@@ -28,7 +28,7 @@ project.ext {
     projectDockerAppName = 'cals-api'
     projectVersion = '3.5-SNAPSHOT'
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.27.363'
+    coreApiVersion = '0.27.378'
     calsModelVersion = '3.5-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     droolsVersion = '7.1.0.Final'
@@ -112,6 +112,7 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.1'
     compile group: 'org.slf4j', name: 'slf4j-ext', version: '1.7.25'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    compile group: 'org.secnod.dropwizard', name: 'dropwizard-shiro', version: '0.2.0'
 
     compile (
             'io.dropwizard:dropwizard-core:' + dropwizardVersion,
