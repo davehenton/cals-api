@@ -5,10 +5,10 @@ package gov.ca.cwds.cals.service.validation.business.parameters;
  */
 public final class TwoParametersRetrievingStrategy extends AbstractRetrievingParametersStrategy {
 
-  public static final RetrievingParametersStrategy INSTANCE = new TwoParametersRetrievingStrategy();
+  public static final TwoParametersRetrievingStrategy INSTANCE = new TwoParametersRetrievingStrategy();
 
   private TwoParametersRetrievingStrategy() {
-    super((byte) 1);
+    super((byte) 1, (byte) 2);
   }
 
 }

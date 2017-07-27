@@ -10,14 +10,20 @@ public abstract class AbstractRetrievingParametersStrategy<T extends BaseDTO> im
     RetrievingParametersStrategy<T> {
 
   private byte entityDtoPosition;
+  private byte expectedParametersLength;
 
-  public AbstractRetrievingParametersStrategy(byte entityDtoPosition) {
+  public AbstractRetrievingParametersStrategy(byte entityDtoPosition,
+      byte expectedParametersLength) {
     this.entityDtoPosition = entityDtoPosition;
+    this.expectedParametersLength = expectedParametersLength;
   }
 
   @Override
   public BusinessValidationParameterObject<T> retrieveParameters(
       Object[] parameters, Class<T> clazz) {
+    if (parameters.length != expectedParametersLength) {
+      throw new IllegalStateException("Uexpected method parameters count");
+    }
     ParameterReader<T> parametersReader =
         new ParameterReader<>(parameters, clazz, entityDtoPosition);
     return new BusinessValidationParameterObject<>(

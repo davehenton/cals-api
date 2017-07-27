@@ -5,10 +5,10 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
@@ -25,7 +25,7 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   private static final long serialVersionUID = 1367746149537559411L;
 
   @CheckReferentialIntegrity
-  private ApplicantRelationshipType relationshipToApplicant;
+  private RelationshipToApplicantType relationshipToApplicant;
 
   private List<Long> childRelatedTo;
 
@@ -53,11 +53,12 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
 
   private boolean childAdopted;
 
-  public ApplicantRelationshipType getRelationshipToApplicant() {
+  public RelationshipToApplicantType getRelationshipToApplicant() {
     return relationshipToApplicant;
   }
 
-  public void setRelationshipToApplicant(ApplicantRelationshipType relationshipToApplicant) {
+  public void setRelationshipToApplicant(
+      RelationshipToApplicantType relationshipToApplicant) {
     this.relationshipToApplicant = relationshipToApplicant;
   }
 
