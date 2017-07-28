@@ -4,13 +4,10 @@
     "value": "Child"
   },
   "child_related_to": [
-    {
-      applicantId1
-    },
-    {
-      applicantId2
-    }
+    1,
+    2
   ],
+  "other_relative": true,
   "other_relative_name_prefix": {
     "id": 2,
     "value": "Ms."
@@ -27,6 +24,6 @@
     "id": 1,
     "value": "Male"
   },
-  "is_child_financially_supported": true,
-  "is_child_adopted": false
+  "child_financially_supported": true,
+  "child_adopted": false
 }

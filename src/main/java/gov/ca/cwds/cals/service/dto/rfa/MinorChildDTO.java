@@ -5,10 +5,10 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
@@ -25,9 +25,11 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   private static final long serialVersionUID = 1367746149537559411L;
 
   @CheckReferentialIntegrity
-  private ApplicantRelationshipType relationshipToApplicant;
+  private RelationshipToApplicantType relationshipToApplicant;
 
   private List<Long> childRelatedTo;
+
+  private Boolean otherRelative;
 
   @ApiModelProperty(value = "Other Relative Prefix")
   @CheckReferentialIntegrity
@@ -49,15 +51,16 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   @CheckReferentialIntegrity
   private GenderType gender;
 
-  private boolean childFinanciallySupported;
+  private Boolean childFinanciallySupported;
 
-  private boolean childAdopted;
+  private Boolean childAdopted;
 
-  public ApplicantRelationshipType getRelationshipToApplicant() {
+  public RelationshipToApplicantType getRelationshipToApplicant() {
     return relationshipToApplicant;
   }
 
-  public void setRelationshipToApplicant(ApplicantRelationshipType relationshipToApplicant) {
+  public void setRelationshipToApplicant(
+      RelationshipToApplicantType relationshipToApplicant) {
     this.relationshipToApplicant = relationshipToApplicant;
   }
 
@@ -118,22 +121,6 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
     this.gender = gender;
   }
 
-  public boolean isChildFinanciallySupported() {
-    return childFinanciallySupported;
-  }
-
-  public void setChildFinanciallySupported(boolean childFinanciallySupported) {
-    this.childFinanciallySupported = childFinanciallySupported;
-  }
-
-  public boolean isChildAdopted() {
-    return childAdopted;
-  }
-
-  public void setChildAdopted(boolean childAdopted) {
-    this.childAdopted = childAdopted;
-  }
-
   public NameSuffixType getOtherRelativeNameSuffix() {
     return otherRelativeNameSuffix;
   }
@@ -141,5 +128,29 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   public void setOtherRelativeNameSuffix(
       NameSuffixType otherRelativeNameSuffix) {
     this.otherRelativeNameSuffix = otherRelativeNameSuffix;
+  }
+
+  public Boolean getOtherRelative() {
+    return otherRelative;
+  }
+
+  public void setOtherRelative(Boolean otherRelative) {
+    this.otherRelative = otherRelative;
+  }
+
+  public Boolean getChildFinanciallySupported() {
+    return childFinanciallySupported;
+  }
+
+  public void setChildFinanciallySupported(Boolean childFinanciallySupported) {
+    this.childFinanciallySupported = childFinanciallySupported;
+  }
+
+  public Boolean getChildAdopted() {
+    return childAdopted;
+  }
+
+  public void setChildAdopted(Boolean childAdopted) {
+    this.childAdopted = childAdopted;
   }
 }
