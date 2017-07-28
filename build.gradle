@@ -125,6 +125,7 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-compress', version: '1.14'
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
 
+    testCompile group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
     testCompile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: calsModelVersion, changing: true)
     testCompile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: calsModelVersion, changing: true)
     testCompile (group: 'gov.ca.cwds.cals', name: 'lis-data-model', version: calsModelVersion, changing: true)

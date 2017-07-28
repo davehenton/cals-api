@@ -29,6 +29,8 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
 
   private List<Long> childRelatedTo;
 
+  private Boolean otherRelative;
+
   @ApiModelProperty(value = "Other Relative Prefix")
   @CheckReferentialIntegrity
   private NamePrefixType otherRelativeNamePrefix;
@@ -49,9 +51,9 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   @CheckReferentialIntegrity
   private GenderType gender;
 
-  private boolean childFinanciallySupported;
+  private Boolean childFinanciallySupported;
 
-  private boolean childAdopted;
+  private Boolean childAdopted;
 
   public RelationshipToApplicantType getRelationshipToApplicant() {
     return relationshipToApplicant;
@@ -119,22 +121,6 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
     this.gender = gender;
   }
 
-  public boolean isChildFinanciallySupported() {
-    return childFinanciallySupported;
-  }
-
-  public void setChildFinanciallySupported(boolean childFinanciallySupported) {
-    this.childFinanciallySupported = childFinanciallySupported;
-  }
-
-  public boolean isChildAdopted() {
-    return childAdopted;
-  }
-
-  public void setChildAdopted(boolean childAdopted) {
-    this.childAdopted = childAdopted;
-  }
-
   public NameSuffixType getOtherRelativeNameSuffix() {
     return otherRelativeNameSuffix;
   }
@@ -142,5 +128,29 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   public void setOtherRelativeNameSuffix(
       NameSuffixType otherRelativeNameSuffix) {
     this.otherRelativeNameSuffix = otherRelativeNameSuffix;
+  }
+
+  public Boolean getOtherRelative() {
+    return otherRelative;
+  }
+
+  public void setOtherRelative(Boolean otherRelative) {
+    this.otherRelative = otherRelative;
+  }
+
+  public Boolean getChildFinanciallySupported() {
+    return childFinanciallySupported;
+  }
+
+  public void setChildFinanciallySupported(Boolean childFinanciallySupported) {
+    this.childFinanciallySupported = childFinanciallySupported;
+  }
+
+  public Boolean getChildAdopted() {
+    return childAdopted;
+  }
+
+  public void setChildAdopted(Boolean childAdopted) {
+    this.childAdopted = childAdopted;
   }
 }
