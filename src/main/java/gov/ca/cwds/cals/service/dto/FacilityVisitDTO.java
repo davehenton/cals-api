@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 /**
  * @author CWDS CALS API Team
  */
-@SuppressWarnings("squid:S3437")   //LocalDateTime is serializable
+@SuppressWarnings(value = {"squid:S3437", "squid:S2160"})   //LocalDateTime is serializable
+//reflection equals hashcode is used in superclass
 public class FacilityVisitDTO extends BaseDTO {
 
     @JsonProperty("visit_type")

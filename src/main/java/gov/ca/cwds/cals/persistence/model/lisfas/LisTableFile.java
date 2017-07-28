@@ -1,17 +1,16 @@
 package gov.ca.cwds.cals.persistence.model.lisfas;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.NamedQuery;
-
+import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import java.io.Serializable;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  * @author CWDS CALS API Team
@@ -31,19 +30,24 @@ public class LisTableFile implements PersistentObject {
   private static final long serialVersionUID = 3362198377330883827L;
   public static final String FIND_COUNTY_QUERY_PARAM_NAME = "countyCode";
   public static final String FIND_COUNTY_QUERY_SUFFIX = ".findCounty";
-  public static final String FIND_COUNTY_QUERY = "LisTableFile" + FIND_COUNTY_QUERY_SUFFIX;
+  public static final String LIS_TABLE_FILE = "LisTableFile";
+
+  public static final String FIND_COUNTY_QUERY = LIS_TABLE_FILE + FIND_COUNTY_QUERY_SUFFIX;
 
   public static final String FIND_FACILITY_TYPE_QUERY_PARAM_NAME = "facilityTypeCode";
   public static final String FIND_FACILITY_TYPE_QUERY_SUFFIX = ".findFacilityType";
-  public static final String FIND_FACILITY_TYPE_QUERY = "LisTableFile" + FIND_FACILITY_TYPE_QUERY_SUFFIX;
+  public static final String FIND_FACILITY_TYPE_QUERY =
+      LIS_TABLE_FILE + FIND_FACILITY_TYPE_QUERY_SUFFIX;
 
   public static final String FIND_FACILITY_STATUS_QUERY_PARAM_NAME = "facilityStatusCode";
   public static final String FIND_FACILITY_STATUS_QUERY_SUFFIX = ".findFacilityStatus";
-  public static final String FIND_FACILITY_STATUS_QUERY = "LisTableFile" + FIND_FACILITY_STATUS_QUERY_SUFFIX;
+  public static final String FIND_FACILITY_STATUS_QUERY =
+      LIS_TABLE_FILE + FIND_FACILITY_STATUS_QUERY_SUFFIX;
 
   public static final String FIND_VISIT_REASON_QUERY_PARAM_NAME = "visitReasonCode";
   public static final String FIND_VISIT_REASON_QUERY_SUFFIX = ".findVisitReason";
-  public static final String FIND_VISIT_REASON_QUERY = "LisTableFile" + FIND_VISIT_REASON_QUERY_SUFFIX;
+  public static final String FIND_VISIT_REASON_QUERY =
+      LIS_TABLE_FILE + FIND_VISIT_REASON_QUERY_SUFFIX;
 
   private Integer isnLisTableFile;
   private Integer tblCoNbr;
