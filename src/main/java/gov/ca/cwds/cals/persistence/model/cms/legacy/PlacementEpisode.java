@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -15,7 +16,7 @@ import org.hibernate.annotations.NotFoundAction;
  * @author CWDS CALS API Team
  */
 @Entity
-@javax.persistence.Table(name = "PLC_EPST")
+@Table(name = "PLC_EPST")
 public class PlacementEpisode extends BasePlacementEpisode {
   private static final long serialVersionUID = -3903845942588945920L;
 

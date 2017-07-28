@@ -1,16 +1,16 @@
 package gov.ca.cwds.cals.persistence.model.cms.legacy;
 
 import gov.ca.cwds.cals.persistence.model.cms.BaseOutOfHomePlacement;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * @author CWDS CALS API Team
  */
 @Entity
-@javax.persistence.Table(name = "O_HM_PLT")
+@Table(name = "O_HM_PLT")
 public class OutOfHomePlacement extends BaseOutOfHomePlacement {
     private static final long serialVersionUID = 8899107757146812647L;
 

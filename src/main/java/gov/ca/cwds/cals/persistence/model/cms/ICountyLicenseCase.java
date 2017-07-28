@@ -5,7 +5,9 @@ import java.util.List;
 /**
  * @author CWDS CALS API Team
  */
-public interface ICountyLicenseCase<LV extends BaseLicensingVisit, SP extends BaseStaffPerson> {
-  List<LV> getLicensingVisits();
-  SP getStaffPerson();
+public interface ICountyLicenseCase<T extends BaseLicensingVisit, S extends BaseStaffPerson> {
+
+  List<T> getLicensingVisits();
+
+  S getStaffPerson();
 }
