@@ -18,10 +18,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

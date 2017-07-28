@@ -8,6 +8,7 @@ import gov.ca.cwds.rest.api.Response;
  * @author CWDS CALS API Team
  */
 
+@SuppressWarnings("squid:S2160") //reflection equals hashcode is used in superclass
 public class RFAExternalEntityDTO extends BaseDTO implements Request, Response {
 
   protected Long id;

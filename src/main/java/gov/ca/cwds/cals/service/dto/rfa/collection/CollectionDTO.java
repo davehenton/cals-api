@@ -6,6 +6,7 @@ import gov.ca.cwds.rest.api.Response;
 import java.util.Collection;
 
 /** @author CWDS TPT-2 */
+@SuppressWarnings("squid:S2160") //reflection equals hashcode is used in superclass
 public class CollectionDTO<T extends BaseDTO> extends BaseDTO implements Response {
 
   private static final long serialVersionUID = 7775898799478004935L;
