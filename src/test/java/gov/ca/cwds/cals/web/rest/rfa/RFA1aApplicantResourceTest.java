@@ -160,4 +160,9 @@ public class RFA1aApplicantResourceTest extends
     return IOUtils.toString((InputStream) e.getResponse().getEntity(), "UTF-8");
   }
 
+  @Test
+  public void applicantInvalidPhoneExtensionTest() {
+
+  }
+
 }
