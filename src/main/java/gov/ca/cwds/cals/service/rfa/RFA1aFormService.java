@@ -7,6 +7,7 @@ import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
@@ -110,7 +111,7 @@ public class RFA1aFormService
 
   private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus) {
     form.setStatus(newStatus);
-    form.setPlacementHomeId(generatePlacementHomeId());
+    form.setPlacementHomeId(Utils.Id.generate());
     PlacementHome placementHome;
     try {
       placementHome = facilityService.createPlacementHomeByRfaApplication(form);
@@ -120,10 +121,6 @@ public class RFA1aFormService
     }
     form.setPlacementHomeId(placementHome.getIdentifier());
     updateForm(form);
-  }
-
-  private String generatePlacementHomeId() {
-    return StringUtils.substring(new BigInteger(80, new SecureRandom()).toString(32), 0, 10);
   }
 
   private RFA1aForm findFormById(Long formId) {
