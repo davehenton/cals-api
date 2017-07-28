@@ -14,30 +14,56 @@ import org.junit.Test;
 public class PhoneDTOTest extends BeanValidationTestSupport<PhoneDTO> {
 
   @Test
-  public void phoneValidExtansionValidationTest() {
-    // Valid PhoneDTO
+  public void phoneNumberValidationTest() {
     PhoneDTO phone = new PhoneDTO();
-    phone.setNumber("(555) 555-5555");
-    phone.setExtension("5555555");
+    phone.setNumber("1234567890");
     Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
     assertTrue(violations.isEmpty());
   }
 
   @Test
-  public void phoneExtansionMoreThen7ValidationTest() {
+  public void phoneNumberLessThan10digitsValidationTest() {
     PhoneDTO phone = new PhoneDTO();
-    phone.setNumber("(555) 555-5555");
-    // more then 7 digits
-    phone.setExtension("55555555");
+    phone.setNumber("123456789");
     Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
     assertFalse(violations.isEmpty());
   }
 
   @Test
-  public void phoneExtansionHasNonDigitCharsValidationTest() {
+  public void phoneNumberMoreThan10digitsValidationTest() {
     PhoneDTO phone = new PhoneDTO();
-    phone.setNumber("(555) 555-5555");
-    // has nondigit char digits
+    phone.setNumber("12345678901");
+    Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
+    assertFalse(violations.isEmpty());
+  }
+
+  @Test
+  public void phoneNumberNonDigitsValidationTest() {
+    PhoneDTO phone = new PhoneDTO();
+    phone.setNumber("123456789a");
+    Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
+    assertFalse(violations.isEmpty());
+  }
+
+  @Test
+  public void phoneExtensionValidationTest() {
+    PhoneDTO phone = new PhoneDTO();
+    phone.setExtension("1234567");
+    Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
+    assertTrue(violations.isEmpty());
+  }
+
+  @Test
+  public void phoneExtensionMoreThen7ValidationTest() {
+    PhoneDTO phone = new PhoneDTO();
+    phone.setExtension("12345678");
+    Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
+    assertFalse(violations.isEmpty());
+  }
+
+  @Test
+  public void phoneExtensionHasNonDigitCharsValidationTest() {
+    PhoneDTO phone = new PhoneDTO();
     phone.setExtension("a");
     Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
     assertFalse(violations.isEmpty());

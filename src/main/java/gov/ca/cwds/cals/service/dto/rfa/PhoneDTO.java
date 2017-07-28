@@ -20,6 +20,8 @@ public class PhoneDTO extends BaseDTO {
   @CheckReferentialIntegrity
   private PhoneNumberType phoneType;
 
+  @Size(min = 10, max = 10)
+  @Pattern(regexp = "^\\d*")
   private String number;
 
   @Size(max = 7)
