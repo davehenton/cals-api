@@ -10,6 +10,8 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
   private DataSourceFactory lisDataSourceFactory;
   private DataSourceFactory calsnsDataSourceFactory;
 
+  private boolean upgardeDb = false;
+
   @JsonProperty
   public DataSourceFactory getFasDataSourceFactory() {
     return fasDataSourceFactory;
@@ -35,5 +37,14 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
 
   public void setCalsnsDataSourceFactory(DataSourceFactory calsnsDataSourceFactory) {
     this.calsnsDataSourceFactory = calsnsDataSourceFactory;
+  }
+
+  @JsonProperty
+  public boolean isUpgradeDb() {
+    return upgardeDb;
+  }
+
+  public void setUpgardeDb(boolean upgardeDb) {
+    this.upgardeDb = upgardeDb;
   }
 }

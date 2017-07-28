@@ -35,6 +35,8 @@ swagger:
   jsonUrl: ${SWAGGER_JSON_URL:-http://localhost:8080/swagger.json}
   callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
 
+upgardeDb: true
+
 lisDataSourceFactory:
   driverClass: org.postgresql.Driver
   user: ${DB_NS_USER:-postgres_data}

@@ -84,7 +84,7 @@ public abstract class BaseCalsApiIntegrationTest {
 
   public static void setUpCalsns() throws Exception {
     if (!isIntegrationTestsRunning()) {
-      getCalsnsDatabaseHelper().runScript("liquibase/calsns_database_master.xml");
+      getCalsnsDatabaseHelper().runScript("liquibase/calsns_database_master_for_tests.xml");
     }
   }
 

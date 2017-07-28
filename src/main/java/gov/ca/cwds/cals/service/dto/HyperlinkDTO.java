@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
  * @author CWDS CALS API Team
  */
 
+@SuppressWarnings("squid:S2160") //reflection equals hashcode is used in superclass
 public class HyperlinkDTO extends BaseDTO {
 
     private static final long serialVersionUID = -9070129634987372402L;

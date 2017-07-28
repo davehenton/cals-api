@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
@@ -63,4 +65,15 @@ public class FacilityVisitDTO extends BaseDTO {
     public void setVisitDeferredDate(LocalDateTime visitDeferredDate) {
         this.visitDeferredDate = visitDeferredDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
 }

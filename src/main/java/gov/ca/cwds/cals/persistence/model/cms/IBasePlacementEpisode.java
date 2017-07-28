@@ -5,7 +5,9 @@ import java.util.Set;
 /**
  * @author CWDS CALS API Team
  */
-public interface IBasePlacementEpisode<OHP extends BaseOutOfHomePlacement, SP extends BaseStaffPerson> {
-  Set<OHP> getOutOfHomePlacements();
-  SP getStaffPerson();
+public interface IBasePlacementEpisode<H extends BaseOutOfHomePlacement, S extends BaseStaffPerson> {
+
+  Set<H> getOutOfHomePlacements();
+
+  S getStaffPerson();
 }

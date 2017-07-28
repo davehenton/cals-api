@@ -8,6 +8,7 @@ import gov.ca.cwds.cals.inject.ApplicationModule;
 import gov.ca.cwds.cals.inject.InjectorHolder;
 import gov.ca.cwds.cals.web.rest.exception.CalsExceptionHandler;
 import gov.ca.cwds.rest.BaseApiApplication;
+import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import java.util.Map;
@@ -21,6 +22,8 @@ import org.slf4j.LoggerFactory;
 public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CalsApiApplication.class);
+  public static final String LIQUIBASE_CALSNS_DATABASE_MASTER_XML = "liquibase/calsns_database_master.xml";
+  public static final String HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME = "hibernate.default_schema";
 
   public static void main(String[] args) throws Exception {
     new CalsApiApplication().run(args);
@@ -54,6 +57,10 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
 
     // Providing access to the guice injector from external classes such as custom validators
     InjectorHolder.INSTANCE.setInjector(this.guiceBundle.getInjector());
+
+    if (configuration.isUpgradeDb()) {
+      upgardeCalsNsDB(configuration);
+    }
   }
 
   private void runHealthChecks(Environment environment) {
@@ -63,5 +70,23 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
         LOG.error("Fail - {}: {}", entry.getKey(), entry.getValue().getMessage());
       }
     }
+  }
+
+  private void upgardeCalsNsDB(CalsApiConfiguration configuration) {
+    LOG.info("Upgrading CALS_NS DB...");
+
+    DataSourceFactory calsnsDataSourceFactory = configuration.getCalsnsDataSourceFactory();
+    DatabaseHelper databaseHelper = new DatabaseHelper(calsnsDataSourceFactory.getUrl(),
+        calsnsDataSourceFactory.getUser(),
+        calsnsDataSourceFactory.getPassword());
+    try {
+      databaseHelper.runScript(LIQUIBASE_CALSNS_DATABASE_MASTER_XML,
+          calsnsDataSourceFactory.getProperties().get(HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME));
+    } catch (Exception e) {
+      LOG.error("Upgarding of CALS_NS DB is failed. ", e);
+      throw new IllegalStateException(e);
+    }
+
+    LOG.info("Finish Upgrading CALS_NS DB");
   }
 }
