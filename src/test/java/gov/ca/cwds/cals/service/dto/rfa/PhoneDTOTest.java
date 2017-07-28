@@ -22,6 +22,13 @@ public class PhoneDTOTest extends BeanValidationTestSupport<PhoneDTO> {
   }
 
   @Test
+  public void phoneNumberNullValidationTest() {
+    PhoneDTO phone = new PhoneDTO();
+    Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
+    assertTrue(violations.isEmpty());
+  }
+
+  @Test
   public void phoneNumberLessThan10digitsValidationTest() {
     PhoneDTO phone = new PhoneDTO();
     phone.setNumber("123456789");
@@ -49,6 +56,13 @@ public class PhoneDTOTest extends BeanValidationTestSupport<PhoneDTO> {
   public void phoneExtensionValidationTest() {
     PhoneDTO phone = new PhoneDTO();
     phone.setExtension("1234567");
+    Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
+    assertTrue(violations.isEmpty());
+  }
+
+  @Test
+  public void phoneExtensionNullValidationTest() {
+    PhoneDTO phone = new PhoneDTO();
     Set<ConstraintViolation<PhoneDTO>> violations = validate(phone);
     assertTrue(violations.isEmpty());
   }
