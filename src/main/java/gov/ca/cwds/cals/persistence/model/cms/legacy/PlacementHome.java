@@ -1,12 +1,12 @@
 package gov.ca.cwds.cals.persistence.model.cms.legacy;
 
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import org.hibernate.annotations.NamedQuery;
-
-import javax.persistence.Entity;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -22,7 +22,7 @@ import org.hibernate.annotations.NotFoundAction;
                 + " WHERE ph.identifier = :facilityId"
 )
 @Entity
-@javax.persistence.Table(name = "PLC_HM_T")
+@Table(name = "PLC_HM_T")
 public class PlacementHome extends BasePlacementHome {
     private static final long serialVersionUID = 8516376534560115439L;
 

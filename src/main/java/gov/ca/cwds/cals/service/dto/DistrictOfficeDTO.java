@@ -3,12 +3,12 @@ package gov.ca.cwds.cals.service.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import io.swagger.annotations.ApiModelProperty;
-
 import javax.validation.constraints.NotNull;
 
 /**
  * @author CWDS CALS API Team
  */
+@SuppressWarnings("squid:S2160") //reflection equals hashcode is used in superclass
 public class DistrictOfficeDTO extends BaseDTO {
 
     private static final long serialVersionUID = -6573472953019773477L;
