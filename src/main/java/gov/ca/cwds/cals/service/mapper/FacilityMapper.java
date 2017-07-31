@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
@@ -14,7 +15,6 @@ import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.PhoneDTO;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +132,7 @@ public interface FacilityMapper {
   @Mapping(target = "stateCode", ignore = true)
   @Mapping(target = "payeeStateCode", ignore = true)
   @Mapping(target = "licenseStatus", ignore = true)
-  @Mapping(target = "licenseNo", ignore = true)
+  @Mapping(target = "licenseNo", constant = "as12345cd")
   @Mapping(target = "licAplDt", ignore = true)
   @Mapping(target = "licEfctdt", ignore = true)
   @Mapping(target = "licExpDt", ignore = true)
@@ -165,7 +165,7 @@ public interface FacilityMapper {
   @Mapping(target = "licCapNo", constant = "0")
   @Mapping(target = "licStatdt", constant = "1997-08-25")
   @Mapping(target = "licBsnc", constant = "0")
-  @Mapping(target = "licnseeNm", constant = "")
+  @Mapping(target = "licnseeNm", constant = "ab12345679cd")
   @Mapping(target = "licensrCd", constant = "CT")
   @Mapping(target = "facltyNm", constant = "San Diego Placement Home 3")
   @Mapping(target = "oprtdByid", constant = "")
@@ -282,4 +282,17 @@ public interface FacilityMapper {
     }
     facilityDTO.setPhone(phoneDTOs);
   }
+
+
+  @Mapping(target = "pkplcHmt", source = "identifier")
+  @Mapping(target = "cityNm", expression = "java( placementHome.getCityNm() != null ? placementHome.getCityNm().toUpperCase() : null )")
+  @Mapping(target = "geoRgntcd", expression = "java( placementHome.getGeoRgntcd() != null ? placementHome.getGeoRgntcd().toUpperCase(): null )")
+  @Mapping(target = "laVndrId", expression = "java( placementHome.getLaVndrId() != null ? placementHome.getLaVndrId().toUpperCase() : null  )")
+  @Mapping(target = "lstUpdId", ignore = true)
+  @Mapping(target = "lstUpdTs", ignore = true)
+  @Mapping(target = "licenseNo", expression = "java( placementHome.getLicenseNo() != null ? placementHome.getLicenseNo().toUpperCase() : null )")
+  @Mapping(target = "facltyNm", expression = "java( placementHome.getFacltyNm() != null ? placementHome.getFacltyNm().toUpperCase() : null )")
+  @Mapping(target = "streetNo", expression = "java( placementHome.getStreetNo() != null ? placementHome.getStreetNo().toUpperCase() : null )")
+  @Mapping(target = "streetNm", expression = "java( placementHome.getStreetNm() != null ? placementHome.getStreetNm().toUpperCase() : null )")
+  PlacementHomeUc toPlacementHomeUc(PlacementHome placementHome);
 }

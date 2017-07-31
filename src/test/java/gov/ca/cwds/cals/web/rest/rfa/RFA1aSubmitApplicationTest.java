@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
+import gov.ca.cwds.cals.persistence.DBUnitSupport;
+import gov.ca.cwds.cals.persistence.DBUnitSupportBuilder;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
@@ -20,6 +22,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import org.dbunit.Assertion;
+import org.dbunit.dataset.ITable;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -34,6 +38,7 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
 
   @BeforeClass
   public static void beforeClass() throws Exception {
+
     setUpCalsns();
     setUpCms();
   }
@@ -89,8 +94,25 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
     target = clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId());
     form = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
     assertNotNull(form.getPlacementHomeId());
+
+    testIfPlacementHomeUCWasCreatedProperly();
+
   }
 
+  private void testIfPlacementHomeUCWasCreatedProperly() throws Exception {
+    // DataBase testing
+    DBUnitSupportBuilder dbUnitSupportBuilder = new DBUnitSupportBuilder();
+    DBUnitSupport dbUnitSupport = dbUnitSupportBuilder.buildForCMS(appRule.getConfiguration());
+
+    String pathToFlatXMLDataSet = "/dbunit/PlacementHomeUc-test-dataset.xml";
+    String PlacementHomeUCTableName = "PLCHM_UC";
+
+    ITable expected = dbUnitSupport.getTableFromXML(pathToFlatXMLDataSet, PlacementHomeUCTableName);
+    ITable actual = dbUnitSupport.getTableFromDB(PlacementHomeUCTableName);
+
+    Assertion.assertEqualsIgnoreCols(expected, actual,
+        new String[]{"PKPLC_HMT", "LST_UPD_ID", "LST_UPD_TS"});
+  }
 
   @Test
   public void unChangedDraftStatusTest() throws Exception {
