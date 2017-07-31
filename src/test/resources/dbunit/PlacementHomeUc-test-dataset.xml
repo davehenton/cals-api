@@ -2,8 +2,8 @@
 <dataset>
   <PLCHM_UC PKPLC_HMT="pt8m9l5m9d"
     CITY_NM="SAN DIEGO"
-    GEO_RGNTCD=""
-    LA_VNDR_ID=""
+    GEO_RGNTCD="NE"
+    LA_VNDR_ID="LAVND"
     LST_UPD_ID=""
     LST_UPD_TS=""
     LICENSE_NO="AS12345CD"
