@@ -33,7 +33,8 @@ swagger:
 #  loginUrl: ${LOGIN_URL:-http://192.168.99.100:8090/authn/login}
   showSwagger: ${SHOW_SWAGGER:-true}
   jsonUrl: ${SWAGGER_JSON_URL:-http://localhost:8080/swagger.json}
-  callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
+  callbackUrl: ${SWAGGER_CALLBACK_URL:-https://cals-api.dev.cwds.io/swagger}
+#  callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
 
 upgardeDb: true
 
