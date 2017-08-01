@@ -4,7 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.web.rest.rfa.LoggingFilter;
+import gov.ca.cwds.security.jwt.JwtConfiguration;
+import gov.ca.cwds.security.jwt.JwtService;
 import io.dropwizard.testing.junit.DropwizardAppRule;
+
+import java.io.File;
 import java.net.URI;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
@@ -34,16 +38,55 @@ public class RestClientTestRule implements TestRule {
   private final DropwizardAppRule<CalsApiConfiguration> dropWizardApplication;
 
   private Client client;
-
   private ObjectMapper mapper;
+  private String token;
 
   public RestClientTestRule(DropwizardAppRule<CalsApiConfiguration> dropWizardApplication) {
     this.dropWizardApplication = dropWizardApplication;
+    if (isIntegrationTestsRunning()) {
+      try {
+        token = generateToken();
+      } catch (Exception e) {
+        LOG.warn("Cannot generate token");
+      }
+    }
+  }
+
+  public static boolean isIntegrationTestsRunning() {
+    return System.getProperty(CALS_API_URL) != null;
+  }
+
+  public String generateToken() throws Exception {
+    JwtConfiguration configuration = getJwtConfiguration();
+    JwtService jwtService = new JwtService(configuration);
+    return jwtService.generate("id", "subject", "identity");
+  }
+
+  private JwtConfiguration getJwtConfiguration() {
+    JwtConfiguration configuration = new JwtConfiguration();
+    configuration = new JwtConfiguration();
+    //JWT
+    configuration.setTimeout(30);
+    configuration.setIssuer("issuer");
+    configuration.setKeyStore(new JwtConfiguration.KeyStoreConfiguration());
+    //KeyStore
+    configuration.getKeyStore().setPath(new File("config/enc.jceks").getPath());
+    configuration.getKeyStore().setPassword("test");
+    //Sign/Validate Key
+    configuration.getKeyStore().setAlias("test");
+    configuration.getKeyStore().setKeyPassword("test");
+    //Enc Key
+    configuration.setEncryptionEnabled(true);
+    configuration.getKeyStore().setEncKeyPassword("test");
+    configuration.getKeyStore().setEncAlias("enc128");
+    configuration.setEncryptionMethod("A128GCM");
+    return configuration;
   }
 
   public WebTarget target(String pathInfo) {
     String restUrl = getUriString() + pathInfo;
     WebTarget webTarget = client.target(restUrl);
+    webTarget.queryParam("token", token);
     webTarget.register(new LoggingFilter());
     return webTarget;
   }
