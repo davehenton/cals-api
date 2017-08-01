@@ -5,10 +5,10 @@ import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseB
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
-import exception.BaseExceptionResponse;
-import exception.ExpectedExceptionInfo;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
+import gov.ca.cwds.cals.exception.BaseExceptionResponse;
+import gov.ca.cwds.cals.exception.ExpectedExceptionInfo;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;

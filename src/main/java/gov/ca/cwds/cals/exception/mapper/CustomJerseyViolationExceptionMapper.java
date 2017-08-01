@@ -1,7 +1,7 @@
-package exception.mapper;
+package gov.ca.cwds.cals.exception.mapper;
 
-import exception.BaseExceptionResponse;
-import exception.ExceptionType;
+import gov.ca.cwds.cals.exception.BaseExceptionResponse;
+import gov.ca.cwds.cals.exception.ExceptionType;
 import io.dropwizard.jersey.validation.JerseyViolationException;
 import io.dropwizard.jersey.validation.JerseyViolationExceptionMapper;
 import io.dropwizard.jersey.validation.ValidationErrorMessage;

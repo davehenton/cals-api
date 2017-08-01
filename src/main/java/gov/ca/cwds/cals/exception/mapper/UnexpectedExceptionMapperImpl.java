@@ -1,8 +1,8 @@
-package exception.mapper;
+package gov.ca.cwds.cals.exception.mapper;
 
-import exception.BaseExceptionResponse;
-import exception.ExceptionType;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
+import gov.ca.cwds.cals.exception.BaseExceptionResponse;
+import gov.ca.cwds.cals.exception.ExceptionType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

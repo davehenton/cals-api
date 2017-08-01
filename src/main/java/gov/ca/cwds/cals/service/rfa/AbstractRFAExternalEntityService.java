@@ -3,8 +3,8 @@ package gov.ca.cwds.cals.service.rfa;
 import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
-import exception.ExpectedException;
-import exception.ExpectedExceptionInfo;
+import gov.ca.cwds.cals.exception.ExpectedException;
+import gov.ca.cwds.cals.exception.ExpectedExceptionInfo;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFAExternalEntityDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;

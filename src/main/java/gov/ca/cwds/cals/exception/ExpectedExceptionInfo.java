@@ -1,4 +1,4 @@
-package exception;
+package gov.ca.cwds.cals.exception;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 

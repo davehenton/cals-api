@@ -1,7 +1,7 @@
-package exception;
+package gov.ca.cwds.cals.exception;
 
-import exception.mapper.CustomJerseyViolationExceptionMapper;
-import exception.mapper.CustomJsonProcessingExceptionMapper;
+import gov.ca.cwds.cals.exception.mapper.CustomJerseyViolationExceptionMapper;
+import gov.ca.cwds.cals.exception.mapper.CustomJsonProcessingExceptionMapper;
 import javax.ws.rs.ext.ExceptionMapper;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 

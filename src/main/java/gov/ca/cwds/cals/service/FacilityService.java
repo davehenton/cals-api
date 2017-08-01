@@ -1,15 +1,15 @@
 package gov.ca.cwds.cals.service;
 
-import static exception.ExpectedExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
 import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 import com.google.inject.Inject;
-import exception.ExpectedException;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.Id;
+import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;

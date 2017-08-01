@@ -1,4 +1,4 @@
-package exception;
+package gov.ca.cwds.cals.exception;
 
 import javax.ws.rs.core.Response.Status;
 

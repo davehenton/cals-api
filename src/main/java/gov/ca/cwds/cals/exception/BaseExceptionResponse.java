@@ -1,4 +1,4 @@
-package exception;
+package gov.ca.cwds.cals.exception;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

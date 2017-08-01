@@ -1,10 +1,10 @@
 package gov.ca.cwds.cals.service;
 
-import static exception.ExpectedExceptionInfo.COMPLAINT_NOT_FOUND_BY_ID;
+import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.COMPLAINT_NOT_FOUND_BY_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.google.inject.Inject;
-import exception.ExpectedException;
+import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;

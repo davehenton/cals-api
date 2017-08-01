@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.web.rest;
 
-import static exception.ExceptionType.UNEXPECTED_EXCEPTION;
-import static exception.ExpectedExceptionInfo.COMPLAINT_NOT_FOUND_BY_ID;
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.ErrorMessages.BASE_ERROR_MESSAGE;
+import static gov.ca.cwds.cals.exception.ExceptionType.UNEXPECTED_EXCEPTION;
+import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.COMPLAINT_NOT_FOUND_BY_ID;
 import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixturePath;
@@ -11,11 +11,11 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
+import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;

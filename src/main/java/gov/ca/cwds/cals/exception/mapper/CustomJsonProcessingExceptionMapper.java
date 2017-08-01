@@ -1,9 +1,9 @@
-package exception.mapper;
+package gov.ca.cwds.cals.exception.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import exception.BaseExceptionResponse;
-import exception.ExceptionType;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
+import gov.ca.cwds.cals.exception.BaseExceptionResponse;
+import gov.ca.cwds.cals.exception.ExceptionType;
 import io.dropwizard.jersey.errors.ErrorMessage;
 import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
 import javax.ws.rs.core.Response;
