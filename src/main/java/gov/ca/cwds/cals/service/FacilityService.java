@@ -8,23 +8,26 @@ import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Utils;
+import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeUcDao;
 import gov.ca.cwds.cals.persistence.dao.cms.StateDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityInfoLisDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.County;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
@@ -67,6 +70,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private PlacementHomeDao placementHomeDao;
+
+  @Inject
+  private PlacementHomeUcDao placementHomeUcDao;
 
   @Inject
   private CountiesDao countiesDao;
@@ -269,6 +275,23 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(CMS)
   public PlacementHome createPlacementHomeByRfaApplication(RFA1aForm form) {
+    PlacementHome persistedPlacementHome = storePlacementHome(form);
+    storePlacementHomeUc(persistedPlacementHome);
+
+    return persistedPlacementHome;
+  }
+
+  private PlacementHomeUc storePlacementHomeUc(PlacementHome persistedPlacementHome) {
+    PlacementHomeUc placementHomeUc = facilityMapper.toPlacementHomeUc(persistedPlacementHome);
+
+    placementHomeUc.setLstUpdId(Id.getStaffPersonId());
+    placementHomeUc.setLstUpdTs(LocalDateTime.now());
+    placementHomeUc.setPkplcHmt(persistedPlacementHome.getIdentifier());
+
+    return placementHomeUcDao.create(placementHomeUc);
+  }
+
+  private PlacementHome storePlacementHome(RFA1aForm form) {
     PlacementHome placementHome = facilityMapper.toPlacementHome(form);
     placementHome.setFacilityType(facilityTypeDao.findAll().get(0));
     placementHome.setCounty(countiesDao.findAll().get(0));
@@ -279,5 +302,6 @@ public class FacilityService implements CrudsService {
     //
     return placementHomeDao.create(placementHome);
   }
+
 
 }

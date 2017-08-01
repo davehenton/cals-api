@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.persistence.model.cms;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.joda.time.LocalDateTime;
+
 
 /**
  * @author CWDS CALS API Team
