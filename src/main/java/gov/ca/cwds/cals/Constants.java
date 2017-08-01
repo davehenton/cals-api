@@ -244,6 +244,16 @@ public final class Constants {
     }
   }
 
+  public static class FieldValidation {
+    public static final String REFERENTIAL_INTEGRITY_MESSAGE_TEMPLATE =
+        " Object %s is not found in database. Referential integrity was not confirmed.";
+    public static final String REFERENTIAL_INTEGRITY_LIST_MESSAGE_TEMPLATE =
+        " [%s] object %s is not found in database ";
+    public static final String CANNOT_OPEN_DATABASE_SESSION_MESSAGE_TEMPLATE =
+        " Cannot open database session.";
+
+  }
+
   public static class BusinessValidationMessages {
 
     public static final String APPLICANT_DUPLICATE_NAMES_MESSAGE =

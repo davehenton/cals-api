@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.validation.field;
 
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.validation.CalsSessionFactoryAware;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.util.Collection;
@@ -36,19 +37,23 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
             result[0] &= valid;
             if (!valid) {
               context.disableDefaultConstraintViolation();
-              StringBuilder sb = new StringBuilder();
-              sb.append('[')
-                  .append(index[0])
-                  .append("] object ")
-                  .append(o)
-                  .append("  is not found in DataBase ");
-              context.buildConstraintViolationWithTemplate(sb.toString()).addConstraintViolation();
+              context.buildConstraintViolationWithTemplate(
+                  String.format(Constants.FieldValidation.REFERENTIAL_INTEGRITY_LIST_MESSAGE_TEMPLATE, index[0], o))
+                  .addConstraintViolation();
             }
             index[0]++;
           });
       return result[0];
     }
+    catch (Exception e) {
+      context.disableDefaultConstraintViolation();
+      context.buildConstraintViolationWithTemplate(
+          Constants.FieldValidation.CANNOT_OPEN_DATABASE_SESSION_MESSAGE_TEMPLATE)
+          .addConstraintViolation();
+    return false;
   }
+
+}
 
   @Override
   boolean isCheckEqualityRequired() {
