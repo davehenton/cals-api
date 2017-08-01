@@ -1,12 +1,11 @@
-package gov.ca.cwds.cals;
+package gov.ca.cwds.cals.web.rest.utils;
 
+import java.io.StringWriter;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-
-import java.io.StringWriter;
 
 /**
  * @author CWDS CALS API Team

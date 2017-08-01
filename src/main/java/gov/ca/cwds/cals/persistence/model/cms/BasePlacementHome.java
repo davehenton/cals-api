@@ -25,7 +25,7 @@ import org.hibernate.annotations.NotFoundAction;
  *
  * All licensed and nonlicensed substitute care homes in which a child may potentially be placed.
  * This entity includes definitions for both PLACEMENT_HOMEs and Foster Family Agencies (FFA).
- * Attributes for each of these entities are almost identical, with the exception of Backup Contact
+ * Attributes for each of these entities are almost identical, with the gov.ca.cwds.cals.exception of Backup Contact
  * Person information and Unit Number for FFA. PLACEMENT_HOMEs may be licensed homes, certified
  * foster family homes and relative homes, as well as those homes which have been certified pending
  * licensure. The street name, city and county of the PLACEMENT_HOME must be known before the entity

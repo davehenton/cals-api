@@ -65,4 +65,11 @@ public abstract class BaseDictionary extends BaseDTO implements PersistentObject
   public static String buildFindAllQueryName(Class<? extends BaseDictionary> dictionaryClass) {
     return dictionaryClass.getName() + NAMED_QUERY_FIND_ALL_SUFFIX;
   }
+
+  @Override
+  public String toString() {
+    return String
+        .format(getClass().getSimpleName() + "{id = %s, value = %s})", getId(), getValue());
+  }
+
 }
