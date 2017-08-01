@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
@@ -32,7 +31,7 @@ public class BeanValidationTestSupport<T> {
   public Set<ConstraintViolation<PhoneDTO>> removeDbSessionViolation(Set<ConstraintViolation<PhoneDTO>> violations) {
     return violations.stream()
           .filter(b -> !b.getMessageTemplate().equals(
-              Constants.FieldValidation.CANNOT_OPEN_DATABASE_SESSION_MESSAGE_TEMPLATE))
+              Constants.Validation.Field.CANNOT_OPEN_DATABASE_SESSION_MESSAGE))
           .collect(Collectors.toSet());
   }
 }

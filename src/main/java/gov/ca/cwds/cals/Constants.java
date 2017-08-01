@@ -244,23 +244,30 @@ public final class Constants {
     }
   }
 
-  public static class FieldValidation {
-    public static final String REFERENTIAL_INTEGRITY_MESSAGE_TEMPLATE =
-        " Object %s is not found in database. Referential integrity was not confirmed.";
-    public static final String REFERENTIAL_INTEGRITY_LIST_MESSAGE_TEMPLATE =
-        " [%s] object %s is not found in database ";
-    public static final String CANNOT_OPEN_DATABASE_SESSION_MESSAGE_TEMPLATE =
-        " Cannot open database session.";
+  public static class Validation {
 
-  }
+    public static class Field {
+      public static final String REFERENTIAL_INTEGRITY_MESSAGE =
+          " Object %s is not found in database. Referential integrity was not confirmed.";
+      public static final String REFERENTIAL_INTEGRITY_LIST_MESSAGE =
+          " [%s] object %s is not found in database ";
+      public static final String CANNOT_OPEN_DATABASE_SESSION_MESSAGE =
+          " Cannot open database session.";
 
-  public static class BusinessValidationMessages {
+      private Field() {
+      }
+    }
 
-    public static final String APPLICANT_DUPLICATE_NAMES_MESSAGE =
-        "Applicant with firstName - [%s],"
-            + " last name - [%s] and name suffix - [%s] already exists in application";
+    public static class Business {
+      public static final String APPLICANT_DUPLICATE_NAMES_MESSAGE =
+          "Applicant with firstName - [%s],"
+              + " last name - [%s] and name suffix - [%s] already exists in application";
 
-    private BusinessValidationMessages() {
+      private Business() {
+      }
+    }
+
+    private Validation() {
     }
   }
 

@@ -30,7 +30,7 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
       if (!checkReferentialIntegrity(currentSession, obj)) {
         context.disableDefaultConstraintViolation();
         context.buildConstraintViolationWithTemplate(
-            String.format(Constants.FieldValidation.REFERENTIAL_INTEGRITY_MESSAGE_TEMPLATE, obj))
+            String.format(Constants.Validation.Field.REFERENTIAL_INTEGRITY_MESSAGE, obj))
             .addConstraintViolation();
         return false;
       }
@@ -38,7 +38,7 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
     } catch (Exception e) {
       context.disableDefaultConstraintViolation();
       context.buildConstraintViolationWithTemplate(
-          Constants.FieldValidation.CANNOT_OPEN_DATABASE_SESSION_MESSAGE_TEMPLATE)
+          Constants.Validation.Field.CANNOT_OPEN_DATABASE_SESSION_MESSAGE)
           .addConstraintViolation();
       return false;
     }

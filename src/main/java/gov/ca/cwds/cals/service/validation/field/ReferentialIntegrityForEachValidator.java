@@ -38,7 +38,7 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
             if (!valid) {
               context.disableDefaultConstraintViolation();
               context.buildConstraintViolationWithTemplate(
-                  String.format(Constants.FieldValidation.REFERENTIAL_INTEGRITY_LIST_MESSAGE_TEMPLATE, index[0], o))
+                  String.format(Constants.Validation.Field.REFERENTIAL_INTEGRITY_LIST_MESSAGE, index[0], o))
                   .addConstraintViolation();
             }
             index[0]++;
@@ -48,7 +48,7 @@ public class ReferentialIntegrityForEachValidator extends AbstractReferentialInt
     catch (Exception e) {
       context.disableDefaultConstraintViolation();
       context.buildConstraintViolationWithTemplate(
-          Constants.FieldValidation.CANNOT_OPEN_DATABASE_SESSION_MESSAGE_TEMPLATE)
+          Constants.Validation.Field.CANNOT_OPEN_DATABASE_SESSION_MESSAGE)
           .addConstraintViolation();
     return false;
   }
