@@ -4,6 +4,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
+import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
 import org.apache.shiro.SecurityUtils;
@@ -34,6 +35,16 @@ public final class Utils {
     FacilityParameterObject parameterObject = createFacilityParameterObject(facilityNumber);
     parameterObject.setExpanded(Boolean.TRUE);
     return parameterObject;
+  }
+
+  public static class Phone {
+
+    public static String formatNumber(PhoneDTO phone) {
+      return phone.getNumber() + " ext. " + phone.getExtension();
+    }
+
+    public Phone() {
+    }
   }
 
   public static class Id {

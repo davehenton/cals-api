@@ -12,24 +12,22 @@ import org.hibernate.Hibernate;
 /**
  * @author CWDS CALS API Team
  */
-public final class ApplicantDuplicateNamesConstraintPutConfiguration
+public final class ApplicantNamesDuplicationConstraintPutConfiguration
     implements BusinessValidationConfiguration<ApplicantDTO> {
 
-  public static final ApplicantDuplicateNamesConstraintPutConfiguration INSTANCE =
-      new ApplicantDuplicateNamesConstraintPutConfiguration();
+  public static final ApplicantNamesDuplicationConstraintPutConfiguration INSTANCE =
+      new ApplicantNamesDuplicationConstraintPutConfiguration();
 
-  private ApplicantDuplicateNamesConstraintPutConfiguration() {
+  private ApplicantNamesDuplicationConstraintPutConfiguration() {
   }
 
   @Override
   public String getAgendaGroup() {
-    return BusinessRulesAgendaGroups.APPLICANT_DUPLICATE_NAMES_CHECK;
+    return BusinessRulesAgendaGroups.APPLICANT_NAMES_DUPLICATION_VALIDATION;
   }
 
-  public BusinessValidationParameterObject<ApplicantDTO> getBusinessValidationParameterObject(
-      Object[] parameters) {
-    return ThreeParametersRetrievingStrategy.INSTANCE
-        .retrieveParameters(parameters, ApplicantDTO.class);
+  public BusinessValidationParameterObject<ApplicantDTO> getBusinessValidationParameterObject(Object[] parameters) {
+    return ThreeParametersRetrievingStrategy.INSTANCE.retrieveParameters(parameters, ApplicantDTO.class);
   }
 
   @Override

@@ -7,8 +7,8 @@ import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static gov.ca.cwds.cals.service.validation.business.configuration.BusinessValidationConfigurationRegistry.APPLICANTS_DUPLICATE_NAME_CONSTRAINT_POST_CONFIGURATION;
-import static gov.ca.cwds.cals.service.validation.business.configuration.BusinessValidationConfigurationRegistry.APPLICANTS_DUPLICATE_NAME_CONSTRAINT_PUT_CONFIGURATION;
+import static gov.ca.cwds.cals.service.validation.business.configuration.BusinessValidationConfigurationRegistry.APPLICANT_NAMES_DUPLICATION_CONSTRAINT_POST_CONFIGURATION;
+import static gov.ca.cwds.cals.service.validation.business.configuration.BusinessValidationConfigurationRegistry.APPLICANT_NAMES_DUPLICATION_CONSTRAINT_PUT_CONFIGURATION;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
@@ -73,7 +73,7 @@ public class RFA1aApplicantsResource {
   )
   @ApiOperation(value = "Creates and returns RFA 1A Applicant", response = ApplicantDTO.class)
   @BusinessValidationConstraint(
-      businessValidationConfiguration = APPLICANTS_DUPLICATE_NAME_CONSTRAINT_POST_CONFIGURATION
+      businessValidationConfiguration = {APPLICANT_NAMES_DUPLICATION_CONSTRAINT_POST_CONFIGURATION, APPLICANT_NAMES_DUPLICATION_CONSTRAINT_POST_CONFIGURATION}
   )
   public Response createApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
@@ -98,7 +98,7 @@ public class RFA1aApplicantsResource {
   )
   @ApiOperation(value = "Update and returns RFA 1A Applicant", response = ApplicantDTO.class)
   @BusinessValidationConstraint(
-      businessValidationConfiguration = APPLICANTS_DUPLICATE_NAME_CONSTRAINT_PUT_CONFIGURATION
+      businessValidationConfiguration = APPLICANT_NAMES_DUPLICATION_CONSTRAINT_PUT_CONFIGURATION
   )
   public Response updateApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)

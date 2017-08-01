@@ -238,7 +238,8 @@ public final class Constants {
 
   public static class BusinessRulesAgendaGroups {
 
-    public static final String APPLICANT_DUPLICATE_NAMES_CHECK = "applicant-duplicate-names-check";
+    public static final String APPLICANT_NAMES_DUPLICATION_VALIDATION = "applicant-names-duplication-validation";
+    public static final String APPLICANT_PHONE_NUMBERS_DUPLICATION_VALIDATION = "applicant-phone-numbers-duplication-validation";
 
     private BusinessRulesAgendaGroups() {
     }
@@ -259,9 +260,11 @@ public final class Constants {
     }
 
     public static class Business {
-      public static final String APPLICANT_DUPLICATE_NAMES_MESSAGE =
-          "Applicant with firstName - [%s],"
+      public static final String APPLICANT_NAMES_DUPLICATION_MESSAGE =
+          "Applicant with first name - [%s],"
               + " last name - [%s] and name suffix - [%s] already exists in application";
+      public static final String APPLICANT_PHONE_NUMBERS_DUPLICATION_MESSAGE =
+          "Phone [%s] already exists for Applicant with first name - [%s], last name - [%s] and name suffix - [%s]";
 
       private Business() {
       }

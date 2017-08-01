@@ -7,6 +7,8 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import gov.ca.cwds.cals.service.validation.business.configuration.BusinessValidationConfigurationRegistry;
+import org.mapstruct.Mapper;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -23,7 +25,7 @@ import javax.validation.Payload;
 @Documented
 public @interface BusinessValidationConstraint {
 
-  BusinessValidationConfigurationRegistry businessValidationConfiguration();
+  BusinessValidationConfigurationRegistry[] businessValidationConfiguration();
 
   String message() default "";
 

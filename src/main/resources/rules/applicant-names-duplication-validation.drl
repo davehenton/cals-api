@@ -6,7 +6,7 @@ global java.util.Set validationMessages;
 
 rule "Check Applicant names for duplication"
       dialect "mvel"
-  agenda-group "applicant-duplicate-names-check"
+  agenda-group "applicant-names-duplication-validation"
   when
       $form : RFA1aForm()
       $firstApplicant: RFA1aApplicant() from $form.applicants
@@ -16,7 +16,7 @@ rule "Check Applicant names for duplication"
        lastName == $firstApplicantDTO.lastName,
        nameSuffix.id == $firstApplicantDTO.nameSuffix.id) from $secondApplicant.applicant
   then
-      validationMessages.add(String.format(Constants.Validation.Business.APPLICANT_DUPLICATE_NAMES_MESSAGE,
+      validationMessages.add(String.format(Constants.Validation.Business.APPLICANT_NAMES_DUPLICATION_MESSAGE,
        $firstApplicantDTO.getFirstName(),
        $firstApplicantDTO.getLastName(),
        $firstApplicantDTO.getNameSuffix().getValue()));
