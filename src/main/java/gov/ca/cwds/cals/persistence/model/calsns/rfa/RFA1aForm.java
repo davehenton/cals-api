@@ -28,7 +28,7 @@ import org.hibernate.annotations.Type;
  * @author CWDS CALS API Team
  */
 @SuppressWarnings("squid:S3437") //LocalDateTime is serializable
-@NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm ORDER BY id ASC")
+@NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm ORDER BY id DESC")
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_UPDATED_AFTER,
     query = "SELECT form FROM RFA1aForm form"
         + " LEFT JOIN RFA1aApplicant applicant ON applicant.formId = form.id"

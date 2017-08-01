@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
+
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -18,8 +20,11 @@ public class PhoneDTO extends BaseDTO {
   private static final long serialVersionUID = 3691096439228739229L;
 
   @CheckReferentialIntegrity
+  @NotNull
   private PhoneNumberType phoneType;
 
+  @Size(min = 10, max = 10)
+  @Pattern(regexp = "^\\d*")
   private String number;
 
   @Size(max = 7)

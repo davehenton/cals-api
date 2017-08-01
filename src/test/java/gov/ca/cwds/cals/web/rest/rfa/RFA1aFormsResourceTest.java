@@ -21,6 +21,7 @@ import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -28,6 +29,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -196,5 +198,10 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
         invocation.get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {});
 
     assertTrue(rfaForms.getCollection().size() >= 3);
+
+    List<RFA1aFormDTO> list = new ArrayList<>(rfaForms.getCollection());
+    assertEquals(rfaFormCreate3, list.get(0));
+    assertEquals(rfaFormCreate2, list.get(1));
+    assertEquals(rfaFormCreate1, list.get(2));
   }
 }

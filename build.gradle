@@ -32,6 +32,7 @@ project.ext {
     calsModelVersion = '3.5-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     droolsVersion = '7.1.0.Final'
+    dbunitVersion = '2.5.0'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
 }
 
@@ -144,6 +145,7 @@ dependencies {
     }
 
     testCompile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
+    testCompile "org.dbunit:dbunit:$dbunitVersion"
 
     apt 'org.mapstruct:mapstruct-processor:' + mapstructVersion
 }
