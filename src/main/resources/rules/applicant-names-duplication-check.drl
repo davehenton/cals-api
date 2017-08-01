@@ -16,7 +16,7 @@ rule "Check Applicant names for duplication"
        lastName == $firstApplicantDTO.lastName,
        nameSuffix.id == $firstApplicantDTO.nameSuffix.id) from $secondApplicant.applicant
   then
-      validationMessages.add(String.format(Constants.BusinessValidationMessages.APPLICANT_DUPLICATE_NAMES_MESSAGE,
+      validationMessages.add(String.format(Constants.Validation.Business.APPLICANT_DUPLICATE_NAMES_MESSAGE,
        $firstApplicantDTO.getFirstName(),
        $firstApplicantDTO.getLastName(),
        $firstApplicantDTO.getNameSuffix().getValue()));

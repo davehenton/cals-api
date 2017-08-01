@@ -9,8 +9,7 @@ import org.hibernate.Session;
  */
 public abstract class AbstractReferentialIntegrityValidator {
 
-  protected <T extends PersistentObject> boolean checkReferentialIntegrity(
-      Session currentSession, T obj) {
+  protected <T extends PersistentObject> boolean checkReferentialIntegrity(Session currentSession, T obj) {
     PersistentObject found = null;
     Serializable primaryKey = obj.getPrimaryKey();
     if (primaryKey != null) {
