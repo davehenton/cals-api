@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.web.rest.exception;
+package exception;
 
 import javax.ws.rs.core.Response.Status;
 
@@ -6,18 +6,18 @@ import javax.ws.rs.core.Response.Status;
  * @author CWDS CALS API Team
  */
 
-public class UserFriendlyException extends RuntimeException {
+public class ExpectedException extends RuntimeException {
 
-    private final CalsExceptionInfo calsExceptionInfo;
+  private final ExpectedExceptionInfo calsExceptionInfo;
 
     private final Status responseStatus;
 
-    public UserFriendlyException(CalsExceptionInfo calsExceptionInfo, Status responseStatus) {
+  public ExpectedException(ExpectedExceptionInfo calsExceptionInfo, Status responseStatus) {
         this.calsExceptionInfo = calsExceptionInfo;
         this.responseStatus = responseStatus;
     }
 
-    public CalsExceptionInfo getCalsExceptionInfo() {
+  public ExpectedExceptionInfo getCalsExceptionInfo() {
         return calsExceptionInfo;
     }
 

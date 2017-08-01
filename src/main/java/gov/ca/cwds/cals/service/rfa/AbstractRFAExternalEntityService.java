@@ -3,13 +3,13 @@ package gov.ca.cwds.cals.service.rfa;
 import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import exception.ExpectedException;
+import exception.ExpectedExceptionInfo;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFAExternalEntityDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.rfa.factory.RFAExternalEntityFactory;
-import gov.ca.cwds.cals.web.rest.exception.CalsExceptionInfo;
-import gov.ca.cwds.cals.web.rest.exception.UserFriendlyException;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import java.time.LocalDateTime;
@@ -58,8 +58,8 @@ public abstract class AbstractRFAExternalEntityService<
         dao.findEntityByFormIdAndEntityId(
             params.getFormId(), params.getEntityId());
     if (entity == null) {
-      throw new UserFriendlyException(
-          CalsExceptionInfo.RFA_1A_APPLICANT_NOT_FOUND_BY_ID, NOT_FOUND);
+      throw new ExpectedException(
+          ExpectedExceptionInfo.RFA_1A_APPLICANT_NOT_FOUND_BY_ID, NOT_FOUND);
     } else {
       D entityDto = entity.getEntityDTO();
       entityDto.setId(entity.getId());
