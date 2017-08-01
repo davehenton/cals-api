@@ -85,6 +85,7 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void submitApplicationTest() throws Exception {
+
     RFA1aFormDTO form = createForm(clientTestRule);
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());

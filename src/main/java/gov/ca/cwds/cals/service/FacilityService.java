@@ -8,6 +8,7 @@ import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Utils;
+import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
@@ -283,8 +284,7 @@ public class FacilityService implements CrudsService {
   private PlacementHomeUc storePlacementHomeUc(PlacementHome persistedPlacementHome) {
     PlacementHomeUc placementHomeUc = facilityMapper.toPlacementHomeUc(persistedPlacementHome);
 
-    //TODO: Change it to actual user
-    placementHomeUc.setLstUpdId("SYS");
+    placementHomeUc.setLstUpdId(Id.getStaffPersonId());
     placementHomeUc.setLstUpdTs(LocalDateTime.now());
     placementHomeUc.setPkplcHmt(persistedPlacementHome.getIdentifier());
 
