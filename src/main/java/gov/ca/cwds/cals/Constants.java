@@ -240,6 +240,8 @@ public final class Constants {
 
     public static final String APPLICANT_DUPLICATE_NAMES_CHECK = "applicant-duplicate-names-check";
 
+    public static final String APPLICANT_PREFERRED_NUMBER_VALIDATION = "applicant-phone-card-validation";
+
     private BusinessRulesAgendaGroups() {
     }
   }

@@ -1,0 +1,14 @@
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.*
+import gov.ca.cwds.cals.service.dto.rfa.*
+import gov.ca.cwds.cals.Constants;
+
+global java.util.Set validationMessages;
+
+rule "Validate Applicant's phones"
+      dialect "mvel"
+  agenda-group "applicant-phone-card-validation"
+  when
+
+  then
+
+end
