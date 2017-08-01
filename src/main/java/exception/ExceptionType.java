@@ -10,7 +10,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ExceptionType {
 
-  VALIDATION_ERROR("validation_error"),
+  JSON_PROCESSING_EXCEPTION("json_processing_exception"),
+  VALIDATION_ERROR("constraint_validation"),
   UNEXPECTED_EXCEPTION("unexpected_exception"),
   EXPECTED_EXCEPTION("expected_exception");
 

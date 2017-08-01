@@ -5,8 +5,8 @@ import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseB
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
+import exception.BaseExceptionResponse;
 import exception.ExpectedExceptionInfo;
-import exception.ExpectedExceptionResponse;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
@@ -60,8 +60,8 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
   }
 
   private void checkExpectedExceptionResponse(Response response) throws IOException, JSONException {
-    ExpectedExceptionResponse expectedExceptionResponse =
-        response.readEntity(ExpectedExceptionResponse.class);
+    BaseExceptionResponse expectedExceptionResponse =
+        response.readEntity(BaseExceptionResponse.class);
     VelocityHelper velocityHelper = new VelocityHelper();
     velocityHelper.setParameter("incident_id", expectedExceptionResponse.getIncidentId());
     velocityHelper.setParameter("user_message", ErrorMessages.BASE_ERROR_MESSAGE);

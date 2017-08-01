@@ -1,5 +1,7 @@
-package exception;
+package exception.mapper;
 
+import exception.BaseExceptionResponse;
+import exception.ExceptionType;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,18 +25,20 @@ public class UnexpectedExceptionMapperImpl implements ExceptionMapper<RuntimeExc
 
   public Response toResponse(RuntimeException ex) {
     LOGGER.error("EXCEPTION MAPPER: {}", ex.getMessage(), ex);
-    UnexpectedExceptionResponse unexpectedError = new UnexpectedExceptionResponse();
-    unexpectedError.setIncidentId(MDC.get("uniqueId"));
-    unexpectedError.getUserMessages().add(ErrorMessages.BASE_ERROR_MESSAGE);
-    unexpectedError.getTechnicalMessages().add(ex.getMessage());
+    BaseExceptionResponse unexpectedException = new BaseExceptionResponse();
+    unexpectedException.setExceptionType(ExceptionType.UNEXPECTED_EXCEPTION);
+    unexpectedException.setIncidentId(MDC.get("uniqueId"));
+    unexpectedException.addUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
+    unexpectedException.addTechnicalMessage(ex.getMessage());
     if (ex.getCause() != null) {
-      unexpectedError.addTechnicalMessage(ex.getCause().getMessage());
-      unexpectedError.setCauseStackTrace(
+      unexpectedException.addTechnicalMessage(ex.getCause().getMessage());
+      unexpectedException.setCauseStackTrace(
           StringEscapeUtils.escapeJson(ExceptionUtils.getStackTrace(ex.getCause())));
     }
     String stackTrace = ExceptionUtils.getStackTrace(ex);
-    unexpectedError.setStackTrace(StringEscapeUtils.escapeJson(stackTrace));
-    return Response.status(500).entity(unexpectedError).type(MediaType.APPLICATION_JSON).build();
+    unexpectedException.setStackTrace(StringEscapeUtils.escapeJson(stackTrace));
+    return Response.status(500).entity(unexpectedException).type(MediaType.APPLICATION_JSON)
+        .build();
   }
 
 }

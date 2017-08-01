@@ -3,8 +3,9 @@ package gov.ca.cwds.cals;
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.google.inject.Module;
-import exception.ExpectedExceptionMapperImpl;
-import exception.UnexpectedExceptionMapperImpl;
+import exception.CustomExceptionMapperBinder;
+import exception.mapper.ExpectedExceptionMapperImpl;
+import exception.mapper.UnexpectedExceptionMapperImpl;
 import gov.ca.cwds.cals.health.DataSourceHealthCheck;
 import gov.ca.cwds.cals.inject.ApplicationModule;
 import gov.ca.cwds.cals.inject.InjectorHolder;
@@ -39,6 +40,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
   public void runInternal(CalsApiConfiguration configuration, Environment environment) {
     environment.jersey().register(UnexpectedExceptionMapperImpl.class);
     environment.jersey().register(ExpectedExceptionMapperImpl.class);
+    environment.jersey().register(new CustomExceptionMapperBinder(true));
 
     HealthCheckRegistry healthCheckRegistry = environment.healthChecks();
     healthCheckRegistry.register(

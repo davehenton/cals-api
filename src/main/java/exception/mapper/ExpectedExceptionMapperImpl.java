@@ -1,5 +1,8 @@
-package exception;
+package exception.mapper;
 
+import exception.BaseExceptionResponse;
+import exception.ExceptionType;
+import exception.ExpectedException;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,11 +19,12 @@ public class ExpectedExceptionMapperImpl implements ExceptionMapper<ExpectedExce
 
     @Override
     public Response toResponse(ExpectedException exception) {
-        ExpectedExceptionResponse expectedExceptionResponse = new ExpectedExceptionResponse();
+        BaseExceptionResponse expectedExceptionResponse = new BaseExceptionResponse();
+        expectedExceptionResponse.setExceptionType(ExceptionType.EXPECTED_EXCEPTION);
         expectedExceptionResponse.setIncidentId(MDC.get("uniqueId"));
-        expectedExceptionResponse.getTechnicalMessages()
-            .add(exception.getCalsExceptionInfo().getMessage());
-        expectedExceptionResponse.getUserMessages().add(ErrorMessages.BASE_ERROR_MESSAGE);
+        expectedExceptionResponse
+            .addTechnicalMessage(exception.getCalsExceptionInfo().getMessage());
+        expectedExceptionResponse.addUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
         expectedExceptionResponse.setCode(exception.getCalsExceptionInfo().getCode());
         return Response.status(exception.getResponseStatus()).entity(expectedExceptionResponse)
                 .type(MediaType.APPLICATION_JSON).build();
