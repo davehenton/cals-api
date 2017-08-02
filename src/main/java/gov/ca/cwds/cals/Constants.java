@@ -277,6 +277,16 @@ public final class Constants {
     }
   }
 
+  public static class ErrorMessages {
+
+    public static final String BASE_ERROR_MESSAGE =
+        "There was an error processing your request. It has been logged with unique incident id";
+
+    private ErrorMessages() {
+    }
+
+  }
+
   private Constants() {
   }
 }

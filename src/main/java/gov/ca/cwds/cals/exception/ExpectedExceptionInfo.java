@@ -1,15 +1,12 @@
-package gov.ca.cwds.cals.web.rest.exception;
+package gov.ca.cwds.cals.exception;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
  * @author CWDS CALS API Team
  */
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum CalsExceptionInfo {
+public enum ExpectedExceptionInfo {
 
   COMPLAINT_NOT_FOUND_BY_ID("1",
       "Facility Complaint is not found by Facility Number and Complaint Id"),
@@ -24,19 +21,21 @@ public enum CalsExceptionInfo {
   TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED(
       "6", "Transition Submitted Application to Draft status is not allowed");
 
-  @JsonProperty("code")
   private final String code;
 
-  @JsonProperty("message")
   private final String message;
 
-  CalsExceptionInfo(String code, String message) {
+  ExpectedExceptionInfo(String code, String message) {
     this.message = message;
     this.code = code;
   }
 
   public String getMessage() {
     return message;
+  }
+
+  public String getCode() {
+    return code;
   }
 
   @Override
