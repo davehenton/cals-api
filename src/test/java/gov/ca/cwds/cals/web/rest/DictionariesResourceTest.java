@@ -21,7 +21,7 @@ import static gov.ca.cwds.cals.Constants.DictionaryType.SCHOOL_GRADE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SIBLING_GROUP_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.STATE_TYPE_PATH;
 import static gov.ca.cwds.cals.Constants.DictionaryType.SUFFIX_TYPE_PATH;
-import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
+import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertNotNull;
 

@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
 import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
+import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;

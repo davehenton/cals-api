@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
-import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
+import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 
@@ -56,17 +56,6 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
         String fixture = fixture("fixtures/complaint-response.json");
         assertEqualsResponse(fixture, transformDTOtoJSON(complaintDTO));
-    }
-
-    @Test
-    public void getFacilityComplaintNoResultTest() throws Exception {
-        WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
-                WRONG_COMPLAINT_ID);
-        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-        Response response = invocation.get();
-        assertEquals(404, response.getStatus());
-        String fixture = fixture("fixtures/complaint-not-found-by-id-response.json");
-        assertEqualsResponse(fixture, response.readEntity(String.class));
     }
 
 }
