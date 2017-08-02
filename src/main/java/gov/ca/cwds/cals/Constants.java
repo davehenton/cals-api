@@ -244,14 +244,41 @@ public final class Constants {
     }
   }
 
-  public static class BusinessValidationMessages {
+  public static class Validation {
 
-    public static final String APPLICANT_DUPLICATE_NAMES_MESSAGE =
-        "Applicant with firstName - [%s],"
-            + " last name - [%s] and name suffix - [%s] already exists in application";
+    public static class Field {
+      public static final String REFERENTIAL_INTEGRITY_MESSAGE =
+          " Object %s is not found in database. Referential integrity was not confirmed.";
+      public static final String REFERENTIAL_INTEGRITY_LIST_MESSAGE =
+          " [%s] object %s is not found in database ";
+      public static final String CANNOT_OPEN_DATABASE_SESSION_MESSAGE =
+          " Cannot open database session.";
 
-    private BusinessValidationMessages() {
+      private Field() {
+      }
     }
+
+    public static class Business {
+      public static final String APPLICANT_DUPLICATE_NAMES_MESSAGE =
+          "Applicant with firstName - [%s],"
+              + " last name - [%s] and name suffix - [%s] already exists in application";
+
+      private Business() {
+      }
+    }
+
+    private Validation() {
+    }
+  }
+
+  public static class ErrorMessages {
+
+    public static final String BASE_ERROR_MESSAGE =
+        "There was an error processing your request. It has been logged with unique incident id";
+
+    private ErrorMessages() {
+    }
+
   }
 
   private Constants() {

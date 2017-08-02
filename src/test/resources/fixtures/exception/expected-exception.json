@@ -1,0 +1,11 @@
+{
+  "exception_type": "expected_exception",
+  "user_messages": [
+    "$user_message"
+  ],
+  "technical_messages": [
+    "$technical_message"
+  ],
+  "code": "1",
+  "incident_id": "$incident_id"
+}

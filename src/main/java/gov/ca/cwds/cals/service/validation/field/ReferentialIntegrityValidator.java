@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.validation.field;
 
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.validation.CalsSessionFactoryAware;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.validation.ConstraintValidator;
@@ -12,9 +13,6 @@ import org.hibernate.Session;
 public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityValidator
     implements ConstraintValidator<CheckReferentialIntegrity, PersistentObject>,
     CalsSessionFactoryAware {
-
-  private static final String VALIDATION_MESSAGE =
-      " Object %s is not found in database. Referential integrity was not confirmed.";
 
   private boolean checkEquality;
 
@@ -31,11 +29,18 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
 
       if (!checkReferentialIntegrity(currentSession, obj)) {
         context.disableDefaultConstraintViolation();
-        context.buildConstraintViolationWithTemplate(String.format(VALIDATION_MESSAGE, obj))
+        context.buildConstraintViolationWithTemplate(
+            String.format(Constants.Validation.Field.REFERENTIAL_INTEGRITY_MESSAGE, obj))
             .addConstraintViolation();
         return false;
       }
       return true;
+    } catch (Exception e) {
+      context.disableDefaultConstraintViolation();
+      context.buildConstraintViolationWithTemplate(
+          Constants.Validation.Field.CANNOT_OPEN_DATABASE_SESSION_MESSAGE)
+          .addConstraintViolation();
+      return false;
     }
   }
 

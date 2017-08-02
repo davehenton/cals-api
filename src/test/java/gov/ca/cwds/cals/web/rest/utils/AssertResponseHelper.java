@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.web.rest;
+package gov.ca.cwds.cals.web.rest.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

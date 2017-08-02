@@ -1,0 +1,7 @@
+{
+  "exception_type": "constraint_validation",
+  "user_messages": [
+    "<cross-parameter> Applicant with firstName - [Anna], last name - [Smith] and name suffix - [Jr] already exists in application"
+  ],
+  "code": "?"
+}

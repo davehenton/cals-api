@@ -6,10 +6,9 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
+import java.util.List;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-
-import java.util.List;
 
 /**
  * @author CALS API Team
@@ -37,6 +36,9 @@ public final class Utils {
   }
 
   public static class Id {
+
+    public static final String DEFAULT_USER_ID = "0X5";
+
     private Id() {
     }
 
@@ -44,9 +46,9 @@ public final class Utils {
       return CmsKeyIdGenerator.generate(getStaffPersonId());
     }
 
-    private static String getStaffPersonId() {
+    public static String getStaffPersonId() {
       Subject currentUser = SecurityUtils.getSubject();
-      String staffPersonId = null;
+      String staffPersonId = DEFAULT_USER_ID; //Default value
       if (currentUser.getPrincipals() != null) {
         @SuppressWarnings("rawtypes")
         List principals = currentUser.getPrincipals().asList();
