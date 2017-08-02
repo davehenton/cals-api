@@ -9,9 +9,12 @@ import gov.ca.cwds.security.jwt.JwtService;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.Properties;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
@@ -62,24 +65,26 @@ public class RestClientTestRule implements TestRule {
     return jwtService.generate("id", "subject", "identity");
   }
 
-  private JwtConfiguration getJwtConfiguration() {
+  private JwtConfiguration getJwtConfiguration() throws IOException {
+    Properties properties = new Properties();
+    properties.load(new FileInputStream("config/shiro.ini"));
+
     JwtConfiguration configuration = new JwtConfiguration();
-    configuration = new JwtConfiguration();
     //JWT
     configuration.setTimeout(30);
-    configuration.setIssuer("issuer");
+    configuration.setIssuer(properties.getProperty("perryRealm.tokenIssuer"));
     configuration.setKeyStore(new JwtConfiguration.KeyStoreConfiguration());
     //KeyStore
-    configuration.getKeyStore().setPath(new File("config/enc.jceks").getPath());
-    configuration.getKeyStore().setPassword("test");
+    configuration.getKeyStore().setPath(new File(properties.getProperty("perryRealm.keyStorePath")).getPath());
+    configuration.getKeyStore().setPassword(properties.getProperty("perryRealm.keyStorePassword"));
     //Sign/Validate Key
-    configuration.getKeyStore().setAlias("test");
-    configuration.getKeyStore().setKeyPassword("test");
+    configuration.getKeyStore().setAlias(properties.getProperty("perryRealm.keyStoreAlias"));
+    configuration.getKeyStore().setKeyPassword(properties.getProperty("perryRealm.keyStoreKeyPassword"));
     //Enc Key
-    configuration.setEncryptionEnabled(true);
-    configuration.getKeyStore().setEncKeyPassword("test");
-    configuration.getKeyStore().setEncAlias("enc128");
-    configuration.setEncryptionMethod("A128GCM");
+    configuration.setEncryptionEnabled(Boolean.valueOf(properties.getProperty("perryRealm.useEncryption")));
+    configuration.getKeyStore().setEncKeyPassword(properties.getProperty("perryRealm.encKeyPassword"));
+    configuration.getKeyStore().setEncAlias(properties.getProperty("perryRealm.encKeyAlias"));
+    configuration.setEncryptionMethod(properties.getProperty("perryRealm.encryptionMethod"));
     return configuration;
   }
 
@@ -104,9 +109,7 @@ public class RestClientTestRule implements TestRule {
   }
 
   protected String composeUriString() {
-    String serverUrlStr =
-        String.format("http://localhost:%s/", dropWizardApplication.getLocalPort());
-    return serverUrlStr;
+    return String.format("http://localhost:%s/", dropWizardApplication.getLocalPort());
   }
 
   public ObjectMapper getMapper() {
