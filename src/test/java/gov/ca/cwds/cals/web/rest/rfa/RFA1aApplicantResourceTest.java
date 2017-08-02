@@ -141,11 +141,26 @@ public class RFA1aApplicantResourceTest extends
 
   @Test
   public void moreThenOnePreferredNumberInApplicantValidationTest() throws IOException {
+    RFA1aFormDTO form = createForm(clientTestRule);
+    ApplicantDTO applicant = getApplicantDTO();
+    applicant.getPhones().forEach(p -> p.setPreferred(true));
     try {
-      RFA1aFormDTO form = createForm(clientTestRule);
-      ApplicantDTO applicant = getApplicantDTO();
+      applicant = postApplicant(form, applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+      assertEqualsResponse(
+          fixture("fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json"),
+          getEntityFromException(e));
+    }
+
+    // Update test
+    applicant.getPhones().forEach(p -> p.setPreferred(false));
+    applicant = postApplicant(form, applicant);
+
+    try {
       applicant.getPhones().forEach(p -> p.setPreferred(true));
-      postApplicant(form, applicant);
+      putApplicant(form, applicant);
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
