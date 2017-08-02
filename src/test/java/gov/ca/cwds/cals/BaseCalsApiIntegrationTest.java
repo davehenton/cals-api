@@ -65,25 +65,25 @@ public abstract class BaseCalsApiIntegrationTest {
   }
 
   public static void setUpFas() throws Exception {
-    if (!isIntegrationTestsRunning()) {
+    if (!RestClientTestRule.isIntegrationTestsRunning()) {
       getFasDatabaseHelper().runScript("liquibase/fas_database_master.xml");
     }
   }
 
   public static void setUpLis() throws Exception {
-    if (!isIntegrationTestsRunning()) {
+    if (!RestClientTestRule.isIntegrationTestsRunning()) {
       getLisDatabaseHelper().runScript("liquibase/lis_database_master.xml");
     }
   }
 
   public static void setUpCms() throws Exception {
-    if (!isIntegrationTestsRunning()) {
+    if (!RestClientTestRule.isIntegrationTestsRunning()) {
       getCmsDatabaseHelper().runScript("liquibase/cwscms_database_master.xml");
     }
   }
 
   public static void setUpCalsns() throws Exception {
-    if (!isIntegrationTestsRunning()) {
+    if (!RestClientTestRule.isIntegrationTestsRunning()) {
       getCalsnsDatabaseHelper().runScript("liquibase/calsns_database_master_for_tests.xml");
     }
   }
@@ -98,10 +98,6 @@ public abstract class BaseCalsApiIntegrationTest {
 
   @After
   public void tearDown() throws Exception {
-  }
-
-  private static boolean isIntegrationTestsRunning() {
-    return System.getProperty("cals.api.url") != null;
   }
 
 }
