@@ -90,10 +90,7 @@ public class RestClientTestRule implements TestRule {
 
   public WebTarget target(String pathInfo) {
     String restUrl = getUriString() + pathInfo;
-    WebTarget webTarget = client.target(restUrl);
-    webTarget.queryParam("token", token);
-    webTarget.register(new LoggingFilter());
-    return webTarget;
+    return client.target(restUrl).queryParam("token", token).register(new LoggingFilter());
   }
 
   protected String getUriString() {
