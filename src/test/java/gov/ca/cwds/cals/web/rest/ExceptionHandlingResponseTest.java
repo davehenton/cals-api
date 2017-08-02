@@ -18,6 +18,7 @@ import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
 import java.io.IOException;
 import java.io.Serializable;
@@ -111,6 +112,9 @@ public class ExceptionHandlingResponseTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void unExpectedExceptionTest() throws LiquibaseException, IOException, JSONException {
+    if (TestModeUtils.isIntegrationTestsMode()) {
+      return;
+    }
     WebTarget target = clientTestRule.target(Constants.API.FACILITIES + "/" + FACILITY_ID);
     Response response = target.request(MediaType.APPLICATION_JSON).get();
     assertEquals(500, response.getStatus());

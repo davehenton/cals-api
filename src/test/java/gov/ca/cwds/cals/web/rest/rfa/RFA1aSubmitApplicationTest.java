@@ -16,6 +16,7 @@ import gov.ca.cwds.cals.persistence.DBUnitSupportBuilder;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
+import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -85,14 +86,15 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void submitApplicationTest() throws Exception {
-
+    if (TestModeUtils.isIntegrationTestsMode()) {
+      return;
+    }
     RFA1aFormDTO form = createForm(clientTestRule);
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
 
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    target = clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId());
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId());
     form = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
     assertNotNull(form.getPlacementHomeId());
 
@@ -159,9 +161,8 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
   private Response changeApplicationStatusTo(RFAApplicationStatusDTO newStatus, Long formId) {
     WebTarget target =
         clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.STATUS);
-    Response response = target.request(MediaType.APPLICATION_JSON)
+    return target.request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(newStatus, MediaType.APPLICATION_JSON));
-    return response;
   }
 
 

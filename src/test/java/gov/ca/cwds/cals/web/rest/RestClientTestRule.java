@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.web.rest.rfa.LoggingFilter;
+import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import gov.ca.cwds.security.jwt.JwtConfiguration;
 import gov.ca.cwds.security.jwt.JwtService;
 import io.dropwizard.testing.junit.DropwizardAppRule;
@@ -15,8 +16,6 @@ import java.net.URI;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.Properties;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
@@ -37,7 +36,6 @@ public class RestClientTestRule implements TestRule {
 
   private static final Logger LOG = LoggerFactory.getLogger(RestClientTestRule.class);
 
-  public static final String CALS_API_URL = "cals.api.url";
   private final DropwizardAppRule<CalsApiConfiguration> dropWizardApplication;
 
   private Client client;
@@ -46,17 +44,13 @@ public class RestClientTestRule implements TestRule {
 
   public RestClientTestRule(DropwizardAppRule<CalsApiConfiguration> dropWizardApplication) {
     this.dropWizardApplication = dropWizardApplication;
-    if (isIntegrationTestsRunning()) {
+    if (TestModeUtils.isIntegrationTestsMode()) {
       try {
         token = generateToken();
       } catch (Exception e) {
         LOG.warn("Cannot generate token");
       }
     }
-  }
-
-  public static boolean isIntegrationTestsRunning() {
-    return System.getProperty(CALS_API_URL) != null;
   }
 
   public String generateToken() throws Exception {
@@ -94,7 +88,7 @@ public class RestClientTestRule implements TestRule {
   }
 
   protected String getUriString() {
-    String serverUrlStr = System.getProperty(CALS_API_URL);
+    String serverUrlStr = System.getProperty(TestModeUtils.CALS_API_URL);
     if (StringUtils.isEmpty(serverUrlStr)) {
       serverUrlStr = composeUriString();
     }
@@ -121,12 +115,9 @@ public class RestClientTestRule implements TestRule {
 
         JerseyClientBuilder clientBuilder = new JerseyClientBuilder()
             .property(ClientProperties.CONNECT_TIMEOUT, 5000)
-            .property(ClientProperties.READ_TIMEOUT, 20000).hostnameVerifier(new HostnameVerifier() {
-              @Override
-              public boolean verify(String hostName, SSLSession sslSession) {
-                // Just ignore host verification for test purposes
-                return true;
-              }
+            .property(ClientProperties.READ_TIMEOUT, 20000).hostnameVerifier((hostName, sslSession) -> {
+              // Just ignore host verification for test purposes
+              return true;
             });
 
         client = clientBuilder.build();
