@@ -6,7 +6,6 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfigurationRegistry;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -17,15 +16,13 @@ import javax.validation.Payload;
  * @author CWDS CALS API Team
  */
 
-@Target({FIELD, PARAMETER, ANNOTATION_TYPE})
+@Target({METHOD})
 @Retention(RUNTIME)
-@Constraint(validatedBy = DroolsFieldValidator.class)
+@Constraint(validatedBy = DroolsParamsValidator.class)
 @Documented
-public @interface DroolsFieldValidationConstraint {
+public @interface BusinessValidationParamsConstraint {
 
-  DroolsValidationConfigurationRegistry validationConfiguration();
-
-  String session() default "inProgressValidationSession";
+  String configuration();
 
   String message() default "";
 
@@ -38,7 +35,7 @@ public @interface DroolsFieldValidationConstraint {
   @Documented
   @interface List {
 
-    DroolsFieldValidationConstraint[] value();
+    BusinessValidationParamsConstraint[] value();
   }
 
 }

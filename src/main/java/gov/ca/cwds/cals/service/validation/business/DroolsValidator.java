@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.validation.business;
 
+import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
 import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,24 +22,28 @@ public abstract class DroolsValidator<A extends Annotation, T> implements
       return true;
     }
 
-    Set<String> validationMessages = validate(getValidatedFact(obj), getAgendaGroup());
+    DroolsValidationConfiguration<T> configuration = getConfiguration();
+    Object validatedFact = configuration.getValidatedFact(obj);
+
+    Set<String> validationMessages = validate(validatedFact, getAgendaGroup());
     if (validationMessages.isEmpty()) {
       return true;
     } else {
       context.disableDefaultConstraintViolation();
       validationMessages.forEach(
           (message ->
-              context.buildConstraintViolationWithTemplate(message).addConstraintViolation()));
+              context.buildConstraintViolationWithTemplate(message)
+                  .addPropertyNode("<" + configuration.getAgendaGroup() + ">")
+                  .addConstraintViolation()
+          ));
       return false;
     }
 
   }
 
-  protected abstract String getValidationSessionName();
-
   protected abstract String getAgendaGroup();
 
-  protected abstract Object getValidatedFact(T input);
+  protected abstract DroolsValidationConfiguration<T> getConfiguration();
 
 
   private Set<String> validate(Object obj, String agendaGroup) {
@@ -46,7 +51,7 @@ public abstract class DroolsValidator<A extends Annotation, T> implements
     KieContainer kc = ks.getKieClasspathContainer();
     KieSession kSession = null;
     try {
-      kSession = kc.newKieSession(getValidationSessionName());
+      kSession = kc.newKieSession(getConfiguration().getDroolsSessionName());
       kSession.insert(obj);
       Set<String> validationMessages = new HashSet<>();
       kSession.setGlobal("validationMessages", validationMessages);

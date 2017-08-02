@@ -1,0 +1,22 @@
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.*
+import gov.ca.cwds.cals.service.dto.rfa.*
+import gov.ca.cwds.cals.Constants
+import gov.ca.cwds.cals.Constants.Validation.Business;
+
+global java.util.Set validationMessages;
+
+rule "Validate Applicant's preferred phone"
+      dialect "mvel"
+  agenda-group "applicant-validation"
+  when
+    $applicant : ApplicantDTO();
+    $actualPhone: PhoneDTO() from $applicant.phones;
+
+    exists PhoneDTO(
+      this != $actualPhone,
+      $actualPhone.preferred,
+      preferred
+    ) from $applicant.phones
+  then
+    validationMessages.add(Business.APPLICANT_PREFERRED_NUMBER_MESSAGE);
+end

@@ -1,5 +1,5 @@
 {
   "errors": [
-    "<cross-parameter> Applicant with firstName - [Anna], last name - [Smith] and name suffix - [Jr] already exists in application"
+    "<applicant-duplicate-names-check> Applicant with firstName - [Anna], last name - [Smith] and name suffix - [Jr] already exists in application"
   ]
 }

@@ -6,18 +6,18 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 /**
  * @author CWDS CALS API Team
  */
-public class ApplicantPreferredNumberValidationConfiguration implements
+public class ApplicantValidationConfiguration implements
     DroolsFieldValidationConfiguration<ApplicantDTO> {
 
-  public static final ApplicantPreferredNumberValidationConfiguration INSTANCE =
-      new ApplicantPreferredNumberValidationConfiguration();
+  public static final ApplicantValidationConfiguration INSTANCE =
+      new ApplicantValidationConfiguration();
 
-  private ApplicantPreferredNumberValidationConfiguration() {
+  private ApplicantValidationConfiguration() {
   }
 
   @Override
   public String getAgendaGroup() {
-    return BusinessRulesAgendaGroups.APPLICANT_PREFERRED_NUMBER_VALIDATION;
+    return BusinessRulesAgendaGroups.APPLICANT_VALIDATION;
   }
 
   @Override

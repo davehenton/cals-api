@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.validation.business;
 
 import gov.ca.cwds.cals.service.validation.CalsSessionFactoryAware;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
+import gov.ca.cwds.cals.service.validation.business.configuration.ValidationConfigurationRegistry;
 import javax.validation.constraintvalidation.SupportedValidationTarget;
 import javax.validation.constraintvalidation.ValidationTarget;
 
@@ -10,31 +11,23 @@ import javax.validation.constraintvalidation.ValidationTarget;
  */
 @SupportedValidationTarget(ValidationTarget.PARAMETERS)
 public class DroolsParamsValidator extends
-    DroolsValidator<DroolsParamsValidationConstraint, Object[]> implements
+    DroolsValidator<BusinessValidationParamsConstraint, Object[]> implements
     CalsSessionFactoryAware {
 
-  private DroolsValidationConfiguration validationConfiguration;
-  private String validationSessionName;
+  private DroolsValidationConfiguration<Object[]> configuration;
 
-  public void initialize(DroolsParamsValidationConstraint constraint) {
-    this.validationConfiguration = constraint.validationConfiguration()
-        .getConfiguration();
-    this.validationSessionName = constraint.session();
-  }
-
-  @Override
-  protected String getValidationSessionName() {
-    return validationSessionName;
+  public void initialize(BusinessValidationParamsConstraint constraint) {
+    this.configuration = ValidationConfigurationRegistry.INSTANCE.get(constraint.configuration());
   }
 
   @Override
   protected String getAgendaGroup() {
-    return validationConfiguration.getAgendaGroup();
+    return configuration.getAgendaGroup();
   }
 
   @Override
-  protected Object getValidatedFact(Object[] parameters) {
-    return validationConfiguration.getValidatedFact(parameters);
+  protected DroolsValidationConfiguration<Object[]> getConfiguration() {
+    return configuration;
   }
 
 }

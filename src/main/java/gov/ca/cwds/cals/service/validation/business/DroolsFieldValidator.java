@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.validation.business;
 
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
+import gov.ca.cwds.cals.service.validation.business.configuration.ValidationConfigurationRegistry;
 import javax.validation.constraintvalidation.SupportedValidationTarget;
 import javax.validation.constraintvalidation.ValidationTarget;
 
@@ -10,30 +11,23 @@ import javax.validation.constraintvalidation.ValidationTarget;
  */
 @SupportedValidationTarget(ValidationTarget.ANNOTATED_ELEMENT)
 public class DroolsFieldValidator extends
-    DroolsValidator<DroolsFieldValidationConstraint, BaseDTO> {
+    DroolsValidator<BusinessValidationFieldConstraint, BaseDTO> {
 
-  private DroolsValidationConfiguration validationConfiguration;
-  private String validationSessionName;
+  private DroolsValidationConfiguration<BaseDTO> configuration;
 
-  public void initialize(DroolsFieldValidationConstraint constraint) {
-    this.validationConfiguration = constraint.validationConfiguration()
-        .getConfiguration();
-    this.validationSessionName = constraint.session();
-  }
-
-  @Override
-  protected String getValidationSessionName() {
-    return validationSessionName;
+  public void initialize(BusinessValidationFieldConstraint constraint) {
+    configuration = ValidationConfigurationRegistry.INSTANCE
+        .get(constraint.configuration());
   }
 
   @Override
   protected String getAgendaGroup() {
-    return validationConfiguration.getAgendaGroup();
+    return configuration.getAgendaGroup();
   }
 
   @Override
-  protected Object getValidatedFact(BaseDTO input) {
-    return validationConfiguration.getValidatedFact(input);
+  protected DroolsValidationConfiguration<BaseDTO> getConfiguration() {
+    return configuration;
   }
 
 }

@@ -15,7 +15,7 @@ import org.hibernate.Hibernate;
  * @author CWDS CALS API Team
  */
 public final class ApplicantDuplicateNamesConstraintPutConfiguration
-    implements DroolsValidationConfiguration<Object[], RFA1aForm>, CalsSessionFactoryAware,
+    implements DroolsValidationConfiguration<Object[]>, CalsSessionFactoryAware,
     RFA1aFormsDaoAware {
 
   public static final ApplicantDuplicateNamesConstraintPutConfiguration INSTANCE =

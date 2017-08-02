@@ -240,13 +240,15 @@ public final class Constants {
 
     public static final String APPLICANT_DUPLICATE_NAMES_CHECK = "applicant-duplicate-names-check";
 
-    public static final String APPLICANT_PREFERRED_NUMBER_VALIDATION = "applicant-phone-card-validation";
+    public static final String APPLICANT_VALIDATION = "applicant-validation";
 
     private BusinessRulesAgendaGroups() {
     }
   }
 
   public static class Validation {
+
+    public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
 
     public static class Field {
       public static final String REFERENTIAL_INTEGRITY_MESSAGE =
@@ -265,6 +267,8 @@ public final class Constants {
           "Applicant with firstName - [%s],"
               + " last name - [%s] and name suffix - [%s] already exists in application";
 
+      public static final String APPLICANT_PREFERRED_NUMBER_MESSAGE =
+          "Applicant has more then one preferred number";
       private Business() {
       }
     }
