@@ -14,7 +14,7 @@ import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import gov.ca.cwds.cals.service.dto.PhoneDTO;
+import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -267,20 +267,20 @@ public interface FacilityMapper {
 
   default void afterPhones(@MappingTarget FacilityDTO facilityDTO,
       BasePlacementHome placementHome) {
-    List<PhoneDTO> phoneDTOs = new ArrayList<>(2);
+    List<PersonPhoneDTO> personPhoneDTOS = new ArrayList<>(2);
 
     PhoneMapper phoneMapper = Mappers.getMapper(PhoneMapper.class);
 
-    PhoneDTO primaryPhone = phoneMapper.toPrimaryPhoneDTO(placementHome);
+    PersonPhoneDTO primaryPhone = phoneMapper.toPrimaryPhoneDTO(placementHome);
     if (primaryPhone != null) {
-      phoneDTOs.add(primaryPhone);
+      personPhoneDTOS.add(primaryPhone);
     }
 
-    PhoneDTO alternativePhone = phoneMapper.toAlternatePhoneDTO(placementHome);
+    PersonPhoneDTO alternativePhone = phoneMapper.toAlternatePhoneDTO(placementHome);
     if (alternativePhone != null) {
-      phoneDTOs.add(alternativePhone);
+      personPhoneDTOS.add(alternativePhone);
     }
-    facilityDTO.setPhone(phoneDTOs);
+    facilityDTO.setPhone(personPhoneDTOS);
   }
 
 
