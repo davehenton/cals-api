@@ -1,22 +1,22 @@
 package gov.ca.cwds.cals.web.rest;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.ca.cwds.cals.JerseyGuiceRule;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ApplicationResourceTest {
 
     private static final String APP_NAME = "my app";
-    private static final String VERSION = "1.0.0";
-    private static final String BUILD_NUMBER = "1";
 
     @ClassRule
     public static JerseyGuiceRule rule = new JerseyGuiceRule();
@@ -27,33 +27,15 @@ public class ApplicationResourceTest {
             .build();
 
     @Test
-    public void applicationGetReturns200() {
-        assertThat(resources.client().target("/application").request().get().getStatus(), is(equalTo(200)));
-    }
+    public void testApplicationGet() throws IOException {
+        String response = resources.client().target("/application").request().get(String.class);
 
-    @Test
-    public void applicationGetReturnsCorrectName() {
-        assertThat(resources.client().target("/application").request().get().readEntity(String.class),
-                containsString(APP_NAME));
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<HashMap<String, String>> typeRef = new TypeReference<HashMap<String, String>>() {};
+        Map<String,String> applicationProperties = mapper.readValue(response, typeRef);
+        assertNotNull(applicationProperties);
+        assertEquals(APP_NAME, applicationProperties.get("Application"));
+        assertNotNull(applicationProperties.get("Version"));
+        assertNotNull(applicationProperties.get("BuildNumber"));
     }
-
-    @Test
-    public void applicationGetReturnsCorrectVersion() {
-        assertThat(resources.client().target("/application").request().get().readEntity(String.class),
-                containsString(VERSION));
-    }
-
-    @Test
-    public void applicationGetReturnsCorrectBuildNumber() {
-        assertThat(resources.client().target("/application").request().get().readEntity(String.class),
-                containsString(BUILD_NUMBER));
-    }
-
-    @Test
-    public void applicationGetReturnsV1JsonContentType() {
-        assertThat(
-                resources.client().target("/application").request().get().getMediaType()
-                        .toString(), is(equalTo(MediaType.APPLICATION_JSON)));
-    }
-
 }
