@@ -62,7 +62,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
     // Providing access to the guice injector from external classes such as custom validators
     InjectorHolder.INSTANCE.setInjector(this.guiceBundle.getInjector());
 
-    if (configuration.isUpgradeDb()) {
+    if (configuration.isUpgradeDbOnStart()) {
       upgardeCalsNsDB(configuration);
     }
   }

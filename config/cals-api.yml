@@ -36,7 +36,7 @@ swagger:
 #  callbackUrl: https://cals-api.dev.cwds.io/swagger
   callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
 
-upgardeDb: true
+upgardeDbOnStart: true
 
 lisDataSourceFactory:
   driverClass: org.postgresql.Driver
@@ -124,6 +124,20 @@ cmsDataSourceFactory:
       hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSCMS}
       hibernate.connection.autocommit: false
 
+webSecurity:
+  httpResponseSecurityHeaders:
+    # Prevent MIMI sniffing
+    X-Content-Type-Options: nosniff
+
+    # Prevent click-jacking
+    X-Frame-Options: deny
+
+    # Prevent cross site scripting
+    X-XSS-Protection: 1; mode=block
+
+    # Prevent everything other than same origin
+    Content-Security-Policy: default-src 'self' 'unsafe-inline';
+
 logging:
   level: ${LOGLEVEL:-INFO}
   loggers:
@@ -140,4 +154,4 @@ logging:
       threshold: INFO
       timeZone: UTC
       target: stdout
-      logFormat: '%X{remoteAddress} [%date{ISO8601}] %level "%thread" "%X{uniqueId}" %logger: "%message%n"'
+      logFormat: '[%X{remoteAddress}] [%date{ISO8601}] [%level] [%thread] [%X{uniqueId}] [%logger:] [%message]%n'
