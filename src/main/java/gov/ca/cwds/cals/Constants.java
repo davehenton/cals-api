@@ -241,11 +241,15 @@ public final class Constants {
     public static final String APPLICANT_NAMES_DUPLICATION_VALIDATION = "applicant-names-duplication-validation";
     public static final String APPLICANT_PHONE_NUMBERS_DUPLICATION_VALIDATION = "applicant-phone-numbers-duplication-validation";
 
+    public static final String APPLICANT_VALIDATION = "applicant-validation";
+
     private BusinessRulesAgendaGroups() {
     }
   }
 
   public static class Validation {
+
+    public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
 
     public static class Field {
       public static final String REFERENTIAL_INTEGRITY_MESSAGE =
@@ -266,12 +270,24 @@ public final class Constants {
       public static final String APPLICANT_PHONE_NUMBERS_DUPLICATION_MESSAGE =
           "Phone [%s] already exists for Applicant with first name - [%s], last name - [%s] and name suffix - [%s]";
 
+      public static final String APPLICANT_PREFERRED_NUMBER_MESSAGE =
+          "Applicant has more then one preferred number";
       private Business() {
       }
     }
 
     private Validation() {
     }
+  }
+
+  public static class ErrorMessages {
+
+    public static final String BASE_ERROR_MESSAGE =
+        "There was an error processing your request. It has been logged with unique incident id";
+
+    private ErrorMessages() {
+    }
+
   }
 
   private Constants() {

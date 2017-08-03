@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.AssertResponseHelper.assertEqualsResponse;
 import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
+import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -138,6 +138,38 @@ public class RFA1aApplicantResourceTest extends
           getEntityFromException(e));
     }
   }
+
+  @Test
+  public void moreThenOnePreferredNumberInApplicantValidationTest() throws IOException {
+    RFA1aFormDTO form = createForm(clientTestRule);
+    ApplicantDTO applicant = getApplicantDTO();
+    applicant.getPhones().forEach(p -> p.setPreferred(true));
+    try {
+      applicant = postApplicant(form, applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+      assertEqualsResponse(
+          fixture("fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json"),
+          getEntityFromException(e));
+    }
+
+    // Update test
+    applicant.getPhones().forEach(p -> p.setPreferred(false));
+    applicant = postApplicant(form, applicant);
+
+    try {
+      applicant.getPhones().forEach(p -> p.setPreferred(true));
+      putApplicant(form, applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+      assertEqualsResponse(
+          fixture("fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json"),
+          getEntityFromException(e));
+    }
+  }
+
 
   private ApplicantDTO postApplicant(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
     WebTarget target =

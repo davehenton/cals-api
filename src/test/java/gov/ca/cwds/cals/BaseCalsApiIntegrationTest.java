@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals;
 
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
+import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
@@ -65,25 +66,25 @@ public abstract class BaseCalsApiIntegrationTest {
   }
 
   public static void setUpFas() throws Exception {
-    if (!isIntegrationTestsRunning()) {
+    if (!TestModeUtils.isIntegrationTestsMode()) {
       getFasDatabaseHelper().runScript("liquibase/fas_database_master.xml");
     }
   }
 
   public static void setUpLis() throws Exception {
-    if (!isIntegrationTestsRunning()) {
+    if (!TestModeUtils.isIntegrationTestsMode()) {
       getLisDatabaseHelper().runScript("liquibase/lis_database_master.xml");
     }
   }
 
   public static void setUpCms() throws Exception {
-    if (!isIntegrationTestsRunning()) {
+    if (!TestModeUtils.isIntegrationTestsMode()) {
       getCmsDatabaseHelper().runScript("liquibase/cwscms_database_master.xml");
     }
   }
 
   public static void setUpCalsns() throws Exception {
-    if (!isIntegrationTestsRunning()) {
+    if (!TestModeUtils.isIntegrationTestsMode()) {
       getCalsnsDatabaseHelper().runScript("liquibase/calsns_database_master_for_tests.xml");
     }
   }
@@ -98,10 +99,6 @@ public abstract class BaseCalsApiIntegrationTest {
 
   @After
   public void tearDown() throws Exception {
-  }
-
-  private static boolean isIntegrationTestsRunning() {
-    return System.getProperty("cals.api.url") != null;
   }
 
 }

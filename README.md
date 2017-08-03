@@ -49,12 +49,12 @@ In order for the CALS API successfully connect to the above databases the follow
 3. CONNX - LIS database
 Set environment variable CALS_API_CONFIG to cals-api-lis-connx.yml to run docker container with CONNX connection to LIS datasource
 
-- DB_CONXX_USER -- the CONXX datasource username
-- DB_CONXX_PASSWORD -- the CONXX datasource password
-- DB_CONXX_JDBC_URL -- the CONXX datasource URL in Java Database Connectivity format
-- DB_CONXX_CP_INITIAL_SIZE -- the CONXX connections pool iniitial size (default: 2)
-- DB_CONXX_CP_MIN_SIZE -- the CONXX connections pool minimum size (default: 2)
-- DB_CONXX_CP_MAX_SIZE -- the CONXX connections pool maximum size (default: 8)
+- DB_LIS_USER -- the LIS datasource username
+- DB_LIS_PASSWORD -- the LIS datasource password
+- DB_LIS_JDBC_URL -- the LIS datasource URL in Java Database Connectivity format
+- DB_LIS_CP_INITIAL_SIZE -- the LIS connections pool iniitial size (default: 2)
+- DB_LIS_CP_MIN_SIZE -- the LIS connections pool minimum size (default: 2)
+- DB_LIS_CP_MAX_SIZE -- the LIS connections pool maximum size (default: 8)
 
 4. Postgres - FAS Legacy database
 

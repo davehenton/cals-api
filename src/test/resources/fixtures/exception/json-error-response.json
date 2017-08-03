@@ -1,0 +1,11 @@
+{
+  "exception_type": "json_processing_exception",
+  "user_messages": [
+    $user_message
+  ],
+  "incident_id": $incident_id,
+  "technical_messages": [
+    "Unable to process JSON",
+    "Unrecognized field \"wrong\" (class gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO), not marked as ignorable"
+  ]
+} 

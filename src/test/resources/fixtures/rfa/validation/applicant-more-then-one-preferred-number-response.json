@@ -1,0 +1,7 @@
+{
+  "code": "?",
+  "exception_type": "constraint_validation",
+  "user_messages": [
+    "<applicant-validation> Applicant has more then one preferred number"
+  ]
+}
