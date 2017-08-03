@@ -17,16 +17,16 @@ import org.slf4j.MDC;
 @Provider
 public class ExpectedExceptionMapperImpl implements ExceptionMapper<ExpectedException> {
 
-    @Override
-    public Response toResponse(ExpectedException exception) {
-        BaseExceptionResponse expectedExceptionResponse = new BaseExceptionResponse();
-        expectedExceptionResponse.setExceptionType(ExceptionType.EXPECTED_EXCEPTION);
-        expectedExceptionResponse.setIncidentId(MDC.get("uniqueId"));
-        expectedExceptionResponse
-            .addTechnicalMessage(exception.getCalsExceptionInfo().getMessage());
-        expectedExceptionResponse.addUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
-        expectedExceptionResponse.setCode(exception.getCalsExceptionInfo().getCode());
-        return Response.status(exception.getResponseStatus()).entity(expectedExceptionResponse)
-                .type(MediaType.APPLICATION_JSON).build();
-    }
+  @Override
+  public Response toResponse(ExpectedException exception) {
+    BaseExceptionResponse expectedExceptionResponse = new BaseExceptionResponse();
+    expectedExceptionResponse.setExceptionType(ExceptionType.EXPECTED_EXCEPTION);
+    expectedExceptionResponse.setIncidentId(MDC.get("uniqueId"));
+    expectedExceptionResponse
+        .addTechnicalMessage(exception.getCalsExceptionInfo().getMessage());
+    expectedExceptionResponse.addUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
+    expectedExceptionResponse.setCode(exception.getCalsExceptionInfo().getCode());
+    return Response.status(exception.getResponseStatus()).entity(expectedExceptionResponse)
+        .type(MediaType.APPLICATION_JSON).build();
+  }
 }

@@ -8,7 +8,6 @@ import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import gov.ca.cwds.security.jwt.JwtConfiguration;
 import gov.ca.cwds.security.jwt.JwtService;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -69,14 +68,18 @@ public class RestClientTestRule implements TestRule {
     configuration.setIssuer(properties.getProperty("perryRealm.tokenIssuer"));
     configuration.setKeyStore(new JwtConfiguration.KeyStoreConfiguration());
     //KeyStore
-    configuration.getKeyStore().setPath(new File(properties.getProperty("perryRealm.keyStorePath")).getPath());
+    configuration.getKeyStore()
+        .setPath(new File(properties.getProperty("perryRealm.keyStorePath")).getPath());
     configuration.getKeyStore().setPassword(properties.getProperty("perryRealm.keyStorePassword"));
     //Sign/Validate Key
     configuration.getKeyStore().setAlias(properties.getProperty("perryRealm.keyStoreAlias"));
-    configuration.getKeyStore().setKeyPassword(properties.getProperty("perryRealm.keyStoreKeyPassword"));
+    configuration.getKeyStore()
+        .setKeyPassword(properties.getProperty("perryRealm.keyStoreKeyPassword"));
     //Enc Key
-    configuration.setEncryptionEnabled(Boolean.valueOf(properties.getProperty("perryRealm.useEncryption")));
-    configuration.getKeyStore().setEncKeyPassword(properties.getProperty("perryRealm.encKeyPassword"));
+    configuration
+        .setEncryptionEnabled(Boolean.valueOf(properties.getProperty("perryRealm.useEncryption")));
+    configuration.getKeyStore()
+        .setEncKeyPassword(properties.getProperty("perryRealm.encKeyPassword"));
     configuration.getKeyStore().setEncAlias(properties.getProperty("perryRealm.encKeyAlias"));
     configuration.setEncryptionMethod(properties.getProperty("perryRealm.encryptionMethod"));
     return configuration;
@@ -115,7 +118,8 @@ public class RestClientTestRule implements TestRule {
 
         JerseyClientBuilder clientBuilder = new JerseyClientBuilder()
             .property(ClientProperties.CONNECT_TIMEOUT, 5000)
-            .property(ClientProperties.READ_TIMEOUT, 20000).hostnameVerifier((hostName, sslSession) -> {
+            .property(ClientProperties.READ_TIMEOUT, 20000)
+            .hostnameVerifier((hostName, sslSession) -> {
               // Just ignore host verification for test purposes
               return true;
             });
