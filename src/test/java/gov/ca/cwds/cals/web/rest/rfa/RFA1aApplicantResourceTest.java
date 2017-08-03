@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
+import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
@@ -11,14 +12,18 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
+import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
 import org.junit.Test;
 
 /**
@@ -60,6 +65,40 @@ public class RFA1aApplicantResourceTest extends
   @Override
   public void getEntitiesByFormId() throws Exception {
     getExternalEntityApiHelper().getEntitiesByFormId();
+  }
+
+  @Test
+  public void checkMaxFirstNameSizeTest() throws IOException, JSONException {
+    try {
+      ApplicantDTO applicantDTO = getApplicantDTO();
+      applicantDTO.setFirstName("12345678901234567890x");
+      RFA1aFormDTO form = createForm(clientTestRule);
+      postApplicant(form, applicantDTO);
+      fail();
+    } catch (ClientErrorException e) {
+      Map<String, Object> parameters = new HashMap<>();
+      parameters
+          .put("user_message", "firstName 12345678901234567890x exceeds maximum length of 20");
+      parameters.put("code", "?");
+      checkValidationResponse(e, parameters);
+    }
+  }
+
+  @Test
+  public void checkFirstNameAlphanumericTest() throws IOException, JSONException {
+    try {
+      ApplicantDTO applicantDTO = getApplicantDTO();
+      applicantDTO.setFirstName("l@4");
+      RFA1aFormDTO form = createForm(clientTestRule);
+      postApplicant(form, applicantDTO);
+      fail();
+    } catch (ClientErrorException e) {
+      Map<String, Object> parameters = new HashMap<>();
+      parameters.put("user_message",
+          "firstName l@4 is invalid. Only alphanumerical characters and spaces are allowed");
+      parameters.put("code", "?");
+      checkValidationResponse(e, parameters);
+    }
   }
 
   @Test
@@ -160,9 +199,14 @@ public class RFA1aApplicantResourceTest extends
     return IOUtils.toString((InputStream) e.getResponse().getEntity(), "UTF-8");
   }
 
-  @Test
-  public void applicantInvalidPhoneExtensionTest() {
-
+  private void checkValidationResponse(ClientErrorException e, Map<String, Object> parameters)
+      throws IOException, JSONException {
+    assertEquals(422, e.getResponse().getStatus());
+    String entity = e.getResponse().readEntity(String.class);
+    VelocityHelper velocityHelper = new VelocityHelper();
+    velocityHelper.setParameters(parameters);
+    assertResponseByFixture(entity,
+        velocityHelper.process("fixtures/rfa/validation/validation_error_response.json"));
   }
 
 }

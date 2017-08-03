@@ -276,6 +276,12 @@ public final class Constants {
     public static final String BASE_ERROR_MESSAGE =
         "There was an error processing your request. It has been logged with unique incident id";
 
+    public static final String MAX_LENGTH_VIOLATION =
+        "${validatedValue} exceeds maximum length of {max}";
+    public static final String FIRST_NAME_ALPHANUMERIC_VIOLATION =
+        "${validatedValue} is invalid. Only alphanumerical characters and spaces are allowed";
+
+
     private ErrorMessages() {
     }
 
