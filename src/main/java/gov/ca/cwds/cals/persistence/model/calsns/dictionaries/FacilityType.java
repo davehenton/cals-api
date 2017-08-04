@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.hibernate.annotations.NamedQuery;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.NamedQuery;
  */
 @NamedQuery(name = FacilityType.NAMED_QUERY_FIND_ALL, query = "FROM FacilityType ORDER BY id ASC")
 @Entity
+@Cacheable
 @Table(name = "facility_type")
 public class FacilityType extends LegacyComplaintDictionary {
 
