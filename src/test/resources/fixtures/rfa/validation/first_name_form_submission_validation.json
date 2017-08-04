@@ -1,6 +1,6 @@
 {
   "exception_type": "constraint_validation",
   "user_messages": [
-    "Applicant with firstName - [], last name - [] and name suffix - [] has empty first name"
+    "Applicant with firstName - [], last name - [Smith] and name suffix - [Jr] has empty first name"
   ]
 }

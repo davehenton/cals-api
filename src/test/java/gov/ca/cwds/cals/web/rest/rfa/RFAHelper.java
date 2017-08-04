@@ -1,5 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANTS_FIXTURE_PATH;
+import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -10,6 +12,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
+import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -50,6 +53,12 @@ public class RFAHelper {
     assertEquals("otherDescription", rfaFormDTOAfter.getOtherTypeDescription());
     assertEquals(rfaFormDTOBefore.getApplicationCounty(), rfaFormDTOAfter.getApplicationCounty());
     return rfaFormDTOAfter;
+  }
+
+  public ApplicantDTO createValidApplicant() throws IOException {
+    ApplicantDTO applicantDTO = clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
+    return applicantDTO;
   }
 
   public ApplicantDTO postApplicant(long formId, ApplicantDTO applicantDTO) {
