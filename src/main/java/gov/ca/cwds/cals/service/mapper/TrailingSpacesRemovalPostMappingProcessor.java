@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
+import java.util.Arrays;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,8 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -60,12 +59,16 @@ public class TrailingSpacesRemovalPostMappingProcessor {
     }
   }
 
+  private boolean isInPackage(Class<?> clazz, String... packageNames) {
+    return Arrays.stream(packageNames).anyMatch(
+        packageName -> clazz.getPackage() != null && clazz.getPackage().getName()
+            .equals(packageName));
+  }
+
   private boolean isSimpleValueType(Class<?> clazz) {
     return ClassUtils.isPrimitiveOrWrapper(clazz) ||
         String.class.isAssignableFrom(clazz) ||
-        LocalDate.class.isAssignableFrom(clazz) ||
-        LocalDateTime.class.isAssignableFrom(clazz) ||
-        clazz.getPackage().getName().equals("java.math");
+        isInPackage(clazz, "java.time", "java.math");
   }
 
   private boolean isCollection(Class<?> clazz) {
