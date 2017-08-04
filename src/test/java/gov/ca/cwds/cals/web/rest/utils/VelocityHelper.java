@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.web.rest.utils;
 
 import java.io.StringWriter;
+import java.util.Map;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -28,6 +29,10 @@ public final class VelocityHelper {
 
   public void setParameter(String name, Object value) {
     context.put(name, value);
+  }
+
+  public void setParameters(Map<String, Object> parameterValues) {
+    parameterValues.forEach(context::put);
   }
 
   public String process(String fixture) {

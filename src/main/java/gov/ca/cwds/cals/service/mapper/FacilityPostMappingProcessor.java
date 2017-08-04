@@ -3,14 +3,13 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import gov.ca.cwds.cals.service.dto.PhoneDTO;
+import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
+import java.util.ArrayList;
+import java.util.List;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -32,7 +31,7 @@ public abstract class FacilityPostMappingProcessor {
     }
 
     private void mapPhones(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
-        List<PhoneDTO> phones = new ArrayList<>(1);
+      List<PersonPhoneDTO> phones = new ArrayList<>(1);
         phones.add(PHONE_MAPPER.lisFacilityToPhoneDTO(lisFacFile));
         facilityDTO.setPhone(phones);
     }

@@ -4,6 +4,7 @@ import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.google.inject.Module;
 import gov.ca.cwds.cals.exception.CustomExceptionMapperBinder;
+import gov.ca.cwds.cals.exception.mapper.BusinessValidationExceptionMapper;
 import gov.ca.cwds.cals.exception.mapper.ExpectedExceptionMapperImpl;
 import gov.ca.cwds.cals.exception.mapper.UnexpectedExceptionMapperImpl;
 import gov.ca.cwds.cals.health.DataSourceHealthCheck;
@@ -40,6 +41,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
   public void runInternal(CalsApiConfiguration configuration, Environment environment) {
     environment.jersey().register(UnexpectedExceptionMapperImpl.class);
     environment.jersey().register(ExpectedExceptionMapperImpl.class);
+    environment.jersey().register(BusinessValidationExceptionMapper.class);
     environment.jersey().register(new CustomExceptionMapperBinder(true));
 
     HealthCheckRegistry healthCheckRegistry = environment.healthChecks();
@@ -62,7 +64,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
     // Providing access to the guice injector from external classes such as custom validators
     InjectorHolder.INSTANCE.setInjector(this.guiceBundle.getInjector());
 
-    if (configuration.isUpgradeDb()) {
+    if (configuration.isUpgradeDbOnStart()) {
       upgardeCalsNsDB(configuration);
     }
   }

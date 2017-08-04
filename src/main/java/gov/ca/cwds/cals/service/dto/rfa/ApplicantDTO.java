@@ -5,6 +5,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
@@ -19,6 +20,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * @author CWDS CALS API Team
@@ -29,11 +32,14 @@ import javax.validation.Valid;
 public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   private static final long serialVersionUID = -4333411852074578122L;
+  public static final String FIRST_NAME_PATTERN = "^[a-zA-Z0-9\\s]*$";
 
   @ApiModelProperty(value = "Prefix")
   @CheckReferentialIntegrity
   private NamePrefixType namePrefix;
 
+  @Size(max = 20, message = ErrorMessages.MAX_LENGTH_VIOLATION)
+  @Pattern(regexp = FIRST_NAME_PATTERN, message = ErrorMessages.FIRST_NAME_ALPHANUMERIC_VIOLATION)
   private String firstName;
 
   private String middleName;

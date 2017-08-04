@@ -25,7 +25,7 @@ public class RFA1aRelationshipResourceTest extends
 
         };
 
-    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration);
+    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
   }
 
 }

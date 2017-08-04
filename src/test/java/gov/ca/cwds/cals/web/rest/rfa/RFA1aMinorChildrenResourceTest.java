@@ -1,7 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
-
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
@@ -50,7 +48,7 @@ public class RFA1aMinorChildrenResourceTest extends
 
         };
 
-    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration);
+    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
   }
 
   @Test
@@ -73,7 +71,7 @@ public class RFA1aMinorChildrenResourceTest extends
   @Test
   public void restoreUnselectedValueBackTest() throws IOException, JSONException {
     String inputFixture = "{\"child_related_to\": [1,2]}";
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_MINOR_CHILDREN);
@@ -110,7 +108,7 @@ public class RFA1aMinorChildrenResourceTest extends
 
   private void checkInputOutput(String inputFixture, String expectedOutputFixture)
       throws IOException, JSONException {
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_MINOR_CHILDREN);

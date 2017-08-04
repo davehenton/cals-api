@@ -37,6 +37,6 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
           }
         };
 
-    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration);
+    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
   }
 }

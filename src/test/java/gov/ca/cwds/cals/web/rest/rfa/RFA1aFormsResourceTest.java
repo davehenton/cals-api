@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
@@ -8,7 +7,6 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
@@ -29,14 +27,13 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
+public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -158,7 +155,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getApplicationFormTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
+    RFA1aFormDTO rfaFormCreate = rfaHelper.createForm();
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     RFA1aFormDTO rfaFormGet = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
@@ -169,7 +166,7 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void updateApplicationFormTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate = createForm(clientTestRule);
+    RFA1aFormDTO rfaFormCreate = rfaHelper.createForm();
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     rfaFormCreate.setOtherTypeDescription("newOtherTypeDescription");
@@ -184,9 +181,9 @@ public class RFA1aFormsResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getAllApplicationFormsTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate1 = createForm(clientTestRule);
-    RFA1aFormDTO rfaFormCreate2 = createForm(clientTestRule);
-    RFA1aFormDTO rfaFormCreate3 = createForm(clientTestRule);
+    RFA1aFormDTO rfaFormCreate1 = rfaHelper.createForm();
+    RFA1aFormDTO rfaFormCreate2 = rfaHelper.createForm();
+    RFA1aFormDTO rfaFormCreate3 = rfaHelper.createForm();
 
     assertNotEquals(rfaFormCreate1, rfaFormCreate2);
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);

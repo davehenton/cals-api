@@ -25,7 +25,7 @@ public class RFA1aResidenceResourceTest extends BaseInternalEntityApiTest<Reside
 
         };
 
-    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration);
+    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
     }
 
 }

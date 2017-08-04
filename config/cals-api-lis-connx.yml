@@ -86,6 +86,9 @@ calsnsDataSourceFactory:
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
       hibernate.default_schema: calsns
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      hibernate.cache.use_query_cache: true
 
 cmsDataSourceFactory:
   autoCommitByDefault: false
@@ -105,20 +108,34 @@ cmsDataSourceFactory:
       hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSCMS}
       hibernate.connection.autocommit: false
 
+webSecurity:
+  httpResponseSecurityHeaders:
+    # Prevent MIMI sniffing
+    X-Content-Type-Options: nosniff
+
+    # Prevent click-jacking
+    X-Frame-Options: deny
+
+    # Prevent cross site scripting
+    X-XSS-Protection: 1; mode=block
+
+    # Prevent everything other than same origin
+    Content-Security-Policy: default-src 'self' 'unsafe-inline';
+
 logging:
   level: ${LOGLEVEL:-INFO}
-#  loggers:
-#    "org.hibernate.SQL":
-#      level: DEBUG
-#    "org.hibernate.type.descriptor.sql":
-#      level: DEBUG
-#    "AUDIT":
-#      level: ALL
-#    "gov.ca.cwds":
-#      level: DEBUG
-#  appenders:
-#    - type: console
-#      threshold: WARN
-#      timeZone: UTC
-#      target: stdout
-#      logFormat: '%X{remoteAddress} [%date{ISO8601}] %level "%thread" "%X{uniqueId}" %logger: "%message%n"'
+  loggers:
+    "org.hibernate.SQL":
+      level: INFO
+    "org.hibernate.type.descriptor.sql":
+      level: INFO
+    "AUDIT":
+      level: ALL
+    "gov.ca.cwds":
+      level: DEBUG
+  appenders:
+    - type: console
+      threshold: INFO
+      timeZone: UTC
+      target: stdout
+      logFormat: '[%X{remoteAddress}] [%date{ISO8601}] [%level] [%thread] [%X{uniqueId}] [%logger:] [%message]%n'

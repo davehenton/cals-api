@@ -7,8 +7,9 @@ import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static gov.ca.cwds.cals.service.validation.business.configuration.BusinessValidationConfigurationRegistry.APPLICANTS_DUPLICATE_NAME_CONSTRAINT_POST_CONFIGURATION;
-import static gov.ca.cwds.cals.service.validation.business.configuration.BusinessValidationConfigurationRegistry.APPLICANTS_DUPLICATE_NAME_CONSTRAINT_PUT_CONFIGURATION;
+import static gov.ca.cwds.cals.service.validation.business.configuration.ValidationConfigurationRegistry.APPLICANTS_DUPLICATE_NAME_POST;
+import static gov.ca.cwds.cals.service.validation.business.configuration.ValidationConfigurationRegistry.APPLICANTS_DUPLICATE_NAME_PUT;
+import static gov.ca.cwds.cals.service.validation.business.configuration.ValidationConfigurationRegistry.APPLICANT_VALIDATION;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
@@ -16,7 +17,8 @@ import gov.ca.cwds.cals.inject.RFA1aApplicantServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aApplicantsCollectionServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.ApplicantCollectionDTO;
-import gov.ca.cwds.cals.service.validation.business.BusinessValidationConstraint;
+import gov.ca.cwds.cals.service.validation.business.BusinessValidationFieldConstraint;
+import gov.ca.cwds.cals.service.validation.business.BusinessValidationParamsConstraint;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import gov.ca.cwds.rest.api.Request;
@@ -72,8 +74,8 @@ public class RFA1aApplicantsResource {
       }
   )
   @ApiOperation(value = "Creates and returns RFA 1A Applicant", response = ApplicantDTO.class)
-  @BusinessValidationConstraint(
-      businessValidationConfiguration = APPLICANTS_DUPLICATE_NAME_CONSTRAINT_POST_CONFIGURATION
+  @BusinessValidationParamsConstraint(
+      configuration = APPLICANTS_DUPLICATE_NAME_POST
   )
   public Response createApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
@@ -81,6 +83,7 @@ public class RFA1aApplicantsResource {
           Long formId,
       @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1A Applicant object")
       @Valid
+      @BusinessValidationFieldConstraint(configuration = APPLICANT_VALIDATION)
           ApplicantDTO applicant) {
     return resourceDelegate.create(new RFAExternalEntityUpdateParameterObject<>(formId, applicant));
   }
@@ -97,8 +100,8 @@ public class RFA1aApplicantsResource {
       }
   )
   @ApiOperation(value = "Update and returns RFA 1A Applicant", response = ApplicantDTO.class)
-  @BusinessValidationConstraint(
-      businessValidationConfiguration = APPLICANTS_DUPLICATE_NAME_CONSTRAINT_PUT_CONFIGURATION
+  @BusinessValidationParamsConstraint(
+      configuration = APPLICANTS_DUPLICATE_NAME_PUT
   )
   public Response updateApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
@@ -109,6 +112,7 @@ public class RFA1aApplicantsResource {
           Long applicantId,
       @ApiParam(required = true, name = RFA_1A_APPLICANT, value = "The RFA-1A Applicant object")
       @Valid
+      @BusinessValidationFieldConstraint(configuration = APPLICANT_VALIDATION)
           ApplicantDTO applicant) {
     return resourceDelegate.update(
         new RFAExternalEntityGetParameterObject(formId, applicantId),
