@@ -3,16 +3,15 @@ package gov.ca.cwds.cals.service.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import io.swagger.annotations.ApiModelProperty;
-
+import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 /**
  * A DTO for the Phone entity.
  */
 
-public class PhoneDTO extends BaseDTO {
+public class PersonPhoneDTO extends BaseDTO {
 
     private static final long serialVersionUID = 845164274506455774L;
 
@@ -75,9 +74,9 @@ public class PhoneDTO extends BaseDTO {
             return false;
         }
 
-        PhoneDTO phoneDTO = (PhoneDTO) o;
+        PersonPhoneDTO personPhoneDTO = (PersonPhoneDTO) o;
 
-        return Objects.equals(id, phoneDTO.id);
+        return Objects.equals(id, personPhoneDTO.id);
     }
 
     @Override
