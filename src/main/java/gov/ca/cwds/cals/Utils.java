@@ -39,7 +39,11 @@ public final class Utils {
   public static class Phone {
 
     public static String formatNumber(PhoneDTO phone) {
-      return phone.getNumber() + " ext. " + phone.getExtension();
+      String number = phone.getNumber();
+      if (phone.getExtension() != null) {
+        number = number + " ext. " + phone.getExtension();
+      }
+      return number;
     }
 
     public Phone() {

@@ -239,7 +239,6 @@ public final class Constants {
   public static class BusinessRulesAgendaGroups {
 
     public static final String APPLICANT_NAMES_DUPLICATION_VALIDATION = "applicant-names-duplication-validation";
-    public static final String APPLICANT_PHONE_NUMBERS_DUPLICATION_VALIDATION = "applicant-phone-numbers-duplication-validation";
 
     public static final String APPLICANT_VALIDATION = "applicant-validation";
 

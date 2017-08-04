@@ -1,6 +1,8 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
+import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createPhone;
+import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createPhoneNoExtension;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
@@ -160,7 +162,7 @@ public class RFA1aApplicantResourceTest extends
 
     try {
       applicant.getPhones().forEach(p -> p.setPreferred(true));
-      putApplicant(form, applicant);
+      applicant = putApplicant(form, applicant);
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
@@ -170,6 +172,45 @@ public class RFA1aApplicantResourceTest extends
     }
   }
 
+  @Test
+  public void testDuplicatePhoneNumbersWithExtension() throws IOException {
+    RFA1aFormDTO form = createForm(clientTestRule);
+    ApplicantDTO applicant = getApplicantDTO();
+
+    applicant.getPhones().clear();
+    applicant.getPhones().add(createPhone());
+    applicant.getPhones().add(createPhone());
+
+    try {
+      postApplicant(form, applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+      assertEqualsResponse(
+          fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json"),
+          getEntityFromException(e));
+    }
+  }
+
+  @Test
+  public void testDuplicatePhoneNumbers() throws IOException {
+    RFA1aFormDTO form = createForm(clientTestRule);
+    ApplicantDTO applicant = getApplicantDTO();
+
+    applicant.getPhones().clear();
+    applicant.getPhones().add(createPhoneNoExtension());
+    applicant.getPhones().add(createPhoneNoExtension());
+
+    try {
+      postApplicant(form, applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+      assertEqualsResponse(
+          fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json"),
+          getEntityFromException(e));
+    }
+  }
 
   private ApplicantDTO postApplicant(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
     WebTarget target =

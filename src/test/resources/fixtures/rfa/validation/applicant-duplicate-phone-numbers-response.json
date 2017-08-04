@@ -1,0 +1,5 @@
+{
+  "exception_type" : "constraint_validation",
+  "user_messages" : [ "<applicant-validation> Phone [1234567890] already exists for Applicant with first name - [Anna], last name - [Smith] and name suffix - [Jr]" ],
+  "code" : "?"
+}
