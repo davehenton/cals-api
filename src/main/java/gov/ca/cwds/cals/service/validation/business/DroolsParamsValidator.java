@@ -21,11 +21,6 @@ public class DroolsParamsValidator extends
   }
 
   @Override
-  protected String getAgendaGroup() {
-    return configuration.getAgendaGroup();
-  }
-
-  @Override
   protected DroolsValidationConfiguration<Object[]> getConfiguration() {
     return configuration;
   }

@@ -20,10 +20,4 @@ public class ApplicantValidationConfiguration implements
     return BusinessRulesAgendaGroups.APPLICANT_VALIDATION;
   }
 
-  @Override
-  public ApplicantDTO getValidatedFact(ApplicantDTO dto) {
-    return dto;
-  }
-
-
 }
