@@ -12,9 +12,10 @@ rule "Check Applicant names for duplication"
       $firstApplicant: RFA1aApplicant() from $form.applicants
       $secondApplicant: RFA1aApplicant(this != $firstApplicant) from $form.applicants
       $firstApplicantDTO: ApplicantDTO() from $firstApplicant.applicant
-      exists ApplicantDTO(firstName == $firstApplicantDTO.firstName,
+      ApplicantDTO(
+       firstName == $firstApplicantDTO.firstName,
        lastName == $firstApplicantDTO.lastName,
-       nameSuffix.id == $firstApplicantDTO.nameSuffix.id) from $secondApplicant.applicant
+       nameSuffix == $firstApplicantDTO.nameSuffix) from $secondApplicant.applicant
   then
       validationMessages.add(String.format(Constants.Validation.Business.APPLICANT_DUPLICATE_NAMES_MESSAGE,
        $firstApplicantDTO.getFirstName() != null ? $firstApplicantDTO.getFirstName() : "",

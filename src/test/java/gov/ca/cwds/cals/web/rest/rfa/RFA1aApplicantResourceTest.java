@@ -67,6 +67,17 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
+  public void twoEmptyApplicantsTest() {
+    try {
+      RFA1aFormDTO form = rfaHelper.createForm();
+      rfaHelper.postApplicant(form.getId(), new ApplicantDTO());
+      rfaHelper.postApplicant(form.getId(), new ApplicantDTO());
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+    }
+  }
+
+  @Test
   public void checkMaxFirstNameSizeTest() throws IOException, JSONException {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
