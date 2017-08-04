@@ -26,6 +26,7 @@ import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1bService;
 import gov.ca.cwds.cals.service.rfa.RFA1cCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1cService;
+import gov.ca.cwds.cals.service.validation.business.DroolsService;
 import gov.ca.cwds.data.cms.SystemCodeDao;
 import gov.ca.cwds.data.cms.SystemMetaDao;
 import gov.ca.cwds.rest.api.domain.cms.SystemCodeCache;
@@ -75,6 +76,7 @@ public class ServicesModule extends AbstractModule {
     bind(RFA1aReferencesService.class);
     bind(RFA1aChildDesiredService.class);
     bind(RFA1aApplicantsDeclarationService.class);
+    bind(DroolsService.class);
   }
 
   @Provides

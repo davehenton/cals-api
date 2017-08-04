@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
@@ -58,7 +57,7 @@ public class RFA1aApplicantResourceTest extends
           }
         };
 
-    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration);
+    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
   }
 
   @Test(expected = ClientErrorException.class) //it's forbidden to create several equal applicants
@@ -72,8 +71,8 @@ public class RFA1aApplicantResourceTest extends
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setFirstName("12345678901234567890x");
-      RFA1aFormDTO form = createForm(clientTestRule);
-      postApplicant(form, applicantDTO);
+      RFA1aFormDTO form = rfaHelper.createForm();
+      rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
       Map<String, Object> parameters = new HashMap<>();
@@ -89,8 +88,8 @@ public class RFA1aApplicantResourceTest extends
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setFirstName("l@4");
-      RFA1aFormDTO form = createForm(clientTestRule);
-      postApplicant(form, applicantDTO);
+      RFA1aFormDTO form = rfaHelper.createForm();
+      rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
       Map<String, Object> parameters = new HashMap<>();
@@ -104,9 +103,9 @@ public class RFA1aApplicantResourceTest extends
   @Test
   public void postDuplicateApplicantsValidationTest() throws IOException {
     try {
-      RFA1aFormDTO form = createForm(clientTestRule);
-      postApplicant(form, getApplicantDTO());
-      postApplicant(form, getApplicantDTO());
+      RFA1aFormDTO form = rfaHelper.createForm();
+      rfaHelper.postApplicant(form.getId(), getApplicantDTO());
+      rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
@@ -121,12 +120,12 @@ public class RFA1aApplicantResourceTest extends
   @Test
   public void postDuplicateApplicantLastNameValidationTest() throws IOException {
     try {
-      RFA1aFormDTO form = createForm(clientTestRule);
+      RFA1aFormDTO form = rfaHelper.createForm();
 
-      ApplicantDTO firstApplicant = postApplicant(form, getApplicantDTO());
+      ApplicantDTO firstApplicant = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
       secondApplicant.setLastName("differentName");
-      secondApplicant = postApplicant(form, secondApplicant);
+      secondApplicant = rfaHelper.postApplicant(form.getId(), secondApplicant);
       secondApplicant.setLastName(firstApplicant.getLastName());
       putApplicant(form, secondApplicant);
       fail();
@@ -141,12 +140,12 @@ public class RFA1aApplicantResourceTest extends
   @Test
   public void postDuplicateApplicantFirstNameValidationTest() throws IOException {
     try {
-      RFA1aFormDTO form = createForm(clientTestRule);
+      RFA1aFormDTO form = rfaHelper.createForm();
 
-      ApplicantDTO firstApplicant = postApplicant(form, getApplicantDTO());
+      ApplicantDTO firstApplicant = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
       secondApplicant.setFirstName("differentName");
-      secondApplicant = postApplicant(form, secondApplicant);
+      secondApplicant = rfaHelper.postApplicant(form.getId(), secondApplicant);
       secondApplicant.setFirstName(firstApplicant.getFirstName());
       putApplicant(form, secondApplicant);
       fail();
@@ -161,12 +160,12 @@ public class RFA1aApplicantResourceTest extends
   @Test
   public void postDuplicateApplicantMiddleNameValidationTest() throws IOException {
     try {
-      RFA1aFormDTO form = createForm(clientTestRule);
+      RFA1aFormDTO form = rfaHelper.createForm();
 
-      ApplicantDTO firstApplicant = postApplicant(form, getApplicantDTO());
+      ApplicantDTO firstApplicant = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
       secondApplicant.setMiddleName("differentName");
-      secondApplicant = postApplicant(form, secondApplicant);
+      secondApplicant = rfaHelper.postApplicant(form.getId(), secondApplicant);
       secondApplicant.setMiddleName(firstApplicant.getMiddleName());
       putApplicant(form, secondApplicant);
       fail();
@@ -180,11 +179,11 @@ public class RFA1aApplicantResourceTest extends
 
   @Test
   public void moreThenOnePreferredNumberInApplicantValidationTest() throws IOException {
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     ApplicantDTO applicant = getApplicantDTO();
     applicant.getPhones().forEach(p -> p.setPreferred(true));
     try {
-      applicant = postApplicant(form, applicant);
+      applicant = rfaHelper.postApplicant(form.getId(), applicant);
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
@@ -195,7 +194,7 @@ public class RFA1aApplicantResourceTest extends
 
     // Update test
     applicant.getPhones().forEach(p -> p.setPreferred(false));
-    applicant = postApplicant(form, applicant);
+    applicant = rfaHelper.postApplicant(form.getId(), applicant);
 
     try {
       applicant.getPhones().forEach(p -> p.setPreferred(true));
@@ -209,14 +208,6 @@ public class RFA1aApplicantResourceTest extends
     }
   }
 
-
-  private ApplicantDTO postApplicant(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
-    WebTarget target =
-        clientTestRule.target(
-            API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_APPLICANTS);
-    return target.request(MediaType.APPLICATION_JSON).post(
-        Entity.entity(applicantDTO, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
-  }
 
   private ApplicantDTO putApplicant(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
     WebTarget target =

@@ -242,6 +242,8 @@ public final class Constants {
 
     public static final String APPLICANT_VALIDATION = "applicant-validation";
 
+    public static final String FORM_SUBMISSION_VALIDATION = "form-submission-validation";
+
     private BusinessRulesAgendaGroups() {
     }
   }
@@ -249,6 +251,7 @@ public final class Constants {
   public static class Validation {
 
     public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
+    public static final String FORM_SUBMISSION_VALIDATION_SESSION = "formSubmissionValidationSession";
 
     public static class Field {
       public static final String REFERENTIAL_INTEGRITY_MESSAGE =
@@ -269,6 +272,11 @@ public final class Constants {
 
       public static final String APPLICANT_PREFERRED_NUMBER_MESSAGE =
           "Applicant has more then one preferred number";
+
+      public static final String APPLICANT_FIRST_NAME_IS_EMPTY =
+          "Applicant with firstName - [%s],"
+              + " last name - [%s] and name suffix - [%s] has empty first name";
+
       private Business() {
       }
     }
