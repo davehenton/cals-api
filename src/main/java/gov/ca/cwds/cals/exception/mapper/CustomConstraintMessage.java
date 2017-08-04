@@ -84,7 +84,7 @@ public class CustomConstraintMessage {
     if (parent.getKind() == PARAMETER) {
       final Parameter param = parameters
           .get(parent.as(Path.ParameterNode.class).getParameterIndex());
-      if (param.getSource().equals(Parameter.Source.UNKNOWN)) {
+      if (param.getSource() == Parameter.Source.UNKNOWN) {
         return Optional.of(Joiner.on('.').join(Iterables.skip(violation.getPropertyPath(), 2)));
       }
     }
@@ -112,7 +112,7 @@ public class CustomConstraintMessage {
           .get(parent.as(Path.ParameterNode.class).getParameterIndex());
 
       // Extract the failing *Param annotation inside the Bean Param
-      if (param.getSource().equals(Parameter.Source.BEAN_PARAM)) {
+      if (param.getSource() == Parameter.Source.BEAN_PARAM) {
         final Field field = FieldUtils.getField(param.getRawType(), member.getName(), true);
         return JerseyParameterNameProvider
             .getParameterNameFromAnnotations(field.getDeclaredAnnotations());
@@ -132,7 +132,7 @@ public class CustomConstraintMessage {
 
     final StringBuilder result = new StringBuilder("server response");
     for (Path.Node node : violation.getPropertyPath()) {
-      if (node.getKind().equals(ElementKind.RETURN_VALUE)) {
+      if (node.getKind() == ElementKind.RETURN_VALUE) {
         returnValueNames = 0;
       } else if (returnValueNames >= 0) {
         result.append(returnValueNames++ == 0 ? " " : ".").append(node);
@@ -164,7 +164,7 @@ public class CustomConstraintMessage {
             // Now determine if the parameter is the request entity
             final int index = node.as(Path.ParameterNode.class).getParameterIndex();
             final Parameter parameter = invocable.getParameters().get(index);
-            return parameter.getSource().equals(Parameter.Source.UNKNOWN) ? 422 : 400;
+            return parameter.getSource() == Parameter.Source.UNKNOWN ? 422 : 400;
           default:
             continue;
         }
