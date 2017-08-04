@@ -118,6 +118,7 @@ public final class Constants {
     }
 
     public static class QueryParams {
+
       public static final String EXPANDED = "expanded";
 
       private QueryParams() {
@@ -254,6 +255,7 @@ public final class Constants {
     public static final String FORM_SUBMISSION_VALIDATION_SESSION = "formSubmissionValidationSession";
 
     public static class Field {
+
       public static final String REFERENTIAL_INTEGRITY_MESSAGE =
           " Object %s is not found in database. Referential integrity was not confirmed.";
       public static final String REFERENTIAL_INTEGRITY_LIST_MESSAGE =
@@ -266,16 +268,21 @@ public final class Constants {
     }
 
     public static class Business {
+
+      private static final String APPLICANT_WITH_NAME_MESSAGE =
+          "Applicant with firstName - [%s], last name - [%s] and name suffix - [%s]";
+
       public static final String APPLICANT_DUPLICATE_NAMES_MESSAGE =
-          "Applicant with firstName - [%s],"
-              + " last name - [%s] and name suffix - [%s] already exists in application";
+          APPLICANT_WITH_NAME_MESSAGE + " already exists in application";
 
       public static final String APPLICANT_PREFERRED_NUMBER_MESSAGE =
           "Applicant has more then one preferred number";
 
       public static final String APPLICANT_FIRST_NAME_IS_EMPTY =
-          "Applicant with firstName - [%s],"
-              + " last name - [%s] and name suffix - [%s] has empty first name";
+          APPLICANT_WITH_NAME_MESSAGE + " has empty first name";
+
+      public static final String APPLICANT_LAST_NAME_IS_EMPTY =
+          APPLICANT_WITH_NAME_MESSAGE + " has empty last name";
 
       private Business() {
       }

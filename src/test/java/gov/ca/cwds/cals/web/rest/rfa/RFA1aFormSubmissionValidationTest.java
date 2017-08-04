@@ -25,11 +25,25 @@ public class RFA1aFormSubmissionValidationTest extends BaseRFAIntegrationTest {
   @Test
   public void firstNameValidationSubmissionTest() throws IOException, JSONException {
     RFA1aFormDTO form = rfaHelper.createForm();
-    rfaHelper.postApplicant(form.getId(), new ApplicantDTO());
+    ApplicantDTO applicant = rfaHelper.createValidApplicant();
+    applicant.setFirstName(null);
+    rfaHelper.postApplicant(form.getId(), applicant);
     Response response = rfaHelper.submitApplication(form.getId());
     assertEquals(422, response.getStatus());
     assertResponseByFixturePath(
         response, "fixtures/rfa/validation/first_name_form_submission_validation.json");
+  }
+
+  @Test
+  public void lastNameValidationSubmissionTest() throws IOException, JSONException {
+    RFA1aFormDTO form = rfaHelper.createForm();
+    ApplicantDTO applicant = rfaHelper.createValidApplicant();
+    applicant.setLastName(null);
+    rfaHelper.postApplicant(form.getId(), applicant);
+    Response response = rfaHelper.submitApplication(form.getId());
+    assertEquals(422, response.getStatus());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/last_name_form_submission_validation.json");
   }
 
 }
