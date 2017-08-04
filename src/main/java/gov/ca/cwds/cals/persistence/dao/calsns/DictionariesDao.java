@@ -25,6 +25,7 @@ public class DictionariesDao extends BaseDaoImpl<BaseDictionary> {
         session.createNamedQuery(
             BaseDictionary.buildFindAllQueryName(type.getDictionaryClass()),
             type.getDictionaryClass());
+    query.setCacheable(true).setCacheRegion("dictionaries");
     ImmutableList.Builder<BaseDictionary> entities = new ImmutableList.Builder<>();
     entities.addAll(query.list());
     return entities.build();

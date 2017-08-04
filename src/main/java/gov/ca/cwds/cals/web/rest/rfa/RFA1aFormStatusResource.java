@@ -8,6 +8,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -49,7 +50,8 @@ public class RFA1aFormStatusResource {
       value = {
           @ApiResponse(code = 200, message = "Application status has been changed successfully"),
           @ApiResponse(code = 304, message = "Application status is the same as previous"),
-          @ApiResponse(code = 400, message = "Application status can not be changed to requested one")
+          @ApiResponse(code = 400, message = "Application status can not be changed to requested one"),
+          @ApiResponse(code = 422, message = "Validation exception fired"),
       }
   )
   @ApiOperation(value = "Changes application status")
@@ -62,7 +64,7 @@ public class RFA1aFormStatusResource {
           name = STATUS,
           value = "New Application status"
       )
-          RFAApplicationStatusDTO status) {
+          RFAApplicationStatusDTO status) throws BusinessValidationException {
     service.setApplicationStatus(formId, status);
     return Response.status(Status.OK).build();
   }

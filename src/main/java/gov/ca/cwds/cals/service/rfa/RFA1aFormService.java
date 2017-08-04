@@ -1,13 +1,16 @@
 package gov.ca.cwds.cals.service.rfa;
 
 import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
+import static gov.ca.cwds.cals.Constants.Validation.FORM_SUBMISSION_VALIDATION_SESSION;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
 import gov.ca.cwds.cals.Utils;
+import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
@@ -17,8 +20,13 @@ import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
+import gov.ca.cwds.cals.service.validation.business.DroolsService;
+import gov.ca.cwds.cals.service.validation.business.configuration.DroolsFieldValidationConfiguration;
+import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,13 +42,18 @@ public class RFA1aFormService
   private RFA1aFormsDao dao;
   private RFA1aFormMapper rfa1aFomMapper;
   private FacilityService facilityService;
+  private DroolsService droolsService;
 
   @Inject
   public RFA1aFormService(
-      RFA1aFormsDao dao, RFA1aFormMapper rfa1aFomMapper, FacilityService facilityService) {
+      RFA1aFormsDao dao,
+      RFA1aFormMapper rfa1aFomMapper,
+      FacilityService facilityService,
+      DroolsService droolsService) {
     this.dao = dao;
     this.rfa1aFomMapper = rfa1aFomMapper;
     this.facilityService = facilityService;
+    this.droolsService = droolsService;
   }
 
   @Override
@@ -94,7 +107,8 @@ public class RFA1aFormService
     return new RFAApplicationStatusDTO(form.getStatus());
   }
 
-  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO) {
+  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO)
+      throws BusinessValidationException {
     RFA1aForm form = findFormById(formId);
     RFAApplicationStatus newStatus = statusDTO.getStatus();
     if (form.getStatus() != newStatus) {
@@ -106,7 +120,10 @@ public class RFA1aFormService
     }
   }
 
-  private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus) {
+  private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus)
+      throws BusinessValidationException {
+    performSubmissionValidation(form);
+
     form.setStatus(newStatus);
     form.setPlacementHomeId(Utils.Id.generate());
     PlacementHome placementHome;
@@ -118,6 +135,31 @@ public class RFA1aFormService
     }
     form.setPlacementHomeId(placementHome.getIdentifier());
     updateForm(form);
+  }
+
+  private void performSubmissionValidation(
+      RFA1aForm form) throws BusinessValidationException {
+    RFA1aFormDTO formDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
+    Set<String> validationMessages = droolsService.validate(formDTO,
+        createConfiguration());
+    if (!validationMessages.isEmpty()) {
+      throw new BusinessValidationException(new ArrayList<>(validationMessages));
+    }
+  }
+
+  private DroolsValidationConfiguration<RFA1aFormDTO> createConfiguration() {
+    return new DroolsFieldValidationConfiguration<RFA1aFormDTO>() {
+
+      @Override
+      public String getDroolsSessionName() {
+        return FORM_SUBMISSION_VALIDATION_SESSION;
+      }
+
+      @Override
+      public String getAgendaGroup() {
+        return BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION;
+      }
+    };
   }
 
   private RFA1aForm findFormById(Long formId) {

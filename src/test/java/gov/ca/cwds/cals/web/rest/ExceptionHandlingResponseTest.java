@@ -4,20 +4,19 @@ import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.ErrorMessages.BASE_ERROR_MESSAGE;
 import static gov.ca.cwds.cals.exception.ExceptionType.UNEXPECTED_EXCEPTION;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.COMPLAINT_NOT_FOUND_BY_ID;
-import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixturePath;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.web.rest.rfa.BaseRFAIntegrationTest;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
 import java.io.IOException;
@@ -36,7 +35,7 @@ import org.junit.Test;
  * @author CWDS CALS API Team
  */
 
-public class ExceptionHandlingResponseTest extends BaseCalsApiIntegrationTest {
+public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
 
   private static final String FACILITY_ID = "107201149";
   private static final String WRONG_FACILITY_ID = "1";
@@ -80,8 +79,8 @@ public class ExceptionHandlingResponseTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void businessValidationTest() throws IOException, JSONException {
-    RFA1aFormDTO form = createForm(clientTestRule);
-    postApplicant(form, getApplicantDTO());
+    RFA1aFormDTO form = rfaHelper.createForm();
+    rfaHelper.postApplicant(form.getId(), getApplicantDTO());
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_APPLICANTS);
@@ -124,14 +123,6 @@ public class ExceptionHandlingResponseTest extends BaseCalsApiIntegrationTest {
     assertEquals(UNEXPECTED_EXCEPTION, unexpectedErrorResponse.getExceptionType());
     assertNotNull(unexpectedErrorResponse.getIncidentId());
     assertEquals(BASE_ERROR_MESSAGE, unexpectedErrorResponse.getUserMessages().get(0));
-  }
-
-  private ApplicantDTO postApplicant(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
-    WebTarget target =
-        clientTestRule.target(
-            API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_APPLICANTS);
-    return target.request(MediaType.APPLICATION_JSON).post(
-        Entity.entity(applicantDTO, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
   }
 
   private ApplicantDTO getApplicantDTO() throws IOException {
