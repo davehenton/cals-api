@@ -14,8 +14,8 @@ import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.api.domain.DomainObject;
 import io.swagger.annotations.ApiModelProperty;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -140,7 +140,7 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
 
   @JsonProperty("phones")
   @ApiModelProperty(required = true, readOnly = true, value = "Facility Phones")
-  private ArrayList<PhoneDTO> phone;
+  private ArrayList<PersonPhoneDTO> phone;
 
   @JsonProperty("addresses")
   @ApiModelProperty(required = true, readOnly = true, value = "Facility Addresses")
@@ -344,11 +344,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
     this.prelicensingVisitDate = prelicensingVisitDate;
   }
 
-  public List<PhoneDTO> getPhone() {
+  public List<PersonPhoneDTO> getPhone() {
     return phone;
   }
 
-  public void setPhone(List<PhoneDTO> phone) {
+  public void setPhone(List<PersonPhoneDTO> phone) {
     this.phone = new ArrayList<>(phone);
   }
 

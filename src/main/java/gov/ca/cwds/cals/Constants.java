@@ -160,7 +160,7 @@ public final class Constants {
     public static final String ETHNICITY_TYPE_PATH = "ethnicity-types";
     public static final String FACILITY_TYPE_PATH = "facility-types";
     public static final String RACE_TYPE_PATH = "race-types";
-    public static final String RELATIONSHIP_TO_APPLICANT_TYPE_PATH = "relationships-to-applicant";
+    public static final String RELATIONSHIP_TO_APPLICANT_TYPE_PATH = "relationship-to-applicant-types";
     public static final String INCOME_TYPE_PATH = "income-types";
     public static final String PHONE_NUMBER_TYPE_PATH = "phone-number-types";
     public static final String ADDRESS_TYPE_PATH = "address-types";
