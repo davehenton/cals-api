@@ -21,11 +21,6 @@ public class DroolsFieldValidator extends
   }
 
   @Override
-  protected String getAgendaGroup() {
-    return configuration.getAgendaGroup();
-  }
-
-  @Override
   protected DroolsValidationConfiguration<BaseDTO> getConfiguration() {
     return configuration;
   }

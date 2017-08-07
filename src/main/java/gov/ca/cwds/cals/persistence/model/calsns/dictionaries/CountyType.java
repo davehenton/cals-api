@@ -4,6 +4,7 @@ package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
  * @author CWDS CALS API Team.
  */
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.hibernate.annotations.NamedQuery;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.NamedQuery;
  */
 @NamedQuery(name = CountyType.NAMED_QUERY_FIND_ALL, query = "FROM CountyType ORDER BY id ASC")
 @Entity
+@Cacheable
 @Table(name = "county_type")
 public class CountyType extends LegacyComplaintDictionary {
 

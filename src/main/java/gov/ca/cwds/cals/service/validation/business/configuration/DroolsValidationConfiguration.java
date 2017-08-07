@@ -5,6 +5,8 @@ import static gov.ca.cwds.cals.Constants.Validation.DEFAULT_DROOLS_VALIDATION_SE
 /**
  * @author CWDS CALS API Team
  */
+
+@FunctionalInterface
 public interface DroolsValidationConfiguration<I> {
 
   String getAgendaGroup();
@@ -13,5 +15,7 @@ public interface DroolsValidationConfiguration<I> {
     return DEFAULT_DROOLS_VALIDATION_SESSION;
   }
 
-  Object getValidatedFact(I input);
+  default Object getValidatedFact(I input) {
+    return input;
+  }
 }

@@ -118,6 +118,7 @@ public final class Constants {
     }
 
     public static class QueryParams {
+
       public static final String EXPANDED = "expanded";
 
       private QueryParams() {
@@ -160,7 +161,7 @@ public final class Constants {
     public static final String ETHNICITY_TYPE_PATH = "ethnicity-types";
     public static final String FACILITY_TYPE_PATH = "facility-types";
     public static final String RACE_TYPE_PATH = "race-types";
-    public static final String RELATIONSHIP_TO_APPLICANT_TYPE_PATH = "relationships-to-applicant";
+    public static final String RELATIONSHIP_TO_APPLICANT_TYPE_PATH = "relationship-to-applicant-types";
     public static final String INCOME_TYPE_PATH = "income-types";
     public static final String PHONE_NUMBER_TYPE_PATH = "phone-number-types";
     public static final String ADDRESS_TYPE_PATH = "address-types";
@@ -242,6 +243,8 @@ public final class Constants {
 
     public static final String APPLICANT_VALIDATION = "applicant-validation";
 
+    public static final String FORM_SUBMISSION_VALIDATION = "form-submission-validation";
+
     private BusinessRulesAgendaGroups() {
     }
   }
@@ -249,8 +252,10 @@ public final class Constants {
   public static class Validation {
 
     public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
+    public static final String FORM_SUBMISSION_VALIDATION_SESSION = "formSubmissionValidationSession";
 
     public static class Field {
+
       public static final String REFERENTIAL_INTEGRITY_MESSAGE =
           " Object %s is not found in database. Referential integrity was not confirmed.";
       public static final String REFERENTIAL_INTEGRITY_LIST_MESSAGE =
@@ -263,14 +268,26 @@ public final class Constants {
     }
 
     public static class Business {
+
+      private static final String APPLICANT_WITH_NAME_MESSAGE =
+          "Applicant with firstName - [%s], last name - [%s] and name suffix - [%s]";
+
       public static final String APPLICANT_NAMES_DUPLICATION_MESSAGE =
           "Applicant with first name - [%s],"
               + " last name - [%s] and name suffix - [%s] already exists in application";
+
       public static final String APPLICANT_PHONE_NUMBERS_DUPLICATION_MESSAGE =
           "Phone [%s] already exists for Applicant with first name - [%s], last name - [%s] and name suffix - [%s]";
 
       public static final String APPLICANT_PREFERRED_NUMBER_MESSAGE =
           "Applicant has more then one preferred number";
+
+      public static final String APPLICANT_FIRST_NAME_IS_EMPTY =
+          APPLICANT_WITH_NAME_MESSAGE + " has empty first name";
+
+      public static final String APPLICANT_LAST_NAME_IS_EMPTY =
+          APPLICANT_WITH_NAME_MESSAGE + " has empty last name";
+
       private Business() {
       }
     }
@@ -283,6 +300,12 @@ public final class Constants {
 
     public static final String BASE_ERROR_MESSAGE =
         "There was an error processing your request. It has been logged with unique incident id";
+
+    public static final String MAX_LENGTH_VIOLATION =
+        "${validatedValue} exceeds maximum length of {max}";
+    public static final String FIRST_NAME_ALPHANUMERIC_VIOLATION =
+        "${validatedValue} is invalid. Only alphanumerical characters and spaces are allowed";
+
 
     private ErrorMessages() {
     }

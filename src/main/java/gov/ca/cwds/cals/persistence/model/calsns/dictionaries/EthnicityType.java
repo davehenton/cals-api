@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.hibernate.annotations.NamedQuery;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.NamedQuery;
  */
 @NamedQuery(name = EthnicityType.NAMED_QUERY_FIND_ALL, query = "FROM EthnicityType ORDER BY id ASC")
 @Entity
+@Cacheable
 @Table(name = "ethnicity_type")
 public class EthnicityType extends LegacyComplaintDictionary {
 
