@@ -65,6 +65,9 @@ Set environment variable CALS_API_CONFIG to cals-api-lis-connx.yml to run docker
 - DB_FAS_CP_MIN_SIZE -- the FAS connections pool minimum size (default: 2)
 - DB_FAS_CP_MAX_SIZE -- the FAS connections pool maximum size (default: 8)
 
+**Upgarde Data Base on Start**
+- UPGRADE_DB_ON_START -- if "true" then application starts Liquibase Scripts for upgrading DB to the latest state (default true)  
+
 **Swagger Configuration Parameters**
 
 - LOGIN_URL -- Login URL 
