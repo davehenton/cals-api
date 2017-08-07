@@ -299,7 +299,7 @@ public final class Constants {
 
     public static final String MAX_LENGTH_VIOLATION =
         "${validatedValue} exceeds maximum length of {max}";
-    public static final String FIRST_NAME_ALPHANUMERIC_VIOLATION =
+    public static final String ALPHANUMERIC_VIOLATION =
         "${validatedValue} is invalid. Only alphanumerical characters and spaces are allowed";
 
 

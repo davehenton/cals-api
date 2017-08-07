@@ -15,7 +15,7 @@ public class ApplicantFirstNamePatternTest {
 
   @Test
   public void firstNamePatternTest() {
-    Pattern pattern = Pattern.compile(ApplicantDTO.FIRST_NAME_PATTERN);
+    Pattern pattern = Pattern.compile(ApplicantDTO.ALFANUMERICAL_PATTERN);
     assertTrue(pattern.matcher("").matches());
     assertTrue(pattern.matcher("abc").matches());
     assertTrue(pattern.matcher("abc s1e").matches());
