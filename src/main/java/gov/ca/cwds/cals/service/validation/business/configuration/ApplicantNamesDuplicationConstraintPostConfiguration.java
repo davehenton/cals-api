@@ -13,20 +13,20 @@ import org.hibernate.Hibernate;
 /**
  * @author CWDS CALS API Team
  */
-public final class ApplicantDuplicateNamesConstraintPostConfiguration
+public final class ApplicantNamesDuplicationConstraintPostConfiguration
     implements DroolsValidationConfiguration<Object[]>, CalsSessionFactoryAware,
     RFA1aFormsDaoAware {
 
-  public static final ApplicantDuplicateNamesConstraintPostConfiguration INSTANCE =
-      new ApplicantDuplicateNamesConstraintPostConfiguration();
+  public static final ApplicantNamesDuplicationConstraintPostConfiguration INSTANCE =
+      new ApplicantNamesDuplicationConstraintPostConfiguration();
 
-  private ApplicantDuplicateNamesConstraintPostConfiguration() {
+  private ApplicantNamesDuplicationConstraintPostConfiguration() {
 
   }
 
   @Override
   public String getAgendaGroup() {
-    return BusinessRulesAgendaGroups.APPLICANT_DUPLICATE_NAMES_CHECK;
+    return BusinessRulesAgendaGroups.APPLICANT_NAMES_DUPLICATION_VALIDATION;
   }
 
 

@@ -9,6 +9,8 @@ import static org.junit.Assert.assertTrue;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
+import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
@@ -82,4 +84,31 @@ public class RFAHelper {
     return changeApplicationStatusTo(RFAApplicationStatus.SUBMITTED, formId);
   }
 
+
+  public static PhoneNumberType createPhoneNumberType() {
+    return createPhoneNumberType(3L, "Work");
+  }
+
+  public static PhoneNumberType createPhoneNumberType(Long id, String value) {
+    PhoneNumberType phoneType = new PhoneNumberType();
+    phoneType.setId(id);
+    phoneType.setValue(value);
+    return phoneType;
+  }
+
+  public static PhoneDTO createPhone() {
+    return createPhone("1234567890", "1234567", false, createPhoneNumberType());
+  }
+  public static PhoneDTO createPhoneNoExtension() {
+    return createPhone("1234567890", null, false, createPhoneNumberType());
+  }
+
+  public static PhoneDTO createPhone(String number, String extension, boolean preferred, PhoneNumberType phoneType) {
+    PhoneDTO phone = new PhoneDTO();
+    phone.setNumber(number);
+    phone.setExtension(extension);
+    phone.setPreferred(false);
+    phone.setPhoneType(phoneType);
+    return phone;
+  }
 }

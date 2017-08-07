@@ -12,22 +12,18 @@ public abstract class AbstractRetrievingParametersStrategy<T extends BaseDTO> im
   private byte entityDtoPosition;
   private byte expectedParametersLength;
 
-  public AbstractRetrievingParametersStrategy(byte entityDtoPosition,
-      byte expectedParametersLength) {
+  public AbstractRetrievingParametersStrategy(byte entityDtoPosition, byte expectedParametersLength) {
     this.entityDtoPosition = entityDtoPosition;
     this.expectedParametersLength = expectedParametersLength;
   }
 
   @Override
-  public BusinessValidationParameterObject<T> retrieveParameters(
-      Object[] parameters, Class<T> clazz) {
+  public BusinessValidationParameterObject<T> retrieveParameters(Object[] parameters, Class<T> clazz) {
     if (parameters.length != expectedParametersLength) {
-      throw new IllegalStateException("Uexpected method parameters count");
+      throw new IllegalStateException("Unexpected method parameters count");
     }
-    ParameterReader<T> parametersReader =
-        new ParameterReader<>(parameters, clazz, entityDtoPosition);
-    return new BusinessValidationParameterObject<>(
-        parametersReader.getFormId(), parametersReader.getEntityDto());
+    ParameterReader<T> parametersReader = new ParameterReader<>(parameters, clazz, entityDtoPosition);
+    return new BusinessValidationParameterObject<>(parametersReader.getFormId(), parametersReader.getEntityDto());
   }
 
 }
