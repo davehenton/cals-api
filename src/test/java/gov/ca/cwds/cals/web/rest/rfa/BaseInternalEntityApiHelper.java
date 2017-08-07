@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -29,11 +28,13 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
 
   private RestClientTestRule clientTestRule;
   private TestInternalEntityConfiguration<T> configuration;
+  private RFAHelper rfaHelper;
 
   public BaseInternalEntityApiHelper(RestClientTestRule clientTestRule,
-      TestInternalEntityConfiguration<T> configuration) {
+      TestInternalEntityConfiguration<T> configuration, RFAHelper rfaHelper) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
+    this.rfaHelper = rfaHelper;
   }
 
   @Override
@@ -76,7 +77,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
 
   @Override
   public void getEntityNotFound() throws Exception {
-    RFA1aFormDTO rfa1aForm = createForm(clientTestRule);
+    RFA1aFormDTO rfa1aForm = new RFAHelper(clientTestRule).createForm();
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + configuration.getApiPath());
@@ -86,7 +87,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
 
   @Override
   public void putAndGetEntity() throws Exception {
-    RFA1aFormDTO rfa1aForm = createForm(clientTestRule);
+    RFA1aFormDTO rfa1aForm = new RFAHelper(clientTestRule).createForm();
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + configuration.getApiPath());

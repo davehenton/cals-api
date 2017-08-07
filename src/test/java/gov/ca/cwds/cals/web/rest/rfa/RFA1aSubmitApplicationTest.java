@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.DBUnitSupport;
@@ -33,7 +31,7 @@ import org.junit.Test;
  * @author CWDS CALS API Team
  */
 
-public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
+public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
@@ -80,7 +78,7 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getInitialStatusTest() throws Exception {
-    Long formId = createForm(clientTestRule).getId();
+    Long formId = rfaHelper.createForm().getId();
     assertDraft(formId);
   }
 
@@ -89,7 +87,7 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
     if (TestModeUtils.isIntegrationTestsMode()) {
       return;
     }
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
@@ -119,16 +117,16 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void unChangedDraftStatusTest() throws Exception {
-    Long formId = createForm(clientTestRule).getId();
+    Long formId = rfaHelper.createForm().getId();
     assertDraft(formId);
-    Response response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT.toDTO(), formId);
+    Response response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT, formId);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertDraft(formId);
   }
 
   @Test
   public void unChangedSubmitStatusTest() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
@@ -139,11 +137,11 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void changeStatusBackToDraftTest() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
-    response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT.toDTO(), form.getId());
+    response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT, form.getId());
     assertEquals(Status.BAD_REQUEST.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
   }
@@ -155,14 +153,11 @@ public class RFA1aSubmitApplicationTest extends BaseCalsApiIntegrationTest {
   }
 
   private Response submitApplication(Long formId) {
-    return changeApplicationStatusTo(RFAApplicationStatus.SUBMITTED.toDTO(), formId);
+    return rfaHelper.submitApplication(formId);
   }
 
-  private Response changeApplicationStatusTo(RFAApplicationStatusDTO newStatus, Long formId) {
-    WebTarget target =
-        clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.STATUS);
-    return target.request(MediaType.APPLICATION_JSON)
-        .post(Entity.entity(newStatus, MediaType.APPLICATION_JSON));
+  private Response changeApplicationStatusTo(RFAApplicationStatus newStatus, Long formId) {
+    return rfaHelper.changeApplicationStatusTo(newStatus, formId);
   }
 
 

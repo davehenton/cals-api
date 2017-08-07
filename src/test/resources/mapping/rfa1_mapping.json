@@ -1,0 +1,632 @@
+{
+  "id": 88,
+  "other_type_description": "Description",
+  "application_county": {
+    "id": 34,
+    "value": "Sacramento"
+  },
+  "residence": {
+    "addresses": [
+      {
+        "street_address": "1702 Redoak Ct.",
+        "zip": "98123",
+        "city": "Rocklin",
+        "state": {
+          "id": 6,
+          "value": "California"
+        },
+        "type": {
+          "id": 1,
+          "value": "Residential"
+        }
+      },
+      {
+        "street_address": "1702 Redoak Ct.",
+        "zip": "98123",
+        "city": "Rocklin",
+        "state": {
+          "id": 6,
+          "value": "California"
+        },
+        "type": {
+          "id": 3,
+          "value": "Mailing"
+        }
+      }
+    ],
+    "physical_mailing_similar": false,
+    "residence_ownership": {
+      "id": 1,
+      "value": "Own"
+    },
+    "weapon_in_home": false,
+    "body_of_water_exist": true,
+    "body_of_water_description": "Description here",
+    "others_using_residence_as_mailing": true,
+    "other_people_using_residence_as_mailing": [
+      {
+        "name_prefix": {
+          "id": 1,
+          "value": "Mr."
+        },
+        "first_name": "string",
+        "middle_name": "string",
+        "last_name": "string",
+        "name_suffix": {
+          "id": 5,
+          "value": "Jr"
+        }
+      }
+    ],
+    "directions_to_home": "Directions here",
+    "home_languages": [
+      {
+        "id": 6,
+        "value": "English"
+      }
+    ]
+  },
+  "applicants_relationship": {
+    "relationship_type": {
+      "id": 1,
+      "value": "Married"
+    },
+    "other_relationship": "Other relationship",
+    "date_of_relationship": "2017-04-12",
+    "place_of_relationship_city": "Sacramento",
+    "place_of_relationship_state": {
+      "id": 6,
+      "value": "California"
+    }
+  },
+  "applicants_history": {
+    "former_spouses": [
+      {
+        "relationship_type": {
+          "id": 1,
+          "value": "Married"
+        },
+        "applicant_id": 1234567,
+        "name_prefix": {
+          "id": 3,
+          "value": "Mrs."
+        },
+        "first_name": "Anna",
+        "middle_name": "L.",
+        "last_name": "Pollen",
+        "name_suffix": {
+          "id": 5,
+          "value": "Jr"
+        },
+        "date_of_marriage": "2016-12-26",
+        "place_of_marriage_city": "Sacramento",
+        "place_of_marriage_state": {
+          "id": 6,
+          "value": "California"
+        },
+        "marriage_termination_reason": {
+          "id": 1,
+          "value": "Marriage Dissolution (Divorce)"
+        },
+        "date_of_marriage_end": "2016-12-26",
+        "place_of_marriage_end_city": "Sacramento",
+        "place_of_marriage_end_state": {
+          "id": 6,
+          "value": "California"
+        }
+      }
+    ],
+    "adult_children": [
+      {
+        "first_name": "",
+        "middle_name": "",
+        "last_name": "",
+        "relationship_to_applicant": {
+          "id": 1,
+          "value": "Child"
+        },
+        "adult_child_related_to": [
+          1234567,
+          8154545
+        ]
+      }
+    ]
+  },
+  "applicants": [
+    {
+      "id": 45,
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "first_name": "Anna",
+      "middle_name": "N.",
+      "last_name": "Smith",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
+      "other_names": [
+        {
+          "name_prefix": {
+            "id": 2,
+            "value": "Ms."
+          },
+          "first_name": "Anna",
+          "middle_name": "N.",
+          "last_name": "Peterson",
+          "name_suffix": {
+            "id": 5,
+            "value": "Jr"
+          },
+          "name_type": {
+            "id": 2,
+            "value": "Maiden"
+          }
+        }
+      ],
+      "highest_education_level": {
+        "id": 3,
+        "value": "High School or Equivalent"
+      },
+      "date_of_birth": "1981-12-26",
+      "gender": {
+        "id": 2,
+        "value": "Female"
+      },
+      "race": {
+        "id": 1,
+        "value": "American Indian or Alaska Native"
+      },
+      "ethnicity": {
+        "id": 1,
+        "value": "Alaskan Native"
+      },
+      "driver_license_number": "MD123G3333232",
+      "driver_license_state": {
+        "id": 6,
+        "value": "California"
+      },
+      "email": "anna.smith@gmail.com",
+      "employment": {
+        "employer_name": "HSH Inc.",
+        "occupation": "Sr. Analyst",
+        "income": 98000,
+        "income_type": {
+          "id": 1,
+          "value": "yearly"
+        },
+        "physical_address": {
+          "street_address": "1702 Redoak Ct.",
+          "city": "Rocklin",
+          "state": {
+            "id": 2,
+            "value": "CA - California"
+          },
+          "zip": "98123"
+        }
+      },
+      "phones": [
+        {
+          "phone_type": {
+            "id": 1,
+            "value": "Cell"
+          },
+          "number": "(534) 758-9802",
+          "preferred": false
+        },
+        {
+          "phone_type": {
+            "id": 3,
+            "value": "Work"
+          },
+          "number": "(534) 758-9803",
+          "extension": "0000001",
+          "preferred": true
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "first_name": "Pavel",
+      "middle_name": "N.",
+      "last_name": "Smith",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
+      "other_names": [
+        {
+          "name_prefix": {
+            "id": 2,
+            "value": "Ms."
+          },
+          "first_name": "Anna",
+          "middle_name": "N.",
+          "last_name": "Peterson",
+          "name_suffix": {
+            "id": 5,
+            "value": "Jr"
+          },
+          "name_type": {
+            "id": 2,
+            "value": "Maiden"
+          }
+        }
+      ],
+      "highest_education_level": {
+        "id": 3,
+        "value": "High School or Equivalent"
+      },
+      "date_of_birth": "1981-12-26",
+      "gender": {
+        "id": 2,
+        "value": "Female"
+      },
+      "race": {
+        "id": 1,
+        "value": "American Indian or Alaska Native"
+      },
+      "ethnicity": {
+        "id": 1,
+        "value": "Alaskan Native"
+      },
+      "driver_license_number": "MD123G3333232",
+      "driver_license_state": {
+        "id": 6,
+        "value": "California"
+      },
+      "email": "anna.smith@gmail.com",
+      "employment": {
+        "employer_name": "HSH Inc.",
+        "occupation": "Sr. Analyst",
+        "income": 98000,
+        "income_type": {
+          "id": 1,
+          "value": "yearly"
+        },
+        "physical_address": {
+          "street_address": "1702 Redoak Ct.",
+          "city": "Rocklin",
+          "state": {
+            "id": 2,
+            "value": "CA - California"
+          },
+          "zip": "98123"
+        }
+      },
+      "phones": [
+        {
+          "phone_type": {
+            "id": 1,
+            "value": "Cell"
+          },
+          "number": "(534) 758-9802",
+          "extension": "0000001",
+          "preferred": false
+        },
+        {
+          "phone_type": {
+            "id": 3,
+            "value": "Work"
+          },
+          "number": "(534) 758-9803",
+          "extension": "0000001",
+          "preferred": true
+        }
+      ]
+    }
+  ],
+  "minor_children": [
+    {
+      "relationship_to_applicant": {
+        "id": 1,
+        "value": "Child"
+      },
+      "child_related_to": [
+        1,
+        2
+      ],
+      "other_relative": true,
+      "other_relative_name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "other_relative_first_name": "",
+      "other_relative_middle_name": "",
+      "other_relative_last_name": "",
+      "other_relative_name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
+      "date_of_birth": "2007-07-14",
+      "gender": {
+        "id": 1,
+        "value": "Male"
+      },
+      "child_financially_supported": true,
+      "child_adopted": false
+    }
+  ],
+  "other_adults": [
+    {
+      "id": 8,
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "first_name": "Anna",
+      "middle_name": "L.",
+      "last_name": "Pollen",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
+      "date_of_birth": "1995-07-14",
+      "relationship_to_applicants": [
+        {
+          "applicant_id": 1234567,
+          "relationship_to_applicant": {
+            "id": 1,
+            "value": "Child"
+          }
+        }
+      ]
+    }
+  ],
+  "rfa1b_forms": [
+    {
+      "id": 8,
+      "application_county": {
+        "id": 34,
+        "value": "Sacramento"
+      },
+      "lived_in_other_state": true,
+      "other_states_of_living": [
+        {
+          "id": 50,
+          "value": "Texas"
+        },
+        {
+          "id": 38,
+          "value": "Nevada"
+        }
+      ],
+      "convicted_in_california": false,
+      "convicted_in_another_state": false,
+      "arrested_for_crime": false,
+      "resource_family_name": "Peterson",
+      "rfa1a_applicant_id": true,
+      "applicant_name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "applicant_first_name": "Anna",
+      "applicant_middle_name": "M.",
+      "applicant_last_name": "Peterson",
+      "applicant_name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
+      "residence_address": {
+        "street_address": "1702 Redoak Ct.",
+        "zip": "98123",
+        "city": "Rocklin",
+        "state": {
+          "id": 6,
+          "value": "California"
+        },
+        "type": {
+          "id": 1,
+          "value": "Residential"
+        }
+      },
+      "ssn": "464-94-2323",
+      "date_of_birth": "1981-12-26",
+      "driver_license": "MD123-1234-585-121",
+      "driver_license_state": {
+        "id": 25,
+        "value": "Maryland"
+      },
+      "signature": "Anna Peterson",
+      "application_date": "2017-07-02",
+      "disclosures": [
+        {
+          "offense": "Offense description",
+          "offense_city": "Sacramento",
+          "offense_state": {
+            "id": 6,
+            "value": "California"
+          },
+          "offense_date": "2014-03-12",
+          "offense_details": "More details about offence",
+          "signature": "Anna Peterson",
+          "application_date": "2017-07-02"
+        }
+      ]
+    }
+  ],
+  "rfa1c_forms": [
+    {
+      "id": 8,
+      "application_county": {
+        "id": 34,
+        "value": "Sacramento"
+      },
+      "child_identified": true,
+      "child_in_home": true,
+      "identified_children": [
+        {
+          "first_name": "Collin",
+          "middle_name": "P.",
+          "last_name": "Martin",
+          "name_suffix": {
+            "id": 5,
+            "value": "Jr"
+          },
+          "date_of_birth": "2007-07-14",
+          "gender": {
+            "id": 1,
+            "value": "Male"
+          },
+          "county_of_jurisdiction": {
+            "id": 34,
+            "value": "Sacramento"
+          },
+          "date_of_placement": "2017-05-14",
+          "relationship_to_applicants": [
+            {
+              "applicant_id": 1234567,
+              "relationship_to_applicant": {
+                "id": 1,
+                "value": "Child"
+              }
+            }
+          ],
+          "school_grade": {
+            "id": 6,
+            "value": "4"
+          },
+          "school_name": "White Oaks High",
+          "school_address": {
+            "street_address": "1702 Redoak Ct.",
+            "zip": "98123",
+            "city": "Rocklin",
+            "state": {
+              "id": 6,
+              "value": "California"
+            },
+            "type": {
+              "id": 3,
+              "value": "Mailing"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "child_desired": {
+    "child_identified": false,
+    "child_in_home": false,
+    "preferred_ages": [
+      {
+        "id": 1,
+        "value": "0-3 years"
+      },
+      {
+        "id": 2,
+        "value": "4-8 years"
+      }
+    ],
+    "preferred_sibling_groups": [
+      {
+        "id": 2,
+        "value": "2"
+      },
+      {
+        "id": 3,
+        "value": "3"
+      }
+    ]
+  },
+  "references": {
+    "references": [
+      {
+        "name_prefix": {
+          "id": 2,
+          "value": "Ms."
+        },
+        "first_name": "Anna",
+        "middle_name": "N.",
+        "last_name": "Smith",
+        "name_suffix": {
+          "id": 5,
+          "value": "Jr"
+        },
+        "mailing_address": {
+          "street_address": "1704 Redoak Ct.",
+          "zip": "98123",
+          "city": "Rocklin",
+          "state": {
+            "id": 6,
+            "value": "California"
+          },
+          "type": {
+            "id": 1,
+            "value": "Mailing"
+          }
+        },
+        "phone_number": "(534) 758-9802",
+        "email": "anna.smith@gmail.com"
+      },
+      {
+        "first_name": "Anna",
+        "middle_name": "N.",
+        "last_name": "Smith",
+        "mailing_address": {
+          "street_address": "1704 Redoak Ct.",
+          "zip": "98123",
+          "city": "Rocklin",
+          "state": {
+            "id": 6,
+            "value": "California"
+          },
+          "type": {
+            "id": 1,
+            "value": "Mailing"
+          }
+        },
+        "phone_number": "(534) 758-9802",
+        "email": "anna.smith@gmail.com"
+      },
+      {
+        "first_name": "Anna",
+        "middle_name": "N.",
+        "last_name": "Smith",
+        "mailing_address": {
+          "street_address": "1704 Redoak Ct.",
+          "zip": "98123",
+          "city": "Rocklin",
+          "state": {
+            "id": 6,
+            "value": "California"
+          },
+          "type": {
+            "id": 1,
+            "value": "Mailing"
+          }
+        },
+        "phone_number": "(534) 758-9802",
+        "email": "anna.smith@gmail.com"
+      }
+    ]
+  },
+  "applicants_declaration": {
+    "applicant_signatures": [
+      {
+        "applicant_id": 1234567,
+        "signature_city": "Sacramento",
+        "signature_county": {
+          "id": 34,
+          "value": "Sacramento"
+        },
+        "signature_date": "2017-06-18"
+      },
+      {
+        "applicant_id": 1234568,
+        "signature_city": "Sacramento",
+        "signature_county": {
+          "id": 34,
+          "value": "Sacramento"
+        },
+        "signature_date": "2017-06-18"
+      }
+    ]
+  },
+  "is_initial_application": true,
+  "is_other_type": false
+}

@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -10,7 +9,7 @@ import org.junit.Test;
  */
 
 public abstract class BaseInternalEntityApiTest<T extends BaseDTO> extends
-    BaseCalsApiIntegrationTest implements InternalEntityApiHelper {
+    BaseRFAIntegrationTest implements InternalEntityApiHelper {
 
   protected abstract BaseInternalEntityApiHelper<T> getInternalEntityApiHelper();
 

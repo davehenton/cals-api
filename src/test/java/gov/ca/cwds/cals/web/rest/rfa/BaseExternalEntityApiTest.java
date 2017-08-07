@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -9,7 +8,7 @@ import org.junit.Test;
  * @author CWDS CALS API Team
  */
 public abstract class BaseExternalEntityApiTest<T extends RFAExternalEntityDTO>
-    extends BaseCalsApiIntegrationTest implements ExternalEntityApiHelper {
+    extends BaseRFAIntegrationTest implements ExternalEntityApiHelper {
 
   protected abstract BaseExternalEntityApiHelper<T> getExternalEntityApiHelper();
 

@@ -42,7 +42,7 @@ public class RFA1aOtherAdultsResourceTest extends
 
         };
 
-    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration);
+    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
   }
 
 }

@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createForm;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
@@ -25,15 +24,17 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
 
   private RestClientTestRule clientTestRule;
   private TestExternalEntityConfiguration<T> configuration;
+  private RFAHelper rfaHelper;
 
   public BaseExternalEntityApiHelper(RestClientTestRule clientTestRule,
-      TestExternalEntityConfiguration<T> configuration) {
+      TestExternalEntityConfiguration<T> configuration, RFAHelper rfaHelper) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
+    this.rfaHelper = rfaHelper;
   }
 
   public void createEntity() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     T created = createEntity(form);
 
     assertNotNull(created);
@@ -45,7 +46,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
   }
 
   public void updateEntity() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
 
     T created = createEntity(form);
     Long createdEntityId = created.getId();
@@ -76,7 +77,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
   }
 
   public void getEntityById() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     T created = createEntity(form);
     Long createdEntityId = created.getId();
     T found = findEntity(form, createdEntityId);
@@ -84,7 +85,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
   }
 
   public void getEntitiesByFormId() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     createEntity(form);
     createEntity(form);
     createEntity(form);
@@ -103,7 +104,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
   }
 
   public void deleteEntity() throws Exception {
-    RFA1aFormDTO form = createForm(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
     T created = createEntity(form);
     Long createdEntityId = created.getId();
     T found = findEntity(form, createdEntityId);
