@@ -1,6 +1,8 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
+import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createPhone;
+import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createPhoneNoExtension;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
@@ -165,12 +167,13 @@ public class RFA1aApplicantResourceTest extends
   @Test
   public void postDuplicateApplicantLastNameValidationTest() throws IOException {
     try {
+      RFAHelper rfaHelper = new RFAHelper(clientTestRule);
       RFA1aFormDTO form = rfaHelper.createForm();
 
-      ApplicantDTO firstApplicant = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
+      ApplicantDTO firstApplicant = this.rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
       secondApplicant.setLastName("differentName");
-      secondApplicant = rfaHelper.postApplicant(form.getId(), secondApplicant);
+      secondApplicant = this.rfaHelper.postApplicant(form.getId(), secondApplicant);
       secondApplicant.setLastName(firstApplicant.getLastName());
       putApplicant(form, secondApplicant);
       fail();
@@ -253,6 +256,47 @@ public class RFA1aApplicantResourceTest extends
     }
   }
 
+  @Test
+  public void testDuplicatePhoneNumbersWithExtension() throws IOException {
+    RFAHelper rfaHelper = new RFAHelper(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
+    ApplicantDTO applicant = getApplicantDTO();
+
+    applicant.getPhones().clear();
+    applicant.getPhones().add(createPhone());
+    applicant.getPhones().add(createPhone());
+
+    try {
+      rfaHelper.postApplicant(form.getId(), applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+      assertEqualsResponse(
+          fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json"),
+          getEntityFromException(e));
+    }
+  }
+
+  @Test
+  public void testDuplicatePhoneNumbers() throws IOException {
+    RFAHelper rfaHelper = new RFAHelper(clientTestRule);
+    RFA1aFormDTO form = rfaHelper.createForm();
+    ApplicantDTO applicant = getApplicantDTO();
+
+    applicant.getPhones().clear();
+    applicant.getPhones().add(createPhoneNoExtension());
+    applicant.getPhones().add(createPhoneNoExtension());
+
+    try {
+      rfaHelper.postApplicant(form.getId(), applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+      assertEqualsResponse(
+          fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-response.json"),
+          getEntityFromException(e));
+    }
+  }
 
   private ApplicantDTO putApplicant(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
     WebTarget target =

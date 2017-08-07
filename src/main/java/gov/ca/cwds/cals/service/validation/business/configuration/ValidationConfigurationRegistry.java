@@ -19,10 +19,10 @@ public class ValidationConfigurationRegistry {
     DroolsValidationConfiguration<?> res = null;
     switch (configurationName) {
       case APPLICANTS_DUPLICATE_NAME_POST:
-        res = ApplicantDuplicateNamesConstraintPostConfiguration.INSTANCE;
+        res = ApplicantNamesDuplicationConstraintPostConfiguration.INSTANCE;
         break;
       case APPLICANTS_DUPLICATE_NAME_PUT:
-        res = ApplicantDuplicateNamesConstraintPutConfiguration.INSTANCE;
+        res = ApplicantNamesDuplicationConstraintPutConfiguration.INSTANCE;
         break;
       case APPLICANT_VALIDATION:
         res = ApplicantValidationConfiguration.INSTANCE;

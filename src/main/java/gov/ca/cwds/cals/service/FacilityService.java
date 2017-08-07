@@ -41,6 +41,7 @@ import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
@@ -79,6 +80,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private FacilityMapper facilityMapper;
+
+  @Inject
+  private PlacementHomeMapper placementHomeMapper;
 
   @Inject
   private FasFacilityMapper fasFacilityMapper;
@@ -282,7 +286,7 @@ public class FacilityService implements CrudsService {
   }
 
   private PlacementHomeUc storePlacementHomeUc(PlacementHome persistedPlacementHome) {
-    PlacementHomeUc placementHomeUc = facilityMapper.toPlacementHomeUc(persistedPlacementHome);
+    PlacementHomeUc placementHomeUc = placementHomeMapper.toPlacementHomeUc(persistedPlacementHome);
 
     placementHomeUc.setLstUpdId(Id.getStaffPersonId());
     placementHomeUc.setLstUpdTs(LocalDateTime.now());
@@ -292,7 +296,7 @@ public class FacilityService implements CrudsService {
   }
 
   private PlacementHome storePlacementHome(RFA1aForm form) {
-    PlacementHome placementHome = facilityMapper.toPlacementHome(form);
+    PlacementHome placementHome = placementHomeMapper.toPlacementHome(form);
     placementHome.setFacilityType(facilityTypeDao.findAll().get(0));
     placementHome.setCounty(countiesDao.findAll().get(0));
     placementHome.setLicenseStatus(licenseStatusDao.findAll().get(0));

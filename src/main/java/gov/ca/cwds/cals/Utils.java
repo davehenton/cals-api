@@ -4,6 +4,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
+import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
 import java.util.List;
@@ -33,6 +34,20 @@ public final class Utils {
     FacilityParameterObject parameterObject = createFacilityParameterObject(facilityNumber);
     parameterObject.setExpanded(Boolean.TRUE);
     return parameterObject;
+  }
+
+  public static class Phone {
+
+    public static String formatNumber(PhoneDTO phone) {
+      String number = phone.getNumber();
+      if (phone.getExtension() != null) {
+        number = number + " ext. " + phone.getExtension();
+      }
+      return number;
+    }
+
+    public Phone() {
+    }
   }
 
   public static class Id {

@@ -1,12 +1,13 @@
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.*
 import gov.ca.cwds.cals.service.dto.rfa.*
 import gov.ca.cwds.cals.Constants
-import gov.ca.cwds.cals.Constants.Validation.Business;
+import gov.ca.cwds.cals.Constants.Validation.Business
+import gov.ca.cwds.cals.Utils;
 
 global java.util.Set validationMessages;
 
 rule "Validate Applicant's preferred phone"
-      dialect "mvel"
+  dialect "mvel"
   agenda-group "applicant-validation"
   when
     $applicant : ApplicantDTO();
@@ -19,4 +20,19 @@ rule "Validate Applicant's preferred phone"
     ) from $applicant.phones
   then
     validationMessages.add(Business.APPLICANT_PREFERRED_NUMBER_MESSAGE);
+end
+
+rule "Validate Applicant phone numbers duplication"
+  dialect "mvel"
+  agenda-group "applicant-validation"
+  when
+      $applicant: ApplicantDTO()
+      $phone: PhoneDTO() from $applicant.phones
+      exists PhoneDTO(this.uuid != $phone.uuid, number == $phone.number, extension == $phone.extension) from $applicant.phones
+  then
+      validationMessages.add(String.format(Constants.Validation.Business.APPLICANT_PHONE_NUMBERS_DUPLICATION_MESSAGE,
+       Utils.Phone.formatNumber($phone),
+       $applicant.getFirstName(),
+       $applicant.getLastName(),
+       $applicant.getNameSuffix().getValue()));
 end
