@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CalsApiApplication.class);
+  public static final String LIQUIBASE_CALSNS_DATABASE_CREATE_SCHEMA_XML = "liquibase/calsns_schema.xml";
   public static final String LIQUIBASE_CALSNS_DATABASE_MASTER_XML = "liquibase/calsns_database_master.xml";
   public static final String HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME = "hibernate.default_schema";
 
@@ -86,6 +87,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
         calsnsDataSourceFactory.getUser(),
         calsnsDataSourceFactory.getPassword());
     try {
+      databaseHelper.runScript(LIQUIBASE_CALSNS_DATABASE_CREATE_SCHEMA_XML);
       databaseHelper.runScript(LIQUIBASE_CALSNS_DATABASE_MASTER_XML,
           calsnsDataSourceFactory.getProperties().get(HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME));
     } catch (Exception e) {
