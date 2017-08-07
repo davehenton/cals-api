@@ -15,6 +15,8 @@ import gov.ca.cwds.cals.service.mapper.FacilityTypeMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityTypeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapperImpl;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapperImpl;
 
@@ -29,6 +31,7 @@ public class MappingModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(FacilityMapper.class).to(FacilityMapperImpl.class).asEagerSingleton();
+        bind(PlacementHomeMapper.class).to(PlacementHomeMapperImpl.class).asEagerSingleton();
         bind(FasFacilityMapper.class).to(FasFacilityMapperImpl.class).asEagerSingleton();
         bind(FacilityChildMapper.class).to(FacilityChildMapperImpl.class).asEagerSingleton();
         bind(FacilityInspectionMapper.class).to(FacilityInspectionMapperImpl.class).asEagerSingleton();
