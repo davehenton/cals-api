@@ -197,10 +197,10 @@ task integrationTest(type: Test, dependsOn: testClasses) {
     exclude '**/ChangedRFA1aFormsResourceTest.class'
 }
 
-task smokeTestSuite(type: Test) {
-    // URL where integration tests will be pointed to (may change it in gradle.properties)
+task smokeTest(type: Test) {
+    // URL where smoke tests will be pointed to (may change it in gradle.properties)
     systemProperty 'cals.api.url', project.property('cals.api.url')
-    include 'SystemInformationResourceTest.class'
+    include 'SmokeTestSuite.class'
 }
 
 task copyConfig(type: Copy) {
