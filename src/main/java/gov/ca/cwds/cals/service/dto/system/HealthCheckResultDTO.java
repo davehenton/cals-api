@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto.system;
 import com.codahale.metrics.health.HealthCheck;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,15 +13,15 @@ public class HealthCheckResultDTO extends BaseDTO {
   private boolean healthy;
   private String message;
   private Throwable error;
-  private Map<String, Object> details;
+  private HashMap<String, Object> details;
   private String timestamp;
 
   public void setResult(HealthCheck.Result result) {
-    healthy = result.isHealthy();
-    message = result.getMessage();
-    error = result.getError();
-    details = result.getDetails();
-    timestamp = result.getTimestamp();
+    setHealthy(result.isHealthy());
+    setMessage(result.getMessage());
+    setError(result.getError());
+    setDetails(result.getDetails());
+    setTimestamp(result.getTimestamp());
   }
 
   public boolean isHealthy() {
@@ -52,7 +53,7 @@ public class HealthCheckResultDTO extends BaseDTO {
   }
 
   public void setDetails(Map<String, Object> details) {
-    this.details = details;
+    this.details = new HashMap<>(details);
   }
 
   public String getTimestamp() {
