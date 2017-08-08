@@ -53,7 +53,7 @@ public class HealthCheckResultDTO extends BaseDTO {
   }
 
   public void setDetails(Map<String, Object> details) {
-    this.details = new HashMap<>(details);
+    this.details = details == null ? null : new HashMap<>(details);
   }
 
   public String getTimestamp() {
