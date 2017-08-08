@@ -191,12 +191,17 @@ jar {
 
 def dockerTag = projectVersion + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
 
-task integrationTest(type: Test, dependsOn: testClasses) {
-
+switchToIntegrationTestMode {
     // URL where integration tests will be pointed to (may change it in gradle.properties)
     systemProperty 'cals.api.url', project.property('cals.api.url')
+}
 
+task integrationTest(type: Test, dependsOn: testClasses, switchToIntegrationTestMode) {
     exclude '**/ChangedRFA1aFormsResourceTest.class'
+}
+
+task smokeTestSuite(type: Test, dependsOn: switchToIntegrationTestMode) {
+    include 'SystemInformationResourceTest.class'
 }
 
 task copyConfig(type: Copy) {

@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals;
 
-import gov.ca.cwds.cals.web.rest.ApplicationResourceTest;
+import gov.ca.cwds.cals.web.rest.system.SystemInformationResourceTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -9,7 +9,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    ApplicationResourceTest.class
+    SystemInformationResourceTest.class
 })
 public class SmokeTestSuite {
 }
