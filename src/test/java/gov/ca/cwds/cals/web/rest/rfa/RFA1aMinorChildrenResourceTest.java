@@ -61,7 +61,7 @@ public class RFA1aMinorChildrenResourceTest extends
 
   @Test
   public void checkNullChildRelatedToTest() throws IOException, JSONException {
-    String inputFixture = "{\"child_related_to\": null}";
+    String inputFixture = "{\"relationship_to_applicants\": null}";
     String outputFixture = "{\n"
         + "  \"id\" : %s\n"
         + "}";
@@ -70,7 +70,7 @@ public class RFA1aMinorChildrenResourceTest extends
 
   @Test
   public void restoreUnselectedValueBackTest() throws IOException, JSONException {
-    String inputFixture = "{\"child_related_to\": [1,2]}";
+    String inputFixture = "{\"relationship_to_applicants\": []}";
     RFA1aFormDTO form = rfaHelper.createForm();
     WebTarget target =
         clientTestRule.target(
@@ -84,7 +84,7 @@ public class RFA1aMinorChildrenResourceTest extends
 
     String removeArrayFixture = "{\n"
         + "  \"id\" : %s\n"
-        + ", \"child_related_to\":null"
+        + ", \"relationship_to_applicants\":null"
         + "}";
     minorChildDTO = clientTestRule.getMapper().readValue(
         String.format(removeArrayFixture, postMinorChildDTO.getId()), MinorChildDTO.class);
