@@ -39,9 +39,9 @@ public final class Constants {
 
   public static class API {
 
-    public static final String FACILITIES = "facilities";
+    public static final String SYSTEM_INFORMATION = "system-information";
 
-    public static final String RESOURCE_APPLICATION = "application";
+    public static final String FACILITIES = "facilities";
 
     public static final String CHILDREN = "children";
 
