@@ -36,7 +36,7 @@ swagger:
 #  callbackUrl: https://cals-api.dev.cwds.io/swagger
   callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
 
-upgardeDbOnStart: true
+upgardeDbOnStart: ${UPGRADE_DB_ON_START:-true}
 
 lisDataSourceFactory:
   driverClass: org.postgresql.Driver

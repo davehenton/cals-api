@@ -43,7 +43,7 @@ CREATE TABLE PLC_HM_T
     PSTREET_NM char(40) DEFAULT ' ' NOT NULL,
     PSTREET_NO char(10) DEFAULT ' ' NOT NULL,
     P_ZIP_NO int DEFAULT 0 NOT NULL,
-    PLC_FCLC smallint NOT NULL, -- Resource Family Home code:
+    PLC_FCLC smallint NOT NULL, -- Resource Family Home code: 6914 (Resource Family Home)
     PRM_CNCTNM char(35) DEFAULT ' ' NOT NULL, -- applicants.applicant[1].first_name + applicants.applicant[1].last_name
     PRM_EXT_NO int DEFAULT 0 NOT NULL, -- applicants.applicant[1].phones.phone[cell].extension
     PRM_SUBSID char(10) DEFAULT 'NULL', -- The logical foreign key representing the ID from the source entity of the Primary Care Provider for a particular PLACEMENT HOME.

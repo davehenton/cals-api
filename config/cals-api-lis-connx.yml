@@ -34,6 +34,8 @@ swagger:
   jsonUrl: ${SWAGGER_JSON_URL:-http://localhost:8080/swagger.json}
   callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
 
+upgardeDbOnStart: ${UPGRADE_DB_ON_START:-true}
+
 lisDataSourceFactory:
   autoCommitByDefault: false
   driverClass: com.Connx.jdbc.TCJdbc.TCJdbcDriver
