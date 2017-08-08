@@ -1,13 +1,14 @@
 package gov.ca.cwds.cals.service.dto.system;
 
 import com.codahale.metrics.health.HealthCheck;
+import gov.ca.cwds.cals.service.dto.BaseDTO;
 
 import java.util.Map;
 
 /**
  * @author CWDS CALS API Team
  */
-public class HealthCheckResultDTO {
+public class HealthCheckResultDTO extends BaseDTO {
   private boolean healthy;
   private String message;
   private Throwable error;
