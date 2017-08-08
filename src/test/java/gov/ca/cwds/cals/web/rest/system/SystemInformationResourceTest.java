@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest.system;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.service.dto.system.HealthCheckResultDTO;
 import gov.ca.cwds.cals.service.dto.system.SystemInformationDTO;
 import org.junit.Test;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class SystemInformationResourceTest extends BaseCalsApiIntegrationTest {
 
@@ -19,10 +21,16 @@ public class SystemInformationResourceTest extends BaseCalsApiIntegrationTest {
         request(MediaType.APPLICATION_JSON).get(SystemInformationDTO.class);
     assertEquals("CWDS CALS API", systemInformationDTO.getApplication());
     assertNotNull(systemInformationDTO.getVersion());
-    assertNotNull(systemInformationDTO.getCalsns());
-    assertNotNull(systemInformationDTO.getCwscms());
-    assertNotNull(systemInformationDTO.getFas());
-    assertNotNull(systemInformationDTO.getLis());
     assertNotNull(systemInformationDTO.getDeadlocks());
+
+    assertDataSource(systemInformationDTO.getCalsns());
+    assertDataSource(systemInformationDTO.getCwscms());
+    assertDataSource(systemInformationDTO.getFas());
+    assertDataSource(systemInformationDTO.getLis());
+  }
+
+  public void assertDataSource(HealthCheckResultDTO healthCheckResultDTO) {
+    assertNotNull(healthCheckResultDTO);
+    assertTrue(healthCheckResultDTO.isHealthy());
   }
 }
