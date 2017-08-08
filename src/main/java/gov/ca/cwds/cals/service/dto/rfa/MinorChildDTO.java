@@ -8,11 +8,11 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
@@ -24,10 +24,9 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
 
   private static final long serialVersionUID = 1367746149537559411L;
 
-  @CheckReferentialIntegrity
-  private RelationshipToApplicantType relationshipToApplicant;
-
-  private List<Long> childRelatedTo;
+  @ApiModelProperty("Relationship to Applicants")
+  @Valid
+  private List<RelationshipToApplicantDTO> relationshipToApplicants;
 
   private Boolean otherRelative;
 
@@ -55,21 +54,13 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
 
   private Boolean childAdopted;
 
-  public RelationshipToApplicantType getRelationshipToApplicant() {
-    return relationshipToApplicant;
+  public List<RelationshipToApplicantDTO> getRelationshipToApplicants() {
+    return relationshipToApplicants;
   }
 
-  public void setRelationshipToApplicant(
-      RelationshipToApplicantType relationshipToApplicant) {
-    this.relationshipToApplicant = relationshipToApplicant;
-  }
-
-  public List<Long> getChildRelatedTo() {
-    return childRelatedTo;
-  }
-
-  public void setChildRelatedTo(List<Long> childRelatedTo) {
-    this.childRelatedTo = childRelatedTo;
+  public void setRelationshipToApplicants(
+      List<RelationshipToApplicantDTO> relationshipToApplicants) {
+    this.relationshipToApplicants = relationshipToApplicants;
   }
 
   public NamePrefixType getOtherRelativeNamePrefix() {
