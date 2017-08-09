@@ -192,11 +192,15 @@ jar {
 def dockerTag = projectVersion + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
 
 task integrationTest(type: Test, dependsOn: testClasses) {
-
     // URL where integration tests will be pointed to (may change it in gradle.properties)
     systemProperty 'cals.api.url', project.property('cals.api.url')
-
     exclude '**/ChangedRFA1aFormsResourceTest.class'
+}
+
+task smokeTest(type: Test) {
+    // URL where smoke tests will be pointed to (may change it in gradle.properties)
+    systemProperty 'cals.api.url', project.property('cals.api.url')
+    include 'SmokeTestSuite.class'
 }
 
 task copyConfig(type: Copy) {
@@ -208,7 +212,6 @@ task copyDist(type: Copy, dependsOn: shadowJar) {
     from 'build/libs'
     into 'build/docker/libs'
 }
-
 
 task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
     dockerfile = "Dockerfile"
