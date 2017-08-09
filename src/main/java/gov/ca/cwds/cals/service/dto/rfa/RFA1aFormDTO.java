@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.dto.rfa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -10,6 +11,7 @@ import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import javax.validation.Valid;
+import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * @author CWDS CALS API Team.
@@ -237,6 +239,11 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   public void setPlacementHomeId(String placementHomeId) {
     this.placementHomeId = placementHomeId;
+  }
+
+  @JsonIgnore
+  public ApplicantDTO getFirstApplicant() {
+    return CollectionUtils.isNotEmpty(applicants) ? applicants.get(0) : null;
   }
 
 }
