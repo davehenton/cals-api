@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
@@ -73,18 +74,18 @@ public interface FacilityMapper {
   @Mapping(target = "visits", ignore = true)
   @Mapping(target = "lastDeferredVisitReason", ignore = true)
   @Mapping(target = "lastDeferredVisitDate", ignore = true)
-  @Mapping(target = "id", source = "identifier")
-  @Mapping(target = "name", source = "facltyNm")
-  @Mapping(target = "type", source = "facilityType")
-  @Mapping(target = "licenseeName", source = "licnseeNm")
-  @Mapping(target = "assignedWorker", source = "countyLicenseCase.staffPerson")
-  @Mapping(target = "districtOffice", source = "countyLicenseCase.staffPerson.county")
-  @Mapping(target = "licenseNumber", source = "licenseNo")
-  @Mapping(target = "status", source = "licenseStatus")
-  @Mapping(target = "capacity", source = "maxCapNo")
-  @Mapping(target = "licenseEffectiveDate", source = "licEfctdt")
-  @Mapping(target = "originalApplicationRecievedDate", source = "licAplDt")
-  @Mapping(target = "county", source = "county")
+  @Mapping(target = "id", source = "placementHome.identifier")
+  @Mapping(target = "name", source = "placementHome.facltyNm")
+  @Mapping(target = "type", source = "placementHome.facilityType")
+  @Mapping(target = "licenseeName", source = "placementHome.licnseeNm")
+  @Mapping(target = "assignedWorker", source = "placementHome.countyLicenseCase.staffPerson")
+  @Mapping(target = "districtOffice", source = "placementHome.countyLicenseCase.staffPerson.county")
+  @Mapping(target = "licenseNumber", source = "placementHome.licenseNo")
+  @Mapping(target = "status", source = "placementHome.licenseStatus")
+  @Mapping(target = "capacity", source = "placementHome.maxCapNo")
+  @Mapping(target = "licenseEffectiveDate", source = "placementHome.licEfctdt")
+  @Mapping(target = "originalApplicationRecievedDate", source = "placementHome.licAplDt")
+  @Mapping(target = "county", source = "applicationCounty")
   @Mapping(target = "lastVisitDate", ignore = true)
   @Mapping(target = "lastVisitReason", ignore = true)
   @Mapping(target = "phone", ignore = true)
@@ -93,7 +94,7 @@ public interface FacilityMapper {
   @Mapping(target = "licenseeType", ignore = true)
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "emailAddress", ignore = true)
-  FacilityDTO toFacilityDTO(BasePlacementHome placementHome);
+  FacilityDTO toFacilityDTO(BasePlacementHome placementHome, County applicationCounty);
 
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "phone", ignore = true)
