@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.rfa;
 
 import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.Validation.FORM_SUBMISSION_VALIDATION_SESSION;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED;
@@ -14,7 +15,6 @@ import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
@@ -24,6 +24,7 @@ import gov.ca.cwds.cals.service.validation.business.DroolsService;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsFieldValidationConfiguration;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
+import io.dropwizard.hibernate.UnitOfWork;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Set;
@@ -39,21 +40,20 @@ public class RFA1aFormService
   private static final Logger LOG = LoggerFactory
       .getLogger(RFA1aFormService.class);
 
-  private RFA1aFormsDao dao;
-  private RFA1aFormMapper rfa1aFomMapper;
-  private FacilityService facilityService;
-  private DroolsService droolsService;
+  @Inject
+  private RFA1aFormsDao rfa1AFormsDao;
 
   @Inject
-  public RFA1aFormService(
-      RFA1aFormsDao dao,
-      RFA1aFormMapper rfa1aFomMapper,
-      FacilityService facilityService,
-      DroolsService droolsService) {
-    this.dao = dao;
-    this.rfa1aFomMapper = rfa1aFomMapper;
-    this.facilityService = facilityService;
-    this.droolsService = droolsService;
+  private RFA1aFormMapper rfa1aFomMapper;
+
+  @Inject
+  private FacilityService facilityService;
+
+  @Inject
+  private DroolsService droolsService;
+
+  public RFA1aFormService() {
+    // default constructor
   }
 
   @Override
@@ -68,14 +68,14 @@ public class RFA1aFormService
     form.setUpdateDateTime(now);
     form.setUpdateUserId(SYSTEM_USER_ID);
     form.setStatus(RFAApplicationStatus.DRAFT);
-    form = dao.create(form);
+    form = rfa1AFormsDao.create(form);
 
     return rfa1aFomMapper.toRFA1aFormDTO(form);
   }
 
   @Override
   public RFA1aFormDTO find(RFA1aFormsParameterObject parameterObject) {
-    RFA1aForm form = dao.find(parameterObject.getFormId());
+    RFA1aForm form = rfa1AFormsDao.find(parameterObject.getFormId());
 
     RFA1aFormDTO formDTO;
     if (parameterObject.isExpanded()) {
@@ -99,7 +99,7 @@ public class RFA1aFormService
   private void updateForm(RFA1aForm form) {
     form.setUpdateDateTime(LocalDateTime.now());
     form.setUpdateUserId(SYSTEM_USER_ID);
-    dao.update(form);
+    rfa1AFormsDao.update(form);
   }
 
   public RFAApplicationStatusDTO getApplicationStatus(Long formId) {
@@ -125,16 +125,21 @@ public class RFA1aFormService
     RFA1aFormDTO expandedFormDTO = performSubmissionValidation(form);
     String placementHomeId = Utils.Id.generate();
     expandedFormDTO.setPlacementHomeId(placementHomeId);
-    PlacementHome placementHome;
     try {
-      placementHome = facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
+      facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
     } catch (Exception e) {
       LOG.error("Can not create Placement Home in database", e);
       throw e;
     }
+    updateFormAfterPlacementHomeCreation(form.getId(), placementHomeId, newStatus);
+  }
+
+  @UnitOfWork(CALSNS)
+  protected void updateFormAfterPlacementHomeCreation(
+      Long formId, String placementHomeId, RFAApplicationStatus newStatus) {
+    RFA1aForm form = rfa1AFormsDao.find(formId);
     form.setStatus(newStatus);
     form.setPlacementHomeId(placementHomeId);
-    form.setPlacementHomeId(placementHome.getIdentifier());
     updateForm(form);
   }
 
@@ -165,7 +170,7 @@ public class RFA1aFormService
   }
 
   private RFA1aForm findFormById(Long formId) {
-    RFA1aForm form = dao.find(formId);
+    RFA1aForm form = rfa1AFormsDao.find(formId);
     if (form == null) {
       throw new ExpectedException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
     }

@@ -66,11 +66,9 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
    * (e.g., Yolo, Butte, Fresno, etc.)  within the state of California where the PLACEMENT HOME is
    * located.
    */
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "GVR_ENTC", referencedColumnName = "SYS_ID")
-  private County county;
+  @Basic
+  @Column(name = "GVR_ENTC", nullable = false)
+  private Short gvrEntc;
 
   /**
    * STATE_CODE_TYPE - The system generated number which identifies the  State where the PLACEMENT
@@ -914,14 +912,6 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
     this.facilityType = facilityType;
   }
 
-  public County getCounty() {
-    return county;
-  }
-
-  public void setCounty(County county) {
-    this.county = county;
-  }
-
   public gov.ca.cwds.cals.persistence.model.cms.State getStateCode() {
     return stateCode;
   }
@@ -1718,6 +1708,14 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
   public void setOtherChildrenInPlacementHomes(
       List<OtherChildrenInPlacementHome> otherChildrenInPlacementHomes) {
     this.otherChildrenInPlacementHomes = otherChildrenInPlacementHomes;
+  }
+
+  public Short getGvrEntc() {
+    return gvrEntc;
+  }
+
+  public void setGvrEntc(Short gvrEntc) {
+    this.gvrEntc = gvrEntc;
   }
 
   @Override

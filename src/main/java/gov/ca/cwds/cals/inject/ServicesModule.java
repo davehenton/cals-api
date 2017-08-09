@@ -58,7 +58,7 @@ public class ServicesModule extends AbstractModule {
     bind(FacilityService.class).toProvider(FacilityServiceProvider.class);
 
     // RFA
-    bind(RFA1aFormService.class);
+    bind(RFA1aFormService.class).toProvider(RFA1aFormServiceProvider.class);
     bind(RFA1aFormsCollectionService.class);
     bind(RFA1aApplicantService.class);
     bind(RFA1aApplicantsCollectionService.class);

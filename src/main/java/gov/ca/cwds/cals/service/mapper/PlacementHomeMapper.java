@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -19,7 +20,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(imports = LocalDateTime.class)
 public interface PlacementHomeMapper {
 
-  @Mapping(target = "identifier", source = "placementHomeId")
+  @Mapping(target = "identifier", source = "form.placementHomeId")
   @Mapping(target = "ageFrmNo", constant = "0")
   @Mapping(target = "ageToNo", constant = "0")
   @Mapping(target = "atCapInd", constant = "N")
@@ -27,7 +28,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "bckExtNo", constant = "0")
   @Mapping(target = "bckTelNo", constant = "0")
   @Mapping(target = "chlcrPlcd", constant = "U")
-  @Mapping(target = "cityNm", source = "residence.residentialAddress.city")
+  @Mapping(target = "cityNm", source = "form.residence.residentialAddress.city")
   @Mapping(target = "clSrvdc", constant = "0")
   @Mapping(target = "confEfind", constant = "N")
   @Mapping(target = "curOcpNo", constant = "0")
@@ -36,7 +37,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "frgAdrtB", constant = "N")
   @Mapping(target = "gndrAcpcd", constant = " ")
   @Mapping(target = "geoRgntcd", constant = " ")
-  @Mapping(target = "county", ignore = true) //TODO 1 GVR_ENTC smallint DEFAULT 0 NOT NULL, County
+  @Mapping(target = "gvrEntc", source = "applicationCounty.cwsId")
   @Mapping(target = "inhmVstcd", constant = "U")
   @Mapping(target = "maxCapNo", constant = "0")
   @Mapping(target = "laVndrId", constant = " ")
@@ -58,19 +59,19 @@ public interface PlacementHomeMapper {
   @Mapping(target = "pZipNo", constant = "0")
   @Mapping(target = "facilityType", ignore = true) //TODO 5 PLC_FCLC - facility type
   @Mapping(target = "prmCnctnm", expression = "java(form.getFirstApplicant().getFirstName() + \" \" + form.getFirstApplicant().getLastName())")
-  @Mapping(target = "prmExtNo", source = "firstApplicant.preferredPhoneNumber.extension")
-  @Mapping(target = "prmSubsnm", source = "firstApplicant.applicantFullName")
-  @Mapping(target = "prmTelNo", source = "firstApplicant.preferredPhoneNumber.number")
+  @Mapping(target = "prmExtNo", source = "form.firstApplicant.preferredPhoneNumber.extension")
+  @Mapping(target = "prmSubsnm", source = "form.firstApplicant.applicantFullName")
+  @Mapping(target = "prmTelNo", source = "form.firstApplicant.preferredPhoneNumber.number")
   @Mapping(target = "pvdTrnscd", constant = "U")
   @Mapping(target = "pubTrnscd", constant = "U")
   @Mapping(target = "stateCode", ignore = true)
   //TODO 10 -- F_STATE_C residence.addresses[x].type = Residential then residence.addresses[x].state
-  @Mapping(target = "streetNm", source = "residence.residentialStreet")
-  @Mapping(target = "streetNo", source = "residence.residentialStreetNumber")
-  @Mapping(target = "zipNo", source = "residence.residentialAddress.zip")
+  @Mapping(target = "streetNm", source = "form.residence.residentialStreet")
+  @Mapping(target = "streetNo", source = "form.residence.residentialStreetNumber")
+  @Mapping(target = "zipNo", source = "form.residence.residentialAddress.zip")
   @Mapping(target = "lstUpdId", constant = "SYS")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
-  @Mapping(target = "addrDsc", source = "residence.directionsToHome")
+  @Mapping(target = "addrDsc", source = "form.residence.directionsToHome")
   @Mapping(target = "spcharDsc", constant = " ") //
   @Mapping(target = "ctyprfDsc", constant = " ")
   @Mapping(target = "edPvrDsc", constant = " ")
@@ -109,7 +110,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "endDt", ignore = true)
   @Mapping(target = "phEndc", ignore = true)
   @Mapping(target = "endComdsc", ignore = true)
-  PlacementHome toPlacementHome(RFA1aFormDTO form);
+  PlacementHome toPlacementHome(RFA1aFormDTO form, CountyType applicationCounty);
 
   @AfterMapping
   default void setFacilityName(@MappingTarget PlacementHome placementHome, RFA1aFormDTO form) {
