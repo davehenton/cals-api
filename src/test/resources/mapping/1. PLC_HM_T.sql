@@ -19,7 +19,7 @@ CREATE TABLE PLC_HM_T
     GNDR_ACPCD char(1) DEFAULT ' ' NOT NULL,
     GEO_RGNTCD char(2) DEFAULT ' ' NOT NULL,
     GVR_ENTC smallint DEFAULT 0 NOT NULL,
-    INHM_VSTCD char(1) NOT NULL, -- U
+    INHM_VSTCD char(1) NOT NULL, -- U`
     MAX_CAP_NO smallint DEFAULT 0 NOT NULL,
     LA_VNDR_ID char(6) DEFAULT ' ' NOT NULL,
     LICENSE_NO char(9) DEFAULT 'NULL',
@@ -45,10 +45,10 @@ CREATE TABLE PLC_HM_T
     P_ZIP_NO int DEFAULT 0 NOT NULL,
     PLC_FCLC smallint NOT NULL, -- Resource Family Home code: 6914 (Resource Family Home)
     PRM_CNCTNM char(35) DEFAULT ' ' NOT NULL, -- applicants.applicant[1].first_name + applicants.applicant[1].last_name
-    PRM_EXT_NO int DEFAULT 0 NOT NULL, -- applicants.applicant[1].phones.phone[cell].extension
+    PRM_EXT_NO int DEFAULT 0 NOT NULL, -- applicants.applicant[1].phones.phone.extension where preferred=true if no preferred then just get first number extension
     PRM_SUBSID char(10) DEFAULT 'NULL', -- The logical foreign key representing the ID from the source entity of the Primary Care Provider for a particular PLACEMENT HOME.
     PRM_SUBSNM char(54) DEFAULT ' ' NOT NULL, -- applicants.applicant[1].name_prefix.value + " " + applicants.applicant[1].first_name + " " + applicants.applicant[1].middle_name + " " + applicants.applicant[1].last_name + " " + applicants.applicant[1].name_suffix.value
-    PRM_TEL_NO decimal(10) DEFAULT 0 NOT NULL, --applicants.phones[x].number where preferred=true if no preferred then just get first number
+    PRM_TEL_NO decimal(10) DEFAULT 0 NOT NULL, --applicants.applicant[1].phones.number where phone.preferred=true if no preferred then just get first number
     PVD_TRNSCD char(1) NOT NULL, -- U
     PUB_TRNSCD char(1) NOT NULL, -- U
     F_STATE_C smallint DEFAULT 0 NOT NULL, -- residence.addresses[x].type = Residential then residence.addresses[x].state
@@ -76,12 +76,14 @@ CREATE TABLE PLC_HM_T
     LA_P_LSTNM char(25) DEFAULT ' ' NOT NULL,
     LA_P_MIDNM char(1) DEFAULT ' ' NOT NULL,
     LP_STATE_C smallint DEFAULT 0 NOT NULL,
+
     LA_P_STNM char(40) DEFAULT ' ' NOT NULL,
     LA_P_STNO char(10) DEFAULT ' ' NOT NULL,
     LA_P_ZIPNO int DEFAULT 0 NOT NULL,
     LA_P_ZPSFX smallint DEFAULT 0 NOT NULL,
     LA_P_BSNSS char(30) DEFAULT ' ' NOT NULL,
     AP_STAT_DT date DEFAULT NULL,
+
     LA_P_PH_NO decimal(10) DEFAULT 0 NOT NULL,
     LA_P_PH_EX int DEFAULT 0 NOT NULL,
     ADHMONLY char(1) DEFAULT ' ' NOT NULL,
@@ -95,6 +97,7 @@ CREATE TABLE PLC_HM_T
     NEWLIC_UPD char(1) DEFAULT 'N' NOT NULL,
     OLDFAC_ID char(10) DEFAULT 'NULL',
     EM_CNT_B char(1) DEFAULT 'N' NOT NULL, -- N
+
     END_DT date DEFAULT NULL,
     PH_ENDC smallint DEFAULT NULL,
     END_COMDSC char(254) DEFAULT 'NULL'

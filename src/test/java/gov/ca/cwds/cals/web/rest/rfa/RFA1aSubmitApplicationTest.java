@@ -9,20 +9,24 @@ import static org.junit.Assert.assertNotNull;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
+import gov.ca.cwds.cals.persistence.DBUnitAssertHelper;
 import gov.ca.cwds.cals.persistence.DBUnitSupport;
 import gov.ca.cwds.cals.persistence.DBUnitSupportBuilder;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import org.dbunit.Assertion;
-import org.dbunit.dataset.ITable;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -34,6 +38,9 @@ import org.junit.Test;
 public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
+
+  DBUnitSupport dbUnitSupport =
+      new DBUnitSupportBuilder().buildForCMS(appRule.getConfiguration());
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -88,6 +95,11 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
       return;
     }
     RFA1aFormDTO form = rfaHelper.createForm();
+    rfaHelper.postApplicant(form.getId(), getApplicantDTO());
+    ApplicantDTO secondApplicant = getApplicantDTO();
+    secondApplicant.setFirstName("John");
+    rfaHelper.postApplicant(form.getId(), secondApplicant);
+    rfaHelper.putResidence(form.getId(), getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
@@ -96,23 +108,57 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     form = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
     assertNotNull(form.getPlacementHomeId());
 
+    testIfPlacementHomeWasCreatedProperly(form.getPlacementHomeId());
     testIfPlacementHomeUCWasCreatedProperly();
+  }
 
+  private void testIfPlacementHomeWasCreatedProperly(String placementHomeId) throws Exception {
+    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
+    dbUnitAssertHelper.setTableName("PLC_HM_T");
+    Map<String, Object> parameters = new HashMap<>();
+    parameters.put("id", placementHomeId);
+    dbUnitAssertHelper.addFixture("/dbunit/PlacementHome.xml", parameters);
+    dbUnitAssertHelper.addFilter("IDENTIFIER", placementHomeId);
+    dbUnitAssertHelper.assertEqualsIgnoreCols(
+        new String[]{
+            "LST_UPD_TS",
+            "BCK_PERSNM",
+            "GNDR_ACPCD",
+            "GEO_RGNTCD",
+            "LA_VNDR_ID",
+            "LICNSEE_NM",
+            "P_CITY_NM",
+            "PYE_FSTNM",
+            "PYE_LSTNM",
+            "PYE_MIDNM",
+            "PSTREET_NM",
+            "PSTREET_NO",
+            "SPCHAR_DSC",
+            "CTYPRF_DSC",
+            "ED_PVR_DSC",
+            "ENV_FCTDSC",
+            "HAZRDS_DSC",
+            "LIS_PRFDSC",
+            "PETS_DSC",
+            "RLG_ACTDSC",
+            "CERT_CMPLT",
+            "LA_P_CTYNM",
+            "LA_P_FSTNM",
+            "LA_P_LSTNM",
+            "LA_P_MIDNM",
+            "LA_P_STNM",
+            "LA_P_STNO",
+            "LA_P_BSNSS",
+            "ADHMONLY",
+        });
   }
 
   private void testIfPlacementHomeUCWasCreatedProperly() throws Exception {
-    // DataBase testing
-    DBUnitSupportBuilder dbUnitSupportBuilder = new DBUnitSupportBuilder();
-    DBUnitSupport dbUnitSupport = dbUnitSupportBuilder.buildForCMS(appRule.getConfiguration());
-
-    String pathToFlatXMLDataSet = "/dbunit/PlacementHomeUc-test-dataset.xml";
-    String PlacementHomeUCTableName = "PLCHM_UC";
-
-    ITable expected = dbUnitSupport.getTableFromXML(pathToFlatXMLDataSet, PlacementHomeUCTableName);
-    ITable actual = dbUnitSupport.getTableFromDB(PlacementHomeUCTableName);
-
-    Assertion.assertEqualsIgnoreCols(expected, actual,
-        new String[]{"PKPLC_HMT", "LST_UPD_ID", "LST_UPD_TS"});
+    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
+    dbUnitAssertHelper.setTableName("PLCHM_UC");
+    dbUnitAssertHelper.addFixture("/dbunit/PlacementHomeUc.xml");
+    dbUnitAssertHelper
+        .assertEqualsIgnoreCols(new String[]{"PKPLC_HMT", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
   @Test
@@ -127,6 +173,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   @Test
   public void unChangedSubmitStatusTest() throws Exception {
     RFA1aFormDTO form = rfaHelper.createForm();
+    rfaHelper.postApplicant(form.getId(), getApplicantDTO());
+    rfaHelper.putResidence(form.getId(), getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
@@ -138,6 +186,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   @Test
   public void changeStatusBackToDraftTest() throws Exception {
     RFA1aFormDTO form = rfaHelper.createForm();
+    rfaHelper.postApplicant(form.getId(), getApplicantDTO());
+    rfaHelper.putResidence(form.getId(), getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
@@ -172,6 +222,18 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   private void assertStatus(String statusFixture, Long formId) throws Exception {
     assertEqualsResponse(
         fixture(statusFixture), getStatus(formId));
+  }
+
+  private ResidenceDTO getResidenceDTO() throws IOException {
+    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
+    return clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
+  }
+
+  private ApplicantDTO getApplicantDTO() throws IOException {
+    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
+    return clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
   }
 
 }

@@ -8,10 +8,11 @@ import static org.junit.Assert.assertTrue;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import java.io.IOException;
@@ -69,6 +70,15 @@ public class RFAHelper {
             API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS);
     return target.request(MediaType.APPLICATION_JSON).post(
         Entity.entity(applicantDTO, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
+
+  }
+
+  public ResidenceDTO putResidence(long formId, ResidenceDTO residenceDTO) {
+    WebTarget target =
+        clientTestRule.target(
+            API.RFA_1A_FORMS + "/" + formId + "/" + API.RESIDENCE);
+    return target.request(MediaType.APPLICATION_JSON).put(
+        Entity.entity(residenceDTO, MediaType.APPLICATION_JSON_TYPE), ResidenceDTO.class);
 
   }
 
