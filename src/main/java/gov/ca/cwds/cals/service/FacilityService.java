@@ -23,7 +23,6 @@ import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
@@ -38,6 +37,7 @@ import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
@@ -278,8 +278,8 @@ public class FacilityService implements CrudsService {
   }
 
   @UnitOfWork(CMS)
-  public PlacementHome createPlacementHomeByRfaApplication(RFA1aForm form) {
-    PlacementHome persistedPlacementHome = storePlacementHome(form);
+  public PlacementHome createPlacementHomeByRfaApplication(RFA1aFormDTO formDTO) {
+    PlacementHome persistedPlacementHome = storePlacementHome(formDTO);
     storePlacementHomeUc(persistedPlacementHome);
 
     return persistedPlacementHome;
@@ -295,15 +295,14 @@ public class FacilityService implements CrudsService {
     return placementHomeUcDao.create(placementHomeUc);
   }
 
-  private PlacementHome storePlacementHome(RFA1aForm form) {
+  private PlacementHome storePlacementHome(RFA1aFormDTO form) {
     PlacementHome placementHome = placementHomeMapper.toPlacementHome(form);
-    placementHome.setFacilityType(facilityTypeDao.findAll().get(0));
+     /*TODO Fix below*/
     placementHome.setCounty(countiesDao.findAll().get(0));
     placementHome.setLicenseStatus(licenseStatusDao.findAll().get(0));
+    placementHome.setFacilityType(facilityTypeDao.findAll().get(0));
     placementHome.setStateCode(stateDao.findAll().get(0));
-    placementHome.setLstUpdTs(LocalDateTime.now());
     placementHome.setLaPayeeState(stateDao.findAll().get(0));
-    //
     return placementHomeDao.create(placementHome);
   }
 

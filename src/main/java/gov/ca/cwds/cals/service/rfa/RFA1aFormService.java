@@ -122,22 +122,23 @@ public class RFA1aFormService
 
   private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus)
       throws BusinessValidationException {
-    performSubmissionValidation(form);
-
-    form.setStatus(newStatus);
-    form.setPlacementHomeId(Utils.Id.generate());
+    RFA1aFormDTO expandedFormDTO = performSubmissionValidation(form);
+    String placementHomeId = Utils.Id.generate();
+    expandedFormDTO.setPlacementHomeId(placementHomeId);
     PlacementHome placementHome;
     try {
-      placementHome = facilityService.createPlacementHomeByRfaApplication(form);
+      placementHome = facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
     } catch (Exception e) {
       LOG.error("Can not create Placement Home in database", e);
       throw e;
     }
+    form.setStatus(newStatus);
+    form.setPlacementHomeId(placementHomeId);
     form.setPlacementHomeId(placementHome.getIdentifier());
     updateForm(form);
   }
 
-  private void performSubmissionValidation(
+  private RFA1aFormDTO performSubmissionValidation(
       RFA1aForm form) throws BusinessValidationException {
     RFA1aFormDTO formDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
     Set<String> validationMessages = droolsService.validate(formDTO,
@@ -145,6 +146,7 @@ public class RFA1aFormService
     if (!validationMessages.isEmpty()) {
       throw new BusinessValidationException(new ArrayList<>(validationMessages));
     }
+    return formDTO;
   }
 
   private DroolsValidationConfiguration<RFA1aFormDTO> createConfiguration() {

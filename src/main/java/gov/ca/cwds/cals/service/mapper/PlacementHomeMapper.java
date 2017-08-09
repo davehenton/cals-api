@@ -1,114 +1,128 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 /**
  * @author CWDS CALS API Team
  */
-@Mapper
+@Mapper(imports = LocalDateTime.class)
 public interface PlacementHomeMapper {
 
-  @Mapping(target = "facilityType", ignore = true)
-  @Mapping(target = "county", ignore = true)
-  @Mapping(target = "stateCode", ignore = true)
-  @Mapping(target = "payeeStateCode", ignore = true)
-  @Mapping(target = "licenseStatus", ignore = true)
-  @Mapping(target = "licenseNo", constant = "as12345cd")
-  @Mapping(target = "licAplDt", ignore = true)
-  @Mapping(target = "licEfctdt", ignore = true)
-  @Mapping(target = "licExpDt", ignore = true)
-  @Mapping(target = "lstUpdTs", ignore = true)
-  @Mapping(target = "endDt", ignore = true)
-  @Mapping(target = "phEndc", ignore = true)
-  @Mapping(target = "endComdsc", ignore = true)
-  @Mapping(target = "countyLicenseCase", ignore = true)
   @Mapping(target = "identifier", source = "placementHomeId")
-  @Mapping(target = "ageToNo", constant = "18")
   @Mapping(target = "ageFrmNo", constant = "0")
+  @Mapping(target = "ageToNo", constant = "0")
   @Mapping(target = "atCapInd", constant = "N")
-  @Mapping(target = "bckPersnm", constant = "")
+  @Mapping(target = "bckPersnm", constant = " ")
   @Mapping(target = "bckExtNo", constant = "0")
   @Mapping(target = "bckTelNo", constant = "0")
-  @Mapping(target = "certfPndt", constant = "1997-08-25")
   @Mapping(target = "chlcrPlcd", constant = "U")
-  @Mapping(target = "cityNm", constant = "San Diego")
+  @Mapping(target = "cityNm", source = "residence.residentialAddress.city")
   @Mapping(target = "clSrvdc", constant = "0")
   @Mapping(target = "confEfind", constant = "N")
-  @Mapping(target = "curOcpNo", constant = "15")
+  @Mapping(target = "curOcpNo", constant = "0")
   @Mapping(target = "emrShltcd", constant = "U")
   @Mapping(target = "faxNo", constant = "0")
   @Mapping(target = "frgAdrtB", constant = "N")
-  @Mapping(target = "gndrAcpcd", constant = "B")
-  @Mapping(target = "geoRgntcd", constant = "ne")
+  @Mapping(target = "gndrAcpcd", constant = " ")
+  @Mapping(target = "geoRgntcd", constant = " ")
+  @Mapping(target = "county", ignore = true) //TODO 1 GVR_ENTC smallint DEFAULT 0 NOT NULL, County
   @Mapping(target = "inhmVstcd", constant = "U")
   @Mapping(target = "maxCapNo", constant = "0")
-  @Mapping(target = "laVndrId", constant = "laVnd")
+  @Mapping(target = "laVndrId", constant = " ")
+  @Mapping(target = "licenseNo", constant = "NULL")
   @Mapping(target = "licCapNo", constant = "0")
-  @Mapping(target = "licStatdt", constant = "1997-08-25")
+  @Mapping(target = "licenseStatus", ignore = true) //TODO 2 LIC_STC, LicenseStatus
   @Mapping(target = "licBsnc", constant = "0")
-  @Mapping(target = "licnseeNm", constant = "ab12345679cd")
-  @Mapping(target = "licensrCd", constant = "CT")
-  @Mapping(target = "facltyNm", constant = "San Diego Placement Home 3")
-  @Mapping(target = "oprtdByid", constant = "")
-  @Mapping(target = "oprtdBycd", constant = "")
-  @Mapping(target = "pCityNm", constant = "")
-  @Mapping(target = "pyeFstnm", constant = "")
-  @Mapping(target = "pyeLstnm", constant = "")
-  @Mapping(target = "pyeMidnm", constant = "")
-  @Mapping(target = "pstreetNm", constant = "")
-  @Mapping(target = "pstreetNo", constant = "")
+  @Mapping(target = "licnseeNm", constant = " ")
+  @Mapping(target = "licensrCd", constant = "NA")
+  @Mapping(target = "facltyNm", ignore = true)
+  @Mapping(target = "pCityNm", constant = " ")
+  @Mapping(target = "pyeFstnm", constant = " ")
+  @Mapping(target = "pyeLstnm", constant = " ")
+  @Mapping(target = "pyeMidnm", constant = " ")
+  @Mapping(target = "payeeStateCode", ignore = true)
+  //TODO 4 P_STATE_C placementHome.setStateCode ????
+  @Mapping(target = "pstreetNm", constant = " ")
+  @Mapping(target = "pstreetNo", constant = " ")
   @Mapping(target = "pZipNo", constant = "0")
-  @Mapping(target = "prmCnctnm", constant = "")
-  @Mapping(target = "prmExtNo", constant = "0")
-  @Mapping(target = "prmSubsnm", constant = "Dixon, Kathleen")
-  @Mapping(target = "prmTelNo", constant = "0")
+  @Mapping(target = "facilityType", ignore = true) //TODO 5 PLC_FCLC - facility type
+  @Mapping(target = "prmCnctnm", expression = "java(form.getFirstApplicant().getFirstName() + \" \" + form.getFirstApplicant().getLastName())")
+  @Mapping(target = "prmExtNo", source = "firstApplicant.preferredPhoneNumber.extension")
+  @Mapping(target = "prmSubsnm", source = "firstApplicant.applicantFullName")
+  @Mapping(target = "prmTelNo", source = "firstApplicant.preferredPhoneNumber.number")
   @Mapping(target = "pvdTrnscd", constant = "U")
   @Mapping(target = "pubTrnscd", constant = "U")
-  @Mapping(target = "streetNm", constant = "Beach St")
-  @Mapping(target = "streetNo", constant = "3300")
-  @Mapping(target = "zipNo", constant = "95223")
-  @Mapping(target = "lstUpdId", constant = "q41")
-  @Mapping(target = "addrDsc", constant = "")
-  @Mapping(target = "spcharDsc", constant = "")
-  @Mapping(target = "ctyprfDsc", constant = "")
-  @Mapping(target = "edPvrDsc", constant = "")
-  @Mapping(target = "envFctdsc", constant = "")
-  @Mapping(target = "hazrdsDsc", constant = "")
-  @Mapping(target = "lisPrfdsc", constant = "")
-  @Mapping(target = "petsDsc", constant = "")
-  @Mapping(target = "rlgActdsc", constant = "")
+  @Mapping(target = "stateCode", ignore = true)
+  //TODO 10 -- F_STATE_C residence.addresses[x].type = Residential then residence.addresses[x].state
+  @Mapping(target = "streetNm", source = "residence.residentialStreet")
+  @Mapping(target = "streetNo", source = "residence.residentialStreetNumber")
+  @Mapping(target = "zipNo", source = "residence.residentialAddress.zip")
+  @Mapping(target = "lstUpdId", constant = "SYS")
+  @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
+  @Mapping(target = "addrDsc", source = "residence.directionsToHome")
+  @Mapping(target = "spcharDsc", constant = " ") //
+  @Mapping(target = "ctyprfDsc", constant = " ")
+  @Mapping(target = "edPvrDsc", constant = " ")
+  @Mapping(target = "envFctdsc", constant = " ")
+  @Mapping(target = "hazrdsDsc", constant = " ")
+  @Mapping(target = "lisPrfdsc", constant = " ")
+  @Mapping(target = "petsDsc", constant = " ")
+  @Mapping(target = "rlgActdsc", constant = " ")
   @Mapping(target = "pyZipSfx", constant = "0")
   @Mapping(target = "zipSfxNo", constant = "0")
-  @Mapping(target = "apStatTp", constant = "3081")
-  @Mapping(target = "certCmplt", constant = "Y")
-  @Mapping(target = "laPCtynm", constant = "")
-  @Mapping(target = "laPFstnm", constant = "")
-  @Mapping(target = "laPLstnm", constant = "")
-  @Mapping(target = "laPMidnm", constant = "")
-  @Mapping(target = "laPStnm", constant = "")
-  @Mapping(target = "laPStno", constant = "")
+  @Mapping(target = "apStatTp", constant = "0")
+  @Mapping(target = "certCmplt", constant = " ")
+  @Mapping(target = "laPCtynm", constant = " ")
+  @Mapping(target = "laPFstnm", constant = " ")
+  @Mapping(target = "laPLstnm", constant = " ")
+  @Mapping(target = "laPMidnm", constant = " ")
+  @Mapping(target = "laPayeeState", ignore = true) //TODO 15 LP_STATE_C
+  @Mapping(target = "laPStnm", constant = " ")
+  @Mapping(target = "laPStno", constant = " ")
   @Mapping(target = "laPZipno", constant = "0")
   @Mapping(target = "laPZpsfx", constant = "0")
-  @Mapping(target = "laPBsnss", constant = "")
-  @Mapping(target = "apStatDt", constant = "1997-08-25")
+  @Mapping(target = "laPBsnss", constant = " ")
   @Mapping(target = "laPPhNo", constant = "0")
   @Mapping(target = "laPPhEx", constant = "0")
-  @Mapping(target = "adhmonly", constant = "N")
+  @Mapping(target = "adhmonly", constant = " ")
   @Mapping(target = "pyeExtNo", constant = "0")
   @Mapping(target = "pyeTelNo", constant = "0")
   @Mapping(target = "arcassInd", constant = "N")
   @Mapping(target = "comfacInd", constant = "N")
   @Mapping(target = "trnhsgInd", constant = "N")
   @Mapping(target = "trnhsgFac", constant = "N")
-  @Mapping(target = "newlicNo", constant = "")
+  @Mapping(target = "newlicNo", ignore = true)
   @Mapping(target = "newlicUpd", constant = "N")
-  @Mapping(target = "oldfacId", constant = "")
+  @Mapping(target = "oldfacId", ignore = true)
   @Mapping(target = "emCntB", constant = "N")
-  PlacementHome toPlacementHome(RFA1aForm form);
+  @Mapping(target = "endDt", ignore = true)
+  @Mapping(target = "phEndc", ignore = true)
+  @Mapping(target = "endComdsc", ignore = true)
+  PlacementHome toPlacementHome(RFA1aFormDTO form);
+
+  @AfterMapping
+  default void setFacilityName(@MappingTarget PlacementHome placementHome, RFA1aFormDTO form) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(form.getFirstApplicant().getLastName());
+    sb.append(", ");
+    List<String> firstNames = form.getApplicants().stream().map(ApplicantDTO::getFirstName).collect(
+        Collectors.toList());
+    sb.append(StringUtils.join(firstNames, " & "));
+    sb.append(" RFH");
+    placementHome.setFacltyNm(sb.toString());
+  }
+
 
   @Mapping(target = "pkplcHmt", source = "identifier")
   @Mapping(target = "cityNm", expression = "java( placementHome.getCityNm() != null ? placementHome.getCityNm().toUpperCase() : null )")

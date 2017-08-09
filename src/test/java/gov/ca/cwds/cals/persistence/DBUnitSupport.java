@@ -12,6 +12,8 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.RowFilterTable;
+import org.dbunit.dataset.filter.IRowFilter;
 import org.dbunit.dataset.xml.FlatDtdDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 
@@ -117,5 +119,19 @@ public class DBUnitSupport {
     this.schema = schema;
   }
 
+  public ITable filterByColumnAndValue(ITable table, String column, String filterValue)
+      throws DataSetException {
+    IRowFilter rowFilter =
+        rowValueProvider -> {
+          Object columnValue = null;
+          try {
+            columnValue = rowValueProvider.getColumnValue(column);
+          } catch (DataSetException e) {
+            e.printStackTrace();
+          }
+          return columnValue.equals(filterValue);
+        };
+    return new RowFilterTable(table, rowFilter);
+  }
 
 }
