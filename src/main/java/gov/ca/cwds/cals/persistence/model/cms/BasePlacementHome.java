@@ -92,11 +92,9 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
    * LICENSE_STATUS_TYPE - The system generated number assigned to each type of license status for a
    * specific PLACEMENT HOME (e.g., Expired, Pending, Application Denied, Licensed, etc.).
    */
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "LIC_STC", referencedColumnName = "SYS_ID", nullable = false)
-  private LicenseStatus licenseStatus;
+  @Basic
+  @Column(name = "LIC_STC", nullable = false)
+  private Short licStc;
 
   /**
    * ID - A system generated number used to uniquely identify each PLACEMENT_HOME. This ID is
@@ -928,12 +926,12 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
     this.payeeStateCode = payeeStateCode;
   }
 
-  public gov.ca.cwds.cals.persistence.model.cms.LicenseStatus getLicenseStatus() {
-    return licenseStatus;
+  public Short getLicStc() {
+    return licStc;
   }
 
-  public void setLicenseStatus(gov.ca.cwds.cals.persistence.model.cms.LicenseStatus licenseStatus) {
-    this.licenseStatus = licenseStatus;
+  public void setLicStc(Short licStc) {
+    this.licStc = licStc;
   }
 
   public String getIdentifier() {

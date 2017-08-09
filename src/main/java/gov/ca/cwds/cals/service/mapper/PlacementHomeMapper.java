@@ -43,7 +43,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "laVndrId", constant = " ")
   @Mapping(target = "licenseNo", constant = "NULL")
   @Mapping(target = "licCapNo", constant = "0")
-  @Mapping(target = "licenseStatus", ignore = true) //TODO 2 LIC_STC, LicenseStatus
+  @Mapping(target = "licStc", constant = "0")
   @Mapping(target = "licBsnc", constant = "0")
   @Mapping(target = "licnseeNm", constant = " ")
   @Mapping(target = "licensrCd", constant = "NA")
