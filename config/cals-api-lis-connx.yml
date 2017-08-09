@@ -70,7 +70,7 @@ fasDataSourceFactory:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
-      hibernate.default_schema: fas
+      hibernate.default_schema: ${DB_FAS_DEFAULT_SCHEMA:-public}
 
 calsnsDataSourceFactory:
   driverClass: org.postgresql.Driver
