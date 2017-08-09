@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.service.mapper;
 
+import gov.ca.cwds.cals.persistence.dao.cms.DictionaryEntriesHolder;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
-import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
@@ -81,11 +81,11 @@ public interface FacilityMapper {
   @Mapping(target = "assignedWorker", source = "placementHome.countyLicenseCase.staffPerson")
   @Mapping(target = "districtOffice", source = "placementHome.countyLicenseCase.staffPerson.county")
   @Mapping(target = "licenseNumber", source = "placementHome.licenseNo")
-  @Mapping(target = "status", source = "placementHome.licenseStatus")
+  @Mapping(target = "status", source = "dictionaryEntriesHolder.licenseStatus")
   @Mapping(target = "capacity", source = "placementHome.maxCapNo")
   @Mapping(target = "licenseEffectiveDate", source = "placementHome.licEfctdt")
   @Mapping(target = "originalApplicationRecievedDate", source = "placementHome.licAplDt")
-  @Mapping(target = "county", source = "applicationCounty")
+  @Mapping(target = "county", source = "dictionaryEntriesHolder.applicationCounty")
   @Mapping(target = "lastVisitDate", ignore = true)
   @Mapping(target = "lastVisitReason", ignore = true)
   @Mapping(target = "phone", ignore = true)
@@ -94,7 +94,8 @@ public interface FacilityMapper {
   @Mapping(target = "licenseeType", ignore = true)
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "emailAddress", ignore = true)
-  FacilityDTO toFacilityDTO(BasePlacementHome placementHome, County applicationCounty);
+  FacilityDTO toFacilityDTO(BasePlacementHome placementHome,
+      DictionaryEntriesHolder dictionaryEntriesHolder);
 
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "phone", ignore = true)
