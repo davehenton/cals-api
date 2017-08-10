@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
+import gov.ca.cwds.cals.service.CalsNsDictionaryEntriesHolder;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import java.time.LocalDateTime;
@@ -37,7 +37,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "frgAdrtB", constant = "N")
   @Mapping(target = "gndrAcpcd", constant = " ")
   @Mapping(target = "geoRgntcd", constant = " ")
-  @Mapping(target = "gvrEntc", source = "applicationCounty.cwsId")
+  @Mapping(target = "gvrEntc", source = "dictionaryEntriesHolder.applicationCounty.cwsId")
   @Mapping(target = "inhmVstcd", constant = "U")
   @Mapping(target = "maxCapNo", constant = "0")
   @Mapping(target = "laVndrId", constant = " ")
@@ -52,8 +52,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "pyeFstnm", constant = " ")
   @Mapping(target = "pyeLstnm", constant = " ")
   @Mapping(target = "pyeMidnm", constant = " ")
-  @Mapping(target = "payeeStateCode", ignore = true)
-  //TODO 4 P_STATE_C placementHome.setStateCode ????
+  @Mapping(target = "payeeStateCode", constant = "0")
   @Mapping(target = "pstreetNm", constant = " ")
   @Mapping(target = "pstreetNo", constant = " ")
   @Mapping(target = "pZipNo", constant = "0")
@@ -64,8 +63,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "prmTelNo", source = "form.firstApplicant.preferredPhoneNumber.number")
   @Mapping(target = "pvdTrnscd", constant = "U")
   @Mapping(target = "pubTrnscd", constant = "U")
-  @Mapping(target = "stateCode", ignore = true)
-  //TODO 10 -- F_STATE_C residence.addresses[x].type = Residential then residence.addresses[x].state
+  @Mapping(target = "stateCode", source = "dictionaryEntriesHolder.stateCode.cwsId")
   @Mapping(target = "streetNm", source = "form.residence.residentialStreet")
   @Mapping(target = "streetNo", source = "form.residence.residentialStreetNumber")
   @Mapping(target = "zipNo", source = "form.residence.residentialAddress.zip")
@@ -88,7 +86,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "laPFstnm", constant = " ")
   @Mapping(target = "laPLstnm", constant = " ")
   @Mapping(target = "laPMidnm", constant = " ")
-  @Mapping(target = "laPayeeState", ignore = true) //TODO 15 LP_STATE_C
+  @Mapping(target = "laPayeeState", constant = "0")
   @Mapping(target = "laPStnm", constant = " ")
   @Mapping(target = "laPStno", constant = " ")
   @Mapping(target = "laPZipno", constant = "0")
@@ -110,7 +108,8 @@ public interface PlacementHomeMapper {
   @Mapping(target = "endDt", ignore = true)
   @Mapping(target = "phEndc", ignore = true)
   @Mapping(target = "endComdsc", ignore = true)
-  PlacementHome toPlacementHome(RFA1aFormDTO form, CountyType applicationCounty);
+  PlacementHome toPlacementHome(RFA1aFormDTO form,
+      CalsNsDictionaryEntriesHolder dictionaryEntriesHolder);
 
   @AfterMapping
   default void setFacilityName(@MappingTarget PlacementHome placementHome, RFA1aFormDTO form) {

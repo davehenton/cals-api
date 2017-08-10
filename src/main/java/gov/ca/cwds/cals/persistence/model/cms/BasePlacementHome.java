@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Fetch;
@@ -74,19 +73,13 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
    * STATE_CODE_TYPE - The system generated number which identifies the  State where the PLACEMENT
    * HOME is located (e.g.,  California, Texas, Nevada, etc.).
    */
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "F_STATE_C", referencedColumnName = "SYS_ID")
-  private State stateCode;
+  @Basic
+  @Column(name = "F_STATE_C", nullable = false)
+  private Short stateCode;
 
-  /*
-      @NotFound(action = NotFoundAction.IGNORE)
-      @ManyToOne(fetch = FetchType.LAZY)
-      @JoinColumn(name = "P_STATE_C", referencedColumnName = "SYS_ID", nullable = false)
-  */
-  @Transient
-  private State payeeStateCode;
+  @Basic
+  @Column(name = "P_STATE_C", nullable = false)
+  private Short payeeStateCode;
 
   /**
    * LICENSE_STATUS_TYPE - The system generated number assigned to each type of license status for a
@@ -696,12 +689,9 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
    * @Basic
    * @Column(name = "LP_STATE_C", nullable = false) private Short lpStateC;
    */
-
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "LP_STATE_C", referencedColumnName = "SYS_ID")
-  private State laPayeeState;
+  @Basic
+  @Column(name = "LP_STATE_C")
+  private Short laPayeeState;
 
   /**
    * LA_PAYEE_STREET_NAME - The actual name of the street associated with the Designated Payee's
@@ -910,19 +900,19 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
     this.facilityType = facilityType;
   }
 
-  public gov.ca.cwds.cals.persistence.model.cms.State getStateCode() {
+  public Short getStateCode() {
     return stateCode;
   }
 
-  public void setStateCode(gov.ca.cwds.cals.persistence.model.cms.State stateCode) {
+  public void setStateCode(Short stateCode) {
     this.stateCode = stateCode;
   }
 
-  public gov.ca.cwds.cals.persistence.model.cms.State getPayeeStateCode() {
+  public Short getPayeeStateCode() {
     return payeeStateCode;
   }
 
-  public void setPayeeStateCode(gov.ca.cwds.cals.persistence.model.cms.State payeeStateCode) {
+  public void setPayeeStateCode(Short payeeStateCode) {
     this.payeeStateCode = payeeStateCode;
   }
 
@@ -1506,14 +1496,6 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
     this.laPMidnm = laPMidnm;
   }
 
-  public State getLaPayeeState() {
-    return laPayeeState;
-  }
-
-  public void setLaPayeeState(State laPayeeState) {
-    this.laPayeeState = laPayeeState;
-  }
-
   public String getLaPStnm() {
     return laPStnm;
   }
@@ -1714,6 +1696,14 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
 
   public void setGvrEntc(Short gvrEntc) {
     this.gvrEntc = gvrEntc;
+  }
+
+  public Short getLaPayeeState() {
+    return laPayeeState;
+  }
+
+  public void setLaPayeeState(Short laPayeeState) {
+    this.laPayeeState = laPayeeState;
   }
 
   @Override
