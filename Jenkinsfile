@@ -4,6 +4,7 @@ node ('tpt2-slave'){
    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')), disableConcurrentBuilds(), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
    parameters([
       string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
+      string(defaultValue: 'false', description: '', name: 'RELEASE_DOCKER'),
       string(defaultValue: 'development', description: '', name: 'branch'),
       string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory')
       ]), pipelineTriggers([pollSCM('H/5 * * * *')])])
@@ -41,7 +42,7 @@ node ('tpt2-slave'){
 	stage ('Build Docker'){
 	   buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'createDockerImage'
 	   withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
-           buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker'
+           buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker -DReleaseDocker=$RELEASE_DOCKER -DBuildNumber=${env.BUILD_NUMBER}'
        }
 	}
 	stage('Clean Workspace') {
