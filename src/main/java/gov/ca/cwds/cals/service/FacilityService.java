@@ -12,9 +12,9 @@ import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.CountyTypeDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.StateTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.DictionaryEntriesHolder;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
@@ -26,11 +26,10 @@ import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
-import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
@@ -42,6 +41,8 @@ import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
@@ -55,6 +56,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -118,6 +120,9 @@ public class FacilityService implements CrudsService {
   @Inject
   private StateDao stateDao;
 
+  @Inject
+  private StateTypeDao stateTypeDao;
+
   public FacilityService() {
     // default constructor
   }
@@ -180,7 +185,7 @@ public class FacilityService implements CrudsService {
 
   private FacilityDTO loadFacilityFromCwsCms(FacilityParameterObject parameterObject) {
     BasePlacementHome placementHome = findFacilityById(parameterObject);
-    DictionaryEntriesHolder dictionaryEntriesHolder = fillOutCMSDictionaryEntriesHolder(
+    CMSDictionaryEntriesHolder dictionaryEntriesHolder = buildCMSDictionaryEntriesHolder(
         placementHome);
     FacilityDTO facilityDTO = facilityMapper.toFacilityDTO(placementHome, dictionaryEntriesHolder);
 
@@ -207,13 +212,21 @@ public class FacilityService implements CrudsService {
   }
 
   @UnitOfWork(CMS)
-  protected DictionaryEntriesHolder fillOutCMSDictionaryEntriesHolder(
+  protected CMSDictionaryEntriesHolder buildCMSDictionaryEntriesHolder(
       BasePlacementHome placementHome) {
-    DictionaryEntriesHolder dictionaryEntriesHolder = new DictionaryEntriesHolder();
+    CMSDictionaryEntriesHolder dictionaryEntriesHolder = new CMSDictionaryEntriesHolder();
     dictionaryEntriesHolder.setApplicationCounty(
         placementHome.getGvrEntc() != 0 ? countiesDao.find(placementHome.getGvrEntc()) : null);
     dictionaryEntriesHolder.setLicenseStatus(
         placementHome.getLicStc() != 0 ? licenseStatusDao.find(placementHome.getLicStc()) : null);
+    dictionaryEntriesHolder.setStateCode(
+        placementHome.getStateCode() != 0 ? stateDao.find(placementHome.getStateCode()) : null);
+    dictionaryEntriesHolder.setPayeeStateCode(
+        placementHome.getPayeeStateCode() != 0 ? stateDao.find(placementHome.getPayeeStateCode())
+            : null);
+    dictionaryEntriesHolder.setFacilityType(
+        placementHome.getFacilityType() != 0 ? facilityTypeDao.find(placementHome.getFacilityType())
+            : null);
     return dictionaryEntriesHolder;
   }
 
@@ -280,19 +293,14 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(CMS)
   protected BasePlacementHome findFacilityById(FacilityParameterObject parameterObject) {
-    // todo refactor to java8
-    BasePlacementHome placementHome = placementHomeDao.findByParameterObject(parameterObject);
-    if (placementHome != null) {
-      BaseCountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
-      if (countyLicenseCase != null) {
-        BaseStaffPerson staffPerson = countyLicenseCase.getStaffPerson();
-        if (staffPerson != null) {
-          County county = countiesDao.findByLogicalId(staffPerson.getCntySpfcd());
-          staffPerson.setCounty(county);
-        }
-      }
-    }
-    return placementHome;
+    Optional<PlacementHome> placementHome = Optional
+        .of(placementHomeDao.findByParameterObject(parameterObject));
+    Optional<BaseStaffPerson> staffPerson = placementHome
+        .map(PlacementHome::getCountyLicenseCase)
+        .map(BaseCountyLicenseCase::getStaffPerson);
+    staffPerson.ifPresent(
+        person -> person.setCounty(countiesDao.findByLogicalId(person.getCntySpfcd())));
+    return placementHome.orElse(null);
   }
 
   @Override
@@ -311,18 +319,30 @@ public class FacilityService implements CrudsService {
   }
 
   public PlacementHome createPlacementHomeByRfaApplication(RFA1aFormDTO formDTO) {
-    CountyType applicationCounty = loadApplicationCounty(formDTO.getApplicationCounty());
+    CalsNsDictionaryEntriesHolder calsNsDictionaryEntriesHolder = buildCalsNsDictionaryEntriesHolder(
+        formDTO);
     PlacementHome persistedPlacementHome =
-        storePlacementHome(formDTO, applicationCounty);
+        storePlacementHome(formDTO, calsNsDictionaryEntriesHolder);
     storePlacementHomeUc(persistedPlacementHome);
 
     return persistedPlacementHome;
   }
 
   @UnitOfWork(CALSNS)
-  protected CountyType loadApplicationCounty(CountyType applicationCounty) {
-    return countyTypeDao.find(applicationCounty.getPrimaryKey());
+  private CalsNsDictionaryEntriesHolder buildCalsNsDictionaryEntriesHolder(RFA1aFormDTO formDTO) {
+    CalsNsDictionaryEntriesHolder calsNsDictionaryEntriesHolder = new CalsNsDictionaryEntriesHolder();
+    calsNsDictionaryEntriesHolder.setApplicationCounty(formDTO.getApplicationCounty() != null
+        ? countyTypeDao.find(formDTO.getApplicationCounty().getPrimaryKey()) : null);
+    Optional<Serializable> stateTypeId =
+        Optional.of(formDTO.getResidence())
+            .map(ResidenceDTO::getResidentialAddress)
+            .map(RFAAddressDTO::getState)
+            .map(StateType::getPrimaryKey);
+    calsNsDictionaryEntriesHolder.setStateCode(
+        stateTypeId.map(serializable -> stateTypeDao.find(serializable)).orElse(null));
+    return calsNsDictionaryEntriesHolder;
   }
+
 
   @UnitOfWork(CMS)
   protected PlacementHomeUc storePlacementHomeUc(PlacementHome persistedPlacementHome) {
@@ -336,12 +356,10 @@ public class FacilityService implements CrudsService {
   }
 
   @UnitOfWork(CMS)
-  protected PlacementHome storePlacementHome(RFA1aFormDTO form, CountyType applicationCounty) {
-    PlacementHome placementHome = placementHomeMapper.toPlacementHome(form, applicationCounty);
-    /*TODO Fix below*/
-    placementHome.setFacilityType(facilityTypeDao.findAll().get(0));
-    placementHome.setStateCode(stateDao.findAll().get(0));
-    placementHome.setLaPayeeState(stateDao.findAll().get(0));
+  protected PlacementHome storePlacementHome(RFA1aFormDTO form,
+      CalsNsDictionaryEntriesHolder dictionaryEntriesHolder) {
+    PlacementHome placementHome = placementHomeMapper
+        .toPlacementHome(form, dictionaryEntriesHolder);
     return placementHomeDao.create(placementHome);
   }
 }
