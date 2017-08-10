@@ -5,6 +5,7 @@ node ('tpt2-slave'){
    parameters([
       string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
       string(defaultValue: 'development', description: '', name: 'branch'),
+      booleanParam(defaultValue: false, description: '', name: 'RELEASE_DOCKER'),
       string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory')
       ]), pipelineTriggers([pollSCM('H/5 * * * *')])])
   try {
