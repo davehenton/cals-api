@@ -56,7 +56,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "pstreetNm", constant = " ")
   @Mapping(target = "pstreetNo", constant = " ")
   @Mapping(target = "pZipNo", constant = "0")
-  @Mapping(target = "facilityType", ignore = true) //TODO 5 PLC_FCLC - facility type
+  @Mapping(target = "facilityType", constant = "6914")
   @Mapping(target = "prmCnctnm", expression = "java(form.getFirstApplicant().getFirstName() + \" \" + form.getFirstApplicant().getLastName())")
   @Mapping(target = "prmExtNo", source = "form.firstApplicant.preferredPhoneNumber.extension")
   @Mapping(target = "prmSubsnm", source = "form.firstApplicant.applicantFullName")

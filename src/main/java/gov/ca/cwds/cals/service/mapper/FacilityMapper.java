@@ -77,7 +77,7 @@ public interface FacilityMapper {
   @Mapping(target = "lastDeferredVisitDate", ignore = true)
   @Mapping(target = "id", source = "placementHome.identifier")
   @Mapping(target = "name", source = "placementHome.facltyNm")
-  @Mapping(target = "type", source = "placementHome.facilityType")
+  @Mapping(target = "type", source = "dictionaryEntriesHolder.facilityType")
   @Mapping(target = "licenseeName", source = "placementHome.licnseeNm")
   @Mapping(target = "assignedWorker", source = "placementHome.countyLicenseCase.staffPerson")
   @Mapping(target = "districtOffice", source = "placementHome.countyLicenseCase.staffPerson.county")

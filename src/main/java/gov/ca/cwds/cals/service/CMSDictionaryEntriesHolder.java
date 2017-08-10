@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service;
 
 import gov.ca.cwds.cals.persistence.model.cms.County;
+import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
 import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.cms.State;
 
@@ -14,6 +15,7 @@ public class CMSDictionaryEntriesHolder {
   private LicenseStatus licenseStatus;
   private State stateCode;
   private State payeeStateCode;
+  private FacilityType facilityType;
 
   public County getApplicationCounty() {
     return applicationCounty;
@@ -45,5 +47,13 @@ public class CMSDictionaryEntriesHolder {
 
   public void setPayeeStateCode(State payeeStateCode) {
     this.payeeStateCode = payeeStateCode;
+  }
+
+  public FacilityType getFacilityType() {
+    return facilityType;
+  }
+
+  public void setFacilityType(FacilityType facilityType) {
+    this.facilityType = facilityType;
   }
 }

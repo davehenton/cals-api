@@ -30,7 +30,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
-import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
@@ -225,6 +224,9 @@ public class FacilityService implements CrudsService {
     dictionaryEntriesHolder.setPayeeStateCode(
         placementHome.getPayeeStateCode() != 0 ? stateDao.find(placementHome.getPayeeStateCode())
             : null);
+    dictionaryEntriesHolder.setFacilityType(
+        placementHome.getFacilityType() != 0 ? facilityTypeDao.find(placementHome.getFacilityType())
+            : null);
     return dictionaryEntriesHolder;
   }
 
@@ -291,19 +293,14 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(CMS)
   protected BasePlacementHome findFacilityById(FacilityParameterObject parameterObject) {
-    // todo refactor to java8
-    BasePlacementHome placementHome = placementHomeDao.findByParameterObject(parameterObject);
-    if (placementHome != null) {
-      BaseCountyLicenseCase countyLicenseCase = placementHome.getCountyLicenseCase();
-      if (countyLicenseCase != null) {
-        BaseStaffPerson staffPerson = countyLicenseCase.getStaffPerson();
-        if (staffPerson != null) {
-          County county = countiesDao.findByLogicalId(staffPerson.getCntySpfcd());
-          staffPerson.setCounty(county);
-        }
-      }
-    }
-    return placementHome;
+    Optional<PlacementHome> placementHome = Optional
+        .of(placementHomeDao.findByParameterObject(parameterObject));
+    Optional<BaseStaffPerson> staffPerson = placementHome
+        .map(PlacementHome::getCountyLicenseCase)
+        .map(BaseCountyLicenseCase::getStaffPerson);
+    staffPerson.ifPresent(
+        person -> person.setCounty(countiesDao.findByLogicalId(person.getCntySpfcd())));
+    return placementHome.orElse(null);
   }
 
   @Override
@@ -363,8 +360,6 @@ public class FacilityService implements CrudsService {
       CalsNsDictionaryEntriesHolder dictionaryEntriesHolder) {
     PlacementHome placementHome = placementHomeMapper
         .toPlacementHome(form, dictionaryEntriesHolder);
-    /*TODO Fix below*/
-    placementHome.setFacilityType(facilityTypeDao.findAll().get(0));
     return placementHomeDao.create(placementHome);
   }
 }

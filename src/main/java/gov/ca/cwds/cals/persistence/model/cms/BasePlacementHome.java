@@ -54,11 +54,9 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
    * facility which can be used for OUT OF HOME PLACEMENT (e.g., Foster Family Agency, Licensed
    * Foster Family Home, Relative Home, Small Family Home, Group Home, etc.).
    */
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "PLC_FCLC", referencedColumnName = "SYS_ID")
-  private FacilityType facilityType;
+  @Basic
+  @Column(name = "PLC_FCLC", nullable = false)
+  private Short facilityType;
 
   /**
    * GOVERNMENT_ENTITY_TYPE - The system generated number which represents the  specific county
@@ -892,11 +890,11 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
   @JoinColumn(name = "FKPLC_HM_T")
   private List<OtherChildrenInPlacementHome> otherChildrenInPlacementHomes;
 
-  public FacilityType getFacilityType() {
+  public Short getFacilityType() {
     return facilityType;
   }
 
-  public void setFacilityType(FacilityType facilityType) {
+  public void setFacilityType(Short facilityType) {
     this.facilityType = facilityType;
   }
 
