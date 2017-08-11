@@ -30,10 +30,10 @@ project.ext {
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
     projectMajorVersion = '3.5'
-    projectVersion = projectMajorVersion + '-SNAPSHOT'
+    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.27.378'
-    calsModelVersion = '3.5-SNAPSHOT'
+    calsModelVersion = '3.5'
     mapstructVersion = '1.1.0.Final'
     droolsVersion = '7.1.0.Final'
     dbunitVersion = '2.5.0'
