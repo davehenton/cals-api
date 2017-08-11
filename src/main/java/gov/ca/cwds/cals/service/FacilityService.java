@@ -319,13 +319,8 @@ public class FacilityService implements CrudsService {
   }
 
   public PlacementHome createPlacementHomeByRfaApplication(RFA1aFormDTO formDTO) {
-    CalsNsDictionaryEntriesHolder calsNsDictionaryEntriesHolder = buildCalsNsDictionaryEntriesHolder(
-        formDTO);
-    PlacementHome persistedPlacementHome =
-        storePlacementHome(formDTO, calsNsDictionaryEntriesHolder);
-    storePlacementHomeUc(persistedPlacementHome);
-
-    return persistedPlacementHome;
+    CalsNsDictionaryEntriesHolder dictionariesHolder = buildCalsNsDictionaryEntriesHolder(formDTO);
+    return storePlacementHome(formDTO, dictionariesHolder);
   }
 
   @UnitOfWork(CALSNS)
@@ -343,11 +338,18 @@ public class FacilityService implements CrudsService {
     return calsNsDictionaryEntriesHolder;
   }
 
-
   @UnitOfWork(CMS)
-  protected PlacementHomeUc storePlacementHomeUc(PlacementHome persistedPlacementHome) {
-    PlacementHomeUc placementHomeUc = placementHomeMapper.toPlacementHomeUc(persistedPlacementHome);
+  protected PlacementHome storePlacementHome(RFA1aFormDTO form,
+      CalsNsDictionaryEntriesHolder dictionariesHolder) {
+    PlacementHome placementHome = placementHomeMapper.toPlacementHome(form, dictionariesHolder);
+    placementHome.setIdentifier(Utils.Id.generate());
+    PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
+    storePlacementHomeUc(storedPlacementHome);
+    return storedPlacementHome;
+  }
 
+  private PlacementHomeUc storePlacementHomeUc(PlacementHome persistedPlacementHome) {
+    PlacementHomeUc placementHomeUc = placementHomeMapper.toPlacementHomeUc(persistedPlacementHome);
     placementHomeUc.setLstUpdId(Id.getStaffPersonId());
     placementHomeUc.setLstUpdTs(LocalDateTime.now());
     placementHomeUc.setPkplcHmt(persistedPlacementHome.getIdentifier());
@@ -355,11 +357,4 @@ public class FacilityService implements CrudsService {
     return placementHomeUcDao.create(placementHomeUc);
   }
 
-  @UnitOfWork(CMS)
-  protected PlacementHome storePlacementHome(RFA1aFormDTO form,
-      CalsNsDictionaryEntriesHolder dictionaryEntriesHolder) {
-    PlacementHome placementHome = placementHomeMapper
-        .toPlacementHome(form, dictionaryEntriesHolder);
-    return placementHomeDao.create(placementHome);
-  }
 }
