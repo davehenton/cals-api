@@ -15,6 +15,10 @@ import gov.ca.cwds.cals.service.mapper.FacilityTypeMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityTypeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapperImpl;
+import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapperImpl;
+import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
@@ -40,6 +44,10 @@ public class MappingModule extends AbstractModule {
         bind(FacilityTypeMapper.class).to(FacilityTypeMapperImpl.class).asEagerSingleton();
 
         bind(RFA1aFormMapper.class).to(RFA1aFormMapperImpl.class).asEagerSingleton();
+        bind(OtherChildrenInPlacementHomeMapper.class)
+            .to(OtherChildrenInPlacementHomeMapperImpl.class).asEagerSingleton();
+        bind(OtherAdultsInPlacementHomeMapper.class).to(OtherAdultsInPlacementHomeMapperImpl.class)
+            .asEagerSingleton();
     }
 
 }

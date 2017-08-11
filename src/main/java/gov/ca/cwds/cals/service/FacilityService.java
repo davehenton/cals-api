@@ -17,6 +17,8 @@ import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
+import gov.ca.cwds.cals.persistence.dao.cms.OtherAdultsInPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.OtherChildrenInPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeUcDao;
 import gov.ca.cwds.cals.persistence.dao.cms.StateDao;
@@ -30,6 +32,8 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
@@ -40,12 +44,16 @@ import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
+import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.api.Request;
@@ -85,6 +93,12 @@ public class FacilityService implements CrudsService {
   private PlacementHomeUcDao placementHomeUcDao;
 
   @Inject
+  private OtherChildrenInPlacementHomeDao otherChildrenDao;
+
+  @Inject
+  private OtherAdultsInPlacementHomeDao otherAdultDao;
+
+  @Inject
   private CountiesDao countiesDao;
 
   @Inject
@@ -101,6 +115,12 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private FacilityChildMapper facilityChildMapper;
+
+  @Inject
+  private OtherChildrenInPlacementHomeMapper otherChildMapper;
+
+  @Inject
+  private OtherAdultsInPlacementHomeMapper otherAdultMapper;
 
   @Inject
   private ClientDao clientDao;
@@ -345,6 +365,10 @@ public class FacilityService implements CrudsService {
     placementHome.setIdentifier(Utils.Id.generate());
     PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
     storePlacementHomeUc(storedPlacementHome);
+
+    storeOtherChildren(form, storedPlacementHome);
+    storeOtherAdults(form, storedPlacementHome);
+
     return storedPlacementHome;
   }
 
@@ -355,6 +379,37 @@ public class FacilityService implements CrudsService {
     placementHomeUc.setPkplcHmt(persistedPlacementHome.getIdentifier());
 
     return placementHomeUcDao.create(placementHomeUc);
+  }
+
+  private void storeOtherChildren(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
+    List<MinorChildDTO> minorChildren = form.getMinorChildren();
+
+    minorChildren.forEach(minorChildDTO -> {
+      OtherChildrenInPlacementHome otherChild = otherChildMapper.toOtherChild(minorChildDTO);
+      otherChildMapper.toOtherChild(otherChild, minorChildDTO.getGender());
+
+      otherChild.setIdentifier(Utils.Id.generate());
+      otherChild.setLstUpdId(Id.getStaffPersonId());
+      otherChild.setLstUpdTs(LocalDateTime.now());
+      otherChild.setFkplcHmT(persistedPlacementHome.getIdentifier());
+
+      otherChildrenDao.create(otherChild);
+    });
+  }
+
+  private void storeOtherAdults(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
+    List<OtherAdultDTO> otherAdults = form.getOtherAdults();
+
+    otherAdults.forEach(otherAdultDTO -> {
+      OtherAdultsInPlacementHome otherAdult = otherAdultMapper.toOtherAdult(otherAdultDTO);
+
+      otherAdult.setIdentifier(Utils.Id.generate());
+      otherAdult.setLstUpdId(Id.getStaffPersonId());
+      otherAdult.setLstUpdTs(LocalDateTime.now());
+      otherAdult.setFkplcHmT(persistedPlacementHome.getIdentifier());
+
+      otherAdultDao.create(otherAdult);
+    });
   }
 
 }
