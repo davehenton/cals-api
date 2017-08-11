@@ -16,8 +16,7 @@ public class CalsNsDictionaryEntriesHolder {
     return applicationCounty;
   }
 
-  public void setApplicationCounty(
-      CountyType applicationCounty) {
+  public void setApplicationCounty(CountyType applicationCounty) {
     this.applicationCounty = applicationCounty;
   }
 

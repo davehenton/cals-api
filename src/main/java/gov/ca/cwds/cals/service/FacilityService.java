@@ -41,8 +41,6 @@ import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
@@ -333,13 +331,9 @@ public class FacilityService implements CrudsService {
     CalsNsDictionaryEntriesHolder calsNsDictionaryEntriesHolder = new CalsNsDictionaryEntriesHolder();
     calsNsDictionaryEntriesHolder.setApplicationCounty(formDTO.getApplicationCounty() != null
         ? countyTypeDao.find(formDTO.getApplicationCounty().getPrimaryKey()) : null);
-    Optional<Serializable> stateTypeId =
-        Optional.of(formDTO.getResidence())
-            .map(ResidenceDTO::getResidentialAddress)
-            .map(RFAAddressDTO::getState)
-            .map(StateType::getPrimaryKey);
-    calsNsDictionaryEntriesHolder.setStateCode(
-        stateTypeId.map(serializable -> stateTypeDao.find(serializable)).orElse(null));
+    Long stateTypeId = Utils.Id.getResidentialStateId(formDTO.getResidence());
+    StateType stateType = Optional.ofNullable(stateTypeDao.find(stateTypeId)).orElse(null);
+    calsNsDictionaryEntriesHolder.setStateCode(stateType);
     return calsNsDictionaryEntriesHolder;
   }
 

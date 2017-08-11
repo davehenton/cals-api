@@ -12,6 +12,8 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,25 +33,25 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   private CountyType applicationCounty;
 
   @ApiModelProperty(example = "true")
-  private boolean livedInOtherState;
+  private Boolean livedInOtherState;
 
   @CheckReferentialIntegrityForEach
   private List<StateType> otherStatesOfLiving;
 
   @ApiModelProperty(example = "false")
-  private boolean convictedInCalifornia;
+  private Boolean convictedInCalifornia;
 
   @ApiModelProperty(example = "false")
-  private boolean convictedInAnotherState;
+  private Boolean convictedInAnotherState;
 
   @ApiModelProperty(example = "false")
-  private boolean arrestedForCrime;
+  private Boolean arrestedForCrime;
 
   @ApiModelProperty(example = "Peterson")
   private String resourceFamilyName;
 
   @ApiModelProperty(example = "123")
-  private boolean rfa1aApplicantId;
+  private Long rfa1aApplicantId;
 
   @ApiModelProperty(value = "Prefix")
   @CheckReferentialIntegrity
@@ -98,16 +100,15 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     return applicationCounty;
   }
 
-  public void setApplicationCounty(
-      CountyType applicationCounty) {
+  public void setApplicationCounty(CountyType applicationCounty) {
     this.applicationCounty = applicationCounty;
   }
 
-  public boolean isLivedInOtherState() {
+  public Boolean isLivedInOtherState() {
     return livedInOtherState;
   }
 
-  public void setLivedInOtherState(boolean livedInOtherState) {
+  public void setLivedInOtherState(Boolean livedInOtherState) {
     this.livedInOtherState = livedInOtherState;
   }
 
@@ -120,27 +121,27 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     this.otherStatesOfLiving = otherStatesOfLiving;
   }
 
-  public boolean isConvictedInCalifornia() {
+  public Boolean isConvictedInCalifornia() {
     return convictedInCalifornia;
   }
 
-  public void setConvictedInCalifornia(boolean convictedInCalifornia) {
+  public void setConvictedInCalifornia(Boolean convictedInCalifornia) {
     this.convictedInCalifornia = convictedInCalifornia;
   }
 
-  public boolean isConvictedInAnotherState() {
+  public Boolean isConvictedInAnotherState() {
     return convictedInAnotherState;
   }
 
-  public void setConvictedInAnotherState(boolean convictedInAnotherState) {
+  public void setConvictedInAnotherState(Boolean convictedInAnotherState) {
     this.convictedInAnotherState = convictedInAnotherState;
   }
 
-  public boolean isArrestedForCrime() {
+  public Boolean isArrestedForCrime() {
     return arrestedForCrime;
   }
 
-  public void setArrestedForCrime(boolean arrestedForCrime) {
+  public void setArrestedForCrime(Boolean arrestedForCrime) {
     this.arrestedForCrime = arrestedForCrime;
   }
 
@@ -152,11 +153,11 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     this.resourceFamilyName = resourceFamilyName;
   }
 
-  public boolean isRfa1aApplicantId() {
+  public Long getRfa1aApplicantId() {
     return rfa1aApplicantId;
   }
 
-  public void setRfa1aApplicantId(boolean rfa1aApplicantId) {
+  public void setRfa1aApplicantId(Long rfa1aApplicantId) {
     this.rfa1aApplicantId = rfa1aApplicantId;
   }
 
@@ -164,8 +165,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     return applicantNamePrefix;
   }
 
-  public void setApplicantNamePrefix(
-      NamePrefixType applicantNamePrefix) {
+  public void setApplicantNamePrefix(NamePrefixType applicantNamePrefix) {
     this.applicantNamePrefix = applicantNamePrefix;
   }
 
@@ -229,8 +229,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     return driverLicenseState;
   }
 
-  public void setDriverLicenseState(
-      StateType driverLicenseState) {
+  public void setDriverLicenseState(StateType driverLicenseState) {
     this.driverLicenseState = driverLicenseState;
   }
 
@@ -254,8 +253,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     return disclosures;
   }
 
-  public void setDisclosures(
-      List<DisclosureDTO> disclosures) {
+  public void setDisclosures(List<DisclosureDTO> disclosures) {
     this.disclosures = disclosures;
   }
 
@@ -263,8 +261,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     return applicantNameSuffix;
   }
 
-  public void setApplicantNameSuffix(
-      NameSuffixType applicantNameSuffix) {
+  public void setApplicantNameSuffix(NameSuffixType applicantNameSuffix) {
     this.applicantNameSuffix = applicantNameSuffix;
   }
 }
