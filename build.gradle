@@ -1,6 +1,8 @@
-import static org.gradle.api.logging.LogLevel.*
-import org.apache.tools.ant.filters.ReplaceTokens
 import org.apache.tools.ant.filters.FixCrLfFilter
+import org.apache.tools.ant.filters.ReplaceTokens
+
+import static org.gradle.api.logging.LogLevel.INFO
+
 
 buildscript {
     repositories {
@@ -27,7 +29,8 @@ project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
-    projectVersion = '3.5-SNAPSHOT'
+    projectMajorVersion = '3.5'
+    projectVersion = projectMajorVersion + '-SNAPSHOT'
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.27.378'
     calsModelVersion = '3.5-SNAPSHOT'
@@ -189,7 +192,6 @@ jar {
     }
 }
 
-def dockerTag = projectVersion + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
 
 task integrationTest(type: Test, dependsOn: testClasses) {
     // URL where integration tests will be pointed to (may change it in gradle.properties)
@@ -213,11 +215,25 @@ task copyDist(type: Copy, dependsOn: shadowJar) {
     into 'build/docker/libs'
 }
 
+
+def releaseDocker = System.getProperty("ReleaseDocker")
+def buildNumber = System.getProperty('BuildNumber')
+def dockerTag = (releaseDocker == 'true' && buildNumber != null  ? projectMajorVersion + '-' + buildNumber : projectVersion )
+
+task readArguments() {
+    doLast{
+        println "ReleaseDocker: " + releaseDocker
+        println "Build: " + buildNumber
+        println "Docker Tag: " + dockerTag
+    }
+}
+
+
 task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
     dockerfile = "Dockerfile"
     project.group = projectDockerGroup
     applicationName = projectDockerAppName
-    tagVersion = version + ((System.properties.getProperty('build') != null ) ? '.' + System.properties.getProperty('build') : '')
+    tagVersion = dockerTag
 }
 
 task createDockerImage(type:Exec, dependsOn: [convertEntrypointToLF, shadowJar]) {

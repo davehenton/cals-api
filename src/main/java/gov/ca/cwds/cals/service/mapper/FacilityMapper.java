@@ -7,6 +7,7 @@ import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
+import gov.ca.cwds.cals.service.CMSDictionaryEntriesHolder;
 import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -73,18 +75,18 @@ public interface FacilityMapper {
   @Mapping(target = "visits", ignore = true)
   @Mapping(target = "lastDeferredVisitReason", ignore = true)
   @Mapping(target = "lastDeferredVisitDate", ignore = true)
-  @Mapping(target = "id", source = "identifier")
-  @Mapping(target = "name", source = "facltyNm")
-  @Mapping(target = "type", source = "facilityType")
-  @Mapping(target = "licenseeName", source = "licnseeNm")
-  @Mapping(target = "assignedWorker", source = "countyLicenseCase.staffPerson")
-  @Mapping(target = "districtOffice", source = "countyLicenseCase.staffPerson.county")
-  @Mapping(target = "licenseNumber", source = "licenseNo")
-  @Mapping(target = "status", source = "licenseStatus")
-  @Mapping(target = "capacity", source = "maxCapNo")
-  @Mapping(target = "licenseEffectiveDate", source = "licEfctdt")
-  @Mapping(target = "originalApplicationRecievedDate", source = "licAplDt")
-  @Mapping(target = "county", source = "county")
+  @Mapping(target = "id", source = "placementHome.identifier")
+  @Mapping(target = "name", source = "placementHome.facltyNm")
+  @Mapping(target = "type", source = "dictionaryEntriesHolder.facilityType")
+  @Mapping(target = "licenseeName", source = "placementHome.licnseeNm")
+  @Mapping(target = "assignedWorker", source = "placementHome.countyLicenseCase.staffPerson")
+  @Mapping(target = "districtOffice", source = "placementHome.countyLicenseCase.staffPerson.county")
+  @Mapping(target = "licenseNumber", source = "placementHome.licenseNo")
+  @Mapping(target = "status", source = "dictionaryEntriesHolder.licenseStatus")
+  @Mapping(target = "capacity", source = "placementHome.maxCapNo")
+  @Mapping(target = "licenseEffectiveDate", source = "placementHome.licEfctdt")
+  @Mapping(target = "originalApplicationRecievedDate", source = "placementHome.licAplDt")
+  @Mapping(target = "county", source = "dictionaryEntriesHolder.applicationCounty")
   @Mapping(target = "lastVisitDate", ignore = true)
   @Mapping(target = "lastVisitReason", ignore = true)
   @Mapping(target = "phone", ignore = true)
@@ -93,7 +95,8 @@ public interface FacilityMapper {
   @Mapping(target = "licenseeType", ignore = true)
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "emailAddress", ignore = true)
-  FacilityDTO toFacilityDTO(BasePlacementHome placementHome);
+  FacilityDTO toFacilityDTO(BasePlacementHome placementHome,
+      CMSDictionaryEntriesHolder dictionaryEntriesHolder);
 
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "phone", ignore = true)
@@ -129,8 +132,11 @@ public interface FacilityMapper {
       List<ComplaintReportLic802> complaints);
 
   @AfterMapping
-  default void after(@MappingTarget FacilityDTO facilityDTO, BasePlacementHome placementHome) {
-    afterAddresses(facilityDTO, placementHome);
+  default void after(
+      @MappingTarget FacilityDTO facilityDTO,
+      BasePlacementHome placementHome,
+      CMSDictionaryEntriesHolder dictionaryEntriesHolder) {
+    afterAddresses(facilityDTO, placementHome, dictionaryEntriesHolder);
     afterPhones(facilityDTO, placementHome);
     afterLastVisit(facilityDTO, placementHome.getCountyLicenseCase());
   }
@@ -146,21 +152,38 @@ public interface FacilityMapper {
   }
 
   default void afterAddresses(@MappingTarget FacilityDTO facilityDTO,
-      BasePlacementHome placementHome) {
+      BasePlacementHome placementHome,
+      CMSDictionaryEntriesHolder dictionaryEntriesHolder) {
     List<FacilityAddressDTO> facilityAddressDTOs = new ArrayList<>(2);
 
     FacilityAddressMapper facilityAddressMapper = Mappers.getMapper(FacilityAddressMapper.class);
 
-    FacilityAddressDTO residentialAddress = facilityAddressMapper
-        .toResidentialAddress(placementHome);
-    if (residentialAddress != null) {
+    Integer residentialZipCode = placementHome.getZipNo();
+    Short residentialZipSuffix = placementHome.getZipSfxNo();
+    if (StringUtils
+        .isNoneBlank(placementHome.getStreetNo(), placementHome.getStreetNm(),
+            placementHome.getCityNm())
+        || residentialZipCode > 0
+        || residentialZipSuffix > 0) {
+      FacilityAddressDTO residentialAddress = facilityAddressMapper
+          .toResidentialAddress(placementHome, dictionaryEntriesHolder);
+      facilityAddressMapper
+          .afterMapping(residentialAddress, placementHome, dictionaryEntriesHolder);
       facilityAddressDTOs.add(residentialAddress);
     }
 
-    FacilityAddressDTO mailingAddress = facilityAddressMapper.toMailAddress(placementHome);
-    if (mailingAddress != null) {
+    Integer mailZipCode = placementHome.getpZipNo();
+    Short mailZipSuffix = placementHome.getPyZipSfx();
+    if (StringUtils.isNoneBlank(placementHome.getPstreetNo(), placementHome.getPstreetNm(),
+        placementHome.getpCityNm())
+        || mailZipCode > 0
+        || mailZipSuffix > 0) {
+      FacilityAddressDTO mailingAddress = facilityAddressMapper
+          .toMailAddress(placementHome, dictionaryEntriesHolder);
+      facilityAddressMapper.afterMapping(mailingAddress, placementHome, dictionaryEntriesHolder);
       facilityAddressDTOs.add(mailingAddress);
     }
+
     facilityDTO.setAddress(facilityAddressDTOs);
   }
 

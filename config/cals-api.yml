@@ -43,7 +43,7 @@ lisDataSourceFactory:
   user: ${DB_LIS_USER:-postgres_data}
   password: ${DB_LIS_PASSWORD:-postgres_data}
   url: ${DB_LIS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
-  validationQuery: "/* MyService Health Check */ SELECT 1"
+  validationQuery: "select count(*) from ${DB_LIS_SCHEMA:-lis}.lis_fac_file"
   logValidationErrors: true
   initialSize: ${DB_LIS_CP_INITIAL_SIZE:-2}
   minSize: ${DB_LIS_CP_MIN_SIZE:-2}
@@ -53,14 +53,14 @@ lisDataSourceFactory:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
-      hibernate.default_schema: lis
+      hibernate.default_schema: ${DB_LIS_SCHEMA:-lis}
 
 fasDataSourceFactory:
   driverClass: org.postgresql.Driver
   user: ${DB_FAS_USER:-postgres_data}
   password: ${DB_FAS_PASSWORD:-postgres_data}
   url: ${DB_FAS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
-  validationQuery: "/* MyService Health Check */ SELECT 1"
+  validationQuery: "select count(*) from ${DB_FAS_DEFAULT_SCHEMA:-fas}.facility_info_lis"
   logValidationErrors: true
   initialSize: ${DB_FAS_CP_INITIAL_SIZE:-2}
   minSize: ${DB_FAS_CP_MIN_SIZE:-2}
@@ -94,7 +94,7 @@ calsnsDataSourceFactory:
   user: ${DB_NS_USER:-postgres_data}
   password: ${DB_NS_PASSWORD:-postgres_data}
   url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
-  validationQuery: "/* MyService Health Check */ SELECT 1"
+  validationQuery: "select count(*) from ${DB_NS_DEFAULT_SCHEMA:-calsns}.rfa_1a"
   logValidationErrors: true
   initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
   minSize: ${DB_NS_CP_MIN_SIZE:-2}
@@ -104,7 +104,7 @@ calsnsDataSourceFactory:
       hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.JsonbSupportPostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
-      hibernate.default_schema: calsns
+      hibernate.default_schema: ${DB_NS_DEFAULT_SCHEMA:-calsns}
       hibernate.cache.use_second_level_cache: true
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       hibernate.cache.use_query_cache: true
@@ -116,7 +116,7 @@ cmsDataSourceFactory:
   user: ${DB_CMS_USER:-db2inst1}
   password: ${DB_CMS_PASSWORD:-db2inst1-pwd}
   url: ${DB_CMS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/DB0TDEV}
-  validationQuery: "/* MyService Health Check */ SELECT 1 FROM sysibm.sysdummy1 for read only"
+  validationQuery: "select count(*) from ${DB_CMS_SCHEMA:-CWSCMS}.PLC_HM_T"
   logValidationErrors: true
   initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
   minSize: ${DB_CMS_CP_MIN_SIZE:-2}

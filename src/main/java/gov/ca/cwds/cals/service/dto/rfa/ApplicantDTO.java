@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto.rfa;
 import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
@@ -19,6 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -210,4 +212,19 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   public void setNameSuffix(NameSuffixType nameSuffix) {
     this.nameSuffix = nameSuffix;
   }
+
+  @JsonIgnore
+  public PhoneDTO getPreferredPhoneNumber() {
+    Optional<PhoneDTO> preferredPhoneNumber = this.phones.stream().filter(PhoneDTO::isPreferred)
+        .findAny();
+    return preferredPhoneNumber.orElse(phones.get(0));
+  }
+
+  @JsonIgnore
+  public String getApplicantFullName() {
+    String prefix = this.namePrefix != null ? this.namePrefix.getValue() : "";
+    String suffix = this.nameSuffix != null ? this.nameSuffix.getValue() : "";
+    return prefix + " " + firstName + " " + middleName + " " + lastName + " " + suffix;
+  }
+
 }

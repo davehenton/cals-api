@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Fetch;
@@ -55,50 +54,38 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
    * facility which can be used for OUT OF HOME PLACEMENT (e.g., Foster Family Agency, Licensed
    * Foster Family Home, Relative Home, Small Family Home, Group Home, etc.).
    */
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "PLC_FCLC", referencedColumnName = "SYS_ID")
-  private FacilityType facilityType;
+  @Basic
+  @Column(name = "PLC_FCLC", nullable = false)
+  private Short facilityType;
 
   /**
    * GOVERNMENT_ENTITY_TYPE - The system generated number which represents the  specific county
    * (e.g., Yolo, Butte, Fresno, etc.)  within the state of California where the PLACEMENT HOME is
    * located.
    */
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "GVR_ENTC", referencedColumnName = "SYS_ID")
-  private County county;
+  @Basic
+  @Column(name = "GVR_ENTC", nullable = false)
+  private Short gvrEntc;
 
   /**
    * STATE_CODE_TYPE - The system generated number which identifies the  State where the PLACEMENT
    * HOME is located (e.g.,  California, Texas, Nevada, etc.).
    */
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "F_STATE_C", referencedColumnName = "SYS_ID")
-  private State stateCode;
+  @Basic
+  @Column(name = "F_STATE_C", nullable = false)
+  private Short stateCode;
 
-  /*
-      @NotFound(action = NotFoundAction.IGNORE)
-      @ManyToOne(fetch = FetchType.LAZY)
-      @JoinColumn(name = "P_STATE_C", referencedColumnName = "SYS_ID", nullable = false)
-  */
-  @Transient
-  private State payeeStateCode;
+  @Basic
+  @Column(name = "P_STATE_C", nullable = false)
+  private Short payeeStateCode;
 
   /**
    * LICENSE_STATUS_TYPE - The system generated number assigned to each type of license status for a
    * specific PLACEMENT HOME (e.g., Expired, Pending, Application Denied, Licensed, etc.).
    */
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "LIC_STC", referencedColumnName = "SYS_ID", nullable = false)
-  private LicenseStatus licenseStatus;
+  @Basic
+  @Column(name = "LIC_STC", nullable = false)
+  private Short licStc;
 
   /**
    * ID - A system generated number used to uniquely identify each PLACEMENT_HOME. This ID is
@@ -700,12 +687,9 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
    * @Basic
    * @Column(name = "LP_STATE_C", nullable = false) private Short lpStateC;
    */
-
-  @NotFound(action = NotFoundAction.IGNORE)
-  @ManyToOne
-  @Fetch(FetchMode.SELECT)
-  @JoinColumn(name = "LP_STATE_C", referencedColumnName = "SYS_ID")
-  private State laPayeeState;
+  @Basic
+  @Column(name = "LP_STATE_C")
+  private Short laPayeeState;
 
   /**
    * LA_PAYEE_STREET_NAME - The actual name of the street associated with the Designated Payee's
@@ -906,44 +890,36 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
   @JoinColumn(name = "FKPLC_HM_T")
   private List<OtherChildrenInPlacementHome> otherChildrenInPlacementHomes;
 
-  public FacilityType getFacilityType() {
+  public Short getFacilityType() {
     return facilityType;
   }
 
-  public void setFacilityType(FacilityType facilityType) {
+  public void setFacilityType(Short facilityType) {
     this.facilityType = facilityType;
   }
 
-  public County getCounty() {
-    return county;
-  }
-
-  public void setCounty(County county) {
-    this.county = county;
-  }
-
-  public gov.ca.cwds.cals.persistence.model.cms.State getStateCode() {
+  public Short getStateCode() {
     return stateCode;
   }
 
-  public void setStateCode(gov.ca.cwds.cals.persistence.model.cms.State stateCode) {
+  public void setStateCode(Short stateCode) {
     this.stateCode = stateCode;
   }
 
-  public gov.ca.cwds.cals.persistence.model.cms.State getPayeeStateCode() {
+  public Short getPayeeStateCode() {
     return payeeStateCode;
   }
 
-  public void setPayeeStateCode(gov.ca.cwds.cals.persistence.model.cms.State payeeStateCode) {
+  public void setPayeeStateCode(Short payeeStateCode) {
     this.payeeStateCode = payeeStateCode;
   }
 
-  public gov.ca.cwds.cals.persistence.model.cms.LicenseStatus getLicenseStatus() {
-    return licenseStatus;
+  public Short getLicStc() {
+    return licStc;
   }
 
-  public void setLicenseStatus(gov.ca.cwds.cals.persistence.model.cms.LicenseStatus licenseStatus) {
-    this.licenseStatus = licenseStatus;
+  public void setLicStc(Short licStc) {
+    this.licStc = licStc;
   }
 
   public String getIdentifier() {
@@ -1518,14 +1494,6 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
     this.laPMidnm = laPMidnm;
   }
 
-  public State getLaPayeeState() {
-    return laPayeeState;
-  }
-
-  public void setLaPayeeState(State laPayeeState) {
-    this.laPayeeState = laPayeeState;
-  }
-
   public String getLaPStnm() {
     return laPStnm;
   }
@@ -1718,6 +1686,22 @@ public abstract class BasePlacementHome implements IBasePlacementHome, Persisten
   public void setOtherChildrenInPlacementHomes(
       List<OtherChildrenInPlacementHome> otherChildrenInPlacementHomes) {
     this.otherChildrenInPlacementHomes = otherChildrenInPlacementHomes;
+  }
+
+  public Short getGvrEntc() {
+    return gvrEntc;
+  }
+
+  public void setGvrEntc(Short gvrEntc) {
+    this.gvrEntc = gvrEntc;
+  }
+
+  public Short getLaPayeeState() {
+    return laPayeeState;
+  }
+
+  public void setLaPayeeState(Short laPayeeState) {
+    this.laPayeeState = laPayeeState;
   }
 
   @Override

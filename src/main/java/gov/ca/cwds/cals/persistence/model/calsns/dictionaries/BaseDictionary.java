@@ -6,6 +6,7 @@ import gov.ca.cwds.data.persistence.PersistentObject;
 import gov.ca.cwds.rest.api.Request;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,7 @@ import javax.validation.constraints.Size;
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
+@Cacheable
 public abstract class BaseDictionary extends BaseDTO implements PersistentObject, Request {
 
   private static final long serialVersionUID = 1405907682848102125L;
