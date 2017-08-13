@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.persistence.model.cms;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -44,7 +44,7 @@ public class PlacementHomeInformation implements PersistentObject {
    */
   @Basic
   @Column(name = "START_DT", nullable = false)
-  private Date startDt;
+  private LocalDate startDt;
 
   /**
    * END_DATE - The date the SUBSTITUTE CARE PROVIDER terminates his/her association with the
@@ -52,7 +52,7 @@ public class PlacementHomeInformation implements PersistentObject {
    */
   @Basic
   @Column(name = "END_DT", nullable = true)
-  private Date endDt;
+  private LocalDate endDt;
 
   /**
    * LICENSEE_CODE - Indicates whether this person holds the LICENSE for this PLACEMENT HOME (who
@@ -129,19 +129,19 @@ public class PlacementHomeInformation implements PersistentObject {
     this.thirdId = thirdId;
   }
 
-  public Date getStartDt() {
+  public LocalDate getStartDt() {
     return startDt;
   }
 
-  public void setStartDt(Date startDt) {
+  public void setStartDt(LocalDate startDt) {
     this.startDt = startDt;
   }
 
-  public Date getEndDt() {
+  public LocalDate getEndDt() {
     return endDt;
   }
 
-  public void setEndDt(Date endDt) {
+  public void setEndDt(LocalDate endDt) {
     this.endDt = endDt;
   }
 

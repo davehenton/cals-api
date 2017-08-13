@@ -12,6 +12,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
@@ -59,9 +60,7 @@ public class RFAHelper {
   }
 
   public ApplicantDTO createValidApplicant() throws IOException {
-    ApplicantDTO applicantDTO = clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
-    return applicantDTO;
+    return clientTestRule.getMapper().readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
   }
 
   public ApplicantDTO postApplicant(long formId, ApplicantDTO applicantDTO) {
@@ -120,5 +119,17 @@ public class RFAHelper {
     phone.setPreferred(false);
     phone.setPhoneType(phoneType);
     return phone;
+  }
+
+  public RFA1bFormDTO getRfa1bForm() throws IOException {
+    return clientTestRule.getMapper().readValue(fixture(RFA1bResourceTest.RFA1B_FORM_FIXTURE_PATH), RFA1bFormDTO.class);
+  }
+
+  public RFA1bFormDTO postRfa1bForm(Long formId, RFA1bFormDTO rfa1bFormDTO) {
+    WebTarget target =
+        clientTestRule.target(
+            API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1B_FORMS);
+    return target.request(MediaType.APPLICATION_JSON).post(
+        Entity.entity(rfa1bFormDTO, MediaType.APPLICATION_JSON_TYPE), RFA1bFormDTO.class);
   }
 }

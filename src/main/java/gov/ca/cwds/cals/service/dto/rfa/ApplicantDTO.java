@@ -102,7 +102,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   }
 
   public String getMiddleName() {
-    return middleName.substring(0, 1);
+    return middleName;
   }
 
   public void setMiddleName(String middleName) {

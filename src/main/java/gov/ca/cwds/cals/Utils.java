@@ -1,25 +1,21 @@
 package gov.ca.cwds.cals;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.service.dto.AddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.commons.lang3.CharSequenceUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+
+import java.util.List;
+import java.util.Optional;
+
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  * @author CALS API Team
@@ -56,16 +52,13 @@ public final class Utils {
       return number;
     }
 
-    public Phone() {
+    private Phone() {
     }
   }
 
   public static class Id {
 
     public static final String DEFAULT_USER_ID = "0X5";
-
-    private Id() {
-    }
 
     public static String generate() {
       return CmsKeyIdGenerator.generate(getStaffPersonId());
@@ -87,29 +80,35 @@ public final class Utils {
       return staffPersonId;
     }
 
-    public static Long getResidentialStateId(ResidenceDTO residenceDTO) {
-      Optional<Serializable> stateTypeId =
-          Optional.of(residenceDTO)
-              .map(ResidenceDTO::getResidentialAddress)
-              .map(RFAAddressDTO::getState)
-              .map(StateType::getPrimaryKey);
-
-      return (Long) stateTypeId.orElse(null);
+    private Id() {
     }
   }
 
   public static class Address {
-    public static String getStreetNumber(AddressDTO addressDTO) {
+
+    public static RFAAddressDTO getByType(RFA1aFormDTO rfa1aFormDTO, String type) {
+      ResidenceDTO residence = rfa1aFormDTO.getResidence();
+      if (residence == null) {
+        return null;
+      }
+      Optional<RFAAddressDTO> address =
+          residence.getAddresses()
+              .stream()
+              .filter(a -> type.equals(a.getType().getValue()))
+              .findAny();
+      return address.orElse(null);
+    }
+
+    public static String getStreetNumber(RFAAddressDTO addressDTO) {
       String[] numberAndName = StringUtils.split(addressDTO.getStreetAddress(), null, 2);
       String number = numberAndName[0];
       if (!StringUtils.isNumeric(number)) {
         number = null;
       }
       return number;
-
     }
 
-    public static String getStreetName(AddressDTO addressDTO) {
+    public static String getStreetName(RFAAddressDTO addressDTO) {
       String[] numberAndName = StringUtils.split(addressDTO.getStreetAddress(), null, 2);
       return numberAndName[numberAndName.length - 1];
     }

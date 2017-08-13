@@ -1,0 +1,13 @@
+<!DOCTYPE dataset SYSTEM "$schemaPath">
+<dataset>
+  <SBPVD_UC
+    CA_DLIC_NO=""
+    FIRST_NM="ANNA"
+    LAST_NM="SMITH"
+  />
+  <SBPVD_UC
+    CA_DLIC_NO=""
+    FIRST_NM="JOHN"
+    LAST_NM="SMITH"
+  />
+</dataset>

@@ -22,7 +22,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
  */
 public class DBUnitSupport {
 
-  private String drivaerClassName;
+  private String driverClassName;
   private String jdbcUrl;
   private String dbUser;
   private String dbPassword;
@@ -34,14 +34,14 @@ public class DBUnitSupport {
 
   void init() {
     try {
-      Class driverClass = Class.forName(drivaerClassName);
+      Class.forName(driverClassName);
     } catch (ClassNotFoundException e) {
       throw new IllegalArgumentException(e);
     }
   }
 
   private IDatabaseConnection getConnection() throws DatabaseUnitException {
-    Connection jdbcConnection = null;
+    Connection jdbcConnection;
     try {
       jdbcConnection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
     } catch (SQLException e) {
@@ -99,8 +99,8 @@ public class DBUnitSupport {
     return getTableFromDataSet(xmlDataSet, tableName);
   }
 
-  void setDrivaerClassName(String drivaerClassName) {
-    this.drivaerClassName = drivaerClassName;
+  void setDriverClassName(String driverClassName) {
+    this.driverClassName = driverClassName;
   }
 
   void setJdbcUrl(String jdbcUrl) {

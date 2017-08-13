@@ -12,7 +12,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @Valid
   private RFAAddressDTO residenceAddress;
 
-  @ApiModelProperty(example = "464-94-2323")
+  @ApiModelProperty(example = "464942323")
   private String ssn;
 
   @ApiModelProperty(example = "1981-12-26")
