@@ -50,7 +50,7 @@ public class DBUnitSupport {
     return new DatabaseConnection(jdbcConnection, schema);
   }
 
-  protected ITable getTableFromDataSet(IDataSet dataSet, String table) {
+  public ITable getTableFromDataSet(IDataSet dataSet, String table) {
     try {
       return dataSet.getTable(table);
     } catch (DatabaseUnitException e) {
@@ -67,7 +67,7 @@ public class DBUnitSupport {
     }
   }
 
-  protected IDataSet getXMLDataSet(String dataSetXMLFile) {
+  public IDataSet getXMLDataSet(String dataSetXMLFile) {
     URL datasetURL = getClass().getResource(dataSetXMLFile);
     try {
       return new FlatXmlDataSetBuilder().build(datasetURL);

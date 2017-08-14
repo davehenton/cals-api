@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.dbunit.Assertion;
-import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -67,25 +67,22 @@ public class DBUnitAssertHelper {
   }
 
   public void assertEqualsIgnoreCols(String[] ignoreCols) throws Exception {
-    ReplacementDataSet expectedDataset = getReplacementDataset(fixture);
+    try (InputStream is = IOUtils.toInputStream(fixture, "UTF-8")) {
+      ReplacementDataSet expectedDataset = new ReplacementDataSet(new FlatXmlDataSetBuilder().build(is));
+      expectedDataset.addReplacementObject("[NULL]", null);
+      ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataset, tableName);
+      ITable actualData = dbUnitSupport.getTableFromDB(tableName);
+      if (filter != null) {
+        actualData = dbUnitSupport.filterByColumnAndValue(
+            actualData, filter.getFilterColumnName(), filter.getFilterColumnValue());
+      }
 
-    ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataset, tableName);
-    ITable actualData = dbUnitSupport.getTableFromDB(tableName);
-    if (filter != null) {
-      actualData = getRow(actualData, filter.getFilterColumnName(), filter.getFilterColumnValue());
+      Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
     }
-
-    Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
   }
 
-  public ITable getRow(ITable actualData, String filterColumnName, String filterColumnValue) throws DataSetException {
-    actualData = dbUnitSupport.filterByColumnAndValue(actualData, filterColumnName, filterColumnValue);
-    return actualData;
-  }
-
-  public ReplacementDataSet getReplacementDataset(String fixture) throws Exception {
-    InputStream is = IOUtils.toInputStream(fixture, "UTF-8");
-    ReplacementDataSet replacementDataSet = new ReplacementDataSet(new FlatXmlDataSetBuilder().build(is));
+  public static ReplacementDataSet getReplacementDataset(IDataSet dataSet) throws Exception {
+    ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
     replacementDataSet.addReplacementObject("[NULL]", null);
     return replacementDataSet;
   }
