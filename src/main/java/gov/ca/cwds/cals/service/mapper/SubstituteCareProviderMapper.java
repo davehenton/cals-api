@@ -8,19 +8,19 @@ import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper(imports = {StringUtils.class, LocalDate.class, LocalDateTime.class, Utils.class})
 public interface SubstituteCareProviderMapper {
+
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
   @Mapping(target = "addTelNo", constant = "0")
   @Mapping(target = "addExtNo", constant = "0")
@@ -207,7 +207,8 @@ public interface SubstituteCareProviderMapper {
   @Mapping(target = "cdsPrsn", constant = " ")
   @Mapping(target = "scprvdInd", source = "scprvdInd")
   PlacementHomeInformation toPlacementHomeInformation(
-      PlacementHome placementHome, SubstituteCareProvider substituteCareProvider, String prprvdrCd, String scprvdInd);
+      PlacementHome placementHome, SubstituteCareProvider substituteCareProvider, String prprvdrCd,
+      String scprvdInd);
 
   @Mapping(target = "pksbPvdrt", source = "identifier")
 //  @Mapping(target = "caDlicNo", expression = "java(StringUtils.upperCase(applicantDTO.getDriverLicenseNumber()))") //todo 8 chars but have 13 (MD123G3333232)

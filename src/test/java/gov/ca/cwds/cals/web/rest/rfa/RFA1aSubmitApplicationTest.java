@@ -5,6 +5,7 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.ca.cwds.cals.Constants;
@@ -13,6 +14,8 @@ import gov.ca.cwds.cals.persistence.DBUnitAssertHelper;
 import gov.ca.cwds.cals.persistence.DBUnitSupport;
 import gov.ca.cwds.cals.persistence.DBUnitSupportBuilder;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
@@ -22,6 +25,7 @@ import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -106,6 +110,9 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     rfa1bForm.setRfa1aApplicantId(applicantDTO.getId());
     rfaHelper.postRfa1bForm(form.getId(), rfa1bForm);
 
+    List<OtherAdultDTO> otherAdultDTOs = rfaHelper.createOtherAdults(form.getId());
+    List<MinorChildDTO> minorChildDTOs = rfaHelper.createMinorChildren(form.getId());
+
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
@@ -120,6 +127,9 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     testIfPlacementHomeInformationWasCreatedProperly(form.getPlacementHomeId());
     testIfSubstituteCareProviderWasCreatedProperly();
     testIfSubstituteCareProviderUCWasCreatedProperly();
+
+    testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId(), otherAdultDTOs);
+    testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId(), minorChildDTOs);
   }
 
   private void testIfPlacementHomeWasCreatedProperly(String placementHomeId) throws Exception {
@@ -171,7 +181,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .assertEqualsIgnoreCols(new String[]{"PKPLC_HMT", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
-  private void testIfPlacementHomeInformationWasCreatedProperly(String placementHomeId) throws Exception {
+  private void testIfPlacementHomeInformationWasCreatedProperly(String placementHomeId)
+      throws Exception {
     DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
     dbUnitAssertHelper.setTableName("HM_SCP_T");
     Map<String, Object> parameters = new HashMap<>();
@@ -186,7 +197,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     dbUnitAssertHelper.setTableName("SB_PVDRT");
     dbUnitAssertHelper.addFixture("/dbunit/SubstituteCareProvider.xml");
     dbUnitAssertHelper.assertEqualsIgnoreCols(
-        new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS", "LST_UPD_ID", "LIS_PER_ID", "ETH_UD_CD", "HISP_UD_CD",
+        new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS", "LST_UPD_ID", "LIS_PER_ID",
+            "ETH_UD_CD", "HISP_UD_CD",
             "PASSBC_CD"});
   }
 
@@ -197,6 +209,28 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     dbUnitAssertHelper.assertEqualsIgnoreCols(
         new String[]{"PKSB_PVDRT", "LST_UPD_ID", "LST_UPD_TS"});
   }
+
+  private void testIfOtherAdultsWasCreatedProperly(String placementHomeId,
+      List<OtherAdultDTO> otherAdultDTOS) throws Exception {
+    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
+    dbUnitAssertHelper.setTableName("OTH_ADLT");
+    dbUnitAssertHelper.addFixture("/dbunit/OtherAdultsInPlacementHome.xml");
+    dbUnitAssertHelper.addFilter("FKPLC_HM_T", placementHomeId);
+    fail();
+  }
+
+  private void testIfOtherChildrenWasCreatedProperly(String placementHomeId,
+      List<MinorChildDTO> minorChildDTOs) throws Exception {
+    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
+    dbUnitAssertHelper.setTableName("OTH_KIDT");
+    dbUnitAssertHelper.addFixture("/dbunit/SubstituteCareProviderUC.xml");
+    dbUnitAssertHelper.addFilter("IDENTIFIER", placementHomeId);
+
+    fail();
+  }
+
+
+
 
   @Test
   public void unChangedDraftStatusTest() throws Exception {
@@ -262,12 +296,14 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   private ResidenceDTO getResidenceDTO() throws IOException {
     String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
-    return clientTestRule.getMapper().readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
+    return clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
   }
 
   private ApplicantDTO getApplicantDTO() throws IOException {
     String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
-    return clientTestRule.getMapper().readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
+    return clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
   }
 
 }

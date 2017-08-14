@@ -66,7 +66,8 @@ public class DBUnitAssertHelper {
 
   public void assertEqualsIgnoreCols(String[] ignoreCols) throws Exception {
     try (InputStream is = IOUtils.toInputStream(fixture, "UTF-8")) {
-      ReplacementDataSet expectedDataset = new ReplacementDataSet(new FlatXmlDataSetBuilder().build(is));
+      ReplacementDataSet expectedDataset = new ReplacementDataSet(
+          new FlatXmlDataSetBuilder().build(is));
       expectedDataset.addReplacementObject("[NULL]", null);
       ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataset, tableName);
       ITable actualData = dbUnitSupport.getTableFromDB(tableName);

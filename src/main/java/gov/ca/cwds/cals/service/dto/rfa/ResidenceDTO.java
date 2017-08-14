@@ -117,7 +117,8 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
     return otherPeopleUsingResidenceAsMailing;
   }
 
-  public void setOtherPeopleUsingResidenceAsMailing(Set<PersonNameDTO> otherPeopleUsingResidenceAsMailing) {
+  public void setOtherPeopleUsingResidenceAsMailing(
+      Set<PersonNameDTO> otherPeopleUsingResidenceAsMailing) {
     this.otherPeopleUsingResidenceAsMailing = otherPeopleUsingResidenceAsMailing;
   }
 

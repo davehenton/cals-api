@@ -11,8 +11,8 @@ import org.hibernate.SessionFactory;
  */
 public class SubstituteCareProviderDao extends BaseDaoImpl<SubstituteCareProvider> {
 
-@Inject
-public SubstituteCareProviderDao(@CmsSessionFactory SessionFactory sessionFactory) {
+  @Inject
+  public SubstituteCareProviderDao(@CmsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
-    }
-    }
+  }
+}

@@ -44,7 +44,8 @@ public class MappingModule extends AbstractModule {
         bind(ComplaintMapper.class).to(ComplaintMapperImpl.class).asEagerSingleton();
         bind(CountyMapper.class).to(CountyMapperImpl.class).asEagerSingleton();
         bind(FacilityTypeMapper.class).to(FacilityTypeMapperImpl.class).asEagerSingleton();
-        bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapperImpl.class).asEagerSingleton();
+        bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapperImpl.class)
+            .asEagerSingleton();
 
         bind(RFA1aFormMapper.class).to(RFA1aFormMapperImpl.class).asEagerSingleton();
         bind(OtherChildrenInPlacementHomeMapper.class)

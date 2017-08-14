@@ -1,5 +1,12 @@
 package gov.ca.cwds.cals.service;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
+import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
+
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
@@ -34,9 +41,9 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
@@ -68,7 +75,6 @@ import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
-
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -77,13 +83,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
-import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 /**
  * CRUD service for {@link gov.ca.cwds.cals.service.dto.FacilityDTO}
@@ -385,14 +384,17 @@ public class FacilityService implements CrudsService {
         id -> Optional.ofNullable(countyTypeDao.find(id)).ifPresent(formDTO::setApplicationCounty)
     );
 
-    List<ApplicantDTO> applicants = Optional.ofNullable(formDTO.getApplicants()).orElse(Collections.emptyList());
+    List<ApplicantDTO> applicants = Optional.ofNullable(formDTO.getApplicants())
+        .orElse(Collections.emptyList());
     for (ApplicantDTO applicantDTO : applicants) {
       Optional.ofNullable(applicantDTO.getGender()).map(GenderType::getId).ifPresent(
           id -> Optional.ofNullable(genderTypeDao.find(id)).ifPresent(applicantDTO::setGender)
       );
-      Optional.ofNullable(applicantDTO.getHighestEducationLevel()).map(EducationLevelType::getId).ifPresent(
-          id -> Optional.ofNullable(educationLevelTypeDao.find(id)).ifPresent(applicantDTO::setHighestEducationLevel)
-      );
+      Optional.ofNullable(applicantDTO.getHighestEducationLevel()).map(EducationLevelType::getId)
+          .ifPresent(
+              id -> Optional.ofNullable(educationLevelTypeDao.find(id))
+                  .ifPresent(applicantDTO::setHighestEducationLevel)
+          );
     }
 
     List<RFAAddressDTO> addresses = Optional.ofNullable(formDTO.getResidence())
@@ -412,45 +414,18 @@ public class FacilityService implements CrudsService {
 
     placementHome.setIdentifier(Utils.Id.generate());
     PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
+
     storePlacementHomeUc(storedPlacementHome);
 
-    List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants()).orElse(Collections.emptyList());
-    for (int i = 0; i < applicants.size(); i++) {
-      ApplicantDTO applicantDTO = applicants.get(i);
-      SubstituteCareProvider substituteCareProvider =
-          substituteCareProviderMapper.toSubstituteCareProvider(applicantDTO);
-
-      RFA1bFormDTO bForm = get1BForm(form, applicantDTO);
-      substituteCareProviderMapper.toSubstituteCareProvider(substituteCareProvider, bForm);
-
-      RFAAddressDTO residentialAddress = Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL);
-      substituteCareProviderMapper.toSubstituteCareProviderFromResidentialAddress(
-          substituteCareProvider, residentialAddress);
-
-      RFAAddressDTO mailingAddress = Utils.Address.getByType(form, Constants.AddressTypes.MAIL);
-      substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
-          substituteCareProvider, mailingAddress);
-
-      SubstituteCareProvider storedSubstituteCareProvider = substituteCareProviderDao.create(substituteCareProvider);
-
-      String prprvdrCd = i == 0 ? "Y" : "N";
-      String scprvdInd = i == 0 ? "N" : "Y";
-      PlacementHomeInformation placementHomeInformation = substituteCareProviderMapper.toPlacementHomeInformation(
-          storedPlacementHome, substituteCareProvider, prprvdrCd, scprvdInd);
-
-      placementHomeInformationDao.create(placementHomeInformation);
-
-      SubstituteCareProviderUc substituteCareProviderUc = substituteCareProviderMapper.toSubstituteCareProviderUC(
-          storedSubstituteCareProvider.getIdentifier(), applicantDTO);
-
-      substituteCareProviderUCDao.create(substituteCareProviderUc);
-    }
+    storeSubstituteCareProvider(form, storedPlacementHome);
 
     storeOtherChildren(form, storedPlacementHome);
+
     storeOtherAdults(form, storedPlacementHome);
 
     return storedPlacementHome;
   }
+
 
   RFA1bFormDTO get1BForm(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
     List<RFA1bFormDTO> rfa1bForms = form.getRfa1bForms();
@@ -471,6 +446,45 @@ public class FacilityService implements CrudsService {
     placementHomeUc.setPkplcHmt(persistedPlacementHome.getIdentifier());
 
     return placementHomeUcDao.create(placementHomeUc);
+  }
+
+  private void storeSubstituteCareProvider(RFA1aFormDTO form, PlacementHome storedPlacementHome) {
+    List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
+        .orElse(Collections.emptyList());
+    for (int i = 0; i < applicants.size(); i++) {
+      ApplicantDTO applicantDTO = applicants.get(i);
+      SubstituteCareProvider substituteCareProvider =
+          substituteCareProviderMapper.toSubstituteCareProvider(applicantDTO);
+
+      RFA1bFormDTO bForm = get1BForm(form, applicantDTO);
+      substituteCareProviderMapper.toSubstituteCareProvider(substituteCareProvider, bForm);
+
+      RFAAddressDTO residentialAddress = Utils.Address
+          .getByType(form, Constants.AddressTypes.RESIDENTIAL);
+      substituteCareProviderMapper.toSubstituteCareProviderFromResidentialAddress(
+          substituteCareProvider, residentialAddress);
+
+      RFAAddressDTO mailingAddress = Utils.Address.getByType(form, Constants.AddressTypes.MAIL);
+      substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
+          substituteCareProvider, mailingAddress);
+
+      SubstituteCareProvider storedSubstituteCareProvider = substituteCareProviderDao
+          .create(substituteCareProvider);
+
+      String prprvdrCd = i == 0 ? "Y" : "N";
+      String scprvdInd = i == 0 ? "N" : "Y";
+      PlacementHomeInformation placementHomeInformation = substituteCareProviderMapper
+          .toPlacementHomeInformation(
+              storedPlacementHome, substituteCareProvider, prprvdrCd, scprvdInd);
+
+      placementHomeInformationDao.create(placementHomeInformation);
+
+      SubstituteCareProviderUc substituteCareProviderUc = substituteCareProviderMapper
+          .toSubstituteCareProviderUC(
+              storedSubstituteCareProvider.getIdentifier(), applicantDTO);
+
+      substituteCareProviderUCDao.create(substituteCareProviderUc);
+    }
   }
 
   private void storeOtherChildren(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
