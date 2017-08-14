@@ -279,7 +279,7 @@ processResources {
 
 publishing {
     publications {
-        library(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
             groupId projectGroup
             artifactId rootProject.name
