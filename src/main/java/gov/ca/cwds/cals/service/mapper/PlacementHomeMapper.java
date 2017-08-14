@@ -19,7 +19,7 @@ import org.mapstruct.MappingTarget;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = {LocalDateTime.class, Utils.class})
+@Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class})
 public interface PlacementHomeMapper {
 
   @Mapping(target = "identifier", source = "form.placementHomeId")
@@ -126,14 +126,14 @@ public interface PlacementHomeMapper {
 
 
   @Mapping(target = "pkplcHmt", source = "identifier")
-  @Mapping(target = "cityNm", expression = "java( placementHome.getCityNm() != null ? placementHome.getCityNm().toUpperCase() : null )")
-  @Mapping(target = "geoRgntcd", expression = "java( placementHome.getGeoRgntcd() != null ? placementHome.getGeoRgntcd().toUpperCase(): null )")
-  @Mapping(target = "laVndrId", expression = "java( placementHome.getLaVndrId() != null ? placementHome.getLaVndrId().toUpperCase() : null  )")
+  @Mapping(target = "cityNm", expression = "java(StringUtils.upperCase(placementHome.getCityNm()))")
+  @Mapping(target = "geoRgntcd", expression = "java(StringUtils.upperCase(placementHome.getGeoRgntcd()))")
+  @Mapping(target = "laVndrId", expression = "java(StringUtils.upperCase(placementHome.getLaVndrId()))")
   @Mapping(target = "lstUpdId", ignore = true)
   @Mapping(target = "lstUpdTs", ignore = true)
-  @Mapping(target = "licenseNo", expression = "java( placementHome.getLicenseNo() != null ? placementHome.getLicenseNo().toUpperCase() : null )")
-  @Mapping(target = "facltyNm", expression = "java( placementHome.getFacltyNm() != null ? placementHome.getFacltyNm().toUpperCase() : null )")
-  @Mapping(target = "streetNo", expression = "java( placementHome.getStreetNo() != null ? placementHome.getStreetNo().toUpperCase() : null )")
-  @Mapping(target = "streetNm", expression = "java( placementHome.getStreetNm() != null ? placementHome.getStreetNm().toUpperCase() : null )")
+  @Mapping(target = "licenseNo", expression = "java(StringUtils.upperCase(placementHome.getLicenseNo()))")
+  @Mapping(target = "facltyNm", expression = "java(StringUtils.upperCase(placementHome.getFacltyNm()))")
+  @Mapping(target = "streetNo", expression = "java(StringUtils.upperCase(placementHome.getStreetNo()))")
+  @Mapping(target = "streetNm", expression = "java(StringUtils.upperCase(placementHome.getStreetNm()))")
   PlacementHomeUc toPlacementHomeUc(PlacementHome placementHome);
 }
