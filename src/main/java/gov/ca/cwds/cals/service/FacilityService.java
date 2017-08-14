@@ -355,12 +355,12 @@ public class FacilityService implements CrudsService {
   }
 
   public PlacementHome createPlacementHomeByRfaApplication(RFA1aFormDTO formDTO) {
-    CalsNsDictionaryEntriesHolder dictionariesHolder = buildCalsNsDictionaryEntriesHolder(formDTO);
-    return storePlacementHome(formDTO, dictionariesHolder);
+    enrichDictionaryEntries(formDTO);
+    return storePlacementHome(formDTO);
   }
 
   @UnitOfWork(CALSNS)
-  private CalsNsDictionaryEntriesHolder buildCalsNsDictionaryEntriesHolder(RFA1aFormDTO formDTO) {
+  private void enrichDictionaryEntries(RFA1aFormDTO formDTO) {
     Optional.ofNullable(formDTO.getApplicationCounty()).map(CountyType::getId).ifPresent(
         id -> Optional.ofNullable(countyTypeDao.find(id)).ifPresent(formDTO::setApplicationCounty)
     );
@@ -383,24 +383,13 @@ public class FacilityService implements CrudsService {
           id -> Optional.ofNullable(stateTypeDao.find(id)).ifPresent(address::setState)
       );
     }
-
-    CalsNsDictionaryEntriesHolder calsNsDictionaryEntriesHolder = new CalsNsDictionaryEntriesHolder();
-    calsNsDictionaryEntriesHolder.setApplicationCounty(formDTO.getApplicationCounty() != null
-        ? countyTypeDao.find(formDTO.getApplicationCounty().getPrimaryKey()) : null);
-    Optional<Serializable> stateTypeId =
-        Optional.of(formDTO.getResidence())
-            .map(ResidenceDTO::getResidentialAddress)
-            .map(RFAAddressDTO::getState)
-            .map(StateType::getPrimaryKey);
-    calsNsDictionaryEntriesHolder.setStateCode(
-        stateTypeId.map(serializable -> stateTypeDao.find(serializable)).orElse(null));
-    return calsNsDictionaryEntriesHolder;
   }
 
   @UnitOfWork(CMS)
-  protected PlacementHome storePlacementHome(RFA1aFormDTO form,
-      CalsNsDictionaryEntriesHolder dictionariesHolder) {
-    PlacementHome placementHome = placementHomeMapper.toPlacementHome(form, dictionariesHolder);
+  protected PlacementHome storePlacementHome(RFA1aFormDTO form) {
+    PlacementHome placementHome = placementHomeMapper.toPlacementHome(
+        form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));
+
     placementHome.setIdentifier(Utils.Id.generate());
     PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
     storePlacementHomeUc(storedPlacementHome);
