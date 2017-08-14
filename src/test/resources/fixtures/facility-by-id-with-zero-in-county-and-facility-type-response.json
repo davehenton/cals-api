@@ -26,7 +26,7 @@
     "number" : "9164578228"
   } ],
   "addresses" : [ {
-    "type" : "residential",
+    "type" : "Residential",
     "address" : {
       "street_address" : "2114 H St.",
       "city" : "Sacramento",
@@ -35,7 +35,7 @@
       "zip_suffix_code" : "0"
     }
   }, {
-    "type" : "mail",
+    "type" : "Mailing",
     "address" : {
       "street_address" : "2114 H St.",
       "state": "CA",

@@ -1,0 +1,19 @@
+<!DOCTYPE dataset SYSTEM "$schemaPath">
+<dataset>
+  <OTH_ADLT
+    IDENTIFIER="idntfr"
+    BIRTH_DT=""
+    END_DT=""
+    GENDER_CD=""
+    OTH_ADLTNM=""
+    START_DT=""
+    LST_UPD_ID=""
+    LST_UPD_TS=""
+    FKPLC_HM_T="plcmntHmId"
+    COMNT_DSC=""
+    OTH_ADL_CD=""
+    IDENTFD_DT=""
+    RESOST_IND=""
+    PASSBC_CD=""
+  />
+</dataset>

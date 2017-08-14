@@ -21,6 +21,8 @@ import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapperImpl;
+import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
+import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapperImpl;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapperImpl;
 
@@ -42,6 +44,7 @@ public class MappingModule extends AbstractModule {
         bind(ComplaintMapper.class).to(ComplaintMapperImpl.class).asEagerSingleton();
         bind(CountyMapper.class).to(CountyMapperImpl.class).asEagerSingleton();
         bind(FacilityTypeMapper.class).to(FacilityTypeMapperImpl.class).asEagerSingleton();
+        bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapperImpl.class).asEagerSingleton();
 
         bind(RFA1aFormMapper.class).to(RFA1aFormMapperImpl.class).asEagerSingleton();
         bind(OtherChildrenInPlacementHomeMapper.class)

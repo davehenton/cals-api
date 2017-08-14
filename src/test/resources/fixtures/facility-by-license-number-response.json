@@ -31,7 +31,7 @@
     "number" : "2092340660"
   } ],
   "addresses" : [ {
-    "type" : "residential",
+    "type" : "Residential",
     "address" : {
       "street_address" : "87 SW. LAKEWOOD AVE.",
       "city" : "NATIONAL CITY",
@@ -39,7 +39,7 @@
       "zip_code" : "91950"
     }
   }, {
-    "type" : "mail",
+    "type" : "Mailing",
     "address" : {
       "street_address" : "87 SW. LAKEWOOD AVE.",
       "city" : "NATIONAL CITY",

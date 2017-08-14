@@ -13,6 +13,8 @@ import javax.ws.rs.core.GenericType;
 @SuppressWarnings("squid:S2187")
 public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
 
+  public static final String RFA1B_FORM_FIXTURE_PATH = "fixtures/rfa/rfa-1b-form.json";
+
   @Override
   protected BaseExternalEntityApiHelper<RFA1bFormDTO> getExternalEntityApiHelper() {
 
@@ -22,7 +24,7 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
 
           @Override
           protected String getCreateFixture() {
-            return "fixtures/rfa/rfa-1b-form.json";
+            return RFA1B_FORM_FIXTURE_PATH;
           }
 
           @Override
