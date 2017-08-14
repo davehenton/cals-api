@@ -29,11 +29,11 @@ project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
-    projectMajorVersion = '3.5'
+    projectMajorVersion = '3.6'
     projectVersion = projectMajorVersion + '-SNAPSHOT'
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.27.378'
-    calsModelVersion = '3.5-SNAPSHOT'
+    calsModelVersion = '3.6-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     droolsVersion = '7.1.0.Final'
     dbunitVersion = '2.5.0'
@@ -218,7 +218,7 @@ task copyDist(type: Copy, dependsOn: shadowJar) {
 
 def releaseDocker = System.getProperty("ReleaseDocker")
 def buildNumber = System.getProperty('BuildNumber')
-def dockerTag = (releaseDocker == 'true' && buildNumber != null  ? projectMajorVersion + '-' + buildNumber : projectVersion )
+def dockerTag = (releaseDocker == 'true' && buildNumber != null  ? projectMajorVersion + '_' + buildNumber + '-rc' : projectVersion )
 
 task readArguments() {
     doLast{
