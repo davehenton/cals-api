@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals;
 
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
@@ -81,6 +82,21 @@ public final class Utils {
     }
 
     private Id() {
+    }
+  }
+
+  public static class Applicant {
+    public static String getCaliforniaDriverLicense(ApplicantDTO applicant, String defaultValue) {
+      if (applicant.getDriverLicenseState() != null) {
+        Long stateId = applicant.getDriverLicenseState().getId();
+        if (Constants.StateTypes.CALIFORNIA_STATE_ID.equals(stateId)) {
+          return applicant.getDriverLicenseNumber();
+        }
+      }
+      return defaultValue;
+    }
+
+    private Applicant() {
     }
   }
 

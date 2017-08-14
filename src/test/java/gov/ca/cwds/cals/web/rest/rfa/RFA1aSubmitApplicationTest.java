@@ -12,6 +12,7 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.DBUnitAssertHelper;
 import gov.ca.cwds.cals.persistence.DBUnitSupport;
 import gov.ca.cwds.cals.persistence.DBUnitSupportBuilder;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
@@ -99,6 +100,11 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicantDTO = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
     ApplicantDTO secondApplicant = getApplicantDTO();
     secondApplicant.setFirstName("John");
+    StateType driverLicenseState = new StateType();
+    driverLicenseState.setId(25L);
+    driverLicenseState.setValue("Maryland");
+    secondApplicant.setDriverLicenseState(driverLicenseState);
+
     rfaHelper.postApplicant(form.getId(), secondApplicant);
     rfaHelper.putResidence(form.getId(), getResidenceDTO());
 

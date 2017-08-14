@@ -394,9 +394,17 @@ public class FacilityService implements CrudsService {
     PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
     storePlacementHomeUc(storedPlacementHome);
 
+    storeSubstituteCareProvider(form, storedPlacementHome);
+
+    return storedPlacementHome;
+  }
+
+  private void storeSubstituteCareProvider(RFA1aFormDTO form, PlacementHome storedPlacementHome) {
     List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants()).orElse(Collections.emptyList());
     for (int i = 0; i < applicants.size(); i++) {
       ApplicantDTO applicantDTO = applicants.get(i);
+
+
       SubstituteCareProvider substituteCareProvider =
           substituteCareProviderMapper.toSubstituteCareProvider(applicantDTO);
 
@@ -425,7 +433,6 @@ public class FacilityService implements CrudsService {
 
       substituteCareProviderUCDao.create(substituteCareProviderUc);
     }
-    return storedPlacementHome;
   }
 
   RFA1bFormDTO get1BForm(RFA1aFormDTO form, ApplicantDTO applicantDTO) {

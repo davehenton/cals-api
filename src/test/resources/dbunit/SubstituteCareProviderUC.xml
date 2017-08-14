@@ -1,7 +1,7 @@
 <!DOCTYPE dataset SYSTEM "$schemaPath">
 <dataset>
   <SBPVD_UC
-    CA_DLIC_NO=""
+    CA_DLIC_NO="A1234567"
     FIRST_NM="ANNA"
     LAST_NM="SMITH"
   />
