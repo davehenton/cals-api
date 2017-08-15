@@ -48,14 +48,14 @@ import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
-import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
-import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
+import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
+import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
@@ -63,7 +63,9 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
+import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
@@ -135,6 +137,12 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private FacilityMapper facilityMapper;
+
+  @Inject
+  private FacilityInspectionMapper facilityInspectionMapper;
+
+  @Inject
+  private ComplaintMapper complaintMapper;
 
   @Inject
   private PlacementHomeMapper placementHomeMapper;
@@ -217,22 +225,20 @@ public class FacilityService implements CrudsService {
     fasFacilityMapper.toFacilityDTO(facilityDTO, facilityInfoLis);
 
     if (parameterObject.isExpanded()) {
-      List<FacilityChildDTO> facilityChildren =
-          clientDao
-              .streamByLicenseNumber(parameterObject.getLicenseNumber())
-              .map(facilityChildMapper::toFacilityChildDTO)
-              .collect(Collectors.toList());
+      List<FacilityChildDTO> facilityChildren = clientDao
+          .streamByLicenseNumber(parameterObject.getLicenseNumber())
+          .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
 
-      List<Rr809Dn> inspections =
-          inspectionDao.findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber());
+      List<FacilityInspectionDTO> inspections = inspectionDao
+          .findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber()).stream()
+          .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
 
-      List<ComplaintReportLic802> complaints =
-          complaintReportLic802Dao.findComplaintsByFacilityNumber(
-              parameterObject.getLicenseNumber());
+      List<ComplaintDTO> complaints = complaintReportLic802Dao
+          .findComplaintsByFacilityNumber(parameterObject.getLicenseNumber()).stream()
+          .map(complaintMapper::entityToDTO).collect(Collectors.toList());
 
-      facilityDTO =
-          facilityMapper.toExpandedFacilityDTO(
-              facilityDTO, facilityChildren, inspections, complaints);
+      facilityDTO = facilityMapper
+          .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections, complaints);
     }
 
     return facilityDTO;
@@ -245,22 +251,21 @@ public class FacilityService implements CrudsService {
     FacilityDTO facilityDTO = facilityMapper.toFacilityDTO(placementHome, dictionaryEntriesHolder);
 
     if (parameterObject.isExpanded()) {
-      List<FacilityChildDTO> facilityChildren =
-          clientDao
-              .streamByFacilityId(parameterObject.getFacilityId())
-              .map(facilityChildMapper::toFacilityChildDTO)
-              .collect(Collectors.toList());
+      List<FacilityChildDTO> facilityChildren = clientDao
+          .streamByFacilityId(parameterObject.getFacilityId())
+          .map(facilityChildMapper::toFacilityChildDTO)
+          .collect(Collectors.toList());
 
-      List<Rr809Dn> inspections =
-          inspectionDao.findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber());
+      List<FacilityInspectionDTO> inspections = inspectionDao
+          .findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber()).stream()
+          .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
 
-      List<ComplaintReportLic802> complaints =
-          complaintReportLic802Dao.findComplaintsByFacilityNumber(
-              parameterObject.getLicenseNumber());
+      List<ComplaintDTO> complaints = complaintReportLic802Dao
+          .findComplaintsByFacilityNumber(parameterObject.getLicenseNumber()).stream()
+          .map(complaintMapper::entityToDTO).collect(Collectors.toList());
 
-      facilityDTO =
-          facilityMapper.toExpandedFacilityDTO(
-              facilityDTO, facilityChildren, inspections, complaints);
+      facilityDTO = facilityMapper
+          .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections, complaints);
     }
 
     return facilityDTO;
