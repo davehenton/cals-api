@@ -3,15 +3,15 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
-import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
-import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.CMSDictionaryEntriesHolder;
+import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
+import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -128,8 +128,8 @@ public interface FacilityMapper {
   void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);
 
   ExpandedFacilityDTO toExpandedFacilityDTO(FacilityDTO facilityDTO,
-      List<FacilityChildDTO> children, List<Rr809Dn> inspections,
-      List<ComplaintReportLic802> complaints);
+      List<FacilityChildDTO> children, List<FacilityInspectionDTO> inspections,
+      List<ComplaintDTO> complaints);
 
   @AfterMapping
   default void after(
