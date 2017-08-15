@@ -5,7 +5,6 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.ca.cwds.cals.Constants;
@@ -24,6 +23,7 @@ import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +32,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import org.dbunit.dataset.ReplacementDataSet;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -216,20 +217,26 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     dbUnitAssertHelper.setTableName("OTH_ADLT");
     dbUnitAssertHelper.addFixture("/dbunit/OtherAdultsInPlacementHome.xml");
     dbUnitAssertHelper.addFilter("FKPLC_HM_T", placementHomeId);
-    fail();
+    /*ReplacementDataSet expectedDataset = dbUnitAssertHelper
+        .getReplacementDataset("/dbunit/OtherAdultsInPlacementHome.xml");*/
+    ReplacementDataSet expectedDataSet = dbUnitAssertHelper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("[CURRENT_DATE]", LocalDate.now().toString());
+    dbUnitAssertHelper
+        .assertEqualsIgnoreCols(
+            new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
   private void testIfOtherChildrenWasCreatedProperly(String placementHomeId,
       List<MinorChildDTO> minorChildDTOs) throws Exception {
     DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
     dbUnitAssertHelper.setTableName("OTH_KIDT");
-    dbUnitAssertHelper.addFixture("/dbunit/SubstituteCareProviderUC.xml");
-    dbUnitAssertHelper.addFilter("IDENTIFIER", placementHomeId);
+    dbUnitAssertHelper.addFixture("/dbunit/MinorChildrenInPlacementHome.xml");
+    dbUnitAssertHelper.addFilter("FKPLC_HM_T", placementHomeId);
 
-    fail();
+    dbUnitAssertHelper
+        .assertEqualsIgnoreCols(
+            new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
   }
-
-
 
 
   @Test

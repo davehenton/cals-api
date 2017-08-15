@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.persistence;
 
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
-
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -25,12 +24,13 @@ public class DBUnitAssertHelper {
   private DBUnitSupport dbUnitSupport;
   private String fixture;
   private DataFilter filter;
+  private ReplacementDataSet expectedDataSet;
 
   public DBUnitAssertHelper(DBUnitSupport dbUnitSupport) {
     this.dbUnitSupport = dbUnitSupport;
   }
 
-  public void addFixture(String fixturePath) throws URISyntaxException {
+  public void addFixture(String fixturePath) throws Exception {
     processFixture(fixturePath, prepareInitialParametersMap());
   }
 
@@ -38,6 +38,11 @@ public class DBUnitAssertHelper {
     VelocityHelper velocityHelper = new VelocityHelper();
     velocityHelper.setParameters(parameters);
     this.fixture = velocityHelper.process(fixturePath);
+    try {
+      expectedDataSet = getReplacementDataset(fixture);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   private Map<String, Object> prepareInitialParametersMap() throws URISyntaxException {
@@ -67,10 +72,7 @@ public class DBUnitAssertHelper {
   }
 
   public void assertEqualsIgnoreCols(String[] ignoreCols) throws Exception {
-
-      ReplacementDataSet expectedDataset = getReplacementDataset(fixture);
-
-      ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataset, tableName);
+    ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataSet, tableName);
       ITable actualData = dbUnitSupport.getTableFromDB(tableName);
       if (filter != null) {
         actualData = getRow(
@@ -80,16 +82,22 @@ public class DBUnitAssertHelper {
     Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
   }
 
-  public ITable getRow(ITable actualData, String filterColumnName, String filterColumnValue) throws DataSetException {
-    actualData = dbUnitSupport.filterByColumnAndValue(actualData, filterColumnName, filterColumnValue);
+  public ITable getRow(ITable actualData, String filterColumnName, String filterColumnValue)
+      throws DataSetException {
+    actualData = dbUnitSupport
+        .filterByColumnAndValue(actualData, filterColumnName, filterColumnValue);
     return actualData;
   }
 
   public ReplacementDataSet getReplacementDataset(String fixture) throws Exception {
     InputStream is = IOUtils.toInputStream(fixture, "UTF-8");
-    ReplacementDataSet replacementDataSet = new ReplacementDataSet(new FlatXmlDataSetBuilder().build(is));
+    ReplacementDataSet replacementDataSet = new ReplacementDataSet(
+        new FlatXmlDataSetBuilder().build(is));
     replacementDataSet.addReplacementObject("[NULL]", null);
     return replacementDataSet;
   }
 
+  public ReplacementDataSet getExpectedDataSet() {
+    return expectedDataSet;
+  }
 }

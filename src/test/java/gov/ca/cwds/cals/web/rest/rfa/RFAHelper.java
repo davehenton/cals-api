@@ -157,7 +157,7 @@ public class RFAHelper {
         Entity.entity(minorChild, MediaType.APPLICATION_JSON_TYPE), MinorChildDTO.class);
   }
 
-  public List<OtherAdultDTO> createOtherAdults(Long formId) throws IOException {
+  public List<OtherAdultDTO> createOtherAdults(Long formId) throws Exception {
     List<OtherAdultDTO> otherAdultsDTOs = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
       OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
@@ -170,7 +170,7 @@ public class RFAHelper {
     return otherAdultsDTOs;
   }
 
-  public List<MinorChildDTO> createMinorChildren(Long formId) throws IOException {
+  public List<MinorChildDTO> createMinorChildren(Long formId) throws Exception {
     List<MinorChildDTO> minorChildDTOs = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
       MinorChildDTO minorChildDTO = clientTestRule.getMapper()

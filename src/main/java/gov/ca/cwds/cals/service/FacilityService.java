@@ -405,6 +405,16 @@ public class FacilityService implements CrudsService {
           id -> Optional.ofNullable(stateTypeDao.find(id)).ifPresent(address::setState)
       );
     }
+
+    formDTO.getMinorChildren().forEach(this::enrichMinirChild);
+
+
+  }
+
+  private void enrichMinirChild(MinorChildDTO minorChildDTO) {
+    GenderType genderType = minorChildDTO.getGender();
+    String genderCwsShortCode = genderTypeDao.find(genderType.getPrimaryKey()).getCwsShortCode();
+    genderType.setCwsShortCode(genderCwsShortCode);
   }
 
   @UnitOfWork(CMS)
@@ -492,8 +502,7 @@ public class FacilityService implements CrudsService {
 
     minorChildren.forEach(minorChildDTO -> {
       OtherChildrenInPlacementHome otherChild = otherChildMapper.toOtherChild(minorChildDTO);
-      otherChildMapper.toOtherChild(otherChild, minorChildDTO.getGender());
-
+      otherChild.setGenderCd("M");
       otherChild.setIdentifier(Utils.Id.generate());
       otherChild.setLstUpdId(Id.getStaffPersonId());
       otherChild.setLstUpdTs(LocalDateTime.now());
@@ -508,7 +517,6 @@ public class FacilityService implements CrudsService {
 
     otherAdults.forEach(otherAdultDTO -> {
       OtherAdultsInPlacementHome otherAdult = otherAdultMapper.toOtherAdult(otherAdultDTO);
-
       otherAdult.setIdentifier(Utils.Id.generate());
       otherAdult.setLstUpdId(Id.getStaffPersonId());
       otherAdult.setLstUpdTs(LocalDateTime.now());

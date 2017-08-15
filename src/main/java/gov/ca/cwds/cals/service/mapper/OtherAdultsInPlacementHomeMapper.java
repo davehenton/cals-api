@@ -27,6 +27,7 @@ public interface OtherAdultsInPlacementHomeMapper {
   @Mapping(target = "othAdlCd", constant = "O")
   @Mapping(target = "resostInd", ignore = true)
   @Mapping(target = "passbcCd", constant = "U")
+  @Mapping(target = "comntDsc", constant = "")
   OtherAdultsInPlacementHome toOtherAdult(OtherAdultDTO otherAdultDTO);
 
   @AfterMapping
