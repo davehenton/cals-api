@@ -182,7 +182,7 @@
         "id": 1,
         "value": "Alaskan Native"
       },
-      "driver_license_number": "MD123G3333232",
+      "driver_license_number": "A1234567",
       "driver_license_state": {
         "id": 6,
         "value": "California"
@@ -277,8 +277,8 @@
       },
       "driver_license_number": "MD123G3333232",
       "driver_license_state": {
-        "id": 6,
-        "value": "California"
+        "id": 25,
+        "value": "Maryland"
       },
       "email": "anna.smith@gmail.com",
       "employment": {
@@ -425,7 +425,7 @@
           "value": "Residential"
         }
       },
-      "ssn": "464-94-2323",
+      "ssn": "464942323",
       "date_of_birth": "1981-12-26",
       "driver_license": "MD123-1234-585-121",
       "driver_license_state": {

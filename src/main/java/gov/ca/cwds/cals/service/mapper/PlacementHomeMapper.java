@@ -1,13 +1,15 @@
 package gov.ca.cwds.cals.service.mapper;
 
+import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
-import gov.ca.cwds.cals.service.CalsNsDictionaryEntriesHolder;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -17,7 +19,7 @@ import org.mapstruct.MappingTarget;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = LocalDateTime.class)
+@Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class})
 public interface PlacementHomeMapper {
 
   @Mapping(target = "identifier", source = "form.placementHomeId")
@@ -28,7 +30,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "bckExtNo", constant = "0")
   @Mapping(target = "bckTelNo", constant = "0")
   @Mapping(target = "chlcrPlcd", constant = "U")
-  @Mapping(target = "cityNm", source = "form.residence.residentialAddress.city")
+  @Mapping(target = "cityNm", source = "residentialAddress.city")
   @Mapping(target = "clSrvdc", constant = "0")
   @Mapping(target = "confEfind", constant = "N")
   @Mapping(target = "curOcpNo", constant = "0")
@@ -37,7 +39,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "frgAdrtB", constant = "N")
   @Mapping(target = "gndrAcpcd", constant = " ")
   @Mapping(target = "geoRgntcd", constant = " ")
-  @Mapping(target = "gvrEntc", source = "dictionaryEntriesHolder.applicationCounty.cwsId")
+  @Mapping(target = "gvrEntc", source = "form.applicationCounty.cwsId")
   @Mapping(target = "inhmVstcd", constant = "U")
   @Mapping(target = "maxCapNo", constant = "0")
   @Mapping(target = "laVndrId", constant = " ")
@@ -63,14 +65,14 @@ public interface PlacementHomeMapper {
   @Mapping(target = "prmTelNo", source = "form.firstApplicant.preferredPhoneNumber.number")
   @Mapping(target = "pvdTrnscd", constant = "U")
   @Mapping(target = "pubTrnscd", constant = "U")
-  @Mapping(target = "stateCode", source = "dictionaryEntriesHolder.stateCode.cwsId")
-  @Mapping(target = "streetNm", source = "form.residence.residentialStreet")
-  @Mapping(target = "streetNo", source = "form.residence.residentialStreetNumber")
-  @Mapping(target = "zipNo", source = "form.residence.residentialAddress.zip")
+  @Mapping(target = "stateCode", source = "residentialAddress.state.cwsId")
+  @Mapping(target = "streetNm", expression = "java(Utils.Address.getStreetName(residentialAddress))")
+  @Mapping(target = "streetNo", expression = "java(Utils.Address.getStreetNumber(residentialAddress))")
+  @Mapping(target = "zipNo", source = "residentialAddress.zip")
   @Mapping(target = "lstUpdId", constant = "SYS")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   @Mapping(target = "addrDsc", source = "form.residence.directionsToHome")
-  @Mapping(target = "spcharDsc", constant = " ") //
+  @Mapping(target = "spcharDsc", constant = " ")
   @Mapping(target = "ctyprfDsc", constant = " ")
   @Mapping(target = "edPvrDsc", constant = " ")
   @Mapping(target = "envFctdsc", constant = " ")
@@ -108,8 +110,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "endDt", ignore = true)
   @Mapping(target = "phEndc", ignore = true)
   @Mapping(target = "endComdsc", ignore = true)
-  PlacementHome toPlacementHome(RFA1aFormDTO form,
-      CalsNsDictionaryEntriesHolder dictionaryEntriesHolder);
+  PlacementHome toPlacementHome(RFA1aFormDTO form, RFAAddressDTO residentialAddress);
 
   @AfterMapping
   default void setFacilityName(@MappingTarget PlacementHome placementHome, RFA1aFormDTO form) {
@@ -125,14 +126,14 @@ public interface PlacementHomeMapper {
 
 
   @Mapping(target = "pkplcHmt", source = "identifier")
-  @Mapping(target = "cityNm", expression = "java( placementHome.getCityNm() != null ? placementHome.getCityNm().toUpperCase() : null )")
-  @Mapping(target = "geoRgntcd", expression = "java( placementHome.getGeoRgntcd() != null ? placementHome.getGeoRgntcd().toUpperCase(): null )")
-  @Mapping(target = "laVndrId", expression = "java( placementHome.getLaVndrId() != null ? placementHome.getLaVndrId().toUpperCase() : null  )")
+  @Mapping(target = "cityNm", expression = "java(StringUtils.upperCase(placementHome.getCityNm()))")
+  @Mapping(target = "geoRgntcd", expression = "java(StringUtils.upperCase(placementHome.getGeoRgntcd()))")
+  @Mapping(target = "laVndrId", expression = "java(StringUtils.upperCase(placementHome.getLaVndrId()))")
   @Mapping(target = "lstUpdId", ignore = true)
   @Mapping(target = "lstUpdTs", ignore = true)
-  @Mapping(target = "licenseNo", expression = "java( placementHome.getLicenseNo() != null ? placementHome.getLicenseNo().toUpperCase() : null )")
-  @Mapping(target = "facltyNm", expression = "java( placementHome.getFacltyNm() != null ? placementHome.getFacltyNm().toUpperCase() : null )")
-  @Mapping(target = "streetNo", expression = "java( placementHome.getStreetNo() != null ? placementHome.getStreetNo().toUpperCase() : null )")
-  @Mapping(target = "streetNm", expression = "java( placementHome.getStreetNm() != null ? placementHome.getStreetNm().toUpperCase() : null )")
+  @Mapping(target = "licenseNo", expression = "java(StringUtils.upperCase(placementHome.getLicenseNo()))")
+  @Mapping(target = "facltyNm", expression = "java(StringUtils.upperCase(placementHome.getFacltyNm()))")
+  @Mapping(target = "streetNo", expression = "java(StringUtils.upperCase(placementHome.getStreetNo()))")
+  @Mapping(target = "streetNm", expression = "java(StringUtils.upperCase(placementHome.getStreetNm()))")
   PlacementHomeUc toPlacementHomeUc(PlacementHome placementHome);
 }

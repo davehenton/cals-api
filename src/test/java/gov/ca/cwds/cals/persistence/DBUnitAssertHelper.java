@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.persistence;
 
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
+
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ import org.apache.commons.io.IOUtils;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 
 /**
@@ -66,7 +68,8 @@ public class DBUnitAssertHelper {
 
   public void assertEqualsIgnoreCols(String[] ignoreCols) throws Exception {
     try (InputStream is = IOUtils.toInputStream(fixture, "UTF-8")) {
-      IDataSet expectedDataset = new FlatXmlDataSetBuilder().build(is);
+      ReplacementDataSet expectedDataset = new ReplacementDataSet(new FlatXmlDataSetBuilder().build(is));
+      expectedDataset.addReplacementObject("[NULL]", null);
       ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataset, tableName);
       ITable actualData = dbUnitSupport.getTableFromDB(tableName);
       if (filter != null) {
@@ -76,6 +79,12 @@ public class DBUnitAssertHelper {
 
       Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
     }
+  }
+
+  public static ReplacementDataSet getReplacementDataset(IDataSet dataSet) throws Exception {
+    ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
+    replacementDataSet.addReplacementObject("[NULL]", null);
+    return replacementDataSet;
   }
 
 }

@@ -10,11 +10,11 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
-import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
+import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
@@ -122,16 +122,20 @@ public class RFA1aFormService
 
   private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus)
       throws BusinessValidationException {
-    RFA1aFormDTO expandedFormDTO = performSubmissionValidation(form);
-    String placementHomeId = Utils.Id.generate();
-    expandedFormDTO.setPlacementHomeId(placementHomeId);
+    RFA1aFormDTO expandedFormDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
+    performSubmissionValidation(expandedFormDTO);
+
+    PlacementHome storedPlacementHome = null;
+
     try {
-      facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
+      storedPlacementHome = facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
     } catch (Exception e) {
       LOG.error("Can not create Placement Home in database", e);
       throw e;
     }
-    updateFormAfterPlacementHomeCreation(form.getId(), placementHomeId, newStatus);
+
+    updateFormAfterPlacementHomeCreation(form.getId(), storedPlacementHome.getIdentifier(),
+        newStatus);
   }
 
   @UnitOfWork(CALSNS)
@@ -143,15 +147,13 @@ public class RFA1aFormService
     updateForm(form);
   }
 
-  private RFA1aFormDTO performSubmissionValidation(
-      RFA1aForm form) throws BusinessValidationException {
-    RFA1aFormDTO formDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
+  private void performSubmissionValidation(
+      RFA1aFormDTO formDTO) throws BusinessValidationException {
     Set<String> validationMessages = droolsService.validate(formDTO,
         createConfiguration());
     if (!validationMessages.isEmpty()) {
       throw new BusinessValidationException(new ArrayList<>(validationMessages));
     }
-    return formDTO;
   }
 
   private DroolsValidationConfiguration<RFA1aFormDTO> createConfiguration() {

@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.dto.rfa;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
@@ -12,7 +11,6 @@ import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEac
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import javax.validation.Valid;
 
@@ -24,8 +22,6 @@ import javax.validation.Valid;
 public class ResidenceDTO extends BaseDTO implements RequestResponse {
 
   private static final long serialVersionUID = -7762404097883966587L;
-
-  public static final String RESIDENTIAL = "Residential";
 
   @ApiModelProperty(value = "List of Addresses")
   @Valid
@@ -81,8 +77,7 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
     return residenceOwnership;
   }
 
-  public void setResidenceOwnership(
-      ResidenceOwnershipType residenceOwnership) {
+  public void setResidenceOwnership(ResidenceOwnershipType residenceOwnership) {
     this.residenceOwnership = residenceOwnership;
   }
 
@@ -122,8 +117,7 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
     return otherPeopleUsingResidenceAsMailing;
   }
 
-  public void setOtherPeopleUsingResidenceAsMailing(
-      Set<PersonNameDTO> otherPeopleUsingResidenceAsMailing) {
+  public void setOtherPeopleUsingResidenceAsMailing(Set<PersonNameDTO> otherPeopleUsingResidenceAsMailing) {
     this.otherPeopleUsingResidenceAsMailing = otherPeopleUsingResidenceAsMailing;
   }
 
@@ -139,33 +133,7 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
     return homeLanguages;
   }
 
-  public void setHomeLanguages(
-      Set<LanguageType> homeLanguages) {
+  public void setHomeLanguages(Set<LanguageType> homeLanguages) {
     this.homeLanguages = homeLanguages;
   }
-
-  @JsonIgnore
-  public RFAAddressDTO getResidentialAddress() {
-    Optional<RFAAddressDTO> residentialAddress =
-        this.addresses
-            .stream()
-            .filter(address -> RESIDENTIAL.equals(address.getType().getValue()))
-            .findAny();
-    return residentialAddress
-        .orElseThrow(() -> new IllegalStateException("Residential address must be present"));
-  }
-
-  @JsonIgnore
-  public String getResidentialStreet() {
-    String streetAddress = getResidentialAddress().getStreetAddress();
-    return streetAddress.substring(streetAddress.indexOf(' ') + 1);
-  }
-
-  @JsonIgnore
-  public String getResidentialStreetNumber() {
-    String streetAddress = getResidentialAddress().getStreetAddress();
-    return streetAddress.substring(0, streetAddress.indexOf(' '));
-  }
-
-
 }

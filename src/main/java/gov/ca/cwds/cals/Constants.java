@@ -191,11 +191,18 @@ public final class Constants {
 
   public static class AddressTypes {
 
-    public static final String RESIDENTIAL = "residential";
+    public static final String RESIDENTIAL = "Residential";
 
-    public static final String MAIL = "mail";
+    public static final String MAIL = "Mailing";
 
     private AddressTypes() {
+    }
+  }
+
+  public static class StateTypes {
+    public static final Long CALIFORNIA_STATE_ID = 6L;
+
+    private StateTypes() {
     }
   }
 
