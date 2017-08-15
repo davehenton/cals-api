@@ -463,6 +463,8 @@ public class FacilityService implements CrudsService {
         .orElse(Collections.emptyList());
     for (int i = 0; i < applicants.size(); i++) {
       ApplicantDTO applicantDTO = applicants.get(i);
+
+
       SubstituteCareProvider substituteCareProvider =
           substituteCareProviderMapper.toSubstituteCareProvider(applicantDTO);
 

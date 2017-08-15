@@ -12,6 +12,7 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.DBUnitAssertHelper;
 import gov.ca.cwds.cals.persistence.DBUnitSupport;
 import gov.ca.cwds.cals.persistence.DBUnitSupportBuilder;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
@@ -32,6 +33,10 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+
+import org.dbunit.Assertion;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -104,6 +109,11 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicantDTO = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
     ApplicantDTO secondApplicant = getApplicantDTO();
     secondApplicant.setFirstName("John");
+    StateType driverLicenseState = new StateType();
+    driverLicenseState.setId(25L);
+    driverLicenseState.setValue("Maryland");
+    secondApplicant.setDriverLicenseState(driverLicenseState);
+
     rfaHelper.postApplicant(form.getId(), secondApplicant);
     rfaHelper.putResidence(form.getId(), getResidenceDTO());
 
@@ -120,14 +130,21 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId());
     form = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
-    assertNotNull(form.getPlacementHomeId());
 
-    testIfPlacementHomeWasCreatedProperly(form.getPlacementHomeId());
+    String placementHomeId = form.getPlacementHomeId();
+    assertNotNull(placementHomeId);
+
+    testIfPlacementHomeWasCreatedProperly(placementHomeId);
     testIfPlacementHomeUCWasCreatedProperly();
 
-    testIfPlacementHomeInformationWasCreatedProperly(form.getPlacementHomeId());
-    testIfSubstituteCareProviderWasCreatedProperly();
-    testIfSubstituteCareProviderUCWasCreatedProperly();
+    ITable placementHomeInformation = dbUnitSupport.getTableFromDB("HM_SCP_T");
+    ITable placementHomeRow = dbUnitSupport.filterByColumnAndValue(placementHomeInformation, "FKPLC_HM_T", placementHomeId);
+    String substituteCareProviderId1 = (String) placementHomeRow.getValue(0, "FKSB_PVDRT");
+    String substituteCareProviderId2 = (String) placementHomeRow.getValue(1, "FKSB_PVDRT");
+
+    testIfPlacementHomeInformationWasCreatedProperly(placementHomeId, substituteCareProviderId1, substituteCareProviderId2);
+    testIfSubstituteCareProviderWasCreatedProperly(substituteCareProviderId1, substituteCareProviderId2);
+    testIfSubstituteCareProviderUCWasCreatedProperly(substituteCareProviderId2, substituteCareProviderId2);
 
     testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId(), otherAdultDTOs);
     testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId(), minorChildDTOs);
@@ -182,33 +199,37 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .assertEqualsIgnoreCols(new String[]{"PKPLC_HMT", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
-  private void testIfPlacementHomeInformationWasCreatedProperly(String placementHomeId)
+  private void testIfPlacementHomeInformationWasCreatedProperly(String placementHomeId, String substituteCareProviderId1, String substituteCareProviderId2)
       throws Exception {
-    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
-    dbUnitAssertHelper.setTableName("HM_SCP_T");
-    Map<String, Object> parameters = new HashMap<>();
-    parameters.put("placementHomeId", placementHomeId);
-    dbUnitAssertHelper.addFixture("/dbunit/PlacementHomeInformation.xml", parameters);
-    dbUnitAssertHelper.assertEqualsIgnoreCols(
-        new String[]{"THIRD_ID", "START_DT", "END_DT", "LST_UPD_ID", "LST_UPD_TS", "FKSB_PVDRT"});
+    IDataSet xmlDataSet = dbUnitSupport.getXMLDataSet("/dbunit/PlacementHomeInformation.xml");
+    ReplacementDataSet expectedDataset = DBUnitAssertHelper.getReplacementDataset(xmlDataSet);
+    expectedDataset.addReplacementObject("$placementHomeId", placementHomeId);
+    expectedDataset.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
+    expectedDataset.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
+    ITable expectedTable = expectedDataset.getTable("HM_SCP_T");
+    ITable actualTable = dbUnitSupport.getTableFromDB("HM_SCP_T");
+    Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, new String[]{"THIRD_ID", "START_DT", "END_DT", "LST_UPD_ID", "LST_UPD_TS",});
   }
 
-  private void testIfSubstituteCareProviderWasCreatedProperly() throws Exception {
-    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
-    dbUnitAssertHelper.setTableName("SB_PVDRT");
-    dbUnitAssertHelper.addFixture("/dbunit/SubstituteCareProvider.xml");
-    dbUnitAssertHelper.assertEqualsIgnoreCols(
-        new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS", "LST_UPD_ID", "LIS_PER_ID",
-            "ETH_UD_CD", "HISP_UD_CD",
-            "PASSBC_CD"});
+  private void testIfSubstituteCareProviderWasCreatedProperly(String substituteCareProviderId1, String substituteCareProviderId2) throws Exception {
+    IDataSet xmlDataSet = dbUnitSupport.getXMLDataSet("/dbunit/SubstituteCareProvider.xml");
+    ReplacementDataSet expectedDataset = DBUnitAssertHelper.getReplacementDataset(xmlDataSet);
+    expectedDataset.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
+    expectedDataset.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
+    ITable expectedTable = expectedDataset.getTable("SB_PVDRT");
+    ITable actualTable = dbUnitSupport.getTableFromDB("SB_PVDRT");
+    Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS", "LST_UPD_ID", "LIS_PER_ID",
+            "ETH_UD_CD", "HISP_UD_CD", "PASSBC_CD"});
   }
 
-  private void testIfSubstituteCareProviderUCWasCreatedProperly() throws Exception {
-    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
-    dbUnitAssertHelper.setTableName("SBPVD_UC");
-    dbUnitAssertHelper.addFixture("/dbunit/SubstituteCareProviderUC.xml");
-    dbUnitAssertHelper.assertEqualsIgnoreCols(
-        new String[]{"PKSB_PVDRT", "LST_UPD_ID", "LST_UPD_TS"});
+  private void testIfSubstituteCareProviderUCWasCreatedProperly(String substituteCareProviderId1, String substituteCareProviderId2) throws Exception {
+    IDataSet xmlDataSet = dbUnitSupport.getXMLDataSet("/dbunit/SubstituteCareProviderUC.xml");
+    ReplacementDataSet expectedDataset = DBUnitAssertHelper.getReplacementDataset(xmlDataSet);
+    expectedDataset.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
+    expectedDataset.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
+    ITable expectedTable = expectedDataset.getTable("SBPVD_UC");
+    ITable actualTable = dbUnitSupport.getTableFromDB("SBPVD_UC");
+    Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, new String[]{"PKSB_PVDRT", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
   private void testIfOtherAdultsWasCreatedProperly(String placementHomeId,

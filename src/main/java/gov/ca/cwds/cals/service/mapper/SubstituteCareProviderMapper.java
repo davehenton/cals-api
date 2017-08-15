@@ -25,8 +25,7 @@ public interface SubstituteCareProviderMapper {
   @Mapping(target = "addTelNo", constant = "0")
   @Mapping(target = "addExtNo", constant = "0")
   @Mapping(target = "birthDt", source = "dateOfBirth")
-//  @Mapping(target = "caDlicNo", source = "driverLicenseNumber")//todo 8 chars but have 13 (MD123G3333232)
-  @Mapping(target = "caDlicNo", constant = " ")//todo 8 chars but have 13 (MD123G3333232)
+  @Mapping(target = "caDlicNo", expression = "java(Utils.Applicant.getCaliforniaDriverLicense(applicantDTO, \" \"))")
   @Mapping(target = "cityNm", ignore = true)
   @Mapping(target = "emplyrNm", source = "employment.employerName")
   @Mapping(target = "firstNm", source = "firstName")
@@ -211,8 +210,8 @@ public interface SubstituteCareProviderMapper {
       String scprvdInd);
 
   @Mapping(target = "pksbPvdrt", source = "identifier")
-//  @Mapping(target = "caDlicNo", expression = "java(StringUtils.upperCase(applicantDTO.getDriverLicenseNumber()))") //todo 8 chars but have 13 (MD123G3333232)
-  @Mapping(target = "caDlicNo", constant = " ") //todo 8 chars but have 13 (MD123G3333232)
+  @Mapping(target = "caDlicNo",
+      expression = "java(StringUtils.upperCase(Utils.Applicant.getCaliforniaDriverLicense(applicantDTO, \" \")))")
   @Mapping(target = "firstNm", expression = "java(StringUtils.upperCase(applicantDTO.getFirstName()))")
   @Mapping(target = "lastNm", expression = "java(StringUtils.upperCase(applicantDTO.getLastName()))")
   @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
