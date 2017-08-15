@@ -464,7 +464,6 @@ public class FacilityService implements CrudsService {
     for (int i = 0; i < applicants.size(); i++) {
       ApplicantDTO applicantDTO = applicants.get(i);
 
-
       SubstituteCareProvider substituteCareProvider =
           substituteCareProviderMapper.toSubstituteCareProvider(applicantDTO);
 
@@ -504,7 +503,6 @@ public class FacilityService implements CrudsService {
 
     minorChildren.forEach(minorChildDTO -> {
       OtherChildrenInPlacementHome otherChild = otherChildMapper.toOtherChild(minorChildDTO);
-      otherChild.setGenderCd("M");
       otherChild.setIdentifier(Utils.Id.generate());
       otherChild.setLstUpdId(Id.getStaffPersonId());
       otherChild.setLstUpdTs(LocalDateTime.now());

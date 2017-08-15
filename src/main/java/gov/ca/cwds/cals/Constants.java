@@ -200,6 +200,7 @@ public final class Constants {
   }
 
   public static class StateTypes {
+
     public static final Long CALIFORNIA_STATE_ID = 6L;
 
     private StateTypes() {

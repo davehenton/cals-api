@@ -61,12 +61,12 @@ public final class Utils {
 
   public static class Id {
 
+    public static final String DEFAULT_USER_ID = "0X5";
+
     private Id() {
     }
 
-    public static final String DEFAULT_USER_ID = "0X5";
-
-    public static String generate() {
+    public static synchronized String generate() {
       return CmsKeyIdGenerator.generate(getStaffPersonId());
     }
 
@@ -89,6 +89,10 @@ public final class Utils {
   }
 
   public static class Applicant {
+
+    private Applicant() {
+    }
+
     public static String getCaliforniaDriverLicense(ApplicantDTO applicant, String defaultValue) {
       if (applicant.getDriverLicenseState() != null) {
         Long stateId = applicant.getDriverLicenseState().getId();
@@ -99,8 +103,6 @@ public final class Utils {
       return defaultValue;
     }
 
-    private Applicant() {
-    }
   }
 
   public static class Address {

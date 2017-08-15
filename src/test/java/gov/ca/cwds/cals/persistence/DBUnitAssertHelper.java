@@ -39,7 +39,7 @@ public class DBUnitAssertHelper {
     velocityHelper.setParameters(parameters);
     this.fixture = velocityHelper.process(fixturePath);
     try {
-      expectedDataSet = getReplacementDataset(fixture);
+      expectedDataSet = getReplacementDataSet(fixture);
     } catch (Exception e) {
       throw new IllegalStateException(e);
     }
@@ -72,27 +72,24 @@ public class DBUnitAssertHelper {
   }
 
   public void assertEqualsIgnoreCols(String[] ignoreCols) throws Exception {
-    try (InputStream is = IOUtils.toInputStream(fixture, "UTF-8")) {
-      ReplacementDataSet expectedDataset = new ReplacementDataSet(new FlatXmlDataSetBuilder().build(is));
-      expectedDataset.addReplacementObject("[NULL]", null);
-      ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataset, tableName);
-      ITable actualData = dbUnitSupport.getTableFromDB(tableName);
-      if (filter != null) {
-        actualData = dbUnitSupport.filterByColumnAndValue(
-            actualData, filter.getFilterColumnName(), filter.getFilterColumnValue());
-      }
-
+    ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataSet, tableName);
+    ITable actualData = dbUnitSupport.getTableFromDB(tableName);
+    if (filter != null) {
+      actualData = dbUnitSupport.filterByColumnAndValue(
+          actualData, filter.getFilterColumnName(), filter.getFilterColumnValue());
+    }
     Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
   }
 
-
-  }
-
-  public staticReplacementDataSet getReplacementDataset(IDataSet dataSet) throws Exception {
-
+  public static ReplacementDataSet getReplacementDataSet(IDataSet dataSet) throws Exception {
     ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
     replacementDataSet.addReplacementObject("[NULL]", null);
     return replacementDataSet;
+  }
+
+  private ReplacementDataSet getReplacementDataSet(String fixture) throws Exception {
+    InputStream is = IOUtils.toInputStream(fixture, "UTF-8");
+    return getReplacementDataSet(new FlatXmlDataSetBuilder().build(is));
   }
 
   public ReplacementDataSet getExpectedDataSet() {

@@ -4,7 +4,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import java.time.LocalDate;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
@@ -64,8 +63,12 @@ public interface OtherAdultsInPlacementHomeMapper {
   }
 
   default OtherAdultsInPlacementHome residedOutOfStateIndMapping(OtherAdultsInPlacementHome target,
-      RFA1aFormDTO rfa1aFormDTO) {
-    // TODO: implement Me !!!!!
+      OtherAdultDTO otherAdultDTO) {
+    /* 
+       TODO: implement residedOutOfStateIndMapping
+       (if rfa1b_forms.lived_in_other_state == true then Y. if rfa1b_forms.lived_in_other_state == false then N. if rfa1b_forms.lived_in_other_state == null then null)
+       need to define link between OtherAdult and RFA1b form
+     */
 
     return target;
   }
