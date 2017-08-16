@@ -25,16 +25,12 @@ import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import org.dbunit.Assertion;
-import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.junit.BeforeClass;
@@ -156,121 +152,146 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         substituteCareProviderId2);
     testIfSubstituteCareProviderUCWasCreatedProperly(substituteCareProviderId2,
         substituteCareProviderId2);
+
+    testIfPhoneContactDetailsWasCreatedProperly(substituteCareProviderId1);
+    testIfPhoneContactDetailsWasCreatedProperly(substituteCareProviderId2);
   }
 
   private void testIfPlacementHomeWasCreatedProperly(String placementHomeId) throws Exception {
-    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
-    dbUnitAssertHelper.setTableName("PLC_HM_T");
-    Map<String, Object> parameters = new HashMap<>();
-    parameters.put("id", placementHomeId);
-    dbUnitAssertHelper.addFixture("/dbunit/PlacementHome.xml", parameters);
-    dbUnitAssertHelper.addFilter("IDENTIFIER", placementHomeId);
-    dbUnitAssertHelper.assertEqualsIgnoreCols(
-        new String[]{
-            "LST_UPD_TS",
-            "BCK_PERSNM",
-            "GNDR_ACPCD",
-            "GEO_RGNTCD",
-            "LA_VNDR_ID",
-            "LICNSEE_NM",
-            "P_CITY_NM",
-            "PYE_FSTNM",
-            "PYE_LSTNM",
-            "PYE_MIDNM",
-            "PSTREET_NM",
-            "PSTREET_NO",
-            "SPCHAR_DSC",
-            "CTYPRF_DSC",
-            "ED_PVR_DSC",
-            "ENV_FCTDSC",
-            "HAZRDS_DSC",
-            "LIS_PRFDSC",
-            "PETS_DSC",
-            "RLG_ACTDSC",
-            "CERT_CMPLT",
-            "LA_P_CTYNM",
-            "LA_P_FSTNM",
-            "LA_P_LSTNM",
-            "LA_P_MIDNM",
-            "LA_P_STNM",
-            "LA_P_STNO",
-            "LA_P_BSNSS",
-            "ADHMONLY",
-        });
+    DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/PlacementHome.xml")
+        .appendTemplateParameter("id", placementHomeId)
+        .setTestedTableName("PLC_HM_T")
+        .appendTableFilter("IDENTIFIER", placementHomeId)
+        .build()
+        .assertEqualsIgnoreCols(
+            new String[]{
+                "LST_UPD_TS",
+                "BCK_PERSNM",
+                "GNDR_ACPCD",
+                "GEO_RGNTCD",
+                "LA_VNDR_ID",
+                "LICNSEE_NM",
+                "P_CITY_NM",
+                "PYE_FSTNM",
+                "PYE_LSTNM",
+                "PYE_MIDNM",
+                "PSTREET_NM",
+                "PSTREET_NO",
+                "SPCHAR_DSC",
+                "CTYPRF_DSC",
+                "ED_PVR_DSC",
+                "ENV_FCTDSC",
+                "HAZRDS_DSC",
+                "LIS_PRFDSC",
+                "PETS_DSC",
+                "RLG_ACTDSC",
+                "CERT_CMPLT",
+                "LA_P_CTYNM",
+                "LA_P_FSTNM",
+                "LA_P_LSTNM",
+                "LA_P_MIDNM",
+                "LA_P_STNM",
+                "LA_P_STNO",
+                "LA_P_BSNSS",
+                "ADHMONLY",
+            });
   }
 
   private void testIfPlacementHomeUCWasCreatedProperly() throws Exception {
-    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
-    dbUnitAssertHelper.setTableName("PLCHM_UC");
-    dbUnitAssertHelper.addFixture("/dbunit/PlacementHomeUc.xml");
-    dbUnitAssertHelper
+    DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/PlacementHomeUc.xml")
+        .setTestedTableName("PLCHM_UC")
+        .build()
         .assertEqualsIgnoreCols(new String[]{"PKPLC_HMT", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
   private void testIfPlacementHomeInformationWasCreatedProperly(String placementHomeId,
       String substituteCareProviderId1, String substituteCareProviderId2)
       throws Exception {
-    IDataSet xmlDataSet = dbUnitSupport.getXMLDataSet("/dbunit/PlacementHomeInformation.xml");
-    ReplacementDataSet expectedDataset = DBUnitAssertHelper.getReplacementDataSet(xmlDataSet);
-    expectedDataset.addReplacementObject("$placementHomeId", placementHomeId);
-    expectedDataset.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
-    expectedDataset.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
-    ITable expectedTable = expectedDataset.getTable("HM_SCP_T");
-    ITable actualTable = dbUnitSupport.getTableFromDB("HM_SCP_T");
-    Assertion.assertEqualsIgnoreCols(expectedTable, actualTable,
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/PlacementHomeInformation.xml")
+        .setTestedTableName("HM_SCP_T")
+        .build();
+
+    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("$placementHomeId", placementHomeId);
+    expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
+    expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
+
+    helper.assertEqualsIgnoreCols(
         new String[]{"THIRD_ID", "START_DT", "END_DT", "LST_UPD_ID", "LST_UPD_TS",});
   }
 
   private void testIfSubstituteCareProviderWasCreatedProperly(String substituteCareProviderId1,
       String substituteCareProviderId2) throws Exception {
-    IDataSet xmlDataSet = dbUnitSupport.getXMLDataSet("/dbunit/SubstituteCareProvider.xml");
-    ReplacementDataSet expectedDataset = DBUnitAssertHelper.getReplacementDataSet(xmlDataSet);
-    expectedDataset.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
-    expectedDataset.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
-    ITable expectedTable = expectedDataset.getTable("SB_PVDRT");
-    ITable actualTable = dbUnitSupport.getTableFromDB("SB_PVDRT");
-    Assertion.assertEqualsIgnoreCols(expectedTable, actualTable,
+
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/SubstituteCareProvider.xml")
+        .setTestedTableName("SB_PVDRT")
+        .build();
+
+    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
+    expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
+
+    helper.assertEqualsIgnoreCols(
         new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS", "LST_UPD_ID", "LIS_PER_ID",
             "ETH_UD_CD", "HISP_UD_CD", "PASSBC_CD"});
   }
 
   private void testIfSubstituteCareProviderUCWasCreatedProperly(String substituteCareProviderId1,
       String substituteCareProviderId2) throws Exception {
-    IDataSet xmlDataSet = dbUnitSupport.getXMLDataSet("/dbunit/SubstituteCareProviderUC.xml");
-    ReplacementDataSet expectedDataset = DBUnitAssertHelper.getReplacementDataSet(xmlDataSet);
-    expectedDataset.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
-    expectedDataset.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
-    ITable expectedTable = expectedDataset.getTable("SBPVD_UC");
-    ITable actualTable = dbUnitSupport.getTableFromDB("SBPVD_UC");
-    Assertion.assertEqualsIgnoreCols(expectedTable, actualTable,
-        new String[]{"PKSB_PVDRT", "LST_UPD_ID", "LST_UPD_TS"});
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/SubstituteCareProviderUC.xml")
+        .setTestedTableName("SBPVD_UC")
+        .build();
+
+    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
+    expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
+    helper.assertEqualsIgnoreCols(new String[]{"PKSB_PVDRT", "LST_UPD_ID", "LST_UPD_TS"});
+  }
+
+  private void testIfPhoneContactDetailsWasCreatedProperly(String substituteCareProviderId)
+      throws Exception {
+
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/PhoneContactDetail.xml")
+        .setTestedTableName("PH_CNT_T")
+        .appendTableFilter("ESTBLSH_ID", substituteCareProviderId)
+        .build();
+
+    helper
+        .assertEqualsIgnoreCols(new String[]{"THIRD_ID", "ESTBLSH_ID", "LST_UPD_ID", "LST_UPD_TS"});
+
+
   }
 
   private void testIfOtherAdultsWasCreatedProperly(String placementHomeId,
       List<OtherAdultDTO> otherAdultDTOS) throws Exception {
-    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
-    dbUnitAssertHelper.setTableName("OTH_ADLT");
-    dbUnitAssertHelper.addFixture("/dbunit/OtherAdultsInPlacementHome.xml");
-    dbUnitAssertHelper.addFilter("FKPLC_HM_T", placementHomeId);
-    /*ReplacementDataSet expectedDataset = dbUnitAssertHelper
-        .getReplacementDataSet("/dbunit/OtherAdultsInPlacementHome.xml");*/
-    ReplacementDataSet expectedDataSet = dbUnitAssertHelper.getExpectedDataSet();
-    expectedDataSet.addReplacementObject("[CURRENT_DATE]", LocalDate.now().toString());
-    dbUnitAssertHelper
-        .assertEqualsIgnoreCols(
-            new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/OtherAdultsInPlacementHome.xml")
+        .setTestedTableName("OTH_ADLT")
+        .appendTableFilter("FKPLC_HM_T", placementHomeId)
+        .build();
+
+    helper.getExpectedDataSet().addReplacementObject("[CURRENT_DATE]", LocalDate.now().toString());
+    helper.assertEqualsIgnoreCols(
+        new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
   private void testIfOtherChildrenWasCreatedProperly(String placementHomeId,
       List<MinorChildDTO> minorChildDTOs) throws Exception {
-    DBUnitAssertHelper dbUnitAssertHelper = new DBUnitAssertHelper(dbUnitSupport);
-    dbUnitAssertHelper.setTableName("OTH_KIDT");
-    dbUnitAssertHelper.addFixture("/dbunit/MinorChildrenInPlacementHome.xml");
-    dbUnitAssertHelper.addFilter("FKPLC_HM_T", placementHomeId);
 
-    dbUnitAssertHelper
-        .assertEqualsIgnoreCols(
-            new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/MinorChildrenInPlacementHome.xml")
+        .setTestedTableName("OTH_KIDT")
+        .appendTableFilter("FKPLC_HM_T", placementHomeId)
+        .build();
+
+    helper.assertEqualsIgnoreCols(
+        new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
 

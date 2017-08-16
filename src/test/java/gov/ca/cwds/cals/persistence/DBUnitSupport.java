@@ -6,6 +6,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
@@ -121,16 +122,22 @@ public class DBUnitSupport {
 
   public ITable filterByColumnAndValue(ITable table, String column, String filterValue)
       throws DataSetException {
+    return doFilter(table, new DataFilter(column, filterValue));
+  }
+
+  public ITable doFilter(ITable table, DataFilter... filters)
+      throws DataSetException {
     IRowFilter rowFilter =
-        rowValueProvider -> {
-          Object columnValue = null;
-          try {
-            columnValue = rowValueProvider.getColumnValue(column);
-          } catch (DataSetException e) {
-            e.printStackTrace();
-          }
-          return columnValue.equals(filterValue);
-        };
+        rowValueProvider ->
+            Arrays.stream(filters).allMatch(filter -> {
+              try {
+                Object columnValue = rowValueProvider.getColumnValue(filter.getFilterColumnName());
+                return columnValue.equals(filter.getFilterColumnValue());
+              } catch (DataSetException e) {
+                throw new IllegalStateException(e);
+              }
+            });
+
     return new RowFilterTable(table, rowFilter);
   }
 
