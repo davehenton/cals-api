@@ -1,8 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.cms;
 
 import java.io.Serializable;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import org.apache.commons.lang3.builder.EqualsBuilder;

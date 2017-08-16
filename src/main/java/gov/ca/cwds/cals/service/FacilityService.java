@@ -1,5 +1,12 @@
 package gov.ca.cwds.cals.service;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
+import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
+
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
@@ -13,6 +20,8 @@ import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
+import gov.ca.cwds.cals.persistence.dao.cms.OtherAdultsInPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.OtherChildrenInPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeInformationDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeUcDao;
@@ -32,6 +41,8 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
@@ -46,6 +57,8 @@ import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
@@ -55,6 +68,8 @@ import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
+import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
@@ -62,7 +77,6 @@ import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
-
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -71,13 +85,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
-import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 /**
  * CRUD service for {@link gov.ca.cwds.cals.service.dto.FacilityDTO}
@@ -120,6 +127,12 @@ public class FacilityService implements CrudsService {
   private PlacementHomeInformationDao placementHomeInformationDao;
 
   @Inject
+  private OtherChildrenInPlacementHomeDao otherChildrenDao;
+
+  @Inject
+  private OtherAdultsInPlacementHomeDao otherAdultDao;
+
+  @Inject
   private CountiesDao countiesDao;
 
   @Inject
@@ -145,6 +158,12 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private FacilityChildMapper facilityChildMapper;
+
+  @Inject
+  private OtherChildrenInPlacementHomeMapper otherChildMapper;
+
+  @Inject
+  private OtherAdultsInPlacementHomeMapper otherAdultMapper;
 
   @Inject
   private ClientDao clientDao;
@@ -370,14 +389,17 @@ public class FacilityService implements CrudsService {
         id -> Optional.ofNullable(countyTypeDao.find(id)).ifPresent(formDTO::setApplicationCounty)
     );
 
-    List<ApplicantDTO> applicants = Optional.ofNullable(formDTO.getApplicants()).orElse(Collections.emptyList());
+    List<ApplicantDTO> applicants = Optional.ofNullable(formDTO.getApplicants())
+        .orElse(Collections.emptyList());
     for (ApplicantDTO applicantDTO : applicants) {
       Optional.ofNullable(applicantDTO.getGender()).map(GenderType::getId).ifPresent(
           id -> Optional.ofNullable(genderTypeDao.find(id)).ifPresent(applicantDTO::setGender)
       );
-      Optional.ofNullable(applicantDTO.getHighestEducationLevel()).map(EducationLevelType::getId).ifPresent(
-          id -> Optional.ofNullable(educationLevelTypeDao.find(id)).ifPresent(applicantDTO::setHighestEducationLevel)
-      );
+      Optional.ofNullable(applicantDTO.getHighestEducationLevel()).map(EducationLevelType::getId)
+          .ifPresent(
+              id -> Optional.ofNullable(educationLevelTypeDao.find(id))
+                  .ifPresent(applicantDTO::setHighestEducationLevel)
+          );
     }
 
     List<RFAAddressDTO> addresses = Optional.ofNullable(formDTO.getResidence())
@@ -388,6 +410,16 @@ public class FacilityService implements CrudsService {
           id -> Optional.ofNullable(stateTypeDao.find(id)).ifPresent(address::setState)
       );
     }
+
+    formDTO.getMinorChildren().forEach(this::enrichMinirChild);
+
+
+  }
+
+  private void enrichMinirChild(MinorChildDTO minorChildDTO) {
+    GenderType genderType = minorChildDTO.getGender();
+    String genderCwsShortCode = genderTypeDao.find(genderType.getPrimaryKey()).getCwsShortCode();
+    genderType.setCwsShortCode(genderCwsShortCode);
   }
 
   @UnitOfWork(CMS)
@@ -397,48 +429,18 @@ public class FacilityService implements CrudsService {
 
     placementHome.setIdentifier(Utils.Id.generate());
     PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
+
     storePlacementHomeUc(storedPlacementHome);
 
     storeSubstituteCareProvider(form, storedPlacementHome);
 
+    storeOtherChildren(form, storedPlacementHome);
+
+    storeOtherAdults(form, storedPlacementHome);
+
     return storedPlacementHome;
   }
 
-  private void storeSubstituteCareProvider(RFA1aFormDTO form, PlacementHome storedPlacementHome) {
-    List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants()).orElse(Collections.emptyList());
-    for (int i = 0; i < applicants.size(); i++) {
-      ApplicantDTO applicantDTO = applicants.get(i);
-
-
-      SubstituteCareProvider substituteCareProvider =
-          substituteCareProviderMapper.toSubstituteCareProvider(applicantDTO);
-
-      RFA1bFormDTO bForm = get1BForm(form, applicantDTO);
-      substituteCareProviderMapper.toSubstituteCareProvider(substituteCareProvider, bForm);
-
-      RFAAddressDTO residentialAddress = Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL);
-      substituteCareProviderMapper.toSubstituteCareProviderFromResidentialAddress(
-          substituteCareProvider, residentialAddress);
-
-      RFAAddressDTO mailingAddress = Utils.Address.getByType(form, Constants.AddressTypes.MAIL);
-      substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
-          substituteCareProvider, mailingAddress);
-
-      SubstituteCareProvider storedSubstituteCareProvider = substituteCareProviderDao.create(substituteCareProvider);
-
-      String prprvdrCd = i == 0 ? "Y" : "N";
-      String scprvdInd = i == 0 ? "N" : "Y";
-      PlacementHomeInformation placementHomeInformation = substituteCareProviderMapper.toPlacementHomeInformation(
-          storedPlacementHome, substituteCareProvider, prprvdrCd, scprvdInd);
-
-      placementHomeInformationDao.create(placementHomeInformation);
-
-      SubstituteCareProviderUc substituteCareProviderUc = substituteCareProviderMapper.toSubstituteCareProviderUC(
-          storedSubstituteCareProvider.getIdentifier(), applicantDTO);
-
-      substituteCareProviderUCDao.create(substituteCareProviderUc);
-    }
-  }
 
   RFA1bFormDTO get1BForm(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
     List<RFA1bFormDTO> rfa1bForms = form.getRfa1bForms();
@@ -459,6 +461,74 @@ public class FacilityService implements CrudsService {
     placementHomeUc.setPkplcHmt(persistedPlacementHome.getIdentifier());
 
     return placementHomeUcDao.create(placementHomeUc);
+  }
+
+  private void storeSubstituteCareProvider(RFA1aFormDTO form, PlacementHome storedPlacementHome) {
+    List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
+        .orElse(Collections.emptyList());
+    for (int i = 0; i < applicants.size(); i++) {
+      ApplicantDTO applicantDTO = applicants.get(i);
+
+      SubstituteCareProvider substituteCareProvider =
+          substituteCareProviderMapper.toSubstituteCareProvider(applicantDTO);
+
+      RFA1bFormDTO bForm = get1BForm(form, applicantDTO);
+      substituteCareProviderMapper.toSubstituteCareProvider(substituteCareProvider, bForm);
+
+      RFAAddressDTO residentialAddress = Utils.Address
+          .getByType(form, Constants.AddressTypes.RESIDENTIAL);
+      substituteCareProviderMapper.toSubstituteCareProviderFromResidentialAddress(
+          substituteCareProvider, residentialAddress);
+
+      RFAAddressDTO mailingAddress = Utils.Address.getByType(form, Constants.AddressTypes.MAIL);
+      substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
+          substituteCareProvider, mailingAddress);
+
+      SubstituteCareProvider storedSubstituteCareProvider = substituteCareProviderDao
+          .create(substituteCareProvider);
+
+      String prprvdrCd = i == 0 ? "Y" : "N";
+      String scprvdInd = i == 0 ? "N" : "Y";
+      PlacementHomeInformation placementHomeInformation = substituteCareProviderMapper
+          .toPlacementHomeInformation(
+              storedPlacementHome, substituteCareProvider, prprvdrCd, scprvdInd);
+
+      placementHomeInformationDao.create(placementHomeInformation);
+
+      SubstituteCareProviderUc substituteCareProviderUc = substituteCareProviderMapper
+          .toSubstituteCareProviderUC(
+              storedSubstituteCareProvider.getIdentifier(), applicantDTO);
+
+      substituteCareProviderUCDao.create(substituteCareProviderUc);
+    }
+  }
+
+  private void storeOtherChildren(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
+    List<MinorChildDTO> minorChildren = form.getMinorChildren();
+
+    minorChildren.forEach(minorChildDTO -> {
+      OtherChildrenInPlacementHome otherChild = otherChildMapper.toOtherChild(minorChildDTO);
+      otherChild.setIdentifier(Utils.Id.generate());
+      otherChild.setLstUpdId(Id.getStaffPersonId());
+      otherChild.setLstUpdTs(LocalDateTime.now());
+      otherChild.setFkplcHmT(persistedPlacementHome.getIdentifier());
+
+      otherChildrenDao.create(otherChild);
+    });
+  }
+
+  private void storeOtherAdults(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
+    List<OtherAdultDTO> otherAdults = form.getOtherAdults();
+
+    otherAdults.forEach(otherAdultDTO -> {
+      OtherAdultsInPlacementHome otherAdult = otherAdultMapper.toOtherAdult(otherAdultDTO);
+      otherAdult.setIdentifier(Utils.Id.generate());
+      otherAdult.setLstUpdId(Id.getStaffPersonId());
+      otherAdult.setLstUpdTs(LocalDateTime.now());
+      otherAdult.setFkplcHmT(persistedPlacementHome.getIdentifier());
+
+      otherAdultDao.create(otherAdult);
+    });
   }
 
 }

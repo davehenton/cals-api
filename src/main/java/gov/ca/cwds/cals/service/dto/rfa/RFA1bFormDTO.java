@@ -12,7 +12,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

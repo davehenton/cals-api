@@ -21,6 +21,8 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 public class RFA1aMinorChildrenResourceTest extends
     BaseExternalEntityApiTest<MinorChildDTO> {
 
+  public static final String FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON = "fixtures/rfa/rfa-1a-minor-children.json";
+
   @Override
   protected BaseExternalEntityApiHelper<MinorChildDTO> getExternalEntityApiHelper() {
     TestExternalEntityConfiguration<MinorChildDTO> configuration =
@@ -32,7 +34,7 @@ public class RFA1aMinorChildrenResourceTest extends
 
           @Override
           protected String getCreateFixture() {
-            return "fixtures/rfa/rfa-1a-minor-children.json";
+            return FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON;
           }
 
           @Override

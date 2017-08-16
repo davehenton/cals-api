@@ -1,5 +1,8 @@
 package gov.ca.cwds.cals;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
@@ -8,15 +11,11 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
+import java.util.List;
+import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-
-import java.util.List;
-import java.util.Optional;
-
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  * @author CALS API Team
@@ -45,6 +44,10 @@ public final class Utils {
 
   public static class Phone {
 
+    private Phone() {
+
+    }
+
     public static String formatNumber(PhoneDTO phone) {
       String number = phone.getNumber();
       if (phone.getExtension() != null) {
@@ -53,15 +56,17 @@ public final class Utils {
       return number;
     }
 
-    private Phone() {
-    }
+
   }
 
   public static class Id {
 
     public static final String DEFAULT_USER_ID = "0X5";
 
-    public static String generate() {
+    private Id() {
+    }
+
+    public static synchronized String generate() {
       return CmsKeyIdGenerator.generate(getStaffPersonId());
     }
 
@@ -81,11 +86,13 @@ public final class Utils {
       return staffPersonId;
     }
 
-    private Id() {
-    }
   }
 
   public static class Applicant {
+
+    private Applicant() {
+    }
+
     public static String getCaliforniaDriverLicense(ApplicantDTO applicant, String defaultValue) {
       if (applicant.getDriverLicenseState() != null) {
         Long stateId = applicant.getDriverLicenseState().getId();
@@ -96,12 +103,13 @@ public final class Utils {
       return defaultValue;
     }
 
-    private Applicant() {
-    }
   }
 
   public static class Address {
 
+    private Address() {
+    }
+    
     public static RFAAddressDTO getByType(RFA1aFormDTO rfa1aFormDTO, String type) {
       ResidenceDTO residence = rfa1aFormDTO.getResidence();
       if (residence == null) {
@@ -129,11 +137,13 @@ public final class Utils {
       return numberAndName[numberAndName.length - 1];
     }
 
-    private Address() {
-    }
   }
 
   public static class BooleanToString {
+
+    private BooleanToString() {
+    }
+
     public static String resolve(Boolean flag, String selectedValue, String rejectedValue) {
       if (flag == null) {
         return null;
@@ -144,7 +154,5 @@ public final class Utils {
       return rejectedValue;
     }
 
-    private BooleanToString() {
-    }
   }
 }
