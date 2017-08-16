@@ -15,6 +15,7 @@ import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.CountyTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.EducationLevelTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.GenderTypeDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.PhoneNumberTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.StateTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
@@ -22,6 +23,7 @@ import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.OtherAdultsInPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.OtherChildrenInPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PhoneContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeInformationDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeUcDao;
@@ -37,12 +39,14 @@ import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
@@ -70,6 +74,7 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
@@ -127,6 +132,9 @@ public class FacilityService implements CrudsService {
   private PlacementHomeInformationDao placementHomeInformationDao;
 
   @Inject
+  private PhoneContactDetailDao phoneContactDetailDao;
+
+  @Inject
   private OtherChildrenInPlacementHomeDao otherChildrenDao;
 
   @Inject
@@ -134,6 +142,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private CountiesDao countiesDao;
+
+  @Inject
+  private PhoneNumberTypeDao phoneNumberTypeDao;
 
   @Inject
   private FacilityMapper facilityMapper;
@@ -149,6 +160,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private SubstituteCareProviderMapper substituteCareProviderMapper;
+
+  @Inject
+  private PhoneContactDetailMapper phoneContactDetailMapper;
 
   @Inject
   private FasFacilityMapper fasFacilityMapper;
@@ -400,6 +414,16 @@ public class FacilityService implements CrudsService {
               id -> Optional.ofNullable(educationLevelTypeDao.find(id))
                   .ifPresent(applicantDTO::setHighestEducationLevel)
           );
+
+      Optional.ofNullable(applicantDTO.getPhones())
+          .ifPresent(
+              phoneDTOS -> phoneDTOS.forEach(
+                  phoneDTO -> Optional.ofNullable(phoneDTO.getPhoneType())
+                      .map(PhoneNumberType::getId).ifPresent(
+                          id -> Optional.ofNullable(phoneNumberTypeDao.find(id))
+                              .ifPresent(phoneDTO::setPhoneType))
+              )
+          );
     }
 
     List<RFAAddressDTO> addresses = Optional.ofNullable(formDTO.getResidence())
@@ -411,8 +435,8 @@ public class FacilityService implements CrudsService {
       );
     }
 
-    formDTO.getMinorChildren().forEach(this::enrichMinirChild);
-
+    Optional.ofNullable(formDTO.getMinorChildren())
+        .ifPresent(list -> list.forEach(this::enrichMinirChild));
 
   }
 
@@ -500,7 +524,22 @@ public class FacilityService implements CrudsService {
               storedSubstituteCareProvider.getIdentifier(), applicantDTO);
 
       substituteCareProviderUCDao.create(substituteCareProviderUc);
+
+      storePhoneContactDetails(applicantDTO, substituteCareProvider.getIdentifier());
     }
+  }
+
+  private void storePhoneContactDetails(ApplicantDTO applicantDTO,
+      String substituteCareProviderId) {
+
+    Optional.ofNullable(applicantDTO.getPhones()).ifPresent(
+        phoneDTOS -> phoneDTOS.forEach(phoneDTO -> {
+          PhoneContactDetail phoneContactDetail = phoneContactDetailMapper
+              .toPhoneContactDetail(phoneDTO, substituteCareProviderId);
+          phoneContactDetailDao.create(phoneContactDetail);
+        })
+    );
+
   }
 
   private void storeOtherChildren(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
