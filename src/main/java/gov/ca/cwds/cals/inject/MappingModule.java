@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeNotes;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapperImpl;
 import gov.ca.cwds.cals.service.mapper.CountyMapper;
@@ -44,10 +45,11 @@ public class MappingModule extends AbstractModule {
         bind(ComplaintMapper.class).to(ComplaintMapperImpl.class).asEagerSingleton();
         bind(CountyMapper.class).to(CountyMapperImpl.class).asEagerSingleton();
         bind(FacilityTypeMapper.class).to(FacilityTypeMapperImpl.class).asEagerSingleton();
-        bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapperImpl.class)
-            .asEagerSingleton();
 
         bind(RFA1aFormMapper.class).to(RFA1aFormMapperImpl.class).asEagerSingleton();
+        bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapperImpl.class)
+            .asEagerSingleton();
+        bind(PlacementHomeNotes.class).to(PlacementHomeNotesImpl.class).asEagerSingleton();
         bind(OtherChildrenInPlacementHomeMapper.class)
             .to(OtherChildrenInPlacementHomeMapperImpl.class).asEagerSingleton();
         bind(OtherAdultsInPlacementHomeMapper.class).to(OtherAdultsInPlacementHomeMapperImpl.class)

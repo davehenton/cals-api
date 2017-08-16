@@ -434,6 +434,8 @@ public class FacilityService implements CrudsService {
 
     storeSubstituteCareProvider(form, storedPlacementHome);
 
+//    storePlacementHomeNotes(storedPlacementHome.getIdentifier());
+
     storeOtherChildren(form, storedPlacementHome);
 
     storeOtherAdults(form, storedPlacementHome);
