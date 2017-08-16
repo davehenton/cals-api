@@ -41,22 +41,22 @@ public interface OtherAdultsInPlacementHomeMapper {
 
     String firstName = otherAdultDTO.getFirstName();
     if (StringUtils.isNoneEmpty(firstName)) {
-      nameBuilder.append(" ").append(firstName);
+      nameBuilder.append(' ').append(firstName);
     }
 
     String middleName = otherAdultDTO.getMiddleName();
     if (StringUtils.isNoneEmpty(middleName)) {
-      nameBuilder.append(" ").append(middleName);
+      nameBuilder.append(' ').append(middleName);
     }
 
     String lastName = otherAdultDTO.getLastName();
     if (StringUtils.isNoneEmpty(lastName)) {
-      nameBuilder.append(" ").append(lastName);
+      nameBuilder.append(' ').append(lastName);
     }
 
     NameSuffixType nameSuffix = otherAdultDTO.getNameSuffix();
     if (nameSuffix != null) {
-      nameBuilder.append(" ").append(nameSuffix.getValue());
+      nameBuilder.append(' ').append(nameSuffix.getValue());
     }
 
     target.setOthAdltnm(nameBuilder.toString());
