@@ -11,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 
 /**
@@ -23,12 +24,13 @@ public class DBUnitAssertHelper {
   private DBUnitSupport dbUnitSupport;
   private String fixture;
   private DataFilter filter;
+  private ReplacementDataSet expectedDataSet;
 
   public DBUnitAssertHelper(DBUnitSupport dbUnitSupport) {
     this.dbUnitSupport = dbUnitSupport;
   }
 
-  public void addFixture(String fixturePath) throws URISyntaxException {
+  public void addFixture(String fixturePath) throws Exception {
     processFixture(fixturePath, prepareInitialParametersMap());
   }
 
@@ -36,6 +38,11 @@ public class DBUnitAssertHelper {
     VelocityHelper velocityHelper = new VelocityHelper();
     velocityHelper.setParameters(parameters);
     this.fixture = velocityHelper.process(fixturePath);
+    try {
+      expectedDataSet = getReplacementDataSet(fixture);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   private Map<String, Object> prepareInitialParametersMap() throws URISyntaxException {
@@ -65,17 +72,27 @@ public class DBUnitAssertHelper {
   }
 
   public void assertEqualsIgnoreCols(String[] ignoreCols) throws Exception {
-    try (InputStream is = IOUtils.toInputStream(fixture, "UTF-8")) {
-      IDataSet expectedDataset = new FlatXmlDataSetBuilder().build(is);
-      ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataset, tableName);
-      ITable actualData = dbUnitSupport.getTableFromDB(tableName);
-      if (filter != null) {
-        actualData = dbUnitSupport.filterByColumnAndValue(
-            actualData, filter.getFilterColumnName(), filter.getFilterColumnValue());
-      }
-
-      Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
+    ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataSet, tableName);
+    ITable actualData = dbUnitSupport.getTableFromDB(tableName);
+    if (filter != null) {
+      actualData = dbUnitSupport.filterByColumnAndValue(
+          actualData, filter.getFilterColumnName(), filter.getFilterColumnValue());
     }
+    Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
   }
 
+  public static ReplacementDataSet getReplacementDataSet(IDataSet dataSet) throws Exception {
+    ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
+    replacementDataSet.addReplacementObject("[NULL]", null);
+    return replacementDataSet;
+  }
+
+  private ReplacementDataSet getReplacementDataSet(String fixture) throws Exception {
+    InputStream is = IOUtils.toInputStream(fixture, "UTF-8");
+    return getReplacementDataSet(new FlatXmlDataSetBuilder().build(is));
+  }
+
+  public ReplacementDataSet getExpectedDataSet() {
+    return expectedDataSet;
+  }
 }

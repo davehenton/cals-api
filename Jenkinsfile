@@ -74,7 +74,7 @@ node ('tpt2-slave'){
       rtGradle.deployer repo:'libs-snapshot', server: serverArti
 	    //rtGradle.deployer repo:'libs-release', server: serverArti
 	    rtGradle.deployer.deployArtifacts = true
-		buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'artifactoryPublish'
+		buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publish'
 		rtGradle.deployer.deployArtifacts = false
 	}
 	stage ('Build Docker'){

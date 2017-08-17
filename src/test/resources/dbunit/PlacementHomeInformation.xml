@@ -1,0 +1,20 @@
+<dataset>
+  <HM_SCP_T
+    LICNSEE_CD="U"
+    CRPRVDR_CD="Y"
+    FKSB_PVDRT="$substituteCareProviderId1"
+    FKPLC_HM_T="$placementHomeId"
+    PRPRVDR_CD="Y"
+    CDS_PRSN=""
+    SCPRVD_IND="N"
+  />
+  <HM_SCP_T
+    LICNSEE_CD="U"
+    CRPRVDR_CD="Y"
+    FKSB_PVDRT="$substituteCareProviderId2"
+    FKPLC_HM_T="$placementHomeId"
+    PRPRVDR_CD="N"
+    CDS_PRSN=""
+    SCPRVD_IND="Y"
+  />
+</dataset>
