@@ -10,12 +10,17 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -59,9 +64,8 @@ public class RFAHelper {
   }
 
   public ApplicantDTO createValidApplicant() throws IOException {
-    ApplicantDTO applicantDTO = clientTestRule.getMapper()
+    return clientTestRule.getMapper()
         .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
-    return applicantDTO;
   }
 
   public ApplicantDTO postApplicant(long formId, ApplicantDTO applicantDTO) {
@@ -109,11 +113,13 @@ public class RFAHelper {
   public static PhoneDTO createPhone() {
     return createPhone("1234567890", "1234567", false, createPhoneNumberType());
   }
+
   public static PhoneDTO createPhoneNoExtension() {
     return createPhone("1234567890", null, false, createPhoneNumberType());
   }
 
-  public static PhoneDTO createPhone(String number, String extension, boolean preferred, PhoneNumberType phoneType) {
+  public static PhoneDTO createPhone(String number, String extension, boolean preferred,
+      PhoneNumberType phoneType) {
     PhoneDTO phone = new PhoneDTO();
     phone.setNumber(number);
     phone.setExtension(extension);
@@ -121,4 +127,61 @@ public class RFAHelper {
     phone.setPhoneType(phoneType);
     return phone;
   }
+
+  public RFA1bFormDTO getRfa1bForm() throws IOException {
+    return clientTestRule.getMapper()
+        .readValue(fixture(RFA1bResourceTest.RFA1B_FORM_FIXTURE_PATH), RFA1bFormDTO.class);
+  }
+
+  public RFA1bFormDTO postRfa1bForm(Long formId, RFA1bFormDTO rfa1bFormDTO) {
+    WebTarget target =
+        clientTestRule.target(
+            API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1B_FORMS);
+    return target.request(MediaType.APPLICATION_JSON).post(
+        Entity.entity(rfa1bFormDTO, MediaType.APPLICATION_JSON_TYPE), RFA1bFormDTO.class);
+  }
+
+  public OtherAdultDTO postOtherAdult(Long formId, OtherAdultDTO otherAdult) {
+    WebTarget target =
+        clientTestRule.target(
+            API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_OTHER_ADULTS);
+    return target.request(MediaType.APPLICATION_JSON).post(
+        Entity.entity(otherAdult, MediaType.APPLICATION_JSON_TYPE), OtherAdultDTO.class);
+  }
+
+  public MinorChildDTO postMinorChild(Long formId, MinorChildDTO minorChild) {
+    WebTarget target =
+        clientTestRule.target(
+            API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_MINOR_CHILDREN);
+    return target.request(MediaType.APPLICATION_JSON).post(
+        Entity.entity(minorChild, MediaType.APPLICATION_JSON_TYPE), MinorChildDTO.class);
+  }
+
+  public List<OtherAdultDTO> createOtherAdults(Long formId) throws Exception {
+    List<OtherAdultDTO> otherAdultsDTOs = new ArrayList<>(2);
+    for (int i = 0; i < 2; i++) {
+      OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
+          .readValue(fixture(RFA1aOtherAdultsResourceTest.FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON),
+              OtherAdultDTO.class);
+      otherAdultDTO.setFirstName(otherAdultDTO.getFirstName() + i);
+      otherAdultDTO.setLastName(otherAdultDTO.getLastName() + i);
+      otherAdultsDTOs.add(postOtherAdult(formId, otherAdultDTO));
+    }
+    return otherAdultsDTOs;
+  }
+
+  public List<MinorChildDTO> createMinorChildren(Long formId) throws Exception {
+    List<MinorChildDTO> minorChildDTOs = new ArrayList<>(2);
+    for (int i = 0; i < 2; i++) {
+      MinorChildDTO minorChildDTO = clientTestRule.getMapper()
+          .readValue(
+              fixture(RFA1aMinorChildrenResourceTest.FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON),
+              MinorChildDTO.class);
+      minorChildDTO.setOtherRelativeFirstName(minorChildDTO.getOtherRelativeFirstName() + i);
+      minorChildDTO.setOtherRelativeLastName(minorChildDTO.getOtherRelativeLastName() + i);
+      minorChildDTOs.add(postMinorChild(formId, minorChildDTO));
+    }
+    return minorChildDTOs;
+  }
+
 }

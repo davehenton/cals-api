@@ -14,6 +14,8 @@ import javax.ws.rs.core.GenericType;
 public class RFA1aOtherAdultsResourceTest extends
     BaseExternalEntityApiTest<OtherAdultDTO> {
 
+  public static final String FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON = "fixtures/rfa/rfa-1a-other-adults.json";
+
   @Override
   protected BaseExternalEntityApiHelper<OtherAdultDTO> getExternalEntityApiHelper() {
 
@@ -26,7 +28,7 @@ public class RFA1aOtherAdultsResourceTest extends
 
           @Override
           protected String getCreateFixture() {
-            return "fixtures/rfa/rfa-1a-other-adults.json";
+            return FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON;
           }
 
           @Override
