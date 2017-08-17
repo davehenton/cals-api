@@ -1,11 +1,14 @@
 package gov.ca.cwds.cals.service.mapper;
 
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import java.time.LocalDate;
@@ -18,7 +21,7 @@ import org.mapstruct.MappingTarget;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = {StringUtils.class, LocalDate.class, LocalDateTime.class, Utils.class})
+@Mapper(imports = {StringUtils.class, LocalDate.class, LocalDateTime.class, Utils.class, Constants.class})
 public interface SubstituteCareProviderMapper {
 
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
@@ -200,14 +203,15 @@ public interface SubstituteCareProviderMapper {
   @Mapping(target = "crprvdrCd", constant = "Y")
   @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
-  @Mapping(target = "fksbPvdrt", source = "substituteCareProvider.identifier")
-  @Mapping(target = "fkplcHmT", source = "placementHome.identifier")
-  @Mapping(target = "prprvdrCd", source = "prprvdrCd")
+  @Mapping(target = "fksbPvdrt", source = "substituteCareProviderId")
+  @Mapping(target = "fkplcHmT", source = "placementHomeId")
+  @Mapping(target = "prprvdrCd",
+      expression = "java(Utils.Applicant.isPrimary(form, applicant) ? Constants.Y : Constants.N)")
   @Mapping(target = "cdsPrsn", constant = " ")
-  @Mapping(target = "scprvdInd", source = "scprvdInd")
+  @Mapping(target = "scprvdInd",
+      expression = "java(Utils.Applicant.isPrimary(form, applicant) ? Constants.N : Constants.Y)")
   PlacementHomeInformation toPlacementHomeInformation(
-      PlacementHome placementHome, SubstituteCareProvider substituteCareProvider, String prprvdrCd,
-      String scprvdInd);
+      RFA1aFormDTO form, ApplicantDTO applicant, String placementHomeId, String substituteCareProviderId);
 
   @Mapping(target = "pksbPvdrt", source = "identifier")
   @Mapping(target = "caDlicNo",
