@@ -6,9 +6,9 @@ package gov.ca.cwds.cals.persistence;
 public class DataFilter {
 
   private String filterColumnName;
-  private String filterColumnValue;
+  private Object filterColumnValue;
 
-  public DataFilter(String filterColumnName, String filterColumnValue) {
+  public DataFilter(String filterColumnName, Object filterColumnValue) {
     this.filterColumnName = filterColumnName;
     this.filterColumnValue = filterColumnValue;
   }
@@ -17,7 +17,7 @@ public class DataFilter {
     return filterColumnName;
   }
 
-  public String getFilterColumnValue() {
+  public Object getFilterColumnValue() {
     return filterColumnValue;
   }
 }

@@ -132,6 +132,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     testIfPlacementHomeWasCreatedProperly(placementHomeId);
     testIfPlacementHomeUCWasCreatedProperly();
 
+    testIfPlacementHomeNotesWasCreatedProperly(placementHomeId);
+
     testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(placementHomeId);
 
     testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId(), otherAdultDTOs);
@@ -204,6 +206,19 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .setTestedTableName("PLCHM_UC")
         .build()
         .assertEqualsIgnoreCols(new String[]{"PKPLC_HMT", "LST_UPD_ID", "LST_UPD_TS"});
+  }
+
+  private void testIfPlacementHomeNotesWasCreatedProperly(String placementHomeId) throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/PlacementHomeNotes.xml")
+        .setTestedTableName("PLCHM_UC")
+        .appendTableFilter("FKPLC_HM_T", placementHomeId)
+        .build();
+    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("$placementHomeId", placementHomeId);
+    expectedDataSet.addReplacementObject("[CURRENT_DATE]", LocalDate.now().toString());
+
+    helper.assertEqualsIgnoreCols(new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
   private void testIfPlacementHomeInformationWasCreatedProperly(String placementHomeId,

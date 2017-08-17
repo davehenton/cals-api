@@ -1,0 +1,9 @@
+<dataset>
+  <HMNOTE_T
+    RECEIVE_DT="[CURRENT_DATE]"
+    REF_LICIND="N"
+    SUBMITR_NM=""
+    FKPLC_HM_T="$placementHomeId"
+    COMNT_DSC=""
+  />
+</dataset>

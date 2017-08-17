@@ -120,7 +120,7 @@ public class DBUnitSupport {
     this.schema = schema;
   }
 
-  public ITable filterByColumnAndValue(ITable table, String column, String filterValue)
+  public ITable filterByColumnAndValue(ITable table, String column, Object filterValue)
       throws DataSetException {
     return doFilter(table, new DataFilter(column, filterValue));
   }
