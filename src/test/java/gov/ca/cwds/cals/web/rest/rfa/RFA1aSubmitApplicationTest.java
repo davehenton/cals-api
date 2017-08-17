@@ -108,6 +108,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     driverLicenseState.setId(25L);
     driverLicenseState.setValue("Maryland");
     secondApplicant.setDriverLicenseState(driverLicenseState);
+    secondApplicant.getEthnicity().setId(2L);
+    secondApplicant.getEthnicity().setValue("American Indian");
 
     rfaHelper.postApplicant(form.getId(), secondApplicant);
     rfaHelper.putResidence(form.getId(), getResidenceDTO());
@@ -155,7 +157,11 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     testIfPhoneContactDetailsWasCreatedProperly(substituteCareProviderId1);
     testIfPhoneContactDetailsWasCreatedProperly(substituteCareProviderId2);
+
+    testIfClientScpEthnicityWasCreatedProperly(substituteCareProviderId1, "820");
+    testIfClientScpEthnicityWasCreatedProperly(substituteCareProviderId2, "821");
   }
+
 
   private void testIfPlacementHomeWasCreatedProperly(String placementHomeId) throws Exception {
     DBUnitAssertHelper.builder(dbUnitSupport)
@@ -266,6 +272,21 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .assertEqualsIgnoreCols(new String[]{"THIRD_ID", "ESTBLSH_ID", "LST_UPD_ID", "LST_UPD_TS"});
 
 
+  }
+
+  private void testIfClientScpEthnicityWasCreatedProperly(String substituteCareProviderId,
+      String ethnicityId)
+      throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/ClientScpEthnicity.xml")
+        .appendTemplateParameter("scpId", substituteCareProviderId)
+        .appendTemplateParameter("ethnicityId", ethnicityId)
+        .setTestedTableName("CLSCP_ET")
+        .appendTableFilter("ESTBLSH_ID", substituteCareProviderId)
+        .build();
+
+    helper
+        .assertEqualsIgnoreCols(new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
   private void testIfOtherAdultsWasCreatedProperly(String placementHomeId,

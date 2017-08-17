@@ -40,7 +40,7 @@ public class PhoneContactDetail implements PersistentObject {
    */
   @Basic
   @Column(name = "PHONE_NO", nullable = false, precision = 0)
-  private int phoneNo;
+  private long phoneNo;
 
   /**
    * PHONE_EXTENSION_NUMBER - The phone extension number for the Substitute Care Provider.
@@ -98,11 +98,11 @@ public class PhoneContactDetail implements PersistentObject {
     this.thirdId = thirdId;
   }
 
-  public int getPhoneNo() {
+  public long getPhoneNo() {
     return phoneNo;
   }
 
-  public void setPhoneNo(int phoneNo) {
+  public void setPhoneNo(long phoneNo) {
     this.phoneNo = phoneNo;
   }
 

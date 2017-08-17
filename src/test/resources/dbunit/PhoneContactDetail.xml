@@ -13,7 +13,7 @@
   <PH_CNT_T
     THIRD_ID="${idntfr}"
     PHONE_NO="5347589803"
-    PHEXT_NO="0000001"
+    PHEXT_NO="1234567"
     PHN_TYP_CD="W"
     ESTBLSH_CD="S"
     ESTBLSH_ID="${scpId}"

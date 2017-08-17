@@ -1,0 +1,17 @@
+<!DOCTYPE dataset SYSTEM "$schemaPath">
+<dataset>
+  <OST_CHKT
+    IDENTIFIER=""
+    RCPNT_ID=""
+    RCPNT_CD=""
+    STATE_C=""
+    REGMNT_IND=""
+    REQUEST_DT=""
+    RECEIVE_DT=""
+    STATUS_DT=""
+    STATUS_CD=""
+    LST_UPD_ID=""
+    LST_UPD_TS=""
+    FKCOLTRL_T=""
+  />
+</dataset>

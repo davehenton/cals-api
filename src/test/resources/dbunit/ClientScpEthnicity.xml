@@ -1,0 +1,11 @@
+<!DOCTYPE dataset SYSTEM "$schemaPath">
+<dataset>
+  <CLSCP_ET
+    IDENTIFIER="${idntfr}"
+    ETHNCTYC="${ethnicityId}"
+    ESTBLSH_ID="${scpId}"
+    ESTBLSH_CD="S"
+    LST_UPD_ID=""
+    LST_UPD_TS=""
+  />
+</dataset>

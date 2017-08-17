@@ -14,10 +14,12 @@ import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.CountyTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.EducationLevelTypeDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.EthnicityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.GenderTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.PhoneNumberTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.StateTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
+import gov.ca.cwds.cals.persistence.dao.cms.ClientScpEthnicityDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
@@ -38,14 +40,17 @@ import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
 import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
 import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
@@ -66,6 +71,7 @@ import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
@@ -74,6 +80,7 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
@@ -135,6 +142,9 @@ public class FacilityService implements CrudsService {
   private PhoneContactDetailDao phoneContactDetailDao;
 
   @Inject
+  private ClientScpEthnicityDao clientScpEthnicityDao;
+
+  @Inject
   private OtherChildrenInPlacementHomeDao otherChildrenDao;
 
   @Inject
@@ -145,6 +155,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private PhoneNumberTypeDao phoneNumberTypeDao;
+
+  @Inject
+  private EthnicityTypeDao ethnicityTypeDao;
 
   @Inject
   private FacilityMapper facilityMapper;
@@ -175,6 +188,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private OtherChildrenInPlacementHomeMapper otherChildMapper;
+
+  @Inject
+  private OtherPeopleScpRelationshipMapper otherPeopleScpRelationshipMapper;
 
   @Inject
   private OtherAdultsInPlacementHomeMapper otherAdultMapper;
@@ -424,6 +440,11 @@ public class FacilityService implements CrudsService {
                               .ifPresent(phoneDTO::setPhoneType))
               )
           );
+
+      Optional.ofNullable(applicantDTO.getEthnicity()).map(EthnicityType::getId).ifPresent(
+          id -> Optional.ofNullable(ethnicityTypeDao.find(id))
+              .ifPresent(applicantDTO::setEthnicity)
+      );
     }
 
     List<RFAAddressDTO> addresses = Optional.ofNullable(formDTO.getResidence())
@@ -526,6 +547,7 @@ public class FacilityService implements CrudsService {
       substituteCareProviderUCDao.create(substituteCareProviderUc);
 
       storePhoneContactDetails(applicantDTO, substituteCareProvider.getIdentifier());
+      storeEthnicity(applicantDTO, substituteCareProvider.getIdentifier());
     }
   }
 
@@ -536,16 +558,29 @@ public class FacilityService implements CrudsService {
         phoneDTOS -> phoneDTOS.forEach(phoneDTO -> {
           PhoneContactDetail phoneContactDetail = phoneContactDetailMapper
               .toPhoneContactDetail(phoneDTO, substituteCareProviderId);
+          phoneContactDetail.setThirdId(Utils.Id.generate());
+          phoneContactDetail.setLstUpdId(Id.getStaffPersonId());
+          phoneContactDetail.setLstUpdTs(LocalDateTime.now());
           phoneContactDetailDao.create(phoneContactDetail);
         })
     );
 
   }
 
+  private void storeEthnicity(ApplicantDTO applicantDTO, String substituteCareProviderId) {
+    ClientScpEthnicity clientScpEthnicity = substituteCareProviderMapper
+        .toClientScpEthnicity(applicantDTO, substituteCareProviderId);
+    clientScpEthnicity.setIdentifier(Utils.Id.generate());
+    clientScpEthnicity.setLstUpdId(Id.getStaffPersonId());
+    clientScpEthnicity.setLstUpdTs(LocalDateTime.now());
+    clientScpEthnicityDao.create(clientScpEthnicity);
+  }
+
   private void storeOtherChildren(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
     List<MinorChildDTO> minorChildren = form.getMinorChildren();
 
     minorChildren.forEach(minorChildDTO -> {
+
       OtherChildrenInPlacementHome otherChild = otherChildMapper.toOtherChild(minorChildDTO);
       otherChild.setIdentifier(Utils.Id.generate());
       otherChild.setLstUpdId(Id.getStaffPersonId());
@@ -554,6 +589,14 @@ public class FacilityService implements CrudsService {
 
       otherChildrenDao.create(otherChild);
     });
+  }
+
+  private void storeOtherPeopleScpRelationship(RelationshipToApplicantDTO relationshipToApplicant,
+      String relativeId) {
+
+    OtherPeopleScpRelationship relationship = otherPeopleScpRelationshipMapper
+        .toOtherPeopleScpRelationship(relationshipToApplicant, relativeId);
+
   }
 
   private void storeOtherAdults(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {

@@ -67,6 +67,11 @@ public final class Utils {
     }
 
     public static synchronized String generate() {
+      try {
+        Thread.sleep(10L);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
       return CmsKeyIdGenerator.generate(getStaffPersonId());
     }
 
