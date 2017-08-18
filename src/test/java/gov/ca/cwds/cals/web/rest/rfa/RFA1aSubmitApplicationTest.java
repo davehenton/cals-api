@@ -185,7 +185,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .setTestedTableName("OST_CHKT")
         .appendTableFilter("RCPNT_ID", recipientId)
         .build()
-        .assertEqualsIgnoreCols(new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS"});
+        .assertEquals(new String[]{"IDENTIFIER", "LST_UPD_TS"});
   }
 
   private String[] getSubstituteCareProviderIds(String placementHomeId) throws Exception {
