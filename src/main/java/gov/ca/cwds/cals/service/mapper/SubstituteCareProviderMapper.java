@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
+import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
@@ -221,4 +222,13 @@ public interface SubstituteCareProviderMapper {
   @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   SubstituteCareProviderUc toSubstituteCareProviderUC(String identifier, ApplicantDTO applicantDTO);
+
+  @Mapping(target = "identifier", ignore = true)
+  @Mapping(target = "ethnctyc", source = "applicantDTO.ethnicity.cwsId")
+  @Mapping(target = "estblshId", source = "substituteCareProviderId")
+  @Mapping(target = "estblshCd", constant = "S")
+  @Mapping(target = "lstUpdId", ignore = true)
+  @Mapping(target = "lstUpdTs", ignore = true)
+  ClientScpEthnicity toClientScpEthnicity(ApplicantDTO applicantDTO,
+      String substituteCareProviderId);
 }
