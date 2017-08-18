@@ -1,9 +1,8 @@
-<!DOCTYPE dataset SYSTEM "$schemaPath">
 <dataset>
   <OPSCPRLT
     IDENTIFIER="${idntfr}"
     CLNTRELC="0"
-    LST_UPD_ID=""
+    LST_UPD_ID="0X5"
     LST_UPD_TS=""
     FKOTH_ADLT="[NULL]"
     FKOTH_KIDT="${childId}"
@@ -12,7 +11,7 @@
   <OPSCPRLT
     IDENTIFIER="${idntfr}"
     CLNTRELC="0"
-    LST_UPD_ID=""
+    LST_UPD_ID="0X5"
     LST_UPD_TS=""
     FKOTH_ADLT="${adultId}"
     FKOTH_KIDT="[NULL]"

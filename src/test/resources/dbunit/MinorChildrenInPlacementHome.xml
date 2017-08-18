@@ -1,11 +1,10 @@
-<!DOCTYPE dataset SYSTEM "$schemaPath">
 <dataset>
   <OTH_KIDT
     IDENTIFIER="idnfr"
     BIRTH_DT="2007-07-14"
     GENDER_CD="M"
     OTHCHLD_NM=""
-    LST_UPD_ID=""
+    LST_UPD_ID="0X5"
     LST_UPD_TS=""
     FKPLC_HM_T="plcmntHmId"
     YR_INC_AMT="[NULL]"
@@ -15,7 +14,7 @@
     BIRTH_DT="2007-07-14"
     GENDER_CD="M"
     OTHCHLD_NM=""
-    LST_UPD_ID=""
+    LST_UPD_ID="0X5"
     LST_UPD_TS=""
     FKPLC_HM_T="plcmntHmId"
     YR_INC_AMT="[NULL]"

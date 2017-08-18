@@ -47,7 +47,7 @@
     STREET_NM="Redoak Ct."
     STREET_NO="1702"
     ZIP_NO="98123"
-    LST_UPD_ID="SYS"
+    LST_UPD_ID="0X5"
     LST_UPD_TS="$LST_UPD_TS"
     ADDR_DSC="Directions here"
     SPCHAR_DSC=" "

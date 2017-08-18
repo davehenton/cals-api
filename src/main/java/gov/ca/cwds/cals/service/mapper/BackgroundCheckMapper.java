@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @Mapper(imports = {LocalDateTime.class, LocalDate.class, Utils.class})
 public interface BackgroundCheckMapper {
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
-  @Mapping(target = "rcpntCd", constant = "P")
-  @Mapping(target = "rcpntId", source = "placementHomeId")
+  @Mapping(target = "rcpntCd", ignore = true) // TODO: 8/18/2017
+  @Mapping(target = "rcpntId", ignore = true) // TODO: 8/18/2017
   @Mapping(target = "bkgrchkc", constant = "-1") // TODO: 8/17/2017
   @Mapping(target = "bkgrchkDt", expression = "java(LocalDate.now())") // TODO: 8/17/2017
   @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   @Mapping(target = "fkcoltrlT", ignore = true)  // TODO: 8/17/2017
-  BackgroundCheck toBackgroundCheck(String placementHomeId);
+  BackgroundCheck toBackgroundCheck(String stub);
 }

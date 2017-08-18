@@ -45,13 +45,8 @@ import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
@@ -493,41 +488,40 @@ public class FacilityService implements CrudsService {
                   .ifPresent(applicantDTO::setGender)
           );
 
-          Optional.ofNullable(applicantDTO.getHighestEducationLevel())
-              .ifPresent(
-                  educationLevelType -> Optional.ofNullable(educationLevelTypeDao.find(educationLevelType.getId()))
-                      .ifPresent(applicantDTO::setHighestEducationLevel)
+          Optional.ofNullable(applicantDTO.getHighestEducationLevel()).ifPresent(
+              educationLevelType -> Optional.ofNullable(educationLevelTypeDao.find(educationLevelType.getId()))
+                  .ifPresent(applicantDTO::setHighestEducationLevel)
               );
 
-      Optional.ofNullable(applicantDTO.getPhones())
-          .ifPresent(
-              phoneDTOS -> phoneDTOS.forEach(
-                  phoneDTO -> Optional.ofNullable(phoneDTO.getPhoneType())
-                      .map(PhoneNumberType::getId).ifPresent(
-                          id -> Optional.ofNullable(phoneNumberTypeDao.find(id))
+          Optional.ofNullable(applicantDTO.getPhones())
+              .ifPresent(
+                  phoneDTOS -> phoneDTOS.forEach(
+                      phoneDTO -> Optional.ofNullable(phoneDTO.getPhoneType()).ifPresent(
+                          phoneNumberType -> Optional.ofNullable(phoneNumberTypeDao.find(phoneNumberType.getId()))
                               .ifPresent(phoneDTO::setPhoneType))
-              )
-          );
+                  )
+              );
 
-      Optional.ofNullable(applicantDTO.getEthnicity()).map(EthnicityType::getId).ifPresent(
-          id -> Optional.ofNullable(ethnicityTypeDao.find(id))
-              .ifPresent(applicantDTO::setEthnicity)
-      );
-    }
+          Optional.ofNullable(applicantDTO.getEthnicity()).ifPresent(
+             ethnicityType -> Optional.ofNullable(ethnicityTypeDao.find(ethnicityType.getId()))
+                  .ifPresent(applicantDTO::setEthnicity)
+          );
+      });
 
     Optional.ofNullable(formDTO.getResidence())
         .map(ResidenceDTO::getAddresses)
         .orElse(Collections.emptyList()).forEach(address ->
-            Optional.ofNullable(address.getState()).map(StateType::getId).ifPresent(
-                id -> Optional.ofNullable(stateTypeDao.find(id)).ifPresent(address::setState)
+            Optional.ofNullable(address.getState()).ifPresent(
+                stateType -> Optional.ofNullable(stateTypeDao.find(stateType.getId()))
+                    .ifPresent(address::setState)
             ));
 
     Optional.ofNullable(formDTO.getMinorChildren())
-        .ifPresent(list -> list.forEach(this::enrichMinirChild));
+        .ifPresent(list -> list.forEach(this::enrichMinorChild));
 
   }
 
-  private void enrichMinirChild(MinorChildDTO minorChildDTO) {
+  private void enrichMinorChild(MinorChildDTO minorChildDTO) {
     GenderType genderType = minorChildDTO.getGender();
     String genderCwsShortCode = genderTypeDao.find(genderType.getPrimaryKey()).getCwsShortCode();
     genderType.setCwsShortCode(genderCwsShortCode);
@@ -540,25 +534,24 @@ public class FacilityService implements CrudsService {
 
     placementHome.setIdentifier(Utils.Id.generate());
     PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
+    String placementHomeId = storedPlacementHome.getIdentifier();
 
     storePlacementHomeUc(storedPlacementHome);
 
     storeExternalInterfaceMapper();
 
-    storeEmergencyContactDetail(storedPlacementHome.getIdentifier());
+    storeEmergencyContactDetail(placementHomeId);
 
-    storeBackgroundCheck(storedPlacementHome.getIdentifier());
+    storeBackgroundCheck();
+
+    storePlacementHomeNotes(placementHomeId);
+
+    storePlacementHomeProfile(form, placementHomeId);
 
     Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = storeSubstituteCareProviders(form,
         storedPlacementHome);
 
     storeOtherChildren(form, storedPlacementHome, rfaApplicantIdsMap);
-
-    storePlacementHomeNotes(storedPlacementHome.getIdentifier());
-
-    storePlacementHomeProfile(form);
-
-    storeOtherChildren(form, storedPlacementHome);
 
     storeOtherAdults(form, storedPlacementHome, rfaApplicantIdsMap);
 
@@ -576,8 +569,8 @@ public class FacilityService implements CrudsService {
     emergencyContactDetailDao.create(emergencyContactDetail);
   }
 
-  private void storeBackgroundCheck(String placementHomeId) {
-    BackgroundCheck backgroundCheck = backgroundCheckMapper.toBackgroundCheck(placementHomeId);
+  private void storeBackgroundCheck() {
+    BackgroundCheck backgroundCheck = backgroundCheckMapper.toBackgroundCheck("");
     backgroundCheckDao.create(backgroundCheck);
   }
 
@@ -656,13 +649,13 @@ public class FacilityService implements CrudsService {
     return rfaApplicantIdsMap;
   }
 
-  private void storePlacementHomeProfile(RFA1aFormDTO form) {
+  private void storePlacementHomeProfile(RFA1aFormDTO form, String placementHomeId) {
     Set<LanguageType> languageTypes = Optional.ofNullable(form.getResidence())
         .map(ResidenceDTO::getHomeLanguages)
         .orElse(Collections.emptySet());
     for (LanguageType languageType : languageTypes) {
       PlacementHomeProfile placementHomeProfile =
-          placementHomeProfileMapper.toPlacementHomeProfile(languageType, form.getPlacementHomeId());
+          placementHomeProfileMapper.toPlacementHomeProfile(languageType, placementHomeId);
       placementHomeProfileDao.create(placementHomeProfile);
     }
   }

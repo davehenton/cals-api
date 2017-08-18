@@ -16,7 +16,7 @@ public interface PlacementHomeNotesMapper {
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
   @Mapping(target = "receiveDt", expression = "java(LocalDate.now())")
   @Mapping(target = "refLicind", constant = "N")
-  @Mapping(target = "submitrNm", ignore = true)// TODO: 8/17/2017 mapping is required
+  @Mapping(target = "submitrNm", constant = " ")// TODO: 8/17/2017 mapping is required
   @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   @Mapping(target = "fkplcHmT", source = "placementHomeId")

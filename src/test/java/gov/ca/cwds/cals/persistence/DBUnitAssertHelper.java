@@ -5,17 +5,21 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.dbunit.Assertion;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
+import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 
 /**
@@ -72,16 +76,33 @@ public class DBUnitAssertHelper {
     filters.add(new DataFilter(filterColumnName, filterColumnValue));
   }
 
-  public void assertEqualsIgnoreCols(String[] ignoreCols) throws Exception {
+  public void assertEquals() throws Exception {
+    assertEquals(null, null);
+  }
+
+  public void assertEquals(String[] ignoreCols) throws Exception {
+    assertEquals(ignoreCols, null);
+  }
+
+  public void assertEquals(String[] ignoreCols, String sortedCols[]) throws Exception {
     ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataSet, tableName);
     ITable actualData = getActualTable();
+    if (ArrayUtils.isNotEmpty(sortedCols)) {
+      expectedData = new SortedTable(expectedData, sortedCols);
+      actualData = new SortedTable(actualData, sortedCols);
+    }
 
-    Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
+    if (ArrayUtils.isNotEmpty(ignoreCols)) {
+      Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
+    } else {
+      Assertion.assertEquals(expectedData, actualData);
+    }
   }
 
   private ReplacementDataSet getReplacementDataSet(IDataSet dataSet) throws Exception {
     ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
     replacementDataSet.addReplacementObject("[NULL]", null);
+    replacementDataSet.addReplacementObject("[CURRENT_DATE]", LocalDate.now().toString());
     return replacementDataSet;
   }
 
