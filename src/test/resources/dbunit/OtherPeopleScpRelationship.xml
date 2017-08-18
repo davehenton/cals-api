@@ -1,0 +1,21 @@
+<!DOCTYPE dataset SYSTEM "$schemaPath">
+<dataset>
+  <OPSCPRLT
+    IDENTIFIER="${idntfr}"
+    CLNTRELC="0"
+    LST_UPD_ID=""
+    LST_UPD_TS=""
+    FKOTH_ADLT="[NULL]"
+    FKOTH_KIDT="${childId}"
+    FKSB_PVDRT="${scpId}"
+  />
+  <OPSCPRLT
+    IDENTIFIER="${idntfr}"
+    CLNTRELC="0"
+    LST_UPD_ID=""
+    LST_UPD_TS=""
+    FKOTH_ADLT="${adultId}"
+    FKOTH_KIDT="[NULL]"
+    FKSB_PVDRT="${scpId}"
+  />
+</dataset>

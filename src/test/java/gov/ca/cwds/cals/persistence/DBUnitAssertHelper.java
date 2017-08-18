@@ -6,9 +6,13 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.dbunit.Assertion;
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
@@ -22,24 +26,32 @@ public class DBUnitAssertHelper {
 
   private String tableName;
   private DBUnitSupport dbUnitSupport;
-  private String fixture;
-  private DataFilter filter;
+  private List<DataFilter> filters = new LinkedList<>();
   private ReplacementDataSet expectedDataSet;
+  private ReplacementDataSet actualDataSet;
+  private String templatePath;
+  private Map<String, Object> templateParams = new HashMap<>();
 
-  public DBUnitAssertHelper(DBUnitSupport dbUnitSupport) {
+  private DBUnitAssertHelper(DBUnitSupport dbUnitSupport) {
+
     this.dbUnitSupport = dbUnitSupport;
-  }
-
-  public void addFixture(String fixturePath) throws Exception {
-    processFixture(fixturePath, prepareInitialParametersMap());
-  }
-
-  private void processFixture(String fixturePath, Map<String, Object> parameters) {
-    VelocityHelper velocityHelper = new VelocityHelper();
-    velocityHelper.setParameters(parameters);
-    this.fixture = velocityHelper.process(fixturePath);
     try {
-      expectedDataSet = getReplacementDataSet(fixture);
+      this.templateParams = prepareInitialParametersMap();
+    } catch (URISyntaxException e) {
+      throw new IllegalArgumentException(e);
+    }
+
+  }
+
+  private void setFixture(String templatePath) throws Exception {
+    this.templatePath = templatePath;
+  }
+
+  private void processTemplate() {
+    VelocityHelper velocityHelper = new VelocityHelper();
+    velocityHelper.setParameters(templateParams);
+    try {
+      expectedDataSet = getReplacementDataSet(velocityHelper.process(templatePath));
     } catch (Exception e) {
       throw new IllegalStateException(e);
     }
@@ -52,36 +64,22 @@ public class DBUnitAssertHelper {
     return parameters;
   }
 
-  public void addFixture(String fixturePath, Map<String, Object> parameters)
-      throws URISyntaxException {
-    Map<String, Object> initialParametersMap = prepareInitialParametersMap();
-    initialParametersMap.putAll(parameters);
-    processFixture(fixturePath, initialParametersMap);
-  }
-
-  public void setTableName(String tableName) {
+  private void setTableName(String tableName) {
     this.tableName = tableName;
   }
 
-  public String getTableName() {
-    return tableName;
-  }
-
-  public void addFilter(String filterColumnName, String filterColumnValue) {
-    this.filter = new DataFilter(filterColumnName, filterColumnValue);
+  private void addFilter(String filterColumnName, String filterColumnValue) {
+    filters.add(new DataFilter(filterColumnName, filterColumnValue));
   }
 
   public void assertEqualsIgnoreCols(String[] ignoreCols) throws Exception {
     ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataSet, tableName);
-    ITable actualData = dbUnitSupport.getTableFromDB(tableName);
-    if (filter != null) {
-      actualData = dbUnitSupport.filterByColumnAndValue(
-          actualData, filter.getFilterColumnName(), filter.getFilterColumnValue());
-    }
+    ITable actualData = getActualTable();
+
     Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
   }
 
-  public static ReplacementDataSet getReplacementDataSet(IDataSet dataSet) throws Exception {
+  private ReplacementDataSet getReplacementDataSet(IDataSet dataSet) throws Exception {
     ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
     replacementDataSet.addReplacementObject("[NULL]", null);
     return replacementDataSet;
@@ -94,5 +92,70 @@ public class DBUnitAssertHelper {
 
   public ReplacementDataSet getExpectedDataSet() {
     return expectedDataSet;
+  }
+
+  public ReplacementDataSet getActualDataSet() {
+    try {
+      return new ReplacementDataSet(dbUnitSupport.getSchemaDataSet());
+    } catch (DatabaseUnitException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  public ITable getActualTable() {
+    ITable actualTable = dbUnitSupport.getTableFromDB(tableName);
+    if (!filters.isEmpty()) {
+      try {
+        actualTable = dbUnitSupport
+            .doFilter(actualTable, filters.toArray(new DataFilter[filters.size()]));
+      } catch (DataSetException e) {
+        throw new IllegalStateException(e);
+      }
+    }
+    return actualTable;
+  }
+
+  public static DBUnitAssertHelperBuilder builder(DBUnitSupport dbUnitSupport) {
+    return new DBUnitAssertHelperBuilder(dbUnitSupport);
+  }
+
+  public static class DBUnitAssertHelperBuilder {
+
+    private DBUnitAssertHelper helper;
+
+    public DBUnitAssertHelperBuilder(DBUnitSupport dbUnitSupport) {
+      this.helper = new DBUnitAssertHelper(dbUnitSupport);
+    }
+
+    public DBUnitAssertHelperBuilder appendTemplateParameter(String name, Object value) {
+      helper.templateParams.put(name, value);
+      return this;
+    }
+
+    public DBUnitAssertHelperBuilder setExpectedResultTemplatePath(String fixturePath) {
+      try {
+        helper.setFixture(fixturePath);
+      } catch (Exception e) {
+        throw new IllegalArgumentException(e);
+      }
+      return this;
+    }
+
+    public DBUnitAssertHelperBuilder setTestedTableName(String tableName) {
+      helper.setTableName(tableName);
+      return this;
+    }
+
+    public DBUnitAssertHelperBuilder appendTableFilter(String filterColumnName,
+        String filterColumnValue) {
+      helper.addFilter(filterColumnName, filterColumnValue);
+      return this;
+    }
+
+    public DBUnitAssertHelper build() {
+      helper.processTemplate();
+      return helper;
+    }
+
   }
 }

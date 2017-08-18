@@ -16,6 +16,8 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CALS API Team
@@ -61,13 +63,31 @@ public final class Utils {
 
   public static class Id {
 
+    private static final Logger LOG = LoggerFactory.getLogger(Id.class);
+
     public static final String DEFAULT_USER_ID = "0X5";
+    private static final Object monitor = new Object();
+    private static String lastId;
 
     private Id() {
     }
 
-    public static synchronized String generate() {
-      return CmsKeyIdGenerator.generate(getStaffPersonId());
+    public static String generate() {
+      synchronized (monitor) {
+        String generated = null;
+        do {
+          generated = CmsKeyIdGenerator.generate(getStaffPersonId());
+          try {
+            monitor.wait(10L);
+          } catch (InterruptedException e) {
+            LOG.warn("Interrupted: " + e.getMessage(), e);
+            Thread.currentThread().interrupt();
+          }
+        } while (lastId != null && lastId.equals(generated));
+
+        lastId = generated;
+      }
+      return lastId;
     }
 
     public static String getStaffPersonId() {

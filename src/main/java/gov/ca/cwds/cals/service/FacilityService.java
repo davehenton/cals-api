@@ -14,14 +14,20 @@ import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.CountyTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.EducationLevelTypeDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.EthnicityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.GenderTypeDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.PhoneNumberTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.StateTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
+import gov.ca.cwds.cals.persistence.dao.cms.ClientScpEthnicityDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.OtherAdultsInPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.OtherChildrenInPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.OtherPeopleScpRelationshipDao;
+import gov.ca.cwds.cals.persistence.dao.cms.OutOfStateCheckDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PhoneContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeInformationDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeUcDao;
@@ -36,13 +42,19 @@ import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
 import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
+import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
+import gov.ca.cwds.cals.persistence.model.cms.OutOfStateCheck;
+import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
@@ -70,6 +82,9 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
+import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
+import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
@@ -81,7 +96,9 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -127,13 +144,31 @@ public class FacilityService implements CrudsService {
   private PlacementHomeInformationDao placementHomeInformationDao;
 
   @Inject
+  private PhoneContactDetailDao phoneContactDetailDao;
+
+  @Inject
+  private ClientScpEthnicityDao clientScpEthnicityDao;
+
+  @Inject
   private OtherChildrenInPlacementHomeDao otherChildrenDao;
 
   @Inject
   private OtherAdultsInPlacementHomeDao otherAdultDao;
 
   @Inject
+  private OtherPeopleScpRelationshipDao otherPeopleScpRelationshipDao;
+
+  @Inject
   private CountiesDao countiesDao;
+
+  @Inject
+  private PhoneNumberTypeDao phoneNumberTypeDao;
+
+  @Inject
+  private EthnicityTypeDao ethnicityTypeDao;
+
+  @Inject
+  private OutOfStateCheckDao outOfStateCheckDao;
 
   @Inject
   private FacilityMapper facilityMapper;
@@ -151,6 +186,9 @@ public class FacilityService implements CrudsService {
   private SubstituteCareProviderMapper substituteCareProviderMapper;
 
   @Inject
+  private PhoneContactDetailMapper phoneContactDetailMapper;
+
+  @Inject
   private FasFacilityMapper fasFacilityMapper;
 
   @Inject
@@ -163,7 +201,13 @@ public class FacilityService implements CrudsService {
   private OtherChildrenInPlacementHomeMapper otherChildMapper;
 
   @Inject
+  private OtherPeopleScpRelationshipMapper otherPeopleScpRelationshipMapper;
+
+  @Inject
   private OtherAdultsInPlacementHomeMapper otherAdultMapper;
+
+  @Inject
+  private OutOfStateCheckMapper outOfStateCheckMapper;
 
   @Inject
   private ClientDao clientDao;
@@ -400,6 +444,21 @@ public class FacilityService implements CrudsService {
               id -> Optional.ofNullable(educationLevelTypeDao.find(id))
                   .ifPresent(applicantDTO::setHighestEducationLevel)
           );
+
+      Optional.ofNullable(applicantDTO.getPhones())
+          .ifPresent(
+              phoneDTOS -> phoneDTOS.forEach(
+                  phoneDTO -> Optional.ofNullable(phoneDTO.getPhoneType())
+                      .map(PhoneNumberType::getId).ifPresent(
+                          id -> Optional.ofNullable(phoneNumberTypeDao.find(id))
+                              .ifPresent(phoneDTO::setPhoneType))
+              )
+          );
+
+      Optional.ofNullable(applicantDTO.getEthnicity()).map(EthnicityType::getId).ifPresent(
+          id -> Optional.ofNullable(ethnicityTypeDao.find(id))
+              .ifPresent(applicantDTO::setEthnicity)
+      );
     }
 
     List<RFAAddressDTO> addresses = Optional.ofNullable(formDTO.getResidence())
@@ -411,8 +470,8 @@ public class FacilityService implements CrudsService {
       );
     }
 
-    formDTO.getMinorChildren().forEach(this::enrichMinirChild);
-
+    Optional.ofNullable(formDTO.getMinorChildren())
+        .ifPresent(list -> list.forEach(this::enrichMinirChild));
 
   }
 
@@ -432,11 +491,12 @@ public class FacilityService implements CrudsService {
 
     storePlacementHomeUc(storedPlacementHome);
 
-    storeSubstituteCareProvider(form, storedPlacementHome);
+    Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = storeSubstituteCareProviders(form,
+        storedPlacementHome);
 
-    storeOtherChildren(form, storedPlacementHome);
+    storeOtherChildren(form, storedPlacementHome, rfaApplicantIdsMap);
 
-    storeOtherAdults(form, storedPlacementHome);
+    storeOtherAdults(form, storedPlacementHome, rfaApplicantIdsMap);
 
     return storedPlacementHome;
   }
@@ -463,9 +523,13 @@ public class FacilityService implements CrudsService {
     return placementHomeUcDao.create(placementHomeUc);
   }
 
-  private void storeSubstituteCareProvider(RFA1aFormDTO form, PlacementHome storedPlacementHome) {
+  private Map<Long, SubstituteCareProvider> storeSubstituteCareProviders(RFA1aFormDTO form,
+      PlacementHome storedPlacementHome) {
     List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
         .orElse(Collections.emptyList());
+
+    Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>();
+
     for (int i = 0; i < applicants.size(); i++) {
       ApplicantDTO applicantDTO = applicants.get(i);
 
@@ -487,6 +551,8 @@ public class FacilityService implements CrudsService {
       SubstituteCareProvider storedSubstituteCareProvider = substituteCareProviderDao
           .create(substituteCareProvider);
 
+      rfaApplicantIdsMap.put(applicantDTO.getId(), storedSubstituteCareProvider);
+
       String prprvdrCd = i == 0 ? "Y" : "N";
       String scprvdInd = i == 0 ? "N" : "Y";
       PlacementHomeInformation placementHomeInformation = substituteCareProviderMapper
@@ -500,24 +566,86 @@ public class FacilityService implements CrudsService {
               storedSubstituteCareProvider.getIdentifier(), applicantDTO);
 
       substituteCareProviderUCDao.create(substituteCareProviderUc);
+
+      storePhoneContactDetails(applicantDTO, substituteCareProvider.getIdentifier());
+      storeEthnicity(applicantDTO, substituteCareProvider.getIdentifier());
+      storeOutOfStateCheck(substituteCareProvider);
     }
+
+    return rfaApplicantIdsMap;
   }
 
-  private void storeOtherChildren(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
+
+  private void storePhoneContactDetails(ApplicantDTO applicantDTO,
+      String substituteCareProviderId) {
+
+    Optional.ofNullable(applicantDTO.getPhones()).ifPresent(
+        phoneDTOS -> phoneDTOS.forEach(phoneDTO -> {
+          PhoneContactDetail phoneContactDetail = phoneContactDetailMapper
+              .toPhoneContactDetail(phoneDTO, substituteCareProviderId);
+          phoneContactDetail.setThirdId(Utils.Id.generate());
+          phoneContactDetail.setLstUpdId(Id.getStaffPersonId());
+          phoneContactDetail.setLstUpdTs(LocalDateTime.now());
+          phoneContactDetailDao.create(phoneContactDetail);
+        })
+    );
+
+  }
+
+  private void storeEthnicity(ApplicantDTO applicantDTO, String substituteCareProviderId) {
+    ClientScpEthnicity clientScpEthnicity = substituteCareProviderMapper
+        .toClientScpEthnicity(applicantDTO, substituteCareProviderId);
+    clientScpEthnicity.setIdentifier(Utils.Id.generate());
+    clientScpEthnicity.setLstUpdId(Id.getStaffPersonId());
+    clientScpEthnicity.setLstUpdTs(LocalDateTime.now());
+    clientScpEthnicityDao.create(clientScpEthnicity);
+  }
+
+  private void storeOutOfStateCheck(SubstituteCareProvider substituteCareProvider) {
+    OutOfStateCheck outOfStateCheck = outOfStateCheckMapper
+        .toOutOfStateCheck(substituteCareProvider);
+    storeOutOfStateCheck(outOfStateCheck);
+  }
+
+  private void storeOtherChildren(RFA1aFormDTO form, PlacementHome persistedPlacementHome,
+      Map<Long, SubstituteCareProvider> rfaApplicantIdsMap) {
     List<MinorChildDTO> minorChildren = form.getMinorChildren();
 
     minorChildren.forEach(minorChildDTO -> {
+
       OtherChildrenInPlacementHome otherChild = otherChildMapper.toOtherChild(minorChildDTO);
       otherChild.setIdentifier(Utils.Id.generate());
       otherChild.setLstUpdId(Id.getStaffPersonId());
       otherChild.setLstUpdTs(LocalDateTime.now());
       otherChild.setFkplcHmT(persistedPlacementHome.getIdentifier());
+      final OtherChildrenInPlacementHome storedOtherChild = otherChildrenDao.create(otherChild);
 
-      otherChildrenDao.create(otherChild);
+      storeOtherChildrenScpRelationships(rfaApplicantIdsMap, minorChildDTO, storedOtherChild);
+
     });
   }
 
-  private void storeOtherAdults(RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
+  private void storeOtherChildrenScpRelationships(
+      Map<Long, SubstituteCareProvider> rfaApplicantIdsMap, MinorChildDTO minorChildDTO,
+      OtherChildrenInPlacementHome storedOtherChild) {
+    minorChildDTO.getRelationshipToApplicants().forEach(
+        relationshipToApplicantDTO -> {
+          SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
+              .get(relationshipToApplicantDTO.getApplicantId());
+          OtherPeopleScpRelationship relationship = otherPeopleScpRelationshipMapper
+              .toOtherChildScpRelationship(relationshipToApplicantDTO,
+                  storedOtherChild.getIdentifier(),
+                  substituteCareProvider);
+          relationship.setIdentifier(Id.generate());
+          relationship.setLstUpdId(Id.getStaffPersonId());
+          relationship.setLstUpdTs(LocalDateTime.now());
+          otherPeopleScpRelationshipDao.create(relationship);
+        });
+  }
+
+
+  private void storeOtherAdults(RFA1aFormDTO form, PlacementHome persistedPlacementHome,
+      Map<Long, SubstituteCareProvider> rfaApplicantIdsMap) {
     List<OtherAdultDTO> otherAdults = form.getOtherAdults();
 
     otherAdults.forEach(otherAdultDTO -> {
@@ -527,8 +655,40 @@ public class FacilityService implements CrudsService {
       otherAdult.setLstUpdTs(LocalDateTime.now());
       otherAdult.setFkplcHmT(persistedPlacementHome.getIdentifier());
 
-      otherAdultDao.create(otherAdult);
+      final OtherAdultsInPlacementHome storedOtherAdult = otherAdultDao.create(otherAdult);
+      storeOtherAdultScpRelationships(rfaApplicantIdsMap, otherAdultDTO, storedOtherAdult);
+      storeOutOfStateCheck(storedOtherAdult);
     });
+  }
+
+  private void storeOtherAdultScpRelationships(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap,
+      OtherAdultDTO otherAdultDTO, OtherAdultsInPlacementHome storedOtherAdult) {
+    otherAdultDTO.getRelationshipToApplicants().forEach(
+        relationshipToApplicantDTO -> {
+          SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
+              .get(relationshipToApplicantDTO.getApplicantId());
+          OtherPeopleScpRelationship relationship = otherPeopleScpRelationshipMapper
+              .toOtherAdultScpRelationship(relationshipToApplicantDTO,
+                  storedOtherAdult.getIdentifier(),
+                  substituteCareProvider);
+          relationship.setIdentifier(Id.generate());
+          relationship.setLstUpdId(Id.getStaffPersonId());
+          relationship.setLstUpdTs(LocalDateTime.now());
+          otherPeopleScpRelationshipDao.create(relationship);
+        });
+  }
+
+  private void storeOutOfStateCheck(OtherAdultsInPlacementHome otherAdultsInPlacementHome) {
+    OutOfStateCheck outOfStateCheck = outOfStateCheckMapper
+        .toOutOfStateCheck(otherAdultsInPlacementHome);
+    storeOutOfStateCheck(outOfStateCheck);
+  }
+
+  private void storeOutOfStateCheck(OutOfStateCheck outOfStateCheck) {
+    outOfStateCheck.setIdentifier(Id.generate());
+    outOfStateCheck.setLstUpdId(Id.getStaffPersonId());
+    outOfStateCheck.setLstUpdTs(LocalDateTime.now());
+    outOfStateCheckDao.create(outOfStateCheck);
   }
 
 }
