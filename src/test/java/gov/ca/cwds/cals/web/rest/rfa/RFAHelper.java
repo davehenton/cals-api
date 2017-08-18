@@ -157,7 +157,8 @@ public class RFAHelper {
         Entity.entity(minorChild, MediaType.APPLICATION_JSON_TYPE), MinorChildDTO.class);
   }
 
-  public List<OtherAdultDTO> createOtherAdults(Long formId) throws Exception {
+  public List<OtherAdultDTO> createOtherAdults(Long formId, ApplicantDTO relativeApplicant)
+      throws Exception {
     List<OtherAdultDTO> otherAdultsDTOs = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
       OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
@@ -165,12 +166,15 @@ public class RFAHelper {
               OtherAdultDTO.class);
       otherAdultDTO.setFirstName(otherAdultDTO.getFirstName() + i);
       otherAdultDTO.setLastName(otherAdultDTO.getLastName() + i);
+      // Assume that we have only one relationship object
+      otherAdultDTO.getRelationshipToApplicants().get(0).setApplicantId(relativeApplicant.getId());
       otherAdultsDTOs.add(postOtherAdult(formId, otherAdultDTO));
     }
     return otherAdultsDTOs;
   }
 
-  public List<MinorChildDTO> createMinorChildren(Long formId) throws Exception {
+  public List<MinorChildDTO> createMinorChildren(Long formId, ApplicantDTO reletiveApplicant)
+      throws Exception {
     List<MinorChildDTO> minorChildDTOs = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
       MinorChildDTO minorChildDTO = clientTestRule.getMapper()
@@ -179,6 +183,8 @@ public class RFAHelper {
               MinorChildDTO.class);
       minorChildDTO.setOtherRelativeFirstName(minorChildDTO.getOtherRelativeFirstName() + i);
       minorChildDTO.setOtherRelativeLastName(minorChildDTO.getOtherRelativeLastName() + i);
+      // Assume that we have only one relationship object
+      minorChildDTO.getRelationshipToApplicants().get(0).setApplicantId(reletiveApplicant.getId());
       minorChildDTOs.add(postMinorChild(formId, minorChildDTO));
     }
     return minorChildDTOs;

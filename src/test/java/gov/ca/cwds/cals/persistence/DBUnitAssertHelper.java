@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.dbunit.Assertion;
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
@@ -26,6 +28,7 @@ public class DBUnitAssertHelper {
   private DBUnitSupport dbUnitSupport;
   private List<DataFilter> filters = new LinkedList<>();
   private ReplacementDataSet expectedDataSet;
+  private ReplacementDataSet actualDataSet;
   private String templatePath;
   private Map<String, Object> templateParams = new HashMap<>();
 
@@ -71,11 +74,8 @@ public class DBUnitAssertHelper {
 
   public void assertEqualsIgnoreCols(String[] ignoreCols) throws Exception {
     ITable expectedData = dbUnitSupport.getTableFromDataSet(expectedDataSet, tableName);
-    ITable actualData = dbUnitSupport.getTableFromDB(tableName);
-    if (!filters.isEmpty()) {
-      actualData = dbUnitSupport
-          .doFilter(actualData, filters.toArray(new DataFilter[filters.size()]));
-    }
+    ITable actualData = getActualTable();
+
     Assertion.assertEqualsIgnoreCols(expectedData, actualData, ignoreCols);
   }
 
@@ -92,6 +92,27 @@ public class DBUnitAssertHelper {
 
   public ReplacementDataSet getExpectedDataSet() {
     return expectedDataSet;
+  }
+
+  public ReplacementDataSet getActualDataSet() {
+    try {
+      return new ReplacementDataSet(dbUnitSupport.getSchemaDataSet());
+    } catch (DatabaseUnitException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  public ITable getActualTable() {
+    ITable actualTable = dbUnitSupport.getTableFromDB(tableName);
+    if (!filters.isEmpty()) {
+      try {
+        actualTable = dbUnitSupport
+            .doFilter(actualTable, filters.toArray(new DataFilter[filters.size()]));
+      } catch (DataSetException e) {
+        throw new IllegalStateException(e);
+      }
+    }
+    return actualTable;
   }
 
   public static DBUnitAssertHelperBuilder builder(DBUnitSupport dbUnitSupport) {

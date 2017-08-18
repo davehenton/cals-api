@@ -111,15 +111,15 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     secondApplicant.getEthnicity().setId(2L);
     secondApplicant.getEthnicity().setValue("American Indian");
 
-    rfaHelper.postApplicant(form.getId(), secondApplicant);
+    secondApplicant = rfaHelper.postApplicant(form.getId(), secondApplicant);
     rfaHelper.putResidence(form.getId(), getResidenceDTO());
 
     RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
     rfa1bForm.setRfa1aApplicantId(applicantDTO.getId());
     rfaHelper.postRfa1bForm(form.getId(), rfa1bForm);
 
-    List<OtherAdultDTO> otherAdultDTOs = rfaHelper.createOtherAdults(form.getId());
-    List<MinorChildDTO> minorChildDTOs = rfaHelper.createMinorChildren(form.getId());
+    List<OtherAdultDTO> otherAdultDTOs = rfaHelper.createOtherAdults(form.getId(), secondApplicant);
+    List<MinorChildDTO> minorChildDTOs = rfaHelper.createMinorChildren(form.getId(), applicantDTO);
 
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
@@ -136,32 +136,47 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(placementHomeId);
 
-    testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId(), otherAdultDTOs);
-    testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId(), minorChildDTOs);
+    testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId());
+    testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId());
+
+    String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
+
+    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[0]);
+    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[1]);
+
   }
 
   private void testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(String placementHomeId)
       throws Exception {
+
+    String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
+
+    testIfPlacementHomeInformationWasCreatedProperly(placementHomeId, substituteCareProviderIds[0],
+        substituteCareProviderIds[1]);
+    testIfSubstituteCareProviderWasCreatedProperly(substituteCareProviderIds[0],
+        substituteCareProviderIds[1]);
+    testIfSubstituteCareProviderUCWasCreatedProperly(substituteCareProviderIds[0],
+        substituteCareProviderIds[1]);
+
+    testIfPhoneContactDetailsWasCreatedProperly(substituteCareProviderIds[0]);
+    testIfPhoneContactDetailsWasCreatedProperly(substituteCareProviderIds[1]);
+
+    testIfClientScpEthnicityWasCreatedProperly(substituteCareProviderIds[0], "820");
+    testIfClientScpEthnicityWasCreatedProperly(substituteCareProviderIds[1], "821");
+
+  }
+
+
+  private String[] getSubstituteCareProviderIds(String placementHomeId) throws Exception {
+    String[] ids = new String[2];
     ITable placementHomeInformation = dbUnitSupport.getTableFromDB("HM_SCP_T");
     ITable placementHomeRow = dbUnitSupport
         .filterByColumnAndValue(placementHomeInformation, "FKPLC_HM_T", placementHomeId);
-    String substituteCareProviderId1 = (String) placementHomeRow.getValue(0, "FKSB_PVDRT");
-    String substituteCareProviderId2 = (String) placementHomeRow.getValue(1, "FKSB_PVDRT");
-
-    testIfPlacementHomeInformationWasCreatedProperly(placementHomeId, substituteCareProviderId1,
-        substituteCareProviderId2);
-    testIfSubstituteCareProviderWasCreatedProperly(substituteCareProviderId1,
-        substituteCareProviderId2);
-    testIfSubstituteCareProviderUCWasCreatedProperly(substituteCareProviderId2,
-        substituteCareProviderId2);
-
-    testIfPhoneContactDetailsWasCreatedProperly(substituteCareProviderId1);
-    testIfPhoneContactDetailsWasCreatedProperly(substituteCareProviderId2);
-
-    testIfClientScpEthnicityWasCreatedProperly(substituteCareProviderId1, "820");
-    testIfClientScpEthnicityWasCreatedProperly(substituteCareProviderId2, "821");
+    for (int i = 0; i < ids.length; i++) {
+      ids[i] = (String) placementHomeRow.getValue(i, "FKSB_PVDRT");
+    }
+    return ids;
   }
-
 
   private void testIfPlacementHomeWasCreatedProperly(String placementHomeId) throws Exception {
     DBUnitAssertHelper.builder(dbUnitSupport)
@@ -289,8 +304,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .assertEqualsIgnoreCols(new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
-  private void testIfOtherAdultsWasCreatedProperly(String placementHomeId,
-      List<OtherAdultDTO> otherAdultDTOS) throws Exception {
+  private void testIfOtherAdultsWasCreatedProperly(String placementHomeId) throws Exception {
     DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/OtherAdultsInPlacementHome.xml")
         .setTestedTableName("OTH_ADLT")
@@ -302,9 +316,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
-  private void testIfOtherChildrenWasCreatedProperly(String placementHomeId,
-      List<MinorChildDTO> minorChildDTOs) throws Exception {
-
+  private void testIfOtherChildrenWasCreatedProperly(String placementHomeId) throws Exception {
     DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/MinorChildrenInPlacementHome.xml")
         .setTestedTableName("OTH_KIDT")
@@ -313,6 +325,19 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     helper.assertEqualsIgnoreCols(
         new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
+  }
+
+  private void testIfOtherPeopleScpRelationshipWasCreatedProperly(String substituteCareProviderId)
+      throws Exception {
+
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/OtherPeopleScpRelationship.xml")
+        .setTestedTableName("OPSCPRLT")
+        .appendTableFilter("FKSB_PVDRT", substituteCareProviderId)
+        .build();
+
+    ITable actualTable = helper.getActualTable();
+    assertEquals(2, actualTable.getRowCount());
   }
 
 

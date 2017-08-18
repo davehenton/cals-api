@@ -19,6 +19,8 @@ import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapperImpl;
+import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
+import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapperImpl;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapperImpl;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
@@ -36,26 +38,28 @@ import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapperImpl;
 
 public class MappingModule extends AbstractModule {
 
-    @Override
-    protected void configure() {
-        bind(FacilityMapper.class).to(FacilityMapperImpl.class).asEagerSingleton();
-        bind(PlacementHomeMapper.class).to(PlacementHomeMapperImpl.class).asEagerSingleton();
-        bind(FasFacilityMapper.class).to(FasFacilityMapperImpl.class).asEagerSingleton();
-        bind(FacilityChildMapper.class).to(FacilityChildMapperImpl.class).asEagerSingleton();
-        bind(FacilityInspectionMapper.class).to(FacilityInspectionMapperImpl.class).asEagerSingleton();
-        bind(ComplaintMapper.class).to(ComplaintMapperImpl.class).asEagerSingleton();
-        bind(CountyMapper.class).to(CountyMapperImpl.class).asEagerSingleton();
-        bind(FacilityTypeMapper.class).to(FacilityTypeMapperImpl.class).asEagerSingleton();
-        bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapperImpl.class)
-            .asEagerSingleton();
-      bind(PhoneContactDetailMapper.class).to(PhoneContactDetailMapperImpl.class)
-          .asEagerSingleton();
-        bind(RFA1aFormMapper.class).to(RFA1aFormMapperImpl.class).asEagerSingleton();
-        bind(OtherChildrenInPlacementHomeMapper.class)
-            .to(OtherChildrenInPlacementHomeMapperImpl.class).asEagerSingleton();
-        bind(OtherAdultsInPlacementHomeMapper.class).to(OtherAdultsInPlacementHomeMapperImpl.class)
-            .asEagerSingleton();
-    }
+  @Override
+  protected void configure() {
+    bind(FacilityMapper.class).to(FacilityMapperImpl.class).asEagerSingleton();
+    bind(PlacementHomeMapper.class).to(PlacementHomeMapperImpl.class).asEagerSingleton();
+    bind(FasFacilityMapper.class).to(FasFacilityMapperImpl.class).asEagerSingleton();
+    bind(FacilityChildMapper.class).to(FacilityChildMapperImpl.class).asEagerSingleton();
+    bind(FacilityInspectionMapper.class).to(FacilityInspectionMapperImpl.class).asEagerSingleton();
+    bind(ComplaintMapper.class).to(ComplaintMapperImpl.class).asEagerSingleton();
+    bind(CountyMapper.class).to(CountyMapperImpl.class).asEagerSingleton();
+    bind(FacilityTypeMapper.class).to(FacilityTypeMapperImpl.class).asEagerSingleton();
+    bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapperImpl.class)
+        .asEagerSingleton();
+    bind(PhoneContactDetailMapper.class).to(PhoneContactDetailMapperImpl.class)
+        .asEagerSingleton();
+    bind(RFA1aFormMapper.class).to(RFA1aFormMapperImpl.class).asEagerSingleton();
+    bind(OtherChildrenInPlacementHomeMapper.class)
+        .to(OtherChildrenInPlacementHomeMapperImpl.class).asEagerSingleton();
+    bind(OtherAdultsInPlacementHomeMapper.class).to(OtherAdultsInPlacementHomeMapperImpl.class)
+        .asEagerSingleton();
+    bind(OtherPeopleScpRelationshipMapper.class).to(OtherPeopleScpRelationshipMapperImpl.class)
+        .asEagerSingleton();
+  }
 
 }
 
