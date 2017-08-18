@@ -1,0 +1,115 @@
+Demo in Integration environment https://calsapi.integration.cwds.io/
+
+1. Validation
+Invalid request shows all validations regarding applicant name and phone number
+
+{
+  "name_prefix": {
+    "id": 2,
+    "value": "Ms."
+  },
+  "first_name": "This is a really really long first name",
+  "middle_name": "N.",
+  "last_name": "This is a really really long last name",
+  "name_suffix": {
+    "id": 50,
+    "value": "Jr"
+  },
+  "other_names": [
+    {
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "first_name": "Anna",
+      "middle_name": "N.",
+      "last_name": "Peterson",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
+      "name_type": {
+        "id": 2,
+        "value": "Maiden"
+      }
+    }
+  ],
+  "highest_education_level": {
+    "id": 3,
+    "value": "High School or Equivalent"
+  },
+  "date_of_birth": "1981-12-26",
+  "gender": {
+    "id": 2,
+    "value": "Female"
+  },
+  "race": {
+    "id": 1,
+    "value": "American Indian or Alaska Native"
+  },
+  "ethnicity": {
+    "id": 1,
+    "value": "Alaskan Native"
+  },
+  "driver_license_number": "A1234567",
+  "driver_license_state": {
+    "id": 6,
+    "value": "California"
+  },
+  "email": "anna.smith@gmail.com",
+  "employment": {
+    "employer_name": "HSH Inc.",
+    "occupation": "Sr. Analyst",
+    "income": 98000.00,
+    "income_type": {
+      "id": 1,
+      "value": "yearly"
+    },
+    "physical_address": {
+      "street_address": "1702 Redoak Ct.",
+      "zip": "98123",
+      "city": "Rocklin",
+      "state": {
+        "id": 2,
+        "value": "CA - California"
+      }
+    }
+  },
+  "phones": [
+    {
+      "phone_type": {
+        "id": 1,
+        "value": "Cell"
+      },
+      "number": "534758980212",
+      "extension": "000000112"
+    },
+    {
+      "phone_type": {
+        "id": 3,
+        "value": "Work"
+      },
+      "number": "5347589803",
+      "extension": "0000001",
+      "preferred": true
+    },
+    {
+      "phone_type": {
+        "id": 3,
+        "value": "Work"
+      },
+      "number": "5347589803",
+      "extension": "0000001",
+      "preferred": true
+    }
+  ]
+}
+
+2. Smoke Test
+Show System Information - https://calsapi.integration.cwds.io/swagger/system-information/get
+Show Jenkins Pipeline - http://jenkins.dev.cwds.io:8080/job/cals-api/
+License Report and Smoke Test stage
+
+
+
+

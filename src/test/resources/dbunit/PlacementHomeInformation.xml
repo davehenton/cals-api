@@ -1,0 +1,26 @@
+<dataset>
+  <HM_SCP_T
+    START_DT="[CURRENT_DATE]"
+    END_DT="[NULL]"
+    LICNSEE_CD="U"
+    CRPRVDR_CD="Y"
+    LST_UPD_ID="0X5"
+    FKSB_PVDRT="$substituteCareProviderId1"
+    FKPLC_HM_T="$placementHomeId"
+    PRPRVDR_CD="Y"
+    CDS_PRSN=""
+    SCPRVD_IND="N"
+  />
+  <HM_SCP_T
+    START_DT="[CURRENT_DATE]"
+    END_DT="[NULL]"
+    LICNSEE_CD="U"
+    CRPRVDR_CD="Y"
+    LST_UPD_ID="0X5"
+    FKSB_PVDRT="$substituteCareProviderId2"
+    FKPLC_HM_T="$placementHomeId"
+    PRPRVDR_CD="N"
+    CDS_PRSN=""
+    SCPRVD_IND="Y"
+  />
+</dataset>

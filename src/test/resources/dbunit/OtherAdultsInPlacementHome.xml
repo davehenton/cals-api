@@ -1,0 +1,32 @@
+<dataset>
+  <OTH_ADLT
+    IDENTIFIER="${idntfr}"
+    BIRTH_DT="1995-07-14"
+    END_DT="[NULL]"
+    GENDER_CD="M"
+    OTH_ADLTNM="Ms. Anna0 L. Pollen0 Jr"
+    START_DT="[CURRENT_DATE]"
+    LST_UPD_ID="0X5"
+    FKPLC_HM_T="${plcmntHmId}"
+    COMNT_DSC=""
+    OTH_ADL_CD="O"
+    IDENTFD_DT="[NULL]"
+    RESOST_IND="[NULL]"
+    PASSBC_CD="U"
+  />
+  <OTH_ADLT
+    IDENTIFIER="${idntfr}"
+    BIRTH_DT="1995-07-14"
+    END_DT="[NULL]"
+    GENDER_CD="M"
+    OTH_ADLTNM="Ms. Anna1 L. Pollen1 Jr"
+    START_DT="[CURRENT_DATE]"
+    LST_UPD_ID="0X5"
+    FKPLC_HM_T="${plcmntHmId}"
+    COMNT_DSC=""
+    OTH_ADL_CD="O"
+    IDENTFD_DT="[NULL]"
+    RESOST_IND="[NULL]"
+    PASSBC_CD="U"
+  />
+</dataset>

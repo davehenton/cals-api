@@ -3,6 +3,8 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.OtherAdultsInPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.OtherChildrenInPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeUcDao;
 import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
@@ -105,5 +107,7 @@ public class CwsCmsDataAccessModule extends AbstractModule {
     bind(ClientDao.class);
     bind(PlacementHomeDao.class);
     bind(PlacementHomeUcDao.class);
+    bind(OtherChildrenInPlacementHomeDao.class);
+    bind(OtherAdultsInPlacementHomeDao.class);
   }
 }

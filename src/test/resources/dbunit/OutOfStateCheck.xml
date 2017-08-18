@@ -1,0 +1,16 @@
+<dataset>
+  <OST_CHKT
+    IDENTIFIER="${idntfr}"
+    RCPNT_ID="${rcpntId}"
+    RCPNT_CD="${rcpntCd}"
+    STATE_C="0"
+    REGMNT_IND="[NULL]"
+    REQUEST_DT="[NULL]"
+    RECEIVE_DT="[NULL]"
+    STATUS_DT="[NULL]"
+    STATUS_CD="[NULL]"
+    LST_UPD_ID="0X5"
+    LST_UPD_TS=""
+    FKCOLTRL_T="[NULL]"
+  />
+</dataset>

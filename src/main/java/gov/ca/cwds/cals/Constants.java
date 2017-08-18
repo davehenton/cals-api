@@ -28,6 +28,9 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
  * @author CWDS CALS API Team
  */
 public final class Constants {
+  public static final String Y = "Y";
+
+  public static final String N = "N";
 
   public static final String SQL_TYPE = "sqlType";
 
@@ -191,11 +194,19 @@ public final class Constants {
 
   public static class AddressTypes {
 
-    public static final String RESIDENTIAL = "residential";
+    public static final String RESIDENTIAL = "Residential";
 
-    public static final String MAIL = "mail";
+    public static final String MAIL = "Mailing";
 
     private AddressTypes() {
+    }
+  }
+
+  public static class StateTypes {
+
+    public static final Long CALIFORNIA_STATE_ID = 6L;
+
+    private StateTypes() {
     }
   }
 

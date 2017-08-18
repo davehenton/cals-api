@@ -1,0 +1,16 @@
+<dataset>
+  <SBPVD_UC
+    PKSB_PVDRT="$substituteCareProviderId1"
+    CA_DLIC_NO="A1234567"
+    FIRST_NM="ANNA"
+    LAST_NM="SMITH"
+    LST_UPD_ID="0X5"
+  />
+  <SBPVD_UC
+    PKSB_PVDRT="$substituteCareProviderId2"
+    CA_DLIC_NO=""
+    FIRST_NM="JOHN"
+    LAST_NM="SMITH"
+    LST_UPD_ID="0X5"
+  />
+</dataset>

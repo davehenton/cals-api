@@ -1,8 +1,6 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
-import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,10 +13,10 @@ public class ExpandedFacilityDTO extends FacilityDTO {
   private List<FacilityChildDTO> children = new ArrayList<>();
 
   @JsonProperty("inspections")
-  private List<Rr809Dn> inspections = new ArrayList<>();
+  private List<FacilityInspectionDTO> inspections = new ArrayList<>();
 
   @JsonProperty("complaints")
-  private List<ComplaintReportLic802> complaints = new ArrayList<>();
+  private List<ComplaintDTO> complaints = new ArrayList<>();
 
   public List<FacilityChildDTO> getChildren() {
     return children;
@@ -29,20 +27,20 @@ public class ExpandedFacilityDTO extends FacilityDTO {
     this.children = children;
   }
 
-  public List<Rr809Dn> getInspections() {
+  public List<FacilityInspectionDTO> getInspections() {
     return inspections;
   }
 
-  public void setInspections(List<Rr809Dn> inspections) {
+  public void setInspections(List<FacilityInspectionDTO> inspections) {
     this.inspections = inspections;
   }
 
-  public List<ComplaintReportLic802> getComplaints() {
+  public List<ComplaintDTO> getComplaints() {
     return complaints;
   }
 
   public void setComplaints(
-      List<ComplaintReportLic802> complaints) {
+      List<ComplaintDTO> complaints) {
     this.complaints = complaints;
   }
 

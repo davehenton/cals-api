@@ -13,8 +13,16 @@ public class PlacementHomeInformationPK implements Serializable {
 
   private static final long serialVersionUID = -7640982561710880631L;
 
+  @Id
+  @Column(name = "THIRD_ID", nullable = false, length = 10)
   private String thirdId;
+
+  @Id
+  @Column(name = "FKSB_PVDRT", nullable = false, length = 10)
   private String fksbPvdrt;
+
+  @Id
+  @Column(name = "FKPLC_HM_T", nullable = false, length = 10)
   private String fkplcHmT;
 
   public PlacementHomeInformationPK() {
@@ -26,8 +34,6 @@ public class PlacementHomeInformationPK implements Serializable {
     this.fkplcHmT = fkplcHmT;
   }
 
-  @Column(name = "THIRD_ID", nullable = false, length = 10)
-  @Id
   public String getThirdId() {
     return thirdId;
   }
@@ -36,8 +42,6 @@ public class PlacementHomeInformationPK implements Serializable {
     this.thirdId = thirdId;
   }
 
-  @Column(name = "FKSB_PVDRT", nullable = false, length = 10)
-  @Id
   public String getFksbPvdrt() {
     return fksbPvdrt;
   }
@@ -46,8 +50,6 @@ public class PlacementHomeInformationPK implements Serializable {
     this.fksbPvdrt = fksbPvdrt;
   }
 
-  @Column(name = "FKPLC_HM_T", nullable = false, length = 10)
-  @Id
   public String getFkplcHmT() {
     return fkplcHmT;
   }

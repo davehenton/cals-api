@@ -21,7 +21,7 @@
   },
   "phones" : [ ],
   "addresses" : [ {
-    "type" : "residential",
+    "type": "Residential",
     "address" : {
       "street_address" : "10 Main St",
       "city" : "Sacramento",

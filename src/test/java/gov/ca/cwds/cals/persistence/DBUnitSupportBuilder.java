@@ -49,13 +49,13 @@ public class DBUnitSupportBuilder {
     DBUnitSupport dbUnitSupport = new DBUnitSupport();
 
     if (dataSourceFactory != null) {
-      dbUnitSupport.setDrivaerClassName(dataSourceFactory.getDriverClass());
+      dbUnitSupport.setDriverClassName(dataSourceFactory.getDriverClass());
       dbUnitSupport.setJdbcUrl(dataSourceFactory.getUrl());
       dbUnitSupport.setDbUser(dataSourceFactory.getUser());
       dbUnitSupport.setDbPassword(dataSourceFactory.getPassword());
     }
     if (drivaerClassName != null) {
-      dbUnitSupport.setDrivaerClassName(drivaerClassName);
+      dbUnitSupport.setDriverClassName(drivaerClassName);
     }
 
     if (jdbcUrl != null) {

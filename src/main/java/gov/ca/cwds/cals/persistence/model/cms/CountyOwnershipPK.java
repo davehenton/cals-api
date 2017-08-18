@@ -13,7 +13,12 @@ public class CountyOwnershipPK implements Serializable {
 
   private static final long serialVersionUID = 2925386558395818255L;
 
+  @Id
+  @Column(name = "ENTITY_ID", nullable = false, length = 10)
   private String entityId;
+
+  @Id
+  @Column(name = "ENTITY_CD", nullable = false, length = 2)
   private String entityCd;
 
   public CountyOwnershipPK() {
@@ -24,8 +29,6 @@ public class CountyOwnershipPK implements Serializable {
     this.entityCd = entityCd;
   }
 
-  @Column(name = "ENTITY_ID", nullable = false, length = 10)
-  @Id
   public String getEntityId() {
     return entityId;
   }
@@ -34,8 +37,6 @@ public class CountyOwnershipPK implements Serializable {
     this.entityId = entityId;
   }
 
-  @Column(name = "ENTITY_CD", nullable = false, length = 2)
-  @Id
   public String getEntityCd() {
     return entityCd;
   }
