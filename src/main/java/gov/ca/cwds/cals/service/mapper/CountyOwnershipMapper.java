@@ -99,7 +99,7 @@ public interface CountyOwnershipMapper {
           flag = (String) method.invoke(countyOwnership);
         } catch (IllegalAccessException | InvocationTargetException e) {
           throw new RuntimeException("Cannot calculate multi flag for county ownership {id: "
-              + entityId + ", code: " + discriminator + "}");
+              + entityId + ", code: " + discriminator + "}", e);
         }
         if (Constants.Y.equals(flag)) {
           yFlagsCount += 1;
