@@ -1,4 +1,3 @@
-<!DOCTYPE dataset SYSTEM "$schemaPath">
 <dataset>
   <PH_CNT_T
     THIRD_ID="${idntfr}"
@@ -7,7 +6,7 @@
     PHN_TYP_CD="C"
     ESTBLSH_CD="S"
     ESTBLSH_ID="${scpId}"
-    LST_UPD_ID=""
+    LST_UPD_ID="0X5"
     LST_UPD_TS=""
   />
   <PH_CNT_T
@@ -17,7 +16,7 @@
     PHN_TYP_CD="W"
     ESTBLSH_CD="S"
     ESTBLSH_ID="${scpId}"
-    LST_UPD_ID=""
+    LST_UPD_ID="0X5"
     LST_UPD_TS=""
   />
 </dataset>

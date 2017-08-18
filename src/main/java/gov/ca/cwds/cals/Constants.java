@@ -28,6 +28,9 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
  * @author CWDS CALS API Team
  */
 public final class Constants {
+  public static final String Y = "Y";
+
+  public static final String N = "N";
 
   public static final String SQL_TYPE = "sqlType";
 

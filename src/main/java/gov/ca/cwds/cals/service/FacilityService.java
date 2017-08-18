@@ -14,13 +14,18 @@ import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.CountyTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.EducationLevelTypeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.BackgroundCheckDao;
+import gov.ca.cwds.cals.persistence.dao.cms.CountyOwnershipDao;
+import gov.ca.cwds.cals.persistence.dao.cms.EmergencyContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.EthnicityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.GenderTypeDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.LanguageTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.PhoneNumberTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.StateTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientScpEthnicityDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.ExternalInterfaceDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.OtherAdultsInPlacementHomeDao;
@@ -30,6 +35,8 @@ import gov.ca.cwds.cals.persistence.dao.cms.OutOfStateCheckDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PhoneContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeInformationDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeNotesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeProfileDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeUcDao;
 import gov.ca.cwds.cals.persistence.dao.cms.StateDao;
 import gov.ca.cwds.cals.persistence.dao.cms.SubstituteCareProviderDao;
@@ -40,15 +47,15 @@ import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.CountyOwnership;
+import gov.ca.cwds.cals.persistence.model.cms.EmergencyContactDetail;
+import gov.ca.cwds.cals.persistence.model.cms.ExternalInterface;
 import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
 import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
@@ -56,6 +63,8 @@ import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
 import gov.ca.cwds.cals.persistence.model.cms.OutOfStateCheck;
 import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeNotes;
+import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeProfile;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
@@ -75,7 +84,11 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
+import gov.ca.cwds.cals.service.mapper.CountyOwnershipMapper;
+import gov.ca.cwds.cals.service.mapper.EmergencyContactDetailMapper;
+import gov.ca.cwds.cals.service.mapper.ExternalInterfaceMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
@@ -86,6 +99,8 @@ import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
 import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeNotesMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.api.Request;
@@ -101,6 +116,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -120,6 +136,9 @@ public class FacilityService implements CrudsService {
   private EducationLevelTypeDao educationLevelTypeDao;
 
   @Inject
+  private LanguageTypeDao languageTypeDao;
+
+  @Inject
   private LisFacFileLisDao lisFacFileLisDao;
 
   @Inject
@@ -129,10 +148,25 @@ public class FacilityService implements CrudsService {
   private LisTableFileDao lisTableFileDao;
 
   @Inject
+  private ExternalInterfaceDao externalInterfaceDao;
+
+  @Inject
   private PlacementHomeDao placementHomeDao;
 
   @Inject
   private PlacementHomeUcDao placementHomeUcDao;
+
+  @Inject
+  private PlacementHomeNotesDao placementHomeNotesDao;
+
+  @Inject
+  private EmergencyContactDetailDao emergencyContactDetailDao;
+
+  @Inject
+  private BackgroundCheckDao backgroundCheckDao;
+
+  @Inject
+  private CountyOwnershipDao countyOwnershipDao;
 
   @Inject
   private SubstituteCareProviderDao substituteCareProviderDao;
@@ -142,6 +176,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private PlacementHomeInformationDao placementHomeInformationDao;
+
+  @Inject
+  private PlacementHomeProfileDao placementHomeProfileDao;
 
   @Inject
   private PhoneContactDetailDao phoneContactDetailDao;
@@ -180,10 +217,28 @@ public class FacilityService implements CrudsService {
   private ComplaintMapper complaintMapper;
 
   @Inject
+  private ExternalInterfaceMapper externalInterfaceMapper;
+
+  @Inject
   private PlacementHomeMapper placementHomeMapper;
 
   @Inject
+  private EmergencyContactDetailMapper emergencyContactDetailMapper;
+
+  @Inject
+  private BackgroundCheckMapper backgroundCheckMapper;
+
+  @Inject
+  private PlacementHomeNotesMapper placementHomeNotesMapper;
+
+  @Inject
+  private CountyOwnershipMapper countyOwnershipMapper;
+
+  @Inject
   private SubstituteCareProviderMapper substituteCareProviderMapper;
+
+  @Inject
+  private PlacementHomeProfileMapper placementHomeProfileMapper;
 
   @Inject
   private PhoneContactDetailMapper phoneContactDetailMapper;
@@ -429,53 +484,62 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(CALSNS)
   private void enrichDictionaryEntries(RFA1aFormDTO formDTO) {
-    Optional.ofNullable(formDTO.getApplicationCounty()).map(CountyType::getId).ifPresent(
-        id -> Optional.ofNullable(countyTypeDao.find(id)).ifPresent(formDTO::setApplicationCounty)
+    Optional.ofNullable(formDTO.getApplicationCounty()).ifPresent(
+        countyType -> Optional.ofNullable(countyTypeDao.find(countyType.getId()))
+            .ifPresent(formDTO::setApplicationCounty)
     );
 
-    List<ApplicantDTO> applicants = Optional.ofNullable(formDTO.getApplicants())
-        .orElse(Collections.emptyList());
-    for (ApplicantDTO applicantDTO : applicants) {
-      Optional.ofNullable(applicantDTO.getGender()).map(GenderType::getId).ifPresent(
-          id -> Optional.ofNullable(genderTypeDao.find(id)).ifPresent(applicantDTO::setGender)
-      );
-      Optional.ofNullable(applicantDTO.getHighestEducationLevel()).map(EducationLevelType::getId)
-          .ifPresent(
-              id -> Optional.ofNullable(educationLevelTypeDao.find(id))
+    Optional.ofNullable(formDTO.getResidence())
+        .map(ResidenceDTO::getHomeLanguages)
+        .orElse(Collections.emptySet()).forEach(languageType -> {
+          Optional.ofNullable(languageTypeDao.find(languageType.getId()))
+              .ifPresent(persistentLanguageType -> {
+                languageType.setCwsId(persistentLanguageType.getCwsId());
+                languageType.setLisId(persistentLanguageType.getLisId());
+              });
+        });
+
+    Optional.ofNullable(formDTO.getApplicants())
+        .orElse(Collections.emptyList()).forEach(applicantDTO -> {
+          Optional.ofNullable(applicantDTO.getGender()).ifPresent(
+              genderType -> Optional.ofNullable(genderTypeDao.find(genderType.getId()))
+                  .ifPresent(applicantDTO::setGender)
+          );
+
+          Optional.ofNullable(applicantDTO.getHighestEducationLevel()).ifPresent(
+              educationLevelType -> Optional.ofNullable(educationLevelTypeDao.find(educationLevelType.getId()))
                   .ifPresent(applicantDTO::setHighestEducationLevel)
-          );
+              );
 
-      Optional.ofNullable(applicantDTO.getPhones())
-          .ifPresent(
-              phoneDTOS -> phoneDTOS.forEach(
-                  phoneDTO -> Optional.ofNullable(phoneDTO.getPhoneType())
-                      .map(PhoneNumberType::getId).ifPresent(
-                          id -> Optional.ofNullable(phoneNumberTypeDao.find(id))
+          Optional.ofNullable(applicantDTO.getPhones())
+              .ifPresent(
+                  phoneDTOS -> phoneDTOS.forEach(
+                      phoneDTO -> Optional.ofNullable(phoneDTO.getPhoneType()).ifPresent(
+                          phoneNumberType -> Optional.ofNullable(phoneNumberTypeDao.find(phoneNumberType.getId()))
                               .ifPresent(phoneDTO::setPhoneType))
-              )
+                  )
+              );
+
+          Optional.ofNullable(applicantDTO.getEthnicity()).ifPresent(
+             ethnicityType -> Optional.ofNullable(ethnicityTypeDao.find(ethnicityType.getId()))
+                  .ifPresent(applicantDTO::setEthnicity)
           );
+      });
 
-      Optional.ofNullable(applicantDTO.getEthnicity()).map(EthnicityType::getId).ifPresent(
-          id -> Optional.ofNullable(ethnicityTypeDao.find(id))
-              .ifPresent(applicantDTO::setEthnicity)
-      );
-    }
-
-    List<RFAAddressDTO> addresses = Optional.ofNullable(formDTO.getResidence())
-        .map(ResidenceDTO::getAddresses).orElse(Collections.emptyList());
-
-    for (RFAAddressDTO address : addresses) {
-      Optional.ofNullable(address.getState()).map(StateType::getId).ifPresent(
-          id -> Optional.ofNullable(stateTypeDao.find(id)).ifPresent(address::setState)
-      );
-    }
+    Optional.ofNullable(formDTO.getResidence())
+        .map(ResidenceDTO::getAddresses)
+        .orElse(Collections.emptyList()).forEach(address ->
+            Optional.ofNullable(address.getState()).ifPresent(
+                stateType -> Optional.ofNullable(stateTypeDao.find(stateType.getId()))
+                    .ifPresent(address::setState)
+            ));
 
     Optional.ofNullable(formDTO.getMinorChildren())
-        .ifPresent(list -> list.forEach(this::enrichMinirChild));
+        .ifPresent(list -> list.forEach(this::enrichMinorChild));
 
   }
 
-  private void enrichMinirChild(MinorChildDTO minorChildDTO) {
+  private void enrichMinorChild(MinorChildDTO minorChildDTO) {
     GenderType genderType = minorChildDTO.getGender();
     String genderCwsShortCode = genderTypeDao.find(genderType.getPrimaryKey()).getCwsShortCode();
     genderType.setCwsShortCode(genderCwsShortCode);
@@ -488,11 +552,22 @@ public class FacilityService implements CrudsService {
 
     placementHome.setIdentifier(Utils.Id.generate());
     PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
+    String placementHomeId = storedPlacementHome.getIdentifier();
 
     storePlacementHomeUc(storedPlacementHome);
 
+    storeExternalInterfaceMapper();
+
+    storeEmergencyContactDetail(placementHomeId);
+
+    storeBackgroundCheck();
+
+    storePlacementHomeNotes(placementHomeId);
+
+    storePlacementHomeProfile(form, placementHomeId);
+
     Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = storeSubstituteCareProviders(form,
-        storedPlacementHome);
+        placementHomeId);
 
     storeOtherChildren(form, storedPlacementHome, rfaApplicantIdsMap);
 
@@ -501,6 +576,26 @@ public class FacilityService implements CrudsService {
     return storedPlacementHome;
   }
 
+  private void storeExternalInterfaceMapper() {
+    ExternalInterface externalInterface = externalInterfaceMapper.toExternalInterface("");
+    externalInterfaceDao.create(externalInterface);
+  }
+
+  private void storeEmergencyContactDetail(String placementHomeId) {
+    EmergencyContactDetail emergencyContactDetail =
+        emergencyContactDetailMapper.toEmergencyContactDetail(placementHomeId);
+    emergencyContactDetailDao.create(emergencyContactDetail);
+  }
+
+  private void storeBackgroundCheck() {
+    BackgroundCheck backgroundCheck = backgroundCheckMapper.toBackgroundCheck("");
+    backgroundCheckDao.create(backgroundCheck);
+  }
+
+  private void storePlacementHomeNotes(String placementHomeId) {
+    PlacementHomeNotes placementHomeNotes = placementHomeNotesMapper.toPlacementHomeNotes(placementHomeId);
+    placementHomeNotesDao.create(placementHomeNotes);
+  }
 
   RFA1bFormDTO get1BForm(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
     List<RFA1bFormDTO> rfa1bForms = form.getRfa1bForms();
@@ -524,7 +619,12 @@ public class FacilityService implements CrudsService {
   }
 
   private Map<Long, SubstituteCareProvider> storeSubstituteCareProviders(RFA1aFormDTO form,
-      PlacementHome storedPlacementHome) {
+      String placementHomeId) {
+
+    CountyOwnership phCountyOwnership =
+        countyOwnershipMapper.toCountyOwnership(placementHomeId, "P", Collections.emptyList());
+    countyOwnershipDao.create(phCountyOwnership);// TODO: 8/18/2017
+
     List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
         .orElse(Collections.emptyList());
 
@@ -551,13 +651,17 @@ public class FacilityService implements CrudsService {
       SubstituteCareProvider storedSubstituteCareProvider = substituteCareProviderDao
           .create(substituteCareProvider);
 
+      CountyOwnership scpCountyOwnership =
+          countyOwnershipMapper.toCountyOwnership(
+              substituteCareProvider.getIdentifier(), "S", Collections.emptyList());
+      countyOwnershipDao.create(scpCountyOwnership);// TODO: 8/18/2017
+
+
       rfaApplicantIdsMap.put(applicantDTO.getId(), storedSubstituteCareProvider);
 
-      String prprvdrCd = i == 0 ? "Y" : "N";
-      String scprvdInd = i == 0 ? "N" : "Y";
-      PlacementHomeInformation placementHomeInformation = substituteCareProviderMapper
-          .toPlacementHomeInformation(
-              storedPlacementHome, substituteCareProvider, prprvdrCd, scprvdInd);
+      PlacementHomeInformation placementHomeInformation =
+          substituteCareProviderMapper.toPlacementHomeInformation(
+              form, applicantDTO, placementHomeId, substituteCareProvider.getIdentifier());
 
       placementHomeInformationDao.create(placementHomeInformation);
 
@@ -575,6 +679,16 @@ public class FacilityService implements CrudsService {
     return rfaApplicantIdsMap;
   }
 
+  private void storePlacementHomeProfile(RFA1aFormDTO form, String placementHomeId) {
+    Set<LanguageType> languageTypes = Optional.ofNullable(form.getResidence())
+        .map(ResidenceDTO::getHomeLanguages)
+        .orElse(Collections.emptySet());
+    for (LanguageType languageType : languageTypes) {
+      PlacementHomeProfile placementHomeProfile =
+          placementHomeProfileMapper.toPlacementHomeProfile(languageType, placementHomeId);
+      placementHomeProfileDao.create(placementHomeProfile);
+    }
+  }
 
   private void storePhoneContactDetails(ApplicantDTO applicantDTO,
       String substituteCareProviderId) {

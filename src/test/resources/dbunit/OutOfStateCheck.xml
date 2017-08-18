@@ -1,4 +1,3 @@
-<!DOCTYPE dataset SYSTEM "$schemaPath">
 <dataset>
   <OST_CHKT
     IDENTIFIER="${idntfr}"
@@ -10,7 +9,7 @@
     RECEIVE_DT="[NULL]"
     STATUS_DT="[NULL]"
     STATUS_CD="[NULL]"
-    LST_UPD_ID=""
+    LST_UPD_ID="0X5"
     LST_UPD_TS=""
     FKCOLTRL_T="[NULL]"
   />

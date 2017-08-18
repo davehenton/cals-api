@@ -68,7 +68,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "streetNm", expression = "java(Utils.Address.getStreetName(residentialAddress))")
   @Mapping(target = "streetNo", expression = "java(Utils.Address.getStreetNumber(residentialAddress))")
   @Mapping(target = "zipNo", source = "residentialAddress.zip")
-  @Mapping(target = "lstUpdId", constant = "SYS")
+  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   @Mapping(target = "addrDsc", source = "form.residence.directionsToHome")
   @Mapping(target = "spcharDsc", constant = " ")

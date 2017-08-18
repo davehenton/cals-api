@@ -24,7 +24,6 @@ import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -130,26 +129,35 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     String placementHomeId = form.getPlacementHomeId();
     assertNotNull(placementHomeId);
+    String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
 
     testIfPlacementHomeWasCreatedProperly(placementHomeId);
     testIfPlacementHomeUCWasCreatedProperly();
 
-    testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(placementHomeId);
+    testIfPlacementHomeNotesWasCreatedProperly(placementHomeId);
+
+    testIfPlacementHomeProfileWasCreatedProperly(placementHomeId);
+
+    testIfEmergencyContactDetailWasCreatedProperly(placementHomeId);
+
+    testIfExternalInterfaceWasCreatedProperly();
+
+    testIfBackgroundCheckWasCreatedProperly();
+
+    testIfCountyOwnershipWasCreatedProperly(placementHomeId, substituteCareProviderIds);
+
+    testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(placementHomeId, substituteCareProviderIds);
 
     testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId());
     testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId());
-
-    String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
 
     testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[0]);
     testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[1]);
 
   }
 
-  private void testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(String placementHomeId)
-      throws Exception {
-
-    String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
+  private void testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(
+      String placementHomeId, String[] substituteCareProviderIds) throws Exception {
 
     testIfPlacementHomeInformationWasCreatedProperly(placementHomeId, substituteCareProviderIds[0],
         substituteCareProviderIds[1]);
@@ -177,9 +185,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .setTestedTableName("OST_CHKT")
         .appendTableFilter("RCPNT_ID", recipientId)
         .build()
-        .assertEqualsIgnoreCols(new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS"});
+        .assertEquals(new String[]{"IDENTIFIER", "LST_UPD_TS"});
   }
-
 
   private String[] getSubstituteCareProviderIds(String placementHomeId) throws Exception {
     String[] ids = new String[2];
@@ -192,6 +199,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     return ids;
   }
 
+
   private void testIfPlacementHomeWasCreatedProperly(String placementHomeId) throws Exception {
     DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/PlacementHome.xml")
@@ -199,7 +207,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .setTestedTableName("PLC_HM_T")
         .appendTableFilter("IDENTIFIER", placementHomeId)
         .build()
-        .assertEqualsIgnoreCols(
+        .assertEquals(
             new String[]{
                 "LST_UPD_TS",
                 "BCK_PERSNM",
@@ -235,10 +243,75 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   private void testIfPlacementHomeUCWasCreatedProperly() throws Exception {
     DBUnitAssertHelper.builder(dbUnitSupport)
-        .setExpectedResultTemplatePath("/dbunit/PlacementHomeUc.xml")
+        .setExpectedResultTemplatePath("/dbunit/PlacementHomeUC.xml")
         .setTestedTableName("PLCHM_UC")
         .build()
-        .assertEqualsIgnoreCols(new String[]{"PKPLC_HMT", "LST_UPD_ID", "LST_UPD_TS"});
+        .assertEquals(new String[]{"PKPLC_HMT", "LST_UPD_TS"});
+  }
+
+  private void testIfPlacementHomeNotesWasCreatedProperly(String placementHomeId) throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/PlacementHomeNotes.xml")
+        .setTestedTableName("HMNOTE_T")
+        .appendTableFilter("FKPLC_HM_T", placementHomeId)
+        .build();
+    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("$placementHomeId", placementHomeId);
+
+    helper.assertEquals(new String[]{"IDENTIFIER", "LST_UPD_TS"});
+  }
+
+  private void testIfPlacementHomeProfileWasCreatedProperly(String placementHomeId) throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/PlacementHomeProfile.xml")
+        .setTestedTableName("HM_PRFT")
+        .appendTableFilter("FKPLC_HM_T", placementHomeId)
+        .build();
+    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("$placementHomeId", placementHomeId);
+
+    helper.assertEquals(new String[]{"THIRD_ID", "LST_UPD_TS"});
+  }
+
+  private void testIfEmergencyContactDetailWasCreatedProperly(String placementHomeId) throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/EmergencyContactDetail.xml")
+        .setTestedTableName("EM_CNT_T")
+        .appendTableFilter("ESTBLSH_ID", placementHomeId)
+        .build();
+    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("$placementHomeId", placementHomeId);
+
+    helper.assertEquals(new String[]{"IDENTIFIER", "LST_UPD_TS"});
+  }
+
+  private void testIfExternalInterfaceWasCreatedProperly() throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/ExternalInterface.xml")
+        .setTestedTableName("EXTINF_T")
+        .build();
+    helper.assertEquals(new String[]{"SUBMTL_TS"});
+  }
+
+  private void testIfBackgroundCheckWasCreatedProperly() throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/BackgroundCheck.xml")
+        .setTestedTableName("BKGRCHKT")
+        .build();
+    helper.assertEquals(new String[]{"IDENTIFIER", "BKGRCHK_DT", "LST_UPD_TS"});
+  }
+
+  private void testIfCountyOwnershipWasCreatedProperly(
+      String placementHomeId, String[] substituteCareProviderIds) throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/CountyOwnership.xml")
+        .setTestedTableName("CNTYOWNT")
+        .build();
+    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("$placementHomeId", placementHomeId);
+    expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderIds[0]);
+    expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderIds[1]);
+    helper.assertEquals(new String[]{"IDENTIFIER", "BKGRCHK_DT", "LST_UPD_TS"}, new String[] {"ENTITY_ID"});
   }
 
   private void testIfPlacementHomeInformationWasCreatedProperly(String placementHomeId,
@@ -254,8 +327,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
     expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
 
-    helper.assertEqualsIgnoreCols(
-        new String[]{"THIRD_ID", "START_DT", "END_DT", "LST_UPD_ID", "LST_UPD_TS",});
+    helper.assertEquals(new String[] {"THIRD_ID", "LST_UPD_TS"}, new String[] {"FKSB_PVDRT"});
   }
 
   private void testIfSubstituteCareProviderWasCreatedProperly(String substituteCareProviderId1,
@@ -270,8 +342,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
     expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
 
-    helper.assertEqualsIgnoreCols(
-        new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS", "LST_UPD_ID", "LIS_PER_ID",
+    helper.assertEquals(
+        new String[]{"IDENTIFIER", "LST_UPD_TS", "LIS_PER_ID",
             "ETH_UD_CD", "HISP_UD_CD", "PASSBC_CD"});
   }
 
@@ -285,7 +357,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
     expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
     expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
-    helper.assertEqualsIgnoreCols(new String[]{"PKSB_PVDRT", "LST_UPD_ID", "LST_UPD_TS"});
+    helper.assertEquals(new String[]{"PKSB_PVDRT", "LST_UPD_TS"});
   }
 
   private void testIfPhoneContactDetailsWasCreatedProperly(String substituteCareProviderId)
@@ -298,7 +370,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .build();
 
     helper
-        .assertEqualsIgnoreCols(new String[]{"THIRD_ID", "ESTBLSH_ID", "LST_UPD_ID", "LST_UPD_TS"});
+        .assertEquals(new String[]{"THIRD_ID", "ESTBLSH_ID", "LST_UPD_TS"});
 
 
   }
@@ -315,7 +387,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .build();
 
     helper
-        .assertEqualsIgnoreCols(new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS"});
+        .assertEquals(new String[]{"IDENTIFIER", "LST_UPD_TS"});
   }
 
   private void testIfOtherAdultsWasCreatedProperly(String placementHomeId) throws Exception {
@@ -325,9 +397,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .appendTableFilter("FKPLC_HM_T", placementHomeId)
         .build();
 
-    helper.getExpectedDataSet().addReplacementObject("[CURRENT_DATE]", LocalDate.now().toString());
-    helper.assertEqualsIgnoreCols(
-        new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
+    helper.assertEquals(
+        new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_TS"});
 
     ITable actualTable = helper.getActualTable();
 
@@ -346,8 +417,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .appendTableFilter("FKPLC_HM_T", placementHomeId)
         .build();
 
-    helper.assertEqualsIgnoreCols(
-        new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
+    helper.assertEquals(
+        new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_TS"});
   }
 
   private void testIfOtherPeopleScpRelationshipWasCreatedProperly(String substituteCareProviderId)

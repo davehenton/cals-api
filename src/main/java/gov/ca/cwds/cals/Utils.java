@@ -3,7 +3,9 @@ package gov.ca.cwds.cals;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
+import com.google.common.base.Objects;
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
@@ -11,8 +13,10 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
+
 import java.util.List;
 import java.util.Optional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -123,13 +127,38 @@ public final class Utils {
       return defaultValue;
     }
 
+    public static boolean isPrimary(RFA1aFormDTO form, ApplicantDTO applicant) {
+      List<ApplicantDTO> applicants = form.getApplicants();
+      if (applicants.size() == 0) {
+        throw new IllegalStateException("No applicants in application (id: " + form.getId() + ")");
+      }
+
+      ApplicantDTO expectedPrimaryApplicant = null;
+      Long minId = applicants.get(0).getId();
+      for (ApplicantDTO applicantDTO : applicants) {
+        Long id = applicantDTO.getId();
+        if (minId > id) {
+          minId = id;
+        }
+        if (Objects.equal(id, applicant.getId())) {
+          expectedPrimaryApplicant = applicantDTO;
+        }
+      }
+
+      if (expectedPrimaryApplicant == null) {
+        throw new IllegalStateException(
+            "Applicant (id: " + applicant.getId() + ") not found in application (id: " + form.getId() + ")");
+      }
+
+      return Objects.equal(applicant.getId(), minId);
+    }
   }
 
   public static class Address {
 
     private Address() {
     }
-    
+
     public static RFAAddressDTO getByType(RFA1aFormDTO rfa1aFormDTO, String type) {
       ResidenceDTO residence = rfa1aFormDTO.getResidence();
       if (residence == null) {
@@ -157,6 +186,20 @@ public final class Utils {
       return numberAndName[numberAndName.length - 1];
     }
 
+  }
+
+  public static class County {
+    private County() {
+    }
+
+    public static String getFlag(List<CountyType> counties, int expectedId, String selectedValue, String rejectedValue) {
+      for (CountyType county : counties) {
+        if (county.getCwsId() == expectedId) {
+          return selectedValue;
+        }
+      }
+      return rejectedValue;
+    }
   }
 
   public static class BooleanToString {
