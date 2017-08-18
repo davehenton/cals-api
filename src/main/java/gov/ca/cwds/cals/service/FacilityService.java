@@ -31,6 +31,7 @@ import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.OtherAdultsInPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.OtherChildrenInPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.OtherPeopleScpRelationshipDao;
+import gov.ca.cwds.cals.persistence.dao.cms.OutOfStateCheckDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PhoneContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeInformationDao;
@@ -59,6 +60,7 @@ import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
 import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
+import gov.ca.cwds.cals.persistence.model.cms.OutOfStateCheck;
 import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeNotes;
@@ -94,6 +96,7 @@ import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
+import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeNotesMapper;
@@ -202,6 +205,9 @@ public class FacilityService implements CrudsService {
   private EthnicityTypeDao ethnicityTypeDao;
 
   @Inject
+  private OutOfStateCheckDao outOfStateCheckDao;
+
+  @Inject
   private FacilityMapper facilityMapper;
 
   @Inject
@@ -254,6 +260,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private OtherAdultsInPlacementHomeMapper otherAdultMapper;
+
+  @Inject
+  private OutOfStateCheckMapper outOfStateCheckMapper;
 
   @Inject
   private ClientDao clientDao;
@@ -664,6 +673,7 @@ public class FacilityService implements CrudsService {
 
       storePhoneContactDetails(applicantDTO, substituteCareProvider.getIdentifier());
       storeEthnicity(applicantDTO, substituteCareProvider.getIdentifier());
+      storeOutOfStateCheck(substituteCareProvider);
     }
 
     return rfaApplicantIdsMap;
@@ -703,6 +713,12 @@ public class FacilityService implements CrudsService {
     clientScpEthnicity.setLstUpdId(Id.getStaffPersonId());
     clientScpEthnicity.setLstUpdTs(LocalDateTime.now());
     clientScpEthnicityDao.create(clientScpEthnicity);
+  }
+
+  private void storeOutOfStateCheck(SubstituteCareProvider substituteCareProvider) {
+    OutOfStateCheck outOfStateCheck = outOfStateCheckMapper
+        .toOutOfStateCheck(substituteCareProvider);
+    storeOutOfStateCheck(outOfStateCheck);
   }
 
   private void storeOtherChildren(RFA1aFormDTO form, PlacementHome persistedPlacementHome,
@@ -754,9 +770,8 @@ public class FacilityService implements CrudsService {
       otherAdult.setFkplcHmT(persistedPlacementHome.getIdentifier());
 
       final OtherAdultsInPlacementHome storedOtherAdult = otherAdultDao.create(otherAdult);
-
       storeOtherAdultScpRelationships(rfaApplicantIdsMap, otherAdultDTO, storedOtherAdult);
-
+      storeOutOfStateCheck(storedOtherAdult);
     });
   }
 
@@ -777,5 +792,17 @@ public class FacilityService implements CrudsService {
         });
   }
 
+  private void storeOutOfStateCheck(OtherAdultsInPlacementHome otherAdultsInPlacementHome) {
+    OutOfStateCheck outOfStateCheck = outOfStateCheckMapper
+        .toOutOfStateCheck(otherAdultsInPlacementHome);
+    storeOutOfStateCheck(outOfStateCheck);
+  }
+
+  private void storeOutOfStateCheck(OutOfStateCheck outOfStateCheck) {
+    outOfStateCheck.setIdentifier(Id.generate());
+    outOfStateCheck.setLstUpdId(Id.getStaffPersonId());
+    outOfStateCheck.setLstUpdTs(LocalDateTime.now());
+    outOfStateCheckDao.create(outOfStateCheck);
+  }
 
 }
