@@ -129,6 +129,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     String placementHomeId = form.getPlacementHomeId();
     assertNotNull(placementHomeId);
+    String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
 
     testIfPlacementHomeWasCreatedProperly(placementHomeId);
     testIfPlacementHomeUCWasCreatedProperly();
@@ -143,22 +144,20 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     testIfBackgroundCheckWasCreatedProperly();
 
-    testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(placementHomeId);
+    testIfCountyOwnershipWasCreatedProperly(placementHomeId, substituteCareProviderIds);
+
+    testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(placementHomeId, substituteCareProviderIds);
 
     testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId());
     testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId());
-
-    String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
 
     testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[0]);
     testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[1]);
 
   }
 
-  private void testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(String placementHomeId)
-      throws Exception {
-
-    String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
+  private void testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(
+      String placementHomeId, String[] substituteCareProviderIds) throws Exception {
 
     testIfPlacementHomeInformationWasCreatedProperly(placementHomeId, substituteCareProviderIds[0],
         substituteCareProviderIds[1]);
@@ -288,13 +287,17 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     helper.assertEquals(new String[]{"IDENTIFIER", "BKGRCHK_DT", "LST_UPD_TS"});
   }
 
-  private void testIfCountyOwnershipWasCreatedProperly(String placementHomeId) throws Exception {
+  private void testIfCountyOwnershipWasCreatedProperly(
+      String placementHomeId, String[] substituteCareProviderIds) throws Exception {
     DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/CountyOwnership.xml")
         .setTestedTableName("CNTYOWNT")
-        .appendTableFilter("ENTITY_ID", placementHomeId)
         .build();
-    helper.assertEquals(new String[]{"IDENTIFIER", "BKGRCHK_DT", "LST_UPD_TS"});
+    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
+    expectedDataSet.addReplacementObject("$placementHomeId", placementHomeId);
+    expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderIds[0]);
+    expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderIds[1]);
+    helper.assertEquals(new String[]{"IDENTIFIER", "BKGRCHK_DT", "LST_UPD_TS"}, new String[] {"ENTITY_ID"});
   }
 
   private void testIfPlacementHomeInformationWasCreatedProperly(String placementHomeId,

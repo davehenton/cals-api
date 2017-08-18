@@ -15,6 +15,7 @@ import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.CountyTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.EducationLevelTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.BackgroundCheckDao;
+import gov.ca.cwds.cals.persistence.dao.cms.CountyOwnershipDao;
 import gov.ca.cwds.cals.persistence.dao.cms.EmergencyContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.EthnicityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.GenderTypeDao;
@@ -51,6 +52,7 @@ import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.CountyOwnership;
 import gov.ca.cwds.cals.persistence.model.cms.EmergencyContactDetail;
 import gov.ca.cwds.cals.persistence.model.cms.ExternalInterface;
 import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
@@ -82,6 +84,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
+import gov.ca.cwds.cals.service.mapper.CountyOwnershipMapper;
 import gov.ca.cwds.cals.service.mapper.EmergencyContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.ExternalInterfaceMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
@@ -160,6 +163,9 @@ public class FacilityService implements CrudsService {
   private BackgroundCheckDao backgroundCheckDao;
 
   @Inject
+  private CountyOwnershipDao countyOwnershipDao;
+
+  @Inject
   private SubstituteCareProviderDao substituteCareProviderDao;
 
   @Inject
@@ -218,6 +224,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private PlacementHomeNotesMapper placementHomeNotesMapper;
+
+  @Inject
+  private CountyOwnershipMapper countyOwnershipMapper;
 
   @Inject
   private SubstituteCareProviderMapper substituteCareProviderMapper;
@@ -549,7 +558,7 @@ public class FacilityService implements CrudsService {
     storePlacementHomeProfile(form, placementHomeId);
 
     Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = storeSubstituteCareProviders(form,
-        storedPlacementHome);
+        placementHomeId);
 
     storeOtherChildren(form, storedPlacementHome, rfaApplicantIdsMap);
 
@@ -601,7 +610,12 @@ public class FacilityService implements CrudsService {
   }
 
   private Map<Long, SubstituteCareProvider> storeSubstituteCareProviders(RFA1aFormDTO form,
-      PlacementHome storedPlacementHome) {
+      String placementHomeId) {
+
+    CountyOwnership phCountyOwnership =
+        countyOwnershipMapper.toCountyOwnership(placementHomeId, "P", Collections.emptyList());
+    countyOwnershipDao.create(phCountyOwnership);// TODO: 8/18/2017
+
     List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
         .orElse(Collections.emptyList());
 
@@ -628,11 +642,17 @@ public class FacilityService implements CrudsService {
       SubstituteCareProvider storedSubstituteCareProvider = substituteCareProviderDao
           .create(substituteCareProvider);
 
+      CountyOwnership scpCountyOwnership =
+          countyOwnershipMapper.toCountyOwnership(
+              substituteCareProvider.getIdentifier(), "S", Collections.emptyList());
+      countyOwnershipDao.create(scpCountyOwnership);// TODO: 8/18/2017
+
+
       rfaApplicantIdsMap.put(applicantDTO.getId(), storedSubstituteCareProvider);
 
       PlacementHomeInformation placementHomeInformation =
           substituteCareProviderMapper.toPlacementHomeInformation(
-              form, applicantDTO, storedPlacementHome.getIdentifier(), substituteCareProvider.getIdentifier());
+              form, applicantDTO, placementHomeId, substituteCareProvider.getIdentifier());
 
       placementHomeInformationDao.create(placementHomeInformation);
 

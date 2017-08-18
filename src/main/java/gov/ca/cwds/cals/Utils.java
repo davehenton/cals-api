@@ -192,8 +192,13 @@ public final class Utils {
     private County() {
     }
 
-    public static String getFlag(CountyType county, int expectedId, String selectedValue, String rejectedValue) {
-      return county.getCwsId() == expectedId ? selectedValue : rejectedValue;
+    public static String getFlag(List<CountyType> counties, int expectedId, String selectedValue, String rejectedValue) {
+      for (CountyType county : counties) {
+        if (county.getCwsId() == expectedId) {
+          return selectedValue;
+        }
+      }
+      return rejectedValue;
     }
   }
 
