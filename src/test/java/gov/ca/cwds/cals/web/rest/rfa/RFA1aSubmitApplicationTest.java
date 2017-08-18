@@ -230,7 +230,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   private void testIfPlacementHomeUCWasCreatedProperly() throws Exception {
     DBUnitAssertHelper.builder(dbUnitSupport)
-        .setExpectedResultTemplatePath("/dbunit/PlacementHomeUC1.xml")
+        .setExpectedResultTemplatePath("/dbunit/PlacementHomeUC.xml")
         .setTestedTableName("PLCHM_UC")
         .build()
         .assertEquals(new String[]{"PKPLC_HMT", "LST_UPD_TS"});
