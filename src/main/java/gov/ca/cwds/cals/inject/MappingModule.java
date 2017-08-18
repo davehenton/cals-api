@@ -21,6 +21,8 @@ import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
 import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapperImpl;
+import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
+import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapperImpl;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapperImpl;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
@@ -59,6 +61,8 @@ public class MappingModule extends AbstractModule {
         .asEagerSingleton();
     bind(OtherPeopleScpRelationshipMapper.class).to(OtherPeopleScpRelationshipMapperImpl.class)
         .asEagerSingleton();
+    bind(OutOfStateCheckMapper.class).to(OutOfStateCheckMapperImpl.class).asEagerSingleton();
+
   }
 
 }

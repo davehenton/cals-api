@@ -164,6 +164,20 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     testIfClientScpEthnicityWasCreatedProperly(substituteCareProviderIds[0], "820");
     testIfClientScpEthnicityWasCreatedProperly(substituteCareProviderIds[1], "821");
 
+    testIfOutOfStateCheckWasCreatedProperly(substituteCareProviderIds[0], true);
+
+  }
+
+  private void testIfOutOfStateCheckWasCreatedProperly(String recipientId,
+      boolean isSubstituteCareProvider) throws Exception {
+    DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/OutOfStateCheck.xml")
+        .appendTemplateParameter("rcpntId", recipientId)
+        .appendTemplateParameter("rcpntCd", isSubstituteCareProvider ? "S" : "O")
+        .setTestedTableName("OST_CHKT")
+        .appendTableFilter("RCPNT_ID", recipientId)
+        .build()
+        .assertEqualsIgnoreCols(new String[]{"IDENTIFIER", "LST_UPD_ID", "LST_UPD_TS"});
   }
 
 
@@ -314,6 +328,15 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     helper.getExpectedDataSet().addReplacementObject("[CURRENT_DATE]", LocalDate.now().toString());
     helper.assertEqualsIgnoreCols(
         new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_ID", "LST_UPD_TS"});
+
+    ITable actualTable = helper.getActualTable();
+
+    int rowCount = actualTable.getRowCount();
+
+    for (int i = 0; i < rowCount; i++) {
+      String identifier = String.valueOf(actualTable.getValue(i, "IDENTIFIER"));
+      testIfOutOfStateCheckWasCreatedProperly(identifier, false);
+    }
   }
 
   private void testIfOtherChildrenWasCreatedProperly(String placementHomeId) throws Exception {
