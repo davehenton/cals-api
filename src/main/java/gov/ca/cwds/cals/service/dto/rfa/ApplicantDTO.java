@@ -84,6 +84,9 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   @Valid
   private List<PhoneDTO> phones = new ArrayList<>();
 
+  @ApiModelProperty(hidden = true)
+  private List<RFA1bFormDTO> rfa1bForms;
+
   public NamePrefixType getNamePrefix() {
     return namePrefix;
   }
@@ -211,6 +214,14 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   public void setNameSuffix(NameSuffixType nameSuffix) {
     this.nameSuffix = nameSuffix;
+  }
+
+  public List<RFA1bFormDTO> getRfa1bForms() {
+    return rfa1bForms;
+  }
+
+  public void setRfa1bForms(List<RFA1bFormDTO> rfa1bForms) {
+    this.rfa1bForms = rfa1bForms;
   }
 
   @JsonIgnore

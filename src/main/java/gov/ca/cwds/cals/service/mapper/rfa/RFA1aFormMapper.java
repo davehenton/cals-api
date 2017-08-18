@@ -4,13 +4,11 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import java.util.List;
 import org.mapstruct.InheritConfiguration;
@@ -39,7 +37,6 @@ public interface RFA1aFormMapper {
   @Mapping(target = "applicants", ignore = true)
   @Mapping(target = "minorChildren", ignore = true)
   @Mapping(target = "otherAdults", ignore = true)
-  @Mapping(target = "rfa1bForms", ignore = true)
   @Mapping(target = "rfa1cForms", ignore = true)
   @Mapping(target = "applicantsRelationship", ignore = true)
   @Mapping(target = "residence", ignore = true)
@@ -55,7 +52,6 @@ public interface RFA1aFormMapper {
   @Mapping(target = "applicants", source = "applicants")
   @Mapping(target = "minorChildren", source = "minorChildren")
   @Mapping(target = "otherAdults", source = "otherAdults")
-  @Mapping(target = "rfa1bForms", source = "rfa1bForms")
   @Mapping(target = "rfa1cForms", source = "rfa1cForms")
   @Mapping(target = "applicantsRelationship", source = "applicantsRelationship")
   @Mapping(target = "residence", source = "residence")
@@ -81,7 +77,6 @@ public interface RFA1aFormMapper {
   @Mapping(target = "applicants", ignore = true)
   @Mapping(target = "minorChildren", ignore = true)
   @Mapping(target = "otherAdults", ignore = true)
-  @Mapping(target = "rfa1bForms", ignore = true)
   @Mapping(target = "rfa1cForms", ignore = true)
   @Mapping(target = "applicantsRelationship", ignore = true)
   @Mapping(target = "residence", ignore = true)
@@ -105,9 +100,6 @@ public interface RFA1aFormMapper {
     return entity.getOtherAdult();
   }
 
-  default RFA1bFormDTO toRFA1bFormDTO(RFA1bForm entity) {
-    return entity.getEntityDTO();
-  }
 
   default RFA1cFormDTO toRFA1cFormDTO(RFA1cForm entity) {
     return entity.getEntityDTO();
@@ -118,8 +110,6 @@ public interface RFA1aFormMapper {
   List<MinorChildDTO> toListMinorChildDTO(List<RFA1aMinorChild> list);
 
   List<OtherAdultDTO> toListOtherAdultDTO(List<RFA1aOtherAdult> list);
-
-  List<RFA1bFormDTO> toListRFA1bFormDTO(List<RFA1bForm> list);
 
   List<RFA1cFormDTO> toListRFA1cFormDTO(List<RFA1cForm> list);
 
