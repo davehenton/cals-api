@@ -19,10 +19,10 @@ import org.junit.Test;
 
 public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
-    public static final String FACILITY_ID = "107201149";
-    public static final String WRONG_FACILITY_ID = "1";
+    public static final String FACILITY_ID = "100001317";
+    public static final String WRONG_FACILITY_ID = "-1";
     public static final String COMPLAINT_ID = "24-CR-241214-20050106141240";
-    public static final String WRONG_COMPLAINT_ID = "1";
+    public static final String WRONG_COMPLAINT_ID = "-1";
 
     @BeforeClass
     public static void beforeClass() throws Exception {
@@ -56,6 +56,16 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
         String fixture = fixture("fixtures/complaint-response.json");
         assertEqualsResponse(fixture, transformDTOtoJSON(complaintDTO));
+    }
+
+    @Test
+    public void getFacilityWrongComplaintTest() throws Exception {
+        WebTarget target = clientTestRule
+                .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + WRONG_COMPLAINT_ID);
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        Response response = invocation.get();
+
+        assertEquals(404, response.getStatus());
     }
 
 }

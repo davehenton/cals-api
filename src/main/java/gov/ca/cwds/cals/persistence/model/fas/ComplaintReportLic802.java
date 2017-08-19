@@ -20,12 +20,12 @@ import java.time.LocalDateTime;
  */
 @NamedQuery(
     name = ComplaintReportLic802.FIND_COMPLAINTS_BY_FACILITY_ID,
-    query = "SELECT c FROM ComplaintReportLic802 c WHERE c.crp2FacilityNumber = :" +
+    query = "SELECT c FROM ComplaintReportLic802 c WHERE c.facilityNumberText = :" +
         ComplaintReportLic802.PARAM_FACILITY_NUMBER
 )
 @NamedQuery(
     name = ComplaintReportLic802.FIND_COMPLAINTS_BY_FACILITY_ID_AND_COMPLAINT_NUMBER,
-    query = "SELECT c FROM ComplaintReportLic802 c WHERE c.crp2FacilityNumber = :" +
+    query = "SELECT c FROM ComplaintReportLic802 c WHERE c.facilityNumberText = :" +
         ComplaintReportLic802.PARAM_FACILITY_NUMBER + " AND c.originalunidkey = :" +
         ComplaintReportLic802.PARAM_COMPLAINT_ID
 )
