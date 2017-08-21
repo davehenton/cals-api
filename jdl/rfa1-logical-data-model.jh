@@ -1,0 +1,300 @@
+/**
+ * @author CALS API team.
+ */
+
+entity RFA1aForm {
+  is_initial_application Boolean,
+  is_other_type Boolean,
+  other_type_description String,
+  application_county Enum
+}
+
+entity Applicant {
+	name_prefix Enum,
+    first_name String,
+    middle_name String,
+    last_name String,
+    name_suffix Enum,
+    date_of_birth LocalDate,
+    driver_license_number String minlength(8) maxlength(8),
+    driver_license_state Enum,
+    email String,
+    highest_education_level Enum,
+    gender Enum,
+    ethnicity Enum
+
+}
+
+entity Employment {
+	employer_name String,
+    occupation String,
+    income Decuimal,
+    income_type Enum
+}
+
+entity Address {
+   street_address String,
+   city String,
+   state String,
+   zip Integer
+   type Enum
+}
+
+entity Phone {
+   phone_type Enum,
+   number Decimal,
+   extension Integer,
+   preferred Boolean
+}
+
+entity OtherName {
+   name_prefix Enum,
+   first_name String,
+   middle_name String,
+   last_name String,
+   name_suffix Enum,
+   name_type Enum
+}
+
+entity Residence {
+   physical_mailing_similar Boolean,
+   residence_ownership Enum,
+   weapon_in_home Boolean,
+   body_of_water_exist Boolean,
+   body_of_water_description String,
+   others_using_residence_as_mailing Boolean,
+   directions_to_home String,
+   home_languages Enum,
+
+}
+
+entity Person {
+	name_prefix Enum,
+    first_name String,
+    middle_name String,
+    last_name String,
+    name_suffix Enum
+}
+
+entity RelationshipToApplicants {
+	relationship_to_applicant Enum,
+    applicant_id Long
+}
+
+entity MinorChild {
+	other_relative Boolean,
+	other_relative_name_prefix Enum,
+    other_relative_first_name String,
+    other_relative_middle_name String,
+    other_relative_last_name String,
+    other_relative_name_suffix Enum,
+    date_of_birth LocalDate,
+    gender Enum,
+    child_financially_supported Boolean,
+    child_adopted Boolean
+}
+
+entity OtherAdult {
+	name_prefix Enum,
+    first_name String,
+    middle_name String,
+    last_name String,
+    name_suffix Enum,
+    date_of_birth LocalDate
+}
+
+
+entity ChildDesired {
+	child_identified Boolean,
+    child_in_home Boolean,
+    preferred_ages Enum,
+    preferred_sibling_groups Enum,
+    name_suffix Enum,
+    date_of_birth LocalDate
+}
+
+entity Reference {
+	name_prefix Enum,
+    first_name String,
+    middle_name String,
+    last_name String,
+    name_suffix Enum,
+    email String
+}
+
+entity ApplicantSignature {
+	applicant_id Long,
+    signature_city String,
+    signature_county Enum,
+    signature_date LocalDate
+}
+
+entity ApplicantsRelationship {
+	relationship_type Enum,
+    other_relationship String,
+    date_of_relationship LocalDate,
+    place_of_relationship_city String,
+    place_of_relationship_state Enum
+}
+
+entity RFA1bForm {
+	application_county Enum,
+    lived_in_other_state Boolean,
+    other_states_of_living Enum,
+    convicted_in_california Boolean,
+    convicted_in_another_state Boolean,
+    arrested_for_crime Boolean,
+    resource_family_name String,
+    applicant_name_prefix Enum,
+    applicant_first_name String,
+    applicant_middle_name String,
+    applicant_last_name String,
+    applicant_name_suffix Enum,
+    ssn String,
+    date_of_birth LocalDate,
+    driver_license String,
+    driver_license_state Enum,
+    signature String,
+    application_date LocalDate
+}
+
+entity Disclosure {
+	offense String,
+    offense_city String,
+    offense_state Enum,
+    offense_date LocalDate,
+    offense_details String,
+    signature String,
+    application_date LocalDate
+}
+
+entity RFA1cForm {
+	application_county Enum,
+	child_identified Boolean,
+	child_in_home Boolean
+}
+
+entity IdentifiedChild {
+	first_name String,
+    middle_name String,
+    last_name String,
+    name_suffix Enum,
+    date_of_birth LocalDate,
+    gender Enum,
+    county_of_jurisdiction Enum,
+    date_of_placement LocalDate,
+    school_grade LocalDate,
+    school_name String
+}
+
+relationship OneToMany{
+  RFA1cForm{identified_children} to IdentifiedChild
+}
+
+relationship OneToOne{
+  IdentifiedChild{relationship_to_applicants} to RelationshipToApplicants
+}
+
+relationship OneToOne{
+  IdentifiedChild{school_address} to Address
+}
+
+relationship OneToMany {
+  RFA1aForm{rfa1c_form} to RFA1cForm
+}
+
+
+relationship OneToMany {
+  RFA1bForm{disclosures} to Disclosure
+}
+
+relationship OneToOne {
+  RFA1bForm{residence_address} to Address
+}
+
+relationship OneToOne {
+  Applicant{rfa1b_form} to RFA1bForm
+}
+
+relationship OneToOne {
+  OtherAdult{rfa1b_form} to RFA1bForm
+}
+
+relationship OneToMany {
+  RFA1aForm{references} to Reference
+}
+
+
+
+relationship OneToOne {
+  RelationshipToApplicants{applicant} to RFA1aForm
+}
+
+relationship OneToOne {
+  RFA1aForm{applicants_relationship} to ApplicantsRelationship
+}
+
+relationship OneToOne {
+  Reference{phone_number} to Phone
+}
+
+relationship OneToMany {
+  RFA1aForm{applicant_signature} to ApplicantSignature
+}
+
+relationship OneToOne {
+  Reference{mailing_address} to Address
+}
+
+relationship OneToOne {
+  RFA1aForm{child_desired} to ChildDesired
+}
+
+relationship OneToMany {
+  RFA1aForm{minor_children} to MinorChild
+}
+
+relationship OneToMany {
+  RFA1aForm{other_adults} to OtherAdult
+}
+
+relationship OneToOne {
+  MinorChild{relationship_to_applicant} to RelationshipToApplicants
+}
+
+relationship OneToOne {
+  OtherAdult{relationship_to_applicant} to RelationshipToApplicants
+}
+
+relationship OneToMany {
+  RFA1aForm{residence} to Residence
+}
+
+relationship OneToMany {
+  Residence{addresses} to Address
+}
+
+relationship OneToMany {
+  Residence{other_people_using_residence_as_mailing} to Person
+}
+
+
+
+relationship OneToMany {
+  RFA1aForm{applicant} to Applicant
+}
+relationship OneToMany {
+  Applicant{applicant} to OtherName
+}
+
+relationship OneToOne {
+  Applicant{employment} to Employment
+}
+
+relationship OneToOne {
+  Employment{physical_address} to Address
+}
+
+relationship OneToMany {
+  Applicant{phone} to Phone
+}
