@@ -68,12 +68,12 @@ entity Residence {
 
 }
 
-entity Person {
+entity OtherPersonUseResidenceAsMailing {
 	name_prefix Enum,
-    first_name String,
-    middle_name String,
-    last_name String,
-    name_suffix Enum
+  first_name String,
+  middle_name String,
+  last_name String,
+  name_suffix Enum
 }
 
 entity RelationshipToApplicants {
@@ -275,7 +275,7 @@ relationship OneToMany {
 }
 
 relationship OneToMany {
-  Residence{other_people_using_residence_as_mailing} to Person
+  Residence{other_people_using_residence_as_mailing} to OtherPersonUseResidenceAsMailing
 }
 
 
