@@ -14,17 +14,17 @@ import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.CountyTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.EducationLevelTypeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.BackgroundCheckDao;
-import gov.ca.cwds.cals.persistence.dao.cms.CountyOwnershipDao;
-import gov.ca.cwds.cals.persistence.dao.cms.EmergencyContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.EthnicityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.GenderTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.LanguageTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.PhoneNumberTypeDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.StateTypeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.BackgroundCheckDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientScpEthnicityDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.CountyOwnershipDao;
+import gov.ca.cwds.cals.persistence.dao.cms.EmergencyContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ExternalInterfaceDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
@@ -53,10 +53,10 @@ import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
+import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
 import gov.ca.cwds.cals.persistence.model.cms.CountyOwnership;
 import gov.ca.cwds.cals.persistence.model.cms.EmergencyContactDetail;
 import gov.ca.cwds.cals.persistence.model.cms.ExternalInterface;
-import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
 import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
@@ -114,7 +114,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -491,13 +490,13 @@ public class FacilityService implements CrudsService {
 
     Optional.ofNullable(formDTO.getResidence())
         .map(ResidenceDTO::getHomeLanguages)
-        .orElse(Collections.emptySet()).forEach(languageType -> {
+        .orElse(Collections.emptySet()).forEach(languageType ->
           Optional.ofNullable(languageTypeDao.find(languageType.getId()))
               .ifPresent(persistentLanguageType -> {
                 languageType.setCwsId(persistentLanguageType.getCwsId());
                 languageType.setLisId(persistentLanguageType.getLisId());
-              });
-        });
+              })
+    );
 
     Optional.ofNullable(formDTO.getApplicants())
         .orElse(Collections.emptyList()).forEach(applicantDTO -> {
@@ -597,17 +596,6 @@ public class FacilityService implements CrudsService {
     placementHomeNotesDao.create(placementHomeNotes);
   }
 
-  RFA1bFormDTO get1BForm(RFA1aFormDTO form, ApplicantDTO applicantDTO) {
-    List<RFA1bFormDTO> rfa1bForms = form.getRfa1bForms();
-    if (rfa1bForms != null) {
-      for (RFA1bFormDTO rfa1bForm : rfa1bForms) {
-        if (Objects.equals(rfa1bForm.getRfa1aApplicantId(), applicantDTO.getId())) {
-          return rfa1bForm;
-        }
-      }
-    }
-    return null;
-  }
 
   private PlacementHomeUc storePlacementHomeUc(PlacementHome persistedPlacementHome) {
     PlacementHomeUc placementHomeUc = placementHomeMapper.toPlacementHomeUc(persistedPlacementHome);
@@ -636,7 +624,7 @@ public class FacilityService implements CrudsService {
       SubstituteCareProvider substituteCareProvider =
           substituteCareProviderMapper.toSubstituteCareProvider(applicantDTO);
 
-      RFA1bFormDTO bForm = get1BForm(form, applicantDTO);
+      RFA1bFormDTO bForm = applicantDTO.getRfa1bForm();
       substituteCareProviderMapper.toSubstituteCareProvider(substituteCareProvider, bForm);
 
       RFAAddressDTO residentialAddress = Utils.Address

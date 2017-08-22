@@ -3,7 +3,6 @@ package gov.ca.cwds.cals.persistence.dao.calsns;
 import com.google.common.collect.ImmutableList;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity;
-import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.rfa.factory.RFAExternalEntityFactory;
 import gov.ca.cwds.data.BaseDaoImpl;
 import java.util.stream.Stream;
@@ -17,18 +16,15 @@ import org.slf4j.LoggerFactory;
 /**
  * @author CWDS CALS API Team
  */
-public abstract class RFAExternalEntityDao<
-    T extends RFAExternalEntity,
-    D extends RFAExternalEntityDTO>
-    extends BaseDaoImpl<T> {
+public abstract class RFAExternalEntityDao<T extends RFAExternalEntity> extends BaseDaoImpl<T> {
 
   private static final Logger LOG = LoggerFactory.getLogger(RFAExternalEntityDao.class);
 
-  private RFAExternalEntityFactory<T, D> entityFactory;
+  private RFAExternalEntityFactory<T, ?> entityFactory;
 
   public RFAExternalEntityDao(
       @CalsnsSessionFactory SessionFactory sessionFactory,
-      RFAExternalEntityFactory<T, D> entityFactory) {
+      RFAExternalEntityFactory<T, ?> entityFactory) {
     super(sessionFactory);
     this.entityFactory = entityFactory;
   }

@@ -19,10 +19,10 @@ public class AbstractRFAExternalEntitiesCollectionService<
     extends TypedCrudServiceAdapter<Long, Request, CollectionDTO<D>> {
 
   private final RFAExternalEntityFactory<T, D> factory;
-  private RFAExternalEntityDao<T, D> dao;
+  private RFAExternalEntityDao<T> dao;
 
   public AbstractRFAExternalEntitiesCollectionService(
-      RFAExternalEntityDao<T, D> dao, RFAExternalEntityFactory<T, D> factory) {
+      RFAExternalEntityDao<T> dao, RFAExternalEntityFactory<T, D> factory) {
     this.dao = dao;
     this.factory = factory;
   }

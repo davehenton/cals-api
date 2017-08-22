@@ -48,9 +48,6 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "Peterson")
   private String resourceFamilyName;
 
-  @ApiModelProperty(example = "123")
-  private Long rfa1aApplicantId;
-
   @ApiModelProperty(value = "Prefix")
   @CheckReferentialIntegrity
   private NamePrefixType applicantNamePrefix;
@@ -149,14 +146,6 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
 
   public void setResourceFamilyName(String resourceFamilyName) {
     this.resourceFamilyName = resourceFamilyName;
-  }
-
-  public Long getRfa1aApplicantId() {
-    return rfa1aApplicantId;
-  }
-
-  public void setRfa1aApplicantId(Long rfa1aApplicantId) {
-    this.rfa1aApplicantId = rfa1aApplicantId;
   }
 
   public NamePrefixType getApplicantNamePrefix() {

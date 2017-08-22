@@ -5,8 +5,12 @@ import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant.PARAM
 
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -43,6 +47,10 @@ public class RFA1aApplicant extends RFAExternalEntity<ApplicantDTO> implements P
   @Type(type = "ApplicantJsonType")
   private ApplicantDTO applicant;
 
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @JoinColumn(name = "fra_1b_form_id")
+  private RFA1bForm rfa1bForm;
+
   public ApplicantDTO getApplicant() {
     return applicant;
   }
@@ -54,6 +62,14 @@ public class RFA1aApplicant extends RFAExternalEntity<ApplicantDTO> implements P
   @Override
   public ApplicantDTO getEntityDTO() {
     return getApplicant();
+  }
+
+  public RFA1bForm getRfa1bForm() {
+    return rfa1bForm;
+  }
+
+  public void setRFA1bForm(RFA1bForm rfa1bForm) {
+    this.rfa1bForm = rfa1bForm;
   }
 
   @Override

@@ -22,11 +22,11 @@ public abstract class AbstractRFAExternalEntityService<
     extends TypedCrudServiceAdapter<
     RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<D>, D> {
 
-  private RFAExternalEntityDao<T, D> dao;
+  private RFAExternalEntityDao<T> dao;
   private RFAExternalEntityFactory<T, D> configuration;
 
   public AbstractRFAExternalEntityService(
-      RFAExternalEntityDao<T, D> dao,
+      RFAExternalEntityDao<T> dao,
       RFAExternalEntityFactory<T, D> configuration) {
     this.dao = dao;
     this.configuration = configuration;
@@ -34,22 +34,27 @@ public abstract class AbstractRFAExternalEntityService<
 
   @Override
   public D create(RFAExternalEntityUpdateParameterObject<D> request) {
-    D entityDTO = request.getEntityDTO();
+    T entity = composeEntity(request);
+    entity = dao.create(entity);
+    return extractDTO(entity);
+  }
 
+  protected D extractDTO(T entity) {
+    D entityDTO = entity.getEntityDTO();
+    entityDTO.setId(entity.getId());
+    return entityDTO;
+  }
+
+  protected T composeEntity(RFAExternalEntityUpdateParameterObject<D> request) {
+    D entityDTO = request.getEntityDTO();
     if (entityDTO == null) {
       entityDTO = configuration.createEntityDTO();
     }
-
     T entity = configuration.createEntity();
-
     RFAServiceHelper.fillCreateBaseFields(entity, SYSTEM_USER_ID);
-
     entity.setEntityDTO(entityDTO);
     entity.setFormId(request.getFormId());
-    entity = dao.create(entity);
-    entityDTO = entity.getEntityDTO();
-    entityDTO.setId(entity.getId());
-    return entityDTO;
+    return entity;
   }
 
   @Override
@@ -61,9 +66,7 @@ public abstract class AbstractRFAExternalEntityService<
       throw new ExpectedException(
           ExpectedExceptionInfo.RFA_1A_APPLICANT_NOT_FOUND_BY_ID, NOT_FOUND);
     } else {
-      D entityDto = entity.getEntityDTO();
-      entityDto.setId(entity.getId());
-      return entityDto;
+      return extractDTO(entity);
     }
   }
 
@@ -98,4 +101,7 @@ public abstract class AbstractRFAExternalEntityService<
     return entityDTO;
   }
 
+  public RFAExternalEntityDao<T> getDao() {
+    return dao;
+  }
 }

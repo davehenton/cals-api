@@ -65,9 +65,6 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   private List<OtherAdultDTO> otherAdults;
 
   @ApiModelProperty(hidden = true)
-  private List<RFA1bFormDTO> rfa1bForms;
-
-  @ApiModelProperty(hidden = true)
   private List<RFA1cFormDTO> rfa1cForms;
 
   @ApiModelProperty(hidden = true)
@@ -147,15 +144,6 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   public void setOtherAdults(
       List<OtherAdultDTO> otherAdults) {
     this.otherAdults = otherAdults;
-  }
-
-  public List<RFA1bFormDTO> getRfa1bForms() {
-    return rfa1bForms;
-  }
-
-  public void setRfa1bForms(
-      List<RFA1bFormDTO> rfa1bForms) {
-    this.rfa1bForms = rfa1bForms;
   }
 
   public List<RFA1cFormDTO> getRfa1cForms() {
