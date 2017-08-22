@@ -37,4 +37,5 @@ public class RFA1bService extends AbstractRFAExternalEntityService<RFA1bForm, RF
     return extractDTO(rfa1bForm);
   }
 
+
 }

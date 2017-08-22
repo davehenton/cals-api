@@ -48,7 +48,7 @@ public class RFA1aOtherAdult extends RFAExternalEntity<OtherAdultDTO> implements
   @Type(type = "OtherAdultJsonType")
   private OtherAdultDTO otherAdult;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
   @JoinColumn(name = "fra_1b_form_id")
   private RFA1bForm rfa1bForm;
 

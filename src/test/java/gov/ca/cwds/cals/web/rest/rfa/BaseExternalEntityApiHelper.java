@@ -127,7 +127,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
     assertThat(response.getStatus()).isEqualTo(404);
   }
 
-  private T createEntity(RFA1aFormDTO form) throws IOException {
+  protected T createEntity(RFA1aFormDTO form) throws IOException {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath());

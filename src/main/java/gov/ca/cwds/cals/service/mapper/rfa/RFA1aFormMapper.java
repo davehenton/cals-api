@@ -11,6 +11,7 @@ import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import java.util.List;
+import java.util.Optional;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -89,7 +90,10 @@ public interface RFA1aFormMapper {
   void toRFA1aForm(@MappingTarget RFA1aForm rfa1aForm, RFA1aFormDTO formDTO);
 
   default ApplicantDTO toApplicantDTO(RFA1aApplicant entity) {
-    return entity.getApplicant();
+    ApplicantDTO applicantDTO = entity.getApplicant();
+    Optional.ofNullable(entity.getRfa1bForm())
+        .ifPresent(rfa1bForm -> applicantDTO.setRfa1bForm(rfa1bForm.getEntityDTO()));
+    return applicantDTO;
   }
 
   default MinorChildDTO toMinorChildDTO(RFA1aMinorChild entity) {

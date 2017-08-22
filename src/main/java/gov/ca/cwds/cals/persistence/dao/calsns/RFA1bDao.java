@@ -6,6 +6,8 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
 import gov.ca.cwds.cals.service.rfa.factory.RFA1bFactory;
+import java.io.Serializable;
+import java.util.Optional;
 import org.hibernate.SessionFactory;
 
 /**
@@ -45,5 +47,25 @@ public class RFA1bDao extends RFAExternalEntityDao<RFA1bForm> {
     otherAdult.setRfa1bForm(rfa1bFormEntity);
     otherAdultDao.update(otherAdult);
     return rfa1bFormEntity;
+  }
+
+  @Override
+  public RFA1bForm delete(Serializable id) {
+    RFA1bForm entity = this.find(id);
+    if (entity != null) {
+
+      Optional.ofNullable(entity.getApplicant()).ifPresent(applicant -> {
+        applicant.setRFA1bForm(null);
+        applicantDao.update(applicant);
+      });
+
+      Optional.ofNullable(entity.getOtherAdult()).ifPresent(otherAdult -> {
+        otherAdult.setRfa1bForm(null);
+        otherAdultDao.update(otherAdult);
+      });
+
+      this.currentSession().delete(entity);
+    }
+    return entity;
   }
 }
