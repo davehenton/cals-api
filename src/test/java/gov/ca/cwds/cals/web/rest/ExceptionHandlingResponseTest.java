@@ -48,7 +48,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
 
   @Test
   public void corruptedJSONValidationTest() throws IOException, JSONException {
-    String fixture = "{\"wrong\": -1}";
+    String fixture = "{\"wrong\": -1, \"someOtherWrongField\": false}";
     Response response = clientTestRule.target(API.RFA_1A_FORMS).request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(
             clientTestRule.getMapper().readValue(fixture, Wrong.class),
@@ -137,6 +137,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     }
 
     int wrong;
+    Boolean someOtherWrongField;
 
     public int getWrong() {
       return wrong;
@@ -144,6 +145,14 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
 
     public void getWrong(int wrong) {
       this.wrong = wrong;
+    }
+
+    public Boolean getSomeOtherWrongField() {
+      return someOtherWrongField;
+    }
+
+    public void setSomeOtherWrongField(Boolean someOtherWrongField) {
+      this.someOtherWrongField = someOtherWrongField;
     }
   }
 
