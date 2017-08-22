@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
@@ -47,10 +48,12 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
     return new BaseExternalEntityApiHelper<RFA1bFormDTO>(clientTestRule, configuration, rfaHelper) {
       @Override
       protected RFA1bFormDTO createEntity(RFA1aFormDTO form) throws IOException {
+        ApplicantDTO applicantDTO = rfaHelper
+            .getFirstExistedOrPostNewApplicant(form.getId(), rfaHelper.createValidApplicant());
         WebTarget target =
             clientTestRule.target(
                 API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath() + "/"
-                    + API.RFA_1A_APPLICANTS + "/" + 1);
+                    + API.RFA_1A_APPLICANTS + "/" + applicantDTO.getId());
         RFA1bFormDTO entity = configuration.createEntity();
         return target.request(MediaType.APPLICATION_JSON).post(
             Entity.entity(entity, MediaType.APPLICATION_JSON_TYPE), configuration.getEntityClass());

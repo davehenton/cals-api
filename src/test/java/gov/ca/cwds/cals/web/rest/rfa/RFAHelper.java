@@ -16,13 +16,16 @@ import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -75,6 +78,33 @@ public class RFAHelper {
     return target.request(MediaType.APPLICATION_JSON).post(
         Entity.entity(applicantDTO, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
 
+  }
+
+  public ApplicantDTO getFirstExistedOrPostNewApplicant(long formId, ApplicantDTO applicantDTO) {
+    ApplicantDTO storedApplicantDTO = getFirstApplicant(formId);
+    if (storedApplicantDTO == null) {
+      storedApplicantDTO = postApplicant(formId, applicantDTO);
+    }
+    return storedApplicantDTO;
+  }
+
+  public ApplicantDTO getFirstApplicant(long formId) {
+    WebTarget target =
+        clientTestRule.target(
+            API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS);
+    Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    Response response = invocation.get();
+    ApplicantDTO applicantDTO = null;
+    if (response.getStatus() == 200) {
+      GenericType<CollectionDTO<ApplicantDTO>> genericType = new GenericType<CollectionDTO<ApplicantDTO>>() {
+      };
+      CollectionDTO<ApplicantDTO> applicants = response.readEntity(genericType);
+      ;
+      if (applicants != null && !applicants.getCollection().isEmpty()) {
+        applicantDTO = applicants.getCollection().iterator().next();
+      }
+    }
+    return applicantDTO;
   }
 
   public ResidenceDTO putResidence(long formId, ResidenceDTO residenceDTO) {
