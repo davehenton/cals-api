@@ -133,10 +133,11 @@ public class RFAHelper {
         .readValue(fixture(RFA1bResourceTest.RFA1B_FORM_FIXTURE_PATH), RFA1bFormDTO.class);
   }
 
-  public RFA1bFormDTO postRfa1bForm(Long formId, RFA1bFormDTO rfa1bFormDTO) {
+  public RFA1bFormDTO postRfa1bForm(Long formId, Long applicantId, RFA1bFormDTO rfa1bFormDTO) {
     WebTarget target =
         clientTestRule.target(
-            API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1B_FORMS);
+            API.RFA_1A_FORMS + "/" + formId + "/"
+                + API.RFA_1B_FORMS + "/" + API.RFA_1A_APPLICANTS + "/" + applicantId);
     return target.request(MediaType.APPLICATION_JSON).post(
         Entity.entity(rfa1bFormDTO, MediaType.APPLICATION_JSON_TYPE), RFA1bFormDTO.class);
   }

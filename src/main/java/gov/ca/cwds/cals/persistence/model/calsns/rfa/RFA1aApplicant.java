@@ -47,7 +47,7 @@ public class RFA1aApplicant extends RFAExternalEntity<ApplicantDTO> implements P
   @Type(type = "ApplicantJsonType")
   private ApplicantDTO applicant;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "fra_1b_form_id")
   private RFA1bForm rfa1bForm;
 
