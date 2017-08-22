@@ -114,7 +114,6 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     rfaHelper.putResidence(form.getId(), getResidenceDTO());
 
     RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
-    rfa1bForm.setRfa1aApplicantId(applicantDTO.getId());
     rfaHelper.postRfa1bForm(form.getId(), rfa1bForm);
 
     List<OtherAdultDTO> otherAdultDTOs = rfaHelper.createOtherAdults(form.getId(), secondApplicant);

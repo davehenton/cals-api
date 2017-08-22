@@ -5,8 +5,12 @@ import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity.PA
 
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -44,6 +48,10 @@ public class RFA1aOtherAdult extends RFAExternalEntity<OtherAdultDTO> implements
   @Type(type = "OtherAdultJsonType")
   private OtherAdultDTO otherAdult;
 
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+  @JoinColumn(name = "fra_1b_form_id")
+  private RFA1bForm rfa1bForm;
+
   public void setOtherAdult(OtherAdultDTO otherAdult) {
     this.otherAdult = otherAdult;
   }
@@ -60,6 +68,14 @@ public class RFA1aOtherAdult extends RFAExternalEntity<OtherAdultDTO> implements
   @Override
   public void setEntityDTO(OtherAdultDTO otherAdult) {
     setOtherAdult(otherAdult);
+  }
+
+  public RFA1bForm getRfa1bForm() {
+    return rfa1bForm;
+  }
+
+  public void setRfa1bForm(RFA1bForm rfa1bForm) {
+    this.rfa1bForm = rfa1bForm;
   }
 
   @Override
