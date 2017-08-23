@@ -1,11 +1,11 @@
 {
-  "code": "$code",
-  "exception_type": "expected_exception",
-  "incident_id": "$incident_id",
-  "technical_messages": [
-    "Application is not found by Form Id"
-  ],
-  "user_messages": [
-    "$user_message"
+  "validation_details": [
+    {
+      "type": "expected_exception",
+      "user_message": $user_message,
+      "technical_message": "Application is not found by Form Id",
+      "incident_id": $incident_id,
+      "code": "$code"
+    }
   ]
 }

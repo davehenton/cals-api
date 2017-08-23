@@ -1,7 +1,10 @@
 {
-  "code": "?",
-  "exception_type": "constraint_validation",
-  "user_messages": [
-    "<applicant-names-duplication-validation> Applicant with first name - [Anna], last name - [Smith] and name suffix - [Jr] already exists in application"
+  "validation_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Applicant with first name - [Anna], last name - [Smith] and name suffix - [Jr] already exists in application",
+      "technical_message": "applicant-names-duplication-validation",
+      "code": "BV000005"
+    }
   ]
 }

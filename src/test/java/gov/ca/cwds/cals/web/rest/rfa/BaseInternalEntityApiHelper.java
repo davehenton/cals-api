@@ -8,6 +8,7 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ExpectedExceptionInfo;
+import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
@@ -64,7 +65,8 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
     BaseExceptionResponse expectedExceptionResponse =
         response.readEntity(BaseExceptionResponse.class);
     VelocityHelper velocityHelper = new VelocityHelper();
-    velocityHelper.setParameter("incident_id", expectedExceptionResponse.getIncidentId());
+    ValidationDetails details = expectedExceptionResponse.getValidationDetails().iterator().next();
+    velocityHelper.setParameter("incident_id", details.getIncidentId());
     velocityHelper.setParameter("user_message", ErrorMessages.BASE_ERROR_MESSAGE);
     velocityHelper.setParameter("technical_message",
         ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID.getMessage());
