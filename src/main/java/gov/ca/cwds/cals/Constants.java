@@ -58,6 +58,8 @@ public final class Constants {
 
     public static final String RFA_1B_FORMS = "rfa-1b-forms";
 
+    public static final String RFA_1B_FORM = "rfa-1b-form";
+
     public static final String RFA_1C_FORMS = "rfa-1c-forms";
 
     public static final String RFA_1A_APPLICANTS = "applicants";

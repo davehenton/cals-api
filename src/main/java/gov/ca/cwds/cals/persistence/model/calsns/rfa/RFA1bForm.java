@@ -6,6 +6,7 @@ import static gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity.PA
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -38,8 +39,31 @@ public class RFA1bForm extends RFAExternalEntity<RFA1bFormDTO> implements Persis
   public static final String NAMED_QUERY_FIND_BY_FORMA_ID_AND_FORMB_ID =
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm.find.by.id";
 
+  @OneToOne(mappedBy = "rfa1bForm")
+  private RFA1aApplicant applicant;
+
+  @OneToOne(mappedBy = "rfa1bForm")
+  private RFA1aOtherAdult otherAdult;
+
   @Type(type = "RFA1bFormJsonType")
   private RFA1bFormDTO application;
+
+
+  public RFA1aApplicant getApplicant() {
+    return applicant;
+  }
+
+  public void setApplicant(RFA1aApplicant applicant) {
+    this.applicant = applicant;
+  }
+
+  public RFA1aOtherAdult getOtherAdult() {
+    return otherAdult;
+  }
+
+  public void setOtherAdult(RFA1aOtherAdult otherAdult) {
+    this.otherAdult = otherAdult;
+  }
 
   @Override
   public RFA1bFormDTO getEntityDTO() {

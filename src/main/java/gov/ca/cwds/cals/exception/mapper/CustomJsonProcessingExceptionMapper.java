@@ -5,6 +5,7 @@ import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ExceptionType;
 import gov.ca.cwds.cals.exception.ValidationDetails;
+import gov.ca.cwds.logging.LoggingContext.LogParameter;
 import io.dropwizard.jersey.errors.ErrorMessage;
 import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
 import javax.ws.rs.core.Response;
@@ -35,7 +36,7 @@ public class CustomJsonProcessingExceptionMapper extends JsonProcessingException
 
     ValidationDetails details = new ValidationDetails();
     details.setType(ExceptionType.JSON_PROCESSING_EXCEPTION);
-    details.setIncidentId(MDC.get("uniqueId"));
+    details.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
     details.setUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
     details.setTechnicalMessage(
         StringUtils.join(new Object[] {errorMessage.getMessage(), errorMessage.getDetails()}, ". "));

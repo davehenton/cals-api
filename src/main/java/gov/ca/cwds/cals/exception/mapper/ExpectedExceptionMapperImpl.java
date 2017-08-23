@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ExceptionType;
 import gov.ca.cwds.cals.exception.ExpectedException;
+import gov.ca.cwds.logging.LoggingContext.LogParameter;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -26,7 +27,7 @@ public class ExpectedExceptionMapperImpl implements ExceptionMapper<ExpectedExce
   public Response toResponse(ExpectedException exception) {
     ValidationDetails details = new ValidationDetails();
     details.setType(ExceptionType.EXPECTED_EXCEPTION);
-    details.setIncidentId(MDC.get("uniqueId"));
+    details.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
     details.setTechnicalMessage(exception.getCalsExceptionInfo().getMessage());
     details.setUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
     details.setCode(exception.getCalsExceptionInfo().getCode());
