@@ -183,7 +183,7 @@ public class RequestResponseLoggingFilter implements Filter {
     }
   }
 
-  private class RequestResponseLoggingHttpServletResponseWrapper
+  static private class RequestResponseLoggingHttpServletResponseWrapper
       extends HttpServletResponseWrapper {
 
     private TeeServletOutputStream teeStream;
