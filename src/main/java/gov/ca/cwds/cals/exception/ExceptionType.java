@@ -11,7 +11,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum ExceptionType {
 
   JSON_PROCESSING_EXCEPTION("json_processing_exception"),
-  VALIDATION_ERROR("constraint_validation"),
+  BUSINESS_VALIDATION("business_validation"),
+  CONSTRAINT_VALIDATION("constraint_validation"),
   UNEXPECTED_EXCEPTION("unexpected_exception"),
   EXPECTED_EXCEPTION("expected_exception");
 

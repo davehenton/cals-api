@@ -1,6 +1,10 @@
 {
-  "exception_type": "constraint_validation",
-  "user_messages": [
-    "Applicant with firstName - [], last name - [Smith] and name suffix - [Jr] has empty first name"
+  "validation_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Applicant with firstName - [], last name - [Smith] and name suffix - [Jr] has empty first name",
+      "code": "BV000001",
+      "technical_message" : "form-submission-validation"
+    }
   ]
 }

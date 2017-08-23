@@ -3,6 +3,8 @@ package gov.ca.cwds.cals;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Objects;
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
@@ -14,9 +16,11 @@ import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import io.dropwizard.jackson.Jackson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -217,5 +221,17 @@ public final class Utils {
       return rejectedValue;
     }
 
+  }
+
+  public static class Json {
+    private static final ObjectMapper objectMapper = Jackson.newObjectMapper();
+
+    public static String to(Object o) throws JsonProcessingException {
+      return objectMapper.writeValueAsString(o);
+    }
+
+    public static Object from(String json, Class clazz) throws IOException {
+      return objectMapper.readValue(json, clazz);
+    }
   }
 }

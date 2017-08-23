@@ -14,6 +14,7 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
+import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.rfa.BaseRFAIntegrationTest;
@@ -59,7 +60,8 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
         .readValue(entity, BaseExceptionResponse.class);
 
     VelocityHelper velocityHelper = new VelocityHelper();
-    velocityHelper.setParameter("incident_id", baseExceptionResponse.getIncidentId());
+    ValidationDetails details = baseExceptionResponse.getValidationDetails().iterator().next();
+    velocityHelper.setParameter("incident_id", details.getIncidentId());
     velocityHelper.setParameter("user_message", ErrorMessages.BASE_ERROR_MESSAGE);
     assertResponseByFixture(entity,
         velocityHelper.process("fixtures/exception/json-error-response.json"));
@@ -102,7 +104,8 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     BaseExceptionResponse baseExceptionResponse = clientTestRule.getMapper()
         .readValue(entity, BaseExceptionResponse.class);
     VelocityHelper velocityHelper = new VelocityHelper();
-    velocityHelper.setParameter("incident_id", baseExceptionResponse.getIncidentId());
+    ValidationDetails details = baseExceptionResponse.getValidationDetails().iterator().next();
+    velocityHelper.setParameter("incident_id", details.getIncidentId());
     velocityHelper.setParameter("user_message", ErrorMessages.BASE_ERROR_MESSAGE);
     velocityHelper.setParameter("technical_message", COMPLAINT_NOT_FOUND_BY_ID.getMessage());
     assertResponseByFixture(entity,
@@ -119,10 +122,11 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     assertEquals(500, response.getStatus());
     BaseExceptionResponse unexpectedErrorResponse =
         response.readEntity(BaseExceptionResponse.class);
-    assertNotNull(unexpectedErrorResponse.getStackTrace());
-    assertEquals(UNEXPECTED_EXCEPTION, unexpectedErrorResponse.getExceptionType());
-    assertNotNull(unexpectedErrorResponse.getIncidentId());
-    assertEquals(BASE_ERROR_MESSAGE, unexpectedErrorResponse.getUserMessages().get(0));
+    ValidationDetails details = unexpectedErrorResponse.getValidationDetails().iterator().next();
+    assertNotNull(details.getStackTrace());
+    assertEquals(UNEXPECTED_EXCEPTION, details.getType());
+    assertNotNull(details.getIncidentId());
+    assertEquals(BASE_ERROR_MESSAGE, details.getUserMessage());
   }
 
   private ApplicantDTO getApplicantDTO() throws IOException {

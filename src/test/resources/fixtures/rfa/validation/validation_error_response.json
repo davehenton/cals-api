@@ -1,7 +1,8 @@
 {
-  "exception_type": "constraint_validation",
-  "user_messages": [
-    $user_message
-  ],
-  "code": "$code"
-} 
+  "validation_details": [
+    {
+      "type": "constraint_validation",
+      "user_message": $user_message,
+    }
+  ]
+}
