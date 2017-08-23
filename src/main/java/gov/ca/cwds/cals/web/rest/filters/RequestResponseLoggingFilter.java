@@ -242,7 +242,7 @@ public class RequestResponseLoggingFilter implements Filter {
       return wrappedResponse.toString();
     }
 
-    private class TeeServletOutputStream extends ServletOutputStream {
+    static private class TeeServletOutputStream extends ServletOutputStream {
 
       private final TeeOutputStream targetStream;
 
