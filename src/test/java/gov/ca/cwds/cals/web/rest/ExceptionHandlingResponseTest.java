@@ -29,6 +29,7 @@ import javax.ws.rs.core.Response;
 import liquibase.exception.LiquibaseException;
 import org.json.JSONException;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -46,6 +47,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     setUpFas();
   }
 
+  @Ignore
   @Test
   public void corruptedJSONValidationTest() throws IOException, JSONException {
     String fixture = "{\"wrong\": -1, \"someOtherWrongField\": false}";
