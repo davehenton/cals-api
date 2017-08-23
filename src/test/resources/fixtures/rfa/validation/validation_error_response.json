@@ -2,7 +2,7 @@
   "validation_details": [
     {
       "type": "constraint_validation",
-      "user_message": $user_message,
+      "user_message": "$user_message"
     }
   ]
 }
