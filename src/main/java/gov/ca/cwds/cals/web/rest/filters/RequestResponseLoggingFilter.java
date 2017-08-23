@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -90,7 +91,7 @@ public class RequestResponseLoggingFilter implements Filter {
       try {
         chain.doFilter(wrappedRequest, wrappedResponse);
         StringBuilder reponseStringBuilder = new StringBuilder();
-        reponseStringBuilder.append(wrappedResponse.toString())
+        reponseStringBuilder.append(wrappedResponse)
             .append(wrappedResponse.getContent());
         auditLogger
             .audit(reponseStringBuilder.toString().replaceAll("\n", " ").replaceAll("\r", ""));
@@ -124,12 +125,12 @@ public class RequestResponseLoggingFilter implements Filter {
       }
     }
     InputStream bodyInputStream = request.getInputStream();
-    sb.append(new String(IOUtils.toByteArray(bodyInputStream)));
+    sb.append(new String(IOUtils.toByteArray(bodyInputStream), StandardCharsets.UTF_8));
 
-    return sb.toString().replace("\n", " ");
+    return sb.toString().replace('\n', ' ' );
   }
 
-  private class RequestResponseLoggingHttpServletRequest extends HttpServletRequestWrapper {
+  private static class RequestResponseLoggingHttpServletRequest extends HttpServletRequestWrapper {
     private final byte[] body;
     private final HttpServletRequest wrappedRequest;
 
@@ -160,7 +161,7 @@ public class RequestResponseLoggingFilter implements Filter {
       return new ServletInputStream() {
 
         @Override
-        public int read() throws IOException {
+        public int read() {
           return byteArrayInputStream.read();
         }
 
