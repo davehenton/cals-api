@@ -6,6 +6,8 @@ import gov.ca.cwds.data.persistence.PersistentObject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CWDS CALS API Team
@@ -14,10 +16,14 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
     implements ConstraintValidator<CheckReferentialIntegrity, PersistentObject>,
     CalsSessionFactoryAware {
 
+  private static final Logger LOG = LoggerFactory.getLogger(ReferentialIntegrityValidator.class);
+
   private boolean checkEquality;
+  private boolean enrich;
 
   public void initialize(CheckReferentialIntegrity constraint) {
     checkEquality = constraint.checkEquality();
+    enrich = constraint.enrich();
   }
 
   public boolean isValid(PersistentObject obj, ConstraintValidatorContext context) {
@@ -36,6 +42,7 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
       }
       return true;
     } catch (Exception e) {
+      LOG.error("Can't get Hibernate session", e);
       context.disableDefaultConstraintViolation();
       context.buildConstraintViolationWithTemplate(
           Constants.Validation.Field.CANNOT_OPEN_DATABASE_SESSION_MESSAGE)
@@ -47,5 +54,10 @@ public class ReferentialIntegrityValidator extends AbstractReferentialIntegrityV
   @Override
   boolean isCheckEqualityRequired() {
     return checkEquality;
+  }
+
+  @Override
+  boolean isEnrichmentRequired() {
+    return enrich;
   }
 }

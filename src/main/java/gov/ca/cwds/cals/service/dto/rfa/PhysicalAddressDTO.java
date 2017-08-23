@@ -19,7 +19,7 @@ public class PhysicalAddressDTO extends BaseDTO {
 
   private String city;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private StateType state;
 
   private String zip;

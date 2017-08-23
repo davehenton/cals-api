@@ -25,9 +25,13 @@ import gov.ca.cwds.cals.service.validation.business.configuration.DroolsFieldVal
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import io.dropwizard.hibernate.UnitOfWork;
+import io.dropwizard.setup.Environment;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import javax.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +55,9 @@ public class RFA1aFormService
 
   @Inject
   private DroolsService droolsService;
+
+  @Inject
+  private Environment environment;
 
   public RFA1aFormService() {
     // default constructor
@@ -138,6 +145,7 @@ public class RFA1aFormService
         newStatus);
   }
 
+
   @UnitOfWork(CALSNS)
   protected void updateFormAfterPlacementHomeCreation(
       Long formId, String placementHomeId, RFAApplicationStatus newStatus) {
@@ -149,8 +157,13 @@ public class RFA1aFormService
 
   private void performSubmissionValidation(
       RFA1aFormDTO formDTO) throws BusinessValidationException {
-    Set<String> validationMessages = droolsService.validate(formDTO,
-        createConfiguration());
+    Validator validator = environment.getValidator();
+    Set<String> validationMessages = new HashSet<>();
+    Optional.ofNullable(validator.validate(formDTO))
+        .ifPresent(violations -> violations
+            .forEach(violation -> validationMessages.add(violation.getMessage())
+            ));
+    validationMessages.addAll(droolsService.validate(formDTO, createConfiguration()));
     if (!validationMessages.isEmpty()) {
       throw new BusinessValidationException(new ArrayList<>(validationMessages));
     }

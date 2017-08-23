@@ -31,7 +31,7 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
   private boolean physicalMailingSimilar;
 
   @ApiModelProperty(value = "Residence Ownership Type")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private ResidenceOwnershipType residenceOwnership;
 
   @ApiModelProperty(value = "Is Weapon In Home", example = "false")
@@ -54,7 +54,7 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
   private String directionsToHome;
 
   @ApiModelProperty(value = "Home Languages")
-  @CheckReferentialIntegrityForEach
+  @CheckReferentialIntegrityForEach(enrich = true)
   private Set<LanguageType> homeLanguages;
 
   public List<RFAAddressDTO> getAddresses() {

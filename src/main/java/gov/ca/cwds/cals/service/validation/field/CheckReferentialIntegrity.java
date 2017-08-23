@@ -23,6 +23,8 @@ public @interface CheckReferentialIntegrity {
 
   boolean checkEquality() default true;
 
+  boolean enrich() default false;
+
   String message() default "Object is not found in database";
 
   Class<?>[] groups() default {};

@@ -20,7 +20,7 @@ public class RelationshipToApplicantDTO extends BaseDTO {
 
   @JsonProperty("relationship_to_applicant")
   @ApiModelProperty(value = "Relationship to Applicant")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private RelationshipToApplicantType relationshipToApplicantType;
 
   @ApiModelProperty(value = "Applicant Id", example = "1234567")

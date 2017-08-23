@@ -23,7 +23,7 @@ import java.time.LocalDate;
 public class ApplicantsRelationshipDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty("Relationship between applicants")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private ApplicantRelationshipType relationshipType;
 
   @ApiModelProperty(value = "Other type of relationship if it's not in the list", example = "")
@@ -37,7 +37,7 @@ public class ApplicantsRelationshipDTO extends BaseDTO implements RequestRespons
   private String placeOfRelationshipCity;
 
   @ApiModelProperty("Place of current marriage/Domestic partnership: state")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private StateType placeOfRelationshipState;
 
   public ApplicantRelationshipType getRelationshipType() {

@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
@@ -47,7 +46,6 @@ import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
@@ -477,71 +475,7 @@ public class FacilityService implements CrudsService {
   }
 
   public PlacementHome createPlacementHomeByRfaApplication(RFA1aFormDTO formDTO) {
-    enrichDictionaryEntries(formDTO);
     return storePlacementHome(formDTO);
-  }
-
-  @UnitOfWork(CALSNS)
-  private void enrichDictionaryEntries(RFA1aFormDTO formDTO) {
-    Optional.ofNullable(formDTO.getApplicationCounty()).ifPresent(
-        countyType -> Optional.ofNullable(countyTypeDao.find(countyType.getId()))
-            .ifPresent(formDTO::setApplicationCounty)
-    );
-
-    Optional.ofNullable(formDTO.getResidence())
-        .map(ResidenceDTO::getHomeLanguages)
-        .orElse(Collections.emptySet()).forEach(languageType ->
-          Optional.ofNullable(languageTypeDao.find(languageType.getId()))
-              .ifPresent(persistentLanguageType -> {
-                languageType.setCwsId(persistentLanguageType.getCwsId());
-                languageType.setLisId(persistentLanguageType.getLisId());
-              })
-    );
-
-    Optional.ofNullable(formDTO.getApplicants())
-        .orElse(Collections.emptyList()).forEach(applicantDTO -> {
-          Optional.ofNullable(applicantDTO.getGender()).ifPresent(
-              genderType -> Optional.ofNullable(genderTypeDao.find(genderType.getId()))
-                  .ifPresent(applicantDTO::setGender)
-          );
-
-          Optional.ofNullable(applicantDTO.getHighestEducationLevel()).ifPresent(
-              educationLevelType -> Optional.ofNullable(educationLevelTypeDao.find(educationLevelType.getId()))
-                  .ifPresent(applicantDTO::setHighestEducationLevel)
-              );
-
-          Optional.ofNullable(applicantDTO.getPhones())
-              .ifPresent(
-                  phoneDTOS -> phoneDTOS.forEach(
-                      phoneDTO -> Optional.ofNullable(phoneDTO.getPhoneType()).ifPresent(
-                          phoneNumberType -> Optional.ofNullable(phoneNumberTypeDao.find(phoneNumberType.getId()))
-                              .ifPresent(phoneDTO::setPhoneType))
-                  )
-              );
-
-          Optional.ofNullable(applicantDTO.getEthnicity()).ifPresent(
-             ethnicityType -> Optional.ofNullable(ethnicityTypeDao.find(ethnicityType.getId()))
-                  .ifPresent(applicantDTO::setEthnicity)
-          );
-      });
-
-    Optional.ofNullable(formDTO.getResidence())
-        .map(ResidenceDTO::getAddresses)
-        .orElse(Collections.emptyList()).forEach(address ->
-            Optional.ofNullable(address.getState()).ifPresent(
-                stateType -> Optional.ofNullable(stateTypeDao.find(stateType.getId()))
-                    .ifPresent(address::setState)
-            ));
-
-    Optional.ofNullable(formDTO.getMinorChildren())
-        .ifPresent(list -> list.forEach(this::enrichMinorChild));
-
-  }
-
-  private void enrichMinorChild(MinorChildDTO minorChildDTO) {
-    GenderType genderType = minorChildDTO.getGender();
-    String genderCwsShortCode = genderTypeDao.find(genderType.getPrimaryKey()).getCwsShortCode();
-    genderType.setCwsShortCode(genderCwsShortCode);
   }
 
   @UnitOfWork(CMS)

@@ -281,7 +281,7 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
   public static class AgencyDTO extends BaseDTO {
     private String name;
 
-    @CheckReferentialIntegrity
+    @CheckReferentialIntegrity(enrich = true)
     private LicenseType type;
 
     public String getName() {

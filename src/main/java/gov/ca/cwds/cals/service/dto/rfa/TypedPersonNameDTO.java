@@ -12,7 +12,7 @@ import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class TypedPersonNameDTO extends PersonNameDTO {
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NameType nameType;
 
   public NameType getNameType() {
