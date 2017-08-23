@@ -23,6 +23,8 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
   private static final String DEFAULT_USER_ID = "0X5";
 
+  private static final Date REQUEST_START_TIME = new Date();
+
   /**
    * Context parameters
    */
@@ -34,7 +36,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
    * @param userIdentity User identity
    */
   private RequestExecutionContextImpl(PerryUserIdentity userIdentity) {
-    put(Parameter.REQUEST_START_TIME, new Date());
+    put(Parameter.REQUEST_START_TIME, REQUEST_START_TIME);
     put(Parameter.USER_IDENTITY, userIdentity);
     put(Parameter.SEQUENCE_EXTERNAL_TABLE, Integer.valueOf(0));
   }

@@ -60,10 +60,10 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
 
     runDataSourceHealthChecks(environment);
 
-    // Providing access to the guice injector from external classes such as custom validators
-    InjectorHolder.INSTANCE.setInjector(this.guiceBundle.getInjector());
-
     Injector injector = guiceBundle.getInjector();
+
+    // Providing access to the guice injector from external classes such as custom validators
+    InjectorHolder.INSTANCE.setInjector(injector);
 
     environment.servlets()
         .addFilter("RequestExecutionContextManagingFilter",
