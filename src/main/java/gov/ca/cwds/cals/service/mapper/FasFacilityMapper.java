@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
+import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityVisitDTO;
 import java.util.ArrayList;
@@ -43,16 +43,16 @@ public interface FasFacilityMapper {
   @Mapping(target = "lastDeferredVisitReason", source = "facilityLastDeferredVisitReason", qualifiedByName = "facilityVisitReason")
   @Mapping(target = "annualVisitYear", source = "facAnnualVisitYear")
   @Mapping(target = "prelicensingVisitDate", source = "facPreLicVisitDate")
-  void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, FacilityInfoLis facilityInfoLis);
+  void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, FacilityInformation facilityInfoLis);
 
   @AfterMapping
-  default void after(@MappingTarget FacilityDTO facilityDTO, FacilityInfoLis facilityInfoLis) {
+  default void after(@MappingTarget FacilityDTO facilityDTO, FacilityInformation facilityInformation) {
     FacilityVisitMapper mapper = Mappers.getMapper(FacilityVisitMapper.class);
     List<FacilityVisitDTO> facilityVisitDTOs = new ArrayList<>(5);
-    facilityVisitDTOs.add(mapper.toAnnual10MonthFacilityVisitDTO(facilityInfoLis));
-    facilityVisitDTOs.add(mapper.toAnnual22MonthFacilityVisitDTO(facilityInfoLis));
-    facilityVisitDTOs.add(mapper.toPostLicensingFacilityVisitDTO(facilityInfoLis));
-    facilityVisitDTOs.add(mapper.toRenewalFacilityVisitDTO(facilityInfoLis));
+    facilityVisitDTOs.add(mapper.toAnnual10MonthFacilityVisitDTO(facilityInformation));
+    facilityVisitDTOs.add(mapper.toAnnual22MonthFacilityVisitDTO(facilityInformation));
+    facilityVisitDTOs.add(mapper.toPostLicensingFacilityVisitDTO(facilityInformation));
+    facilityVisitDTOs.add(mapper.toRenewalFacilityVisitDTO(facilityInformation));
     facilityDTO.setVisits(facilityVisitDTOs);
   }
 }

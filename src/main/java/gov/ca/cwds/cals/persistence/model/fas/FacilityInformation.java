@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.fas;
 
+import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -2024,6 +2025,29 @@ public class FacilityInformation implements PersistentObject {
 
   public void setDtModified(LocalDateTime dtModified) {
     this.dtModified = dtModified;
+  }
+
+  private LisTableFile facilityLastVisitReason;
+
+  private LisTableFile facilityLastDeferredVisitReason;
+
+
+  @Transient
+  public LisTableFile getFacilityLastVisitReason() {
+    return facilityLastVisitReason;
+  }
+
+  public void setFacilityLastVisitReason(LisTableFile facilityLastVisitReason) {
+    this.facilityLastVisitReason = facilityLastVisitReason;
+  }
+
+  @Transient
+  public LisTableFile getFacilityLastDeferredVisitReason() {
+    return facilityLastDeferredVisitReason;
+  }
+
+  public void setFacilityLastDeferredVisitReason(LisTableFile facilityLastDeferredVisitReason) {
+    this.facilityLastDeferredVisitReason = facilityLastDeferredVisitReason;
   }
 
   @Transient
