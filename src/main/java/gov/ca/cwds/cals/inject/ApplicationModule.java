@@ -33,6 +33,7 @@ public class ApplicationModule extends AbstractModule {
         install(new ResourcesModule());
         install(new AuditingModule());
         install(new MappingModule());
+        install(new FiltersModule());
     }
 
 }

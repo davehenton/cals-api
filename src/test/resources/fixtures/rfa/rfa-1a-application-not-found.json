@@ -6,6 +6,6 @@
     "Application is not found by Form Id"
   ],
   "user_messages": [
-    $user_message
+    "$user_message"
   ]
 }

@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.exception.mapper;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ExceptionType;
+import gov.ca.cwds.logging.LoggingContext.LogParameter;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -27,7 +28,7 @@ public class UnexpectedExceptionMapperImpl implements ExceptionMapper<RuntimeExc
     LOGGER.error("EXCEPTION MAPPER: {}", ex.getMessage(), ex);
     BaseExceptionResponse unexpectedException = new BaseExceptionResponse();
     unexpectedException.setExceptionType(ExceptionType.UNEXPECTED_EXCEPTION);
-    unexpectedException.setIncidentId(MDC.get("uniqueId"));
+    unexpectedException.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
     unexpectedException.addUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
     unexpectedException.addTechnicalMessage(ex.getMessage());
     if (ex.getCause() != null) {

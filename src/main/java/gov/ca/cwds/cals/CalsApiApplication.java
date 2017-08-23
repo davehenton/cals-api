@@ -2,6 +2,7 @@ package gov.ca.cwds.cals;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
+import com.google.inject.Injector;
 import com.google.inject.Module;
 import gov.ca.cwds.cals.exception.CustomExceptionMapperBinder;
 import gov.ca.cwds.cals.exception.mapper.BusinessValidationExceptionMapper;
@@ -9,10 +10,14 @@ import gov.ca.cwds.cals.exception.mapper.ExpectedExceptionMapperImpl;
 import gov.ca.cwds.cals.exception.mapper.UnexpectedExceptionMapperImpl;
 import gov.ca.cwds.cals.inject.ApplicationModule;
 import gov.ca.cwds.cals.inject.InjectorHolder;
+import gov.ca.cwds.cals.web.rest.filters.RequestExecutionContextFilter;
+import gov.ca.cwds.cals.web.rest.filters.RequestResponseLoggingFilter;
 import gov.ca.cwds.rest.BaseApiApplication;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import java.util.EnumSet;
+import javax.servlet.DispatcherType;
 import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +28,9 @@ import org.slf4j.LoggerFactory;
 public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration> {
 
   private static final Logger LOG = LoggerFactory.getLogger(CalsApiApplication.class);
-  public static final String LIQUIBASE_CALSNS_DATABASE_CREATE_SCHEMA_XML = "liquibase/calsns_schema.xml";
-  public static final String LIQUIBASE_CALSNS_DATABASE_MASTER_XML = "liquibase/calsns_database_master.xml";
-  public static final String HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME = "hibernate.default_schema";
+  private static final String LIQUIBASE_CALSNS_DATABASE_CREATE_SCHEMA_XML = "liquibase/calsns_schema.xml";
+  private static final String LIQUIBASE_CALSNS_DATABASE_MASTER_XML = "liquibase/calsns_database_master.xml";
+  private static final String HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME = "hibernate.default_schema";
 
   public static void main(String[] args) throws Exception {
     new CalsApiApplication().run(args);
@@ -57,6 +62,18 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
 
     // Providing access to the guice injector from external classes such as custom validators
     InjectorHolder.INSTANCE.setInjector(this.guiceBundle.getInjector());
+
+    Injector injector = guiceBundle.getInjector();
+
+    environment.servlets()
+        .addFilter("RequestExecutionContextManagingFilter",
+            injector.getInstance(RequestExecutionContextFilter.class))
+        .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+
+    environment.servlets()
+        .addFilter("AuditAndLoggingFilter",
+            injector.getInstance(RequestResponseLoggingFilter.class))
+        .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
   }
 
   private void runDataSourceHealthChecks(Environment environment) {
