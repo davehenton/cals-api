@@ -37,7 +37,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   public static final String ALFANUMERICAL_PATTERN = "^[a-zA-Z0-9\\s]*$";
 
   @ApiModelProperty(value = "Prefix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NamePrefixType namePrefix;
 
   @Size(max = 20, message = ErrorMessages.MAX_LENGTH_VIOLATION)
@@ -51,29 +51,29 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   private String lastName;
 
   @ApiModelProperty(value = "Suffix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType nameSuffix;
 
   private List<TypedPersonNameDTO> otherNames = new ArrayList<>();
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private EducationLevelType highestEducationLevel;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private GenderType gender;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private RaceType race;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private EthnicityType ethnicity;
 
   private String driverLicenseNumber;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private StateType driverLicenseState;
 
   private String email;

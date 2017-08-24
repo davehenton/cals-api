@@ -27,11 +27,11 @@ public class ChildDesiredDTO extends BaseDTO implements RequestResponse {
   private boolean childInHome;
 
   @ApiModelProperty(value = "Preferred Age(s)")
-  @CheckReferentialIntegrityForEach
+  @CheckReferentialIntegrityForEach(enrich = true)
   private List<AgeGroupType> preferredAges = new ArrayList<>();
 
   @ApiModelProperty(value = "Preferred Sibling(Group Of)")
-  @CheckReferentialIntegrityForEach
+  @CheckReferentialIntegrityForEach(enrich = true)
   private List<SiblingGroupType> preferredSiblingGroups = new ArrayList<>();
 
   public boolean isChildInHome() {

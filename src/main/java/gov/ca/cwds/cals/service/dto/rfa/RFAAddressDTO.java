@@ -30,11 +30,11 @@ public class RFAAddressDTO extends BaseDTO {
   private String city;
 
   @ApiModelProperty(value = "State Type")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private StateType state;
 
   @ApiModelProperty(value = "Address Type")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private AddressType type;
 
   public String getStreetAddress() {

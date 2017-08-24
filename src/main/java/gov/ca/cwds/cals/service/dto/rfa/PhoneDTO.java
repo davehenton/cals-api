@@ -6,13 +6,12 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
+import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.UUID;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author CWDS CALS API Team
@@ -23,7 +22,7 @@ public class PhoneDTO extends BaseDTO {
 
   private static final long serialVersionUID = 3691096439228739229L;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   @NotNull
   private PhoneNumberType phoneType;
 

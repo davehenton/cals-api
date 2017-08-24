@@ -26,9 +26,12 @@ import gov.ca.cwds.cals.service.validation.business.configuration.DroolsFieldVal
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import io.dropwizard.hibernate.UnitOfWork;
+import io.dropwizard.setup.Environment;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +55,9 @@ public class RFA1aFormService
 
   @Inject
   private DroolsService droolsService;
+
+  @Inject
+  private Environment environment;
 
   public RFA1aFormService() {
     // default constructor
@@ -108,8 +114,7 @@ public class RFA1aFormService
     return new RFAApplicationStatusDTO(form.getStatus());
   }
 
-  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO)
-      throws BusinessValidationException {
+  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO) {
     RFA1aForm form = findFormById(formId);
     RFAApplicationStatus newStatus = statusDTO.getStatus();
     if (form.getStatus() != newStatus) {
@@ -121,9 +126,9 @@ public class RFA1aFormService
     }
   }
 
-  private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus)
-      throws BusinessValidationException {
+  private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus) {
     RFA1aFormDTO expandedFormDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
+
     performSubmissionValidation(expandedFormDTO);
 
     PlacementHome storedPlacementHome = null;
@@ -148,10 +153,16 @@ public class RFA1aFormService
     updateForm(form);
   }
 
-  private void performSubmissionValidation(
-      RFA1aFormDTO formDTO) throws BusinessValidationException {
-    Set<ValidationDetails> detailsList = droolsService.validate(formDTO,
-        createConfiguration());
+  private void performSubmissionValidation(RFA1aFormDTO formDTO) {
+    Validator validator = environment.getValidator();
+    Optional.ofNullable(validator.validate(formDTO))
+        .ifPresent(violations -> {
+          if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+          }
+        });
+
+    Set<ValidationDetails> detailsList = droolsService.validate(formDTO, createConfiguration());
     if (!detailsList.isEmpty()) {
       throw new BusinessValidationException(detailsList);
     }

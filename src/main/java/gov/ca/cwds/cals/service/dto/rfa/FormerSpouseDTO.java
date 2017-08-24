@@ -27,14 +27,14 @@ public class FormerSpouseDTO extends BaseDTO {
   private static final long serialVersionUID = 4825726415538736618L;
 
   @ApiModelProperty("Relationship Type")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private ApplicantRelationshipType relationshipType;
 
   @ApiModelProperty(value = "Applicant Id", example = "1234567")
   private Long applicantId;
 
   @ApiModelProperty(value = "Prefix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NamePrefixType namePrefix;
 
   @ApiModelProperty(value = "First Name", example = "Anna")
@@ -47,7 +47,7 @@ public class FormerSpouseDTO extends BaseDTO {
   private String lastName;
 
   @ApiModelProperty(value = "Suffix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType nameSuffix;
 
   @ApiModelProperty(value = "Marriage/Domestic partnership date", example = "2016-12-26")
@@ -58,11 +58,11 @@ public class FormerSpouseDTO extends BaseDTO {
   private String placeOfMarriageCity;
 
   @ApiModelProperty("Marriage/Domestic partnership place: state")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private StateType placeOfMarriageState;
 
   @ApiModelProperty("Divorce/Domestic Partnership Termination reason")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private MarriageTerminationReasonType marriageTerminationReason;
 
   @ApiModelProperty(value = "Divorce/Domestic Partnership Termination Date", example = "2016-12-26")
@@ -73,7 +73,7 @@ public class FormerSpouseDTO extends BaseDTO {
   private String placeOfMarriageEndCity;
 
   @ApiModelProperty("Divorce/Domestic Partnership Termination State")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private StateType placeOfMarriageEndState;
 
   public ApplicantRelationshipType getRelationshipType() {

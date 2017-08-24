@@ -36,7 +36,7 @@ public class ReferencesDTO extends BaseDTO implements RequestResponse {
     private static final long serialVersionUID = -6715371392246671568L;
 
     @ApiModelProperty(value = "Prefix")
-    @CheckReferentialIntegrity
+    @CheckReferentialIntegrity(enrich = true)
     private NamePrefixType namePrefix;
 
     private String firstName;
@@ -46,7 +46,7 @@ public class ReferencesDTO extends BaseDTO implements RequestResponse {
     private String lastName;
 
     @ApiModelProperty(value = "Suffix")
-    @CheckReferentialIntegrity
+    @CheckReferentialIntegrity(enrich = true)
     private NameSuffixType nameSuffix;
 
     @Valid

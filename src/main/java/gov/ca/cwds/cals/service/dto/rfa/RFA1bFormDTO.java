@@ -27,13 +27,13 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
 
   private static final long serialVersionUID = 2700499740023492461L;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private CountyType applicationCounty;
 
   @ApiModelProperty(example = "true")
   private Boolean livedInOtherState;
 
-  @CheckReferentialIntegrityForEach
+  @CheckReferentialIntegrityForEach(enrich = true)
   private List<StateType> otherStatesOfLiving;
 
   @ApiModelProperty(example = "false")
@@ -49,7 +49,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   private String resourceFamilyName;
 
   @ApiModelProperty(value = "Prefix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NamePrefixType applicantNamePrefix;
 
   @ApiModelProperty(example = "Anna")
@@ -62,7 +62,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   private String applicantLastName;
 
   @ApiModelProperty(value = "Suffix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType applicantNameSuffix;
 
   @Valid
@@ -78,7 +78,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "MD123-1234-585-121")
   private String driverLicense;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private StateType driverLicenseState;
 
   @ApiModelProperty(example = "Anna Peterson")

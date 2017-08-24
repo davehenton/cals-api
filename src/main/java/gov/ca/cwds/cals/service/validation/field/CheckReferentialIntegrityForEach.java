@@ -23,6 +23,8 @@ public @interface CheckReferentialIntegrityForEach {
 
   boolean checkEquality() default true;
 
+  boolean enrich() default false;
+
   String message() default "Constraint violated Referential Integrity is not confirmed";
 
   Class<?>[] groups() default {};

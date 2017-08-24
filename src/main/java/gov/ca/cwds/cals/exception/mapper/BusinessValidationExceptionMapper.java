@@ -2,12 +2,12 @@ package gov.ca.cwds.cals.exception.mapper;
 
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.BusinessValidationException;
-import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.cals.exception.ExceptionType;
+import gov.ca.cwds.cals.exception.ValidationDetails;
+import java.util.Set;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
-import java.util.Set;
 
 /**
  * @author CWDS CALS API Team

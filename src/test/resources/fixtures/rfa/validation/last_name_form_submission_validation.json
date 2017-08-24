@@ -4,7 +4,7 @@
       "type": "business_validation",
       "user_message": "Applicant with firstName - [Anna], last name - [] and name suffix - [Jr] has empty last name",
       "code": "BV000002",
-      "technical_message" : "form-submission-validation"
+      "technical_message": "form-submission-validation"
     }
   ]
 }

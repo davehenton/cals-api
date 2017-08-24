@@ -37,7 +37,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   private String otherTypeDescription;
 
   @ApiModelProperty(value = "County Type")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private CountyType applicationCounty;
 
   @ApiModelProperty(hidden = true)

@@ -3,21 +3,19 @@ package gov.ca.cwds.cals.exception.mapper;
 import gov.ca.cwds.cals.Constants.ErrorMessages;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ExceptionType;
+import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.logging.LoggingContext.LogParameter;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
-
-import gov.ca.cwds.cals.exception.ValidationDetails;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author CWDS CALS API Team

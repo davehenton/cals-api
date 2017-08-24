@@ -29,7 +29,7 @@ public class DisclosureDTO extends BaseDTO {
   @ApiModelProperty(example = "Sacramento")
   private String offenseCity;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private StateType offenseState;
 
   @ApiModelProperty(example = "2014-12-26")

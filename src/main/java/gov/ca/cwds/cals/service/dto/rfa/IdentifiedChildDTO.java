@@ -38,17 +38,17 @@ public class IdentifiedChildDTO extends BaseDTO {
   private String lastName;
 
   @ApiModelProperty(value = "Suffix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType nameSuffix;
 
   @ApiModelProperty(example = "2007-07-14")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private GenderType gender;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private CountyType countyOfJurisdiction;
 
   @ApiModelProperty(example = "2017-05-14")
@@ -57,7 +57,7 @@ public class IdentifiedChildDTO extends BaseDTO {
 
   private List<RelationshipToApplicantDTO> relationshipToApplicants = new ArrayList<>();
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private SchoolGradeType schoolGrade;
 
   @ApiModelProperty(example = "White Oaks High")
