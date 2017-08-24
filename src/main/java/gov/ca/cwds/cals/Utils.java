@@ -15,12 +15,10 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
-
+import io.dropwizard.jackson.Jackson;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-
-import io.dropwizard.jackson.Jackson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -133,7 +131,7 @@ public final class Utils {
 
     public static boolean isPrimary(RFA1aFormDTO form, ApplicantDTO applicant) {
       List<ApplicantDTO> applicants = form.getApplicants();
-      if (applicants.size() == 0) {
+      if (applicants.isEmpty()) {
         throw new IllegalStateException("No applicants in application (id: " + form.getId() + ")");
       }
 
@@ -224,7 +222,11 @@ public final class Utils {
   }
 
   public static class Json {
+
     private static final ObjectMapper objectMapper = Jackson.newObjectMapper();
+
+    private Json() {
+    }
 
     public static String to(Object o) throws JsonProcessingException {
       return objectMapper.writeValueAsString(o);

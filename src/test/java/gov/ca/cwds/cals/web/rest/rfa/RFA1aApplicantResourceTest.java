@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
 import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createPhone;
 import static gov.ca.cwds.cals.web.rest.rfa.RFAHelper.createPhoneNoExtension;
+import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;

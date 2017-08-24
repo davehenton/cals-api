@@ -8,6 +8,7 @@ import gov.ca.cwds.cals.exception.CustomExceptionMapperBinder;
 import gov.ca.cwds.cals.exception.mapper.BusinessValidationExceptionMapper;
 import gov.ca.cwds.cals.exception.mapper.ExpectedExceptionMapperImpl;
 import gov.ca.cwds.cals.exception.mapper.UnexpectedExceptionMapperImpl;
+import gov.ca.cwds.cals.exception.mapper.ValidationExceptionMapperImpl;
 import gov.ca.cwds.cals.inject.ApplicationModule;
 import gov.ca.cwds.cals.inject.InjectorHolder;
 import gov.ca.cwds.cals.web.rest.filters.RequestExecutionContextFilter;
@@ -45,6 +46,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
   public void runInternal(CalsApiConfiguration configuration, Environment environment) {
     environment.jersey().register(UnexpectedExceptionMapperImpl.class);
     environment.jersey().register(ExpectedExceptionMapperImpl.class);
+    environment.jersey().register(ValidationExceptionMapperImpl.class);
     environment.jersey().register(BusinessValidationExceptionMapper.class);
     environment.jersey().register(new CustomExceptionMapperBinder(true));
 

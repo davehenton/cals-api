@@ -8,13 +8,11 @@ import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.logging.LoggingContext.LogParameter;
 import io.dropwizard.jersey.errors.ErrorMessage;
 import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
-import javax.ws.rs.core.Response;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.MDC;
-
 import java.util.HashSet;
 import java.util.Set;
+import javax.ws.rs.core.Response;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 
 /**
  * @author CWDS CALS API Team
@@ -39,7 +37,7 @@ public class CustomJsonProcessingExceptionMapper extends JsonProcessingException
     details.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
     details.setUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
     details.setTechnicalMessage(
-        StringUtils.join(new Object[] {errorMessage.getMessage(), errorMessage.getDetails()}, ". "));
+        StringUtils.join(new Object[]{errorMessage.getMessage(), errorMessage.getDetails()}, ". "));
 
     Set<ValidationDetails> detailsList = new HashSet<>();
     detailsList.add(details);
