@@ -69,7 +69,7 @@ import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementEpisode;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.StaffPerson;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
-import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
+import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
@@ -105,7 +105,7 @@ public class DataAccessModule extends AbstractModule {
 
   private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(
-          FacilityInfoLis.class,
+          FacilityInformation.class,
           LisTableFile.class,
           LisDoFile.class,
           ComplaintReportLic802.class,

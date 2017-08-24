@@ -91,7 +91,6 @@ public class RFA1aApplicantResourceTest extends
       Map<String, Object> parameters = new HashMap<>();
       parameters
           .put("user_message", "firstName 12345678901234567890x exceeds maximum length of 20");
-      parameters.put("code", "?");
       checkValidationResponse(e, parameters);
     }
   }
