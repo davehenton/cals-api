@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.validation.business;
 
+import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,18 +14,18 @@ import org.kie.api.runtime.KieSession;
 
 public class DroolsService {
 
-  public Set<String> validate(Object obj, DroolsValidationConfiguration<?> configuration) {
+  public Set<ValidationDetails> validate(Object obj, DroolsValidationConfiguration<?> configuration) {
     KieServices ks = KieServices.Factory.get();
     KieContainer kc = ks.getKieClasspathContainer();
     KieSession kSession = null;
     try {
       kSession = kc.newKieSession(configuration.getDroolsSessionName());
       kSession.insert(obj);
-      Set<String> validationMessages = new HashSet<>();
-      kSession.setGlobal("validationMessages", validationMessages);
+      Set<ValidationDetails> validationDetailsList = new HashSet<>();
+      kSession.setGlobal("validationDetailsList", validationDetailsList);
       kSession.getAgenda().getAgendaGroup(configuration.getAgendaGroup()).setFocus();
       kSession.fireAllRules();
-      return validationMessages;
+      return validationDetailsList;
     } finally {
       if (kSession != null) {
         kSession.dispose();

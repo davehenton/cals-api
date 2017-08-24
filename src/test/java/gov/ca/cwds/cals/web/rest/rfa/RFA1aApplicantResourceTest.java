@@ -91,7 +91,6 @@ public class RFA1aApplicantResourceTest extends
       Map<String, Object> parameters = new HashMap<>();
       parameters
           .put("user_message", "firstName 12345678901234567890x exceeds maximum length of 20");
-      parameters.put("code", "?");
       checkValidationResponse(e, parameters);
     }
   }
@@ -108,7 +107,6 @@ public class RFA1aApplicantResourceTest extends
       Map<String, Object> parameters = new HashMap<>();
       parameters
           .put("user_message", "lastName 1234567890123456789012345X exceeds maximum length of 25");
-      parameters.put("code", "?");
       checkValidationResponse(e, parameters);
     }
   }
@@ -125,7 +123,6 @@ public class RFA1aApplicantResourceTest extends
       Map<String, Object> parameters = new HashMap<>();
       parameters.put("user_message",
           "firstName l@4 is invalid. Only alphanumerical characters and spaces are allowed");
-      parameters.put("code", "?");
       checkValidationResponse(e, parameters);
     }
   }
@@ -142,7 +139,6 @@ public class RFA1aApplicantResourceTest extends
       Map<String, Object> parameters = new HashMap<>();
       parameters.put("user_message",
           "lastName l@4 is invalid. Only alphanumerical characters and spaces are allowed");
-      parameters.put("code", "?");
       checkValidationResponse(e, parameters);
     }
   }

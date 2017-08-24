@@ -8,11 +8,16 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+
+import gov.ca.cwds.cals.exception.ValidationDetails;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author CWDS CALS API Team
@@ -26,18 +31,26 @@ public class UnexpectedExceptionMapperImpl implements ExceptionMapper<RuntimeExc
 
   public Response toResponse(RuntimeException ex) {
     LOGGER.error("EXCEPTION MAPPER: {}", ex.getMessage(), ex);
-    BaseExceptionResponse unexpectedException = new BaseExceptionResponse();
-    unexpectedException.setExceptionType(ExceptionType.UNEXPECTED_EXCEPTION);
-    unexpectedException.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
-    unexpectedException.addUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
-    unexpectedException.addTechnicalMessage(ex.getMessage());
+    ValidationDetails details = new ValidationDetails();
+
+    details.setType(ExceptionType.UNEXPECTED_EXCEPTION);
+    details.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
+    details.setUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
+    details.setTechnicalMessage(ex.getMessage());
+
     if (ex.getCause() != null) {
-      unexpectedException.addTechnicalMessage(ex.getCause().getMessage());
-      unexpectedException.setCauseStackTrace(
+      details.setTechnicalMessage(ex.getCause().getMessage());
+      details.setCauseStackTrace(
           StringEscapeUtils.escapeJson(ExceptionUtils.getStackTrace(ex.getCause())));
     }
     String stackTrace = ExceptionUtils.getStackTrace(ex);
-    unexpectedException.setStackTrace(StringEscapeUtils.escapeJson(stackTrace));
+    details.setStackTrace(StringEscapeUtils.escapeJson(stackTrace));
+
+    Set<ValidationDetails> detailsList = new HashSet<>();
+    detailsList.add(details);
+    BaseExceptionResponse unexpectedException = new BaseExceptionResponse();
+    unexpectedException.setValidationDetails(detailsList);
+
     return Response.status(500).entity(unexpectedException).type(MediaType.APPLICATION_JSON)
         .build();
   }

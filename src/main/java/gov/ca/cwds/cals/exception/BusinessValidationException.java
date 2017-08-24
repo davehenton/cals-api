@@ -1,21 +1,21 @@
 package gov.ca.cwds.cals.exception;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author CWDS CALS API Team
  */
 
-public class BusinessValidationException extends Exception {
+public class BusinessValidationException extends RuntimeException {
 
-  private final List<String> validationMessages;
+  private final Set<ValidationDetails> validationDetailsList;
 
-  public BusinessValidationException(List<String> validationMessages) {
-    this.validationMessages = validationMessages;
+  public BusinessValidationException(Set<ValidationDetails> validationDetailsList) {
+    this.validationDetailsList = validationDetailsList;
   }
 
-  public List<String> getValidationMessages() {
-    return validationMessages;
+  public Set<ValidationDetails> getValidationDetailsList() {
+    return validationDetailsList;
   }
 
 }

@@ -1,7 +1,8 @@
 {
-  "exception_type": "constraint_validation",
-  "user_messages": [
-    "applicationCounty  Object CountyType{id = -1, value = Unknown}) is not found in database. Referential integrity was not confirmed."
-  ],
-  "code": "?"
+  "validation_details": [
+    {
+      "type": "constraint_validation",
+      "user_message": "applicationCounty  Object CountyType{id = -1, value = Unknown}) is not found in database. Referential integrity was not confirmed."
+    }
+  ]
 }

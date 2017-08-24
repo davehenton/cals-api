@@ -2,13 +2,13 @@ package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
-import gov.ca.cwds.cals.persistence.dao.fas.FacilityInfoLisDao;
+import gov.ca.cwds.cals.persistence.dao.fas.FacilityInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.RecordChangeFasDao;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
-import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
+import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.fas.Rr809Dn;
 import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
@@ -25,7 +25,7 @@ public class FasDataAccessModule extends AbstractModule {
   public FasDataAccessModule(String hibernateCfg) {
     this.fasSessionFactory = new Configuration().configure(hibernateCfg)
         .addAnnotatedClass(RecordChange.class)
-        .addAnnotatedClass(FacilityInfoLis.class)
+        .addAnnotatedClass(FacilityInformation.class)
         .addAnnotatedClass(ComplaintReportLic802.class)
         .addAnnotatedClass(LpaInformation.class)
         .addAnnotatedClass(Rrcpoc.class)
@@ -40,7 +40,7 @@ public class FasDataAccessModule extends AbstractModule {
 
     // schema: fas
     bind(RecordChangeFasDao.class);
-    bind(FacilityInfoLisDao.class);
+    bind(FacilityInformationDao.class);
     bind(ComplaintReportLic802Dao.class);
     bind(LpaInformationDao.class);
     bind(InspectionDao.class);

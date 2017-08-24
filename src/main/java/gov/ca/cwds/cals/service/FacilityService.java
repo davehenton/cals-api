@@ -42,7 +42,7 @@ import gov.ca.cwds.cals.persistence.dao.cms.StateDao;
 import gov.ca.cwds.cals.persistence.dao.cms.SubstituteCareProviderDao;
 import gov.ca.cwds.cals.persistence.dao.cms.SubstituteCareProviderUCDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
-import gov.ca.cwds.cals.persistence.dao.fas.FacilityInfoLisDao;
+import gov.ca.cwds.cals.persistence.dao.fas.FacilityInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
@@ -69,7 +69,7 @@ import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
-import gov.ca.cwds.cals.persistence.model.fas.FacilityInfoLis;
+import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
@@ -141,7 +141,7 @@ public class FacilityService implements CrudsService {
   private LisFacFileLisDao lisFacFileLisDao;
 
   @Inject
-  private FacilityInfoLisDao facilityInfoLisDao;
+  private FacilityInformationDao facilityInformationDao;
 
   @Inject
   private LisTableFileDao lisTableFileDao;
@@ -315,12 +315,12 @@ public class FacilityService implements CrudsService {
             : null;
     FacilityDTO facilityDTO = facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
 
-    FacilityInfoLis facilityInfoLis = findFacilityInfoByLicenseNumber(parameterObject);
-    if (facilityInfoLis != null) {
-      attachVisitsData(facilityInfoLis);
+    FacilityInformation facilityInformation = findFacilityInfoByLicenseNumber(parameterObject);
+    if (facilityInformation != null) {
+      attachVisitsData(facilityInformation);
     }
 
-    fasFacilityMapper.toFacilityDTO(facilityDTO, facilityInfoLis);
+    fasFacilityMapper.toFacilityDTO(facilityDTO, facilityInformation);
 
     if (parameterObject.isExpanded()) {
       List<FacilityChildDTO> facilityChildren = clientDao
@@ -417,26 +417,26 @@ public class FacilityService implements CrudsService {
   }
 
   @UnitOfWork(LIS)
-  protected void attachVisitsData(FacilityInfoLis facilityInfoLis) {
-    BigInteger facilityLastVisitReasonCode = facilityInfoLis.getFacLastVisitReason();
+  protected void attachVisitsData(FacilityInformation facilityInformation) {
+    BigInteger facilityLastVisitReasonCode = facilityInformation.getFacLastVisitReason();
     if (facilityLastVisitReasonCode != null) {
       LisTableFile facilityLastVisitReason =
           lisTableFileDao.findVisitReasonType(facilityLastVisitReasonCode.intValue());
-      facilityInfoLis.setFacilityLastVisitReason(facilityLastVisitReason);
+      facilityInformation.setFacilityLastVisitReason(facilityLastVisitReason);
     }
 
-    BigInteger facilityLastDeferredVisitReasonCode = facilityInfoLis.getFacLastDeferVisitReason();
+    BigInteger facilityLastDeferredVisitReasonCode = facilityInformation.getFacLastDeferVisitReason();
     if (facilityLastDeferredVisitReasonCode != null) {
       LisTableFile facilityLastDeferredVisitReason =
           lisTableFileDao.findVisitReasonType(facilityLastDeferredVisitReasonCode.intValue());
-      facilityInfoLis.setFacilityLastDeferredVisitReason(facilityLastDeferredVisitReason);
+      facilityInformation.setFacilityLastDeferredVisitReason(facilityLastDeferredVisitReason);
     }
   }
 
   @UnitOfWork(FAS)
-  protected FacilityInfoLis findFacilityInfoByLicenseNumber(
+  protected FacilityInformation findFacilityInfoByLicenseNumber(
       FacilityParameterObject parameterObject) {
-    return facilityInfoLisDao.find(BigInteger.valueOf(parameterObject.getLicenseNumber()));
+    return facilityInformationDao.find(BigInteger.valueOf(parameterObject.getLicenseNumber()));
   }
 
   @UnitOfWork(FAS)

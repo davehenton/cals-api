@@ -1,7 +1,10 @@
 {
-  "code": "?",
-  "exception_type": "constraint_validation",
-  "user_messages": [
-    "<applicant-validation> Applicant has more then one preferred number"
+  "validation_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Applicant has more then one preferred number",
+      "technical_message": "applicant-validation",
+      "code": "BV000003"
+    }
   ]
 }
