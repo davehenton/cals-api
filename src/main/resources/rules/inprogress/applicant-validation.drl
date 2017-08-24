@@ -2,9 +2,10 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.*
 import gov.ca.cwds.cals.service.dto.rfa.*
 import gov.ca.cwds.cals.Constants
 import gov.ca.cwds.cals.Constants.Validation.Business
-import gov.ca.cwds.cals.Utils;
+import gov.ca.cwds.cals.Utils
+import gov.ca.cwds.cals.exception.ValidationDetails;
 
-global java.util.Set validationMessages;
+global java.util.Set validationDetailsList;
 
 rule "Validate Applicant's preferred phone"
   dialect "mvel"
@@ -19,7 +20,11 @@ rule "Validate Applicant's preferred phone"
       preferred
     ) from $applicant.phones
   then
-    validationMessages.add(Business.APPLICANT_PREFERRED_NUMBER_MESSAGE);
+    ValidationDetails details = new ValidationDetails();
+    details.setCode("BV000003");
+    details.setUserMessage(Business.APPLICANT_PREFERRED_NUMBER_MESSAGE);
+    details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
+    validationDetailsList.add(details);
 end
 
 rule "Validate Applicant phone numbers duplication"
@@ -30,9 +35,13 @@ rule "Validate Applicant phone numbers duplication"
       $phone: PhoneDTO() from $applicant.phones
       exists PhoneDTO(this.uuid != $phone.uuid, number == $phone.number, extension == $phone.extension) from $applicant.phones
   then
-      validationMessages.add(String.format(Constants.Validation.Business.APPLICANT_PHONE_NUMBERS_DUPLICATION_MESSAGE,
+    ValidationDetails details = new ValidationDetails();
+    details.setCode("BV000004");
+    details.setUserMessage(String.format(Constants.Validation.Business.APPLICANT_PHONE_NUMBERS_DUPLICATION_MESSAGE,
        Utils.Phone.formatNumber($phone),
        $applicant.getFirstName(),
        $applicant.getLastName(),
        $applicant.getNameSuffix().getValue()));
+    details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
+    validationDetailsList.add(details);
 end

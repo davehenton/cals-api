@@ -12,6 +12,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
 import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.exception.ExpectedException;
+import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
@@ -145,7 +146,6 @@ public class RFA1aFormService
         newStatus);
   }
 
-
   @UnitOfWork(CALSNS)
   protected void updateFormAfterPlacementHomeCreation(
       Long formId, String placementHomeId, RFAApplicationStatus newStatus) {
@@ -158,14 +158,14 @@ public class RFA1aFormService
   private void performSubmissionValidation(
       RFA1aFormDTO formDTO) throws BusinessValidationException {
     Validator validator = environment.getValidator();
-    Set<String> validationMessages = new HashSet<>();
+    Set<ValidationDetails> detailsList = new HashSet<>();
     Optional.ofNullable(validator.validate(formDTO))
         .ifPresent(violations -> violations
             .forEach(violation -> validationMessages.add(violation.getMessage())
             ));
     validationMessages.addAll(droolsService.validate(formDTO, createConfiguration()));
-    if (!validationMessages.isEmpty()) {
-      throw new BusinessValidationException(new ArrayList<>(validationMessages));
+    if (!detailsList.isEmpty()) {
+      throw new BusinessValidationException(detailsList);
     }
   }
 
