@@ -128,6 +128,7 @@ public class RFA1aFormService
 
   private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus) {
     RFA1aFormDTO expandedFormDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
+
     performSubmissionValidation(expandedFormDTO);
 
     PlacementHome storedPlacementHome = null;
@@ -156,7 +157,9 @@ public class RFA1aFormService
     Validator validator = environment.getValidator();
     Optional.ofNullable(validator.validate(formDTO))
         .ifPresent(violations -> {
-          throw new ConstraintViolationException(violations);
+          if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+          }
         });
 
     Set<ValidationDetails> detailsList = droolsService.validate(formDTO, createConfiguration());
