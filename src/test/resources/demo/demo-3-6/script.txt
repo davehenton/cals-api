@@ -1,0 +1,6 @@
+1. Run integration test to to create RFA 1 A/B/C
+2. Show RFA 1 A/B/C form
+3. Submit Form
+4. Show that RFA 1 A/B/C form now has legacy Id
+5. Show that Placement Home created in CWS/CMS DB2 database
+
