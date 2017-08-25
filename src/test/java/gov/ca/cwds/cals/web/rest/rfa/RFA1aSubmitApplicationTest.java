@@ -368,10 +368,10 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .appendTableFilter("ESTBLSH_ID", substituteCareProviderId)
         .build();
 
-    helper
-        .assertEquals(new String[]{"THIRD_ID", "ESTBLSH_ID", "LST_UPD_TS"});
-
-
+    String[] ignoreCols = {"THIRD_ID", "ESTBLSH_ID", "LST_UPD_TS"};
+    String[] sortedCols = {"PHONE_NO"};
+    helper.assertEquals(ignoreCols, sortedCols);
+    
   }
 
   private void testIfClientScpEthnicityWasCreatedProperly(String substituteCareProviderId,
