@@ -15,6 +15,10 @@
     {
       "id": 4,
       "value": "Cohabitants"
+    },
+    {
+      "id": 5,
+      "value": "Other"
     }
   ]
 }

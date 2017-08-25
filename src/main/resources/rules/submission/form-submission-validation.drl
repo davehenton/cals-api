@@ -1,7 +1,8 @@
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.*
 import gov.ca.cwds.cals.service.dto.rfa.*
 import gov.ca.cwds.cals.Constants
-import gov.ca.cwds.cals.Constants.Validation.Business;
+import gov.ca.cwds.cals.Constants.Validation.Business
+import gov.ca.cwds.cals.Constants.Validation.Business.Code
 import org.apache.commons.lang3.StringUtils
 import gov.ca.cwds.cals.exception.ValidationDetails
 import gov.ca.cwds.cals.exception.ExceptionType
@@ -16,7 +17,7 @@ rule "Validate Applicant's First Name"
     $applicant : ApplicantDTO(eval(StringUtils.isBlank(firstName))) from $form.applicants;
   then
     ValidationDetails details = new ValidationDetails();
-    details.setCode("BV000001");
+    details.setCode(Code.APPLICANT_FIRST_NAME);
     details.setUserMessage(String.format(Business.APPLICANT_FIRST_NAME_IS_EMPTY,
         $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
         $applicant.getLastName() != null ? $applicant.getLastName() : "",
@@ -33,11 +34,26 @@ rule "Applicant's Empty Last Name"
     $applicant : ApplicantDTO(StringUtils.isBlank(lastName)) from $form.applicants;
   then
     ValidationDetails details = new ValidationDetails();
-    details.setCode("BV000002");
+    details.setCode(Code.APPLICANT_LAST_NAME);
     details.setUserMessage(String.format(Business.APPLICANT_LAST_NAME_IS_EMPTY,
        $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
        $applicant.getLastName() != null ? $applicant.getLastName() : "",
        $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
     details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate Applicant's Driver License"
+  dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+      $form : RFA1aFormDTO();
+      ApplicantDTO( (driverLicenseNumber == null && driverLicenseState != null)
+      || (driverLicenseNumber != null && driverLicenseState == null)) from $form.applicants;
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Code.APPLICANT_DRIVER_LICENSE);
+    details.setUserMessage(Constants.Validation.Business.APPLICANT_DRIVER_LICENSE_IS_INVALID);
+    details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
     validationDetailsList.add(details);
 end

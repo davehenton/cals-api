@@ -1,9 +1,10 @@
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.*
 import gov.ca.cwds.cals.service.dto.rfa.*
 import gov.ca.cwds.cals.Constants
-import gov.ca.cwds.cals.exception.ValidationDetails;
+import gov.ca.cwds.cals.Constants.Validation.Business.Code
+import gov.ca.cwds.cals.exception.ValidationDetails
 
-global java.util.Set validationDetailsList;
+global java.util.Set validationDetailsList
 
 rule "Check Applicant names for duplication"
       dialect "mvel"
@@ -19,7 +20,7 @@ rule "Check Applicant names for duplication"
        nameSuffix == $firstApplicantDTO.nameSuffix) from $secondApplicant.applicant
   then
     ValidationDetails details = new ValidationDetails();
-    details.setCode("BV000005");
+    details.setCode(Code.APPLICANT_NAMES_DUPLICATION);
     details.setUserMessage(String.format(Constants.Validation.Business.APPLICANT_NAMES_DUPLICATION_MESSAGE,
        $firstApplicantDTO.getFirstName() != null ? $firstApplicantDTO.getFirstName() : "",
        $firstApplicantDTO.getLastName() != null ? $firstApplicantDTO.getLastName() : "",

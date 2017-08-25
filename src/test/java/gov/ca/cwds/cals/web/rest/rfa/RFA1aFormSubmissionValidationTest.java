@@ -46,4 +46,30 @@ public class RFA1aFormSubmissionValidationTest extends BaseRFAIntegrationTest {
         response, "fixtures/rfa/validation/last_name_form_submission_validation.json");
   }
 
+  @Test
+  public void applicantDriverLicenseNumberIsNullValidationSubmissionTest()
+      throws IOException, JSONException {
+    RFA1aFormDTO form = rfaHelper.createForm();
+    ApplicantDTO applicant = rfaHelper.createValidApplicant();
+    applicant.setDriverLicenseNumber(null);
+    rfaHelper.postApplicant(form.getId(), applicant);
+    Response response = rfaHelper.submitApplication(form.getId());
+    assertEquals(422, response.getStatus());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/applicant-driver-license-violation-response.json");
+  }
+
+  @Test
+  public void applicantDriverLicenseStateIsNullValidationSubmissionTest()
+      throws IOException, JSONException {
+    RFA1aFormDTO form = rfaHelper.createForm();
+    ApplicantDTO applicant = rfaHelper.createValidApplicant();
+    applicant.setDriverLicenseState(null);
+    rfaHelper.postApplicant(form.getId(), applicant);
+    Response response = rfaHelper.submitApplication(form.getId());
+    assertEquals(422, response.getStatus());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/applicant-driver-license-violation-response.json");
+  }
+
 }

@@ -301,6 +301,22 @@ public final class Constants {
       public static final String APPLICANT_LAST_NAME_IS_EMPTY =
           APPLICANT_WITH_NAME_MESSAGE + " has empty last name";
 
+      public static final String APPLICANT_DRIVER_LICENSE_IS_INVALID =
+          "Driver's License field must have both State and Number";
+
+      public static class Code {
+
+        public static final String APPLICANT_FIRST_NAME = "BV000001";
+        public static final String APPLICANT_LAST_NAME = "BV000002";
+        public static final String APPLICANT_PREFERRED_PHONE = "BV000003";
+        public static final String APPLICANT_PHONE_NUMBERS_DUPLICATION = "BV000004";
+        public static final String APPLICANT_NAMES_DUPLICATION = "BV000005";
+        public static final String APPLICANT_DRIVER_LICENSE = "BV000006";
+
+        private Code() {
+        }
+      }
+
       private Business() {
       }
     }
