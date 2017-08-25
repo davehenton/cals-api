@@ -1,0 +1,10 @@
+{
+  "validation_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Driver's License field must have both State and Number",
+      "technical_message": "applicant-validation",
+      "code": "BV000006"
+    }
+  ]
+}
