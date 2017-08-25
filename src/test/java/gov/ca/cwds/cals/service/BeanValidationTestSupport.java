@@ -7,7 +7,8 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.Constants.Validation.Constraint;
+import gov.ca.cwds.cals.Constants.Validation.Field;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import org.junit.Before;
 
@@ -31,7 +32,27 @@ public class BeanValidationTestSupport<T> {
   public Set<ConstraintViolation<PhoneDTO>> removeDbSessionViolation(Set<ConstraintViolation<PhoneDTO>> violations) {
     return violations.stream()
           .filter(b -> !b.getMessageTemplate().equals(
-              Constants.Validation.Field.CANNOT_OPEN_DATABASE_SESSION_MESSAGE))
+              Field.CANNOT_OPEN_DATABASE_SESSION_MESSAGE))
           .collect(Collectors.toSet());
+  }
+
+  protected String getBetweenLengthMessage(int min, int max) {
+      return String.format(Constraint.BETWEEN_LENGTH_MESSAGE, min, max);
+  }
+
+  protected String getMaxLengthMessage(String middleName, int max) {
+      return Constraint.MAX_LENGTH_MESSAGE
+              .replace("${validatedValue}", middleName)
+              .replace("{max}", String.valueOf(max));
+  }
+
+  protected String getAlphaNumericMessage(String middleName) {
+      return Constraint.ALPHANUMERIC_MESSAGE
+              .replace("${validatedValue}", middleName);
+  }
+
+  protected String getNumericMessage(String middleName) {
+      return Constraint.NUMERIC_MESSAGE
+              .replace("${validatedValue}", middleName);
   }
 }

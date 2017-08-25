@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.exception.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import gov.ca.cwds.cals.Constants.ErrorMessages;
+import gov.ca.cwds.cals.Constants.Validation.Error;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ExceptionType;
 import gov.ca.cwds.cals.exception.ValidationDetails;
@@ -35,7 +35,7 @@ public class CustomJsonProcessingExceptionMapper extends JsonProcessingException
     ValidationDetails details = new ValidationDetails();
     details.setType(ExceptionType.JSON_PROCESSING_EXCEPTION);
     details.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
-    details.setUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
+    details.setUserMessage(Error.BASE_MESSAGE);
     details.setTechnicalMessage(
         StringUtils.join(new Object[]{errorMessage.getMessage(), errorMessage.getDetails()}, ". "));
 

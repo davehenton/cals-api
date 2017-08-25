@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.Constants.ErrorMessages;
+import gov.ca.cwds.cals.Constants.Validation.Error;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ExpectedExceptionInfo;
 import gov.ca.cwds.cals.exception.ValidationDetails;
@@ -67,7 +67,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
     VelocityHelper velocityHelper = new VelocityHelper();
     ValidationDetails details = expectedExceptionResponse.getValidationDetails().iterator().next();
     velocityHelper.setParameter("incident_id", details.getIncidentId());
-    velocityHelper.setParameter("user_message", ErrorMessages.BASE_ERROR_MESSAGE);
+    velocityHelper.setParameter("user_message", Error.BASE_MESSAGE);
     velocityHelper.setParameter("technical_message",
         ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID.getMessage());
     velocityHelper

@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto.rfa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.Constants.Validation.Constraint;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
@@ -27,11 +28,11 @@ public class PhoneDTO extends BaseDTO {
   private PhoneNumberType phoneType;
 
   @Size(min = 10, max = 10)
-  @Pattern(regexp = "^\\d*")
+  @Pattern(regexp = "^\\d*", message = Constraint.NUMERIC_MESSAGE)
   private String number;
 
   @Size(max = 7)
-  @Pattern(regexp = "^\\d*")
+  @Pattern(regexp = "^\\d*", message = Constraint.NUMERIC_MESSAGE)
   private String extension;
 
   private boolean preferred;

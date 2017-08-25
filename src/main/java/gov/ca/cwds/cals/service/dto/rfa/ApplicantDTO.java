@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.Constants.ErrorMessages;
+import gov.ca.cwds.cals.Constants.Validation.Constraint;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
@@ -40,14 +40,16 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   @CheckReferentialIntegrity(enrich = true)
   private NamePrefixType namePrefix;
 
-  @Size(max = 20, message = ErrorMessages.MAX_LENGTH_VIOLATION)
-  @Pattern(regexp = ALFANUMERICAL_PATTERN, message = ErrorMessages.ALPHANUMERIC_VIOLATION)
+  @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
+  @Pattern(regexp = ALFANUMERICAL_PATTERN, message = Constraint.ALPHANUMERIC_MESSAGE)
   private String firstName;
 
+  @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
+  @Pattern(regexp = ALFANUMERICAL_PATTERN, message = Constraint.ALPHANUMERIC_MESSAGE)
   private String middleName;
 
-  @Size(max = 25, message = ErrorMessages.MAX_LENGTH_VIOLATION)
-  @Pattern(regexp = ALFANUMERICAL_PATTERN, message = ErrorMessages.ALPHANUMERIC_VIOLATION)
+  @Size(max = 25, message = Constraint.MAX_LENGTH_MESSAGE)
+  @Pattern(regexp = ALFANUMERICAL_PATTERN, message = Constraint.ALPHANUMERIC_MESSAGE)
   private String lastName;
 
   @ApiModelProperty(value = "Suffix")

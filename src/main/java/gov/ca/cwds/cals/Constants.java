@@ -267,6 +267,31 @@ public final class Constants {
     public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
     public static final String FORM_SUBMISSION_VALIDATION_SESSION = "formSubmissionValidationSession";
 
+    public static class Error {
+      public static final String BASE_MESSAGE =
+              "There was an error processing your request. It has been logged with unique incident id";
+
+      private Error() {
+      }
+    }
+
+    public static class Constraint {
+
+      public static final String BETWEEN_LENGTH_MESSAGE =
+              "size must be between %d and %d";
+      public static final String MAX_LENGTH_MESSAGE =
+              "${validatedValue} exceeds maximum length of {max}";
+      public static final String ALPHANUMERIC_MESSAGE =
+              "${validatedValue} is invalid. Only alphanumerical characters and spaces are allowed";
+      public static final String NUMERIC_MESSAGE =
+              "${validatedValue} is invalid. Only numerical characters are allowed";
+      public static final String NOT_NULL_MESSAGE =
+              "may not be null";
+
+      private Constraint() {
+      }
+    }
+
     public static class Field {
 
       public static final String REFERENTIAL_INTEGRITY_MESSAGE =
@@ -307,22 +332,6 @@ public final class Constants {
 
     private Validation() {
     }
-  }
-
-  public static class ErrorMessages {
-
-    public static final String BASE_ERROR_MESSAGE =
-        "There was an error processing your request. It has been logged with unique incident id";
-
-    public static final String MAX_LENGTH_VIOLATION =
-        "${validatedValue} exceeds maximum length of {max}";
-    public static final String ALPHANUMERIC_VIOLATION =
-        "${validatedValue} is invalid. Only alphanumerical characters and spaces are allowed";
-
-
-    private ErrorMessages() {
-    }
-
   }
 
   private Constants() {

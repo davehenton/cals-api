@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.web.rest;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
-import static gov.ca.cwds.cals.Constants.ErrorMessages.BASE_ERROR_MESSAGE;
 import static gov.ca.cwds.cals.exception.ExceptionType.UNEXPECTED_EXCEPTION;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.COMPLAINT_NOT_FOUND_BY_ID;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
@@ -12,7 +11,7 @@ import static org.junit.Assert.assertNotNull;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.Constants.ErrorMessages;
+import gov.ca.cwds.cals.Constants.Validation.Error;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -64,7 +63,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     VelocityHelper velocityHelper = new VelocityHelper();
     ValidationDetails details = baseExceptionResponse.getValidationDetails().iterator().next();
     velocityHelper.setParameter("incident_id", details.getIncidentId());
-    velocityHelper.setParameter("user_message", ErrorMessages.BASE_ERROR_MESSAGE);
+    velocityHelper.setParameter("user_message", Error.BASE_MESSAGE);
     assertResponseByFixture(entity,
         velocityHelper.process("fixtures/exception/json-error-response.json"));
 
@@ -108,7 +107,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     VelocityHelper velocityHelper = new VelocityHelper();
     ValidationDetails details = baseExceptionResponse.getValidationDetails().iterator().next();
     velocityHelper.setParameter("incident_id", details.getIncidentId());
-    velocityHelper.setParameter("user_message", ErrorMessages.BASE_ERROR_MESSAGE);
+    velocityHelper.setParameter("user_message", Error.BASE_MESSAGE);
     velocityHelper.setParameter("technical_message", COMPLAINT_NOT_FOUND_BY_ID.getMessage());
     assertResponseByFixture(entity,
         velocityHelper.process("fixtures/exception/expected-exception.json"));
@@ -128,7 +127,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     assertNotNull(details.getStackTrace());
     assertEquals(UNEXPECTED_EXCEPTION, details.getType());
     assertNotNull(details.getIncidentId());
-    assertEquals(BASE_ERROR_MESSAGE, details.getUserMessage());
+    assertEquals(Error.BASE_MESSAGE, details.getUserMessage());
   }
 
   private ApplicantDTO getApplicantDTO() throws IOException {
