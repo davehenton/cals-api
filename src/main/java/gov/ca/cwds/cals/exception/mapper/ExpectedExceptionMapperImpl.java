@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.exception.mapper;
 
-import gov.ca.cwds.cals.Constants.ErrorMessages;
+import gov.ca.cwds.cals.Constants.Validation.Error;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ExceptionType;
 import gov.ca.cwds.cals.exception.ExpectedException;
@@ -27,7 +27,7 @@ public class ExpectedExceptionMapperImpl implements ExceptionMapper<ExpectedExce
     details.setType(ExceptionType.EXPECTED_EXCEPTION);
     details.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
     details.setTechnicalMessage(exception.getCalsExceptionInfo().getMessage());
-    details.setUserMessage(ErrorMessages.BASE_ERROR_MESSAGE);
+    details.setUserMessage(Error.BASE_MESSAGE);
     details.setCode(exception.getCalsExceptionInfo().getCode());
 
     Set<ValidationDetails> detailsList = new HashSet<>();
