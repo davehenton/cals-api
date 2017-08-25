@@ -34,7 +34,7 @@ public class ApplicationDTO extends BaseDTO implements Request, Response {
   private String otherTypeDescription;
 
   @ApiModelProperty(value = "County Type")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private CountyType applicationCounty;
 
   public boolean isInitialApplication() {

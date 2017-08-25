@@ -2,15 +2,15 @@ package gov.ca.cwds.cals.exception;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author CWDS CALS API Team
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ValidationDetails implements Serializable {
+
   private static final long serialVersionUID = 42L;
 
   @NotNull

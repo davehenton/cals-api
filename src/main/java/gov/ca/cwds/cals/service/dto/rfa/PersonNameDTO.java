@@ -18,7 +18,7 @@ public class PersonNameDTO extends BaseDTO {
   private static final long serialVersionUID = -8654631136147609963L;
 
   @ApiModelProperty(value = "Prefix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NamePrefixType namePrefix;
 
   private String firstName;
@@ -26,7 +26,7 @@ public class PersonNameDTO extends BaseDTO {
   private String lastName;
 
   @ApiModelProperty(value = "Suffix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType nameSuffix;
 
   public NamePrefixType getNamePrefix() {

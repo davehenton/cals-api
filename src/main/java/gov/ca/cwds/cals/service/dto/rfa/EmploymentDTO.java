@@ -22,7 +22,7 @@ public class EmploymentDTO extends BaseDTO {
 
   private Float income;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private IncomeType incomeType;
 
   private PhysicalAddressDTO physicalAddress;

@@ -14,7 +14,8 @@ import org.kie.api.runtime.KieSession;
 
 public class DroolsService {
 
-  public Set<ValidationDetails> validate(Object obj, DroolsValidationConfiguration<?> configuration) {
+  public Set<ValidationDetails> validate(Object obj,
+      DroolsValidationConfiguration<?> configuration) {
     KieServices ks = KieServices.Factory.get();
     KieContainer kc = ks.getKieClasspathContainer();
     KieSession kSession = null;

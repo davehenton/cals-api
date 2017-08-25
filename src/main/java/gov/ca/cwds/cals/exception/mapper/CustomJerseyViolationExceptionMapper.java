@@ -6,11 +6,6 @@ import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.ExceptionType;
 import gov.ca.cwds.cals.exception.ValidationDetails;
 import io.dropwizard.jersey.validation.JerseyViolationException;
-import org.apache.commons.lang3.StringUtils;
-import org.glassfish.jersey.server.model.Invocable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +14,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import org.apache.commons.lang3.StringUtils;
+import org.glassfish.jersey.server.model.Invocable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CWDS CALS API Team
@@ -28,7 +27,8 @@ import javax.ws.rs.ext.Provider;
 public class CustomJerseyViolationExceptionMapper implements
     ExceptionMapper<JerseyViolationException> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(CustomJerseyViolationExceptionMapper.class);
+  private static final Logger LOG = LoggerFactory
+      .getLogger(CustomJerseyViolationExceptionMapper.class);
 
 
   @Override
@@ -61,11 +61,11 @@ public class CustomJerseyViolationExceptionMapper implements
 
   /**
    * hibernate validation framework updates user message with prefix that should be removed.
-   * @see {@link CustomConstraintMessage#calculateMessage(ConstraintViolation, Invocable)}
    *
    * @param data constraint violation message
-   * @return validation details in case of business validation message
-   *    or null in case of constraint validation message
+   * @return validation details in case of business validation message or null in case of constraint
+   * validation message
+   * @see {@link CustomConstraintMessage#calculateMessage(ConstraintViolation, Invocable)}
    */
   private ValidationDetails unmarshallData(String data) {
     String marshalledDetails = StringUtils.removeStart(data, "The request body");

@@ -25,7 +25,7 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
   private static final long serialVersionUID = 3030580167004311781L;
 
   @ApiModelProperty(value = "Prefix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NamePrefixType namePrefix;
 
   @ApiModelProperty(value = "First Name", example = "Anna")
@@ -38,7 +38,7 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
   private String lastName;
 
   @ApiModelProperty(value = "Suffix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType nameSuffix;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)

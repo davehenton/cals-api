@@ -22,7 +22,7 @@ public class AdultChildDTO extends BaseDTO {
   private static final long serialVersionUID = -5382998437450053251L;
 
   @ApiModelProperty(value = "Prefix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NamePrefixType namePrefix;
 
   @ApiModelProperty(value = "First Name", example = "Andrew")
@@ -35,11 +35,11 @@ public class AdultChildDTO extends BaseDTO {
   private String lastName;
 
   @ApiModelProperty(value = "Suffix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType nameSuffix;
 
   @ApiModelProperty("Relationship to applicant")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private RelationshipToApplicantType relationshipToApplicant;
 
   private List<Long> adultChildRelatedTo = new ArrayList<>();

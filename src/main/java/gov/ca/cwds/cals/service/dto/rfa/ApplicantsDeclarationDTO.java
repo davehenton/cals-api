@@ -49,7 +49,7 @@ public class ApplicantsDeclarationDTO extends BaseDTO implements RequestResponse
     private String signatureCity;
 
     @ApiModelProperty(value = "County of signature")
-    @CheckReferentialIntegrity
+    @CheckReferentialIntegrity(enrich = true)
     private CountyType signatureCounty;
 
     @ApiModelProperty(value = "Date of signature", example = "2015-03-25")

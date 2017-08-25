@@ -31,7 +31,7 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   private Boolean otherRelative;
 
   @ApiModelProperty(value = "Other Relative Prefix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NamePrefixType otherRelativeNamePrefix;
 
   private String otherRelativeFirstName;
@@ -41,13 +41,13 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   private String otherRelativeLastName;
 
   @ApiModelProperty(value = "Suffix")
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType otherRelativeNameSuffix;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
 
-  @CheckReferentialIntegrity
+  @CheckReferentialIntegrity(enrich = true)
   private GenderType gender;
 
   private Boolean childFinanciallySupported;
