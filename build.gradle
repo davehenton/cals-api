@@ -34,7 +34,7 @@ project.ext {
     projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
     coreApiVersion = '3.6.400'
-    calsModelVersion = '3.6-SNAPSHOT'
+    calsModelVersion = '0.3.6'
     mapstructVersion = '1.1.0.Final'
     droolsVersion = '7.1.0.Final'
     dbunitVersion = '2.5.0'
