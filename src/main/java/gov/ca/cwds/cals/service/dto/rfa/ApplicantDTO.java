@@ -74,7 +74,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   private EthnicityType ethnicity;
 
   @ApiModelProperty(name = "Driver's License Number", example = "AS123456789012345678")
-  @Size(max = 20, message = ErrorMessages.MAX_LENGTH_VIOLATION)
+  @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
   @Pattern(regexp = "^[A-Za-z0-9]*$")
   private String driverLicenseNumber;
 
