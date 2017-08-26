@@ -21,7 +21,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class})
 public interface PlacementHomeMapper {
 
-  @Mapping(target = "identifier", source = "form.placementHomeId")
+  @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
   @Mapping(target = "ageFrmNo", constant = "0")
   @Mapping(target = "ageToNo", constant = "0")
   @Mapping(target = "atCapInd", constant = "N")

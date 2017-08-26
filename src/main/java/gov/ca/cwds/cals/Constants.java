@@ -32,6 +32,8 @@ public final class Constants {
 
   public static final String N = "N";
 
+  public static final String SPACE = " ";
+
   public static final String SQL_TYPE = "sqlType";
 
   public static final String RETURNED_CLASS_NAME_PARAM = "returnedClassName";

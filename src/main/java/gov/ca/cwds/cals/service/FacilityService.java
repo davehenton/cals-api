@@ -11,13 +11,6 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.exception.ExpectedException;
-import gov.ca.cwds.cals.persistence.dao.calsns.CountyTypeDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.EducationLevelTypeDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.EthnicityTypeDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.GenderTypeDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.LanguageTypeDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.PhoneNumberTypeDao;
-import gov.ca.cwds.cals.persistence.dao.calsns.StateTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.BackgroundCheckDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientScpEthnicityDao;
@@ -83,6 +76,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
+import gov.ca.cwds.cals.service.mapper.ClientScpEthnicityMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.CountyOwnershipMapper;
 import gov.ca.cwds.cals.service.mapper.EmergencyContactDetailMapper;
@@ -96,6 +90,7 @@ import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
 import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeInformationMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeNotesMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
@@ -122,18 +117,6 @@ import java.util.stream.Collectors;
  * @author CALS API Team
  */
 public class FacilityService implements CrudsService {
-
-  @Inject
-  private CountyTypeDao countyTypeDao;
-
-  @Inject
-  private GenderTypeDao genderTypeDao;
-
-  @Inject
-  private EducationLevelTypeDao educationLevelTypeDao;
-
-  @Inject
-  private LanguageTypeDao languageTypeDao;
 
   @Inject
   private LisFacFileLisDao lisFacFileLisDao;
@@ -196,12 +179,6 @@ public class FacilityService implements CrudsService {
   private CountiesDao countiesDao;
 
   @Inject
-  private PhoneNumberTypeDao phoneNumberTypeDao;
-
-  @Inject
-  private EthnicityTypeDao ethnicityTypeDao;
-
-  @Inject
   private OutOfStateCheckDao outOfStateCheckDao;
 
   @Inject
@@ -226,6 +203,9 @@ public class FacilityService implements CrudsService {
   private BackgroundCheckMapper backgroundCheckMapper;
 
   @Inject
+  private ClientScpEthnicityMapper clientScpEthnicityMapper;
+
+  @Inject
   private PlacementHomeNotesMapper placementHomeNotesMapper;
 
   @Inject
@@ -233,6 +213,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private SubstituteCareProviderMapper substituteCareProviderMapper;
+
+  @Inject
+  private PlacementHomeInformationMapper placementHomeInformationMapper;
 
   @Inject
   private PlacementHomeProfileMapper placementHomeProfileMapper;
@@ -278,9 +261,6 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private StateDao stateDao;
-
-  @Inject
-  private StateTypeDao stateTypeDao;
 
   public FacilityService() {
     // default constructor
@@ -483,13 +463,12 @@ public class FacilityService implements CrudsService {
     PlacementHome placementHome = placementHomeMapper.toPlacementHome(
         form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));
 
-    placementHome.setIdentifier(Utils.Id.generate());
     PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
     String placementHomeId = storedPlacementHome.getIdentifier();
 
     storePlacementHomeUc(storedPlacementHome);
 
-    storeExternalInterfaceMapper();
+    storeExternalInterface();
 
     storeEmergencyContactDetail(placementHomeId);
 
@@ -509,7 +488,7 @@ public class FacilityService implements CrudsService {
     return storedPlacementHome;
   }
 
-  private void storeExternalInterfaceMapper() {
+  private void storeExternalInterface() {
     ExternalInterface externalInterface = externalInterfaceMapper.toExternalInterface("");
     externalInterfaceDao.create(externalInterface);
   }
@@ -582,7 +561,7 @@ public class FacilityService implements CrudsService {
       rfaApplicantIdsMap.put(applicantDTO.getId(), storedSubstituteCareProvider);
 
       PlacementHomeInformation placementHomeInformation =
-          substituteCareProviderMapper.toPlacementHomeInformation(
+          placementHomeInformationMapper.toPlacementHomeInformation(
               form, applicantDTO, placementHomeId, substituteCareProvider.getIdentifier());
 
       placementHomeInformationDao.create(placementHomeInformation);
@@ -629,7 +608,7 @@ public class FacilityService implements CrudsService {
   }
 
   private void storeEthnicity(ApplicantDTO applicantDTO, String substituteCareProviderId) {
-    ClientScpEthnicity clientScpEthnicity = substituteCareProviderMapper
+    ClientScpEthnicity clientScpEthnicity = clientScpEthnicityMapper
         .toClientScpEthnicity(applicantDTO, substituteCareProviderId);
     clientScpEthnicity.setIdentifier(Utils.Id.generate());
     clientScpEthnicity.setLstUpdId(Id.getStaffPersonId());

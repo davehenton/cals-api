@@ -3,6 +3,8 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
 import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapperImpl;
+import gov.ca.cwds.cals.service.mapper.ClientScpEthnicityMapper;
+import gov.ca.cwds.cals.service.mapper.ClientScpEthnicityMapperImpl;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapperImpl;
 import gov.ca.cwds.cals.service.mapper.CountyMapper;
@@ -33,6 +35,8 @@ import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
 import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapperImpl;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapperImpl;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeInformationMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeInformationMapperImpl;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapperImpl;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeNotesMapper;
@@ -69,8 +73,10 @@ public class MappingModule extends AbstractModule {
     bind(BackgroundCheckMapper.class).to(BackgroundCheckMapperImpl.class).asEagerSingleton();
     bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapperImpl.class)
         .asEagerSingleton();
+    bind(PlacementHomeInformationMapper.class).to(PlacementHomeInformationMapperImpl.class).asEagerSingleton();
     bind(PlacementHomeNotesMapper.class).to(PlacementHomeNotesMapperImpl.class).asEagerSingleton();
     bind(PlacementHomeProfileMapper.class).to(PlacementHomeProfileMapperImpl.class).asEagerSingleton();
+    bind(ClientScpEthnicityMapper.class).to(ClientScpEthnicityMapperImpl.class).asEagerSingleton();
     bind(PhoneContactDetailMapper.class).to(PhoneContactDetailMapperImpl.class)
         .asEagerSingleton();
     bind(RFA1aFormMapper.class).to(RFA1aFormMapperImpl.class).asEagerSingleton();
