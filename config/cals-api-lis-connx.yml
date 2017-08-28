@@ -42,7 +42,7 @@ lisDataSourceFactory:
   user: ${DB_LIS_USER:-CWDS_Admin}
   password: ${DB_LIS_PASSWORD:-x}
   url: ${DB_LIS_JDBC_URL:-jdbc:connx:DD=CX_All;Gateway=10.211.5.29;port=7502}
-  validationQuery: "select count(*) from ${DB_LIS_SCHEMA:-lis}.lis_fac_file"
+  validationQuery: "select count(*) from ${DB_LIS_SCHEMA:-dbo}.lis_fac_file"
   logValidationErrors: true
   initialSize: ${DB_LIS_CP_INITIAL_SIZE:-2}
   minSize: ${DB_LIS_CP_MIN_SIZE:-2}
