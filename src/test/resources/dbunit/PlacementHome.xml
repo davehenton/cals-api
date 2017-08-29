@@ -1,6 +1,7 @@
 <!DOCTYPE dataset SYSTEM "$schemaPath">
 <dataset>
-  <PLC_HM_T IDENTIFIER="$id"
+  <PLC_HM_T IDENTIFIER="$placementHomeId"
+    PRM_SUBSID="$primarySubstituteCareProviderId"
     AGE_FRM_NO="0"
     AGE_TO_NO="0"
     AT_CAP_IND="N"

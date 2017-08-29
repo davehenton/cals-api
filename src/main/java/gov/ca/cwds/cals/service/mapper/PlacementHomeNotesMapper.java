@@ -7,12 +7,15 @@ import org.mapstruct.Mapping;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper(imports = {LocalDate.class, LocalDateTime.class, Utils.class})
 public interface PlacementHomeNotesMapper {
+  PlacementHomeNotesMapper INSTANCE = Mappers.getMapper(PlacementHomeNotesMapper.class);
+
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
   @Mapping(target = "receiveDt", expression = "java(LocalDate.now())")
   @Mapping(target = "refLicind", constant = "N")

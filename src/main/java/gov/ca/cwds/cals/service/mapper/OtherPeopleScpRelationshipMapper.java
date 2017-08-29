@@ -6,13 +6,14 @@ import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper
 public interface OtherPeopleScpRelationshipMapper {
-
+  OtherPeopleScpRelationshipMapper INSTANCE = Mappers.getMapper(OtherPeopleScpRelationshipMapper.class);
 
   @Mapping(target = "clntrelc", constant = "0")
   @Mapping(target = "fkothAdlt", ignore = true)

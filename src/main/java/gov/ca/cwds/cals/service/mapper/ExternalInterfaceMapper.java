@@ -5,12 +5,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.time.LocalDateTime;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper(imports = LocalDateTime.class)
 public interface ExternalInterfaceMapper {
+  ExternalInterfaceMapper INSTANCE = Mappers.getMapper(ExternalInterfaceMapper.class);
+
   @Mapping(target = "seqNo", constant = "-1")// TODO: 8/17/2017
   @Mapping(target = "submtlTs", expression = "java(LocalDateTime.now())")// TODO: 8/17/2017
   @Mapping(target = "tableName", constant = " ")// TODO: 8/17/2017

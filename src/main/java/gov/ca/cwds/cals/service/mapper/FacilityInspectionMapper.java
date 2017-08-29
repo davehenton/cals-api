@@ -10,12 +10,14 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityInspectionMapper {
+    FacilityInspectionMapper INSTANCE = Mappers.getMapper(FacilityInspectionMapper.class);
 
     @Mapping(target = "messages", ignore = true)
     @Mapping(target = "deficiencies", ignore = true)

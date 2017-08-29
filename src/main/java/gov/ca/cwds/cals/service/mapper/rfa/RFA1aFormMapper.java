@@ -18,6 +18,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import org.mapstruct.factory.Mappers;
 
 
 /**
@@ -25,6 +26,7 @@ import org.mapstruct.Named;
  */
 @Mapper
 public interface RFA1aFormMapper {
+  RFA1aFormMapper INSTANCE = Mappers.getMapper(RFA1aFormMapper.class);
 
   @Named("toRFA1aFormDTO")
   @Mapping(target = "initialApplication", source = "application.initialApplication")

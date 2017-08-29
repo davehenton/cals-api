@@ -7,13 +7,14 @@ import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper
 public interface OutOfStateCheckMapper {
-
+  OutOfStateCheckMapper INSTANCE = Mappers.getMapper(OutOfStateCheckMapper.class);
 
   @Mapping(target = "identifier", ignore = true)
   @Mapping(target = "stateC", constant = "0")

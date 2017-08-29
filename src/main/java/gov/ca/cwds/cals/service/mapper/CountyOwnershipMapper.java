@@ -12,12 +12,15 @@ import org.mapstruct.MappingTarget;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper(imports={Utils.class, Constants.class})
 public interface CountyOwnershipMapper {
+  CountyOwnershipMapper INSTANCE = Mappers.getMapper(CountyOwnershipMapper.class);
+
   @Mapping(target = "entityId", source = "entityId")
   @Mapping(target = "entityCd", source = "discriminator")
   @Mapping(target = "multiFlg", ignore = true)

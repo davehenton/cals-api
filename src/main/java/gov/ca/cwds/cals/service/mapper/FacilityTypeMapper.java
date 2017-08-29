@@ -4,12 +4,14 @@ import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface FacilityTypeMapper {
+    FacilityTypeMapper INSTANCE = Mappers.getMapper(FacilityTypeMapper.class);
 
     @Mapping(target = "code", source = "tblFacTypeCode")
     @Mapping(target = "description", source = "tblFacTypeDesc")

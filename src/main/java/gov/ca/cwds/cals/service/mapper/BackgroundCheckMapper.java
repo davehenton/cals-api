@@ -7,12 +7,15 @@ import org.mapstruct.Mapping;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper(imports = {LocalDateTime.class, LocalDate.class, Utils.class})
 public interface BackgroundCheckMapper {
+  BackgroundCheckMapper INSTANCE = Mappers.getMapper(BackgroundCheckMapper.class);
+
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
   @Mapping(target = "rcpntCd", ignore = true) // TODO: 8/18/2017
   @Mapping(target = "rcpntId", ignore = true) // TODO: 8/18/2017
