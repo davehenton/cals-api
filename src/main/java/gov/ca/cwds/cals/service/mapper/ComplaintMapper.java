@@ -12,6 +12,7 @@ import org.mapstruct.MappingTarget;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
@@ -19,6 +20,7 @@ import java.util.Set;
 
 @Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface ComplaintMapper {
+    ComplaintMapper INSTANCE = Mappers.getMapper(ComplaintMapper.class);
 
     @Mapping(target = "messages", ignore = true)
     @Mapping(source = "originalunidkey", target = "id")

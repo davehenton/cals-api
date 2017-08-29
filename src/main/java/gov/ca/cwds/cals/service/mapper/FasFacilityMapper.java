@@ -17,6 +17,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class, DictionaryMapper.class})
 @FunctionalInterface
 public interface FasFacilityMapper {
+  FasFacilityMapper INSTANCE = Mappers.getMapper(FasFacilityMapper.class);
 
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "phone", ignore = true)

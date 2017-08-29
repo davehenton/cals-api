@@ -9,12 +9,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper(imports = {LocalDateTime.class, LocalDate.class, Constants.class, Utils.class})
 public interface PlacementHomeInformationMapper {
+  PlacementHomeInformationMapper INSTANCE = Mappers.getMapper(PlacementHomeInformationMapper.class);
 
   @Mapping(target = "thirdId", expression = "java(Utils.Id.generate())")
   @Mapping(target = "startDt", expression = "java(LocalDate.now())")

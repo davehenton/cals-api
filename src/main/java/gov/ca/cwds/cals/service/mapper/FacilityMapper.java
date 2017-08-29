@@ -32,6 +32,7 @@ import org.mapstruct.factory.Mappers;
         DistrictOfficeMapper.class, DictionaryMapper.class,
         TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityMapper {
+  FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
 
   /**
    * Visit data is converted in {@link FasFacilityMapper}

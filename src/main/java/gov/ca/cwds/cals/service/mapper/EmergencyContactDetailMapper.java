@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.time.LocalDateTime;
+import org.mapstruct.factory.Mappers;
 
 import static gov.ca.cwds.cals.Constants.N;
 
@@ -15,6 +16,8 @@ import static gov.ca.cwds.cals.Constants.N;
  */
 @Mapper(imports = {LocalDateTime.class, Utils.class, Constants.class})
 public interface EmergencyContactDetailMapper {
+  EmergencyContactDetailMapper INSTANCE = Mappers.getMapper(EmergencyContactDetailMapper.class);
+
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
   @Mapping(target = "estblshCd", constant = "P")
   @Mapping(target = "estblshId", source = "placementHomeId")

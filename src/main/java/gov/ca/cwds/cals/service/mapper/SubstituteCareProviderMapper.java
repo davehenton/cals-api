@@ -3,7 +3,6 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
-import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
@@ -12,12 +11,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = {StringUtils.class, LocalDateTime.class, Utils.class, Constants.class})
+@Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class, Constants.class})
 public interface SubstituteCareProviderMapper {
+  SubstituteCareProviderMapper INSTANCE = Mappers.getMapper(SubstituteCareProviderMapper.class);
 
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
   @Mapping(target = "addTelNo", constant = "0")
@@ -187,19 +188,8 @@ public interface SubstituteCareProviderMapper {
   @Mapping(target = "outOfStateChecks", ignore = true)
   @Mapping(target = "ssNo", expression = "java(StringUtils.defaultString(rfa1bFormDTO.getSsn(), Constants.SPACE))")
   @Mapping(target = "resostInd", expression = "java(Utils.BooleanToString.resolve(" +
-          "rfa1bFormDTO.isLivedInOtherState(), Constants.Y, Constants.N))")
+      "rfa1bFormDTO.isLivedInOtherState(), Constants.Y, Constants.N))")
   SubstituteCareProvider toSubstituteCareProvider(
       @MappingTarget SubstituteCareProvider substituteCareProvider,
       RFA1bFormDTO rfa1bFormDTO);
-
-  @Mapping(target = "pksbPvdrt", source = "identifier")
-  @Mapping(target = "caDlicNo",
-      expression = "java(StringUtils.upperCase(" +
-          "Utils.Applicant.getCaliforniaDriverLicense(applicantDTO, Constants.SPACE)))")
-  @Mapping(target = "firstNm", expression = "java(StringUtils.upperCase(applicantDTO.getFirstName()))")
-  @Mapping(target = "lastNm", expression = "java(StringUtils.upperCase(applicantDTO.getLastName()))")
-  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
-  @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
-  SubstituteCareProviderUc toSubstituteCareProviderUC(String identifier, ApplicantDTO applicantDTO);
-
 }

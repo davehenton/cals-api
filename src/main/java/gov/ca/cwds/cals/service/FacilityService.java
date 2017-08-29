@@ -39,6 +39,7 @@ import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
@@ -72,7 +73,6 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
@@ -95,6 +95,7 @@ import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeNotesMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
+import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderUCMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
@@ -213,6 +214,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private SubstituteCareProviderMapper substituteCareProviderMapper;
+
+  @Inject
+  private SubstituteCareProviderUCMapper substituteCareProviderUCMapper;
 
   @Inject
   private PlacementHomeInformationMapper placementHomeInformationMapper;
@@ -468,6 +472,8 @@ public class FacilityService implements CrudsService {
 
     storePlacementHomeUc(storedPlacementHome);
 
+    storeCountyOwnership(placementHomeId, "P", Collections.emptyList());
+
     storeExternalInterface();
 
     storeEmergencyContactDetail(placementHomeId);
@@ -478,14 +484,64 @@ public class FacilityService implements CrudsService {
 
     storePlacementHomeProfile(form, placementHomeId);
 
-    Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = storeSubstituteCareProviders(form,
-        placementHomeId);
+    Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>();
 
-    storeOtherChildren(form, storedPlacementHome, rfaApplicantIdsMap);
+    List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
+        .orElse(Collections.emptyList());
+    for (ApplicantDTO applicant : applicants) {
+      SubstituteCareProvider substituteCareProvider = storeSubstituteCareProvider(form, applicant);
+      rfaApplicantIdsMap.put(applicant.getId(), substituteCareProvider);
+      if (Utils.Applicant.isPrimary(form, applicant)) {
+        storedPlacementHome.setPrimarySubstituteCareProvider(substituteCareProvider);
+      }
 
-    storeOtherAdults(form, storedPlacementHome, rfaApplicantIdsMap);
+      storeSubstituteCareProviderUC(substituteCareProvider.getIdentifier(), applicant);
+
+      storeCountyOwnership(substituteCareProvider.getIdentifier(), "S", Collections.emptyList());
+
+      storePlacementHomeInformation(form, applicant, placementHomeId, substituteCareProvider.getIdentifier());
+
+      storePhoneContactDetails(applicant, substituteCareProvider.getIdentifier());
+      storeEthnicity(applicant, substituteCareProvider.getIdentifier());
+      storeOutOfStateCheck(substituteCareProvider);
+    }
+
+    storeOtherChildren(rfaApplicantIdsMap, form, storedPlacementHome);
+    storeOtherAdults(rfaApplicantIdsMap, form, storedPlacementHome);
 
     return storedPlacementHome;
+  }
+
+  private CountyOwnership storeCountyOwnership(String entityId, String discriminator, List<CountyType> counties) {
+    CountyOwnership countyOwnership =
+        countyOwnershipMapper.toCountyOwnership(entityId, discriminator, counties);
+    return countyOwnershipDao.create(countyOwnership);// TODO: 8/18/2017
+  }
+
+  private SubstituteCareProvider storeSubstituteCareProvider(RFA1aFormDTO form, ApplicantDTO applicant) {
+    SubstituteCareProvider substituteCareProvider =
+        substituteCareProviderMapper.toSubstituteCareProvider(applicant);
+
+    substituteCareProviderMapper.toSubstituteCareProvider(substituteCareProvider, applicant.getRfa1bForm());
+
+    RFAAddressDTO residentialAddress = Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL);
+    substituteCareProviderMapper.toSubstituteCareProviderFromResidentialAddress(
+        substituteCareProvider, residentialAddress);
+
+    RFAAddressDTO mailingAddress = Utils.Address.getByType(form, Constants.AddressTypes.MAIL);
+    substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
+        substituteCareProvider, mailingAddress);
+
+    return substituteCareProviderDao.create(substituteCareProvider);
+  }
+
+  private SubstituteCareProviderUc storeSubstituteCareProviderUC(
+      String substituteCareProviderIdentifier, ApplicantDTO applicant) {
+
+    SubstituteCareProviderUc substituteCareProviderUc = substituteCareProviderUCMapper
+        .toSubstituteCareProviderUC(substituteCareProviderIdentifier, applicant);
+
+    return substituteCareProviderUCDao.create(substituteCareProviderUc);
   }
 
   private void storeExternalInterface() {
@@ -519,65 +575,13 @@ public class FacilityService implements CrudsService {
     return placementHomeUcDao.create(placementHomeUc);
   }
 
-  private Map<Long, SubstituteCareProvider> storeSubstituteCareProviders(RFA1aFormDTO form,
-      String placementHomeId) {
+  private PlacementHomeInformation storePlacementHomeInformation(RFA1aFormDTO form,
+      ApplicantDTO applicantDTO, String placementHomeId, String substituteCareProviderId) {
+    PlacementHomeInformation placementHomeInformation =
+        placementHomeInformationMapper.toPlacementHomeInformation(
+            form, applicantDTO, placementHomeId, substituteCareProviderId);
 
-    CountyOwnership phCountyOwnership =
-        countyOwnershipMapper.toCountyOwnership(placementHomeId, "P", Collections.emptyList());
-    countyOwnershipDao.create(phCountyOwnership);// TODO: 8/18/2017
-
-    List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
-        .orElse(Collections.emptyList());
-
-    Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>();
-
-    for (int i = 0; i < applicants.size(); i++) {
-      ApplicantDTO applicantDTO = applicants.get(i);
-
-      SubstituteCareProvider substituteCareProvider =
-          substituteCareProviderMapper.toSubstituteCareProvider(applicantDTO);
-
-      RFA1bFormDTO bForm = applicantDTO.getRfa1bForm();
-      substituteCareProviderMapper.toSubstituteCareProvider(substituteCareProvider, bForm);
-
-      RFAAddressDTO residentialAddress = Utils.Address
-          .getByType(form, Constants.AddressTypes.RESIDENTIAL);
-      substituteCareProviderMapper.toSubstituteCareProviderFromResidentialAddress(
-          substituteCareProvider, residentialAddress);
-
-      RFAAddressDTO mailingAddress = Utils.Address.getByType(form, Constants.AddressTypes.MAIL);
-      substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
-          substituteCareProvider, mailingAddress);
-
-      SubstituteCareProvider storedSubstituteCareProvider = substituteCareProviderDao
-          .create(substituteCareProvider);
-
-      CountyOwnership scpCountyOwnership =
-          countyOwnershipMapper.toCountyOwnership(
-              substituteCareProvider.getIdentifier(), "S", Collections.emptyList());
-      countyOwnershipDao.create(scpCountyOwnership);// TODO: 8/18/2017
-
-
-      rfaApplicantIdsMap.put(applicantDTO.getId(), storedSubstituteCareProvider);
-
-      PlacementHomeInformation placementHomeInformation =
-          placementHomeInformationMapper.toPlacementHomeInformation(
-              form, applicantDTO, placementHomeId, substituteCareProvider.getIdentifier());
-
-      placementHomeInformationDao.create(placementHomeInformation);
-
-      SubstituteCareProviderUc substituteCareProviderUc = substituteCareProviderMapper
-          .toSubstituteCareProviderUC(
-              storedSubstituteCareProvider.getIdentifier(), applicantDTO);
-
-      substituteCareProviderUCDao.create(substituteCareProviderUc);
-
-      storePhoneContactDetails(applicantDTO, substituteCareProvider.getIdentifier());
-      storeEthnicity(applicantDTO, substituteCareProvider.getIdentifier());
-      storeOutOfStateCheck(substituteCareProvider);
-    }
-
-    return rfaApplicantIdsMap;
+    return placementHomeInformationDao.create(placementHomeInformation);
   }
 
   private void storePlacementHomeProfile(RFA1aFormDTO form, String placementHomeId) {
@@ -622,22 +626,22 @@ public class FacilityService implements CrudsService {
     storeOutOfStateCheck(outOfStateCheck);
   }
 
-  private void storeOtherChildren(RFA1aFormDTO form, PlacementHome persistedPlacementHome,
-      Map<Long, SubstituteCareProvider> rfaApplicantIdsMap) {
-    List<MinorChildDTO> minorChildren = form.getMinorChildren();
+  private void storeOtherChildren(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap,
+      RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
 
-    minorChildren.forEach(minorChildDTO -> {
-
-      OtherChildrenInPlacementHome otherChild = otherChildMapper.toOtherChild(minorChildDTO);
-      otherChild.setIdentifier(Utils.Id.generate());
-      otherChild.setLstUpdId(Id.getStaffPersonId());
-      otherChild.setLstUpdTs(LocalDateTime.now());
-      otherChild.setFkplcHmT(persistedPlacementHome.getIdentifier());
-      final OtherChildrenInPlacementHome storedOtherChild = otherChildrenDao.create(otherChild);
-
+    form.getMinorChildren().forEach(minorChildDTO -> {
+      OtherChildrenInPlacementHome storedOtherChild = storeOtherChildrenInPlacementHome(persistedPlacementHome, minorChildDTO);
       storeOtherChildrenScpRelationships(rfaApplicantIdsMap, minorChildDTO, storedOtherChild);
-
     });
+  }
+
+  private OtherChildrenInPlacementHome storeOtherChildrenInPlacementHome(PlacementHome placementHome, MinorChildDTO minorChildDTO) {
+    OtherChildrenInPlacementHome otherChild = otherChildMapper.toOtherChild(minorChildDTO);
+    otherChild.setIdentifier(Id.generate());
+    otherChild.setLstUpdId(Id.getStaffPersonId());
+    otherChild.setLstUpdTs(LocalDateTime.now());
+    otherChild.setFkplcHmT(placementHome.getIdentifier());
+    return otherChildrenDao.create(otherChild);
   }
 
   private void storeOtherChildrenScpRelationships(
@@ -658,22 +662,24 @@ public class FacilityService implements CrudsService {
         });
   }
 
-
-  private void storeOtherAdults(RFA1aFormDTO form, PlacementHome persistedPlacementHome,
-      Map<Long, SubstituteCareProvider> rfaApplicantIdsMap) {
-    List<OtherAdultDTO> otherAdults = form.getOtherAdults();
-
-    otherAdults.forEach(otherAdultDTO -> {
-      OtherAdultsInPlacementHome otherAdult = otherAdultMapper.toOtherAdult(otherAdultDTO);
-      otherAdult.setIdentifier(Utils.Id.generate());
-      otherAdult.setLstUpdId(Id.getStaffPersonId());
-      otherAdult.setLstUpdTs(LocalDateTime.now());
-      otherAdult.setFkplcHmT(persistedPlacementHome.getIdentifier());
-
-      final OtherAdultsInPlacementHome storedOtherAdult = otherAdultDao.create(otherAdult);
+  private void storeOtherAdults(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap, RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
+    form.getOtherAdults().forEach(otherAdultDTO -> {
+      OtherAdultsInPlacementHome storedOtherAdult = storeOtherAdultsInPlacementHome(persistedPlacementHome, otherAdultDTO);
       storeOtherAdultScpRelationships(rfaApplicantIdsMap, otherAdultDTO, storedOtherAdult);
       storeOutOfStateCheck(storedOtherAdult);
     });
+  }
+
+  private OtherAdultsInPlacementHome storeOtherAdultsInPlacementHome(
+      PlacementHome persistedPlacementHome, OtherAdultDTO otherAdultDTO) {
+
+    OtherAdultsInPlacementHome otherAdult = otherAdultMapper.toOtherAdult(otherAdultDTO);
+    otherAdult.setIdentifier(Id.generate());
+    otherAdult.setLstUpdId(Id.getStaffPersonId());
+    otherAdult.setLstUpdTs(LocalDateTime.now());
+    otherAdult.setFkplcHmT(persistedPlacementHome.getIdentifier());
+
+    return otherAdultDao.create(otherAdult);
   }
 
   private void storeOtherAdultScpRelationships(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap,

@@ -14,12 +14,14 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
 @Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class})
 public interface PlacementHomeMapper {
+  PlacementHomeMapper INSTANCE = Mappers.getMapper(PlacementHomeMapper.class);
 
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
   @Mapping(target = "ageFrmNo", constant = "0")

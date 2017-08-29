@@ -22,6 +22,7 @@ import java.util.Set;
  */
 @Mapper(uses = {PersonMapper.class, TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityChildMapper {
+    FacilityChildMapper INSTANCE = Mappers.getMapper(FacilityChildMapper.class);
 
     @Mapping(target = "id", source = "client.identifier")
     @Mapping(target = "person", source = "client")
