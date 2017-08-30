@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.persistence.hibernate.AtomikosPooledManagedDataSource;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.db.ManagedDataSource;
+import java.util.Optional;
 import java.util.Properties;
 import javax.validation.constraints.NotNull;
 
@@ -16,6 +17,8 @@ public class XADataSourceFactory extends DataSourceFactory {
   @NotNull
   private String xaDataSourceClassName;
 
+  private Properties xaProperties;
+
   @JsonProperty
   public String getXaDataSourceClassName() {
     return xaDataSourceClassName;
@@ -25,15 +28,30 @@ public class XADataSourceFactory extends DataSourceFactory {
     this.xaDataSourceClassName = xaDataSourceClassName;
   }
 
+  @JsonProperty
+  public Properties getXaProperties() {
+    return xaProperties;
+  }
+
+  public void setXaProperties(Properties xaProperties) {
+    this.xaProperties = xaProperties;
+  }
+
   @Override
   public ManagedDataSource build(MetricRegistry metricRegistry, String name) {
+
     AtomikosPooledManagedDataSource ds = new AtomikosPooledManagedDataSource(metricRegistry);
     ds.setUniqueResourceName(name);
     ds.setXaDataSourceClassName(xaDataSourceClassName);
+
     Properties props = new Properties();
-    getProperties().forEach(props::setProperty);
+    props.put("user", getUser());
+    props.put("password", getPassword());
+    Optional.ofNullable(getXaProperties()).ifPresent(props::putAll);
+
     ds.setXaProperties(props);
-    ds.setPoolSize(3);
+
+    ds.setPoolSize(10);
 
     // Init on start ManagedDataSource.start
 

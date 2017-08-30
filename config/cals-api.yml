@@ -129,6 +129,10 @@ xaCalsnsDataSourceFactory:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       hibernate.cache.use_query_cache: false
+  xaProperties:
+      # Properties for DB2XADataSource
+      url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
+
 
 cmsDataSourceFactory:
   autoCommitByDefault: false
@@ -166,6 +170,12 @@ xaCmsDataSourceFactory:
       hibernate.show_sql: false
       hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSCMS}
       hibernate.connection.autocommit: false
+  xaProperties:
+      # Properties for DB2XADataSource
+      serverName: ${DB_CMS_DB2_HOST:-192.168.99.100}
+      portNumber: ${DB_CMS_DB2_PORT:-50000}
+      databaseName: ${DB_CMS_DB2_NAME:-DB0TDEV}
+      driverType: 4 # Type4 connection for DB2 DataSource
 
 webSecurity:
   httpResponseSecurityHeaders:
