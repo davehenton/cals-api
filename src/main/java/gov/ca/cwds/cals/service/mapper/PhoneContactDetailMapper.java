@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
@@ -11,6 +12,7 @@ import org.mapstruct.Mapping;
 @Mapper
 @SuppressWarnings("squid:S1609")
 public interface PhoneContactDetailMapper {
+  PhoneContactDetailMapper INSTANCE = Mappers.getMapper(PhoneContactDetailMapper.class);
 
   @Mapping(target = "phoneNo", source = "phoneDTO.number")
   @Mapping(target = "phextNo", source = "phoneDTO.extension")

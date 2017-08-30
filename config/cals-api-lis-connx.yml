@@ -42,7 +42,7 @@ lisDataSourceFactory:
   user: ${DB_LIS_USER:-CWDS_Admin}
   password: ${DB_LIS_PASSWORD:-x}
   url: ${DB_LIS_JDBC_URL:-jdbc:connx:DD=CX_All;Gateway=10.211.5.29;port=7502}
-  validationQuery: "select count(*) from ${DB_LIS_SCHEMA:-lis}.lis_fac_file"
+  validationQuery: "select count(*) from ${DB_LIS_SCHEMA:-dbo}.lis_fac_file"
   logValidationErrors: true
   initialSize: ${DB_LIS_CP_INITIAL_SIZE:-2}
   minSize: ${DB_LIS_CP_MIN_SIZE:-2}
@@ -60,7 +60,7 @@ fasDataSourceFactory:
   user: ${DB_FAS_USER:-postgres_data}
   password: ${DB_FAS_PASSWORD:-postgres_data}
   url: ${DB_FAS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
-  validationQuery: "select count(*) from ${DB_FAS_DEFAULT_SCHEMA:-fas}.facility_information"
+  validationQuery: "select count(*) from ${DB_FAS_DEFAULT_SCHEMA:-public}.facility_information"
   logValidationErrors: true
   initialSize: ${DB_FAS_CP_INITIAL_SIZE:-2}
   minSize: ${DB_FAS_CP_MIN_SIZE:-2}

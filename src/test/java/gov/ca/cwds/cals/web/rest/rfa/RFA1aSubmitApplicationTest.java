@@ -116,8 +116,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
     rfaHelper.postRfa1bForm(form.getId(), applicantDTO.getId(), rfa1bForm);
 
-    List<OtherAdultDTO> otherAdultDTOs = rfaHelper.createOtherAdults(form.getId(), secondApplicant);
-    List<MinorChildDTO> minorChildDTOs = rfaHelper.createMinorChildren(form.getId(), applicantDTO);
+    rfaHelper.createOtherAdults(form.getId(), secondApplicant);
+    rfaHelper.createMinorChildren(form.getId(), applicantDTO);
 
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
@@ -198,11 +198,21 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     return ids;
   }
 
+  private String getPrimarySubstituteCareProviderIdByApplicantFirstName(String applicantFirstName) throws Exception {
+    ITable substituteCareProvider = dbUnitSupport.getTableFromDB("SB_PVDRT");
+    ITable placementHomeRow = dbUnitSupport
+        .filterByColumnAndValue(substituteCareProvider, "FIRST_NM", applicantFirstName);
+      return (String) placementHomeRow.getValue(0, "IDENTIFIER");
+  }
+
 
   private void testIfPlacementHomeWasCreatedProperly(String placementHomeId) throws Exception {
+    String primarySubstituteCareProviderId = getPrimarySubstituteCareProviderIdByApplicantFirstName("Anna");
+
     DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/PlacementHome.xml")
-        .appendTemplateParameter("id", placementHomeId)
+        .appendTemplateParameter("placementHomeId", placementHomeId)
+        .appendTemplateParameter("primarySubstituteCareProviderId", primarySubstituteCareProviderId)
         .setTestedTableName("PLC_HM_T")
         .appendTableFilter("IDENTIFIER", placementHomeId)
         .build()

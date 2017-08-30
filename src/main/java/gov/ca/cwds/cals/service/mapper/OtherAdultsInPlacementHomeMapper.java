@@ -10,6 +10,7 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
@@ -17,6 +18,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(imports = LocalDate.class)
 @SuppressWarnings("squid:S1609")
 public interface OtherAdultsInPlacementHomeMapper {
+  OtherAdultsInPlacementHomeMapper INSTANCE = Mappers.getMapper(OtherAdultsInPlacementHomeMapper.class);
 
   @Mapping(target = "birthDt", source = "dateOfBirth")
   @Mapping(target = "endDt", ignore = true)

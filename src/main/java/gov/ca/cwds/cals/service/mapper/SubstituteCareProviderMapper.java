@@ -2,32 +2,30 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
-import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = {StringUtils.class, LocalDate.class, LocalDateTime.class, Utils.class, Constants.class})
+@Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class, Constants.class})
 public interface SubstituteCareProviderMapper {
+  SubstituteCareProviderMapper INSTANCE = Mappers.getMapper(SubstituteCareProviderMapper.class);
 
   @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
   @Mapping(target = "addTelNo", constant = "0")
   @Mapping(target = "addExtNo", constant = "0")
   @Mapping(target = "birthDt", source = "dateOfBirth")
-  @Mapping(target = "caDlicNo", expression = "java(Utils.Applicant.getCaliforniaDriverLicense(applicantDTO, \" \"))")
+  @Mapping(target = "caDlicNo", expression = "java(Utils.Applicant.getCaliforniaDriverLicense(" +
+      "applicantDTO, Constants.SPACE))")
   @Mapping(target = "cityNm", ignore = true)
   @Mapping(target = "emplyrNm", source = "employment.employerName")
   @Mapping(target = "firstNm", source = "firstName")
@@ -188,45 +186,10 @@ public interface SubstituteCareProviderMapper {
   @Mapping(target = "passbcCd", ignore = true)
   @Mapping(target = "backgroundChecks", ignore = true)
   @Mapping(target = "outOfStateChecks", ignore = true)
-  @Mapping(target = "ssNo", expression = "java(StringUtils.defaultString(rfa1bFormDTO.getSsn(), \" \"))")
-  @Mapping(target = "resostInd",
-      expression = "java(Utils.BooleanToString.resolve(rfa1bFormDTO.isLivedInOtherState(), \"Y\", \"N\"))")
+  @Mapping(target = "ssNo", expression = "java(StringUtils.defaultString(rfa1bFormDTO.getSsn(), Constants.SPACE))")
+  @Mapping(target = "resostInd", expression = "java(Utils.BooleanToString.resolve(" +
+      "rfa1bFormDTO.isLivedInOtherState(), Constants.Y, Constants.N))")
   SubstituteCareProvider toSubstituteCareProvider(
       @MappingTarget SubstituteCareProvider substituteCareProvider,
       RFA1bFormDTO rfa1bFormDTO);
-
-  @Mapping(target = "thirdId", expression = "java(Utils.Id.generate())")
-  @Mapping(target = "startDt", expression = "java(LocalDate.now())")
-  @Mapping(target = "endDt", ignore = true)
-  @Mapping(target = "licnseeCd", constant = "U")
-  @Mapping(target = "crprvdrCd", constant = "Y")
-  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
-  @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
-  @Mapping(target = "fksbPvdrt", source = "substituteCareProviderId")
-  @Mapping(target = "fkplcHmT", source = "placementHomeId")
-  @Mapping(target = "prprvdrCd",
-      expression = "java(Utils.Applicant.isPrimary(form, applicant) ? Constants.Y : Constants.N)")
-  @Mapping(target = "cdsPrsn", constant = " ")
-  @Mapping(target = "scprvdInd",
-      expression = "java(Utils.Applicant.isPrimary(form, applicant) ? Constants.N : Constants.Y)")
-  PlacementHomeInformation toPlacementHomeInformation(
-      RFA1aFormDTO form, ApplicantDTO applicant, String placementHomeId, String substituteCareProviderId);
-
-  @Mapping(target = "pksbPvdrt", source = "identifier")
-  @Mapping(target = "caDlicNo",
-      expression = "java(StringUtils.upperCase(Utils.Applicant.getCaliforniaDriverLicense(applicantDTO, \" \")))")
-  @Mapping(target = "firstNm", expression = "java(StringUtils.upperCase(applicantDTO.getFirstName()))")
-  @Mapping(target = "lastNm", expression = "java(StringUtils.upperCase(applicantDTO.getLastName()))")
-  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
-  @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
-  SubstituteCareProviderUc toSubstituteCareProviderUC(String identifier, ApplicantDTO applicantDTO);
-
-  @Mapping(target = "identifier", ignore = true)
-  @Mapping(target = "ethnctyc", source = "applicantDTO.ethnicity.cwsId")
-  @Mapping(target = "estblshId", source = "substituteCareProviderId")
-  @Mapping(target = "estblshCd", constant = "S")
-  @Mapping(target = "lstUpdId", ignore = true)
-  @Mapping(target = "lstUpdTs", ignore = true)
-  ClientScpEthnicity toClientScpEthnicity(ApplicantDTO applicantDTO,
-      String substituteCareProviderId);
 }
