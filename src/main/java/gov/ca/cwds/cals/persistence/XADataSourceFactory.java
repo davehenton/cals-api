@@ -45,12 +45,11 @@ public class XADataSourceFactory extends DataSourceFactory {
     ds.setXaDataSourceClassName(xaDataSourceClassName);
 
     Properties props = new Properties();
-    props.put("user", getUser());
-    props.put("password", getPassword());
+    Optional.ofNullable(getUser()).ifPresent(user -> props.put("user", user));
+    Optional.ofNullable(getPassword()).ifPresent(password -> props.put("password", password));
     Optional.ofNullable(getXaProperties()).ifPresent(props::putAll);
 
     ds.setXaProperties(props);
-
     ds.setPoolSize(10);
 
     // Init on start ManagedDataSource.start

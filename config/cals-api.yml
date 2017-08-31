@@ -130,7 +130,6 @@ xaCalsnsDataSourceFactory:
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       hibernate.cache.use_query_cache: false
   xaProperties:
-      # Properties for DB2XADataSource
       url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
 
 

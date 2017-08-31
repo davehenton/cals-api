@@ -14,6 +14,7 @@ import javax.naming.Reference;
 public class AtomikosPooledManagedDataSource extends AtomikosDataSourceBean implements
     ManagedDataSource {
 
+  private static final long serialVersionUID = -1670043209229276391L;
 
   private final MetricRegistry metricRegistry;
 

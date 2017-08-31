@@ -1,19 +1,20 @@
 package gov.ca.cwds.cals.service.rfa;
 
 import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.Validation.FORM_SUBMISSION_VALIDATION_SESSION;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
 import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.XaRFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.service.FacilityService;
@@ -25,11 +26,13 @@ import gov.ca.cwds.cals.service.validation.business.DroolsService;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsFieldValidationConfiguration;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
-import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.setup.Environment;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import org.slf4j.Logger;
@@ -46,6 +49,9 @@ public class RFA1aFormService
 
   @Inject
   private RFA1aFormsDao rfa1AFormsDao;
+
+  @Inject
+  private XaRFA1aFormsDao xaRfa1AFormsDao;
 
   @Inject
   private RFA1aFormMapper rfa1aFomMapper;
@@ -106,7 +112,7 @@ public class RFA1aFormService
   private void updateForm(RFA1aForm form) {
     form.setUpdateDateTime(LocalDateTime.now());
     form.setUpdateUserId(SYSTEM_USER_ID);
-    rfa1AFormsDao.update(form);
+    xaRfa1AFormsDao.update(form);
   }
 
   public RFAApplicationStatusDTO getApplicationStatus(Long formId) {
@@ -122,32 +128,43 @@ public class RFA1aFormService
           && newStatus == RFAApplicationStatus.DRAFT) {
         throw new ExpectedException(TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED, BAD_REQUEST);
       }
-      submitApplication(form, newStatus);
+
+      try {
+        submitApplication(form, newStatus);
+      } catch (Exception e) {
+        throw new IllegalStateException(e);
+      }
+
     }
   }
 
-  private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus) {
+  private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus)
+      throws NotSupportedException, SystemException {
     RFA1aFormDTO expandedFormDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
 
     performSubmissionValidation(expandedFormDTO);
 
     PlacementHome storedPlacementHome = null;
 
+    UserTransaction userTransaction = new UserTransactionImp();
+    userTransaction.setTransactionTimeout(60);
+    userTransaction.begin();
     try {
       storedPlacementHome = facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
+      updateFormAfterPlacementHomeCreation(form.getId(), storedPlacementHome.getIdentifier(),
+          newStatus);
+      userTransaction.commit();
     } catch (Exception e) {
-      LOG.error("Can not create Placement Home in database", e);
-      throw e;
+      userTransaction.rollback();
+      LOG.error("Can not create Placement Home", e);
+      throw new SystemException(e.getMessage());
     }
-
-    updateFormAfterPlacementHomeCreation(form.getId(), storedPlacementHome.getIdentifier(),
-        newStatus);
   }
 
-  @UnitOfWork(CALSNS)
+  //@UnitOfWork(CALSNS)
   protected void updateFormAfterPlacementHomeCreation(
       Long formId, String placementHomeId, RFAApplicationStatus newStatus) {
-    RFA1aForm form = rfa1AFormsDao.find(formId);
+    RFA1aForm form = xaRfa1AFormsDao.find(formId);
     form.setStatus(newStatus);
     form.setPlacementHomeId(placementHomeId);
     updateForm(form);
