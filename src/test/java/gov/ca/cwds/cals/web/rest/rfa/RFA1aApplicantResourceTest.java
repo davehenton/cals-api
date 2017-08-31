@@ -15,7 +15,6 @@ import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ws.rs.ClientErrorException;
@@ -23,7 +22,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.junit.Test;
 
@@ -177,7 +175,7 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-name-violation-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
@@ -197,7 +195,7 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-name-violation-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
@@ -217,7 +215,7 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-name-violation-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
@@ -233,7 +231,7 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
 
     // Update test
@@ -248,7 +246,7 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
@@ -269,7 +267,7 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
@@ -290,7 +288,7 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
@@ -301,10 +299,6 @@ public class RFA1aApplicantResourceTest extends
                 .getId());
     return target.request(MediaType.APPLICATION_JSON).put(
         Entity.entity(applicantDTO, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
-  }
-
-  private String getEntityFromException(ClientErrorException e) throws IOException {
-    return IOUtils.toString((InputStream) e.getResponse().getEntity(), "UTF-8");
   }
 
   private void checkValidationResponse(ClientErrorException e, Map<String, Object> parameters)

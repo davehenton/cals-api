@@ -123,9 +123,21 @@ public class RFAHelper {
         .post(Entity.entity(newStatus.toDTO(), MediaType.APPLICATION_JSON));
   }
 
-
   public Response submitApplication(long formId) {
     return changeApplicationStatusTo(RFAApplicationStatus.SUBMITTED, formId);
+  }
+
+
+  public ResidenceDTO getResidenceDTO() throws IOException {
+    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
+    return clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
+  }
+
+  public ApplicantDTO getApplicantDTO() throws IOException {
+    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
+    return clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
   }
 
 
@@ -192,33 +204,43 @@ public class RFAHelper {
       throws Exception {
     List<OtherAdultDTO> otherAdultsDTOs = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
-      OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
-          .readValue(fixture(RFA1aOtherAdultsResourceTest.FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON),
-              OtherAdultDTO.class);
+      OtherAdultDTO otherAdultDTO = getOtherAdultDTO(relativeApplicant);
       otherAdultDTO.setFirstName(otherAdultDTO.getFirstName() + i);
       otherAdultDTO.setLastName(otherAdultDTO.getLastName() + i);
-      // Assume that we have only one relationship object
-      otherAdultDTO.getRelationshipToApplicants().get(0).setApplicantId(relativeApplicant.getId());
       otherAdultsDTOs.add(postOtherAdult(formId, otherAdultDTO));
     }
     return otherAdultsDTOs;
+  }
+
+  public OtherAdultDTO getOtherAdultDTO(ApplicantDTO relativeApplicant) throws IOException {
+    OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
+        .readValue(fixture(RFA1aOtherAdultsResourceTest.FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON),
+            OtherAdultDTO.class);
+    // Assume that we have only one relationship object
+    otherAdultDTO.getRelationshipToApplicants().get(0).setApplicantId(relativeApplicant.getId());
+    return otherAdultDTO;
   }
 
   public List<MinorChildDTO> createMinorChildren(Long formId, ApplicantDTO reletiveApplicant)
       throws Exception {
     List<MinorChildDTO> minorChildDTOs = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
-      MinorChildDTO minorChildDTO = clientTestRule.getMapper()
-          .readValue(
-              fixture(RFA1aMinorChildrenResourceTest.FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON),
-              MinorChildDTO.class);
+      MinorChildDTO minorChildDTO = getMinorChildDTO(reletiveApplicant);
       minorChildDTO.setOtherRelativeFirstName(minorChildDTO.getOtherRelativeFirstName() + i);
       minorChildDTO.setOtherRelativeLastName(minorChildDTO.getOtherRelativeLastName() + i);
-      // Assume that we have only one relationship object
-      minorChildDTO.getRelationshipToApplicants().get(0).setApplicantId(reletiveApplicant.getId());
       minorChildDTOs.add(postMinorChild(formId, minorChildDTO));
     }
     return minorChildDTOs;
+  }
+
+  public MinorChildDTO getMinorChildDTO(ApplicantDTO reletiveApplicant) throws IOException {
+    MinorChildDTO minorChildDTO = clientTestRule.getMapper()
+        .readValue(
+            fixture(RFA1aMinorChildrenResourceTest.FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON),
+            MinorChildDTO.class);
+    // Assume that we have only one relationship object
+    minorChildDTO.getRelationshipToApplicants().get(0).setApplicantId(reletiveApplicant.getId());
+    return minorChildDTO;
   }
 
 }

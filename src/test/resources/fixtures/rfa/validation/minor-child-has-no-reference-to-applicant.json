@@ -1,0 +1,8 @@
+{
+  "validation_details" : [ {
+    "type" : "business_validation",
+    "user_message" : "Minor child with other relative first name - [Jane], other relative last name - [Doe] and other relative name suffix - [Jr] has no reference to any applicant",
+    "code" : "BV000010",
+    "technical_message" : "form-submission-validation"
+  } ]
+}

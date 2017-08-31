@@ -310,11 +310,30 @@ public final class Constants {
     public static class Business {
 
       private static final String APPLICANT_WITH_NAME_MESSAGE =
-          "Applicant with firstName - [%s], last name - [%s] and name suffix - [%s]";
+          "Applicant with first name - [%s], last name - [%s] and name suffix - [%s]";
+
+      public static final String APPLICATION_HAS_NO_APPLICANT_MESSAGE =
+          "Application has no applicant";
+
+      public static final String APPLICANT_HAS_NO_RFA1B_FORM_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has no RFA1b form";
+
+      public static final String APPLICATION_HAS_NO_RESIDENCE_MESSAGE =
+          "Application has no residence";
+
+      public static final String APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS_MESSAGE =
+          "Application has no residential address";
+
+      public static final String OTHER_ADULT_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE =
+          "Other adult with first name - [%s], last name - [%s] and name suffix - [%s]" +
+              " has no reference to any applicant";
+
+      public static final String MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE =
+          "Minor child with other relative first name - [%s], other relative last name - [%s] " +
+              "and other relative name suffix - [%s] has no reference to any applicant";
 
       public static final String APPLICANT_NAMES_DUPLICATION_MESSAGE =
-          "Applicant with first name - [%s],"
-              + " last name - [%s] and name suffix - [%s] already exists in application";
+          APPLICANT_WITH_NAME_MESSAGE + " already exists in application";
 
       public static final String APPLICANT_PHONE_NUMBERS_DUPLICATION_MESSAGE =
           "Phone [%s] already exists for Applicant with first name - [%s], last name - [%s] and name suffix - [%s]";
@@ -339,6 +358,12 @@ public final class Constants {
         public static final String APPLICANT_PHONE_NUMBERS_DUPLICATION = "BV000004";
         public static final String APPLICANT_NAMES_DUPLICATION = "BV000005";
         public static final String APPLICANT_DRIVER_LICENSE = "BV000006";
+        public static final String APPLICATION_HAS_NO_APPLICANT = "BV000007";
+        public static final String APPLICANT_HAS_NO_RFA1B_FORM = "BV000008";
+        public static final String OTHER_ADULT_HAS_NO_REFERENCE_TO_APPLICANT = "BV000009";
+        public static final String MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT = "BV000010";
+        public static final String APPLICATION_RESIDENCE = "BV000011";
+        public static final String APPLICATION_RESIDENTIAL_ADDRESS = "BV000012";
 
         private Code() {
         }

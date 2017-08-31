@@ -1,13 +1,121 @@
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.*
-import gov.ca.cwds.cals.service.dto.rfa.*
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO
+import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO
+import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO
 import gov.ca.cwds.cals.Constants
+import gov.ca.cwds.cals.Constants.Validation
 import gov.ca.cwds.cals.Constants.Validation.Business
-import gov.ca.cwds.cals.Constants.Validation.Business.Code
+import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups
+import gov.ca.cwds.cals.Constants.AddressTypes
 import org.apache.commons.lang3.StringUtils
 import gov.ca.cwds.cals.exception.ValidationDetails
 import gov.ca.cwds.cals.exception.ExceptionType
 
 global java.util.Set validationDetailsList;
+
+rule "Validate that applicant exists"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    not ApplicantDTO() from $form.applicants;
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.APPLICATION_HAS_NO_APPLICANT);
+    details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_APPLICANT_MESSAGE);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that applicant has RFA1b form"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant: ApplicantDTO() from $form.applicants;
+    not RFA1bFormDTO() from $applicant.getRfa1bForm();
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.APPLICANT_HAS_NO_RFA1B_FORM);
+    details.setUserMessage(String.format(Validation.Business.APPLICANT_HAS_NO_RFA1B_FORM_MESSAGE,
+        $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
+        $applicant.getLastName() != null ? $applicant.getLastName() : "",
+        $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that other adult has reference to applicant"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $otherAdult: OtherAdultDTO() from $form.otherAdults;
+    $relationship: RelationshipToApplicantDTO() from $otherAdult.getRelationshipToApplicants();
+    not ApplicantDTO(id == $relationship.applicantId) from $form.applicants;
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.OTHER_ADULT_HAS_NO_REFERENCE_TO_APPLICANT);
+    details.setUserMessage(String.format(Validation.Business.OTHER_ADULT_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE,
+        $otherAdult.getFirstName() != null ? $otherAdult.getFirstName() : "",
+        $otherAdult.getLastName() != null ? $otherAdult.getLastName() : "",
+        $otherAdult.getNameSuffix() != null ? $otherAdult.getNameSuffix().getValue() : ""));
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that minor child has reference to applicant"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $minorChild: MinorChildDTO() from $form.minorChildren;
+    $relationship: RelationshipToApplicantDTO() from $minorChild.getRelationshipToApplicants();
+    not ApplicantDTO(id == $relationship.applicantId) from $form.applicants;
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT);
+    details.setUserMessage(String.format(Validation.Business.MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE,
+        $minorChild.getOtherRelativeFirstName() != null ? $minorChild.getOtherRelativeFirstName() : "",
+        $minorChild.getOtherRelativeLastName() != null ? $minorChild.getOtherRelativeLastName() : "",
+        $minorChild.getOtherRelativeNameSuffix() != null ? $minorChild.getOtherRelativeNameSuffix().getValue() : ""));
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that residence exists"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    not ResidenceDTO() from $form.residence;
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.APPLICATION_RESIDENCE);
+    details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_RESIDENCE_MESSAGE);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that residential address exists"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $residence: ResidenceDTO() from $form.residence;
+    not RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.APPLICATION_RESIDENTIAL_ADDRESS);
+    details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS_MESSAGE);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
 
 rule "Validate Applicant's First Name"
       dialect "mvel"
@@ -17,12 +125,12 @@ rule "Validate Applicant's First Name"
     $applicant : ApplicantDTO(eval(StringUtils.isBlank(firstName))) from $form.applicants;
   then
     ValidationDetails details = new ValidationDetails();
-    details.setCode(Code.APPLICANT_FIRST_NAME);
-    details.setUserMessage(String.format(Business.APPLICANT_FIRST_NAME_IS_EMPTY,
+    details.setCode(Validation.Business.Code.APPLICANT_FIRST_NAME);
+    details.setUserMessage(String.format(Validation.Business.APPLICANT_FIRST_NAME_IS_EMPTY,
         $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
         $applicant.getLastName() != null ? $applicant.getLastName() : "",
         $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
-    details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
     validationDetailsList.add(details);
 end
 
@@ -34,12 +142,12 @@ rule "Applicant's Empty Last Name"
     $applicant : ApplicantDTO(StringUtils.isBlank(lastName)) from $form.applicants;
   then
     ValidationDetails details = new ValidationDetails();
-    details.setCode(Code.APPLICANT_LAST_NAME);
-    details.setUserMessage(String.format(Business.APPLICANT_LAST_NAME_IS_EMPTY,
+    details.setCode(Validation.Business.Code.APPLICANT_LAST_NAME);
+    details.setUserMessage(String.format(Validation.Business.APPLICANT_LAST_NAME_IS_EMPTY,
        $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
        $applicant.getLastName() != null ? $applicant.getLastName() : "",
        $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
-    details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
     validationDetailsList.add(details);
 end
 
@@ -52,8 +160,8 @@ rule "Validate Applicant's Driver License"
       || (driverLicenseNumber != null && driverLicenseState == null)) from $form.applicants;
   then
     ValidationDetails details = new ValidationDetails();
-    details.setCode(Code.APPLICANT_DRIVER_LICENSE);
-    details.setUserMessage(Constants.Validation.Business.APPLICANT_DRIVER_LICENSE_IS_INVALID);
-    details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
+    details.setCode(Validation.Business.Code.APPLICANT_DRIVER_LICENSE);
+    details.setUserMessage(Validation.Business.APPLICANT_DRIVER_LICENSE_IS_INVALID);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
     validationDetailsList.add(details);
 end

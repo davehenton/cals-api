@@ -14,17 +14,12 @@ import gov.ca.cwds.cals.persistence.DBUnitSupport;
 import gov.ca.cwds.cals.persistence.DBUnitSupportBuilder;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
-import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
-import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
-import java.io.IOException;
-import java.util.List;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -100,8 +95,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
       return;
     }
     RFA1aFormDTO form = rfaHelper.createForm();
-    ApplicantDTO applicantDTO = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
-    ApplicantDTO secondApplicant = getApplicantDTO();
+    ApplicantDTO applicantDTO = rfaHelper.postApplicant(form.getId(), rfaHelper.getApplicantDTO());
+    ApplicantDTO secondApplicant = rfaHelper.getApplicantDTO();
     secondApplicant.setFirstName("John");
     StateType driverLicenseState = new StateType();
     driverLicenseState.setId(25L);
@@ -111,7 +106,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     secondApplicant.getEthnicity().setValue("American Indian");
 
     secondApplicant = rfaHelper.postApplicant(form.getId(), secondApplicant);
-    rfaHelper.putResidence(form.getId(), getResidenceDTO());
+    rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
 
     RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
     rfaHelper.postRfa1bForm(form.getId(), applicantDTO.getId(), rfa1bForm);
@@ -456,8 +451,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   @Test
   public void unChangedSubmitStatusTest() throws Exception {
     RFA1aFormDTO form = rfaHelper.createForm();
-    rfaHelper.postApplicant(form.getId(), getApplicantDTO());
-    rfaHelper.putResidence(form.getId(), getResidenceDTO());
+    rfaHelper.postApplicant(form.getId(), rfaHelper.getApplicantDTO());
+    rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
@@ -469,8 +464,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   @Test
   public void changeStatusBackToDraftTest() throws Exception {
     RFA1aFormDTO form = rfaHelper.createForm();
-    rfaHelper.postApplicant(form.getId(), getApplicantDTO());
-    rfaHelper.putResidence(form.getId(), getResidenceDTO());
+    rfaHelper.postApplicant(form.getId(), rfaHelper.getApplicantDTO());
+    rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     assertSubmitted(form.getId());
@@ -505,17 +500,4 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   private void assertStatus(String statusFixture, Long formId) throws Exception {
     assertEqualsResponse(fixture(statusFixture), getStatus(formId));
   }
-
-  private ResidenceDTO getResidenceDTO() throws IOException {
-    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
-    return clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
-  }
-
-  private ApplicantDTO getApplicantDTO() throws IOException {
-    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
-    return clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
-  }
-
 }
