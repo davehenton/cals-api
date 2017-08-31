@@ -155,7 +155,7 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @Test
   public void getApplicationFormTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate = rfaHelper.createForm();
+    RFA1aFormDTO rfaFormCreate = rfaHelper.createRFA1aForm();
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     RFA1aFormDTO rfaFormGet = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
@@ -166,7 +166,7 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @Test
   public void updateApplicationFormTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate = rfaHelper.createForm();
+    RFA1aFormDTO rfaFormCreate = rfaHelper.createRFA1aForm();
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     rfaFormCreate.setOtherTypeDescription("newOtherTypeDescription");
@@ -181,9 +181,9 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @Test
   public void getAllApplicationFormsTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate1 = rfaHelper.createForm();
-    RFA1aFormDTO rfaFormCreate2 = rfaHelper.createForm();
-    RFA1aFormDTO rfaFormCreate3 = rfaHelper.createForm();
+    RFA1aFormDTO rfaFormCreate1 = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO rfaFormCreate2 = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO rfaFormCreate3 = rfaHelper.createRFA1aForm();
 
     assertNotEquals(rfaFormCreate1, rfaFormCreate2);
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);

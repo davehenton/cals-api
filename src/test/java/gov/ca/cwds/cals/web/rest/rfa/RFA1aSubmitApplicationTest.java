@@ -85,7 +85,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void getInitialStatusTest() throws Exception {
-    Long formId = rfaHelper.createForm().getId();
+    Long formId = rfaHelper.createRFA1aForm().getId();
     assertDraft(formId);
   }
 
@@ -94,9 +94,9 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     if (TestModeUtils.isIntegrationTestsMode()) {
       return;
     }
-    RFA1aFormDTO form = rfaHelper.createForm();
-    ApplicantDTO applicantDTO = rfaHelper.postApplicant(form.getId(), rfaHelper.getApplicantDTO());
-    ApplicantDTO secondApplicant = rfaHelper.getApplicantDTO();
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    ApplicantDTO applicantDTO = rfaHelper.postApplicant(form.getId(), rfaHelper.getValidApplicant());
+    ApplicantDTO secondApplicant = rfaHelper.getValidApplicant();
     secondApplicant.setFirstName("John");
     StateType driverLicenseState = new StateType();
     driverLicenseState.setId(25L);
@@ -441,7 +441,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void unChangedDraftStatusTest() throws Exception {
-    Long formId = rfaHelper.createForm().getId();
+    Long formId = rfaHelper.createRFA1aForm().getId();
     assertDraft(formId);
     Response response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT, formId);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
@@ -450,8 +450,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void unChangedSubmitStatusTest() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createForm();
-    rfaHelper.postApplicant(form.getId(), rfaHelper.getApplicantDTO());
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    rfaHelper.postApplicant(form.getId(), rfaHelper.getValidApplicant());
     rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
@@ -463,8 +463,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void changeStatusBackToDraftTest() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createForm();
-    rfaHelper.postApplicant(form.getId(), rfaHelper.getApplicantDTO());
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    rfaHelper.postApplicant(form.getId(), rfaHelper.getValidApplicant());
     rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());

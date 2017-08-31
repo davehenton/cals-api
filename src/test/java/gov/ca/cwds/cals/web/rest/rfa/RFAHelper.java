@@ -40,23 +40,13 @@ public class RFAHelper {
     this.clientTestRule = clientTestRule;
   }
 
-  public RFA1aFormDTO createForm() {
+  public RFA1aFormDTO createRFA1aForm() throws Exception {
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
 
-    RFA1aFormDTO rfaFormDTOBefore = new RFA1aFormDTO();
-    CountyType county = new CountyType();
-    county.setId(59L);
-    county.setValue("State of California");
-    rfaFormDTOBefore.setApplicationCounty(county);
-    rfaFormDTOBefore.setInitialApplication(true);
-    rfaFormDTOBefore.setOtherType(true);
-    rfaFormDTOBefore.setOtherTypeDescription("otherDescription");
-    RFA1aFormDTO rfaFormDTOAfter =
-        target
-            .request(MediaType.APPLICATION_JSON)
-            .post(
-                Entity.entity(rfaFormDTOBefore, MediaType.APPLICATION_JSON_TYPE),
-                RFA1aFormDTO.class);
+    RFA1aFormDTO rfaFormDTOBefore = getRfa1aFormDTO();
+    RFA1aFormDTO rfaFormDTOAfter = target.request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(rfaFormDTOBefore, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
+
     assertNotNull(rfaFormDTOAfter);
     assertNotNull(rfaFormDTOAfter.getId());
     assertTrue(rfaFormDTOAfter.isInitialApplication());
@@ -66,9 +56,32 @@ public class RFAHelper {
     return rfaFormDTOAfter;
   }
 
-  public ApplicantDTO createValidApplicant() throws IOException {
+  public RFA1aFormDTO getRfa1aFormDTO() throws Exception {
+    RFA1aFormDTO form = new RFA1aFormDTO();
+    CountyType county = new CountyType();
+    county.setId(59L);
+    county.setValue("State of California");
+    form.setApplicationCounty(county);
+    form.setInitialApplication(true);
+    form.setOtherType(true);
+    form.setOtherTypeDescription("otherDescription");
+    return form;
+  }
+
+  public ApplicantDTO getApplicant() throws IOException {
+    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
     return clientTestRule.getMapper()
         .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
+  }
+
+  public ApplicantDTO getValidApplicant() throws IOException {
+    ApplicantDTO applicant = clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
+
+    RFA1bFormDTO rfa1bForm = getRfa1bForm();
+    applicant.setRfa1bForm(rfa1bForm);
+
+    return applicant;
   }
 
   public ApplicantDTO postApplicant(long formId, ApplicantDTO applicantDTO) {
@@ -123,21 +136,15 @@ public class RFAHelper {
         .post(Entity.entity(newStatus.toDTO(), MediaType.APPLICATION_JSON));
   }
 
+
   public Response submitApplication(long formId) {
     return changeApplicationStatusTo(RFAApplicationStatus.SUBMITTED, formId);
   }
-
 
   public ResidenceDTO getResidenceDTO() throws IOException {
     String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
     return clientTestRule.getMapper()
         .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
-  }
-
-  public ApplicantDTO getApplicantDTO() throws IOException {
-    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
-    return clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
   }
 
 

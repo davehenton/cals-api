@@ -67,9 +67,9 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void twoEmptyApplicantsTest() {
+  public void twoEmptyApplicantsTest() throws Exception {
     try {
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), new ApplicantDTO());
       rfaHelper.postApplicant(form.getId(), new ApplicantDTO());
     } catch (ClientErrorException e) {
@@ -78,11 +78,11 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void checkMaxFirstNameSizeTest() throws IOException, JSONException {
+  public void checkMaxFirstNameSizeTest() throws Exception {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setFirstName("12345678901234567890x");
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
@@ -94,11 +94,11 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void checkMaxLastNameSizeTest() throws IOException, JSONException {
+  public void checkMaxLastNameSizeTest() throws Exception {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setLastName("1234567890123456789012345X");
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
@@ -110,11 +110,11 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void checkFirstNameAlphanumericTest() throws IOException, JSONException {
+  public void checkFirstNameAlphanumericTest() throws Exception {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setFirstName("l@4");
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
@@ -126,11 +126,11 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void checkLastNameAlphanumericTest() throws IOException, JSONException {
+  public void checkLastNameAlphanumericTest() throws Exception {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setLastName("l@4");
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
@@ -142,9 +142,9 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void postDuplicateApplicantsValidationTest() throws IOException {
+  public void postDuplicateApplicantsValidationTest() throws Exception {
     try {
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       fail();
@@ -159,10 +159,10 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void postDuplicateApplicantLastNameValidationTest() throws IOException {
+  public void postDuplicateApplicantLastNameValidationTest() throws Exception {
     try {
       RFAHelper rfaHelper = new RFAHelper(clientTestRule);
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 
       ApplicantDTO firstApplicant = this.rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
@@ -180,9 +180,9 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void postDuplicateApplicantFirstNameValidationTest() throws IOException {
+  public void postDuplicateApplicantFirstNameValidationTest() throws Exception {
     try {
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 
       ApplicantDTO firstApplicant = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
@@ -200,9 +200,9 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void postDuplicateApplicantMiddleNameValidationTest() throws IOException {
+  public void postDuplicateApplicantMiddleNameValidationTest() throws Exception {
     try {
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 
       ApplicantDTO firstApplicant = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
@@ -220,8 +220,8 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void moreThenOnePreferredNumberInApplicantValidationTest() throws IOException {
-    RFA1aFormDTO form = rfaHelper.createForm();
+  public void moreThenOnePreferredNumberInApplicantValidationTest() throws Exception {
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
     ApplicantDTO applicant = getApplicantDTO();
     applicant.getPhones().forEach(p -> p.setPreferred(true));
     try {
@@ -251,9 +251,9 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void testDuplicatePhoneNumbersWithExtension() throws IOException {
+  public void testDuplicatePhoneNumbersWithExtension() throws Exception {
     RFAHelper rfaHelper = new RFAHelper(clientTestRule);
-    RFA1aFormDTO form = rfaHelper.createForm();
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
     ApplicantDTO applicant = getApplicantDTO();
 
     applicant.getPhones().clear();
@@ -272,9 +272,9 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void testDuplicatePhoneNumbers() throws IOException {
+  public void testDuplicatePhoneNumbers() throws Exception {
     RFAHelper rfaHelper = new RFAHelper(clientTestRule);
-    RFA1aFormDTO form = rfaHelper.createForm();
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
     ApplicantDTO applicant = getApplicantDTO();
 
     applicant.getPhones().clear();
