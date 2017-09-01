@@ -312,6 +312,9 @@ public final class Constants {
       private static final String APPLICANT_WITH_NAME_MESSAGE =
           "Applicant with first name - [%s], last name - [%s] and name suffix - [%s]";
 
+      private static final String OTHER_ADULT_WITH_NAME =
+          "Other adult with first name - [%s], last name - [%s] and name suffix - [%s]";
+
       public static final String APPLICATION_HAS_NO_APPLICANT_MESSAGE =
           "Application has no applicant";
 
@@ -340,12 +343,16 @@ public final class Constants {
           "Application has no county";
 
       public static final String OTHER_ADULT_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE =
-          "Other adult with first name - [%s], last name - [%s] and name suffix - [%s]" +
-              " has no reference to any applicant";
+          OTHER_ADULT_WITH_NAME + " has no reference to any applicant";
+
+      public static final String OTHER_ADULT_HAS_NO_FIRST_NAME_MESSAGE =
+          OTHER_ADULT_WITH_NAME + " has no first name";
+
+      public static final String OTHER_ADULT_HAS_NO_LAST_NAME_MESSAGE =
+          OTHER_ADULT_WITH_NAME + " has no last name";
 
       public static final String MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE =
-          "Minor child with other relative first name - [%s], other relative last name - [%s] " +
-              "and other relative name suffix - [%s] has no reference to any applicant";
+          "Some minor child has no reference to any applicant";
 
       public static final String APPLICANT_NAMES_DUPLICATION_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " already exists in application";
@@ -364,7 +371,6 @@ public final class Constants {
 
       public static final String APPLICANT_DRIVER_LICENSE_IS_INVALID =
           "Driver's License field must have both State and Number";
-
       public static class Code {
 
         public static final String APPLICANT_FIRST_NAME = "BV000001";
@@ -384,6 +390,8 @@ public final class Constants {
         public static final String RESIDENTIAL_ADDRESS_HAS_NO_STATE = "BV000015";
         public static final String RESIDENTIAL_ADDRESS_HAS_NO_ZIP_CODE = "BV000016";
         public static final String APPLICATION_HAS_NO_COUNTY = "BV000017";
+        public static final String OTHER_ADULT_HAS_NO_FIRST_NAME = "BV000018";
+        public static final String OTHER_ADULT_HAS_NO_LAST_NAME = "BV000019";
 
         private Code() {
         }

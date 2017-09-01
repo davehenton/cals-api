@@ -147,6 +147,48 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   }
 
   @Test
+  public void validateOtherAdultHasNoFirstName() throws Exception {
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
+    ApplicantDTO persistentApplicant = rfaHelper.postApplicant(form.getId(), applicant);
+
+    OtherAdultDTO otherAdult = rfaHelper.getOtherAdultDTO(persistentApplicant);
+    otherAdult.setFirstName(" ");
+    rfaHelper.postOtherAdult(form.getId(), otherAdult);
+    OtherAdultDTO otherAdult2 = rfaHelper.getOtherAdultDTO(persistentApplicant);
+    rfaHelper.postOtherAdult(form.getId(), otherAdult2);
+
+    ResidenceDTO residence = rfaHelper.getResidenceDTO();
+    rfaHelper.putResidence(form.getId(), residence);
+
+    Response response = rfaHelper.submitApplication(form.getId());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/other-adult-has-no-first-name.json");
+  }
+
+  @Test
+  public void validateOtherAdultHasNoLastName() throws Exception {
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
+    ApplicantDTO persistentApplicant = rfaHelper.postApplicant(form.getId(), applicant);
+
+    OtherAdultDTO otherAdult = rfaHelper.getOtherAdultDTO(persistentApplicant);
+    otherAdult.setLastName(" ");
+    rfaHelper.postOtherAdult(form.getId(), otherAdult);
+    OtherAdultDTO otherAdult2 = rfaHelper.getOtherAdultDTO(persistentApplicant);
+    rfaHelper.postOtherAdult(form.getId(), otherAdult2);
+
+    ResidenceDTO residence = rfaHelper.getResidenceDTO();
+    rfaHelper.putResidence(form.getId(), residence);
+
+    Response response = rfaHelper.submitApplication(form.getId());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/other-adult-has-no-last-name.json");
+  }
+
+  @Test
   public void validateMinorChildHasNoReferenceToApplicant() throws Exception {
     RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 

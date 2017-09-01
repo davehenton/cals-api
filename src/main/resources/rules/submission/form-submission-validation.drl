@@ -72,6 +72,42 @@ rule "Validate that other adult has reference to applicant"
     validationDetailsList.add(details);
 end
 
+rule "Validate that other adult has first name"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $otherAdult: OtherAdultDTO() from $form.otherAdults;
+    eval(StringUtils.isBlank($otherAdult.getFirstName()))
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.OTHER_ADULT_HAS_NO_FIRST_NAME);
+    details.setUserMessage(String.format(Validation.Business.OTHER_ADULT_HAS_NO_FIRST_NAME_MESSAGE,
+        $otherAdult.getFirstName() != null ? $otherAdult.getFirstName() : "",
+        $otherAdult.getLastName() != null ? $otherAdult.getLastName() : "",
+        $otherAdult.getNameSuffix() != null ? $otherAdult.getNameSuffix().getValue() : ""));
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that other adult has last name"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $otherAdult: OtherAdultDTO() from $form.otherAdults;
+    eval(StringUtils.isBlank($otherAdult.getLastName()))
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.OTHER_ADULT_HAS_NO_LAST_NAME);
+    details.setUserMessage(String.format(Validation.Business.OTHER_ADULT_HAS_NO_LAST_NAME_MESSAGE,
+        $otherAdult.getFirstName() != null ? $otherAdult.getFirstName() : "",
+        $otherAdult.getLastName() != null ? $otherAdult.getLastName() : "",
+        $otherAdult.getNameSuffix() != null ? $otherAdult.getNameSuffix().getValue() : ""));
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
 rule "Validate that minor child has reference to applicant"
       dialect "mvel"
   agenda-group "form-submission-validation"
