@@ -15,7 +15,6 @@ import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ws.rs.ClientErrorException;
@@ -23,7 +22,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.junit.Test;
 
@@ -69,9 +67,9 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void twoEmptyApplicantsTest() {
+  public void twoEmptyApplicantsTest() throws Exception {
     try {
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), new ApplicantDTO());
       rfaHelper.postApplicant(form.getId(), new ApplicantDTO());
     } catch (ClientErrorException e) {
@@ -80,11 +78,11 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void checkMaxFirstNameSizeTest() throws IOException, JSONException {
+  public void checkMaxFirstNameSizeTest() throws Exception {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setFirstName("12345678901234567890x");
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
@@ -96,11 +94,11 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void checkMaxLastNameSizeTest() throws IOException, JSONException {
+  public void checkMaxLastNameSizeTest() throws Exception {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setLastName("1234567890123456789012345X");
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
@@ -112,11 +110,11 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void checkFirstNameAlphanumericTest() throws IOException, JSONException {
+  public void checkFirstNameAlphanumericTest() throws Exception {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setFirstName("l@4");
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
@@ -128,11 +126,11 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void checkLastNameAlphanumericTest() throws IOException, JSONException {
+  public void checkLastNameAlphanumericTest() throws Exception {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
       applicantDTO.setLastName("l@4");
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
@@ -144,9 +142,9 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void postDuplicateApplicantsValidationTest() throws IOException {
+  public void postDuplicateApplicantsValidationTest() throws Exception {
     try {
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
       rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       fail();
@@ -161,10 +159,10 @@ public class RFA1aApplicantResourceTest extends
   }
 
   @Test
-  public void postDuplicateApplicantLastNameValidationTest() throws IOException {
+  public void postDuplicateApplicantLastNameValidationTest() throws Exception {
     try {
       RFAHelper rfaHelper = new RFAHelper(clientTestRule);
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 
       ApplicantDTO firstApplicant = this.rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
@@ -177,14 +175,14 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-name-violation-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
   @Test
-  public void postDuplicateApplicantFirstNameValidationTest() throws IOException {
+  public void postDuplicateApplicantFirstNameValidationTest() throws Exception {
     try {
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 
       ApplicantDTO firstApplicant = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
@@ -197,14 +195,14 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-name-violation-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
   @Test
-  public void postDuplicateApplicantMiddleNameValidationTest() throws IOException {
+  public void postDuplicateApplicantMiddleNameValidationTest() throws Exception {
     try {
-      RFA1aFormDTO form = rfaHelper.createForm();
+      RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 
       ApplicantDTO firstApplicant = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
       ApplicantDTO secondApplicant = getApplicantDTO();
@@ -217,13 +215,13 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-name-violation-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
   @Test
-  public void moreThenOnePreferredNumberInApplicantValidationTest() throws IOException {
-    RFA1aFormDTO form = rfaHelper.createForm();
+  public void moreThenOnePreferredNumberInApplicantValidationTest() throws Exception {
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
     ApplicantDTO applicant = getApplicantDTO();
     applicant.getPhones().forEach(p -> p.setPreferred(true));
     try {
@@ -233,7 +231,7 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
 
     // Update test
@@ -248,14 +246,14 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
   @Test
-  public void testDuplicatePhoneNumbersWithExtension() throws IOException {
+  public void testDuplicatePhoneNumbersWithExtension() throws Exception {
     RFAHelper rfaHelper = new RFAHelper(clientTestRule);
-    RFA1aFormDTO form = rfaHelper.createForm();
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
     ApplicantDTO applicant = getApplicantDTO();
 
     applicant.getPhones().clear();
@@ -269,14 +267,14 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
   @Test
-  public void testDuplicatePhoneNumbers() throws IOException {
+  public void testDuplicatePhoneNumbers() throws Exception {
     RFAHelper rfaHelper = new RFAHelper(clientTestRule);
-    RFA1aFormDTO form = rfaHelper.createForm();
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
     ApplicantDTO applicant = getApplicantDTO();
 
     applicant.getPhones().clear();
@@ -290,7 +288,7 @@ public class RFA1aApplicantResourceTest extends
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
           fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-response.json"),
-          getEntityFromException(e));
+          getDataFromRawResponse(e.getResponse()));
     }
   }
 
@@ -301,10 +299,6 @@ public class RFA1aApplicantResourceTest extends
                 .getId());
     return target.request(MediaType.APPLICATION_JSON).put(
         Entity.entity(applicantDTO, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
-  }
-
-  private String getEntityFromException(ClientErrorException e) throws IOException {
-    return IOUtils.toString((InputStream) e.getResponse().getEntity(), "UTF-8");
   }
 
   private void checkValidationResponse(ClientErrorException e, Map<String, Object> parameters)

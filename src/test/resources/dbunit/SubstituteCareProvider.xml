@@ -52,7 +52,7 @@
     LAST_NM="Smith"
     MID_INI_NM="N"
     NMPRFX_DSC="Ms."
-    SS_NO=""
+    SS_NO="464942323"
     STATE_C="1828"
     STREET_NM="Redoak Ct."
     STREET_NO="1702"
@@ -72,7 +72,7 @@
     EMAIL_ADDR="anna.smith@gmail.com"
     ETH_UD_CD="[NULL]"
     HISP_UD_CD="[NULL]"
-    RESOST_IND="[NULL]"
+    RESOST_IND="Y"
     PASSBC_CD="[NULL]"
   />
 </dataset>

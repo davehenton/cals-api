@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
+import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
@@ -183,8 +184,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
     return applicantsDeclaration;
   }
 
-  public void setApplicantsDeclaration(
-      ApplicantsDeclarationDTO applicantsDeclaration) {
+  public void setApplicantsDeclaration(ApplicantsDeclarationDTO applicantsDeclaration) {
     this.applicantsDeclaration = applicantsDeclaration;
   }
 
@@ -231,7 +231,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   @JsonIgnore
   public ApplicantDTO getFirstApplicant() {
-    return CollectionUtils.isNotEmpty(applicants) ? applicants.get(0) : null;
+    return Utils.Applicant.getPrimary(this);
   }
 
 }

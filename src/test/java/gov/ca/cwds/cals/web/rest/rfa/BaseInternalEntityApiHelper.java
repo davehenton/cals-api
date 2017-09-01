@@ -79,7 +79,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
 
   @Override
   public void getEntityNotFound() throws Exception {
-    RFA1aFormDTO rfa1aForm = new RFAHelper(clientTestRule).createForm();
+    RFA1aFormDTO rfa1aForm = new RFAHelper(clientTestRule).createRFA1aForm();
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + configuration.getApiPath());
@@ -89,7 +89,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
 
   @Override
   public void putAndGetEntity() throws Exception {
-    RFA1aFormDTO rfa1aForm = new RFAHelper(clientTestRule).createForm();
+    RFA1aFormDTO rfa1aForm = new RFAHelper(clientTestRule).createRFA1aForm();
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + configuration.getApiPath());

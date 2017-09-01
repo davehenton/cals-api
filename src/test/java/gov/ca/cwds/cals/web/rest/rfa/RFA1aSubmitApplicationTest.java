@@ -16,11 +16,9 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
-import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -86,7 +84,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void getInitialStatusTest() throws Exception {
-    Long formId = rfaHelper.createForm().getId();
+    Long formId = rfaHelper.createRFA1aForm().getId();
     rfaHelper.assertDraft(formId);
   }
 
@@ -95,9 +93,9 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     if (TestModeUtils.isIntegrationTestsMode()) {
       return;
     }
-    RFA1aFormDTO form = rfaHelper.createForm();
-    ApplicantDTO applicantDTO = rfaHelper.postApplicant(form.getId(), getApplicantDTO());
-    ApplicantDTO secondApplicant = getApplicantDTO();
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    ApplicantDTO applicantDTO = rfaHelper.postApplicant(form.getId(), rfaHelper.getValidApplicant());
+    ApplicantDTO secondApplicant = rfaHelper.getValidApplicant();
     secondApplicant.setFirstName("John");
     StateType driverLicenseState = new StateType();
     driverLicenseState.setId(25L);
@@ -107,7 +105,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     secondApplicant.getEthnicity().setValue("American Indian");
 
     secondApplicant = rfaHelper.postApplicant(form.getId(), secondApplicant);
-    rfaHelper.putResidence(form.getId(), getResidenceDTO());
+    rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
 
     RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
     rfaHelper.postRfa1bForm(form.getId(), applicantDTO.getId(), rfa1bForm);
@@ -402,8 +400,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .appendTableFilter("FKPLC_HM_T", placementHomeId)
         .build();
 
-    helper.assertEquals(
-        new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_TS"});
+    helper.assertEquals(new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_TS"});
 
     ITable actualTable = helper.getActualTable();
 
@@ -442,7 +439,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void unChangedDraftStatusTest() throws Exception {
-    Long formId = rfaHelper.createForm().getId();
+    Long formId = rfaHelper.createRFA1aForm().getId();
     rfaHelper.assertDraft(formId);
     Response response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT, formId);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
@@ -451,9 +448,9 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void unChangedSubmitStatusTest() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createForm();
-    rfaHelper.postApplicant(form.getId(), getApplicantDTO());
-    rfaHelper.putResidence(form.getId(), getResidenceDTO());
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    rfaHelper.postApplicant(form.getId(), rfaHelper.getValidApplicant());
+    rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     rfaHelper.assertSubmitted(form.getId());
@@ -464,9 +461,9 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void changeStatusBackToDraftTest() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createForm();
-    rfaHelper.postApplicant(form.getId(), getApplicantDTO());
-    rfaHelper.putResidence(form.getId(), getResidenceDTO());
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    rfaHelper.postApplicant(form.getId(), rfaHelper.getValidApplicant());
+    rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     rfaHelper.assertSubmitted(form.getId());
@@ -482,17 +479,4 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   private Response changeApplicationStatusTo(RFAApplicationStatus newStatus, Long formId) {
     return rfaHelper.changeApplicationStatusTo(newStatus, formId);
   }
-
-  private ResidenceDTO getResidenceDTO() throws IOException {
-    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
-    return clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
-  }
-
-  private ApplicantDTO getApplicantDTO() throws IOException {
-    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
-    return clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
-  }
-
 }
