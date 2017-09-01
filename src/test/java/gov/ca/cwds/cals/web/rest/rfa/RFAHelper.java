@@ -1,11 +1,13 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANTS_FIXTURE_PATH;
+import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -115,7 +118,6 @@ public class RFAHelper {
       GenericType<CollectionDTO<ApplicantDTO>> genericType = new GenericType<CollectionDTO<ApplicantDTO>>() {
       };
       CollectionDTO<ApplicantDTO> applicants = response.readEntity(genericType);
-      ;
       if (applicants != null && !applicants.getCollection().isEmpty()) {
         applicantDTO = applicants.getCollection().iterator().next();
       }
@@ -253,4 +255,29 @@ public class RFAHelper {
     return minorChildDTO;
   }
 
+  private void assertStatus(String statusFixture, Long formId) throws Exception {
+    WebTarget getTarget =
+        clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + Constants.API.STATUS);
+    String status = getTarget.request(MediaType.APPLICATION_JSON).get(String.class);
+    assertEqualsResponse(fixture(statusFixture), status);
+  }
+
+  public void assertSubmitted(Long formId) throws Exception {
+    assertStatus("fixtures/rfa/submitted-status.json", formId);
+  }
+
+  public void assertDraft(Long formId) throws Exception {
+    assertStatus("fixtures/rfa/draft-status.json", formId);
+  }
+
+  public void assertInProgress(Long formId) throws Exception {
+    assertStatus("fixtures/rfa/in-progress-status.json", formId);
+  }
+
+  public CollectionDTO<RFA1aFormDTO> getRFA1aForms() {
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    return invocation.get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {
+    });
+  }
 }

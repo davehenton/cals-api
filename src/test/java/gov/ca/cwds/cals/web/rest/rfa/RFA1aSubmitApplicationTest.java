@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -20,6 +19,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
+import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -86,7 +86,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   @Test
   public void getInitialStatusTest() throws Exception {
     Long formId = rfaHelper.createRFA1aForm().getId();
-    assertDraft(formId);
+    rfaHelper.assertDraft(formId);
   }
 
   @Test
@@ -116,7 +116,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    assertSubmitted(form.getId());
+    rfaHelper.assertSubmitted(form.getId());
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId());
     form = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
@@ -442,10 +442,10 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   @Test
   public void unChangedDraftStatusTest() throws Exception {
     Long formId = rfaHelper.createRFA1aForm().getId();
-    assertDraft(formId);
+    rfaHelper.assertDraft(formId);
     Response response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT, formId);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    assertDraft(formId);
+    rfaHelper.assertDraft(formId);
   }
 
   @Test
@@ -455,10 +455,10 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    assertSubmitted(form.getId());
+    rfaHelper.assertSubmitted(form.getId());
     response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    assertSubmitted(form.getId());
+    rfaHelper.assertSubmitted(form.getId());
   }
 
   @Test
@@ -468,16 +468,10 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
     Response response = submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    assertSubmitted(form.getId());
+    rfaHelper.assertSubmitted(form.getId());
     response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT, form.getId());
     assertEquals(Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-    assertSubmitted(form.getId());
-  }
-
-  private String getStatus(Long formId) throws Exception {
-    WebTarget getTarget =
-        clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + Constants.API.STATUS);
-    return getTarget.request(MediaType.APPLICATION_JSON).get(String.class);
+    rfaHelper.assertSubmitted(form.getId());
   }
 
   private Response submitApplication(Long formId) {
@@ -488,16 +482,16 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     return rfaHelper.changeApplicationStatusTo(newStatus, formId);
   }
 
-
-  private void assertSubmitted(Long formId) throws Exception {
-    assertStatus("fixtures/rfa/submitted-status.json", formId);
+  private ResidenceDTO getResidenceDTO() throws IOException {
+    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
+    return clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
   }
 
-  private void assertDraft(Long formId) throws Exception {
-    assertStatus("fixtures/rfa/draft-status.json", formId);
+  private ApplicantDTO getApplicantDTO() throws IOException {
+    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
+    return clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
   }
 
-  private void assertStatus(String statusFixture, Long formId) throws Exception {
-    assertEqualsResponse(fixture(statusFixture), getStatus(formId));
-  }
 }

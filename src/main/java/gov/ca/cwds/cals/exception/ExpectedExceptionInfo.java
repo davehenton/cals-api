@@ -18,11 +18,9 @@ public enum ExpectedExceptionInfo {
 
   RFA_1A_APPLICATION_NOT_FOUND_BY_ID("5", "Application is not found by Form Id"),
 
-  TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED(
-      "6", "Transition Submitted Application to Draft status is not allowed"),
+  TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED("6", "Requested status transition is not allowed"),
 
-  CANNOT_PARSE_STREET_ADDRESS(
-      "7", "Cannot parse street address");
+  CANNOT_PARSE_STREET_ADDRESS("7", "Cannot parse street address");
 
   private final String code;
 

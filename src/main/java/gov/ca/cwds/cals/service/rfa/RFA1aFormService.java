@@ -4,7 +4,7 @@ import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.Validation.FORM_SUBMISSION_VALIDATION_SESSION;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
-import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED;
+import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.TRANSITION_IS_NOT_ALLOWED;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
@@ -117,12 +117,16 @@ public class RFA1aFormService
   public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO) {
     RFA1aForm form = findFormById(formId);
     RFAApplicationStatus newStatus = statusDTO.getStatus();
-    if (form.getStatus() != newStatus) {
-      if (form.getStatus() == RFAApplicationStatus.SUBMITTED
-          && newStatus == RFAApplicationStatus.DRAFT) {
-        throw new ExpectedException(TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED, BAD_REQUEST);
-      }
+    if (!StatusesTransitionConfiguration.isTransitionAllowed(form.getStatus(), newStatus)) {
+      throw new ExpectedException(TRANSITION_IS_NOT_ALLOWED, BAD_REQUEST);
+    }
+    if (form.getStatus() == newStatus) {
+      return;
+    }
+    if (newStatus == RFAApplicationStatus.SUBMITTED) {
       submitApplication(form, newStatus);
+    } else {
+      form.setStatus(newStatus);
     }
   }
 
