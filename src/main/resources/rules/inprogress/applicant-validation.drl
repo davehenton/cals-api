@@ -41,9 +41,9 @@ rule "Validate Applicant phone numbers duplication"
     details.setCode(Code.APPLICANT_PHONE_NUMBERS_DUPLICATION);
     details.setUserMessage(String.format(Constants.Validation.Business.APPLICANT_PHONE_NUMBERS_DUPLICATION_MESSAGE,
        Utils.Phone.formatNumber($phone),
-       $applicant.getFirstName(),
-       $applicant.getLastName(),
-       $applicant.getNameSuffix().getValue()));
+              $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
+              $applicant.getLastName() != null ? $applicant.getLastName() : "",
+              $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
     details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
     validationDetailsList.add(details);
 end
