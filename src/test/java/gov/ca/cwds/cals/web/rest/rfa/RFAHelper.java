@@ -48,8 +48,8 @@ public class RFAHelper {
 
     RFA1aFormDTO rfaFormDTOBefore = new RFA1aFormDTO();
     CountyType county = new CountyType();
-    county.setId(59L);
-    county.setValue("State of California");
+    county.setId(34L);
+    county.setValue("Sacramento");
     rfaFormDTOBefore.setApplicationCounty(county);
     rfaFormDTOBefore.setInitialApplication(true);
     rfaFormDTOBefore.setOtherType(true);
