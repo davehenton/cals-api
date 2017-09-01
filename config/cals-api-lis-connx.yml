@@ -112,6 +112,11 @@ xaCalsnsDataSourceFactory:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       hibernate.cache.use_query_cache: false
+
+      hibernate.current_session_context_class: jta
+      hibernate.transaction.jta.platform: com.atomikos.icatch.jta.hibernate4.AtomikosPlatform
+      hibernate.transaction.factory_class: org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl
+      connection.release_mode: auto
   xaProperties:
       url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
 
@@ -152,6 +157,11 @@ xaCmsDataSourceFactory:
       hibernate.show_sql: false
       hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSCMS}
       hibernate.connection.autocommit: false
+
+      hibernate.current_session_context_class: jta
+      hibernate.transaction.jta.platform: com.atomikos.icatch.jta.hibernate4.AtomikosPlatform
+      hibernate.transaction.factory_class: org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl
+      connection.release_mode: auto
   xaProperties:
       # Properties for DB2XADataSource
       serverName: ${DB_CMS_DB2_HOST:-192.168.99.100}

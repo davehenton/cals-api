@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service.rfa;
 
-import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.exception.ExpectedExceptionInfo;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFAExternalEntityDao;
@@ -51,7 +51,7 @@ public abstract class AbstractRFAExternalEntityService<
       entityDTO = configuration.createEntityDTO();
     }
     T entity = configuration.createEntity();
-    RFAServiceHelper.fillCreateBaseFields(entity, SYSTEM_USER_ID);
+    RFAServiceHelper.fillCreateBaseFields(entity, Utils.Id.getStaffPersonId());
     entity.setEntityDTO(entityDTO);
     entity.setFormId(request.getFormId());
     return entity;
@@ -88,7 +88,7 @@ public abstract class AbstractRFAExternalEntityService<
     if (entity != null) {
       entity.setEntityDTO(request.getEntityDTO());
       entity.setUpdateDateTime(LocalDateTime.now());
-      entity.setUpdateUserId(SYSTEM_USER_ID);
+      entity.setUpdateUserId(Utils.Id.getStaffPersonId());
     }
     T updated = dao.update(entity);
     D entityDTO = null;

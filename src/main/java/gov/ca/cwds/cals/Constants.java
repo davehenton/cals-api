@@ -38,8 +38,6 @@ public final class Constants {
 
   public static final String RETURNED_CLASS_NAME_PARAM = "returnedClassName";
 
-  public static final String SYSTEM_USER_ID = "SYSTEM";
-
   public static final String RFA = "rfa-1a";
 
   public static class API {

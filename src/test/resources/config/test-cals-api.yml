@@ -65,6 +65,7 @@ cmsDataSourceFactory:
   user: sa
   password:
   url: jdbc:h2:mem:cwscms;INIT=create schema if not exists cwscms\;set schema cwscms
+  #url: jdbc:h2:file:C:/test/cwscms;INIT=create schema if not exists cwscms\;set schema cwscms
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
@@ -73,7 +74,7 @@ cmsDataSourceFactory:
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
-      hibernate.default_schema: CWSCMS
+      hibernate.default_schema: cwscms
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
 
@@ -84,6 +85,7 @@ xaCmsDataSourceFactory:
   password:
   xaDataSourceClassName: org.h2.jdbcx.JdbcDataSource
   url: jdbc:h2:mem:cwscms;INIT=create schema if not exists cwscms\;set schema cwscms
+  #url: jdbc:h2:file:C:/test/cwscms;INIT=create schema if not exists cwscms\;set schema cwscms
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
   initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
@@ -92,11 +94,16 @@ xaCmsDataSourceFactory:
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
-      hibernate.default_schema: CWSCMS
+      hibernate.default_schema: cwscms
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
+
+      hibernate.current_session_context_class: jta
+      hibernate.transaction.jta.platform: com.atomikos.icatch.jta.hibernate4.AtomikosPlatform
+      hibernate.transaction.factory_class: org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl
+      connection.release_mode: auto
   xaProperties:
-       url: jdbc:h2:mem:calsns;INIT=create schema if not exists calsns\;set schema calsns
+       url: jdbc:h2:mem:cwscms;INIT=create schema if not exists calsns\;set schema cwscms
 
 lisDataSourceFactory:
   driverClass: org.h2.Driver
@@ -128,6 +135,7 @@ calsnsDataSourceFactory:
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.JsonbSupportH2Dialect
+      #hibernate.default_schema: CALSNS
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
       hibernate.cache.use_second_level_cache: true
@@ -148,11 +156,17 @@ xaCalsnsDataSourceFactory:
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.JsonbSupportH2Dialect
+      #hibernate.default_schema: CALSNS
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       hibernate.cache.use_query_cache: false
+
+      hibernate.current_session_context_class: jta
+      hibernate.transaction.jta.platform: com.atomikos.icatch.jta.hibernate4.AtomikosPlatform
+      hibernate.transaction.factory_class: org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl
+      connection.release_mode: auto
   xaProperties:
       url: jdbc:h2:mem:calsns;INIT=create schema if not exists calsns\;set schema calsns
 

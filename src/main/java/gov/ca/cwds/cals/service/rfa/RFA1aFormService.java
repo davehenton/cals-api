@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.rfa;
 
-import static gov.ca.cwds.cals.Constants.SYSTEM_USER_ID;
 import static gov.ca.cwds.cals.Constants.Validation.FORM_SUBMISSION_VALIDATION_SESSION;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.TRANSITION_BACK_TO_DRAFT_IS_NOT_ALLOWED;
@@ -10,6 +9,7 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
+import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.exception.ValidationDetails;
@@ -77,9 +77,9 @@ public class RFA1aFormService
 
     LocalDateTime now = LocalDateTime.now();
     form.setCreateDateTime(now);
-    form.setCreateUserId(SYSTEM_USER_ID);
+    form.setCreateUserId(Utils.Id.getStaffPersonId());
     form.setUpdateDateTime(now);
-    form.setUpdateUserId(SYSTEM_USER_ID);
+    form.setUpdateUserId(Utils.Id.getStaffPersonId());
     form.setStatus(RFAApplicationStatus.DRAFT);
     form = rfa1AFormsDao.create(form);
 
@@ -105,14 +105,14 @@ public class RFA1aFormService
     RFA1aForm form = findFormById(
         parameterObject.getFormId());
     rfa1aFomMapper.toRFA1aForm(form, formDTO);
-    updateForm(form);
+    rfa1AFormsDao.update(fillFormUpdateAttributes(form));
     return rfa1aFomMapper.toRFA1aFormDTO(form);
   }
 
-  private void updateForm(RFA1aForm form) {
+  private RFA1aForm fillFormUpdateAttributes(RFA1aForm form) {
     form.setUpdateDateTime(LocalDateTime.now());
-    form.setUpdateUserId(SYSTEM_USER_ID);
-    xaRfa1AFormsDao.update(form);
+    form.setUpdateUserId(Utils.Id.getStaffPersonId());
+    return form;
   }
 
   public RFAApplicationStatusDTO getApplicationStatus(Long formId) {
@@ -131,9 +131,10 @@ public class RFA1aFormService
 
       try {
         submitApplication(form, newStatus);
-      } catch (Exception e) {
+      } catch (NotSupportedException | SystemException e) {
         throw new IllegalStateException(e);
       }
+
 
     }
   }
@@ -141,7 +142,6 @@ public class RFA1aFormService
   private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus)
       throws NotSupportedException, SystemException {
     RFA1aFormDTO expandedFormDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
-
     performSubmissionValidation(expandedFormDTO);
 
     PlacementHome storedPlacementHome = null;
@@ -149,8 +149,9 @@ public class RFA1aFormService
     UserTransaction userTransaction = new UserTransactionImp();
     userTransaction.setTransactionTimeout(60);
     userTransaction.begin();
+
     try {
-      storedPlacementHome = facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
+      storedPlacementHome = storePlaceMentHome(expandedFormDTO);
       updateFormAfterPlacementHomeCreation(form.getId(), storedPlacementHome.getIdentifier(),
           newStatus);
       userTransaction.commit();
@@ -161,13 +162,18 @@ public class RFA1aFormService
     }
   }
 
-  //@UnitOfWork(CALSNS)
-  protected void updateFormAfterPlacementHomeCreation(
+  //@UnitOfWork(XA_CMS)
+  private PlacementHome storePlaceMentHome(RFA1aFormDTO expandedFormDTO) {
+    return facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
+  }
+
+  //@UnitOfWork(XA_CALSNS)
+  private void updateFormAfterPlacementHomeCreation(
       Long formId, String placementHomeId, RFAApplicationStatus newStatus) {
     RFA1aForm form = xaRfa1AFormsDao.find(formId);
     form.setStatus(newStatus);
     form.setPlacementHomeId(placementHomeId);
-    updateForm(form);
+    xaRfa1AFormsDao.update(fillFormUpdateAttributes(form));
   }
 
   private void performSubmissionValidation(RFA1aFormDTO formDTO) {

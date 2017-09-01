@@ -466,7 +466,6 @@ public class FacilityService implements CrudsService {
     return storePlacementHome(formDTO);
   }
 
-  //@UnitOfWork(CMS)
   protected PlacementHome storePlacementHome(RFA1aFormDTO form) {
     PlacementHome placementHome = placementHomeMapper.toPlacementHome(
         form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));

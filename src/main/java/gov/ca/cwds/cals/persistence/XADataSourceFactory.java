@@ -40,7 +40,7 @@ public class XADataSourceFactory extends DataSourceFactory {
   @Override
   public ManagedDataSource build(MetricRegistry metricRegistry, String name) {
 
-    AtomikosPooledManagedDataSource ds = new AtomikosPooledManagedDataSource(metricRegistry);
+    AtomikosPooledManagedDataSource ds = new AtomikosPooledManagedDataSource();
     ds.setUniqueResourceName(name);
     ds.setXaDataSourceClassName(xaDataSourceClassName);
 

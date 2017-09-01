@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.persistence.hibernate;
 
 import com.atomikos.jdbc.AtomikosDataSourceBean;
-import com.codahale.metrics.MetricRegistry;
 import io.dropwizard.db.ManagedDataSource;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
@@ -16,13 +15,6 @@ public class AtomikosPooledManagedDataSource extends AtomikosDataSourceBean impl
 
   private static final long serialVersionUID = -1670043209229276391L;
 
-  private final MetricRegistry metricRegistry;
-
-  public AtomikosPooledManagedDataSource(MetricRegistry metricRegistry) {
-    this.metricRegistry = metricRegistry;
-  }
-
-
   @Override
   public Logger getParentLogger() throws SQLFeatureNotSupportedException {
     throw new SQLFeatureNotSupportedException("Doesn't use java.util.logging");
@@ -31,18 +23,6 @@ public class AtomikosPooledManagedDataSource extends AtomikosDataSourceBean impl
   @Override
   public void start() throws Exception {
     init();
-    /*//final ConnectionPool connectionPool = createPool();
-    metricRegistry.register(name(getClass(), connectionPool.getName(), "active"),
-        (Gauge<Integer>) connectionPool::getActive);
-
-    metricRegistry.register(name(getClass(), connectionPool.getName(), "idle"),
-        (Gauge<Integer>) connectionPool::getIdle);
-
-    metricRegistry.register(name(getClass(), connectionPool.getName(), "waiting"),
-        (Gauge<Integer>) connectionPool::getWaitCount);
-
-    metricRegistry.register(name(getClass(), connectionPool.getName(), "size"),
-        (Gauge<Integer>) connectionPool::getSize);*/
   }
 
   @Override
