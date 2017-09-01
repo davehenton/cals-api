@@ -370,7 +370,8 @@ public final class Constants {
           APPLICANT_WITH_NAME_MESSAGE + " has empty last name";
 
       public static final String APPLICANT_DRIVER_LICENSE_IS_INVALID =
-          "Driver's License field must have both State and Number";
+          APPLICANT_WITH_NAME_MESSAGE + " driver's license field must have both State and Number";
+
       public static class Code {
 
         public static final String APPLICANT_FIRST_NAME = "BV000001";

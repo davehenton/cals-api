@@ -274,12 +274,15 @@ rule "Validate Applicant's Driver License"
   dialect "mvel"
   agenda-group "form-submission-validation"
   when
-      $form : RFA1aFormDTO();
-      ApplicantDTO( (driverLicenseNumber == null && driverLicenseState != null)
-      || (driverLicenseNumber != null && driverLicenseState == null)) from $form.applicants;
+      $form: RFA1aFormDTO();
+      $applicant: ApplicantDTO( (driverLicenseNumber == null && driverLicenseState != null)
+          || (driverLicenseNumber != null && driverLicenseState == null)) from $form.applicants;
   then
     ValidationDetails details = new ValidationDetails();
-    details.setCode(Validation.Business.Code.APPLICANT_DRIVER_LICENSE);
+    details.setCode(String.format(Validation.Business.Code.APPLICANT_DRIVER_LICENSE,
+       $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
+       $applicant.getLastName() != null ? $applicant.getLastName() : "",
+       $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
     details.setUserMessage(Validation.Business.APPLICANT_DRIVER_LICENSE_IS_INVALID);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
     validationDetailsList.add(details);
