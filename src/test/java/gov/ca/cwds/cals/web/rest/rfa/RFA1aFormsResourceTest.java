@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
@@ -22,7 +23,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -182,17 +182,17 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
   @Test
   public void getAllApplicationFormsTest() throws Exception {
     RFA1aFormDTO rfaFormCreate1 = rfaHelper.createForm();
+    rfaHelper.postApplicant(rfaFormCreate1.getId(), new ApplicantDTO());
     RFA1aFormDTO rfaFormCreate2 = rfaHelper.createForm();
+    rfaHelper.postApplicant(rfaFormCreate2.getId(), new ApplicantDTO());
     RFA1aFormDTO rfaFormCreate3 = rfaHelper.createForm();
+    rfaHelper.postApplicant(rfaFormCreate3.getId(), new ApplicantDTO());
 
     assertNotEquals(rfaFormCreate1, rfaFormCreate2);
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);
     assertNotEquals(rfaFormCreate3, rfaFormCreate1);
 
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    CollectionDTO<RFA1aFormDTO> rfaForms =
-        invocation.get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {});
+    CollectionDTO<RFA1aFormDTO> rfaForms = rfaHelper.getRFA1aForms();
 
     assertTrue(rfaForms.getCollection().size() >= 3);
 
