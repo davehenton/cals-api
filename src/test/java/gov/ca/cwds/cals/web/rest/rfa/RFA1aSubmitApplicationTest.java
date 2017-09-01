@@ -19,7 +19,6 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
-import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -401,8 +400,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .appendTableFilter("FKPLC_HM_T", placementHomeId)
         .build();
 
-    helper.assertEquals(
-        new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_TS"}, new String[]{"OTH_ADLTNM"});
+    helper.assertEquals(new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_TS"});
 
     ITable actualTable = helper.getActualTable();
 
@@ -481,17 +479,4 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
   private Response changeApplicationStatusTo(RFAApplicationStatus newStatus, Long formId) {
     return rfaHelper.changeApplicationStatusTo(newStatus, formId);
   }
-
-  private ResidenceDTO getResidenceDTO() throws IOException {
-    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
-    return clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
-  }
-
-  private ApplicantDTO getApplicantDTO() throws IOException {
-    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
-    return clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
-  }
-
 }
