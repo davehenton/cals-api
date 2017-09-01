@@ -65,8 +65,8 @@ public class RFAHelper {
   public RFA1aFormDTO getRfa1aForm() throws Exception {
     RFA1aFormDTO form = new RFA1aFormDTO();
     CountyType county = new CountyType();
-    county.setId(59L);
-    county.setValue("State of California");
+    county.setId(34L);
+    county.setValue("Sacramento");
     form.setApplicationCounty(county);
     form.setInitialApplication(true);
     form.setOtherType(true);
