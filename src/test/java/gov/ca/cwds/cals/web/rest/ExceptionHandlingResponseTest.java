@@ -19,15 +19,12 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.rfa.BaseRFAIntegrationTest;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
-import java.io.IOException;
 import java.io.Serializable;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import liquibase.exception.LiquibaseException;
-import org.json.JSONException;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -49,7 +46,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
 
   @Ignore
   @Test
-  public void corruptedJSONValidationTest() throws IOException, JSONException {
+  public void corruptedJSONValidationTest() throws Exception {
     String fixture = "{\"wrong\": -1, \"someOtherWrongField\": false}";
     Response response = clientTestRule.target(API.RFA_1A_FORMS).request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(
@@ -70,7 +67,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
   }
 
   @Test
-  public void technicalValidationTest() throws IOException, JSONException {
+  public void technicalValidationTest() throws Exception {
     String fixture = "{\"application_county\": {\"id\": -1, \"value\": \"Unknown\"}}";
     Response response = clientTestRule.target(API.RFA_1A_FORMS).request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(
@@ -81,8 +78,8 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
   }
 
   @Test
-  public void businessValidationTest() throws IOException, JSONException {
-    RFA1aFormDTO form = rfaHelper.createForm();
+  public void businessValidationTest() throws Exception {
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
     rfaHelper.postApplicant(form.getId(), getApplicantDTO());
     WebTarget target =
         clientTestRule.target(
@@ -94,7 +91,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
   }
 
   @Test
-  public void expectedExceptionTest() throws IOException, JSONException {
+  public void expectedExceptionTest() throws Exception {
     WebTarget target = clientTestRule
         .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" +
             WRONG_FACILITY_ID);
@@ -114,7 +111,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
   }
 
   @Test
-  public void unExpectedExceptionTest() throws LiquibaseException, IOException, JSONException {
+  public void unExpectedExceptionTest() throws Exception {
     if (TestModeUtils.isIntegrationTestsMode()) {
       return;
     }
@@ -130,7 +127,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     assertEquals(Error.BASE_MESSAGE, details.getUserMessage());
   }
 
-  private ApplicantDTO getApplicantDTO() throws IOException {
+  private ApplicantDTO getApplicantDTO() throws Exception {
     String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
     return clientTestRule.getMapper()
         .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);

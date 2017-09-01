@@ -7,6 +7,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Objects;
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
+import gov.ca.cwds.cals.exception.ExpectedException;
+import gov.ca.cwds.cals.exception.ExpectedExceptionInfo;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
@@ -19,6 +21,7 @@ import io.dropwizard.jackson.Jackson;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -129,30 +132,33 @@ public final class Utils {
       return defaultValue;
     }
 
-    public static boolean isPrimary(RFA1aFormDTO form, ApplicantDTO applicant) {
+    public static String getFirstLastName(ApplicantDTO applicant) {
+      return StringUtils.joinWith(Constants.SPACE, applicant.getFirstName(), applicant.getLastName());
+    }
+
+    public static ApplicantDTO getPrimary(RFA1aFormDTO form) {
       List<ApplicantDTO> applicants = form.getApplicants();
       if (applicants.isEmpty()) {
-        throw new IllegalStateException("No applicants in application (id: " + form.getId() + ")");
+        return null;
       }
-
-      ApplicantDTO expectedPrimaryApplicant = null;
-      Long minId = applicants.get(0).getId();
-      for (ApplicantDTO applicantDTO : applicants) {
-        Long id = applicantDTO.getId();
-        if (minId > id) {
-          minId = id;
-        }
-        if (Objects.equal(id, applicant.getId())) {
-          expectedPrimaryApplicant = applicantDTO;
+      ApplicantDTO primaryApplicant = applicants.get(0);
+      for (ApplicantDTO applicant : applicants) {
+        Long id = applicant.getId();
+        if (primaryApplicant.getId() > id) {
+          primaryApplicant = applicant;
         }
       }
+      return primaryApplicant;
+    }
 
-      if (expectedPrimaryApplicant == null) {
-        throw new IllegalStateException(
-            "Applicant (id: " + applicant.getId() + ") not found in application (id: " + form.getId() + ")");
+    public static boolean isPrimary(RFA1aFormDTO form, ApplicantDTO applicant) {
+      ApplicantDTO primary = getPrimary(form);
+      Long primaryId = null;
+      if (primary != null) {
+        primaryId = primary.getId();
       }
 
-      return Objects.equal(applicant.getId(), minId);
+      return Objects.equal(applicant.getId(), primaryId);
     }
   }
 
@@ -175,17 +181,26 @@ public final class Utils {
     }
 
     public static String getStreetNumber(RFAAddressDTO addressDTO) {
-      String[] numberAndName = StringUtils.split(addressDTO.getStreetAddress(), null, 2);
-      String number = numberAndName[0];
-      if (!StringUtils.isNumeric(number)) {
-        number = null;
-      }
-      return number;
-    }
+      return getStreetAddressByPartIndex(addressDTO, 0);    }
 
     public static String getStreetName(RFAAddressDTO addressDTO) {
-      String[] numberAndName = StringUtils.split(addressDTO.getStreetAddress(), null, 2);
-      return numberAndName[numberAndName.length - 1];
+      return getStreetAddressByPartIndex(addressDTO, 1);
+    }
+
+    public static String getSilentStreetName(RFAAddressDTO addressDTO) {
+      try {
+        return getStreetAddressByPartIndex(addressDTO, 1);
+      } catch (Exception e) {
+        return null;
+      }
+    }
+
+    private static String getStreetAddressByPartIndex(RFAAddressDTO address, int partIndex) {
+      String[] numberAndName = StringUtils.split(address.getStreetAddress(), null, 2);
+      if (numberAndName.length != 2) {
+        throw new ExpectedException(ExpectedExceptionInfo.CANNOT_PARSE_STREET_ADDRESS, Response.Status.BAD_REQUEST);
+      }
+      return numberAndName[partIndex];
     }
 
   }

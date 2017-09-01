@@ -60,7 +60,8 @@ public interface PlacementHomeMapper {
   @Mapping(target = "pstreetNo", constant = " ")
   @Mapping(target = "pZipNo", constant = "0")
   @Mapping(target = "facilityType", constant = "6914")
-  @Mapping(target = "prmCnctnm", expression = "java(form.getFirstApplicant().getFirstName() + \" \" + form.getFirstApplicant().getLastName())")
+  @Mapping(target = "prmCnctnm",
+      expression = "java(Utils.Applicant.getFirstLastName(Utils.Applicant.getPrimary(form)))")
   @Mapping(target = "prmExtNo", source = "form.firstApplicant.preferredPhoneNumber.extension")
   @Mapping(target = "prmSubsnm", source = "form.firstApplicant.applicantFullName")
   @Mapping(target = "prmTelNo", source = "form.firstApplicant.preferredPhoneNumber.number")
@@ -116,7 +117,7 @@ public interface PlacementHomeMapper {
   @AfterMapping
   default void setFacilityName(@MappingTarget PlacementHome placementHome, RFA1aFormDTO form) {
     StringBuilder sb = new StringBuilder();
-    sb.append(form.getFirstApplicant().getLastName());
+    sb.append(Utils.Applicant.getPrimary(form).getLastName());
     sb.append(", ");
     List<String> firstNames = form.getApplicants().stream().map(ApplicantDTO::getFirstName).collect(
         Collectors.toList());

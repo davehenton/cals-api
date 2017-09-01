@@ -1,0 +1,8 @@
+{
+  "validation_details" : [ {
+    "type" : "business_validation",
+    "user_message" : "Application has no residential address",
+    "code" : "BV000012",
+    "technical_message" : "form-submission-validation"
+  } ]
+}
