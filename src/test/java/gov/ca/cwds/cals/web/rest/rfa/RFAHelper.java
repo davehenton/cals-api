@@ -41,11 +41,8 @@ public class RFAHelper {
   }
 
   public RFA1aFormDTO createRFA1aForm() throws Exception {
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
-
-    RFA1aFormDTO rfaFormDTOBefore = getRfa1aFormDTO();
-    RFA1aFormDTO rfaFormDTOAfter = target.request(MediaType.APPLICATION_JSON)
-        .post(Entity.entity(rfaFormDTOBefore, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
+    RFA1aFormDTO rfaFormDTOBefore = getRfa1aForm();
+    RFA1aFormDTO rfaFormDTOAfter = postRfa1aForm(rfaFormDTOBefore);
 
     assertNotNull(rfaFormDTOAfter);
     assertNotNull(rfaFormDTOAfter.getId());
@@ -56,7 +53,13 @@ public class RFAHelper {
     return rfaFormDTOAfter;
   }
 
-  public RFA1aFormDTO getRfa1aFormDTO() throws Exception {
+  public RFA1aFormDTO postRfa1aForm(RFA1aFormDTO rfa1aForm) {
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+    return target.request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(rfa1aForm, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
+  }
+
+  public RFA1aFormDTO getRfa1aForm() throws Exception {
     RFA1aFormDTO form = new RFA1aFormDTO();
     CountyType county = new CountyType();
     county.setId(59L);

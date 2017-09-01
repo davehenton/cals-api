@@ -1,0 +1,8 @@
+{
+  "validation_details" : [ {
+    "type" : "business_validation",
+    "user_message" : "Residential address has no street name",
+    "code" : "BV000013",
+    "technical_message" : "form-submission-validation"
+  } ]
+}

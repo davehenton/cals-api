@@ -5,7 +5,6 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import java.util.Iterator;
@@ -118,9 +117,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   @Test
   public void validateApplicationHasNoResidence() throws Exception {
     RFA1aFormDTO form = rfaHelper.createRFA1aForm();
-    ApplicantDTO applicant = rfaHelper.getApplicant();
-    RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
-    applicant.setRfa1bForm(rfa1bForm);
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
     rfaHelper.postApplicant(form.getId(), applicant);
 
     Response response = rfaHelper.submitApplication(form.getId());
@@ -132,9 +129,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   public void validateOtherAdultHasNoReferenceToApplicant() throws Exception {
     RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 
-    ApplicantDTO applicant = rfaHelper.getApplicant();
-    RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
-    applicant.setRfa1bForm(rfa1bForm);
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
     ApplicantDTO persistentApplicant = rfaHelper.postApplicant(form.getId(), applicant);
 
     OtherAdultDTO otherAdult = rfaHelper.getOtherAdultDTO(persistentApplicant);
@@ -155,9 +150,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   public void validateMinorChildHasNoReferenceToApplicant() throws Exception {
     RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 
-    ApplicantDTO applicant = rfaHelper.getApplicant();
-    RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
-    applicant.setRfa1bForm(rfa1bForm);
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
     ApplicantDTO persistentApplicant = rfaHelper.postApplicant(form.getId(), applicant);
 
     MinorChildDTO minorChild = rfaHelper.getMinorChildDTO(persistentApplicant);
@@ -178,23 +171,92 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   public void validateApplicationHasNoResidentialAddress() throws Exception {
     RFA1aFormDTO form = rfaHelper.createRFA1aForm();
 
-    ApplicantDTO applicant = rfaHelper.getApplicant();
-    RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
-    applicant.setRfa1bForm(rfa1bForm);
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
     rfaHelper.postApplicant(form.getId(), applicant);
 
     ResidenceDTO residence = rfaHelper.getResidenceDTO();
-    List<RFAAddressDTO> addresses = residence.getAddresses();
-    for (Iterator<RFAAddressDTO> iterator = addresses.listIterator(); iterator.hasNext(); ) {
-      RFAAddressDTO address =  iterator.next();
-      if (AddressTypes.RESIDENTIAL.equals(address.getType().getValue())) {
-        addresses.remove(address);
-      }
-    }
+
+    residence.getAddresses().remove(getResidentialAddress(residence));
     rfaHelper.putResidence(form.getId(), residence);
 
     Response response = rfaHelper.submitApplication(form.getId());
     assertResponseByFixturePath(
         response, "fixtures/rfa/validation/application-has-no-residential-address-response.json");
+  }
+
+  @Test
+  public void validateResidentialAddressHasNoStreetName() throws Exception {
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
+    rfaHelper.postApplicant(form.getId(), applicant);
+
+    ResidenceDTO residence = rfaHelper.getResidenceDTO();
+    getResidentialAddress(residence).setStreetAddress("100");
+    rfaHelper.putResidence(form.getId(), residence);
+
+    Response response = rfaHelper.submitApplication(form.getId());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/residential-address-has-no-street-name-response.json");
+  }
+
+  @Test
+  public void validateResidentialAddressHasNoState() throws Exception {
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
+    rfaHelper.postApplicant(form.getId(), applicant);
+
+    ResidenceDTO residence = rfaHelper.getResidenceDTO();
+    getResidentialAddress(residence).setState(null);
+    rfaHelper.putResidence(form.getId(), residence);
+
+    Response response = rfaHelper.submitApplication(form.getId());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/residential-address-has-no-state-response.json");
+  }
+
+  @Test
+  public void validateResidentialAddressHasNoZipCode() throws Exception {
+    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
+    rfaHelper.postApplicant(form.getId(), applicant);
+
+    ResidenceDTO residence = rfaHelper.getResidenceDTO();
+    getResidentialAddress(residence).setZip(" ");
+    rfaHelper.putResidence(form.getId(), residence);
+
+    Response response = rfaHelper.submitApplication(form.getId());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/residential-address-has-no-zip-code-response.json");
+  }
+
+  @Test
+  public void validateApplicationHasNoCounty() throws Exception {
+    RFA1aFormDTO form = rfaHelper.getRfa1aForm();
+    form.setApplicationCounty(null);
+    RFA1aFormDTO persistentForm = rfaHelper.postRfa1aForm(form);
+
+    ApplicantDTO applicant = rfaHelper.getValidApplicant();
+    rfaHelper.postApplicant(persistentForm.getId(), applicant);
+
+    ResidenceDTO residence = rfaHelper.getResidenceDTO();
+    rfaHelper.putResidence(persistentForm.getId(), residence);
+
+    Response response = rfaHelper.submitApplication(persistentForm.getId());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/application-has-no-county-response.json");
+  }
+
+  private RFAAddressDTO getResidentialAddress(ResidenceDTO residence) {
+    List<RFAAddressDTO> addresses = residence.getAddresses();
+    for (Iterator<RFAAddressDTO> iterator = addresses.listIterator(); iterator.hasNext(); ) {
+      RFAAddressDTO address =  iterator.next();
+      if (AddressTypes.RESIDENTIAL.equals(address.getType().getValue())) {
+        return address;
+      }
+    }
+    return null;
   }
 }

@@ -324,6 +324,21 @@ public final class Constants {
       public static final String APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS_MESSAGE =
           "Application has no residential address";
 
+      public static final String RESIDENTIAL_ADDRESS_HAS_NO_STREET_NAME_MESSAGE =
+          "Residential address has no street name";
+
+      public static final String RESIDENTIAL_ADDRESS_HAS_NO_CITY_MESSAGE =
+          "Residential address has no city";
+
+      public static final String RESIDENTIAL_ADDRESS_HAS_NO_STATE_MESSAGE =
+          "Residential address has no state";
+
+      public static final String RESIDENTIAL_ADDRESS_HAS_NO_ZIP_CODE_MESSAGE =
+          "Residential address has no zip code";
+
+      public static final String APPLICATION_HAS_NO_COUNTY_MESSAGE =
+          "Application has no county";
+
       public static final String OTHER_ADULT_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE =
           "Other adult with first name - [%s], last name - [%s] and name suffix - [%s]" +
               " has no reference to any applicant";
@@ -362,8 +377,13 @@ public final class Constants {
         public static final String APPLICANT_HAS_NO_RFA1B_FORM = "BV000008";
         public static final String OTHER_ADULT_HAS_NO_REFERENCE_TO_APPLICANT = "BV000009";
         public static final String MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT = "BV000010";
-        public static final String APPLICATION_RESIDENCE = "BV000011";
-        public static final String APPLICATION_RESIDENTIAL_ADDRESS = "BV000012";
+        public static final String APPLICATION_HAS_NO_RESIDENCE = "BV000011";
+        public static final String APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS = "BV000012";
+        public static final String RESIDENTIAL_ADDRESS_HAS_NO_STREET_NAME = "BV000013";
+        public static final String RESIDENTIAL_ADDRESS_HAS_NO_CITY = "BV000014";
+        public static final String RESIDENTIAL_ADDRESS_HAS_NO_STATE = "BV000015";
+        public static final String RESIDENTIAL_ADDRESS_HAS_NO_ZIP_CODE = "BV000016";
+        public static final String APPLICATION_HAS_NO_COUNTY = "BV000017";
 
         private Code() {
         }

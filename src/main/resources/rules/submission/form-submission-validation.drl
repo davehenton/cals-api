@@ -1,4 +1,6 @@
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO
@@ -7,6 +9,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO
 import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO
+import gov.ca.cwds.cals.Utils
 import gov.ca.cwds.cals.Constants
 import gov.ca.cwds.cals.Constants.Validation
 import gov.ca.cwds.cals.Constants.Validation.Business
@@ -38,7 +41,7 @@ rule "Validate that applicant has RFA1b form"
   when
     $form : RFA1aFormDTO();
     $applicant: ApplicantDTO() from $form.applicants;
-    not RFA1bFormDTO() from $applicant.getRfa1bForm();
+    not RFA1bFormDTO() from $applicant.rfa1bForm;
   then
     ValidationDetails details = new ValidationDetails();
     details.setCode(Validation.Business.Code.APPLICANT_HAS_NO_RFA1B_FORM);
@@ -56,7 +59,7 @@ rule "Validate that other adult has reference to applicant"
   when
     $form : RFA1aFormDTO();
     $otherAdult: OtherAdultDTO() from $form.otherAdults;
-    $relationship: RelationshipToApplicantDTO() from $otherAdult.getRelationshipToApplicants();
+    $relationship: RelationshipToApplicantDTO() from $otherAdult.relationshipToApplicants;
     not ApplicantDTO(id == $relationship.applicantId) from $form.applicants;
   then
     ValidationDetails details = new ValidationDetails();
@@ -75,7 +78,7 @@ rule "Validate that minor child has reference to applicant"
   when
     $form : RFA1aFormDTO();
     $minorChild: MinorChildDTO() from $form.minorChildren;
-    $relationship: RelationshipToApplicantDTO() from $minorChild.getRelationshipToApplicants();
+    $relationship: RelationshipToApplicantDTO() from $minorChild.relationshipToApplicants;
     not ApplicantDTO(id == $relationship.applicantId) from $form.applicants;
   then
     ValidationDetails details = new ValidationDetails();
@@ -96,7 +99,7 @@ rule "Validate that residence exists"
     not ResidenceDTO() from $form.residence;
   then
     ValidationDetails details = new ValidationDetails();
-    details.setCode(Validation.Business.Code.APPLICATION_RESIDENCE);
+    details.setCode(Validation.Business.Code.APPLICATION_HAS_NO_RESIDENCE);
     details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_RESIDENCE_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
     validationDetailsList.add(details);
@@ -111,8 +114,86 @@ rule "Validate that residential address exists"
     not RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
   then
     ValidationDetails details = new ValidationDetails();
-    details.setCode(Validation.Business.Code.APPLICATION_RESIDENTIAL_ADDRESS);
+    details.setCode(Validation.Business.Code.APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS);
     details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS_MESSAGE);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that residential address has street name"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $residence: ResidenceDTO() from $form.residence;
+    $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+    eval(StringUtils.isBlank(Utils.Address.getSilentStreetName($address)));
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.RESIDENTIAL_ADDRESS_HAS_NO_STREET_NAME);
+    details.setUserMessage(Validation.Business.RESIDENTIAL_ADDRESS_HAS_NO_STREET_NAME_MESSAGE);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that residential address has city"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $residence: ResidenceDTO() from $form.residence;
+    $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+    eval(StringUtils.isBlank($address.getCity()));
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.RESIDENTIAL_ADDRESS_HAS_NO_CITY);
+    details.setUserMessage(Validation.Business.RESIDENTIAL_ADDRESS_HAS_NO_CITY_MESSAGE);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that residential address has state"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $residence: ResidenceDTO() from $form.residence;
+    $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+    not StateType() from $address.state;
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.RESIDENTIAL_ADDRESS_HAS_NO_STATE);
+    details.setUserMessage(Validation.Business.RESIDENTIAL_ADDRESS_HAS_NO_STATE_MESSAGE);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that residential address has zip code"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $residence: ResidenceDTO() from $form.residence;
+    $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+    eval(StringUtils.isBlank($address.getZip()));
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.RESIDENTIAL_ADDRESS_HAS_NO_ZIP_CODE);
+    details.setUserMessage(Validation.Business.RESIDENTIAL_ADDRESS_HAS_NO_ZIP_CODE_MESSAGE);
+    details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate that application has county"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    not CountyType() from $form.applicationCounty;
+  then
+    ValidationDetails details = new ValidationDetails();
+    details.setCode(Validation.Business.Code.APPLICATION_HAS_NO_COUNTY);
+    details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_COUNTY_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
     validationDetailsList.add(details);
 end
@@ -122,7 +203,8 @@ rule "Validate Applicant's First Name"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
-    $applicant : ApplicantDTO(eval(StringUtils.isBlank(firstName))) from $form.applicants;
+    $applicant : ApplicantDTO() from $form.applicants;
+    eval(StringUtils.isBlank($applicant.getFirstName()))
   then
     ValidationDetails details = new ValidationDetails();
     details.setCode(Validation.Business.Code.APPLICANT_FIRST_NAME);
@@ -139,7 +221,8 @@ rule "Applicant's Empty Last Name"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
-    $applicant : ApplicantDTO(StringUtils.isBlank(lastName)) from $form.applicants;
+    $applicant : ApplicantDTO() from $form.applicants;
+    eval(StringUtils.isBlank($applicant.getLastName()));
   then
     ValidationDetails details = new ValidationDetails();
     details.setCode(Validation.Business.Code.APPLICANT_LAST_NAME);
