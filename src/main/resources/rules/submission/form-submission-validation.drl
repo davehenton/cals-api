@@ -244,7 +244,7 @@ rule "Validate Applicant's First Name"
   then
     ValidationDetails details = new ValidationDetails();
     details.setCode(Validation.Business.Code.APPLICANT_FIRST_NAME);
-    details.setUserMessage(String.format(Validation.Business.APPLICANT_FIRST_NAME_IS_EMPTY,
+    details.setUserMessage(String.format(Validation.Business.APPLICANT_FIRST_NAME_IS_EMPTY_MESSAGE,
         $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
         $applicant.getLastName() != null ? $applicant.getLastName() : "",
         $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
@@ -262,7 +262,7 @@ rule "Applicant's Empty Last Name"
   then
     ValidationDetails details = new ValidationDetails();
     details.setCode(Validation.Business.Code.APPLICANT_LAST_NAME);
-    details.setUserMessage(String.format(Validation.Business.APPLICANT_LAST_NAME_IS_EMPTY,
+    details.setUserMessage(String.format(Validation.Business.APPLICANT_LAST_NAME_IS_EMPTY_MESSAGE,
        $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
        $applicant.getLastName() != null ? $applicant.getLastName() : "",
        $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
@@ -283,7 +283,10 @@ rule "Validate Applicant's Driver License"
        $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
        $applicant.getLastName() != null ? $applicant.getLastName() : "",
        $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
-    details.setUserMessage(Validation.Business.APPLICANT_DRIVER_LICENSE_IS_INVALID);
+    details.setUserMessage(String.format(Validation.Business.APPLICANT_DRIVER_LICENSE_IS_INVALID_MESSAGE,
+        $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
+               $applicant.getLastName() != null ? $applicant.getLastName() : "",
+               $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
     details.setTechnicalMessage(BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
     validationDetailsList.add(details);
 end

@@ -363,13 +363,13 @@ public final class Constants {
       public static final String APPLICANT_PREFERRED_NUMBER_MESSAGE =
           "Applicant has more then one preferred number";
 
-      public static final String APPLICANT_FIRST_NAME_IS_EMPTY =
+      public static final String APPLICANT_FIRST_NAME_IS_EMPTY_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " has empty first name";
 
-      public static final String APPLICANT_LAST_NAME_IS_EMPTY =
+      public static final String APPLICANT_LAST_NAME_IS_EMPTY_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " has empty last name";
 
-      public static final String APPLICANT_DRIVER_LICENSE_IS_INVALID =
+      public static final String APPLICANT_DRIVER_LICENSE_IS_INVALID_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " driver's license field must have both State and Number";
 
       public static class Code {
