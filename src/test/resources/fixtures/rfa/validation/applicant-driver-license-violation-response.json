@@ -2,7 +2,7 @@
   "validation_details": [
     {
       "type": "business_validation",
-      "user_message": "Driver's License field must have both State and Number",
+      "user_message": "Applicant with first name - [Anna], last name - [Smith] and name suffix - [Jr] driver's license field must have both State and Number",
       "technical_message": "applicant-validation",
       "code": "BV000006"
     }

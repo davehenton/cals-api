@@ -11,8 +11,10 @@ import gov.ca.cwds.cals.service.rfa.factory.RFAInternalEntityConfiguration;
  */
 public class RFA1aResidenceService extends AbstractRFAInternalEntityService<ResidenceDTO> {
 
+  private RFA1aFormsDao formsDao;
+
   @Inject
-  public RFA1aResidenceService(RFA1aFormsDao applicationDao) {
+  public RFA1aResidenceService(RFA1aFormsDao applicationDao, RFA1aFormsDao formsDao) {
     super(
         applicationDao,
         new RFAInternalEntityConfiguration<ResidenceDTO>(ResidenceDTO.class) {
@@ -27,5 +29,18 @@ public class RFA1aResidenceService extends AbstractRFAInternalEntityService<Resi
             form.setResidence(residence);
           }
         });
+    this.formsDao = formsDao;
   }
+
+  @Override
+  public ResidenceDTO update(Long applicationId, ResidenceDTO request) {
+    ResidenceDTO residenceDTO = super.update(applicationId, request);
+    RFA1aForm form = formsDao.find(applicationId);
+    if (form.getStatus() != RFAApplicationStatus.IN_PROGRESS) {
+      form.setStatus(RFAApplicationStatus.IN_PROGRESS);
+    }
+    return residenceDTO;
+  }
+
 }
+

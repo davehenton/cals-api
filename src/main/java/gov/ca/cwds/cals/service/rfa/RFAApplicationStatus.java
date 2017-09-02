@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 public enum RFAApplicationStatus {
 
   DRAFT("draft"),
+  IN_PROGRESS("in-progress"),
   SUBMITTED("submitted");
 
   @ApiModelProperty(example = "submitted")

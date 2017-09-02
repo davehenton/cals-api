@@ -1,0 +1,8 @@
+{
+  "validation_details" : [ {
+    "type" : "business_validation",
+    "user_message" : "Applicant with first name - [Anna], last name - [Smith] and name suffix - [Jr] has no RFA1b form",
+    "code" : "BV000008",
+    "technical_message" : "form-submission-validation"
+  } ]
+}

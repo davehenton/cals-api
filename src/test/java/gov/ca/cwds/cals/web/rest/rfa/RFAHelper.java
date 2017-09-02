@@ -1,11 +1,13 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANTS_FIXTURE_PATH;
+import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -40,23 +43,10 @@ public class RFAHelper {
     this.clientTestRule = clientTestRule;
   }
 
-  public RFA1aFormDTO createForm() {
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+  public RFA1aFormDTO createRFA1aForm() throws Exception {
+    RFA1aFormDTO rfaFormDTOBefore = getRfa1aForm();
+    RFA1aFormDTO rfaFormDTOAfter = postRfa1aForm(rfaFormDTOBefore);
 
-    RFA1aFormDTO rfaFormDTOBefore = new RFA1aFormDTO();
-    CountyType county = new CountyType();
-    county.setId(59L);
-    county.setValue("State of California");
-    rfaFormDTOBefore.setApplicationCounty(county);
-    rfaFormDTOBefore.setInitialApplication(true);
-    rfaFormDTOBefore.setOtherType(true);
-    rfaFormDTOBefore.setOtherTypeDescription("otherDescription");
-    RFA1aFormDTO rfaFormDTOAfter =
-        target
-            .request(MediaType.APPLICATION_JSON)
-            .post(
-                Entity.entity(rfaFormDTOBefore, MediaType.APPLICATION_JSON_TYPE),
-                RFA1aFormDTO.class);
     assertNotNull(rfaFormDTOAfter);
     assertNotNull(rfaFormDTOAfter.getId());
     assertTrue(rfaFormDTOAfter.isInitialApplication());
@@ -66,9 +56,38 @@ public class RFAHelper {
     return rfaFormDTOAfter;
   }
 
-  public ApplicantDTO createValidApplicant() throws IOException {
+  public RFA1aFormDTO postRfa1aForm(RFA1aFormDTO rfa1aForm) {
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+    return target.request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(rfa1aForm, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
+  }
+
+  public RFA1aFormDTO getRfa1aForm() throws Exception {
+    RFA1aFormDTO form = new RFA1aFormDTO();
+    CountyType county = new CountyType();
+    county.setId(34L);
+    county.setValue("Sacramento");
+    form.setApplicationCounty(county);
+    form.setInitialApplication(true);
+    form.setOtherType(true);
+    form.setOtherTypeDescription("otherDescription");
+    return form;
+  }
+
+  public ApplicantDTO getApplicant() throws IOException {
+    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
     return clientTestRule.getMapper()
         .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
+  }
+
+  public ApplicantDTO getValidApplicant() throws IOException {
+    ApplicantDTO applicant = clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
+
+    RFA1bFormDTO rfa1bForm = getRfa1bForm();
+    applicant.setRfa1bForm(rfa1bForm);
+
+    return applicant;
   }
 
   public ApplicantDTO postApplicant(long formId, ApplicantDTO applicantDTO) {
@@ -99,7 +118,6 @@ public class RFAHelper {
       GenericType<CollectionDTO<ApplicantDTO>> genericType = new GenericType<CollectionDTO<ApplicantDTO>>() {
       };
       CollectionDTO<ApplicantDTO> applicants = response.readEntity(genericType);
-      ;
       if (applicants != null && !applicants.getCollection().isEmpty()) {
         applicantDTO = applicants.getCollection().iterator().next();
       }
@@ -126,6 +144,12 @@ public class RFAHelper {
 
   public Response submitApplication(long formId) {
     return changeApplicationStatusTo(RFAApplicationStatus.SUBMITTED, formId);
+  }
+
+  public ResidenceDTO getResidenceDTO() throws IOException {
+    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
+    return clientTestRule.getMapper()
+        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
   }
 
 
@@ -192,33 +216,68 @@ public class RFAHelper {
       throws Exception {
     List<OtherAdultDTO> otherAdultsDTOs = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
-      OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
-          .readValue(fixture(RFA1aOtherAdultsResourceTest.FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON),
-              OtherAdultDTO.class);
+      OtherAdultDTO otherAdultDTO = getOtherAdultDTO(relativeApplicant);
       otherAdultDTO.setFirstName(otherAdultDTO.getFirstName() + i);
       otherAdultDTO.setLastName(otherAdultDTO.getLastName() + i);
-      // Assume that we have only one relationship object
-      otherAdultDTO.getRelationshipToApplicants().get(0).setApplicantId(relativeApplicant.getId());
       otherAdultsDTOs.add(postOtherAdult(formId, otherAdultDTO));
     }
     return otherAdultsDTOs;
+  }
+
+  public OtherAdultDTO getOtherAdultDTO(ApplicantDTO relativeApplicant) throws IOException {
+    OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
+        .readValue(fixture(RFA1aOtherAdultsResourceTest.FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON),
+            OtherAdultDTO.class);
+    // Assume that we have only one relationship object
+    otherAdultDTO.getRelationshipToApplicants().get(0).setApplicantId(relativeApplicant.getId());
+    return otherAdultDTO;
   }
 
   public List<MinorChildDTO> createMinorChildren(Long formId, ApplicantDTO reletiveApplicant)
       throws Exception {
     List<MinorChildDTO> minorChildDTOs = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
-      MinorChildDTO minorChildDTO = clientTestRule.getMapper()
-          .readValue(
-              fixture(RFA1aMinorChildrenResourceTest.FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON),
-              MinorChildDTO.class);
+      MinorChildDTO minorChildDTO = getMinorChildDTO(reletiveApplicant);
       minorChildDTO.setOtherRelativeFirstName(minorChildDTO.getOtherRelativeFirstName() + i);
       minorChildDTO.setOtherRelativeLastName(minorChildDTO.getOtherRelativeLastName() + i);
-      // Assume that we have only one relationship object
-      minorChildDTO.getRelationshipToApplicants().get(0).setApplicantId(reletiveApplicant.getId());
       minorChildDTOs.add(postMinorChild(formId, minorChildDTO));
     }
     return minorChildDTOs;
   }
 
+  public MinorChildDTO getMinorChildDTO(ApplicantDTO reletiveApplicant) throws IOException {
+    MinorChildDTO minorChildDTO = clientTestRule.getMapper()
+        .readValue(
+            fixture(RFA1aMinorChildrenResourceTest.FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON),
+            MinorChildDTO.class);
+    // Assume that we have only one relationship object
+    minorChildDTO.getRelationshipToApplicants().get(0).setApplicantId(reletiveApplicant.getId());
+    return minorChildDTO;
+  }
+
+  private void assertStatus(String statusFixture, Long formId) throws Exception {
+    WebTarget getTarget =
+        clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + Constants.API.STATUS);
+    String status = getTarget.request(MediaType.APPLICATION_JSON).get(String.class);
+    assertEqualsResponse(fixture(statusFixture), status);
+  }
+
+  public void assertSubmitted(Long formId) throws Exception {
+    assertStatus("fixtures/rfa/submitted-status.json", formId);
+  }
+
+  public void assertDraft(Long formId) throws Exception {
+    assertStatus("fixtures/rfa/draft-status.json", formId);
+  }
+
+  public void assertInProgress(Long formId) throws Exception {
+    assertStatus("fixtures/rfa/in-progress-status.json", formId);
+  }
+
+  public CollectionDTO<RFA1aFormDTO> getRFA1aForms() {
+    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    return invocation.get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {
+    });
+  }
 }
