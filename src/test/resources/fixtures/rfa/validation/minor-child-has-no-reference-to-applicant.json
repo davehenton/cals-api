@@ -1,8 +1,10 @@
 {
-  "validation_details" : [ {
-    "type" : "business_validation",
-    "user_message" : "Some minor child has no reference to any applicant",
-    "code" : "BV000010",
-    "technical_message" : "form-submission-validation"
-  } ]
+  "validation_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Some minor child has no reference to any applicant",
+      "code": "BV000010",
+      "technical_message": "form-submission-validation"
+    }
+  ]
 }

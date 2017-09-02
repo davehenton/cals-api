@@ -131,7 +131,7 @@ public class RFA1aFormService
     }
     if (newStatus == RFAApplicationStatus.SUBMITTED) {
       try {
-      submitApplication(form, newStatus);
+        submitApplication(form, newStatus);
       } catch (NotSupportedException | SystemException e) {
         throw new IllegalStateException(e);
       }

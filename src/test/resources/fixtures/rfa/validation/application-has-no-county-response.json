@@ -1,8 +1,10 @@
 {
-  "validation_details" : [ {
-    "type" : "business_validation",
-    "user_message" : "Application has no county",
-    "code" : "BV000017",
-    "technical_message" : "form-submission-validation"
-  } ]
+  "validation_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Application has no county",
+      "code": "BV000017",
+      "technical_message": "form-submission-validation"
+    }
+  ]
 }

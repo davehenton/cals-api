@@ -1,5 +1,8 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixturePath;
+import static org.junit.Assert.assertEquals;
+
 import gov.ca.cwds.cals.Constants.AddressTypes;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
@@ -12,9 +15,6 @@ import java.util.List;
 import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixturePath;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author CWDS CALS API Team
@@ -294,7 +294,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   private RFAAddressDTO getResidentialAddress(ResidenceDTO residence) {
     List<RFAAddressDTO> addresses = residence.getAddresses();
     for (Iterator<RFAAddressDTO> iterator = addresses.listIterator(); iterator.hasNext(); ) {
-      RFAAddressDTO address =  iterator.next();
+      RFAAddressDTO address = iterator.next();
       if (AddressTypes.RESIDENTIAL.equals(address.getType().getValue())) {
         return address;
       }

@@ -1,8 +1,10 @@
 {
-  "validation_details" : [ {
-    "type" : "business_validation",
-    "user_message" : "Other adult with first name - [Anna], last name - [Pollen] and name suffix - [Jr] has no reference to any applicant",
-    "code" : "BV000009",
-    "technical_message" : "form-submission-validation"
-  } ]
+  "validation_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Other adult with first name - [Anna], last name - [Pollen] and name suffix - [Jr] has no reference to any applicant",
+      "code": "BV000009",
+      "technical_message": "form-submission-validation"
+    }
+  ]
 }
