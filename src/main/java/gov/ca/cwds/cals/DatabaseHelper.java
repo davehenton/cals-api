@@ -37,11 +37,14 @@ public class DatabaseHelper {
     }
   }
 
-  public void runScript(String script, Map<String, Object> parameters) throws LiquibaseException {
+  public void runScript(String script, Map<String, Object> parameters, String schema) throws LiquibaseException {
     try {
+      String defaultSchema = getDatabase().getDefaultSchemaName();
+      getDatabase().setDefaultSchemaName(schema);
       Liquibase liquibase = new Liquibase(script, new ClassLoaderResourceAccessor(), getDatabase());
       parameters.forEach((k, v) -> liquibase.setChangeLogParameter(k, v));
       liquibase.update((String) null);
+      getDatabase().setDefaultSchemaName(defaultSchema);
     } catch (Exception e) {
       throw new LiquibaseException(e);
     }
