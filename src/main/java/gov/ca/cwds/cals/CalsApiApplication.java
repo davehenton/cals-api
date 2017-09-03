@@ -141,6 +141,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
 
   private Map<String, Object> getLisParameters(Faker faker, int isn, int facilityNumber, int doNumber) {
     Map<String, Object> parameters = new HashMap<>();
+    parameters.put("changeSetId", isn);
     parameters.put("isnFac", isn);
     parameters.put("isnDo", isn);
     parameters.put("facilityNumber", facilityNumber);
