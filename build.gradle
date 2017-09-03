@@ -137,6 +137,8 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
     compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
 
+    compile group: 'com.github.javafaker', name: 'javafaker', version: '0.13'
+
     testCompile group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
     testCompile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: calsModelVersion, changing: true)
     testCompile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: calsModelVersion, changing: true)

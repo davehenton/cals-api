@@ -2,6 +2,8 @@ package gov.ca.cwds.cals;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
+import com.github.javafaker.Address;
+import com.github.javafaker.Faker;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import gov.ca.cwds.cals.exception.CustomExceptionMapperBinder;
@@ -18,6 +20,8 @@ import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.DispatcherType;
 import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.slf4j.Logger;
@@ -32,6 +36,8 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
   private static final String LIQUIBASE_CALSNS_DATABASE_CREATE_SCHEMA_XML = "liquibase/calsns_schema.xml";
   private static final String LIQUIBASE_CALSNS_DATABASE_MASTER_XML = "liquibase/calsns_database_master.xml";
   private static final String HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME = "hibernate.default_schema";
+
+  private static final String LIQUIBASE_LIS_DATABASE_MASTER_XML = "liquibase/manufactured_data/lis_database_master.xml";
 
   public static void main(String[] args) throws Exception {
     new CalsApiApplication().run(args);
@@ -52,6 +58,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
 
     if (configuration.isUpgradeDbOnStart()) {
       upgardeCalsNsDB(configuration);
+      createManufacturedDataLis(configuration);
     }
 
     environment
@@ -110,5 +117,45 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
     }
 
     LOG.info("Finish Upgrading CALS_NS DB");
+  }
+
+  private void createManufacturedDataLis(CalsApiConfiguration configuration) {
+    LOG.info("Creating manufactured data ...");
+
+    DataSourceFactory lisDataSourceFactory = configuration.getLisDataSourceFactory();
+    DatabaseHelper databaseHelper = new DatabaseHelper(lisDataSourceFactory.getUrl(),
+        lisDataSourceFactory.getUser(),
+        lisDataSourceFactory.getPassword());
+    try {
+      Faker faker = new Faker();
+      for (int i = 1000; i < 2000; i++) {
+        databaseHelper.runScript(LIQUIBASE_LIS_DATABASE_MASTER_XML, getLisParameters(faker, i, faker.random().nextInt(999999999), i));
+      }
+    } catch (Exception e) {
+      LOG.error("Creating manufactured data in LIS failed. ", e);
+      throw new IllegalStateException(e);
+    }
+
+    LOG.info("Finish creating manufactured data in LIS");
+  }
+
+  private Map<String, Object> getLisParameters(Faker faker, int isn, int facilityNumber, int doNumber) {
+    Map<String, Object> parameters = new HashMap<>();
+    parameters.put("isnFac", isn);
+    parameters.put("isnDo", isn);
+    parameters.put("facilityNumber", facilityNumber);
+    parameters.put("facilityName", faker.company().name());
+    parameters.put("doNumber", doNumber);
+    parameters.put("facilityTypeCode", "810");
+    parameters.put("facilityStatus", "15");
+    Address address = faker.address();
+    parameters.put("facilityAddressStreet", address.streetAddress());
+    parameters.put("facilityAddressCity", address.cityName());
+    parameters.put("facilityAddressZip", address.zipCode());
+    parameters.put("facilityLicenseeName", faker.name().fullName());
+    parameters.put("facilityCapacity", "15");
+    parameters.put("facilityApplicationDate", "2014-04-02");
+    parameters.put("facilityPhone", faker.phoneNumber().cellPhone());
+    return parameters;
   }
 }
