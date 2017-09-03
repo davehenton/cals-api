@@ -37,7 +37,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
   private static final String LIQUIBASE_CALSNS_DATABASE_MASTER_XML = "liquibase/calsns_database_master.xml";
   private static final String HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME = "hibernate.default_schema";
 
-  private static final String LIQUIBASE_LIS_DATABASE_MASTER_XML = "liquibase/manufactured_data/lis_database_master.xml";
+  private static final String LIQUIBASE_LIS_DATABASE_MASTER_XML = "liquibase/manufactured-data/lis_database_master.xml";
 
   public static void main(String[] args) throws Exception {
     new CalsApiApplication().run(args);
