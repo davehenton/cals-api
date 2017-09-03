@@ -129,7 +129,7 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
     try {
       Faker faker = new Faker();
       for (int i = 1000; i < 2000; i++) {
-        databaseHelper.runScript(LIQUIBASE_LIS_DATABASE_MASTER_XML, getLisParameters(faker, i, faker.random().nextInt(999999999), i));
+        databaseHelper.runScript(LIQUIBASE_LIS_DATABASE_MASTER_XML, getLisParameters(faker, i, faker.random().nextInt(999999999), i), lisDataSourceFactory.getProperties().get(HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME));
       }
     } catch (Exception e) {
       LOG.error("Creating manufactured data in LIS failed. ", e);
