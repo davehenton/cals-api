@@ -152,11 +152,11 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
     Address address = faker.address();
     parameters.put("facilityAddressStreet", address.streetAddress());
     parameters.put("facilityAddressCity", address.cityName());
-    parameters.put("facilityAddressZip", address.zipCode());
+    parameters.put("facilityAddressZip", address.zipCode().replace("-", ""));
     parameters.put("facilityLicenseeName", faker.name().fullName());
     parameters.put("facilityCapacity", "15");
     parameters.put("facilityApplicationDate", "2014-04-02");
-    parameters.put("facilityPhone", faker.phoneNumber().cellPhone());
+    parameters.put("facilityPhone", "5734989891");
     return parameters;
   }
 }
