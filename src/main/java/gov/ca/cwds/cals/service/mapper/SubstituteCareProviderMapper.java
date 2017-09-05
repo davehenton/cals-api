@@ -35,12 +35,16 @@ public interface SubstituteCareProviderMapper {
   @Mapping(target = "lastNm", source = "lastName")
   @Mapping(target = "midIniNm",
       expression = "java(StringUtils.capitalize(StringUtils.left(applicantDTO.getMiddleName(), 1)))")
-  @Mapping(target = "nmprfxDsc", source = "namePrefix.value")
+  @Mapping(target = "nmprfxDsc",
+      expression = "java(applicantDTO.getNamePrefix() != null ? " +
+          "applicantDTO.getNamePrefix().getValue() : Constants.SPACE)")
   @Mapping(target = "ssNo", constant = " ")
   @Mapping(target = "stateC", ignore = true)
   @Mapping(target = "streetNm", ignore = true)
   @Mapping(target = "streetNo", ignore = true)
-  @Mapping(target = "sufxTldsc", source = "nameSuffix.value")
+  @Mapping(target = "sufxTldsc",
+      expression = "java(applicantDTO.getNameSuffix() != null ? " +
+          "applicantDTO.getNameSuffix().getValue() : Constants.SPACE)")
   @Mapping(target = "zipNo", ignore = true)
   @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
