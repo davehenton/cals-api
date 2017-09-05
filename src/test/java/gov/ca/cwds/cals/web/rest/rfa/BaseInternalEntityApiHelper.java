@@ -13,6 +13,7 @@ import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.helper.FormAHelper;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
 import java.io.IOException;
 import javax.ws.rs.client.Entity;
@@ -29,13 +30,13 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
 
   private RestClientTestRule clientTestRule;
   private TestInternalEntityConfiguration<T> configuration;
-  private RFAHelper rfaHelper;
+  private FormAHelper helper;
 
   public BaseInternalEntityApiHelper(RestClientTestRule clientTestRule,
-      TestInternalEntityConfiguration<T> configuration, RFAHelper rfaHelper) {
+      TestInternalEntityConfiguration<T> configuration, FormAHelper helper) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
-    this.rfaHelper = rfaHelper;
+    this.helper = helper;
   }
 
   @Override
@@ -79,7 +80,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
 
   @Override
   public void getEntityNotFound() throws Exception {
-    RFA1aFormDTO rfa1aForm = new RFAHelper(clientTestRule).createRFA1aForm();
+    RFA1aFormDTO rfa1aForm = helper.createRFA1aForm();
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + configuration.getApiPath());
@@ -89,7 +90,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
 
   @Override
   public void putAndGetEntity() throws Exception {
-    RFA1aFormDTO rfa1aForm = new RFAHelper(clientTestRule).createRFA1aForm();
+    RFA1aFormDTO rfa1aForm = helper.createRFA1aForm();
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + rfa1aForm.getId() + "/" + configuration.getApiPath());

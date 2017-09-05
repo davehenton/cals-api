@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
+import gov.ca.cwds.cals.web.rest.rfa.helper.FormAHelper;
 import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -24,17 +25,17 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
 
   private RestClientTestRule clientTestRule;
   private TestExternalEntityConfiguration<T> configuration;
-  private RFAHelper rfaHelper;
+  private FormAHelper helper;
 
   public BaseExternalEntityApiHelper(RestClientTestRule clientTestRule,
-      TestExternalEntityConfiguration<T> configuration, RFAHelper rfaHelper) {
+      TestExternalEntityConfiguration<T> configuration, FormAHelper helper) {
     this.clientTestRule = clientTestRule;
     this.configuration = configuration;
-    this.rfaHelper = rfaHelper;
+    this.helper = helper;
   }
 
   public void createEntity() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO form = helper.createRFA1aForm();
     T created = createEntity(form);
 
     assertNotNull(created);
@@ -46,7 +47,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
   }
 
   public void updateEntity() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO form = helper.createRFA1aForm();
 
     T created = createEntity(form);
     Long createdEntityId = created.getId();
@@ -77,7 +78,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
   }
 
   public void getEntityById() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO form = helper.createRFA1aForm();
     T created = createEntity(form);
     Long createdEntityId = created.getId();
     T found = findEntity(form, createdEntityId);
@@ -85,7 +86,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
   }
 
   public void getEntitiesByFormId() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO form = helper.createRFA1aForm();
     createEntity(form);
     createEntity(form);
     createEntity(form);
@@ -104,7 +105,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
   }
 
   public void deleteEntity() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO form = helper.createRFA1aForm();
     T created = createEntity(form);
     Long createdEntityId = created.getId();
     T found = findEntity(form, createdEntityId);

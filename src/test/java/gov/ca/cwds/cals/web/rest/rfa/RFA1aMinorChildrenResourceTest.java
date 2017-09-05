@@ -48,7 +48,7 @@ public class RFA1aMinorChildrenResourceTest extends
 
         };
 
-    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
+    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration, formAHelper);
   }
 
   @Test
@@ -71,7 +71,7 @@ public class RFA1aMinorChildrenResourceTest extends
   @Test
   public void restoreUnselectedValueBackTest() throws Exception {
     String inputFixture = "{\"relationship_to_applicants\": []}";
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_MINOR_CHILDREN);
@@ -107,7 +107,7 @@ public class RFA1aMinorChildrenResourceTest extends
 
 
   private void checkInputOutput(String inputFixture, String expectedOutputFixture) throws Exception {
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
     WebTarget target = clientTestRule.target(
         API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_MINOR_CHILDREN);
 
