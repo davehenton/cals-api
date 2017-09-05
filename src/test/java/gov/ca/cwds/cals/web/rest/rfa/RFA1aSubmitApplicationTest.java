@@ -401,7 +401,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .appendTableFilter("FKPLC_HM_T", placementHomeId)
         .build();
 
-    helper.assertEquals(new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_TS"});
+    helper.assertEquals(new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_TS"}, new String[] {"OTH_ADLTNM"});
 
     ITable actualTable = helper.getActualTable();
 

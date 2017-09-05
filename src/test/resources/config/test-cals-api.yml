@@ -28,6 +28,8 @@ swagger:
   loginUrl: ${LOGIN_URL:-http://localhost:8090/authn/login}
   showSwagger: ${SHOW_SWAGGER:-true}
 
+upgardeDbOnStart: ${UPGRADE_DB_ON_START:-false}
+
 #nsDataSourceFactory:
 #  driverClass: org.h2.Driver
 #  user: sa
