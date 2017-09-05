@@ -10,6 +10,7 @@ import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
 import gov.ca.cwds.cals.Utils;
+import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.exception.ValidationDetails;
@@ -75,11 +76,12 @@ public class RFA1aFormService
     RFA1aForm form = new RFA1aForm();
     rfa1aFomMapper.toRFA1aForm(form, formDTO);
 
+    String staffPersonId = Id.getStaffPersonId();
     LocalDateTime now = LocalDateTime.now();
     form.setCreateDateTime(now);
-    form.setCreateUserId(Utils.Id.getStaffPersonId());
+    form.setCreateUserId(staffPersonId);
     form.setUpdateDateTime(now);
-    form.setUpdateUserId(Utils.Id.getStaffPersonId());
+    form.setUpdateUserId(staffPersonId);
     form.setStatus(RFAApplicationStatus.DRAFT);
     form = rfa1AFormsDao.create(form);
 
