@@ -79,8 +79,8 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
 
   @Test
   public void businessValidationTest() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
-    rfaHelper.postApplicant(form.getId(), getApplicantDTO());
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    applicantHelper.postApplicant(form.getId(), getApplicantDTO());
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_APPLICANTS);

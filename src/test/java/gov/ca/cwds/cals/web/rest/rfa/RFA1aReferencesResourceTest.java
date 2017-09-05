@@ -22,6 +22,6 @@ public class RFA1aReferencesResourceTest extends BaseInternalEntityApiTest<Refer
           }
         };
 
-    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
+    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration, formAHelper);
   }
 }

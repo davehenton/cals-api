@@ -84,8 +84,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void getInitialStatusTest() throws Exception {
-    Long formId = rfaHelper.createRFA1aForm().getId();
-    rfaHelper.assertDraft(formId);
+    Long formId = formAHelper.createRFA1aForm().getId();
+    statusHelper.assertDraft(formId);
   }
 
   @Test
@@ -93,9 +93,10 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     if (TestModeUtils.isIntegrationTestsMode()) {
       return;
     }
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
-    ApplicantDTO applicantDTO = rfaHelper.postApplicant(form.getId(), rfaHelper.getValidApplicant());
-    ApplicantDTO secondApplicant = rfaHelper.getValidApplicant();
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    ApplicantDTO applicantDTO = applicantHelper
+        .postApplicant(form.getId(), applicantHelper.getValidApplicant());
+    ApplicantDTO secondApplicant = applicantHelper.getValidApplicant();
     secondApplicant.setFirstName("John");
     StateType driverLicenseState = new StateType();
     driverLicenseState.setId(25L);
@@ -104,18 +105,18 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     secondApplicant.getEthnicity().setId(2L);
     secondApplicant.getEthnicity().setValue("American Indian");
 
-    secondApplicant = rfaHelper.postApplicant(form.getId(), secondApplicant);
-    rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
+    secondApplicant = applicantHelper.postApplicant(form.getId(), secondApplicant);
+    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
 
-    RFA1bFormDTO rfa1bForm = rfaHelper.getRfa1bForm();
-    rfaHelper.postRfa1bForm(form.getId(), applicantDTO.getId(), rfa1bForm);
+    RFA1bFormDTO rfa1bForm = formBHelper.getRfa1bForm();
+    formBHelper.postRfa1bForm(form.getId(), applicantDTO.getId(), rfa1bForm);
 
-    rfaHelper.createOtherAdults(form.getId(), secondApplicant);
-    rfaHelper.createMinorChildren(form.getId(), applicantDTO);
+    otherAdultHelper.createOtherAdults(form.getId(), secondApplicant);
+    minorChildHelper.createMinorChildren(form.getId(), applicantDTO);
 
-    Response response = submitApplication(form.getId());
+    Response response = statusHelper.submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    rfaHelper.assertSubmitted(form.getId());
+    statusHelper.assertSubmitted(form.getId());
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId());
     form = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
@@ -439,44 +440,37 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void unChangedDraftStatusTest() throws Exception {
-    Long formId = rfaHelper.createRFA1aForm().getId();
-    rfaHelper.assertDraft(formId);
-    Response response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT, formId);
+    Long formId = formAHelper.createRFA1aForm().getId();
+    statusHelper.assertDraft(formId);
+    Response response = statusHelper.changeApplicationStatusTo(RFAApplicationStatus.DRAFT, formId);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    rfaHelper.assertDraft(formId);
+    statusHelper.assertDraft(formId);
   }
 
   @Test
   public void unChangedSubmitStatusTest() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
-    rfaHelper.postApplicant(form.getId(), rfaHelper.getValidApplicant());
-    rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
-    Response response = submitApplication(form.getId());
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
+    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
+    Response response = statusHelper.submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    rfaHelper.assertSubmitted(form.getId());
-    response = submitApplication(form.getId());
+    statusHelper.assertSubmitted(form.getId());
+    response = statusHelper.submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    rfaHelper.assertSubmitted(form.getId());
+    statusHelper.assertSubmitted(form.getId());
   }
 
   @Test
   public void changeStatusBackToDraftTest() throws Exception {
-    RFA1aFormDTO form = rfaHelper.createRFA1aForm();
-    rfaHelper.postApplicant(form.getId(), rfaHelper.getValidApplicant());
-    rfaHelper.putResidence(form.getId(), rfaHelper.getResidenceDTO());
-    Response response = submitApplication(form.getId());
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
+    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
+    Response response = statusHelper.submitApplication(form.getId());
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
-    rfaHelper.assertSubmitted(form.getId());
-    response = changeApplicationStatusTo(RFAApplicationStatus.DRAFT, form.getId());
+    statusHelper.assertSubmitted(form.getId());
+    response = statusHelper.changeApplicationStatusTo(RFAApplicationStatus.DRAFT, form.getId());
     assertEquals(Status.BAD_REQUEST.getStatusCode(), response.getStatus());
-    rfaHelper.assertSubmitted(form.getId());
+    statusHelper.assertSubmitted(form.getId());
   }
 
-  private Response submitApplication(Long formId) {
-    return rfaHelper.submitApplication(formId);
-  }
-
-  private Response changeApplicationStatusTo(RFAApplicationStatus newStatus, Long formId) {
-    return rfaHelper.changeApplicationStatusTo(newStatus, formId);
-  }
 }

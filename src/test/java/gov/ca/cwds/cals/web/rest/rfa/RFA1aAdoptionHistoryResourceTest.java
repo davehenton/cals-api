@@ -23,6 +23,6 @@ public class RFA1aAdoptionHistoryResourceTest extends
           }
         };
 
-    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
+    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration, formAHelper);
   }
 }
