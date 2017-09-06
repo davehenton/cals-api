@@ -108,6 +108,7 @@ calsnsDataSourceFactory:
       hibernate.cache.use_second_level_cache: true
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       hibernate.cache.use_query_cache: true
+      hibernate.connection.autocommit: false
 
 xaCalsnsDataSourceFactory:
   driverClass: org.postgresql.Driver
@@ -129,6 +130,7 @@ xaCalsnsDataSourceFactory:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       hibernate.cache.use_query_cache: false
+      hibernate.connection.autocommit: false
 
       hibernate.current_session_context_class: jta
       hibernate.transaction.jta.platform: com.atomikos.icatch.jta.hibernate4.AtomikosPlatform
@@ -181,12 +183,12 @@ xaCmsDataSourceFactory:
       connection.release_mode: auto
   xaProperties:
       # Properties for DB2XADataSource
-#      serverName: ${DB_CMS_DB2_HOST:-192.168.99.100}
-#      portNumber: ${DB_CMS_DB2_PORT:-50000}
-#      databaseName: ${DB_CMS_DB_NAME:-DB0TDEV}
-      serverName: ${DB_CMS_DB2_HOST:-db2.dev.cwds.io}
-      portNumber: ${DB_CMS_DB2_PORT:-51000}
+      serverName: ${DB_CMS_DB2_HOST:-192.168.99.100}
+      portNumber: ${DB_CMS_DB2_PORT:-50000}
       databaseName: ${DB_CMS_DB_NAME:-DB0TDEV}
+      #serverName: ${DB_CMS_DB2_HOST:-db2.dev.cwds.io}
+      #portNumber: ${DB_CMS_DB2_PORT:-51000}
+      #databaseName: ${DB_CMS_DB_NAME:-DB0TDEV}
       driverType: 4 # Type4 connection for DB2 DataSource
 
 webSecurity:

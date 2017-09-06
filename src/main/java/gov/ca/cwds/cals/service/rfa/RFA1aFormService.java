@@ -161,20 +161,19 @@ public class RFA1aFormService
   private void submitApplication(Long formId, RFAApplicationStatus newStatus)
       throws NotSupportedException, SystemException {
 
+    RFA1aFormDTO expandedFormDTO = getExpandedFormDTO(formId);
+    performSubmissionValidation(expandedFormDTO);
+
+    // Start transaction here
     UserTransaction userTransaction = new UserTransactionImp();
     userTransaction.setTransactionTimeout(3600);
     userTransaction.begin();
-
-    RFA1aForm form = xaRfa1AFormsDao.find(formId);
-
-    RFA1aFormDTO expandedFormDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
-    performSubmissionValidation(expandedFormDTO);
 
     PlacementHome storedPlacementHome = null;
 
     try {
       storedPlacementHome = storePlaceMentHome(expandedFormDTO);
-      updateFormAfterPlacementHomeCreation(form.getId(), storedPlacementHome.getIdentifier(),
+      updateFormAfterPlacementHomeCreation(formId, storedPlacementHome.getIdentifier(),
           newStatus);
       userTransaction.commit();
     } catch (Exception e) {
@@ -184,12 +183,16 @@ public class RFA1aFormService
     }
   }
 
-  //@UnitOfWork(XA_CMS)
+  @UnitOfWork(CALSNS)
+  protected RFA1aFormDTO getExpandedFormDTO(Long formId) {
+    RFA1aForm form = rfa1AFormsDao.find(formId);
+    return rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
+  }
+
   private PlacementHome storePlaceMentHome(RFA1aFormDTO expandedFormDTO) {
     return facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
   }
 
-  //@UnitOfWork(XA_CALSNS)
   private void updateFormAfterPlacementHomeCreation(
       Long formId, String placementHomeId, RFAApplicationStatus newStatus) {
     RFA1aForm form = xaRfa1AFormsDao.find(formId);
