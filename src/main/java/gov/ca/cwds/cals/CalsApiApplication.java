@@ -2,6 +2,7 @@ package gov.ca.cwds.cals;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import gov.ca.cwds.cals.exception.CustomExceptionMapperBinder;
@@ -49,6 +50,8 @@ public class CalsApiApplication extends BaseApiApplication<CalsApiConfiguration>
     environment.jersey().register(ValidationExceptionMapperImpl.class);
     environment.jersey().register(BusinessValidationExceptionMapper.class);
     environment.jersey().register(new CustomExceptionMapperBinder(true));
+    environment.getObjectMapper()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
 
     if (configuration.isUpgradeDbOnStart()) {
       upgardeCalsNsDB(configuration);

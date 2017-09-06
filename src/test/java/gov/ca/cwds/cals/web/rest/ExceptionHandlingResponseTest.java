@@ -9,7 +9,6 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.Constants.Validation.Error;
@@ -47,7 +46,6 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
   @Test
   public void corruptedJSONValidationTest() throws Exception {
     String fixture = "{\"wrong\": -1}";
-    clientTestRule.getMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
     Response response = clientTestRule.target(API.RFA_1A_FORMS).request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(
             clientTestRule.getMapper().readValue(fixture, Wrong.class),
