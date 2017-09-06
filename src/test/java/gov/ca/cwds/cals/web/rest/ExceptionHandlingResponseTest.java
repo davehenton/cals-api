@@ -26,7 +26,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -44,10 +43,9 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     setUpFas();
   }
 
-  @Ignore
   @Test
   public void corruptedJSONValidationTest() throws Exception {
-    String fixture = "{\"wrong\": -1, \"someOtherWrongField\": false}";
+    String fixture = "{\"wrong\": -1}";
     Response response = clientTestRule.target(API.RFA_1A_FORMS).request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(
             clientTestRule.getMapper().readValue(fixture, Wrong.class),
@@ -63,7 +61,6 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     velocityHelper.setParameter("user_message", Error.BASE_MESSAGE);
     assertResponseByFixture(entity,
         velocityHelper.process("fixtures/exception/json-error-response.json"));
-
   }
 
   @Test
@@ -139,7 +136,6 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     }
 
     int wrong;
-    Boolean someOtherWrongField;
 
     public int getWrong() {
       return wrong;
@@ -149,13 +145,6 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
       this.wrong = wrong;
     }
 
-    public Boolean getSomeOtherWrongField() {
-      return someOtherWrongField;
-    }
-
-    public void setSomeOtherWrongField(Boolean someOtherWrongField) {
-      this.someOtherWrongField = someOtherWrongField;
-    }
   }
 
 }
