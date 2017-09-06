@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.rfa;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.Validation.FORM_SUBMISSION_VALIDATION_SESSION;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.TRANSITION_IS_NOT_ALLOWED;
@@ -27,6 +28,7 @@ import gov.ca.cwds.cals.service.validation.business.DroolsService;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsFieldValidationConfiguration;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
+import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.setup.Environment;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -70,6 +72,7 @@ public class RFA1aFormService
     // default constructor
   }
 
+  @UnitOfWork(CALSNS)
   @Override
   public RFA1aFormDTO create(RFA1aFormDTO formDTO) {
 
@@ -88,6 +91,7 @@ public class RFA1aFormService
     return rfa1aFomMapper.toRFA1aFormDTO(form);
   }
 
+  @UnitOfWork(CALSNS)
   @Override
   public RFA1aFormDTO find(RFA1aFormsParameterObject parameterObject) {
     RFA1aForm form = rfa1AFormsDao.find(parameterObject.getFormId());
@@ -102,6 +106,7 @@ public class RFA1aFormService
     return formDTO;
   }
 
+  @UnitOfWork(CALSNS)
   @Override
   public RFA1aFormDTO update(RFA1aFormsParameterObject parameterObject, RFA1aFormDTO formDTO) {
     RFA1aForm form = findFormById(
@@ -117,41 +122,55 @@ public class RFA1aFormService
     return form;
   }
 
+  @UnitOfWork(CALSNS)
   public RFAApplicationStatusDTO getApplicationStatus(Long formId) {
     RFA1aForm form = findFormById(formId);
     return new RFAApplicationStatusDTO(form.getStatus());
   }
 
   public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO) {
-    RFA1aForm form = findFormById(formId);
     RFAApplicationStatus newStatus = statusDTO.getStatus();
+    if (!changeStatusIfNotSubmitted(formId, newStatus)) {
+      try {
+        submitApplication(formId, newStatus);
+      } catch (NotSupportedException | SystemException e) {
+        throw new IllegalStateException(e);
+      }
+    }
+  }
+
+  @UnitOfWork(CALSNS)
+  protected boolean changeStatusIfNotSubmitted(Long formId, RFAApplicationStatus newStatus) {
+    RFA1aForm form = findFormById(formId);
     if (!StatusesTransitionConfiguration.isTransitionAllowed(form.getStatus(), newStatus)) {
       throw new ExpectedException(TRANSITION_IS_NOT_ALLOWED, BAD_REQUEST);
     }
     if (form.getStatus() == newStatus) {
-      return;
+      return true;
     }
-    if (newStatus == RFAApplicationStatus.SUBMITTED) {
-      try {
-        submitApplication(form, newStatus);
-      } catch (NotSupportedException | SystemException e) {
-        throw new IllegalStateException(e);
-      }
-    } else {
+    if (newStatus != RFAApplicationStatus.SUBMITTED) {
       form.setStatus(newStatus);
+      return true;
     }
+    return false;
   }
 
-  private void submitApplication(RFA1aForm form, RFAApplicationStatus newStatus)
+  /**
+   * There is using XA Transaction
+   */
+  private void submitApplication(Long formId, RFAApplicationStatus newStatus)
       throws NotSupportedException, SystemException {
+
+    UserTransaction userTransaction = new UserTransactionImp();
+    userTransaction.setTransactionTimeout(3600);
+    userTransaction.begin();
+
+    RFA1aForm form = xaRfa1AFormsDao.find(formId);
+
     RFA1aFormDTO expandedFormDTO = rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
     performSubmissionValidation(expandedFormDTO);
 
     PlacementHome storedPlacementHome = null;
-
-    UserTransaction userTransaction = new UserTransactionImp();
-    userTransaction.setTransactionTimeout(60);
-    userTransaction.begin();
 
     try {
       storedPlacementHome = storePlaceMentHome(expandedFormDTO);

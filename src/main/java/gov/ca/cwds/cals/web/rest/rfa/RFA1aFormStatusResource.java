@@ -4,14 +4,12 @@ import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.API.STATUS;
 import static gov.ca.cwds.cals.Constants.RFA;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
-import io.dropwizard.hibernate.UnitOfWork;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -43,7 +41,6 @@ public class RFA1aFormStatusResource {
     this.service = service;
   }
 
-  @UnitOfWork(CALSNS)
   @POST
   @Timed
   @ApiResponses(
@@ -69,7 +66,6 @@ public class RFA1aFormStatusResource {
     return Response.status(Status.OK).build();
   }
 
-  @UnitOfWork(CALSNS)
   @GET
   @Timed
   @ApiOperation(value = "Get RFA application status", response = RFAApplicationStatusDTO.class)

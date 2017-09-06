@@ -6,7 +6,7 @@ server:
   - type: http
     port: 8090
   - type: https
-    port: 8443
+    port: 8433
     keyStorePath: ${KEY_STORE_FILE:-./config/testKeyStore.jks}
     keyStorePassword: ${KEY_STORE_PASSWORD:-testPass}
     keyStoreType: JKS

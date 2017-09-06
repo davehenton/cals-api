@@ -94,7 +94,8 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
       return;
     }
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
-    ApplicantDTO applicantDTO = applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
+    ApplicantDTO applicantDTO = applicantHelper
+        .postApplicant(form.getId(), applicantHelper.getValidApplicant());
     ApplicantDTO secondApplicant = applicantHelper.getValidApplicant();
     secondApplicant.setFirstName("John");
     StateType driverLicenseState = new StateType();

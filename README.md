@@ -41,12 +41,16 @@ In order for the CALS API successfully connect to the above databases the follow
 - DB_CMS_CP_MAX_SIZE -- the CMS connections pool maximum size (default: 8)
 
 #### Postgres - NS database
+
+Add to __postgresql.conf__ on PostgeSQL server parameter __max_prepared_connections__ to nonzero value, this property need to be set for XATransactions
+
 - DB_NS_USER -- the NS database username
 - DB_NS_PASSWORD -- the NS database password
 - DB_NS_JDBC_URL -- the NS database URL in Java Database Connectivity format
 - DB_NS_CP_INITIAL_SIZE -- the NS connections pool iniitial size (default: 2) 
 - DB_NS_CP_MIN_SIZE -- the NS connections pool minimum size (default: 2)
 - DB_NS_CP_MAX_SIZE -- the NS connections pool maximum size (default: 8)
+
 
 #### CONNX - LIS database
 Set environment variable CALS_API_CONFIG to cals-api-lis-connx.yml to run docker container with CONNX connection to LIS datasource

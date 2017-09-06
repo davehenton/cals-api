@@ -120,7 +120,6 @@ xaCalsnsDataSourceFactory:
   xaProperties:
       url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
 
-
 cmsDataSourceFactory:
   autoCommitByDefault: false
   driverClass: com.ibm.db2.jcc.DB2Driver
