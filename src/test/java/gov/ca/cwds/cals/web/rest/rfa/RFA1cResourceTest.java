@@ -46,7 +46,7 @@ public class RFA1cResourceTest extends
 
         };
 
-    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
+    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration, formAHelper);
   }
 
 }

@@ -45,11 +45,12 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
           }
         };
 
-    return new BaseExternalEntityApiHelper<RFA1bFormDTO>(clientTestRule, configuration, rfaHelper) {
+    return new BaseExternalEntityApiHelper<RFA1bFormDTO>(clientTestRule, configuration,
+        formAHelper) {
       @Override
       protected RFA1bFormDTO createEntity(RFA1aFormDTO form) throws IOException {
-        ApplicantDTO applicantDTO = rfaHelper
-            .getFirstExistedOrPostNewApplicant(form.getId(), rfaHelper.getValidApplicant());
+        ApplicantDTO applicantDTO = applicantHelper
+            .getFirstExistedOrPostNewApplicant(form.getId(), applicantHelper.getValidApplicant());
         WebTarget target =
             clientTestRule.target(
                 API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath() + "/"

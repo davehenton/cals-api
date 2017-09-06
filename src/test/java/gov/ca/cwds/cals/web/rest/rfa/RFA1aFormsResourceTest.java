@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -18,6 +19,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
+import io.dropwizard.jackson.Jackson;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +31,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author CWDS CALS API Team
@@ -55,6 +59,14 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
     assertEqualsResponse(expectedPostResponse, transformDTOtoJSON(postResponseForm));
 
+    WebTarget putApplicantTarget = clientTestRule
+        .target(API.RFA_1A_FORMS + "/" + id + "/" + API.RFA_1A_APPLICANTS);
+    ApplicantDTO applicantDTO = putApplicantTarget.request(MediaType.APPLICATION_JSON)
+        .post(Entity
+                .entity(fixture("fixtures/rfa/rfa-1a-applicant.json"), MediaType.APPLICATION_JSON_TYPE),
+            ApplicantDTO.class);
+    String applicantFixture = Jackson.newObjectMapper().setSerializationInclusion(Include.NON_NULL)
+        .writeValueAsString(applicantDTO);
 
     String putResidenceFixture = fixture("fixtures/rfa/rfa-1a-residence-request.json");
     WebTarget putResidenceTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/residence");
@@ -120,10 +132,15 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
     getVelocityExpandedResponseHelper.setParameter("childDesired", putChildDesiredFixture);
     getVelocityExpandedResponseHelper.setParameter("references", putReferencesFixture);
     getVelocityExpandedResponseHelper.setParameter("applicantsDeclaration", putApplicantsDeclarationFixture);
+    getVelocityExpandedResponseHelper.setParameter("applicant", applicantFixture);
     String expectedGetExpandedResponse =
         getVelocityExpandedResponseHelper.process("fixtures/rfa/rfa-1a-form-get-expanded-response.json");
 
-    assertEqualsResponse(expectedGetExpandedResponse, transformDTOtoJSON(getExpandedResponseForm));
+    //assertEqualsResponse(expectedGetExpandedResponse, transformDTOtoJSON(getExpandedResponseForm));
+    JSONAssert
+        .assertEquals(expectedGetExpandedResponse, transformDTOtoJSON(getExpandedResponseForm),
+            JSONCompareMode.STRICT);
+
 
     WebTarget getExpandedCollectionTarget =
         clientTestRule.target(API.RFA_1A_FORMS + "?" + API.QueryParams.EXPANDED + "=true");
@@ -155,7 +172,7 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @Test
   public void getApplicationFormTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO rfaFormCreate = formAHelper.createRFA1aForm();
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     RFA1aFormDTO rfaFormGet = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
@@ -166,7 +183,7 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @Test
   public void updateApplicationFormTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate = rfaHelper.createRFA1aForm();
+    RFA1aFormDTO rfaFormCreate = formAHelper.createRFA1aForm();
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + rfaFormCreate.getId());
     rfaFormCreate.setOtherTypeDescription("newOtherTypeDescription");
@@ -181,18 +198,18 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @Test
   public void getAllApplicationFormsTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate1 = rfaHelper.createRFA1aForm();
-    rfaHelper.postApplicant(rfaFormCreate1.getId(), new ApplicantDTO());
-    RFA1aFormDTO rfaFormCreate2 = rfaHelper.createRFA1aForm();
-    rfaHelper.postApplicant(rfaFormCreate2.getId(), new ApplicantDTO());
-    RFA1aFormDTO rfaFormCreate3 = rfaHelper.createRFA1aForm();
-    rfaHelper.postApplicant(rfaFormCreate3.getId(), new ApplicantDTO());
+    RFA1aFormDTO rfaFormCreate1 = formAHelper.createRFA1aForm();
+    applicantHelper.postApplicant(rfaFormCreate1.getId(), new ApplicantDTO());
+    RFA1aFormDTO rfaFormCreate2 = formAHelper.createRFA1aForm();
+    applicantHelper.postApplicant(rfaFormCreate2.getId(), new ApplicantDTO());
+    RFA1aFormDTO rfaFormCreate3 = formAHelper.createRFA1aForm();
+    applicantHelper.postApplicant(rfaFormCreate3.getId(), new ApplicantDTO());
 
     assertNotEquals(rfaFormCreate1, rfaFormCreate2);
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);
     assertNotEquals(rfaFormCreate3, rfaFormCreate1);
 
-    CollectionDTO<RFA1aFormDTO> rfaForms = rfaHelper.getRFA1aForms();
+    CollectionDTO<RFA1aFormDTO> rfaForms = formAHelper.getRFA1aForms();
 
     assertTrue(rfaForms.getCollection().size() >= 3);
 

@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author CWDS CALS API Team
  */
 
-public class JunkApplicationsTest extends BaseRFAIntegrationTest {
+public class DraftApplicationsTest extends BaseRFAIntegrationTest {
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -23,12 +23,12 @@ public class JunkApplicationsTest extends BaseRFAIntegrationTest {
   }
 
   @Test
-  public void junkApplicationsTest() throws Exception {
-    int previousSize = rfaHelper.getRFA1aForms().getCollection().size();
-    rfaHelper.assertDraft(createJunkForm().getId());
-    assertEquals(previousSize, rfaHelper.getRFA1aForms().getCollection().size());
-    rfaHelper.assertInProgress(createInProgressForm().getId());
-    assertEquals(previousSize + 1, rfaHelper.getRFA1aForms().getCollection().size());
+  public void draftApplicationsTest() throws Exception {
+    int previousSize = formAHelper.getRFA1aForms().getCollection().size();
+    statusHelper.assertDraft(createJunkForm().getId());
+    assertEquals(previousSize, formAHelper.getRFA1aForms().getCollection().size());
+    statusHelper.assertInProgress(createInProgressForm().getId());
+    assertEquals(previousSize + 1, formAHelper.getRFA1aForms().getCollection().size());
   }
 
   private RFA1aFormDTO createInProgressForm() {
@@ -39,7 +39,7 @@ public class JunkApplicationsTest extends BaseRFAIntegrationTest {
             .post(
                 Entity.entity(new RFA1aFormDTO(), MediaType.APPLICATION_JSON_TYPE),
                 RFA1aFormDTO.class);
-    rfaHelper.postApplicant(rfaForm.getId(), new ApplicantDTO());
+    applicantHelper.postApplicant(rfaForm.getId(), new ApplicantDTO());
     return rfaForm;
   }
 

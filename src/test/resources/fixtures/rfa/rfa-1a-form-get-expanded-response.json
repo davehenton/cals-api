@@ -4,7 +4,9 @@
   "is_other_type": false,
   "residence": $residence,
   "applicants_history": $applicantsHistory,
-  "applicants": [],
+  "applicants": [
+    $applicant
+  ],
   "minor_children": [],
   "other_adults": [],
   "rfa1c_forms": [],

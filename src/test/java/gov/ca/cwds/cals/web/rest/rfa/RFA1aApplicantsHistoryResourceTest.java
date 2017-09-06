@@ -26,7 +26,7 @@ public class RFA1aApplicantsHistoryResourceTest extends
 
         };
 
-    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration, rfaHelper);
+    return new BaseInternalEntityApiHelper<>(clientTestRule, configuration, formAHelper);
   }
 
 }
