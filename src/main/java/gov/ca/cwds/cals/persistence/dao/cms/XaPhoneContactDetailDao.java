@@ -1,15 +1,15 @@
 package gov.ca.cwds.cals.persistence.dao.cms;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
+import gov.ca.cwds.cals.inject.XaCmsSessionFactory;
+import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
 import gov.ca.cwds.data.BaseDaoImpl;
-import gov.ca.cwds.inject.CmsSessionFactory;
 import org.hibernate.SessionFactory;
 
 /**
  * @author CWDS CALS API Team
  */
-public class OtherAdultsInPlacementHomeDao extends BaseDaoImpl<OtherAdultsInPlacementHome> {
+public class XaPhoneContactDetailDao extends BaseDaoImpl<PhoneContactDetail> {
 
   /**
    * Constructor
@@ -17,7 +17,7 @@ public class OtherAdultsInPlacementHomeDao extends BaseDaoImpl<OtherAdultsInPlac
    * @param sessionFactory The session factory
    */
   @Inject
-  public OtherAdultsInPlacementHomeDao(@CmsSessionFactory SessionFactory sessionFactory) {
+  public XaPhoneContactDetailDao(@XaCmsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 }

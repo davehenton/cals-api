@@ -6,7 +6,7 @@ server:
   - type: http
     port: 8090
   - type: https
-    port: 8443
+    port: 8433
     keyStorePath: ${KEY_STORE_FILE:-./config/testKeyStore.jks}
     keyStorePassword: ${KEY_STORE_PASSWORD:-testPass}
     keyStoreType: JKS
@@ -75,9 +75,35 @@ cmsDataSourceFactory:
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
-      hibernate.default_schema: CWSCMS
+      hibernate.default_schema: cwscms
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
+
+
+xaCmsDataSourceFactory:
+  driverClass: org.h2.Driver
+  user: sa
+  password:
+  xaDataSourceClassName: org.h2.jdbcx.JdbcDataSource
+  url: jdbc:h2:mem:cwscms;INIT=create schema if not exists cwscms\;set schema cwscms
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  logValidationErrors: true
+  initialSize: ${DB_CMS_CP_INITIAL_SIZE:-2}
+  minSize: ${DB_CMS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_CMS_CP_MAX_SIZE:-8}
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      hibernate.default_schema: cwscms
+      hibernate.id.new_generator_mappings: false
+      hibernate.show_sql: false
+
+      hibernate.current_session_context_class: jta
+      hibernate.transaction.jta.platform: com.atomikos.icatch.jta.hibernate4.AtomikosPlatform
+      hibernate.transaction.factory_class: org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl
+      connection.release_mode: auto
+  xaProperties:
+       url: jdbc:h2:mem:cwscms;INIT=create schema if not exists calsns\;set schema cwscms
 
 lisDataSourceFactory:
   driverClass: org.h2.Driver
@@ -109,11 +135,40 @@ calsnsDataSourceFactory:
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.JsonbSupportH2Dialect
+      #hibernate.default_schema: CALSNS
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
       hibernate.cache.use_second_level_cache: true
       hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
       hibernate.cache.use_query_cache: true
+      
+xaCalsnsDataSourceFactory:
+  driverClass: org.h2.Driver
+  user: sa
+  password:
+  xaDataSourceClassName: org.h2.jdbcx.JdbcDataSource
+  url: jdbc:h2:mem:calsns;INIT=create schema if not exists calsns\;set schema calsns
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  logValidationErrors: true
+  initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
+  minSize: ${DB_NS_CP_MIN_SIZE:-2}
+  maxSize: ${DB_NS_CP_MAX_SIZE:-8}
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: gov.ca.cwds.cals.persistence.hibernate.dialect.JsonbSupportH2Dialect
+      #hibernate.default_schema: CALSNS
+      hibernate.id.new_generator_mappings: false
+      hibernate.show_sql: false
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      hibernate.cache.use_query_cache: false
+
+      hibernate.current_session_context_class: jta
+      hibernate.transaction.jta.platform: com.atomikos.icatch.jta.hibernate4.AtomikosPlatform
+      hibernate.transaction.factory_class: org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl
+      connection.release_mode: auto
+  xaProperties:
+      url: jdbc:h2:mem:calsns;INIT=create schema if not exists calsns\;set schema calsns
 
 webSecurity:
   httpResponseSecurityHeaders:

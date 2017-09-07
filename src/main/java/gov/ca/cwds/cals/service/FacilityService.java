@@ -11,28 +11,29 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.exception.ExpectedException;
-import gov.ca.cwds.cals.persistence.dao.cms.BackgroundCheckDao;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
-import gov.ca.cwds.cals.persistence.dao.cms.ClientScpEthnicityDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.CountyOwnershipDao;
-import gov.ca.cwds.cals.persistence.dao.cms.EmergencyContactDetailDao;
-import gov.ca.cwds.cals.persistence.dao.cms.ExternalInterfaceDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
-import gov.ca.cwds.cals.persistence.dao.cms.OtherAdultsInPlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.OtherChildrenInPlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.OtherPeopleScpRelationshipDao;
-import gov.ca.cwds.cals.persistence.dao.cms.OutOfStateCheckDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PhoneContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeInformationDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeNotesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeProfileDao;
-import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeUcDao;
 import gov.ca.cwds.cals.persistence.dao.cms.StateDao;
-import gov.ca.cwds.cals.persistence.dao.cms.SubstituteCareProviderDao;
-import gov.ca.cwds.cals.persistence.dao.cms.SubstituteCareProviderUCDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaBackgroundCheckDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaClientScpEthnicityDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaCountyOwnershipDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaEmergencyContactDetailDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaExternalInterfaceDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaOtherAdultsInPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaOtherChildrenInPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaOtherPeopleScpRelationshipDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaOutOfStateCheckDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaPhoneContactDetailDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeInformationDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeNotesDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeProfileDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeUcDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaSubstituteCareProviderDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XaSubstituteCareProviderUCDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
@@ -129,58 +130,61 @@ public class FacilityService implements CrudsService {
   private LisTableFileDao lisTableFileDao;
 
   @Inject
-  private ExternalInterfaceDao externalInterfaceDao;
+  private XaExternalInterfaceDao xaExternalInterfaceDao;
 
   @Inject
   private PlacementHomeDao placementHomeDao;
 
   @Inject
-  private PlacementHomeUcDao placementHomeUcDao;
+  private XaPlacementHomeDao xaPlacementHomeDao;
 
   @Inject
-  private PlacementHomeNotesDao placementHomeNotesDao;
+  private XaPlacementHomeUcDao xaPlacementHomeUcDao;
 
   @Inject
-  private EmergencyContactDetailDao emergencyContactDetailDao;
+  private XaPlacementHomeNotesDao xaPlacementHomeNotesDao;
 
   @Inject
-  private BackgroundCheckDao backgroundCheckDao;
+  private XaEmergencyContactDetailDao xaEmergencyContactDetailDao;
 
   @Inject
-  private CountyOwnershipDao countyOwnershipDao;
+  private XaBackgroundCheckDao xaBackgroundCheckDao;
 
   @Inject
-  private SubstituteCareProviderDao substituteCareProviderDao;
+  private XaCountyOwnershipDao xaCountyOwnershipDao;
 
   @Inject
-  private SubstituteCareProviderUCDao substituteCareProviderUCDao;
+  private XaSubstituteCareProviderDao xaSubstituteCareProviderDao;
 
   @Inject
-  private PlacementHomeInformationDao placementHomeInformationDao;
+  private XaSubstituteCareProviderUCDao xaSubstituteCareProviderUCDao;
 
   @Inject
-  private PlacementHomeProfileDao placementHomeProfileDao;
+  private XaPlacementHomeInformationDao xaPlacementHomeInformationDao;
 
   @Inject
-  private PhoneContactDetailDao phoneContactDetailDao;
+  private XaPlacementHomeProfileDao xaPlacementHomeProfileDao;
 
   @Inject
-  private ClientScpEthnicityDao clientScpEthnicityDao;
+  private XaPhoneContactDetailDao xaPhoneContactDetailDao;
 
   @Inject
-  private OtherChildrenInPlacementHomeDao otherChildrenDao;
+  private XaClientScpEthnicityDao xaClientScpEthnicityDao;
 
   @Inject
-  private OtherAdultsInPlacementHomeDao otherAdultDao;
+  private XaOtherChildrenInPlacementHomeDao xaOtherChildrenDao;
 
   @Inject
-  private OtherPeopleScpRelationshipDao otherPeopleScpRelationshipDao;
+  private XaOtherAdultsInPlacementHomeDao xaOtherAdultDao;
+
+  @Inject
+  private XaOtherPeopleScpRelationshipDao xaOtherPeopleScpRelationshipDao;
 
   @Inject
   private CountiesDao countiesDao;
 
   @Inject
-  private OutOfStateCheckDao outOfStateCheckDao;
+  private XaOutOfStateCheckDao xaOutOfStateCheckDao;
 
   @Inject
   private FacilityMapper facilityMapper;
@@ -462,12 +466,11 @@ public class FacilityService implements CrudsService {
     return storePlacementHome(formDTO);
   }
 
-  @UnitOfWork(CMS)
   protected PlacementHome storePlacementHome(RFA1aFormDTO form) {
     PlacementHome placementHome = placementHomeMapper.toPlacementHome(
         form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));
 
-    PlacementHome storedPlacementHome = placementHomeDao.create(placementHome);
+    PlacementHome storedPlacementHome = xaPlacementHomeDao.create(placementHome);
     String placementHomeId = storedPlacementHome.getIdentifier();
 
     storePlacementHomeUc(storedPlacementHome);
@@ -515,7 +518,7 @@ public class FacilityService implements CrudsService {
   private CountyOwnership storeCountyOwnership(String entityId, String discriminator, List<CountyType> counties) {
     CountyOwnership countyOwnership =
         countyOwnershipMapper.toCountyOwnership(entityId, discriminator, counties);
-    return countyOwnershipDao.create(countyOwnership);// TODO: 8/18/2017
+    return xaCountyOwnershipDao.create(countyOwnership);// TODO: 8/18/2017
   }
 
   private SubstituteCareProvider storeSubstituteCareProvider(RFA1aFormDTO form, ApplicantDTO applicant) {
@@ -532,7 +535,7 @@ public class FacilityService implements CrudsService {
     substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
         substituteCareProvider, mailingAddress);
 
-    return substituteCareProviderDao.create(substituteCareProvider);
+    return xaSubstituteCareProviderDao.create(substituteCareProvider);
   }
 
   private SubstituteCareProviderUc storeSubstituteCareProviderUC(
@@ -541,28 +544,28 @@ public class FacilityService implements CrudsService {
     SubstituteCareProviderUc substituteCareProviderUc = substituteCareProviderUCMapper
         .toSubstituteCareProviderUC(substituteCareProviderIdentifier, applicant);
 
-    return substituteCareProviderUCDao.create(substituteCareProviderUc);
+    return xaSubstituteCareProviderUCDao.create(substituteCareProviderUc);
   }
 
   private void storeExternalInterface() {
     ExternalInterface externalInterface = externalInterfaceMapper.toExternalInterface("");
-    externalInterfaceDao.create(externalInterface);
+    xaExternalInterfaceDao.create(externalInterface);
   }
 
   private void storeEmergencyContactDetail(String placementHomeId) {
     EmergencyContactDetail emergencyContactDetail =
         emergencyContactDetailMapper.toEmergencyContactDetail(placementHomeId);
-    emergencyContactDetailDao.create(emergencyContactDetail);
+    xaEmergencyContactDetailDao.create(emergencyContactDetail);
   }
 
   private void storeBackgroundCheck() {
     BackgroundCheck backgroundCheck = backgroundCheckMapper.toBackgroundCheck("");
-    backgroundCheckDao.create(backgroundCheck);
+    xaBackgroundCheckDao.create(backgroundCheck);
   }
 
   private void storePlacementHomeNotes(String placementHomeId) {
     PlacementHomeNotes placementHomeNotes = placementHomeNotesMapper.toPlacementHomeNotes(placementHomeId);
-    placementHomeNotesDao.create(placementHomeNotes);
+    xaPlacementHomeNotesDao.create(placementHomeNotes);
   }
 
 
@@ -572,7 +575,7 @@ public class FacilityService implements CrudsService {
     placementHomeUc.setLstUpdTs(LocalDateTime.now());
     placementHomeUc.setPkplcHmt(persistedPlacementHome.getIdentifier());
 
-    return placementHomeUcDao.create(placementHomeUc);
+    return xaPlacementHomeUcDao.create(placementHomeUc);
   }
 
   private PlacementHomeInformation storePlacementHomeInformation(RFA1aFormDTO form,
@@ -581,7 +584,7 @@ public class FacilityService implements CrudsService {
         placementHomeInformationMapper.toPlacementHomeInformation(
             form, applicantDTO, placementHomeId, substituteCareProviderId);
 
-    return placementHomeInformationDao.create(placementHomeInformation);
+    return xaPlacementHomeInformationDao.create(placementHomeInformation);
   }
 
   private void storePlacementHomeProfile(RFA1aFormDTO form, String placementHomeId) {
@@ -591,7 +594,7 @@ public class FacilityService implements CrudsService {
     for (LanguageType languageType : languageTypes) {
       PlacementHomeProfile placementHomeProfile =
           placementHomeProfileMapper.toPlacementHomeProfile(languageType, placementHomeId);
-      placementHomeProfileDao.create(placementHomeProfile);
+      xaPlacementHomeProfileDao.create(placementHomeProfile);
     }
   }
 
@@ -605,7 +608,7 @@ public class FacilityService implements CrudsService {
           phoneContactDetail.setThirdId(Utils.Id.generate());
           phoneContactDetail.setLstUpdId(Id.getStaffPersonId());
           phoneContactDetail.setLstUpdTs(LocalDateTime.now());
-          phoneContactDetailDao.create(phoneContactDetail);
+          xaPhoneContactDetailDao.create(phoneContactDetail);
         })
     );
 
@@ -617,7 +620,7 @@ public class FacilityService implements CrudsService {
     clientScpEthnicity.setIdentifier(Utils.Id.generate());
     clientScpEthnicity.setLstUpdId(Id.getStaffPersonId());
     clientScpEthnicity.setLstUpdTs(LocalDateTime.now());
-    clientScpEthnicityDao.create(clientScpEthnicity);
+    xaClientScpEthnicityDao.create(clientScpEthnicity);
   }
 
   private void storeOutOfStateCheck(SubstituteCareProvider substituteCareProvider) {
@@ -641,7 +644,7 @@ public class FacilityService implements CrudsService {
     otherChild.setLstUpdId(Id.getStaffPersonId());
     otherChild.setLstUpdTs(LocalDateTime.now());
     otherChild.setFkplcHmT(placementHome.getIdentifier());
-    return otherChildrenDao.create(otherChild);
+    return xaOtherChildrenDao.create(otherChild);
   }
 
   private void storeOtherChildrenScpRelationships(
@@ -658,7 +661,7 @@ public class FacilityService implements CrudsService {
           relationship.setIdentifier(Id.generate());
           relationship.setLstUpdId(Id.getStaffPersonId());
           relationship.setLstUpdTs(LocalDateTime.now());
-          otherPeopleScpRelationshipDao.create(relationship);
+          xaOtherPeopleScpRelationshipDao.create(relationship);
         });
   }
 
@@ -679,7 +682,7 @@ public class FacilityService implements CrudsService {
     otherAdult.setLstUpdTs(LocalDateTime.now());
     otherAdult.setFkplcHmT(persistedPlacementHome.getIdentifier());
 
-    return otherAdultDao.create(otherAdult);
+    return xaOtherAdultDao.create(otherAdult);
   }
 
   private void storeOtherAdultScpRelationships(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap,
@@ -695,7 +698,7 @@ public class FacilityService implements CrudsService {
           relationship.setIdentifier(Id.generate());
           relationship.setLstUpdId(Id.getStaffPersonId());
           relationship.setLstUpdTs(LocalDateTime.now());
-          otherPeopleScpRelationshipDao.create(relationship);
+          xaOtherPeopleScpRelationshipDao.create(relationship);
         });
   }
 
@@ -709,7 +712,7 @@ public class FacilityService implements CrudsService {
     outOfStateCheck.setIdentifier(Id.generate());
     outOfStateCheck.setLstUpdId(Id.getStaffPersonId());
     outOfStateCheck.setLstUpdTs(LocalDateTime.now());
-    outOfStateCheckDao.create(outOfStateCheck);
+    xaOutOfStateCheckDao.create(outOfStateCheck);
   }
 
 }

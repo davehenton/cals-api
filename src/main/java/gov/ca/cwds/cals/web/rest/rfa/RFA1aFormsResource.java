@@ -55,7 +55,7 @@ public class RFA1aFormsResource {
     this.collectionResourceDelegate = collectionResourceDelegate;
   }
 
-  @UnitOfWork(CALSNS)
+  //@UnitOfWork(CALSNS)
   @POST
   @Timed
   @ApiResponses(
@@ -77,7 +77,7 @@ public class RFA1aFormsResource {
     return resourceDelegate.create(application);
   }
 
-  @UnitOfWork(CALSNS)
+  //@UnitOfWork(CALSNS)
   @PUT
   @Path("/{" + RFA_1A_APPLICATION_ID + "}")
   @Timed
@@ -100,7 +100,7 @@ public class RFA1aFormsResource {
     return resourceDelegate.update(new RFA1aFormsParameterObject(formId), formDTO);
   }
 
-  @UnitOfWork(CALSNS)
+  //@UnitOfWork(CALSNS)
   @GET
   @Path("/{" + RFA_1A_APPLICATION_ID + "}")
   @Timed

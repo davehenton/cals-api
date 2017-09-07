@@ -4,7 +4,10 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CALSNS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CMS;
 
+import com.google.common.collect.ImmutableList;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
@@ -78,8 +81,9 @@ import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
-import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.hibernate.SessionFactoryFactory;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
@@ -87,13 +91,101 @@ import org.hibernate.SessionFactory;
 /** @author CWDS CALS API Team */
 public class DataAccessModule extends AbstractModule {
 
+  private final ImmutableList<Class<?>> lisEntities = ImmutableList.<Class<?>>builder().add(
+      LisFacFile.class,
+      LisTableFile.class,
+      LisDoFile.class
+  ).build();
+
+
+  private final ImmutableList<Class<?>> fasEntities = ImmutableList.<Class<?>>builder().add(
+      FacilityInformation.class,
+      LisTableFile.class,
+      LisDoFile.class,
+      ComplaintReportLic802.class,
+      LpaInformation.class,
+      Rrcpoc.class,
+      Rr809Dn.class
+  ).build();
+
+
+  private final ImmutableList<Class<?>> cmsEntities = ImmutableList.<Class<?>>builder().add(
+      Client.class,
+      OutOfHomePlacement.class,
+      PlacementEpisode.class,
+      PlacementHome.class,
+      StaffPerson.class,
+      gov.ca.cwds.cals.persistence.model.cms.FacilityType.class,
+      gov.ca.cwds.cals.persistence.model.cms.County.class,
+      CountyLicenseCase.class,
+      LicensingVisit.class,
+      VisitType.class,
+      State.class,
+      LicenseStatus.class,
+
+      AddressPhoneticName.class,
+      AddressPhoneticNamePK.class,
+      BackgroundCheck.class,
+      ClientScpEthnicity.class,
+      CountyOwnership.class,
+      CountyOwnershipPK.class,
+      EmergencyContactDetail.class,
+      ExternalInterface.class,
+      ExternalInterfacePK.class,
+      PlacementHomeProfile.class,
+      PlacementHomeProfilePK.class,
+      PlacementHomeInformation.class,
+      PlacementHomeInformationPK.class,
+      PlacementHomeNotes.class,
+      OtherPeopleScpRelationship.class,
+      OutOfStateCheck.class,
+      OtherAdultsInPlacementHome.class,
+      OtherChildrenInPlacementHome.class,
+      PhoneContactDetail.class,
+      PlacementHomeUc.class,
+      SubstituteCareProvider.class,
+      SubstituteCareProviderUc.class,
+      SubCareProviderPhoneticName.class
+  ).build();
+
+
+  private final ImmutableList<Class<?>> calsnsEntities = ImmutableList.<Class<?>>builder().add(
+      // Dictionaries
+      AgeGroupType.class,
+      LanguageType.class,
+      GenderType.class,
+      NameType.class,
+      EducationLevelType.class,
+      EthnicityType.class,
+      gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType.class,
+      RaceType.class,
+      RelationshipToApplicantType.class,
+      IncomeType.class,
+      PhoneNumberType.class,
+      AddressType.class,
+      SiblingGroupType.class,
+      StateType.class,
+      ResidenceOwnershipType.class,
+      ApplicantRelationshipType.class,
+      LicenseType.class,
+      MarriageTerminationReasonType.class,
+      SchoolGradeType.class,
+      CountyType.class,
+      NameSuffixType.class,
+      NamePrefixType.class,
+      //RFA
+      RFA1aForm.class,
+      RFA1aApplicant.class,
+      RFA1aMinorChild.class,
+      RFA1aOtherAdult.class,
+      RFA1bForm.class,
+      RFA1cForm.class
+  ).build();
+
   private final HibernateBundle<CalsApiConfiguration> lisHibernateBundle =
-      new HibernateBundle<CalsApiConfiguration>(
-          LisFacFile.class,
-          LisTableFile.class,
-          LisDoFile.class) {
+      new HibernateBundle<CalsApiConfiguration>(lisEntities, new SessionFactoryFactory()) {
         @Override
-        public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+        public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
           return configuration.getLisDataSourceFactory();
         }
 
@@ -104,16 +196,9 @@ public class DataAccessModule extends AbstractModule {
       };
 
   private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
-      new HibernateBundle<CalsApiConfiguration>(
-          FacilityInformation.class,
-          LisTableFile.class,
-          LisDoFile.class,
-          ComplaintReportLic802.class,
-          LpaInformation.class,
-          Rrcpoc.class,
-          Rr809Dn.class) {
+      new HibernateBundle<CalsApiConfiguration>(fasEntities, new SessionFactoryFactory()) {
         @Override
-        public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+        public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
           return configuration.getFasDataSourceFactory();
         }
 
@@ -124,46 +209,9 @@ public class DataAccessModule extends AbstractModule {
       };
 
   private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
-      new HibernateBundle<CalsApiConfiguration>(
-          Client.class,
-          OutOfHomePlacement.class,
-          PlacementEpisode.class,
-          PlacementHome.class,
-          StaffPerson.class,
-          gov.ca.cwds.cals.persistence.model.cms.FacilityType.class,
-          gov.ca.cwds.cals.persistence.model.cms.County.class,
-          CountyLicenseCase.class,
-          LicensingVisit.class,
-          VisitType.class,
-          State.class,
-          LicenseStatus.class,
-
-          AddressPhoneticName.class,
-          AddressPhoneticNamePK.class,
-          BackgroundCheck.class,
-          ClientScpEthnicity.class,
-          CountyOwnership.class,
-          CountyOwnershipPK.class,
-          EmergencyContactDetail.class,
-          ExternalInterface.class,
-          ExternalInterfacePK.class,
-          PlacementHomeProfile.class,
-          PlacementHomeProfilePK.class,
-          PlacementHomeInformation.class,
-          PlacementHomeInformationPK.class,
-          PlacementHomeNotes.class,
-          OtherPeopleScpRelationship.class,
-          OutOfStateCheck.class,
-          OtherAdultsInPlacementHome.class,
-          OtherChildrenInPlacementHome.class,
-          PhoneContactDetail.class,
-          PlacementHomeUc.class,
-          SubstituteCareProvider.class,
-          SubstituteCareProviderUc.class,
-          SubCareProviderPhoneticName.class
-      ) {
+      new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
         @Override
-        public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+        public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
           return configuration.getCmsDataSourceFactory();
         }
 
@@ -173,42 +221,23 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
-      new HibernateBundle<CalsApiConfiguration>(
-          // Dictionaries
-          AgeGroupType.class,
-          LanguageType.class,
-          GenderType.class,
-          NameType.class,
-          EducationLevelType.class,
-          EthnicityType.class,
-          gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType.class,
-          RaceType.class,
-          RelationshipToApplicantType.class,
-          IncomeType.class,
-          PhoneNumberType.class,
-          AddressType.class,
-          SiblingGroupType.class,
-          StateType.class,
-          ResidenceOwnershipType.class,
-          ApplicantRelationshipType.class,
-          LicenseType.class,
-          MarriageTerminationReasonType.class,
-          SchoolGradeType.class,
-          CountyType.class,
-          NameSuffixType.class,
-          NamePrefixType.class,
-          //RFA
-          RFA1aForm.class,
-          RFA1aApplicant.class,
-          RFA1aMinorChild.class,
-          RFA1aOtherAdult.class,
-          RFA1bForm.class,
-          RFA1cForm.class
-      ) {
+  private final HibernateBundle<CalsApiConfiguration> xaCmsHibernateBundle =
+      new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
+        @Override
+        public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+          return configuration.getXaCmsDataSourceFactory();
+        }
 
         @Override
-        public DataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+        public String name() {
+          return XA_CMS;
+        }
+      };
+
+  private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
+      new HibernateBundle<CalsApiConfiguration>(calsnsEntities, new SessionFactoryFactory()) {
+        @Override
+        public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
           return configuration.getCalsnsDataSourceFactory();
         }
 
@@ -221,14 +250,34 @@ public class DataAccessModule extends AbstractModule {
         public void configure(org.hibernate.cfg.Configuration configuration) {
           configuration.addPackage("gov.ca.cwds.cals.persistence.model.calsns.rfa");
         }
-
       };
+
+  private final HibernateBundle<CalsApiConfiguration> xaCalsnsHibernateBundle =
+      new HibernateBundle<CalsApiConfiguration>(calsnsEntities, new SessionFactoryFactory()) {
+        @Override
+        public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+          return configuration.getXaCalsnsDataSourceFactory();
+        }
+
+        @Override
+        public String name() {
+          return XA_CALSNS;
+        }
+
+        @Override
+        public void configure(org.hibernate.cfg.Configuration configuration) {
+          configuration.addPackage("gov.ca.cwds.cals.persistence.model.calsns.rfa");
+        }
+      };
+
 
   public DataAccessModule(Bootstrap<CalsApiConfiguration> bootstrap) {
     bootstrap.addBundle(fasHibernateBundle);
     bootstrap.addBundle(cmsHibernateBundle);
     bootstrap.addBundle(lisHibernateBundle);
     bootstrap.addBundle(calsnsHibernateBundle);
+    bootstrap.addBundle(xaCmsHibernateBundle);
+    bootstrap.addBundle(xaCalsnsHibernateBundle);
   }
 
   @Override
@@ -249,6 +298,12 @@ public class DataAccessModule extends AbstractModule {
   }
 
   @Provides
+  @XaCmsSessionFactory
+  SessionFactory xaCmsSessionFactory() {
+    return xaCmsHibernateBundle.getSessionFactory();
+  }
+
+  @Provides
   @LisSessionFactory
   SessionFactory lisSessionFactory() {
     return lisHibernateBundle.getSessionFactory();
@@ -259,6 +314,14 @@ public class DataAccessModule extends AbstractModule {
   SessionFactory calsnsSessionFactory() {
     return calsnsHibernateBundle.getSessionFactory();
   }
+
+  @Provides
+  @XaCalsnsSessionFactory
+  SessionFactory xaCalsnsSessionFactory() {
+    return xaCalsnsHibernateBundle.getSessionFactory();
+  }
+
+
 
   @Provides
   @FasHibernateBundle
@@ -285,8 +348,26 @@ public class DataAccessModule extends AbstractModule {
   }
 
   @Provides
+  @XaCmsHibernateBundle
+  public HibernateBundle<CalsApiConfiguration> getXaCmsHibernateBundle() {
+    return xaCmsHibernateBundle;
+  }
+
+  @Provides
+  @XaCalsnsHibernateBundle
+  public HibernateBundle<CalsApiConfiguration> getXaCalsnsHibernateBundle() {
+    return xaCalsnsHibernateBundle;
+  }
+
+
+  @Provides
   UnitOfWorkAwareProxyFactory provideUnitOfWorkAwareProxyFactory() {
     return new UnitOfWorkAwareProxyFactory(
-        lisHibernateBundle, fasHibernateBundle, cmsHibernateBundle, calsnsHibernateBundle);
+        lisHibernateBundle,
+        fasHibernateBundle,
+        cmsHibernateBundle,
+        calsnsHibernateBundle,
+        xaCmsHibernateBundle,
+        xaCalsnsHibernateBundle);
   }
 }

@@ -106,7 +106,8 @@ public class RFA1aMinorChildrenResourceTest extends
   }
 
 
-  private void checkInputOutput(String inputFixture, String expectedOutputFixture) throws Exception {
+  private void checkInputOutput(String inputFixture, String expectedOutputFixture)
+      throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     WebTarget target = clientTestRule.target(
         API.RFA_1A_FORMS + "/" + form.getId() + "/" + API.RFA_1A_MINOR_CHILDREN);

@@ -133,7 +133,8 @@ public final class Utils {
     }
 
     public static String getFirstLastName(ApplicantDTO applicant) {
-      return StringUtils.joinWith(Constants.SPACE, applicant.getFirstName(), applicant.getLastName());
+      return StringUtils
+          .joinWith(Constants.SPACE, applicant.getFirstName(), applicant.getLastName());
     }
 
     public static ApplicantDTO getPrimary(RFA1aFormDTO form) {
@@ -181,7 +182,8 @@ public final class Utils {
     }
 
     public static String getStreetNumber(RFAAddressDTO addressDTO) {
-      return getStreetAddressByPartIndex(addressDTO, 0);    }
+      return getStreetAddressByPartIndex(addressDTO, 0);
+    }
 
     public static String getStreetName(RFAAddressDTO addressDTO) {
       return getStreetAddressByPartIndex(addressDTO, 1);
@@ -198,7 +200,8 @@ public final class Utils {
     private static String getStreetAddressByPartIndex(RFAAddressDTO address, int partIndex) {
       String[] numberAndName = StringUtils.split(address.getStreetAddress(), null, 2);
       if (numberAndName.length != 2) {
-        throw new ExpectedException(ExpectedExceptionInfo.CANNOT_PARSE_STREET_ADDRESS, Response.Status.BAD_REQUEST);
+        throw new ExpectedException(ExpectedExceptionInfo.CANNOT_PARSE_STREET_ADDRESS,
+            Response.Status.BAD_REQUEST);
       }
       return numberAndName[partIndex];
     }

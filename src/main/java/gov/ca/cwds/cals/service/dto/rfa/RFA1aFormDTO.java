@@ -12,7 +12,6 @@ import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import javax.validation.Valid;
-import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * @author CWDS CALS API Team.

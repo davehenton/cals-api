@@ -1,8 +1,10 @@
 {
-  "validation_details" : [ {
-    "type" : "business_validation",
-    "user_message" : "Residential address has no zip code",
-    "code" : "BV000016",
-    "technical_message" : "form-submission-validation"
-  } ]
+  "validation_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Residential address has no zip code",
+      "code": "BV000016",
+      "technical_message": "form-submission-validation"
+    }
+  ]
 }

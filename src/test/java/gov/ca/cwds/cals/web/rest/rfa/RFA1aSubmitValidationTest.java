@@ -296,7 +296,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   private RFAAddressDTO getResidentialAddress(ResidenceDTO residence) {
     List<RFAAddressDTO> addresses = residence.getAddresses();
     for (Iterator<RFAAddressDTO> iterator = addresses.listIterator(); iterator.hasNext(); ) {
-      RFAAddressDTO address =  iterator.next();
+      RFAAddressDTO address = iterator.next();
       if (AddressTypes.RESIDENTIAL.equals(address.getType().getValue())) {
         return address;
       }

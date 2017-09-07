@@ -38,8 +38,6 @@ public final class Constants {
 
   public static final String RETURNED_CLASS_NAME_PARAM = "returnedClassName";
 
-  public static final String SYSTEM_USER_ID = "SYSTEM";
-
   public static final String RFA = "rfa-1a";
 
   public static class API {
@@ -247,6 +245,10 @@ public final class Constants {
     public static final String CMS = "cwscms";
 
     public static final String CALSNS = "calsns";
+
+    public static final String XA_CMS = "xa_cwscms";
+
+    public static final String XA_CALSNS = "xa_calsns";
 
     private UnitOfWork() {
     }
