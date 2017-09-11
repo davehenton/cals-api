@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.dto.rfa;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
@@ -20,6 +21,7 @@ public class ReferencesDTO extends BaseDTO implements RequestResponse {
 
   private static final long serialVersionUID = 5956216012241314291L;
 
+  @JsonProperty("items")
   private List<Reference> references;
 
   public List<Reference> getReferences() {

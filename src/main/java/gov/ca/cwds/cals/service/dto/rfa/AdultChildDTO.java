@@ -4,12 +4,11 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team
@@ -38,11 +37,9 @@ public class AdultChildDTO extends BaseDTO {
   @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType nameSuffix;
 
-  @ApiModelProperty("Relationship to applicant")
-  @CheckReferentialIntegrity(enrich = true)
-  private RelationshipToApplicantType relationshipToApplicant;
-
-  private List<Long> adultChildRelatedTo = new ArrayList<>();
+  @ApiModelProperty("Relationship to Applicants")
+  @Valid
+  private List<RelationshipToApplicantDTO> relationshipToApplicants;
 
   public NamePrefixType getNamePrefix() {
     return namePrefix;
@@ -77,28 +74,20 @@ public class AdultChildDTO extends BaseDTO {
     this.lastName = lastName;
   }
 
-  public RelationshipToApplicantType getRelationshipToApplicant() {
-    return relationshipToApplicant;
-  }
-
-  public void setRelationshipToApplicant(
-      RelationshipToApplicantType relationshipToApplicant) {
-    this.relationshipToApplicant = relationshipToApplicant;
-  }
-
-  public List<Long> getAdultChildRelatedTo() {
-    return adultChildRelatedTo;
-  }
-
-  public void setAdultChildRelatedTo(List<Long> adultChildRelatedTo) {
-    this.adultChildRelatedTo = adultChildRelatedTo;
-  }
-
   public NameSuffixType getNameSuffix() {
     return nameSuffix;
   }
 
   public void setNameSuffix(NameSuffixType nameSuffix) {
     this.nameSuffix = nameSuffix;
+  }
+
+  public List<RelationshipToApplicantDTO> getRelationshipToApplicants() {
+    return relationshipToApplicants;
+  }
+
+  public void setRelationshipToApplicants(
+      List<RelationshipToApplicantDTO> relationshipToApplicants) {
+    this.relationshipToApplicants = relationshipToApplicants;
   }
 }
