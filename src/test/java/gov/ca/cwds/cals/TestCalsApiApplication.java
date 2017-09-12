@@ -24,13 +24,13 @@ public class TestCalsApiApplication extends BaseCalsApiApplication<TestCalsApiCo
           @Provides
           UnitOfWorkAwareProxyFactory provideUnitOfWorkAwareProxyFactory() {
             return new UnitOfWorkAwareProxyFactory(
-                lisHibernateBundle,
-                fasHibernateBundle,
-                cmsHibernateBundle,
-                calsnsHibernateBundle,
-                xaCmsHibernateBundle,
-                xaCalsnsHibernateBundle,
-                cmsrsHibernateBundle
+                getLisHibernateBundle(),
+                getFasHibernateBundle(),
+                getCmsHibernateBundle(),
+                getCalsnsHibernateBundle(),
+                getXaCmsHibernateBundle(),
+                getXaCalsnsHibernateBundle(),
+                getCmsRsHibernateBundle()
             );
           }
 

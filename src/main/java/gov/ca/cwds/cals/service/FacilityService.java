@@ -301,8 +301,8 @@ public class FacilityService implements CrudsService {
     LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
     if (lisDsLisFacFile == null) {
       LOGGER.error(
-          "!!!Facility was not found in LIS by license number "
-              + parameterObject.getLicenseNumber());
+          "!!!Facility was not found in LIS by license number {}",
+          parameterObject.getLicenseNumber());
       return null;
     }
     LpaInformation lpaInformation = lisDsLisFacFile.getFacDoEvalCode() != null

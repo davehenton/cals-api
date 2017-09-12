@@ -186,7 +186,7 @@ public class DataAccessModule extends AbstractModule {
       RFA1cForm.class
   ).build();
 
-  protected final HibernateBundle<CalsApiConfiguration> lisHibernateBundle =
+  private final HibernateBundle<CalsApiConfiguration> lisHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(lisEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -199,7 +199,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  protected final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
+  private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(fasEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -212,7 +212,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  protected final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
+  private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -225,7 +225,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  protected final HibernateBundle<CalsApiConfiguration> xaCmsHibernateBundle =
+  private final HibernateBundle<CalsApiConfiguration> xaCmsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -238,7 +238,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  protected final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
+  private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(calsnsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -256,7 +256,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  protected final HibernateBundle<CalsApiConfiguration> xaCalsnsHibernateBundle =
+  private final HibernateBundle<CalsApiConfiguration> xaCalsnsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(calsnsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -329,7 +329,7 @@ public class DataAccessModule extends AbstractModule {
 
   @Provides
   @FasHibernateBundle
-  HibernateBundle<CalsApiConfiguration> fasHibernateBundle() {
+  public HibernateBundle<CalsApiConfiguration> getFasHibernateBundle() {
     return fasHibernateBundle;
   }
 
