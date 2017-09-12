@@ -14,14 +14,17 @@ public class CompositeIterator<T> implements Iterator<T> {
 
   @SafeVarargs
   public CompositeIterator(Iterator<T>... iteratorArray) {
-    // validate parameter
+    validateParameter(iteratorArray);
+    // initialize
+    this.iteratorArray = iteratorArray;
+    this.currentIterator = nextIterator();
+  }
+
+  private void validateParameter(Iterator<T>[] iteratorArray) {
     Objects.requireNonNull(iteratorArray);
     if (iteratorArray.length == 0) {
       throw new IllegalArgumentException("At least one Iterator is required");
     }
-    // initialize
-    this.iteratorArray = iteratorArray;
-    this.currentIterator = nextIterator();
   }
 
   @Override

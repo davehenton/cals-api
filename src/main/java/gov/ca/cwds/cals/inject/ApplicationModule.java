@@ -1,8 +1,11 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.name.Named;
 import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.inject.AuditingModule;
+import gov.ca.cwds.rest.WebSecurityConfiguration;
 import io.dropwizard.setup.Bootstrap;
 
 /**
@@ -11,11 +14,11 @@ import io.dropwizard.setup.Bootstrap;
  * @author CWDS CALS API Team
  */
 
-public class ApplicationModule extends AbstractModule {
+public class ApplicationModule<T extends CalsApiConfiguration> extends AbstractModule {
 
-    private Bootstrap<CalsApiConfiguration> bootstrap;
+  private Bootstrap<T> bootstrap;
 
-    public ApplicationModule(Bootstrap<CalsApiConfiguration> bootstrap) {
+  public ApplicationModule(Bootstrap<T> bootstrap) {
         super();
         this.bootstrap = bootstrap;
     }
@@ -28,12 +31,34 @@ public class ApplicationModule extends AbstractModule {
      */
     @Override
     protected void configure() {
-        install(new DataAccessModule(bootstrap));
         install(new ServicesModule());
         install(new ResourcesModule());
         install(new AuditingModule());
         install(new MappingModule());
         install(new FiltersModule());
     }
+
+  public Bootstrap<T> getBootstrap() {
+    return bootstrap;
+  }
+
+  @Provides
+  public WebSecurityConfiguration provideWebSecurityConfiguration(T configuration) {
+    return configuration.getWebSecurityConfiguration();
+  }
+
+  @Provides
+  @Named("app.name")
+  public String appName(T configuration) {
+    return configuration.getApplicationName();
+  }
+
+  @Provides
+  @Named("app.version")
+  public String appVersion(T configuration) {
+    return configuration.getVersion();
+  }
+
+
 
 }

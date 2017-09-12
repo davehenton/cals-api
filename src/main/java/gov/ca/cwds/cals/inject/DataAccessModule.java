@@ -11,6 +11,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
@@ -84,7 +85,6 @@ import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.SessionFactoryFactory;
-import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
@@ -94,7 +94,9 @@ public class DataAccessModule extends AbstractModule {
   private final ImmutableList<Class<?>> lisEntities = ImmutableList.<Class<?>>builder().add(
       LisFacFile.class,
       LisTableFile.class,
-      LisDoFile.class
+      LisDoFile.class,
+
+      RecordChange.class
   ).build();
 
 
@@ -105,7 +107,9 @@ public class DataAccessModule extends AbstractModule {
       ComplaintReportLic802.class,
       LpaInformation.class,
       Rrcpoc.class,
-      Rr809Dn.class
+      Rr809Dn.class,
+
+      RecordChange.class
   ).build();
 
 
@@ -182,7 +186,7 @@ public class DataAccessModule extends AbstractModule {
       RFA1cForm.class
   ).build();
 
-  private final HibernateBundle<CalsApiConfiguration> lisHibernateBundle =
+  protected final HibernateBundle<CalsApiConfiguration> lisHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(lisEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -195,7 +199,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  private final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
+  protected final HibernateBundle<CalsApiConfiguration> fasHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(fasEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -208,7 +212,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
+  protected final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -221,7 +225,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  private final HibernateBundle<CalsApiConfiguration> xaCmsHibernateBundle =
+  protected final HibernateBundle<CalsApiConfiguration> xaCmsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -234,7 +238,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
+  protected final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(calsnsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -252,7 +256,7 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  private final HibernateBundle<CalsApiConfiguration> xaCalsnsHibernateBundle =
+  protected final HibernateBundle<CalsApiConfiguration> xaCalsnsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(calsnsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
@@ -271,7 +275,7 @@ public class DataAccessModule extends AbstractModule {
       };
 
 
-  public DataAccessModule(Bootstrap<CalsApiConfiguration> bootstrap) {
+  public DataAccessModule(Bootstrap<? extends CalsApiConfiguration> bootstrap) {
     bootstrap.addBundle(fasHibernateBundle);
     bootstrap.addBundle(cmsHibernateBundle);
     bootstrap.addBundle(lisHibernateBundle);
@@ -359,15 +363,4 @@ public class DataAccessModule extends AbstractModule {
     return xaCalsnsHibernateBundle;
   }
 
-
-  @Provides
-  UnitOfWorkAwareProxyFactory provideUnitOfWorkAwareProxyFactory() {
-    return new UnitOfWorkAwareProxyFactory(
-        lisHibernateBundle,
-        fasHibernateBundle,
-        cmsHibernateBundle,
-        calsnsHibernateBundle,
-        xaCmsHibernateBundle,
-        xaCalsnsHibernateBundle);
-  }
 }

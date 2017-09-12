@@ -1,15 +1,19 @@
 package gov.ca.cwds.cals.service;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMSRS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.CompositeIterator;
 import gov.ca.cwds.cals.RecordChangeOperation;
+import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
 import gov.ca.cwds.cals.persistence.dao.fas.RecordChangeFasDao;
 import gov.ca.cwds.cals.persistence.dao.lis.RecordChangeLisDao;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
-import gov.ca.cwds.cals.persistence.dao.cms.RecordChangeCwsCmsDao;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.changed.ChangedFacilityDTO;
-
+import io.dropwizard.hibernate.UnitOfWork;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -39,26 +43,57 @@ public class ChangedFacilityService extends FacilityService {
     // default constructor
   }
 
-  public Stream<ChangedFacilityDTO> changedFacilitiesStream(Date after, Date lisAfter) {
-    RecordChanges cwsCmsRecordChanges = new RecordChanges();
-    recordChangeCwsCmsDao.streamChangedFacilityRecords(after).forEach(cwsCmsRecordChanges::add);
+  @UnitOfWork(CMSRS)
+  protected RecordChanges handleCwsCmsFacilityIds(Date after) {
+    RecordChanges recordChanges = new RecordChanges();
+    recordChangeCwsCmsDao.streamChangedFacilityRecords(after).forEach(recordChanges::add);
+    return recordChanges;
+  }
 
-    RecordChanges lisFasRecordChanges = new RecordChanges();
-    recordChangeLisDao.streamChangedFacilityRecords(lisAfter).forEach(lisFasRecordChanges::add);
+  @UnitOfWork(LIS)
+  protected RecordChanges handleLisFacilityIds(Date lisAfter) {
+    RecordChanges recordChanges = new RecordChanges();
+    recordChangeLisDao.streamChangedFacilityRecords(lisAfter).forEach(recordChanges::add);
+    return recordChanges;
+  }
+
+  @UnitOfWork(FAS)
+  protected RecordChanges handleFasFacilityIds(Date after) {
+    RecordChanges recordChanges = new RecordChanges();
     recordChangeFasDao.streamChangedFacilityRecords(after == null, evalDateAfter(after))
-        .forEach(lisFasRecordChanges::add);
+        .forEach(recordChanges::add);
+    return recordChanges;
+  }
 
-    return Stream.concat(cwsCmsRecordChanges.newStream(), lisFasRecordChanges.newStream())
+  public Stream<ChangedFacilityDTO> changedFacilitiesStream(Date after, Date lisAfter) {
+    RecordChanges cwsCmsRecordChanges = handleCwsCmsFacilityIds(after);
+    RecordChanges fasRecordChanges = handleFasFacilityIds(after);
+    RecordChanges lisRecordChanges = handleLisFacilityIds(lisAfter);
+    Stream<RecordChange> stream =
+        Stream.concat(cwsCmsRecordChanges.newStream(), fasRecordChanges.newStream());
+
+    return Stream.concat(stream, lisRecordChanges.newStream())
         .map(recordChange -> {
           LOG.info("Getting facility by ID: {}", recordChange.getId());
           FacilityDTO facilityDTO = findExpandedById(recordChange.getId());
+          if (facilityDTO == null) {
+            return null;
+          }
           LOG.info("Find facility by ID {} returned FacilityDTO with ID {}", recordChange.getId(),
               facilityDTO.getId());
           return new ChangedFacilityDTO(facilityDTO, recordChange.getRecordChangeOperation());
         })
         .filter(facilityDTO -> {
+          if (facilityDTO == null) {
+            LOG.error("Finding facility by ID did not return FacilityDTO. Skipped.");
+            return false;
+          }
+          return true;
+        })
+        .filter(facilityDTO -> {
           if (facilityDTO.getId() == null) {
-            LOG.error("Find facility by ID returned incorrect FacilityDTO with NULL id. Skipped.");
+            LOG.error(
+                "Finding facility by ID returned incorrect FacilityDTO with NULL id. Skipped.");
             return false;
           } else {
             return true;

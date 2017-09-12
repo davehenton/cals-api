@@ -1,11 +1,11 @@
 package gov.ca.cwds.cals.persistence.dao.cms;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.model.RecordChange;
+import gov.ca.cwds.cals.inject.CwsRsSessionFactory;
 import gov.ca.cwds.cals.persistence.dao.stream.QueryCreator;
 import gov.ca.cwds.cals.persistence.dao.stream.RecordChangesStreamer;
+import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.data.BaseDaoImpl;
-import gov.ca.cwds.inject.CmsSessionFactory;
 import java.util.Date;
 import java.util.stream.Stream;
 import org.hibernate.SessionFactory;
@@ -16,7 +16,7 @@ import org.hibernate.SessionFactory;
 public class RecordChangeCwsCmsDao extends BaseDaoImpl<RecordChange> {
 
   @Inject
-  public RecordChangeCwsCmsDao(@CmsSessionFactory SessionFactory sessionFactory) {
+  public RecordChangeCwsCmsDao(@CwsRsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 
