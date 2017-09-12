@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.service.dto.changed.ChangedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
+import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import java.time.LocalDateTime;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -34,6 +35,9 @@ public class ChangedFacilityResourceTest extends BaseCalsApiIntegrationTest {
 
   @Test
   public void getChangedFacilitiesTest() throws Exception {
+    if (TestModeUtils.isIntegrationTestsMode()) {
+      return;
+    }
     clientTestRule.getMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     CollectionDTO<ChangedFacilityDTO> changedFacilities =
         getChangedFacilitiesAfter(LocalDateTime.now(), LocalDateTime.now());
