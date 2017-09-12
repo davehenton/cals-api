@@ -29,12 +29,12 @@ public class CalsApiApplication extends BaseCalsApiApplication<CalsApiConfigurat
           @Provides
           UnitOfWorkAwareProxyFactory provideUnitOfWorkAwareProxyFactory() {
             return new UnitOfWorkAwareProxyFactory(
-                lisHibernateBundle,
-                fasHibernateBundle,
-                cmsHibernateBundle,
-                calsnsHibernateBundle,
-                xaCmsHibernateBundle,
-                xaCalsnsHibernateBundle);
+                getLisHibernateBundle(),
+                getFasHibernateBundle(),
+                getCmsHibernateBundle(),
+                getCalsnsHibernateBundle(),
+                getXaCmsHibernateBundle(),
+                getXaCalsnsHibernateBundle());
           }
 
         });

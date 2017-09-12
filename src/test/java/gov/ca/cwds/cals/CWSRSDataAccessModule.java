@@ -23,7 +23,7 @@ public class CWSRSDataAccessModule extends DataAccessModule {
   private final ImmutableList<Class<?>> cmsrsEntities =
       ImmutableList.<Class<?>>builder().add(RecordChange.class).build();
 
-  protected final HibernateBundle<TestCalsApiConfiguration> cmsrsHibernateBundle =
+  private final HibernateBundle<TestCalsApiConfiguration> cmsrsHibernateBundle =
       new HibernateBundle<TestCalsApiConfiguration>(cmsrsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(
@@ -49,7 +49,7 @@ public class CWSRSDataAccessModule extends DataAccessModule {
 
   @Provides
   @CmsRsHibernateBundle
-  HibernateBundle<TestCalsApiConfiguration> cmwrsHibernateBundle() {
+  public HibernateBundle<TestCalsApiConfiguration> getCmsRsHibernateBundle() {
     return cmsrsHibernateBundle;
   }
 
