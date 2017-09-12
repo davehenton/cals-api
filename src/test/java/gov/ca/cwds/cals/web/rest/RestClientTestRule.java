@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import gov.ca.cwds.cals.CalsApiConfiguration;
+import gov.ca.cwds.cals.TestCalsApiConfiguration;
 import gov.ca.cwds.cals.web.rest.rfa.LoggingFilter;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import gov.ca.cwds.security.jwt.JwtConfiguration;
@@ -35,13 +35,13 @@ public class RestClientTestRule implements TestRule {
 
   private static final Logger LOG = LoggerFactory.getLogger(RestClientTestRule.class);
 
-  private final DropwizardAppRule<CalsApiConfiguration> dropWizardApplication;
+  private final DropwizardAppRule<TestCalsApiConfiguration> dropWizardApplication;
 
   private Client client;
   private ObjectMapper mapper;
   private String token;
 
-  public RestClientTestRule(DropwizardAppRule<CalsApiConfiguration> dropWizardApplication) {
+  public RestClientTestRule(DropwizardAppRule<TestCalsApiConfiguration> dropWizardApplication) {
     this.dropWizardApplication = dropWizardApplication;
     if (TestModeUtils.isIntegrationTestsMode()) {
       try {

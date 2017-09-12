@@ -28,6 +28,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
  * @author CWDS CALS API Team
  */
 public final class Constants {
+
   public static final String Y = "Y";
 
   public static final String N = "N";
@@ -243,6 +244,8 @@ public final class Constants {
     public static final String LIS = "lis";
 
     public static final String CMS = "cwscms";
+
+    public static final String CMSRS = "cwscmsrs";
 
     public static final String CALSNS = "calsns";
 

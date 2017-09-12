@@ -28,9 +28,9 @@ public abstract class BaseCalsApiIntegrationTest {
   private static final String configFile = "config/test-cals-api.yml";
 
   @ClassRule
-  public static final DropwizardAppRule<CalsApiConfiguration> appRule =
-      new DropwizardAppRule<CalsApiConfiguration>(
-          CalsApiApplication.class, ResourceHelpers.resourceFilePath(configFile)) {
+  public static final DropwizardAppRule<TestCalsApiConfiguration> appRule =
+      new DropwizardAppRule<TestCalsApiConfiguration>(
+          TestCalsApiApplication.class, ResourceHelpers.resourceFilePath(configFile)) {
 
         @Override
         public Client client() {
@@ -53,6 +53,12 @@ public abstract class BaseCalsApiIntegrationTest {
 
   protected static DatabaseHelper getCmsDatabaseHelper() {
     DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCmsDataSourceFactory();
+    return new DatabaseHelper(
+        dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+  }
+
+  protected static DatabaseHelper getCmsrsDatabaseHelper() {
+    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCmsrsDataSourceFactory();
     return new DatabaseHelper(
         dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
   }
@@ -84,6 +90,12 @@ public abstract class BaseCalsApiIntegrationTest {
   public static void setUpCms() throws Exception {
     if (!TestModeUtils.isIntegrationTestsMode()) {
       getCmsDatabaseHelper().runScript("liquibase/cwscms_database_master.xml");
+    }
+  }
+
+  public static void setUpCmsrs() throws Exception {
+    if (!TestModeUtils.isIntegrationTestsMode()) {
+      getCmsrsDatabaseHelper().runScript("liquibase/cwscmsrs_database_master.xml");
     }
   }
 

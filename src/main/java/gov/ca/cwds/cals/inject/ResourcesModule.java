@@ -3,8 +3,6 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
-import com.google.inject.name.Named;
-import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.Constants.DictionaryType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.service.ComplaintService;
@@ -47,7 +45,6 @@ import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1bService;
 import gov.ca.cwds.cals.service.rfa.RFA1cCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1cService;
-import gov.ca.cwds.cals.web.rest.system.SystemInformationResource;
 import gov.ca.cwds.cals.web.rest.DictionariesResource;
 import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
@@ -69,6 +66,7 @@ import gov.ca.cwds.cals.web.rest.rfa.RFA1aReferencesResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1bFormsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1cFormsResource;
+import gov.ca.cwds.cals.web.rest.system.SystemInformationResource;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate;
@@ -110,18 +108,6 @@ public class ResourcesModule extends AbstractModule {
     bind(RFA1aApplicantsDeclarationResource.class);
     bind(RFA1bFormsResource.class);
     bind(RFA1cFormsResource.class);
-  }
-
-  @Provides
-  @Named("app.name")
-  public String appName(CalsApiConfiguration calsApiConfiguration) {
-    return calsApiConfiguration.getApplicationName();
-  }
-
-  @Provides
-  @Named("app.version")
-  public String appVersion(CalsApiConfiguration calsApiConfiguration) {
-    return calsApiConfiguration.getVersion();
   }
 
   @Provides

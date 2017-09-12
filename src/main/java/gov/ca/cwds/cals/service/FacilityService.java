@@ -112,6 +112,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CRUD service for {@link gov.ca.cwds.cals.service.dto.FacilityDTO}
@@ -119,6 +121,8 @@ import java.util.stream.Collectors;
  * @author CALS API Team
  */
 public class FacilityService implements CrudsService {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(FacilityService.class);
 
   @Inject
   private LisFacFileLisDao lisFacFileLisDao;
@@ -295,8 +299,13 @@ public class FacilityService implements CrudsService {
 
   private FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
     LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
-    LpaInformation lpaInformation =
-        lisDsLisFacFile != null && lisDsLisFacFile.getFacDoEvalCode() != null
+    if (lisDsLisFacFile == null) {
+      LOGGER.error(
+          "!!!Facility was not found in LIS by license number "
+              + parameterObject.getLicenseNumber());
+      return null;
+    }
+    LpaInformation lpaInformation = lisDsLisFacFile.getFacDoEvalCode() != null
             ? findAssignedWorkerInformation(lisDsLisFacFile)
             : null;
     FacilityDTO facilityDTO = facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
@@ -309,23 +318,45 @@ public class FacilityService implements CrudsService {
     fasFacilityMapper.toFacilityDTO(facilityDTO, facilityInformation);
 
     if (parameterObject.isExpanded()) {
-      List<FacilityChildDTO> facilityChildren = clientDao
-          .streamByLicenseNumber(parameterObject.getLicenseNumber())
-          .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
-
-      List<FacilityInspectionDTO> inspections = inspectionDao
-          .findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber()).stream()
-          .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
-
-      List<ComplaintDTO> complaints = complaintReportLic802Dao
-          .findComplaintsByFacilityNumber(parameterObject.getLicenseNumber()).stream()
-          .map(complaintMapper::entityToDTO).collect(Collectors.toList());
-
+      List<FacilityChildDTO> facilityChildren =
+          findFacilityChildredByLicenseNumber(parameterObject.getLicenseNumber());
+      List<FacilityInspectionDTO> inspections =
+          findInspectionsByFacilityId(parameterObject.getLicenseNumber());
+      List<ComplaintDTO> complaints =
+          findComplaintsByFacilityId(parameterObject.getLicenseNumber());
       facilityDTO = facilityMapper
           .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections, complaints);
     }
 
     return facilityDTO;
+  }
+
+  @UnitOfWork(CMS)
+  protected List<FacilityChildDTO> findFacilityChildredByLicenseNumber(Integer licenseNumber) {
+    return clientDao.streamByLicenseNumber(licenseNumber)
+        .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
+  }
+
+  @UnitOfWork(CMS)
+  protected List<FacilityChildDTO> findFacilityChildredByFacilityId(String facilityId) {
+    return clientDao
+        .streamByFacilityId(facilityId)
+        .map(facilityChildMapper::toFacilityChildDTO)
+        .collect(Collectors.toList());
+  }
+
+  @UnitOfWork(FAS)
+  protected List<FacilityInspectionDTO> findInspectionsByFacilityId(Integer licenseNumber) {
+    return inspectionDao
+        .findDeficienciesByFacilityNumber(licenseNumber).stream()
+        .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
+  }
+
+  @UnitOfWork(FAS)
+  protected List<ComplaintDTO> findComplaintsByFacilityId(Integer licenseNumber) {
+    return complaintReportLic802Dao
+        .findComplaintsByFacilityNumber(licenseNumber).stream()
+        .map(complaintMapper::entityToDTO).collect(Collectors.toList());
   }
 
   private FacilityDTO loadFacilityFromCwsCms(FacilityParameterObject parameterObject) {
@@ -335,19 +366,12 @@ public class FacilityService implements CrudsService {
     FacilityDTO facilityDTO = facilityMapper.toFacilityDTO(placementHome, dictionaryEntriesHolder);
 
     if (parameterObject.isExpanded()) {
-      List<FacilityChildDTO> facilityChildren = clientDao
-          .streamByFacilityId(parameterObject.getFacilityId())
-          .map(facilityChildMapper::toFacilityChildDTO)
-          .collect(Collectors.toList());
-
-      List<FacilityInspectionDTO> inspections = inspectionDao
-          .findDeficienciesByFacilityNumber(parameterObject.getLicenseNumber()).stream()
-          .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
-
-      List<ComplaintDTO> complaints = complaintReportLic802Dao
-          .findComplaintsByFacilityNumber(parameterObject.getLicenseNumber()).stream()
-          .map(complaintMapper::entityToDTO).collect(Collectors.toList());
-
+      List<FacilityChildDTO> facilityChildren = findFacilityChildredByFacilityId(
+          parameterObject.getFacilityId());
+      List<FacilityInspectionDTO> inspections = findInspectionsByFacilityId(
+          parameterObject.getLicenseNumber());
+      List<ComplaintDTO> complaints = findComplaintsByFacilityId(
+          parameterObject.getLicenseNumber());
       facilityDTO = facilityMapper
           .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections, complaints);
     }

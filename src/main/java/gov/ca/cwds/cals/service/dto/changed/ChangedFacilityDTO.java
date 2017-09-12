@@ -1,7 +1,8 @@
 package gov.ca.cwds.cals.service.dto.changed;
 
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.RecordChangeOperation;
+import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
@@ -9,7 +10,7 @@ import javax.validation.constraints.NotNull;
 /**
  * @author CWDS TPT-2
  */
-public class ChangedFacilityDTO implements ChangedDTO<FacilityDTO>, Serializable {
+public class ChangedFacilityDTO extends BaseDTO implements ChangedDTO<FacilityDTO>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -22,6 +23,10 @@ public class ChangedFacilityDTO implements ChangedDTO<FacilityDTO>, Serializable
   public ChangedFacilityDTO(FacilityDTO facilityDTO, RecordChangeOperation recordChangeOperation) {
     this.facilityDTO = facilityDTO;
     this.recordChangeOperation = recordChangeOperation;
+  }
+
+  public ChangedFacilityDTO() {
+    //default constructor
   }
 
   @Override
