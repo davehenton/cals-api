@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.validation.business;
 
-import gov.ca.cwds.cals.exception.IssueDetails;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
+import gov.ca.cwds.rest.exception.IssueDetails;
 import java.util.HashSet;
 import java.util.Set;
 import org.kie.api.KieServices;

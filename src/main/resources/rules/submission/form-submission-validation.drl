@@ -16,8 +16,8 @@ import gov.ca.cwds.cals.Constants.Validation.Business
 import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups
 import gov.ca.cwds.cals.Constants.AddressTypes
 import org.apache.commons.lang3.StringUtils
-import gov.ca.cwds.cals.exception.IssueDetails
-import gov.ca.cwds.cals.exception.IssueType
+import gov.ca.cwds.rest.exception.IssueDetails
+import gov.ca.cwds.rest.exception.IssueType
 
 global java.util.Set validationDetailsList;
 

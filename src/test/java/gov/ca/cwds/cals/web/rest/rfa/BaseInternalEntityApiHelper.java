@@ -1,20 +1,20 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
+import static gov.ca.cwds.rest.exception.IssueDetails.BASE_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.Constants.Validation.Error;
-import gov.ca.cwds.cals.exception.BaseExceptionResponse;
-import gov.ca.cwds.cals.exception.IssueDetails;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 import gov.ca.cwds.cals.web.rest.rfa.helper.FormAHelper;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
+import gov.ca.cwds.rest.exception.BaseExceptionResponse;
+import gov.ca.cwds.rest.exception.IssueDetails;
 import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -68,7 +68,7 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
     VelocityHelper velocityHelper = new VelocityHelper();
     IssueDetails details = expectedExceptionResponse.getIssueDetails().iterator().next();
     velocityHelper.setParameter("incident_id", details.getIncidentId());
-    velocityHelper.setParameter("user_message", Error.BASE_MESSAGE);
+    velocityHelper.setParameter("user_message", BASE_MESSAGE);
     velocityHelper.setParameter("technical_message",
         Constants.ExpectedExceptionMessages.RFA_1A_APPLICATION_NOT_FOUND_BY_ID);
     assertResponseByFixture(

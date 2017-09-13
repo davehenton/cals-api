@@ -293,14 +293,6 @@ public final class Constants {
     public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
     public static final String FORM_SUBMISSION_VALIDATION_SESSION = "formSubmissionValidationSession";
 
-    public static class Error {
-      public static final String BASE_MESSAGE =
-              "There was an error processing your request. It has been logged with unique incident id";
-
-      private Error() {
-      }
-    }
-
     public static class Constraint {
 
       public static final String BETWEEN_LENGTH_MESSAGE =

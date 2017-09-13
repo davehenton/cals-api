@@ -5,11 +5,11 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.rfa.factory.RFAInternalEntityConfiguration;
+import gov.ca.cwds.rest.exception.ExpectedException;
 import java.time.LocalDateTime;
 
 /**
