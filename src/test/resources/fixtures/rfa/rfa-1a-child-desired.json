@@ -11,14 +11,9 @@
       "value": "4-8 years"
     }
   ],
-  "preferred_sibling_groups": [
+  "preferred_sibling_group_up_to":
     {
       "id": 2,
       "value": "2"
-    },
-    {
-      "id": 3,
-      "value": "3"
     }
-  ]
 }
