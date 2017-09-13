@@ -8,20 +8,21 @@ import javax.ws.rs.core.Response.Status;
 
 public class ExpectedException extends RuntimeException {
 
-  private final ExpectedExceptionInfo calsExceptionInfo;
+  private final String message;
 
-    private final Status responseStatus;
+  private final Status responseStatus;
 
-  public ExpectedException(ExpectedExceptionInfo calsExceptionInfo, Status responseStatus) {
-        this.calsExceptionInfo = calsExceptionInfo;
+  public ExpectedException(String message, Status responseStatus) {
+    this.message = message;
         this.responseStatus = responseStatus;
-    }
+  }
 
-  public ExpectedExceptionInfo getCalsExceptionInfo() {
-        return calsExceptionInfo;
-    }
+  @Override
+  public String getMessage() {
+    return message;
+  }
 
-    public Status getResponseStatus() {
+  public Status getResponseStatus() {
         return responseStatus;
     }
 }

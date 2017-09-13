@@ -6,9 +6,9 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Objects;
+import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
 import gov.ca.cwds.cals.exception.ExpectedException;
-import gov.ca.cwds.cals.exception.ExpectedExceptionInfo;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
@@ -200,7 +200,7 @@ public final class Utils {
     private static String getStreetAddressByPartIndex(RFAAddressDTO address, int partIndex) {
       String[] numberAndName = StringUtils.split(address.getStreetAddress(), null, 2);
       if (numberAndName.length != 2) {
-        throw new ExpectedException(ExpectedExceptionInfo.CANNOT_PARSE_STREET_ADDRESS,
+        throw new ExpectedException(ExpectedExceptionMessages.CANNOT_PARSE_STREET_ADDRESS,
             Response.Status.BAD_REQUEST);
       }
       return numberAndName[partIndex];

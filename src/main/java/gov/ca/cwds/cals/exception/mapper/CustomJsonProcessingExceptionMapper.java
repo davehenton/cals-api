@@ -3,8 +3,8 @@ package gov.ca.cwds.cals.exception.mapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import gov.ca.cwds.cals.Constants.Validation.Error;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
-import gov.ca.cwds.cals.exception.ExceptionType;
-import gov.ca.cwds.cals.exception.ValidationDetails;
+import gov.ca.cwds.cals.exception.IssueDetails;
+import gov.ca.cwds.cals.exception.IssueType;
 import gov.ca.cwds.logging.LoggingContext.LogParameter;
 import io.dropwizard.jersey.errors.ErrorMessage;
 import io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper;
@@ -32,17 +32,17 @@ public class CustomJsonProcessingExceptionMapper extends JsonProcessingException
     }
     ErrorMessage errorMessage = (ErrorMessage) response.getEntity();
 
-    ValidationDetails details = new ValidationDetails();
-    details.setType(ExceptionType.JSON_PROCESSING_EXCEPTION);
+    IssueDetails details = new IssueDetails();
+    details.setType(IssueType.JSON_PROCESSING_EXCEPTION);
     details.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
     details.setUserMessage(Error.BASE_MESSAGE);
     details.setTechnicalMessage(
         StringUtils.join(new Object[]{errorMessage.getMessage(), errorMessage.getDetails()}, ". "));
 
-    Set<ValidationDetails> detailsList = new HashSet<>();
+    Set<IssueDetails> detailsList = new HashSet<>();
     detailsList.add(details);
     BaseExceptionResponse jsonProcessingExceptionResponse = new BaseExceptionResponse();
-    jsonProcessingExceptionResponse.setValidationDetails(detailsList);
+    jsonProcessingExceptionResponse.setIssueDetails(detailsList);
 
     return Response.status(response.getStatus())
         .type(response.getMediaType())

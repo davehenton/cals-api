@@ -4,11 +4,11 @@ import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseB
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.Constants.Validation.Error;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
-import gov.ca.cwds.cals.exception.ExpectedExceptionInfo;
-import gov.ca.cwds.cals.exception.ValidationDetails;
+import gov.ca.cwds.cals.exception.IssueDetails;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
@@ -66,13 +66,11 @@ public class BaseInternalEntityApiHelper<T extends BaseDTO> implements InternalE
     BaseExceptionResponse expectedExceptionResponse =
         response.readEntity(BaseExceptionResponse.class);
     VelocityHelper velocityHelper = new VelocityHelper();
-    ValidationDetails details = expectedExceptionResponse.getValidationDetails().iterator().next();
+    IssueDetails details = expectedExceptionResponse.getIssueDetails().iterator().next();
     velocityHelper.setParameter("incident_id", details.getIncidentId());
     velocityHelper.setParameter("user_message", Error.BASE_MESSAGE);
     velocityHelper.setParameter("technical_message",
-        ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID.getMessage());
-    velocityHelper
-        .setParameter("code", ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID.getCode());
+        Constants.ExpectedExceptionMessages.RFA_1A_APPLICATION_NOT_FOUND_BY_ID);
     assertResponseByFixture(
         clientTestRule.getMapper().writeValueAsString(expectedExceptionResponse),
         velocityHelper.process("fixtures/rfa/rfa-1a-application-not-found.json"));

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum ExceptionType {
+public enum IssueType {
 
   JSON_PROCESSING_EXCEPTION("json_processing_exception"),
   BUSINESS_VALIDATION("business_validation"),
@@ -18,7 +18,7 @@ public enum ExceptionType {
 
   private String value;
 
-  ExceptionType(String value) {
+  IssueType(String value) {
     this.value = value;
   }
 

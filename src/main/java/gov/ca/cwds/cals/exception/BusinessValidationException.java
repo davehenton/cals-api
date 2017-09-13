@@ -8,13 +8,13 @@ import java.util.Set;
 
 public class BusinessValidationException extends RuntimeException {
 
-  private final Set<ValidationDetails> validationDetailsList;
+  private final Set<IssueDetails> validationDetailsList;
 
-  public BusinessValidationException(Set<ValidationDetails> validationDetailsList) {
+  public BusinessValidationException(Set<IssueDetails> validationDetailsList) {
     this.validationDetailsList = validationDetailsList;
   }
 
-  public Set<ValidationDetails> getValidationDetailsList() {
+  public Set<IssueDetails> getValidationDetailsList() {
     return validationDetailsList;
   }
 

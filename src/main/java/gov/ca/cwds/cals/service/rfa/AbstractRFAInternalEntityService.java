@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service.rfa;
 
-import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.exception.ExpectedException;
@@ -31,7 +31,8 @@ public abstract class AbstractRFAInternalEntityService<T extends RequestResponse
   public T find(Long applicationId) {
     RFA1aForm form = applicationDao.find(applicationId);
     if (form == null) {
-      throw new ExpectedException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
+      throw new ExpectedException(
+          Constants.ExpectedExceptionMessages.RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
     }
     return configuration.getEntityFromTheForm(form);
   }
@@ -40,7 +41,8 @@ public abstract class AbstractRFAInternalEntityService<T extends RequestResponse
   public T update(Long applicationId, T request) {
     RFA1aForm form = applicationDao.find(applicationId);
     if (form == null) {
-      throw new ExpectedException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
+      throw new ExpectedException(
+          Constants.ExpectedExceptionMessages.RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
     }
     form.setUpdateDateTime(LocalDateTime.now());
     form.setUpdateUserId(Utils.Id.getStaffPersonId());

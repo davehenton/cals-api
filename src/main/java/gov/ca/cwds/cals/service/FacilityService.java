@@ -3,7 +3,6 @@ package gov.ca.cwds.cals.service;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
 import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 import com.google.inject.Inject;
@@ -452,7 +451,9 @@ public class FacilityService implements CrudsService {
   @UnitOfWork(FAS)
   protected LpaInformation findAssignedWorkerInformation(LisFacFile lisFacFile) {
     if (lisFacFile.getFacDoNbr() == null) {
-      throw new ExpectedException(DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN, EXPECTATION_FAILED);
+      throw new ExpectedException(
+          Constants.ExpectedExceptionMessages.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN,
+          EXPECTATION_FAILED);
     }
     String lpaCode =
         String.format("%02d", lisFacFile.getFacDoNbr().getDoNbr()) + lisFacFile.getFacDoEvalCode();

@@ -2,19 +2,18 @@ package gov.ca.cwds.cals.service.rfa;
 
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.Validation.FORM_SUBMISSION_VALIDATION_SESSION;
-import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.RFA_1A_APPLICATION_NOT_FOUND_BY_ID;
-import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.TRANSITION_IS_NOT_ALLOWED;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.exception.ExpectedException;
-import gov.ca.cwds.cals.exception.ValidationDetails;
+import gov.ca.cwds.cals.exception.IssueDetails;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.XaRFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
@@ -143,7 +142,8 @@ public class RFA1aFormService
   protected boolean changeStatusIfNotSubmitted(Long formId, RFAApplicationStatus newStatus) {
     RFA1aForm form = findFormById(formId);
     if (!StatusesTransitionConfiguration.isTransitionAllowed(form.getStatus(), newStatus)) {
-      throw new ExpectedException(TRANSITION_IS_NOT_ALLOWED, BAD_REQUEST);
+      throw new ExpectedException(Constants.ExpectedExceptionMessages.TRANSITION_IS_NOT_ALLOWED,
+          BAD_REQUEST);
     }
     if (form.getStatus() == newStatus) {
       return true;
@@ -210,7 +210,7 @@ public class RFA1aFormService
           }
         });
 
-    Set<ValidationDetails> detailsList = droolsService.validate(formDTO, createConfiguration());
+    Set<IssueDetails> detailsList = droolsService.validate(formDTO, createConfiguration());
     if (!detailsList.isEmpty()) {
       throw new BusinessValidationException(detailsList);
     }
@@ -234,7 +234,8 @@ public class RFA1aFormService
   private RFA1aForm findFormById(Long formId) {
     RFA1aForm form = rfa1AFormsDao.find(formId);
     if (form == null) {
-      throw new ExpectedException(RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
+      throw new ExpectedException(
+          Constants.ExpectedExceptionMessages.RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
     }
     return form;
   }

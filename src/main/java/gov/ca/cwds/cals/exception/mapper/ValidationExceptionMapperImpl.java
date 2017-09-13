@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.exception.mapper;
 
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
-import gov.ca.cwds.cals.exception.ExceptionType;
-import gov.ca.cwds.cals.exception.ValidationDetails;
+import gov.ca.cwds.cals.exception.IssueDetails;
+import gov.ca.cwds.cals.exception.IssueType;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -19,19 +19,19 @@ public class ValidationExceptionMapperImpl implements
 
   @Override
   public Response toResponse(ConstraintViolationException exception) {
-    Set<ValidationDetails> validationDetailsList = new HashSet<>();
+    Set<IssueDetails> validationDetailsList = new HashSet<>();
     Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
     for (ConstraintViolation<?> v : constraintViolations) {
       String message = v.getMessage();
-      ValidationDetails details = null;
-      details = new ValidationDetails();
+      IssueDetails details = null;
+      details = new IssueDetails();
       details.setUserMessage(message);
-      details.setType(ExceptionType.CONSTRAINT_VALIDATION);
+      details.setType(IssueType.CONSTRAINT_VALIDATION);
       validationDetailsList.add(details);
     }
 
     BaseExceptionResponse constraintViolationsResponse = new BaseExceptionResponse();
-    constraintViolationsResponse.setValidationDetails(validationDetailsList);
+    constraintViolationsResponse.setIssueDetails(validationDetailsList);
     return Response.status(422)
         .type(MediaType.APPLICATION_JSON_TYPE)
         .entity(constraintViolationsResponse)

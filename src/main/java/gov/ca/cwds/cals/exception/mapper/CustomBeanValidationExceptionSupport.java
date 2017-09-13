@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.exception.mapper;
 
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.exception.ValidationDetails;
+import gov.ca.cwds.cals.exception.IssueDetails;
 import java.io.IOException;
 import javax.validation.ConstraintViolation;
 import org.apache.commons.lang3.StringUtils;
@@ -20,11 +20,11 @@ public interface CustomBeanValidationExceptionSupport {
    * validation message
    * @see {@link CustomConstraintMessage#calculateMessage(ConstraintViolation, Invocable)}
    */
-  default ValidationDetails unmarshallData(String data) {
+  default IssueDetails unmarshallData(String data) {
     String marshalledDetails = StringUtils.removeStart(data, "The request body");
-    ValidationDetails details = null;
+    IssueDetails details = null;
     try {
-      details = (ValidationDetails) Utils.Json.from(marshalledDetails, ValidationDetails.class);
+      details = (IssueDetails) Utils.Json.from(marshalledDetails, IssueDetails.class);
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }

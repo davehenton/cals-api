@@ -9,12 +9,12 @@ import javax.validation.constraints.NotNull;
  * @author CWDS CALS API Team
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ValidationDetails implements Serializable {
+public class IssueDetails implements Serializable {
 
-  private static final long serialVersionUID = 42L;
+  private static final long serialVersionUID = -8879466383753472143L;
 
   @NotNull
-  private ExceptionType type;
+  private IssueType type;
 
   @NotNull
   private String userMessage;
@@ -25,11 +25,11 @@ public class ValidationDetails implements Serializable {
   private String stackTrace;
   private String causeStackTrace;
 
-  public ExceptionType getType() {
+  public IssueType getType() {
     return type;
   }
 
-  public void setType(ExceptionType type) {
+  public void setType(IssueType type) {
     this.type = type;
   }
 

@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.service;
 
-import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.COMPLAINT_NOT_FOUND_BY_ID;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
@@ -38,7 +38,8 @@ public class ComplaintService implements CrudsService {
             ComplaintReportLic802 complaintReportLic802 =complaintReportLic802Dao.findComplaintByFacilityIdAndComplaintId(
                     parameterObject.getFacilityId(), parameterObject.getComplaintId());
             if (complaintReportLic802 == null) {
-              throw new ExpectedException(COMPLAINT_NOT_FOUND_BY_ID, NOT_FOUND);
+              throw new ExpectedException(
+                  Constants.ExpectedExceptionMessages.COMPLAINT_NOT_FOUND_BY_ID, NOT_FOUND);
             } else {
                 return complaintMapper.entityToDTO(complaintReportLic802);
             }

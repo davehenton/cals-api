@@ -1,5 +1,5 @@
 {
-  "validation_details": [
+  "issue_details": [
     {
       "type": "json_processing_exception",
       "user_message": "$user_message",

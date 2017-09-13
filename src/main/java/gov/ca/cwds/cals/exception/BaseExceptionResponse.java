@@ -11,14 +11,14 @@ import java.util.Set;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class BaseExceptionResponse implements Serializable {
 
-  private Set<ValidationDetails> validationDetails;
+  private Set<IssueDetails> issueDetails;
 
-  public Set<ValidationDetails> getValidationDetails() {
-    return validationDetails;
+  public Set<IssueDetails> getIssueDetails() {
+    return issueDetails;
   }
 
-  public void setValidationDetails(Set<ValidationDetails> validationDetails) {
-    this.validationDetails = validationDetails;
+  public void setIssueDetails(Set<IssueDetails> issueDetails) {
+    this.issueDetails = issueDetails;
   }
 
 }

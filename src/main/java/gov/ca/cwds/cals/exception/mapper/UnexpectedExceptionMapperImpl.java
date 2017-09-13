@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.exception.mapper;
 
 import gov.ca.cwds.cals.Constants.Validation.Error;
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
-import gov.ca.cwds.cals.exception.ExceptionType;
-import gov.ca.cwds.cals.exception.ValidationDetails;
+import gov.ca.cwds.cals.exception.IssueDetails;
+import gov.ca.cwds.cals.exception.IssueType;
 import gov.ca.cwds.logging.LoggingContext.LogParameter;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,9 +29,9 @@ public class UnexpectedExceptionMapperImpl implements ExceptionMapper<RuntimeExc
 
   public Response toResponse(RuntimeException ex) {
     LOGGER.error("EXCEPTION MAPPER: {}", ex.getMessage(), ex);
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
 
-    details.setType(ExceptionType.UNEXPECTED_EXCEPTION);
+    details.setType(IssueType.UNEXPECTED_EXCEPTION);
     details.setIncidentId(MDC.get(LogParameter.UNIQUE_ID.name()));
     details.setUserMessage(Error.BASE_MESSAGE);
     details.setTechnicalMessage(ex.getMessage());
@@ -44,10 +44,10 @@ public class UnexpectedExceptionMapperImpl implements ExceptionMapper<RuntimeExc
     String stackTrace = ExceptionUtils.getStackTrace(ex);
     details.setStackTrace(StringEscapeUtils.escapeJson(stackTrace));
 
-    Set<ValidationDetails> detailsList = new HashSet<>();
+    Set<IssueDetails> detailsList = new HashSet<>();
     detailsList.add(details);
     BaseExceptionResponse unexpectedException = new BaseExceptionResponse();
-    unexpectedException.setValidationDetails(detailsList);
+    unexpectedException.setIssueDetails(detailsList);
 
     return Response.status(500).entity(unexpectedException).type(MediaType.APPLICATION_JSON)
         .build();

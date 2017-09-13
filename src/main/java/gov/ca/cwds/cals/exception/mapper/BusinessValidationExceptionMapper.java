@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.exception.mapper;
 
 import gov.ca.cwds.cals.exception.BaseExceptionResponse;
 import gov.ca.cwds.cals.exception.BusinessValidationException;
-import gov.ca.cwds.cals.exception.ExceptionType;
-import gov.ca.cwds.cals.exception.ValidationDetails;
+import gov.ca.cwds.cals.exception.IssueDetails;
+import gov.ca.cwds.cals.exception.IssueType;
 import java.util.Set;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,12 +18,12 @@ public class BusinessValidationExceptionMapper implements
 
   @Override
   public Response toResponse(BusinessValidationException exception) {
-    Set<ValidationDetails> detailsList = exception.getValidationDetailsList();
-    for (ValidationDetails details : detailsList) {
-      details.setType(ExceptionType.BUSINESS_VALIDATION);
+    Set<IssueDetails> detailsList = exception.getValidationDetailsList();
+    for (IssueDetails details : detailsList) {
+      details.setType(IssueType.BUSINESS_VALIDATION);
     }
     BaseExceptionResponse manualValidationResponse = new BaseExceptionResponse();
-    manualValidationResponse.setValidationDetails(detailsList);
+    manualValidationResponse.setIssueDetails(detailsList);
 
     return Response.status(422)
         .type(MediaType.APPLICATION_JSON)
