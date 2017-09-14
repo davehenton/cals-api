@@ -1,5 +1,5 @@
 {
-  "validation_details": [
+  "issue_details": [
     {
       "type": "business_validation",
       "user_message": "Application has no county",

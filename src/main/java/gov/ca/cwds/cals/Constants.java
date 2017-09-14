@@ -269,18 +269,29 @@ public final class Constants {
     }
   }
 
+  public static class ExpectedExceptionMessages {
+
+    public static final String COMPLAINT_NOT_FOUND_BY_ID = "Facility Complaint is not found by Facility Number and Complaint Id";
+
+    public static final String DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN = "Disctrict office (lis_fac_file.fac_do_nbr) is unexpectedly empty";
+
+    public static final String RFA_1A_APPLICANT_NOT_FOUND_BY_ID = "Applicant is not found by Form Id and Applicant Id";
+
+    public static final String RFA_1A_APPLICATION_NOT_FOUND_BY_ID = "Application is not found by Form Id";
+
+    public static final String TRANSITION_IS_NOT_ALLOWED = "Requested status transition is not allowed";
+
+    public static final String CANNOT_PARSE_STREET_ADDRESS = "Cannot parse street address";
+
+    private ExpectedExceptionMessages() {
+    }
+
+  }
+
   public static class Validation {
 
     public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
     public static final String FORM_SUBMISSION_VALIDATION_SESSION = "formSubmissionValidationSession";
-
-    public static class Error {
-      public static final String BASE_MESSAGE =
-              "There was an error processing your request. It has been logged with unique incident id";
-
-      private Error() {
-      }
-    }
 
     public static class Constraint {
 

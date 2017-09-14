@@ -1,5 +1,5 @@
 {
-  "validation_details": [
+  "issue_details": [
     {
       "type": "constraint_validation",
       "user_message": "applicationCounty  Object CountyType{id = -1, value = Unknown}) is not found in database. Referential integrity was not confirmed."
