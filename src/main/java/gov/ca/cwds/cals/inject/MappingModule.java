@@ -20,7 +20,6 @@ import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeInformationMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
-import gov.ca.cwds.cals.service.mapper.PlacementHomeNotesMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderUCMapper;
@@ -67,8 +66,6 @@ public class MappingModule extends AbstractModule {
     bind(SubstituteCareProviderUCMapper.class).to(SubstituteCareProviderUCMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(PlacementHomeInformationMapper.class).to(PlacementHomeInformationMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(PlacementHomeNotesMapper.class).to(PlacementHomeNotesMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(PlacementHomeProfileMapper.class).to(PlacementHomeProfileMapper.INSTANCE.getClass())
         .asEagerSingleton();
