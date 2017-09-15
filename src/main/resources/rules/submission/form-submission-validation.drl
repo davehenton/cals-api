@@ -16,8 +16,8 @@ import gov.ca.cwds.cals.Constants.Validation.Business
 import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups
 import gov.ca.cwds.cals.Constants.AddressTypes
 import org.apache.commons.lang3.StringUtils
-import gov.ca.cwds.cals.exception.ValidationDetails
-import gov.ca.cwds.cals.exception.ExceptionType
+import gov.ca.cwds.rest.exception.IssueDetails
+import gov.ca.cwds.rest.exception.IssueType
 
 global java.util.Set validationDetailsList;
 
@@ -28,7 +28,7 @@ rule "Validate that applicant exists"
     $form : RFA1aFormDTO();
     not ApplicantDTO() from $form.applicants;
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.APPLICATION_HAS_NO_APPLICANT);
     details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_APPLICANT_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
@@ -43,7 +43,7 @@ rule "Validate that applicant has RFA1b form"
     $applicant: ApplicantDTO() from $form.applicants;
     not RFA1bFormDTO() from $applicant.rfa1bForm;
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.APPLICANT_HAS_NO_RFA1B_FORM);
     details.setUserMessage(String.format(Validation.Business.APPLICANT_HAS_NO_RFA1B_FORM_MESSAGE,
         $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
@@ -62,7 +62,7 @@ rule "Validate that other adult has reference to applicant"
     $relationship: RelationshipToApplicantDTO() from $otherAdult.relationshipToApplicants;
     not ApplicantDTO(id == $relationship.applicantId) from $form.applicants;
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.OTHER_ADULT_HAS_NO_REFERENCE_TO_APPLICANT);
     details.setUserMessage(String.format(Validation.Business.OTHER_ADULT_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE,
         $otherAdult.getFirstName() != null ? $otherAdult.getFirstName() : "",
@@ -80,7 +80,7 @@ rule "Validate that other adult has first name"
     $otherAdult: OtherAdultDTO() from $form.otherAdults;
     eval(StringUtils.isBlank($otherAdult.getFirstName()))
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.OTHER_ADULT_HAS_NO_FIRST_NAME);
     details.setUserMessage(String.format(Validation.Business.OTHER_ADULT_HAS_NO_FIRST_NAME_MESSAGE,
         $otherAdult.getFirstName() != null ? $otherAdult.getFirstName() : "",
@@ -98,7 +98,7 @@ rule "Validate that other adult has last name"
     $otherAdult: OtherAdultDTO() from $form.otherAdults;
     eval(StringUtils.isBlank($otherAdult.getLastName()))
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.OTHER_ADULT_HAS_NO_LAST_NAME);
     details.setUserMessage(String.format(Validation.Business.OTHER_ADULT_HAS_NO_LAST_NAME_MESSAGE,
         $otherAdult.getFirstName() != null ? $otherAdult.getFirstName() : "",
@@ -117,7 +117,7 @@ rule "Validate that minor child has reference to applicant"
     $relationship: RelationshipToApplicantDTO() from $minorChild.relationshipToApplicants;
     not ApplicantDTO(id == $relationship.applicantId) from $form.applicants;
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT);
     details.setUserMessage(String.format(Validation.Business.MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE,
         $minorChild.getOtherRelativeFirstName() != null ? $minorChild.getOtherRelativeFirstName() : "",
@@ -134,7 +134,7 @@ rule "Validate that residence exists"
     $form : RFA1aFormDTO();
     not ResidenceDTO() from $form.residence;
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.APPLICATION_HAS_NO_RESIDENCE);
     details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_RESIDENCE_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
@@ -149,7 +149,7 @@ rule "Validate that residential address exists"
     $residence: ResidenceDTO() from $form.residence;
     not RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS);
     details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
@@ -165,7 +165,7 @@ rule "Validate that residential address has street name"
     $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
     eval(StringUtils.isBlank(Utils.Address.getSilentStreetName($address)));
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.RESIDENTIAL_ADDRESS_HAS_NO_STREET_NAME);
     details.setUserMessage(Validation.Business.RESIDENTIAL_ADDRESS_HAS_NO_STREET_NAME_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
@@ -181,7 +181,7 @@ rule "Validate that residential address has city"
     $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
     eval(StringUtils.isBlank($address.getCity()));
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.RESIDENTIAL_ADDRESS_HAS_NO_CITY);
     details.setUserMessage(Validation.Business.RESIDENTIAL_ADDRESS_HAS_NO_CITY_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
@@ -197,7 +197,7 @@ rule "Validate that residential address has state"
     $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
     not StateType() from $address.state;
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.RESIDENTIAL_ADDRESS_HAS_NO_STATE);
     details.setUserMessage(Validation.Business.RESIDENTIAL_ADDRESS_HAS_NO_STATE_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
@@ -213,7 +213,7 @@ rule "Validate that residential address has zip code"
     $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
     eval(StringUtils.isBlank($address.getZip()));
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.RESIDENTIAL_ADDRESS_HAS_NO_ZIP_CODE);
     details.setUserMessage(Validation.Business.RESIDENTIAL_ADDRESS_HAS_NO_ZIP_CODE_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
@@ -227,7 +227,7 @@ rule "Validate that application has county"
     $form : RFA1aFormDTO();
     not CountyType() from $form.applicationCounty;
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.APPLICATION_HAS_NO_COUNTY);
     details.setUserMessage(Validation.Business.APPLICATION_HAS_NO_COUNTY_MESSAGE);
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
@@ -242,7 +242,7 @@ rule "Validate Applicant's First Name"
     $applicant : ApplicantDTO() from $form.applicants;
     eval(StringUtils.isBlank($applicant.getFirstName()))
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.APPLICANT_FIRST_NAME);
     details.setUserMessage(String.format(Validation.Business.APPLICANT_FIRST_NAME_IS_EMPTY_MESSAGE,
         $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
@@ -260,7 +260,7 @@ rule "Applicant's Empty Last Name"
     $applicant : ApplicantDTO() from $form.applicants;
     eval(StringUtils.isBlank($applicant.getLastName()));
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.APPLICANT_LAST_NAME);
     details.setUserMessage(String.format(Validation.Business.APPLICANT_LAST_NAME_IS_EMPTY_MESSAGE,
        $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
@@ -278,7 +278,7 @@ rule "Validate Applicant's Driver License"
       $applicant: ApplicantDTO( (driverLicenseNumber == null && driverLicenseState != null)
           || (driverLicenseNumber != null && driverLicenseState == null)) from $form.applicants;
   then
-    ValidationDetails details = new ValidationDetails();
+    IssueDetails details = new IssueDetails();
     details.setCode(String.format(Validation.Business.Code.APPLICANT_DRIVER_LICENSE,
        $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
        $applicant.getLastName() != null ? $applicant.getLastName() : "",

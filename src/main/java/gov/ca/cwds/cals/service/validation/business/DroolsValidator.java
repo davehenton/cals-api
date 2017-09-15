@@ -1,10 +1,10 @@
 package gov.ca.cwds.cals.service.validation.business;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.exception.ValidationDetails;
 import gov.ca.cwds.cals.inject.InjectorHolder;
 import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
+import gov.ca.cwds.rest.exception.IssueDetails;
+import gov.ca.cwds.utils.JsonUtils;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 import javax.validation.ConstraintValidator;
@@ -26,7 +26,7 @@ public abstract class DroolsValidator<A extends Annotation, T> implements
     Object validatedFact = configuration.getValidatedFact(obj);
 
     DroolsService droolsService = InjectorHolder.INSTANCE.getInstance(DroolsService.class);
-    Set<ValidationDetails> detailsList = droolsService.validate(validatedFact, configuration);
+    Set<IssueDetails> detailsList = droolsService.validate(validatedFact, configuration);
     if (detailsList.isEmpty()) {
       return true;
     } else {
@@ -42,9 +42,9 @@ public abstract class DroolsValidator<A extends Annotation, T> implements
 
   }
 
-  public String marshallData(ValidationDetails details) {
+  public String marshallData(IssueDetails details) {
     try {
-      return Utils.Json.to(details);
+      return JsonUtils.to(details);
     } catch (JsonProcessingException e) {
       throw new IllegalArgumentException(
           "Cannot marshall validation details for message: " + details.getUserMessage(), e);

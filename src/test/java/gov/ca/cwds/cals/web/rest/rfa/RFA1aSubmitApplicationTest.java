@@ -177,7 +177,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .setTestedTableName("OST_CHKT")
         .appendTableFilter("RCPNT_ID", recipientId)
         .build()
-        .assertEquals(new String[]{"IDENTIFIER", "LST_UPD_TS"});
+        .assertEquals(new String[]{"IDENTIFIER", "LST_UPD_TS"}, new String[]{"STATE_C"});
   }
 
   private String[] getSubstituteCareProviderIds(String placementHomeId) throws Exception {
@@ -388,15 +388,6 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .build();
 
     helper.assertEquals(new String[]{"IDENTIFIER", "FKPLC_HM_T", "LST_UPD_TS"}, new String[] {"OTH_ADLTNM"});
-
-    ITable actualTable = helper.getActualTable();
-
-    int rowCount = actualTable.getRowCount();
-
-    for (int i = 0; i < rowCount; i++) {
-      String identifier = String.valueOf(actualTable.getValue(i, "IDENTIFIER"));
-      testIfOutOfStateCheckWasCreatedProperly(identifier, false);
-    }
   }
 
   private void testIfOtherChildrenWasCreatedProperly(String placementHomeId) throws Exception {

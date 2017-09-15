@@ -4,11 +4,6 @@ import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.google.inject.Injector;
-import gov.ca.cwds.cals.exception.CustomExceptionMapperBinder;
-import gov.ca.cwds.cals.exception.mapper.BusinessValidationExceptionMapper;
-import gov.ca.cwds.cals.exception.mapper.ExpectedExceptionMapperImpl;
-import gov.ca.cwds.cals.exception.mapper.UnexpectedExceptionMapperImpl;
-import gov.ca.cwds.cals.exception.mapper.ValidationExceptionMapperImpl;
 import gov.ca.cwds.cals.inject.InjectorHolder;
 import gov.ca.cwds.cals.web.rest.filters.RequestExecutionContextFilter;
 import gov.ca.cwds.cals.web.rest.filters.RequestResponseLoggingFilter;
@@ -34,11 +29,6 @@ public abstract class BaseCalsApiApplication<T extends CalsApiConfiguration> ext
 
   @Override
   public void runInternal(T configuration, Environment environment) {
-    environment.jersey().register(UnexpectedExceptionMapperImpl.class);
-    environment.jersey().register(ExpectedExceptionMapperImpl.class);
-    environment.jersey().register(ValidationExceptionMapperImpl.class);
-    environment.jersey().register(BusinessValidationExceptionMapper.class);
-    environment.jersey().register(new CustomExceptionMapperBinder(true));
     environment.getObjectMapper()
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
 

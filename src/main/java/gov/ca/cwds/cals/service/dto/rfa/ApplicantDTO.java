@@ -90,6 +90,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   private List<PhoneDTO> phones = new ArrayList<>();
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private RFA1bFormDTO rfa1bForm;
 
   public NamePrefixType getNamePrefix() {

@@ -1,11 +1,10 @@
 {
-  "validation_details": [
+  "issue_details": [
     {
       "type": "expected_exception",
       "user_message": "$user_message",
       "technical_message": "$technical_message",
-      "incident_id": "$incident_id",
-      "code": "1"
+      "incident_id": "$incident_id"
     }
   ]
 }
