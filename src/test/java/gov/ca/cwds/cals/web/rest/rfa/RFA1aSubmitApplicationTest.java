@@ -128,8 +128,6 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     testIfPlacementHomeWasCreatedProperly(placementHomeId);
     testIfPlacementHomeUCWasCreatedProperly();
 
-    testIfPlacementHomeNotesWasCreatedProperly(placementHomeId);
-
     testIfPlacementHomeProfileWasCreatedProperly(placementHomeId);
 
     testIfEmergencyContactDetailWasCreatedProperly(placementHomeId);
@@ -251,18 +249,6 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
         .setTestedTableName("PLCHM_UC")
         .build()
         .assertEquals(new String[]{"PKPLC_HMT", "LST_UPD_TS"});
-  }
-
-  private void testIfPlacementHomeNotesWasCreatedProperly(String placementHomeId) throws Exception {
-    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
-        .setExpectedResultTemplatePath("/dbunit/PlacementHomeNotes.xml")
-        .setTestedTableName("HMNOTE_T")
-        .appendTableFilter("FKPLC_HM_T", placementHomeId)
-        .build();
-    ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
-    expectedDataSet.addReplacementObject("$placementHomeId", placementHomeId);
-
-    helper.assertEquals(new String[]{"IDENTIFIER", "LST_UPD_TS"});
   }
 
   private void testIfPlacementHomeProfileWasCreatedProperly(String placementHomeId) throws Exception {

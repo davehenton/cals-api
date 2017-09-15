@@ -55,7 +55,6 @@ import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
 import gov.ca.cwds.cals.persistence.model.cms.OutOfStateCheck;
 import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeNotes;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeProfile;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
@@ -93,7 +92,6 @@ import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeInformationMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
-import gov.ca.cwds.cals.service.mapper.PlacementHomeNotesMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderUCMapper;
@@ -216,9 +214,6 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private ClientScpEthnicityMapper clientScpEthnicityMapper;
-
-  @Inject
-  private PlacementHomeNotesMapper placementHomeNotesMapper;
 
   @Inject
   private CountyOwnershipMapper countyOwnershipMapper;
@@ -512,8 +507,6 @@ public class FacilityService implements CrudsService {
 
     storeBackgroundCheck();
 
-    storePlacementHomeNotes(placementHomeId);
-
     storePlacementHomeProfile(form, placementHomeId);
 
     Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>();
@@ -551,7 +544,7 @@ public class FacilityService implements CrudsService {
   private CountyOwnership storeCountyOwnership(String entityId, String discriminator, List<CountyType> counties) {
     CountyOwnership countyOwnership =
         countyOwnershipMapper.toCountyOwnership(entityId, discriminator, counties);
-    return xaCountyOwnershipDao.create(countyOwnership);// TODO: 8/18/2017
+    return xaCountyOwnershipDao.create(countyOwnership);
   }
 
   private SubstituteCareProvider storeSubstituteCareProvider(RFA1aFormDTO form, ApplicantDTO applicant) {
@@ -595,12 +588,6 @@ public class FacilityService implements CrudsService {
     BackgroundCheck backgroundCheck = backgroundCheckMapper.toBackgroundCheck("");
     xaBackgroundCheckDao.create(backgroundCheck);
   }
-
-  private void storePlacementHomeNotes(String placementHomeId) {
-    PlacementHomeNotes placementHomeNotes = placementHomeNotesMapper.toPlacementHomeNotes(placementHomeId);
-    xaPlacementHomeNotesDao.create(placementHomeNotes);
-  }
-
 
   private PlacementHomeUc storePlacementHomeUc(PlacementHome persistedPlacementHome) {
     PlacementHomeUc placementHomeUc = placementHomeMapper.toPlacementHomeUc(persistedPlacementHome);
