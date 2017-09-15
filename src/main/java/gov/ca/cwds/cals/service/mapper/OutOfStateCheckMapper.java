@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.persistence.model.cms.OutOfStateCheck;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
@@ -17,7 +18,7 @@ public interface OutOfStateCheckMapper {
   OutOfStateCheckMapper INSTANCE = Mappers.getMapper(OutOfStateCheckMapper.class);
 
   @Mapping(target = "identifier", ignore = true)
-  @Mapping(target = "stateC", constant = "0")
+  @Mapping(target = "stateC", source = "state.cwsId")
   @Mapping(target = "regmntInd", ignore = true)
   @Mapping(target = "requestDt", ignore = true)
   @Mapping(target = "receiveDt", ignore = true)
@@ -26,16 +27,19 @@ public interface OutOfStateCheckMapper {
   @Mapping(target = "lstUpdId", ignore = true)
   @Mapping(target = "lstUpdTs", ignore = true)
   @Mapping(target = "fkcoltrlT", ignore = true)
-  void toOutOfStateCheck(@MappingTarget OutOfStateCheck outOfStateCheck, Object stub);
+  void toOutOfStateCheck(@MappingTarget OutOfStateCheck outOfStateCheck, Object stub,
+      StateType state);
 
   @InheritConfiguration
   @Mapping(target = "rcpntId", source = "substituteCareProvider.identifier")
   @Mapping(target = "rcpntCd", constant = "S")
-  OutOfStateCheck toOutOfStateCheck(SubstituteCareProvider substituteCareProvider);
+  OutOfStateCheck toOutOfStateCheck(SubstituteCareProvider substituteCareProvider,
+      StateType state);
 
   @InheritConfiguration
   @Mapping(target = "rcpntId", source = "otherAdultsInPlacementHome.identifier")
   @Mapping(target = "rcpntCd", constant = "O")
-  OutOfStateCheck toOutOfStateCheck(OtherAdultsInPlacementHome otherAdultsInPlacementHome);
+  OutOfStateCheck toOutOfStateCheck(OtherAdultsInPlacementHome otherAdultsInPlacementHome,
+      StateType state);
 
 }
