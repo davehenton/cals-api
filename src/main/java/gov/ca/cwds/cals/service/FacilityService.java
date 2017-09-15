@@ -40,6 +40,7 @@ import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
@@ -72,6 +73,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
@@ -110,7 +112,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -531,7 +535,11 @@ public class FacilityService implements CrudsService {
 
       storePhoneContactDetails(applicant, substituteCareProvider.getIdentifier());
       storeEthnicity(applicant, substituteCareProvider.getIdentifier());
-      storeOutOfStateCheck(substituteCareProvider);
+
+      storeOutOfStateChecks(
+          state -> outOfStateCheckMapper.toOutOfStateCheck(substituteCareProvider, state),
+          applicant.getRfa1bForm());
+
     }
 
     storeOtherChildren(rfaApplicantIdsMap, form, storedPlacementHome);
@@ -648,12 +656,6 @@ public class FacilityService implements CrudsService {
     xaClientScpEthnicityDao.create(clientScpEthnicity);
   }
 
-  private void storeOutOfStateCheck(SubstituteCareProvider substituteCareProvider) {
-    OutOfStateCheck outOfStateCheck = outOfStateCheckMapper
-        .toOutOfStateCheck(substituteCareProvider);
-    storeOutOfStateCheck(outOfStateCheck);
-  }
-
   private void storeOtherChildren(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap,
       RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
 
@@ -691,11 +693,16 @@ public class FacilityService implements CrudsService {
   }
 
   private void storeOtherAdults(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap, RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
-    form.getOtherAdults().forEach(otherAdultDTO -> {
-      OtherAdultsInPlacementHome storedOtherAdult = storeOtherAdultsInPlacementHome(persistedPlacementHome, otherAdultDTO);
-      storeOtherAdultScpRelationships(rfaApplicantIdsMap, otherAdultDTO, storedOtherAdult);
-      storeOutOfStateCheck(storedOtherAdult);
-    });
+    form.getOtherAdults()
+        .forEach(
+            otherAdultDTO -> {
+              OtherAdultsInPlacementHome storedOtherAdult =
+                  storeOtherAdultsInPlacementHome(persistedPlacementHome, otherAdultDTO);
+              storeOtherAdultScpRelationships(rfaApplicantIdsMap, otherAdultDTO, storedOtherAdult);
+              storeOutOfStateChecks(
+                  state -> outOfStateCheckMapper.toOutOfStateCheck(storedOtherAdult, state),
+                  otherAdultDTO.getRfa1bForm());
+            });
   }
 
   private OtherAdultsInPlacementHome storeOtherAdultsInPlacementHome(
@@ -727,10 +734,15 @@ public class FacilityService implements CrudsService {
         });
   }
 
-  private void storeOutOfStateCheck(OtherAdultsInPlacementHome otherAdultsInPlacementHome) {
-    OutOfStateCheck outOfStateCheck = outOfStateCheckMapper
-        .toOutOfStateCheck(otherAdultsInPlacementHome);
-    storeOutOfStateCheck(outOfStateCheck);
+  private void storeOutOfStateChecks(Function<StateType, OutOfStateCheck> buildOutOfStateFunction,
+      RFA1bFormDTO formB) {
+    if (formB == null || CollectionUtils.isEmpty(formB.getOtherStatesOfLiving())) {
+      return;
+    }
+    formB.getOtherStatesOfLiving().forEach(state -> {
+      OutOfStateCheck outOfStateCheck = buildOutOfStateFunction.apply(state);
+      storeOutOfStateCheck(outOfStateCheck);
+    });
   }
 
   private void storeOutOfStateCheck(OutOfStateCheck outOfStateCheck) {
