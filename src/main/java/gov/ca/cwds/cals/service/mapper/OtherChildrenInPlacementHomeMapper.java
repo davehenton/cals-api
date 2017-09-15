@@ -18,7 +18,7 @@ public interface OtherChildrenInPlacementHomeMapper {
 
   @Mapping(target = "birthDt", source = "dateOfBirth")
   @Mapping(target = "genderCd", source = "minorChildDTO.gender.cwsShortCode")
-  @Mapping(target = "othchldNm", constant = "")
+  @Mapping(target = "othchldNm", constant = "Undisclosed")
   @Mapping(target = "yrIncAmt", ignore = true)
   @Mapping(target = "lstUpdId", ignore = true)
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
