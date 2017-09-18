@@ -185,7 +185,7 @@ xaCmsDataSourceFactory:
       # Properties for DB2XADataSource
       serverName: ${DB_CMS_DB2_HOST:-192.168.99.100}
       portNumber: ${DB_CMS_DB2_PORT:-50000}
-      databaseName: ${DB_CMS_DB_NAME:-DB0TDEV}
+      databaseName: ${DB_CMS_DB2_NAME:-DB0TDEV}
 #      serverName: ${DB_CMS_DB2_HOST:-db2.dev.cwds.io}
 #      portNumber: ${DB_CMS_DB2_PORT:-51000}
 #      databaseName: ${DB_CMS_DB_NAME:-DB0TDEV}
