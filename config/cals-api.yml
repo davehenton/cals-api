@@ -29,10 +29,10 @@ swagger:
   description: RESTful API definitions for the CWS New System.
   logo: images/CWDS-API-Logo-Horizontal.png
   #loginUrl: https://tpt2-es.dev.cwds.io/perry/authn/login
-  loginUrl: https://web.integration.cwds.io/perry/authn/login
+#  loginUrl: https://web.integration.cwds.io/perry/authn/login
 #  loginUrl: ${LOGIN_URL:-http://192.168.99.100:8090/authn/login}
-  #loginUrl: ${LOGIN_URL:-http://localhost:8080/perry/authn/login/v2}
-  #logoutUrl: ${LOGOUT_URL:-http://localhost:8080/perry/authn/logout}
+  loginUrl: ${LOGIN_URL:-http://localhost:8080/perry/authn/login/v2}
+  logoutUrl: ${LOGOUT_URL:-http://localhost:8080/perry/authn/logout}
 
 
   showSwagger: ${SHOW_SWAGGER:-true}
