@@ -3,12 +3,9 @@ package gov.ca.cwds.cals;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Objects;
+import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
-import gov.ca.cwds.cals.exception.ExpectedException;
-import gov.ca.cwds.cals.exception.ExpectedExceptionInfo;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
@@ -17,8 +14,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
-import io.dropwizard.jackson.Jackson;
-import java.io.IOException;
+import gov.ca.cwds.rest.exception.ExpectedException;
 import java.util.List;
 import java.util.Optional;
 import javax.ws.rs.core.Response;
@@ -200,7 +196,7 @@ public final class Utils {
     private static String getStreetAddressByPartIndex(RFAAddressDTO address, int partIndex) {
       String[] numberAndName = StringUtils.split(address.getStreetAddress(), null, 2);
       if (numberAndName.length != 2) {
-        throw new ExpectedException(ExpectedExceptionInfo.CANNOT_PARSE_STREET_ADDRESS,
+        throw new ExpectedException(ExpectedExceptionMessages.CANNOT_PARSE_STREET_ADDRESS,
             Response.Status.BAD_REQUEST);
       }
       return numberAndName[partIndex];
@@ -239,19 +235,4 @@ public final class Utils {
 
   }
 
-  public static class Json {
-
-    private static final ObjectMapper objectMapper = Jackson.newObjectMapper();
-
-    private Json() {
-    }
-
-    public static String to(Object o) throws JsonProcessingException {
-      return objectMapper.writeValueAsString(o);
-    }
-
-    public static Object from(String json, Class clazz) throws IOException {
-      return objectMapper.readValue(json, clazz);
-    }
-  }
 }

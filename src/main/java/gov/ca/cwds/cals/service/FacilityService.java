@@ -3,14 +3,12 @@ package gov.ca.cwds.cals.service;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static gov.ca.cwds.cals.exception.ExpectedExceptionInfo.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN;
 import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.Id;
-import gov.ca.cwds.cals.exception.ExpectedException;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
 import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
@@ -42,6 +40,7 @@ import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
 import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
 import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
@@ -56,7 +55,6 @@ import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
 import gov.ca.cwds.cals.persistence.model.cms.OutOfStateCheck;
 import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeNotes;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeProfile;
 import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
 import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
@@ -74,6 +72,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
@@ -93,13 +92,13 @@ import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeInformationMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
-import gov.ca.cwds.cals.service.mapper.PlacementHomeNotesMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderUCMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
+import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
 import java.io.Serializable;
@@ -111,7 +110,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -213,9 +214,6 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private ClientScpEthnicityMapper clientScpEthnicityMapper;
-
-  @Inject
-  private PlacementHomeNotesMapper placementHomeNotesMapper;
 
   @Inject
   private CountyOwnershipMapper countyOwnershipMapper;
@@ -452,7 +450,9 @@ public class FacilityService implements CrudsService {
   @UnitOfWork(FAS)
   protected LpaInformation findAssignedWorkerInformation(LisFacFile lisFacFile) {
     if (lisFacFile.getFacDoNbr() == null) {
-      throw new ExpectedException(DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN, EXPECTATION_FAILED);
+      throw new ExpectedException(
+          Constants.ExpectedExceptionMessages.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN,
+          EXPECTATION_FAILED);
     }
     String lpaCode =
         String.format("%02d", lisFacFile.getFacDoNbr().getDoNbr()) + lisFacFile.getFacDoEvalCode();
@@ -507,8 +507,6 @@ public class FacilityService implements CrudsService {
 
     storeBackgroundCheck();
 
-    storePlacementHomeNotes(placementHomeId);
-
     storePlacementHomeProfile(form, placementHomeId);
 
     Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>();
@@ -530,7 +528,11 @@ public class FacilityService implements CrudsService {
 
       storePhoneContactDetails(applicant, substituteCareProvider.getIdentifier());
       storeEthnicity(applicant, substituteCareProvider.getIdentifier());
-      storeOutOfStateCheck(substituteCareProvider);
+
+      storeOutOfStateChecks(
+          state -> outOfStateCheckMapper.toOutOfStateCheck(substituteCareProvider, state),
+          applicant.getRfa1bForm());
+
     }
 
     storeOtherChildren(rfaApplicantIdsMap, form, storedPlacementHome);
@@ -542,7 +544,7 @@ public class FacilityService implements CrudsService {
   private CountyOwnership storeCountyOwnership(String entityId, String discriminator, List<CountyType> counties) {
     CountyOwnership countyOwnership =
         countyOwnershipMapper.toCountyOwnership(entityId, discriminator, counties);
-    return xaCountyOwnershipDao.create(countyOwnership);// TODO: 8/18/2017
+    return xaCountyOwnershipDao.create(countyOwnership);
   }
 
   private SubstituteCareProvider storeSubstituteCareProvider(RFA1aFormDTO form, ApplicantDTO applicant) {
@@ -586,12 +588,6 @@ public class FacilityService implements CrudsService {
     BackgroundCheck backgroundCheck = backgroundCheckMapper.toBackgroundCheck("");
     xaBackgroundCheckDao.create(backgroundCheck);
   }
-
-  private void storePlacementHomeNotes(String placementHomeId) {
-    PlacementHomeNotes placementHomeNotes = placementHomeNotesMapper.toPlacementHomeNotes(placementHomeId);
-    xaPlacementHomeNotesDao.create(placementHomeNotes);
-  }
-
 
   private PlacementHomeUc storePlacementHomeUc(PlacementHome persistedPlacementHome) {
     PlacementHomeUc placementHomeUc = placementHomeMapper.toPlacementHomeUc(persistedPlacementHome);
@@ -647,12 +643,6 @@ public class FacilityService implements CrudsService {
     xaClientScpEthnicityDao.create(clientScpEthnicity);
   }
 
-  private void storeOutOfStateCheck(SubstituteCareProvider substituteCareProvider) {
-    OutOfStateCheck outOfStateCheck = outOfStateCheckMapper
-        .toOutOfStateCheck(substituteCareProvider);
-    storeOutOfStateCheck(outOfStateCheck);
-  }
-
   private void storeOtherChildren(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap,
       RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
 
@@ -690,11 +680,16 @@ public class FacilityService implements CrudsService {
   }
 
   private void storeOtherAdults(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap, RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
-    form.getOtherAdults().forEach(otherAdultDTO -> {
-      OtherAdultsInPlacementHome storedOtherAdult = storeOtherAdultsInPlacementHome(persistedPlacementHome, otherAdultDTO);
-      storeOtherAdultScpRelationships(rfaApplicantIdsMap, otherAdultDTO, storedOtherAdult);
-      storeOutOfStateCheck(storedOtherAdult);
-    });
+    form.getOtherAdults()
+        .forEach(
+            otherAdultDTO -> {
+              OtherAdultsInPlacementHome storedOtherAdult =
+                  storeOtherAdultsInPlacementHome(persistedPlacementHome, otherAdultDTO);
+              storeOtherAdultScpRelationships(rfaApplicantIdsMap, otherAdultDTO, storedOtherAdult);
+              storeOutOfStateChecks(
+                  state -> outOfStateCheckMapper.toOutOfStateCheck(storedOtherAdult, state),
+                  otherAdultDTO.getRfa1bForm());
+            });
   }
 
   private OtherAdultsInPlacementHome storeOtherAdultsInPlacementHome(
@@ -726,10 +721,15 @@ public class FacilityService implements CrudsService {
         });
   }
 
-  private void storeOutOfStateCheck(OtherAdultsInPlacementHome otherAdultsInPlacementHome) {
-    OutOfStateCheck outOfStateCheck = outOfStateCheckMapper
-        .toOutOfStateCheck(otherAdultsInPlacementHome);
-    storeOutOfStateCheck(outOfStateCheck);
+  private void storeOutOfStateChecks(Function<StateType, OutOfStateCheck> buildOutOfStateFunction,
+      RFA1bFormDTO formB) {
+    if (formB == null || CollectionUtils.isEmpty(formB.getOtherStatesOfLiving())) {
+      return;
+    }
+    formB.getOtherStatesOfLiving().forEach(state -> {
+      OutOfStateCheck outOfStateCheck = buildOutOfStateFunction.apply(state);
+      storeOutOfStateCheck(outOfStateCheck);
+    });
   }
 
   private void storeOutOfStateCheck(OutOfStateCheck outOfStateCheck) {

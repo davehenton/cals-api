@@ -50,6 +50,7 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
   private List<RelationshipToApplicantDTO> relationshipToApplicants = new ArrayList<>();
 
   @ApiModelProperty(hidden = true)
+  @Valid
   private RFA1bFormDTO rfa1bForm;
 
   public NamePrefixType getNamePrefix() {

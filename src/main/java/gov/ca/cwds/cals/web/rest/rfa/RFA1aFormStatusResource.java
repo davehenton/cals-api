@@ -7,9 +7,9 @@ import static gov.ca.cwds.cals.Constants.RFA;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.exception.BusinessValidationException;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
+import gov.ca.cwds.rest.exception.BusinessValidationException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

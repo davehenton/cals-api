@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class ChildDesiredDTO extends BaseDTO implements RequestResponse {
   private List<AgeGroupType> preferredAges = new ArrayList<>();
 
   @ApiModelProperty(value = "Preferred Sibling(Group Of)")
-  @CheckReferentialIntegrityForEach(enrich = true)
-  private List<SiblingGroupType> preferredSiblingGroups = new ArrayList<>();
+  @CheckReferentialIntegrity
+  private SiblingGroupType preferredSiblingGroupUpTo;
 
   public boolean isChildInHome() {
     return childInHome;
@@ -59,13 +60,13 @@ public class ChildDesiredDTO extends BaseDTO implements RequestResponse {
     this.preferredAges = preferredAges;
   }
 
-  public List<SiblingGroupType> getPreferredSiblingGroups() {
-    return preferredSiblingGroups;
+  public SiblingGroupType getPreferredSiblingGroupUpTo() {
+    return preferredSiblingGroupUpTo;
   }
 
-  public void setPreferredSiblingGroups(
-      List<SiblingGroupType> preferredSiblingGroups) {
-    this.preferredSiblingGroups = preferredSiblingGroups;
+  public void setPreferredSiblingGroupUpTo(
+      SiblingGroupType preferredSiblingGroupUpTo) {
+    this.preferredSiblingGroupUpTo = preferredSiblingGroupUpTo;
   }
 
 }

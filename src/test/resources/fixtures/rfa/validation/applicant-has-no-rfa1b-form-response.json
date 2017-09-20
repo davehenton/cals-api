@@ -1,5 +1,5 @@
 {
-  "validation_details": [
+  "issue_details": [
     {
       "type": "business_validation",
       "user_message": "Applicant with first name - [Anna], last name - [Smith] and name suffix - [Jr] has no RFA1b form",
