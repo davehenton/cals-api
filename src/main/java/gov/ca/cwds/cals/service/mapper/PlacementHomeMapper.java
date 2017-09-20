@@ -44,7 +44,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "inhmVstcd", constant = "U")
   @Mapping(target = "maxCapNo", constant = "0")
   @Mapping(target = "laVndrId", constant = " ")
-  @Mapping(target = "licenseNo", constant = "NULL")
+  @Mapping(target = "licenseNo", constant = " ")
   @Mapping(target = "licCapNo", constant = "0")
   @Mapping(target = "licStc", constant = "0")
   @Mapping(target = "licBsnc", constant = "0")
