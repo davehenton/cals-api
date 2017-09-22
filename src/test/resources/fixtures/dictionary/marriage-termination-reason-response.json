@@ -7,6 +7,10 @@
     {
       "id": 2,
       "value": "Spouse Died"
+    },
+    {
+      "id": 3,
+      "value": "Domestic Partnership Dissolution"
     }
   ]
 }
