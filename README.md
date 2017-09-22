@@ -76,6 +76,8 @@ Set environment variable CALS_API_CONFIG to cals-api-lis-connx.yml to run docker
 #### Swagger Configuration Parameters**
 - LOGIN_URL -- Login URL 
 - SHOW_SWAGGER -- Show swagger (true | false) default - true
+- SWAGGER_JSON_URL -- default - http://localhost:8080/swagger.json
+- SWAGGER_CALLBACK_URL -- default - http://localhost:8080/swagger
 
 #### Shiro Configuration Parameters
 - SHIRO_CONFIG_PATH -- path to Shiro configuration file
