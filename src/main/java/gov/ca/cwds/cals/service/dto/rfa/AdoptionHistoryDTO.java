@@ -36,7 +36,7 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
   @Valid
   private SuspensionRevocationHistoryQ6 suspensionRevocationHistoryQ6;
 
-  private boolean wasSubjectForExclusionOrderQ7;
+  private Boolean wasSubjectForExclusionOrderQ7;
 
   public FosterCareLicensesQ1 getFosterCareLicensesQ1() {
     return fosterCareLicensesQ1;
@@ -92,11 +92,11 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
     this.suspensionRevocationHistoryQ6 = suspensionRevocationHistoryQ6;
   }
 
-  public boolean isWasSubjectForExclusionOrderQ7() {
+  public Boolean isWasSubjectForExclusionOrderQ7() {
     return wasSubjectForExclusionOrderQ7;
   }
 
-  public void setWasSubjectForExclusionOrderQ7(boolean wasSubjectForExclusionOrderQ7) {
+  public void setWasSubjectForExclusionOrderQ7(Boolean wasSubjectForExclusionOrderQ7) {
     this.wasSubjectForExclusionOrderQ7 = wasSubjectForExclusionOrderQ7;
   }
 
@@ -108,15 +108,15 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private static final long serialVersionUID = 2997447845465265427L;
 
-    private boolean wasPreviouslyLicensed;
+    private Boolean wasPreviouslyLicensed;
 
     private List<AgencyDTO> agencies;
 
-    public boolean isWasPreviouslyLicensed() {
+    public Boolean isWasPreviouslyLicensed() {
       return wasPreviouslyLicensed;
     }
 
-    public void setWasPreviouslyLicensed(boolean wasPreviouslyLicensed) {
+    public void setWasPreviouslyLicensed(Boolean wasPreviouslyLicensed) {
       this.wasPreviouslyLicensed = wasPreviouslyLicensed;
     }
 
@@ -137,15 +137,15 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private static final long serialVersionUID = -5376871646650659340L;
 
-    private boolean haveAppliedForAdoption;
+    private Boolean haveAppliedForAdoption;
 
     private List<String> facilities;
 
-    public boolean isHaveAppliedForAdoption() {
+    public Boolean isHaveAppliedForAdoption() {
       return haveAppliedForAdoption;
     }
 
-    public void setHaveAppliedForAdoption(boolean haveAppliedForAdoption) {
+    public void setHaveAppliedForAdoption(Boolean haveAppliedForAdoption) {
       this.haveAppliedForAdoption = haveAppliedForAdoption;
     }
 
@@ -167,15 +167,15 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private static final long serialVersionUID = 6565787215494617722L;
 
-    private boolean wasPreviouslyLicensed;
+    private Boolean wasPreviouslyLicensed;
 
     private List<AgencyDTO> agencies;
 
-    public boolean isWasPreviouslyLicensed() {
+    public Boolean isWasPreviouslyLicensed() {
       return wasPreviouslyLicensed;
     }
 
-    public void setWasPreviouslyLicensed(boolean wasPreviouslyLicensed) {
+    public void setWasPreviouslyLicensed(Boolean wasPreviouslyLicensed) {
       this.wasPreviouslyLicensed = wasPreviouslyLicensed;
     }
 
@@ -196,15 +196,15 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private static final long serialVersionUID = 3828070517329879462L;
 
-    private boolean wasEmployedOrVolunteered;
+    private Boolean wasEmployedOrVolunteered;
 
     private List<String> facilities;
 
-    public boolean isWasEmployedOrVolunteered() {
+    public Boolean isWasEmployedOrVolunteered() {
       return wasEmployedOrVolunteered;
     }
 
-    public void setWasEmployedOrVolunteered(boolean wasEmployedOrVolunteered) {
+    public void setWasEmployedOrVolunteered(Boolean wasEmployedOrVolunteered) {
       this.wasEmployedOrVolunteered = wasEmployedOrVolunteered;
     }
 
@@ -225,15 +225,15 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private static final long serialVersionUID = 6797171388514466929L;
 
-    private boolean hadDenials;
+    private Boolean hadDenials;
 
     private List<AgencyDTO> agencies;
 
-    public boolean isHadDenials() {
+    public Boolean isHadDenials() {
       return hadDenials;
     }
 
-    public void setHadDenials(boolean hadDenials) {
+    public void setHadDenials(Boolean hadDenials) {
       this.hadDenials = hadDenials;
     }
 
@@ -254,15 +254,15 @@ public class AdoptionHistoryDTO extends BaseDTO implements RequestResponse {
 
     private static final long serialVersionUID = -4077489037820146583L;
 
-    private boolean hadSuspensionsRevocations;
+    private Boolean hadSuspensionsRevocations;
 
     private List<AgencyDTO> agencies;
 
-    public boolean isHadSuspensionsRevocations() {
+    public Boolean isHadSuspensionsRevocations() {
       return hadSuspensionsRevocations;
     }
 
-    public void setHadSuspensionsRevocations(boolean hadSuspensionsRevocations) {
+    public void setHadSuspensionsRevocations(Boolean hadSuspensionsRevocations) {
       this.hadSuspensionsRevocations = hadSuspensionsRevocations;
     }
 
