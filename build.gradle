@@ -34,7 +34,7 @@ project.ext {
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
     coreApiVersion = '3.6.438'
-    shiroSecurityVersion = '0.4.2_116-RC'
+    shiroSecurityVersion = '0.4.2'
     calsModelVersion = '0.4.2-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     droolsVersion = '7.1.0.Final'
@@ -111,7 +111,9 @@ dependencies {
 
     compile (group: 'gov.ca.cwds.api', name: 'api-core', version: coreApiVersion , changing: true) {
         exclude group: 'org.glassfish.jersey.core'
+        exclude group: 'gov.ca.cwds.api', module: 'shiro-security'
     }
+    
     compile group: 'gov.ca.cwds.api', name:'shiro-security', version: shiroSecurityVersion
 
     compile group: 'org.kie', name: 'kie-api', version: droolsVersion
