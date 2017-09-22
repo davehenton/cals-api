@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
+import gov.ca.cwds.cals.web.rest.rfa.helper.AdoptionHistoryHelper;
 import gov.ca.cwds.cals.web.rest.rfa.helper.ApplicantHelper;
 import gov.ca.cwds.cals.web.rest.rfa.helper.FormAHelper;
 import gov.ca.cwds.cals.web.rest.rfa.helper.FormBHelper;
@@ -20,6 +21,7 @@ public abstract class BaseRFAIntegrationTest extends BaseCalsApiIntegrationTest 
   protected MinorChildHelper minorChildHelper = new MinorChildHelper(clientTestRule);
   protected OtherAdultsHelper otherAdultHelper = new OtherAdultsHelper(clientTestRule);
   protected ResidenceHelper residenceHelper = new ResidenceHelper(clientTestRule);
+  protected AdoptionHistoryHelper adoptionHistoryHelper = new AdoptionHistoryHelper(clientTestRule);
   protected StatusHelper statusHelper = new StatusHelper(clientTestRule);
 
 }
