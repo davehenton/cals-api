@@ -29,13 +29,13 @@ project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
-    projectMajorVersion = '0.4.2'
+    projectMajorVersion = '0.4.3'
     projectVersion = projectMajorVersion + '-SNAPSHOT'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
     coreApiVersion = '3.6.438'
     shiroSecurityVersion = '0.4.2'
-    calsModelVersion = '0.4.2-SNAPSHOT'
+    calsModelVersion = '0.4.3-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     droolsVersion = '7.1.0.Final'
     dbunitVersion = '2.5.0'
@@ -113,7 +113,7 @@ dependencies {
         exclude group: 'org.glassfish.jersey.core'
         exclude group: 'gov.ca.cwds.api', module: 'shiro-security'
     }
-    
+
     compile group: 'gov.ca.cwds.api', name:'shiro-security', version: shiroSecurityVersion
 
     compile group: 'org.kie', name: 'kie-api', version: droolsVersion
