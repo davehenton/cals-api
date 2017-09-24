@@ -41,6 +41,17 @@ public class AdultChildDTO extends BaseDTO {
   @Valid
   private List<RelationshipToApplicantDTO> relationshipToApplicants;
 
+  @ApiModelProperty(value = "Is adult child lives in the home?", example = "false")
+  private Boolean livesInHome;
+
+  @ApiModelProperty("Adult Child phone number")
+  @Valid
+  private PhoneDTO phone;
+
+  @ApiModelProperty("Adult Child address")
+  @Valid
+  private RFAAddressDTO address;
+
   public NamePrefixType getNamePrefix() {
     return namePrefix;
   }
@@ -89,5 +100,29 @@ public class AdultChildDTO extends BaseDTO {
   public void setRelationshipToApplicants(
       List<RelationshipToApplicantDTO> relationshipToApplicants) {
     this.relationshipToApplicants = relationshipToApplicants;
+  }
+
+  public Boolean isLivesInHome() {
+    return livesInHome;
+  }
+
+  public void setLivesInHome(Boolean livesInHome) {
+    this.livesInHome = livesInHome;
+  }
+
+  public PhoneDTO getPhone() {
+    return phone;
+  }
+
+  public void setPhone(PhoneDTO phone) {
+    this.phone = phone;
+  }
+
+  public RFAAddressDTO getAddress() {
+    return address;
+  }
+
+  public void setAddress(RFAAddressDTO address) {
+    this.address = address;
   }
 }

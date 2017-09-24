@@ -35,7 +35,7 @@ public class PhoneDTO extends BaseDTO {
   @Pattern(regexp = "^\\d*", message = Constraint.NUMERIC_MESSAGE)
   private String extension;
 
-  private boolean preferred;
+  private Boolean preferred;
 
   @JsonIgnore
   private UUID uuid = UUID.randomUUID();
@@ -64,11 +64,11 @@ public class PhoneDTO extends BaseDTO {
     this.extension = extension;
   }
 
-  public boolean isPreferred() {
+  public Boolean isPreferred() {
     return preferred;
   }
 
-  public void setPreferred(boolean preferred) {
+  public void setPreferred(Boolean preferred) {
     this.preferred = preferred;
   }
 

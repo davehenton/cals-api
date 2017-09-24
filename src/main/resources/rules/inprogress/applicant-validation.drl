@@ -17,9 +17,11 @@ rule "Validate Applicant's preferred phone"
     $actualPhone: PhoneDTO() from $applicant.phones;
 
     exists PhoneDTO(
+      ($actualPhone.isPreferred() != null),
+      (isPreferred() != null),
       this != $actualPhone,
-      $actualPhone.preferred,
-      preferred
+      $actualPhone.isPreferred(),
+      isPreferred()
     ) from $applicant.phones
   then
     IssueDetails details = new IssueDetails();
