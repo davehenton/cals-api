@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.web.rest;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
-import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixtureTemplate;
+import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixturePath;
 import static gov.ca.cwds.rest.exception.IssueDetails.BASE_MESSAGE;
 import static gov.ca.cwds.rest.exception.IssueType.UNEXPECTED_EXCEPTION;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
@@ -19,9 +19,6 @@ import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
 import gov.ca.cwds.rest.exception.BaseExceptionResponse;
 import gov.ca.cwds.rest.exception.IssueDetails;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -73,18 +70,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
             clientTestRule.getMapper().readValue(fixture, RFA1aFormDTO.class),
             MediaType.APPLICATION_JSON_TYPE));
     assertEquals(422, response.getStatus());
-    String entity = response.readEntity(String.class);
-    Map<String, Object> parameters = new HashMap<>();
-    BaseExceptionResponse exceptionResponse = clientTestRule.getMapper()
-        .readValue(entity, BaseExceptionResponse.class);
-    Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
-    IssueDetails detail = issueDetails.iterator().next();
-    parameters.put("incident_id", detail.getIncidentId());
-
-    assertResponseByFixtureTemplate(entity,
-        "fixtures/exception/technical-validation-exception.json",
-        parameters);
-
+    assertResponseByFixturePath(response, "fixtures/exception/technical-validation-exception.json");
   }
 
   @Test
@@ -97,18 +83,7 @@ public class ExceptionHandlingResponseTest extends BaseRFAIntegrationTest {
     Response response = target.request(MediaType.APPLICATION_JSON).post(
         Entity.entity(getApplicantDTO(), MediaType.APPLICATION_JSON_TYPE));
     assertEquals(422, response.getStatus());
-
-    String entity = response.readEntity(String.class);
-    Map<String, Object> parameters = new HashMap<>();
-    BaseExceptionResponse exceptionResponse = clientTestRule.getMapper()
-        .readValue(entity, BaseExceptionResponse.class);
-    Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
-    IssueDetails detail = issueDetails.iterator().next();
-    parameters.put("incident_id", detail.getIncidentId());
-
-    assertResponseByFixtureTemplate(entity,
-        "fixtures/exception/business-validation-exception.json",
-        parameters);
+    assertResponseByFixturePath(response, "fixtures/exception/business-validation-exception.json");
   }
 
   @Test

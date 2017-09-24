@@ -1,12 +1,10 @@
 {
   "issue_details": [
     {
-      "incident_id": "$incident_id",
       "type": "business_validation",
       "user_message": "Applicant with first name - [Anna], last name - [Smith] and name suffix - [Jr] already exists in application",
-      "code": "BV000005",
-      "technical_message": "applicant-names-duplication-validation"
+      "technical_message": "applicant-names-duplication-validation",
+      "code": "BV000005"
     }
   ]
 }
-
