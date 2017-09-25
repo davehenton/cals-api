@@ -264,7 +264,8 @@ public class RFA1aApplicantResourceTest extends
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
       assertEqualsResponse(
-          fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json"),
+          fixture(
+              "fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json"),
           getDataFromRawResponse(e.getResponse()));
     }
   }
