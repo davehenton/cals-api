@@ -349,14 +349,15 @@ public class RFA1aApplicantResourceTest extends
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
       String entity = e.getResponse().readEntity(String.class);
-          Map<String, Object> parameters = new HashMap<>();
+      Map<String, Object> parameters = new HashMap<>();
       BaseExceptionResponse exceptionResponse = e.getResponse()
           .readEntity(BaseExceptionResponse.class);
       Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
       IssueDetails detail = issueDetails.iterator().next();
       parameters.put("incident_id", detail.getIncidentId());
 
-      assertResponseByFixtureTemplate(entity,"fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json",
+      assertResponseByFixtureTemplate(entity,
+          "fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json",
           parameters);
     }
   }
