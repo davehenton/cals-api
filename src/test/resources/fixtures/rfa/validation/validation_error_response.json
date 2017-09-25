@@ -1,11 +1,8 @@
 {
   "issue_details": [
     {
-      "incident_id": "$incident_id",
       "type": "constraint_validation",
-      "user_message": "$user_message",
-      "property": "$property",
-      "invalid_value": "$invalid_value"
+      "user_message": "$user_message"
     }
   ]
 }

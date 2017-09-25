@@ -232,7 +232,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   @JsonIgnore
   public PhoneDTO getPreferredPhoneNumber() {
-    Optional<PhoneDTO> preferredPhoneNumber = this.phones.stream().filter(PhoneDTO::isPreferred)
+    Optional<PhoneDTO> preferredPhoneNumber = this.phones.stream().filter(phone -> phone.isPreferred() == null ? false : phone.isPreferred())
         .findAny();
     return preferredPhoneNumber.orElse(phones.get(0));
   }
