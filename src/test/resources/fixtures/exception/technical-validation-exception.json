@@ -1,8 +1,14 @@
 {
   "issue_details": [
     {
+      "incident_id": "$incident_id",
       "type": "constraint_validation",
-      "user_message": "applicationCounty  Object CountyType{id = -1, value = Unknown}) is not found in database. Referential integrity was not confirmed."
+      "user_message": " Object CountyType{id = -1, value = Unknown}) is not found in database. Referential integrity was not confirmed.",
+      "property": "applicationCounty",
+      "invalid_value": {
+        "id": -1,
+        "value": "Unknown"
+    }
     }
   ]
 }
