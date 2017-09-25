@@ -1,6 +1,7 @@
 {
   "issue_details": [
     {
+      "incident_id": "$incident_id",
       "type": "business_validation",
       "user_message": "Phone [1234567890] already exists for Applicant with first name - [Anna], last name - [Smith] and name suffix - [Jr]",
       "technical_message": "applicant-validation",

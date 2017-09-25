@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 import static gov.ca.cwds.cals.web.rest.rfa.helper.PhoneDTOHelper.createPhone;
 import static gov.ca.cwds.cals.web.rest.rfa.helper.PhoneDTOHelper.createPhoneNoExtension;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
-import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
+import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixtureTemplate;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -14,9 +14,12 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
+import gov.ca.cwds.rest.exception.BaseExceptionResponse;
+import gov.ca.cwds.rest.exception.IssueDetails;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -87,8 +90,17 @@ public class RFA1aApplicantResourceTest extends
       fail();
     } catch (ClientErrorException e) {
       Map<String, Object> parameters = new HashMap<>();
+
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+      parameters.put("property", "firstName");
+      parameters.put("invalid_value", "12345678901234567890x");
+
       parameters
-          .put("user_message", "firstName 12345678901234567890x exceeds maximum length of 20");
+          .put("user_message", "12345678901234567890x exceeds maximum length of 20");
       checkValidationResponse(e, parameters);
     }
   }
@@ -103,40 +115,66 @@ public class RFA1aApplicantResourceTest extends
       fail();
     } catch (ClientErrorException e) {
       Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+      parameters.put("property", "lastName");
+      parameters.put("invalid_value", "1234567890123456789012345X");
       parameters
-          .put("user_message", "lastName 1234567890123456789012345X exceeds maximum length of 25");
+          .put("user_message", "1234567890123456789012345X exceeds maximum length of 25");
       checkValidationResponse(e, parameters);
     }
   }
 
   @Test
   public void checkFirstNameAlphanumericTest() throws Exception {
+    String invalidValue = "1@4";
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
-      applicantDTO.setFirstName("l@4");
+      applicantDTO.setFirstName(invalidValue);
       RFA1aFormDTO form = formAHelper.createRFA1aForm();
       applicantHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
       Map<String, Object> parameters = new HashMap<>();
+
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+      parameters.put("property", "firstName");
+      parameters.put("invalid_value", invalidValue);
+
       parameters.put("user_message",
-          "firstName l@4 is invalid. Only alphanumerical characters and spaces are allowed");
+          invalidValue + " is invalid. Only alphanumerical characters and spaces are allowed");
       checkValidationResponse(e, parameters);
     }
   }
 
   @Test
   public void checkLastNameAlphanumericTest() throws Exception {
+    String invalidValue = "1@4";
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
-      applicantDTO.setLastName("l@4");
+      applicantDTO.setLastName(invalidValue);
       RFA1aFormDTO form = formAHelper.createRFA1aForm();
       applicantHelper.postApplicant(form.getId(), applicantDTO);
       fail();
     } catch (ClientErrorException e) {
       Map<String, Object> parameters = new HashMap<>();
+
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+      parameters.put("property", "lastName");
+      parameters.put("invalid_value", invalidValue);
       parameters.put("user_message",
-          "lastName l@4 is invalid. Only alphanumerical characters and spaces are allowed");
+          invalidValue + " is invalid. Only alphanumerical characters and spaces are allowed");
       checkValidationResponse(e, parameters);
     }
   }
@@ -172,9 +210,19 @@ public class RFA1aApplicantResourceTest extends
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
-      assertEqualsResponse(
-          fixture("fixtures/rfa/validation/applicant-duplicate-name-violation-response.json"),
-          getDataFromRawResponse(e.getResponse()));
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+          "fixtures/rfa/validation/applicant-duplicate-name-violation-response.json",
+          parameters);
+
     }
   }
 
@@ -192,9 +240,18 @@ public class RFA1aApplicantResourceTest extends
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
-      assertEqualsResponse(
-          fixture("fixtures/rfa/validation/applicant-duplicate-name-violation-response.json"),
-          getDataFromRawResponse(e.getResponse()));
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+          "fixtures/rfa/validation/applicant-duplicate-name-violation-response.json",
+          parameters);
     }
   }
 
@@ -212,9 +269,18 @@ public class RFA1aApplicantResourceTest extends
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
-      assertEqualsResponse(
-          fixture("fixtures/rfa/validation/applicant-duplicate-name-violation-response.json"),
-          getDataFromRawResponse(e.getResponse()));
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+          "fixtures/rfa/validation/applicant-duplicate-name-violation-response.json",
+          parameters);
     }
   }
 
@@ -228,9 +294,19 @@ public class RFA1aApplicantResourceTest extends
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
-      assertEqualsResponse(
-          fixture("fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json"),
-          getDataFromRawResponse(e.getResponse()));
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+          "fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json",
+          parameters);
+
     }
 
     // Update test
@@ -243,9 +319,18 @@ public class RFA1aApplicantResourceTest extends
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
-      assertEqualsResponse(
-          fixture("fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json"),
-          getDataFromRawResponse(e.getResponse()));
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+          "fixtures/rfa/validation/applicant-more-then-one-preferred-number-response.json",
+          parameters);
     }
   }
 
@@ -263,10 +348,16 @@ public class RFA1aApplicantResourceTest extends
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
-      assertEqualsResponse(
-          fixture(
-              "fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json"),
-          getDataFromRawResponse(e.getResponse()));
+      String entity = e.getResponse().readEntity(String.class);
+          Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,"fixtures/rfa/validation/applicant-duplicate-phone-numbers-with-extensions-response.json",
+          parameters);
     }
   }
 
@@ -284,9 +375,18 @@ public class RFA1aApplicantResourceTest extends
       fail();
     } catch (ClientErrorException e) {
       assertEquals(422, e.getResponse().getStatus());
-      assertEqualsResponse(
-          fixture("fixtures/rfa/validation/applicant-duplicate-phone-numbers-response.json"),
-          getDataFromRawResponse(e.getResponse()));
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+          "fixtures/rfa/validation/applicant-duplicate-phone-numbers-response.json",
+          parameters);
     }
   }
 
