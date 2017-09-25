@@ -275,6 +275,27 @@ tasks.withType(JavaCompile) {
     ]
 }
 
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+task testJar(type: Jar) {
+    classifier = 'tests'
+    from sourceSets.test.output+sourceSets.test.allSource
+}
+
+task fatTestJar(type: Jar) {
+    dependsOn testJar, fatJar
+    baseName = project.name + '-test-all'
+    from {
+        configurations.testRuntime.collect { it.isDirectory() ? it : zipTree(it) }
+        sourceSets.test.output
+    }
+    with jar
+}
+
 processResources {
     filter(ReplaceTokens, tokens:[
             'build.version' : projectVersion,
