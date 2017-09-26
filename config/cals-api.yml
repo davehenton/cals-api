@@ -5,6 +5,12 @@ server:
   applicationConnectors:
   - type: http
     port: 8080
+  - type: https
+    port: 8443
+    keyStorePath: ${KEY_STORE_FILE:-./config/testKeyStore.jks}
+    keyStorePassword: ${KEY_STORE_PASSWORD:-testPass}
+    keyStoreType: JKS
+    supportedProtocols: [TLSv1, TLSv1.1, TLSv1.2]
   adminConnectors:
   - type: http
     port: 9081
