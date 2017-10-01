@@ -48,7 +48,7 @@
   },
   "driver_license_number": "A1234567",
   "driver_license_state": {
-    "id": 6,
+    "id": "CA",
     "value": "California"
   },
   "email": "anna.smith@gmail.com",
@@ -65,7 +65,7 @@
       "zip": "98123",
       "city": "Rocklin",
       "state": {
-        "id": 2,
+        "id": "AL",
         "value": "CA - California"
       }
     }

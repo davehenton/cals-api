@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class ShortCodeComplaintDictionary extends BaseDictionary {
+public class ShortCodeComplaintDictionary extends SimpleDictionary {
   private static final long serialVersionUID = 8931766854976564993L;
 
   @JsonIgnore

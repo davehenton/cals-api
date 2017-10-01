@@ -99,7 +99,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
     ApplicantDTO secondApplicant = applicantHelper.getValidApplicant();
     secondApplicant.setFirstName("John");
     StateType driverLicenseState = new StateType();
-    driverLicenseState.setId(25L);
+    driverLicenseState.setId("MD");
     driverLicenseState.setValue("Maryland");
     secondApplicant.setDriverLicenseState(driverLicenseState);
     secondApplicant.getEthnicity().setId(2L);

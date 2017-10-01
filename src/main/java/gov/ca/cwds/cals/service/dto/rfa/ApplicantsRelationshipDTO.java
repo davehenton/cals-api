@@ -10,6 +10,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelations
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 
@@ -37,7 +38,7 @@ public class ApplicantsRelationshipDTO extends BaseDTO implements RequestRespons
   private String placeOfRelationshipCity;
 
   @ApiModelProperty("Place of current marriage/Domestic partnership: state")
-  @CheckReferentialIntegrity(enrich = true)
+  @CheckStateReferentialIntegrity(enrich = true)
   private StateType placeOfRelationshipState;
 
   public ApplicantRelationshipType getRelationshipType() {
