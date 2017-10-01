@@ -21,7 +21,7 @@ public abstract class AbstractReferentialIntegrityValidator {
     Serializable primaryKey = obj.getPrimaryKey();
 
     if (primaryKey != null) {
-      found = currentSession.get(obj.getClass(), primaryKey);
+      found = getPersistentObject(currentSession, obj, primaryKey);
     }
 
     boolean valid = found != null;
@@ -48,7 +48,14 @@ public abstract class AbstractReferentialIntegrityValidator {
     return valid;
   }
 
-  private List<Field> getAllFields(@NotNull List<Field> fields, Class<?> clazz) {
+  protected  <T extends PersistentObject> PersistentObject getPersistentObject(Session currentSession,
+      T obj, Serializable primaryKey) {
+    PersistentObject found;
+    found = currentSession.get(obj.getClass(), primaryKey);
+    return found;
+  }
+
+  protected List<Field> getAllFields(@NotNull List<Field> fields, Class<?> clazz) {
     fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
     if (clazz.getSuperclass() != null) {
       getAllFields(fields, clazz.getSuperclass());

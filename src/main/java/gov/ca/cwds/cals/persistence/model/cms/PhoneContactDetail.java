@@ -22,7 +22,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @SuppressWarnings({"squid:S3437"}) //LocalDate is serializable
 public class PhoneContactDetail implements PersistentObject {
 
-  private static final long serialVersionUID = -1631223734962642690L;
+  private static final long serialVersionUID = -1631223734962642690L; //NOSONAR
 
   /**
    * THIRD_ID - This is a system generated unique number that supplements user supplied data in the

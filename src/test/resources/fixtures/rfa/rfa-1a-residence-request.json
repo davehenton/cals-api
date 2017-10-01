@@ -5,7 +5,7 @@
       "zip": "98123",
       "city": "Rocklin",
       "state": {
-        "id": 6,
+        "id": "CA",
         "value": "California"
       },
       "type": {
@@ -18,7 +18,7 @@
       "zip": "98123",
       "city": "Rocklin",
       "state": {
-        "id": 6,
+        "id": "CA",
         "value": "California"
       },
       "type": {

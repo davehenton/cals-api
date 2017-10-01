@@ -1,235 +1,235 @@
 {
   "items": [
     {
-      "id": 1,
+      "id": "AK",
       "value": "Alaska"
     },
     {
-      "id": 2,
+      "id": "AL",
       "value": "Alabama"
     },
     {
-      "id": 3,
+      "id": "AM",
       "value": "American Samoa"
     },
     {
-      "id": 4,
+      "id": "AR",
       "value": "Arkansas"
     },
     {
-      "id": 5,
+      "id": "AZ",
       "value": "Arizona"
     },
     {
-      "id": 6,
+      "id": "CA",
       "value": "California"
     },
     {
-      "id": 7,
+      "id": "CM",
       "value": "Northern Marianas Islands"
     },
     {
-      "id": 8,
+      "id": "CO",
       "value": "Colorado"
     },
     {
-      "id": 9,
+      "id": "CT",
       "value": "Connecticut"
     },
     {
-      "id": 10,
+      "id": "CZ",
       "value": "Canal Zone"
     },
     {
-      "id": 11,
+      "id": "DC",
       "value": "District of Columbia"
     },
     {
-      "id": 12,
+      "id": "DE",
       "value": "Delaware"
     },
     {
-      "id": 13,
+      "id": "FL",
       "value": "Florida"
     },
     {
-      "id": 14,
+      "id": "GA",
       "value": "Georgia"
     },
     {
-      "id": 15,
+      "id": "GU",
       "value": "Guam"
     },
     {
-      "id": 16,
+      "id": "HI",
       "value": "Hawaii"
     },
     {
-      "id": 17,
+      "id": "IA",
       "value": "Iowa"
     },
     {
-      "id": 18,
+      "id": "ID",
       "value": "Idaho"
     },
     {
-      "id": 19,
+      "id": "IL",
       "value": "Illinois"
     },
     {
-      "id": 20,
+      "id": "IN",
       "value": "Indiana"
     },
     {
-      "id": 21,
+      "id": "KS",
       "value": "Kansas"
     },
     {
-      "id": 22,
+      "id": "KY",
       "value": "Kentucky"
     },
     {
-      "id": 23,
+      "id": "LA",
       "value": "Louisiana"
     },
     {
-      "id": 24,
+      "id": "MA",
       "value": "Massachusetts"
     },
     {
-      "id": 25,
+      "id": "MD",
       "value": "Maryland"
     },
     {
-      "id": 26,
+      "id": "ME",
       "value": "Maine"
     },
     {
-      "id": 27,
+      "id": "MI",
       "value": "Michigan"
     },
     {
-      "id": 28,
+      "id": "MN",
       "value": "Minnesota"
     },
     {
-      "id": 29,
+      "id": "MO",
       "value": "Missouri"
     },
     {
-      "id": 30,
+      "id": "MS",
       "value": "Mississippi"
     },
     {
-      "id": 31,
+      "id": "MT",
       "value": "Montana"
     },
     {
-      "id": 32,
+      "id": "NC",
       "value": "North Carolina"
     },
     {
-      "id": 33,
+      "id": "ND",
       "value": "North Dakota"
     },
     {
-      "id": 34,
+      "id": "NE",
       "value": "Nebraska"
     },
     {
-      "id": 35,
+      "id": "NH",
       "value": "New Hampshire"
     },
     {
-      "id": 36,
+      "id": "NJ",
       "value": "New Jersey"
     },
     {
-      "id": 37,
+      "id": "NM",
       "value": "New Mexico"
     },
     {
-      "id": 38,
+      "id": "NV",
       "value": "Nevada"
     },
     {
-      "id": 39,
+      "id": "NY",
       "value": "New York"
     },
     {
-      "id": 40,
+      "id": "OH",
       "value": "Ohio"
     },
     {
-      "id": 41,
+      "id": "OK",
       "value": "Oklahoma"
     },
     {
-      "id": 42,
+      "id": "OR",
       "value": "Oregon"
     },
     {
-      "id": 43,
+      "id": "PA",
       "value": "Pennsylvania"
     },
     {
-      "id": 44,
+      "id": "PR",
       "value": "Puerto Rico"
     },
     {
-      "id": 45,
+      "id": "RI",
       "value": "Rhode Island"
     },
     {
-      "id": 46,
+      "id": "SC",
       "value": "South Carolina"
     },
     {
-      "id": 47,
+      "id": "SD",
       "value": "South Dakota"
     },
     {
-      "id": 48,
+      "id": "TN",
       "value": "Tennessee"
     },
     {
-      "id": 49,
+      "id": "TT",
       "value": "Trust Territories"
     },
     {
-      "id": 50,
+      "id": "TX",
       "value": "Texas"
     },
     {
-      "id": 51,
+      "id": "UT",
       "value": "Utah"
     },
     {
-      "id": 52,
+      "id": "VA",
       "value": "Virginia"
     },
     {
-      "id": 53,
+      "id": "VI",
       "value": "Virgin Islands"
     },
     {
-      "id": 54,
+      "id": "VT",
       "value": "Vermont"
     },
     {
-      "id": 55,
+      "id": "WA",
       "value": "Washington"
     },
     {
-      "id": 56,
+      "id": "WI",
       "value": "Wisconsin"
     },
     {
-      "id": 57,
+      "id": "WV",
       "value": "West Virginia"
     },
     {
-      "id": 58,
+      "id": "WY",
       "value": "Wyoming"
     }
   ]

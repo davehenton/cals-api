@@ -120,7 +120,7 @@ public final class Utils {
 
     public static String getCaliforniaDriverLicense(ApplicantDTO applicant, String defaultValue) {
       if (applicant.getDriverLicenseState() != null) {
-        Long stateId = applicant.getDriverLicenseState().getId();
+        String stateId = applicant.getDriverLicenseState().getId();
         if (Constants.StateTypes.CALIFORNIA_STATE_ID.equals(stateId)) {
           return applicant.getDriverLicenseNumber();
         }

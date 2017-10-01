@@ -11,6 +11,8 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEach;
+import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "true")
   private Boolean livedInOtherState;
 
-  @CheckReferentialIntegrityForEach(enrich = true)
+  @CheckStateReferentialIntegrityForEach(enrich = true)
   private List<StateType> otherStatesOfLiving;
 
   @ApiModelProperty(example = "false")
@@ -78,7 +80,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "MD123-1234-585-121")
   private String driverLicense;
 
-  @CheckReferentialIntegrity(enrich = true)
+  @CheckStateReferentialIntegrity(enrich = true)
   private StateType driverLicenseState;
 
   @ApiModelProperty(example = "Anna Peterson")
