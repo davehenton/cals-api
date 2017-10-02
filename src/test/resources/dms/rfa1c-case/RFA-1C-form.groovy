@@ -20,7 +20,8 @@ def getSchoolName = {
 }
 
 def getRelationshipToApplicants = {
-    it? it.relationship_to_applicants[0]?.relationship_to_applicant?.value : null;
+    String[] names = it? it.relationship_to_applicants*.relationship_to_applicant?.value : [];
+    StringUtils.joinWith(", ", names);
 }
 
 [

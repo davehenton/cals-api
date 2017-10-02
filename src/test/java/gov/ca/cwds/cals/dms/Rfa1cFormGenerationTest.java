@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.dms;
 import groovy.json.JsonSlurper;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -43,6 +44,13 @@ public class Rfa1cFormGenerationTest {
     pdf.save(outputFileName);
     pdf.close();
     LOGGER.info("File is generated: {}", outputFileName);
+
+    PDDocument generatedPdf = PDDocument.load(new File(outputFileName));
+    List<PDField> fieldList = PdfTestHelper.getFields(pdf);
+    for (PDField field : fieldList) {
+      LOGGER.info("placeholder = '{}', value = {}", field.getFullyQualifiedName(), field.getValueAsString());
+    }
+    generatedPdf.close();
   }
 
 }
