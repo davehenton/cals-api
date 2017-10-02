@@ -85,6 +85,11 @@ node ('tpt2-slave'){
            buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker -DReleaseDocker=$RELEASE_DOCKER -DBuildNumber=$BUILD_NUMBER'
        }
 	}
+	stage ('Build Tests Docker'){
+  	   withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
+             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: ':docker-tests:dockerTestsPublish -DReleaseDocker=$RELEASE_DOCKER -DBuildNumber=$BUILD_NUMBER'
+       }
+  	}
 	stage('Clean Workspace') {
 		buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'dropDockerImage'
 		archiveArtifacts artifacts: '**/cals-api-*.jar,readme.txt', fingerprint: true
