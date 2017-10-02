@@ -12,6 +12,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 
@@ -58,7 +59,7 @@ public class FormerSpouseDTO extends BaseDTO {
   private String placeOfMarriageCity;
 
   @ApiModelProperty("Marriage/Domestic partnership place: state")
-  @CheckReferentialIntegrity(enrich = true)
+  @CheckStateReferentialIntegrity(enrich = true)
   private StateType placeOfMarriageState;
 
   @ApiModelProperty("Divorce/Domestic Partnership Termination reason")
@@ -73,7 +74,7 @@ public class FormerSpouseDTO extends BaseDTO {
   private String placeOfMarriageEndCity;
 
   @ApiModelProperty("Divorce/Domestic Partnership Termination State")
-  @CheckReferentialIntegrity(enrich = true)
+  @CheckStateReferentialIntegrity(enrich = true)
   private StateType placeOfMarriageEndState;
 
   public ApplicantRelationshipType getRelationshipType() {

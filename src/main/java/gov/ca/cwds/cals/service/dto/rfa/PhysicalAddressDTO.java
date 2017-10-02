@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 
 /**
  * @author CWDS CALS API Team
@@ -19,7 +20,7 @@ public class PhysicalAddressDTO extends BaseDTO {
 
   private String city;
 
-  @CheckReferentialIntegrity(enrich = true)
+  @CheckStateReferentialIntegrity(enrich = true)
   private StateType state;
 
   private String zip;

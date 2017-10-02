@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -30,7 +31,7 @@ public class RFAAddressDTO extends BaseDTO {
   private String city;
 
   @ApiModelProperty(value = "State Type")
-  @CheckReferentialIntegrity(enrich = true)
+  @CheckStateReferentialIntegrity(enrich = true)
   private StateType state;
 
   @ApiModelProperty(value = "Address Type")
