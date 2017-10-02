@@ -1,5 +1,6 @@
 import org.apache.tools.ant.filters.FixCrLfFilter
 import org.apache.tools.ant.filters.ReplaceTokens
+import org.apache.tools.ant.taskdefs.condition.Os
 
 import static org.gradle.api.logging.LogLevel.INFO
 
@@ -40,6 +41,13 @@ project.ext {
     droolsVersion = '7.1.0.Final'
     dbunitVersion = '2.5.0'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
+
+    targetDockerHubOrganization = System.env.DOCKERHUB_ORG ?: 'cwds'
+    
+    // assumed that Windows users use the Docker Toolbox
+    buildEnv = System.env.BUILD_ENV ?: (Os.isFamily(Os.FAMILY_WINDOWS) ? 'WIN_DEV' : 'JENKINS')
+    devDockerHost = System.env.DEV_DOCKER_HOST ?: '192.168.99.100'
+    devDockerPort = 2376
 }
 
 group projectGroup
@@ -206,7 +214,6 @@ jar {
     }
 }
 
-
 task integrationTest(type: Test, dependsOn: testClasses) {
     // URL where integration tests will be pointed to (may change it in gradle.properties)
     systemProperty 'cals.api.url', project.property('cals.api.url')
@@ -229,7 +236,6 @@ task copyDist(type: Copy, dependsOn: shadowJar) {
     into 'build/docker/libs'
 }
 
-
 def releaseDocker = System.getProperty("ReleaseDocker")
 def buildNumber = System.getProperty('BuildNumber')
 def dockerTag = (releaseDocker == 'true' && buildNumber != null  ? projectMajorVersion + '_' + buildNumber + '-RC' : projectVersion )
@@ -241,7 +247,6 @@ task readArguments() {
         println "Docker Tag: " + dockerTag
     }
 }
-
 
 task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
     dockerfile = "Dockerfile"
@@ -304,6 +309,36 @@ publishing {
         //mavenLocal()
         maven {
             url "http://sonar.dev.cwds.io:8081/artifactory/repo"
+        }
+    }
+}
+
+// reused in sub-modules
+project.ext.dockerEnvVars = project.buildEnv != 'WIN_DEV' ? [:] : [
+        DOCKER_CERT_PATH: System.getProperty("user.home") + '/.docker/machine/machines/default',
+        DOCKER_HOST: "tcp://$project.devDockerHost:$project.devDockerPort",
+        DOCKER_MACHINE_NAME: 'default',
+        DOCKER_TLS_VERIFY: '1',
+        COMPOSE_CONVERT_WINDOWS_PATHS: 'true'
+]
+
+// reused in sub-modules
+def isPortOpen(host, port) {
+    try {
+        Socket socket = new Socket(host, port)
+        socket.close()
+        return true
+    } catch (IOException e) {
+        return false
+    }
+}
+
+// reused in sub-modules
+task checkDockerService {
+    enabled = project.buildEnv == 'WIN_DEV'
+    doFirst {
+        if (!isPortOpen(project.devDockerHost, project.devDockerPort)) {
+            throw new GradleException('Docker service is not available. Windows users should run Docker Quickstart Terminal of Docker Toolbox')
         }
     }
 }
