@@ -25,8 +25,8 @@ public class Rfa1cFormGenerationTest {
   @Test
   public void testPdfGeneration() throws Exception {
     String templateFileName = "RFA-01C - Resource Family Application-Confidential";
-    String request = fixture("dms/rfa1c-case/RFA-1C-form-request.json");
-    String script = fixture("dms/rfa1c-case/RFA-1C-form.groovy");
+    String request = fixture("fixtures/rfa/rfa-1c-form.json");
+    String script = fixture("dms/rfa1c-form/RFA-1C-form.groovy");
 
     Map jsonMap = (Map) new JsonSlurper().parseText(request);
     Binding binding = new Binding();
