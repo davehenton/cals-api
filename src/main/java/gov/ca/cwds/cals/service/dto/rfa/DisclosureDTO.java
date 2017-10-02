@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 
@@ -29,7 +30,7 @@ public class DisclosureDTO extends BaseDTO {
   @ApiModelProperty(example = "Sacramento")
   private String offenseCity;
 
-  @CheckReferentialIntegrity(enrich = true)
+  @CheckStateReferentialIntegrity(enrich = true)
   private StateType offenseState;
 
   @ApiModelProperty(example = "2014-12-26")

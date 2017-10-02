@@ -28,8 +28,9 @@ swagger:
   title: CWDS CALC API
   description: RESTful API definitions for the CWS New System.
   logo: images/CWDS-API-Logo-Horizontal.png
-#  loginUrl: https://tpt2-es.dev.cwds.io/perry/authn/login
-  loginUrl: ${LOGIN_URL:-http://192.168.99.100:8090/authn/login}
+  #loginUrl: https://tpt2-es.dev.cwds.io/perry/authn/login
+  loginUrl: ${LOGIN_URL:-http://localhost:8080/authn/login/v2}
+  logoutUrl: ${LOGOUT_URL:-http://localhost:8080/perry/authn/logout}
   showSwagger: ${SHOW_SWAGGER:-true}
 #  jsonUrl: https://cals-api.dev.cwds.io/swagger.json
   jsonUrl: ${SWAGGER_JSON_URL:-http://localhost:8080/swagger.json}
@@ -206,19 +207,26 @@ webSecurity:
     Content-Security-Policy: default-src 'self' 'unsafe-inline';
 
 logging:
-  level: ${LOGLEVEL:-INFO}
+  level: ${LOGLEVEL:-WARN}
   loggers:
     "org.hibernate.SQL":
-      level: INFO
+      # Use DEBUG to see SQL logged
+      level: DEBUG
     "org.hibernate.type.descriptor.sql":
+      # Use TRACE to see SQL parameters logged
+      level: INFO
+    "gov.ca.cwds.data.ApiHibernateInterceptor":
+      # Use DEBUG or TRACE to see entities logged
+      level: INFO
+    "io.dropwizard.server":
+      level: INFO
+    "io.dropwizard.jersey.DropwizardResourceConfig":
       level: INFO
     "AUDIT":
       level: ALL
-    "gov.ca.cwds":
-      level: DEBUG
   appenders:
     - type: console
-      threshold: INFO
+      threshold: ALL
       timeZone: UTC
       target: stdout
-      logFormat: '[%X{remoteAddress}] [%date{ISO8601}] [%level] [%thread] [%X{uniqueId}] [%logger:] [%message]%n'
+      logFormat: '[%X{REMOTE_ADDRESS}] [%date{ISO8601}] [%level] [%thread] [%X{UNIQUE_ID}] [%logger] [%X{USER_ID}] [%X{REQUEST_START_TIME}]: [%message]%n'

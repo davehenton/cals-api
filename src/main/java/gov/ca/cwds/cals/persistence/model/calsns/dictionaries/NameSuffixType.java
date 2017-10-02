@@ -12,7 +12,7 @@ import org.hibernate.annotations.NamedQuery;
 @Entity
 @Cacheable
 @Table(name = "name_suffix_type")
-public class NameSuffixType extends BaseDictionary {
+public class NameSuffixType extends SimpleDictionary {
 
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".NameSuffixType" + NAMED_QUERY_FIND_ALL_SUFFIX;

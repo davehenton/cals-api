@@ -20,7 +20,7 @@
       "date_of_marriage": "2016-12-26",
       "place_of_marriage_city": "Sacramento",
       "place_of_marriage_state": {
-        "id": 6,
+        "id": "CA",
         "value": "California"
       },
       "marriage_termination_reason": {
@@ -30,7 +30,7 @@
       "date_of_marriage_end": "2016-12-26",
       "place_of_marriage_end_city": "Sacramento",
       "place_of_marriage_end_state": {
-        "id": 6,
+        "id": "CA",
         "value": "California"
       }
     }
@@ -73,7 +73,7 @@
         "zip": "98123",
         "city": "Rocklin",
         "state": {
-          "id": 6,
+          "id": "CA",
           "value": "California"
         }
       },
