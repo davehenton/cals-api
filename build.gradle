@@ -43,7 +43,11 @@ project.ext {
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
 
     targetDockerHubOrganization = System.env.DOCKERHUB_ORG ?: 'cwds'
-    
+
+    releaseDocker = System.getProperty("ReleaseDocker")
+    buildNumber = System.getProperty('BuildNumber')
+    dockerTag = (releaseDocker == 'true' && buildNumber != null  ? projectMajorVersion + '_' + buildNumber + '-RC' : projectVersion )
+
     // assumed that Windows users use the Docker Toolbox
     buildEnv = System.env.BUILD_ENV ?: (Os.isFamily(Os.FAMILY_WINDOWS) ? 'WIN_DEV' : 'JENKINS')
     devDockerHost = System.env.DEV_DOCKER_HOST ?: '192.168.99.100'
@@ -235,10 +239,6 @@ task copyDist(type: Copy, dependsOn: shadowJar) {
     from 'build/libs'
     into 'build/docker/libs'
 }
-
-def releaseDocker = System.getProperty("ReleaseDocker")
-def buildNumber = System.getProperty('BuildNumber')
-def dockerTag = (releaseDocker == 'true' && buildNumber != null  ? projectMajorVersion + '_' + buildNumber + '-RC' : projectVersion )
 
 task readArguments() {
     doLast{

@@ -2,7 +2,6 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.apache.tools.ant.filters.FixCrLfFilter
 
 def dockerImageName = targetDockerHubOrganization + '/cals-api-tests' // like 'cwds/cals-api-tests'
-def dockerTag = projectVersion
 def dockerContextDir = "build/docker-context"
 
 task dockerTestsCleanUpLatest(type: Exec, dependsOn: project.parent.checkDockerService) {
