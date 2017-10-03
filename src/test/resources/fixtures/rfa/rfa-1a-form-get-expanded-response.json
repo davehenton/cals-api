@@ -14,8 +14,6 @@
   "child_desired": $childDesired,
   "references": $references,
   "applicants_declaration": $applicantsDeclaration,
-  "is_initial_application": true,
-  "is_other_type": false,
   "other_type_description": "Description",
   "application_county": {
     "id": 34,
