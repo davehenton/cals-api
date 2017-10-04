@@ -29,6 +29,10 @@ def formatAddress = {
     [it[0], it[1], stateZip].join(', ')
 }
 
+def dateIsoToUs = {
+    [it[5..6], it[8..9], it[0..3]].join('/')
+}
+
 [
   'Have you ever been convicted of a crime in another state, federal court, military, or a jurisdiction outside of the U.S. ?  yes': yesValue(jsonMap.convicted_in_another_state),
   'Have you ever been convicted of a crime in California check yesHave you ever been convicted of a crime in another state, federal court, military, or a jurisdiction outside of the U.S. ?  no': noValue(jsonMap.convicted_in_another_state),
@@ -49,7 +53,7 @@ def formatAddress = {
   'P1_Name_of_resource_family': jsonMap.resource_family_name,
   'P1_Residence_address_street_city_zip': formatAddress(getAddressStreetCityStateZip(jsonMap.residence_address)),
 
-  'P1_Date_of_birth': jsonMap.date_of_birth,
+  'P1_Date_of_birth': dateIsoToUs(jsonMap.date_of_birth),
   'P1_Drivers_license_number/state': jsonMap.driver_license +'/'+ jsonMap.driver_license_state?.id,
 
   'P1_Social_security_number_see_privacy_statement': jsonMap.ssn,
@@ -58,5 +62,8 @@ def formatAddress = {
 
   'P2_Date_2': jsonMap.application_date,
   'P2_In_which_state_and_city_did_you_commit_the_offense': [jsonMap.disclosures[0]?.offense_city, jsonMap.disclosures[0]?.offense_state?.value].join(', '),
-  'P2_When_did_this_happen': jsonMap.disclosures[0]?.offense_date
+  'P2_When_did_this_happen': jsonMap.disclosures[0]?.offense_date,
+
+  'P2_What_was_the_offense_line_1': jsonMap.disclosures[0]?.offense,
+  'P2_Explain_what_happened_line_1': jsonMap.disclosures[0]?.offense_details
 ]
