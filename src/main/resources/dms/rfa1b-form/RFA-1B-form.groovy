@@ -30,7 +30,7 @@ def formatAddress = {
 }
 
 def dateIsoToUs = {
-    [it[5..6], it[8..9], it[0..3]].join('/')
+    it ? [it[5..6], it[8..9], it[0..3]].join('/') : ''
 }
 
 [
