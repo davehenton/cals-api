@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.dms;
 
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
+import io.dropwizard.testing.FixtureHelpers;
 import org.junit.Test;
 
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResourceTest.APPLICANT_FIXTURE;
@@ -34,7 +35,11 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
     String request =
         getVelocityExpandedResponseHelper.process("fixtures/rfa/rfa-1a-form-get-expanded-response.json");
 
-    System.out.println("request = " + request);
-    generatePdf(templatePath, scriptPath, request);
+//    System.out.println("request = " + request);
+//    generatePdf(templatePath, scriptPath, request);
+
+    String mappingRequest = FixtureHelpers.fixture("mapping/rfa1_mapping.json");
+    System.out.println("mappingRequest = " + mappingRequest);
+    generatePdf(templatePath, scriptPath, mappingRequest);
   }
 }

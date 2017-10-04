@@ -14,7 +14,7 @@ def getSchoolName = {
         it?.school_name,
         it?.school_address?.street_address,
         it?.school_address?.city,
-        it?.school_address?.state?.value,
+        it?.school_address?.state?.id,
         it?.school_address?.zip
     ));
 }
