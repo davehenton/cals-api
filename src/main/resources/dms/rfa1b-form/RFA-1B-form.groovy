@@ -15,6 +15,20 @@ def getFullName = {
     ))
 }
 
+def getAddressStreetCityStateZip = {
+    [
+            it?.street_address,
+            it?.city,
+            it?.state?.value,
+            it?.zip
+    ]
+}
+
+def formatAddress = {
+    stateZip = it[2, 3].join(' ')
+    [it[0], it[1], stateZip].join(', ')
+}
+
 [
   'Have you ever been convicted of a crime in another state, federal court, military, or a jurisdiction outside of the U.S. ?  yes': yesValue(jsonMap.convicted_in_another_state),
   'Have you ever been convicted of a crime in California check yesHave you ever been convicted of a crime in another state, federal court, military, or a jurisdiction outside of the U.S. ?  no': noValue(jsonMap.convicted_in_another_state),
@@ -31,10 +45,18 @@ def getFullName = {
   'P1_If_yes_line_2': otherStatesOfLiving && otherStatesOfLiving.size() > 1 ? otherStatesOfLiving[1..-1].join(', ') : '',
 
   'P1_County': jsonMap.application_county?.value,
+  'P1_Date': jsonMap.application_date,
+  'P1_Name_of_resource_family': jsonMap.resource_family_name,
+  'P1_Residence_address_street_city_zip': formatAddress(getAddressStreetCityStateZip(jsonMap.residence_address)),
+
   'P1_Date_of_birth': jsonMap.date_of_birth,
   'P1_Drivers_license_number/state': jsonMap.driver_license +'/'+ jsonMap.driver_license_state?.id,
 
   'P1_Social_security_number_see_privacy_statement': jsonMap.ssn,
 
-  'P1_Your_full_name_print_clearly': getFullName(jsonMap)
+  'P1_Your_full_name_print_clearly': getFullName(jsonMap),
+
+  'P2_Date_2': jsonMap.application_date,
+  'P2_In_which_state_and_city_did_you_commit_the_offense': [jsonMap.disclosures[0]?.offense_city, jsonMap.disclosures[0]?.offense_state?.value].join(', '),
+  'P2_When_did_this_happen': jsonMap.disclosures[0]?.offense_date
 ]
