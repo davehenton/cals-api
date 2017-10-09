@@ -39,7 +39,7 @@ node  {
    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')),
               [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
 			  parameters([
-			  [$class: 'NodeParameterDefinition', allowedSlaves: ['ALL (no restriction)'], defaultSlaves: ['preint02'], description: '', name: '', nodeEligibility: [$class: 'IgnoreOfflineNodeEligibility'], triggerIfResult: 'multiSelectionDisallowed'],
+			  [$class: 'NodeParameterDefinition', allowedSlaves: ['ALL (no restriction)'], defaultSlaves: ['preint'], description: 'Run tests on slaves', name: 'nname', nodeEligibility: [$class: 'IgnoreOfflineNodeEligibility'], triggerIfResult: 'multiSelectionDisallowed'],
 			  string(defaultValue: 'development', description: '', name: 'branch'),
 			  string(defaultValue: 'https://cals-api.preint.cwds.io/', description: '', name: 'APP_URL')]),pipelineTriggers([])])
 
