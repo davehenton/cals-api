@@ -61,7 +61,7 @@ fasDataSourceFactory:
   user: ${DB_FAS_USER:-postgres_data}
   password: ${DB_FAS_PASSWORD:-postgres_data}
   url: ${DB_FAS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
-  validationQuery: "select count(*) from ${DB_FAS_DEFAULT_SCHEMA:-public}.facility_information"
+  validationQuery: "select count(*) from ${DB_FAS_DEFAULT_SCHEMA:-fas}.facility_information"
   logValidationErrors: true
   initialSize: ${DB_FAS_CP_INITIAL_SIZE:-2}
   minSize: ${DB_FAS_CP_MIN_SIZE:-2}
@@ -71,7 +71,7 @@ fasDataSourceFactory:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
-      hibernate.default_schema: ${DB_FAS_DEFAULT_SCHEMA:-public}
+      hibernate.default_schema: ${DB_FAS_DEFAULT_SCHEMA:-fas}
 
 calsnsDataSourceFactory:
   driverClass: org.postgresql.Driver
