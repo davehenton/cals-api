@@ -3,11 +3,14 @@ package gov.ca.cwds.cals.web.rest.rfa;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
+import io.dropwizard.testing.FixtureHelpers;
 
 /**
  * @author CWDS CALS API Team
  */
 public class RFA1aReferencesResourceTest extends BaseInternalEntityApiTest<ReferencesDTO> {
+
+  public static final String REFERENCES_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-references.json");
 
   @Override
   protected BaseInternalEntityApiHelper<ReferencesDTO> getInternalEntityApiHelper() {
@@ -17,8 +20,8 @@ public class RFA1aReferencesResourceTest extends BaseInternalEntityApiTest<Refer
             clientTestRule, ReferencesDTO.class, API.RFA_1A_REFERENCES) {
 
           @Override
-          protected String getCreateFixture() {
-            return "fixtures/rfa/rfa-1a-references.json";
+          protected String getFixture() {
+            return REFERENCES_FIXTURE;
           }
         };
 

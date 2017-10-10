@@ -5,6 +5,7 @@ import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
+import io.dropwizard.testing.FixtureHelpers;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -16,10 +17,9 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aMinorChildrenResourceTest extends
-    BaseExternalEntityApiTest<MinorChildDTO> {
+public class RFA1aMinorChildrenResourceTest extends BaseExternalEntityApiTest<MinorChildDTO> {
 
-  public static final String FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON = "fixtures/rfa/rfa-1a-minor-children.json";
+  public static final String MINOR_CHILDREN_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-minor-children.json");
 
   @Override
   protected BaseExternalEntityApiHelper<MinorChildDTO> getExternalEntityApiHelper() {
@@ -31,8 +31,8 @@ public class RFA1aMinorChildrenResourceTest extends
             API.RFA_1A_MINOR_CHILDREN) {
 
           @Override
-          protected String getCreateFixture() {
-            return FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON;
+          protected String getFixture() {
+            return MINOR_CHILDREN_FIXTURE;
           }
 
           @Override

@@ -2,7 +2,7 @@
   "issue_details": [
     {
       "type": "business_validation",
-      "user_message": "Other adult with first name - [ ], last name - [Pollen] and name suffix - [Jr] has no first name",
+      "user_message": "Other adult with first name - [ ], last name - [OaLn] and name suffix - [Jr] has no first name",
       "code": "BV000018",
       "technical_message": "form-submission-validation"
     }

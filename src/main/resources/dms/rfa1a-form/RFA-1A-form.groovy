@@ -133,6 +133,12 @@ def getApplicantsRelationshipChoice = {
     }
 }
 
+def test = {jsonMAp, applicant, spouse ->
+    println("find app: " + jsonMap.applicants_history?.former_spouses?.findAll {it?.applicant_id == jsonMap.applicants[applicant]?.id})
+    println("find spo: " + jsonMap.applicants_history?.former_spouses?.findAll {it?.applicant_id == jsonMap.applicants[applicant]?.id}?.getAt(spouse))
+    getFullName(jsonMap.applicants_history?.former_spouses?.findAll {it?.applicant_id == jsonMap.applicants[applicant]?.id}?.getAt(spouse))
+}
+
 [
     'OTHER (SPECIFY)_pg 1' : jsonMap.is_other_type ? jsonMap.other_type_description : "",
     'APPLICANT ONE:  PREVIOUS NAMES USED: *including maiden name_pg 1' : getFullNames(jsonMap.applicants?.getAt(0)?.other_names),
@@ -205,12 +211,10 @@ def getApplicantsRelationshipChoice = {
     'Other Adult Residing In The Home: Relationship To Applicant(s)_ROW 2_pg 2' : getJoinedValues(jsonMap.other_adults?.getAt(1)?.relationship_to_applicants),
     'Other Adult Residing In The Home: Relationship To Applicant(s)_ROW 3_pg 2' : getJoinedValues(jsonMap.other_adults?.getAt(2)?.relationship_to_applicants),
     'Other Adult Residing In The Home: Relationship To Applicant(s)_ROW 4_pg 2' : getJoinedValues(jsonMap.other_adults?.getAt(3)?.relationship_to_applicants),
-/*
-    'Applicant(s) History: Appliciant One, Name of Former Spouse_ROW 2_pg 2' : getFullName(jsonMap.applicants_history?.former_spouses?.find {it?.applicant_id == jsonMap.applicants[0]?.id}[1]),
-    'Applicant(s) History: Appliciant One, Name of Former Spouse_ROW 1_pg 2' : getFullName(jsonMap.applicants_history?.former_spouses?.find {it?.applicant_id == jsonMap.applicants[0]?.id}[0]),
-    'Applicant(s) History: Appliciant Two, Name of Former Spouse_ROW 1_pg 2' : getFullName(jsonMap.applicants_history?.former_spouses?.find {it?.applicant_id == jsonMap.applicants[1]?.id}[0]),
-    'Applicant(s) History: Appliciant Two, Name of Former Spouse_ROW 2_pg 2' : getFullName(jsonMap.applicants_history?.former_spouses?.find {it?.applicant_id == jsonMap.applicants[1]?.id}[1]),
-*/
+    'Applicant(s) History: Appliciant One, Name of Former Spouse_ROW 2_pg 2' : getFullName(jsonMap.applicants_history?.former_spouses?.findAll {it?.applicant_id == jsonMap.applicants[0]?.id} ?.getAt(1)),
+    'Applicant(s) History: Appliciant One, Name of Former Spouse_ROW 1_pg 2' : getFullName(jsonMap.applicants_history?.former_spouses?.findAll {it?.applicant_id == jsonMap.applicants[0]?.id} ?.getAt(0)),
+    'Applicant(s) History: Appliciant Two, Name of Former Spouse_ROW 1_pg 2' : getFullName(jsonMap.applicants_history?.former_spouses?.findAll {it?.applicant_id == jsonMap.applicants[1]?.id} ?.getAt(0)),
+    'Applicant(s) History: Appliciant Two, Name of Former Spouse_ROW 2_pg 2' : getFullName(jsonMap.applicants_history?.former_spouses?.findAll {it?.applicant_id == jsonMap.applicants[1]?.id} ?.getAt(1)),
     'Applicant(s) History: Applicant One: Marriage Date and Place City and State_ROW 1_pg 2' : '',
     'Applicant(s) History: Applicant One: Marriage Date and Place City and State_ROW 2_pg 2' : '',
     'Applicant(s) History: Applicant Two: Marriage Date and Place City and State_ROW 1_pg 2' : '',

@@ -65,21 +65,21 @@ public final class Constants {
 
     public static final String RFA_1A_APPLICANTS = "applicants";
 
-    public static final String APPLICANTS_RELATIONSHIP = "applicants-relationship";
+    public static final String RFA_1A_APPLICANTS_RELATIONSHIP = "applicants-relationship";
 
     public static final String RFA_1A_MINOR_CHILDREN = "minor-children";
 
     public static final String RFA_1A_OTHER_ADULTS = "other-adults";
 
-    public static final String RESIDENCE = "residence";
+    public static final String RFA_1A_RESIDENCE = "residence";
 
     public static final String RFA_1A_ADOPTION_HISTORY = "adoption-history";
 
     public static final String RFA_1A_REFERENCES = "references";
 
-    public static final String APPLICANTS_HISTORY = "applicants-history";
+    public static final String RFA_1A_APPLICANTS_HISTORY = "applicants-history";
 
-    public static final String CHILD_DESIRED = "child-desired";
+    public static final String RFA_1A_CHILD_DESIRED = "child-desired";
 
     public static final String RFA_1A_APPLICANTS_DECLARATION = "applicants-declaration";
 

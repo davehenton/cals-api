@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa.helper;
 
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResourceTest.OTHER_ADULTS_FIXTURE;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 
 import gov.ca.cwds.cals.Constants.API;
@@ -40,7 +41,7 @@ public class OtherAdultsHelper {
 
   public OtherAdultDTO getOtherAdultDTO(ApplicantDTO relativeApplicant) throws IOException {
     OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
-        .readValue(fixture(RFA1aOtherAdultsResourceTest.FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON),
+        .readValue(OTHER_ADULTS_FIXTURE,
             OtherAdultDTO.class);
     // Assume that we have only one relationship object
     otherAdultDTO.getRelationshipToApplicants().get(0).setApplicantId(relativeApplicant.getId());
@@ -48,11 +49,9 @@ public class OtherAdultsHelper {
   }
 
   public OtherAdultDTO postOtherAdult(Long formId, OtherAdultDTO otherAdult) {
-    WebTarget target =
-        clientTestRule.target(
-            API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_OTHER_ADULTS);
-    return target.request(MediaType.APPLICATION_JSON).post(
-        Entity.entity(otherAdult, MediaType.APPLICATION_JSON_TYPE), OtherAdultDTO.class);
+    return clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_OTHER_ADULTS)
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(otherAdult, MediaType.APPLICATION_JSON_TYPE), OtherAdultDTO.class);
   }
 
 }

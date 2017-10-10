@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.CHILD_DESIRED;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_CHILD_DESIRED;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team.
  */
 @Api(tags = {RFA})
-@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + CHILD_DESIRED)
+@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RFA_1A_CHILD_DESIRED)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aChildDesiredResource {
@@ -77,7 +77,7 @@ public class RFA1aChildDesiredResource {
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = CHILD_DESIRED, value = "The RFA-1A Child Desired object")
+      @ApiParam(required = true, name = RFA_1A_CHILD_DESIRED, value = "The RFA-1A Child Desired object")
       @Valid
           ChildDesiredDTO childDesired) {
     return resourceDelegate.update(formId, childDesired);

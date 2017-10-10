@@ -3,9 +3,9 @@
     "id": 2,
     "value": "Ms."
   },
-  "first_name": "Anna",
+  "first_name": "AFn",
   "middle_name": "N",
-  "last_name": "Smith",
+  "last_name": "ALn",
   "name_suffix": {
     "id": 5,
     "value": "Jr"
@@ -16,9 +16,9 @@
         "id": 2,
         "value": "Ms."
       },
-      "first_name": "Anna",
+      "first_name": "AOnFn",
       "middle_name": "N.",
-      "last_name": "Peterson",
+      "last_name": "AOnLn",
       "name_suffix": {
         "id": 5,
         "value": "Jr"

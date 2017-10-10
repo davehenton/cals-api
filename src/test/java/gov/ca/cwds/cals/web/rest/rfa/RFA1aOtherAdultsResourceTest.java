@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
+import io.dropwizard.testing.FixtureHelpers;
 import javax.ws.rs.core.GenericType;
 
 /**
@@ -14,7 +15,7 @@ import javax.ws.rs.core.GenericType;
 public class RFA1aOtherAdultsResourceTest extends
     BaseExternalEntityApiTest<OtherAdultDTO> {
 
-  public static final String FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON = "fixtures/rfa/rfa-1a-other-adults.json";
+  public static final String OTHER_ADULTS_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-other-adults.json");
 
   @Override
   protected BaseExternalEntityApiHelper<OtherAdultDTO> getExternalEntityApiHelper() {
@@ -27,8 +28,8 @@ public class RFA1aOtherAdultsResourceTest extends
             API.RFA_1A_OTHER_ADULTS) {
 
           @Override
-          protected String getCreateFixture() {
-            return FIXTURES_RFA_RFA_1A_OTHER_ADULTS_JSON;
+          protected String getFixture() {
+            return OTHER_ADULTS_FIXTURE;
           }
 
           @Override

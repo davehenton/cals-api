@@ -1,27 +1,39 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResourceTest.ADOPTION_HISTORY_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANT_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResourceTest.APPLICANTS_DECLARATION_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsHistoryResourceTest.APPLICANTS_HISTORY_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsRelationshipResourceTest.APPLICANTS_RELATIONSHIP_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aChildDesiredResourceTest.CHILD_DESIRED_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aMinorChildrenResourceTest.MINOR_CHILDREN_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResourceTest.OTHER_ADULTS_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aReferencesResourceTest.REFERENCES_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResourceTest.RESIDENCE_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
-import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsRelationshipDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ChildDesiredDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
-import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
-import io.dropwizard.jackson.Jackson;
+import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
+import io.dropwizard.testing.FixtureHelpers;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ws.rs.client.Entity;
@@ -31,21 +43,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author CWDS CALS API Team
  */
 public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
-  public static final String PUT_RESIDENCE_FIXTURE = fixture("fixtures/rfa/rfa-1a-residence-request.json");
-  public static final String PUT_APPLICANTS_HISTORY_FIXTURE = fixture("fixtures/rfa/rfa-1a-applicants-history.json");
-  public static final String PUT_CHILD_DESIRED_FIXTURE = fixture("fixtures/rfa/rfa-1a-child-desired.json");
-  public static final String PUT_ADOPTION_HISTORY_FIXTURE = fixture("fixtures/rfa/rfa-1a-adoption-history.json");
-  public static final String PUT_REFERENCES_FIXTURE = fixture("fixtures/rfa/rfa-1a-references.json");
-  public static final String PUT_APPLICANTS_DECLARATION_FIXTURE = fixture("fixtures/rfa/rfa-1a-applicants-declaration.json");
-  public static final String APPLICANT_FIXTURE = fixture("fixtures/rfa/rfa-1a-applicant.json");
+  public static final String RFA_1A_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-form.json");
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -54,94 +58,93 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @Test()
   public void testApplicationWithParts() throws Exception {
-    String postRequest = fixture("fixtures/rfa/rfa-1a-form-post-request.json");
-    WebTarget postTarget = clientTestRule.target(API.RFA_1A_FORMS);
-    RFA1aFormDTO postResponseForm = postTarget.request(MediaType.APPLICATION_JSON)
-        .post(Entity.entity(postRequest, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
-    Long id = postResponseForm.getId();
+    RFA1aFormDTO postFormRequest = clientTestRule.getMapper().readValue(RFA_1A_FIXTURE, RFA1aFormDTO.class);
+    RFA1aFormDTO postFormResponse = clientTestRule.target(API.RFA_1A_FORMS)
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(postFormRequest, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
+    Long formId = postFormResponse.getId();
+    postFormRequest.setId(formId);
+    assertEqualsResponse(transformDTOtoJSON(postFormRequest), transformDTOtoJSON(postFormResponse));
 
-    VelocityHelper postVelocityResponseHelper = new VelocityHelper();
-    postVelocityResponseHelper.setParameter("id", id);
-    String expectedPostResponse =
-        postVelocityResponseHelper.process("fixtures/rfa/rfa-1a-form-post-response.json");
+    ApplicantDTO applicantDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS)
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(APPLICANT_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
 
-    assertEqualsResponse(expectedPostResponse, transformDTOtoJSON(postResponseForm));
+    ResidenceDTO residenceDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_RESIDENCE)
+        .request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(RESIDENCE_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ResidenceDTO.class);
 
-    WebTarget putApplicantTarget = clientTestRule
-        .target(API.RFA_1A_FORMS + "/" + id + "/" + API.RFA_1A_APPLICANTS);
-    ApplicantDTO applicantDTO = putApplicantTarget.request(MediaType.APPLICATION_JSON)
-        .post(Entity
-                .entity(APPLICANT_FIXTURE, MediaType.APPLICATION_JSON_TYPE),
-            ApplicantDTO.class);
-    String applicantFixture = Jackson.newObjectMapper().setSerializationInclusion(Include.NON_NULL)
-        .writeValueAsString(applicantDTO);
+    ApplicantsRelationshipDTO applicantsRelationshipDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS_RELATIONSHIP)
+        .request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(APPLICANTS_RELATIONSHIP_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ApplicantsRelationshipDTO.class);
 
-    WebTarget putResidenceTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/residence");
-    putResidenceTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(PUT_RESIDENCE_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ResidenceDTO.class);
+    MinorChildDTO minorChildDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_MINOR_CHILDREN)
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(MINOR_CHILDREN_FIXTURE, MediaType.APPLICATION_JSON_TYPE), MinorChildDTO.class);
 
+    OtherAdultDTO otherAdultDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_OTHER_ADULTS)
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(OTHER_ADULTS_FIXTURE, MediaType.APPLICATION_JSON_TYPE), OtherAdultDTO.class);
 
-    WebTarget putApplicantsHistoryTarget =
-        clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/applicants-history");
-    putApplicantsHistoryTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(PUT_APPLICANTS_HISTORY_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ApplicantsHistoryDTO.class);
+    ApplicantsHistoryDTO applicantsHistoryDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS_HISTORY)
+        .request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(APPLICANTS_HISTORY_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ApplicantsHistoryDTO.class);
 
+    ChildDesiredDTO childDesiredDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_CHILD_DESIRED)
+        .request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(CHILD_DESIRED_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ChildDesiredDTO.class);
 
-    WebTarget putChildDesiredTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/child-desired");
-    putChildDesiredTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(PUT_CHILD_DESIRED_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ChildDesiredDTO.class);
+    AdoptionHistoryDTO adoptionHistoryDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_ADOPTION_HISTORY)
+        .request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(ADOPTION_HISTORY_FIXTURE, MediaType.APPLICATION_JSON_TYPE), AdoptionHistoryDTO.class);
 
+    ReferencesDTO referencesDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_REFERENCES)
+        .request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(REFERENCES_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ReferencesDTO.class);
 
-    WebTarget putAdoptionHistoryTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/adoption-history");
-    putAdoptionHistoryTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(PUT_ADOPTION_HISTORY_FIXTURE, MediaType.APPLICATION_JSON_TYPE), AdoptionHistoryDTO.class);
-
-
-    WebTarget putReferencesTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/references");
-    putReferencesTarget.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(PUT_REFERENCES_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ReferencesDTO.class);
-
-
-    WebTarget putApplicantsDeclarationTarget =
-        clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "/applicants-declaration");
-    putApplicantsDeclarationTarget.request(MediaType.APPLICATION_JSON)
-        .put(
-            Entity.entity(PUT_APPLICANTS_DECLARATION_FIXTURE, MediaType.APPLICATION_JSON_TYPE),
-            ApplicantsDeclarationDTO.class
-        );
+    ApplicantsDeclarationDTO applicantsDeclarationDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS_DECLARATION)
+        .request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(APPLICANTS_DECLARATION_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ApplicantsDeclarationDTO.class);
 
 
-    WebTarget getTarget = clientTestRule.target(API.RFA_1A_FORMS + "/" + id);
-    RFA1aFormDTO getResponseForm = getTarget.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
+    RFA1aFormDTO getFormResponse = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId)
+        .request(MediaType.APPLICATION_JSON)
+        .get(RFA1aFormDTO.class);
 
-    VelocityHelper getVelocityResponseHelper = new VelocityHelper();
-    getVelocityResponseHelper.setParameter("id", id);
-    String expectedGetResponse = getVelocityResponseHelper.process("fixtures/rfa/rfa-1a-form-get-response.json");
-
-    assertEqualsResponse(expectedGetResponse, transformDTOtoJSON(getResponseForm));
+    assertEqualsResponse(transformDTOtoJSON(postFormResponse), transformDTOtoJSON(getFormResponse));
 
 
-    WebTarget getExpandedTarget =
-        clientTestRule.target(API.RFA_1A_FORMS + "/" + id + "?" + API.QueryParams.EXPANDED + "=true");
-    RFA1aFormDTO getExpandedResponseForm =
-        getExpandedTarget.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
+    RFA1aFormDTO expectedRfa1aFormDTO = clientTestRule.getMapper().readValue(RFA_1A_FIXTURE, RFA1aFormDTO.class);
+    expectedRfa1aFormDTO.setId(formId);
+    expectedRfa1aFormDTO.setRfa1cForms(Collections.emptyList());
 
-    VelocityHelper getVelocityExpandedResponseHelper = new VelocityHelper();
-    getVelocityExpandedResponseHelper.setParameter("id", id);
-    getVelocityExpandedResponseHelper.setParameter("residence", PUT_RESIDENCE_FIXTURE);
-    getVelocityExpandedResponseHelper.setParameter("applicantsHistory", PUT_APPLICANTS_HISTORY_FIXTURE);
-    getVelocityExpandedResponseHelper.setParameter("adoptionHistory", PUT_ADOPTION_HISTORY_FIXTURE);
-    getVelocityExpandedResponseHelper.setParameter("childDesired", PUT_CHILD_DESIRED_FIXTURE);
-    getVelocityExpandedResponseHelper.setParameter("references", PUT_REFERENCES_FIXTURE);
-    getVelocityExpandedResponseHelper.setParameter("applicantsDeclaration", PUT_APPLICANTS_DECLARATION_FIXTURE);
-    getVelocityExpandedResponseHelper.setParameter("applicant", applicantFixture);
-    String expectedGetExpandedResponse =
-        getVelocityExpandedResponseHelper.process("fixtures/rfa/rfa-1a-form-get-expanded-response.json");
+    List<ApplicantDTO> applicants = new ArrayList<>();
+    applicants.add(applicantDTO);
+    expectedRfa1aFormDTO.setApplicants(applicants);
 
-    //assertEqualsResponse(expectedGetExpandedResponse, transformDTOtoJSON(getExpandedResponseForm));
-    JSONAssert
-        .assertEquals(expectedGetExpandedResponse, transformDTOtoJSON(getExpandedResponseForm),
-            JSONCompareMode.STRICT);
+    expectedRfa1aFormDTO.setResidence(residenceDTO);
+    expectedRfa1aFormDTO.setApplicantsRelationship(applicantsRelationshipDTO);
+
+    List<MinorChildDTO> minorChildren = new ArrayList<>();
+    minorChildren.add(minorChildDTO);
+    expectedRfa1aFormDTO.setMinorChildren(minorChildren);
+
+    List<OtherAdultDTO> otherAdults = new ArrayList<>();
+    otherAdults.add(otherAdultDTO);
+    expectedRfa1aFormDTO.setOtherAdults(otherAdults);
+
+    expectedRfa1aFormDTO.setApplicantsHistory(applicantsHistoryDTO);
+    expectedRfa1aFormDTO.setChildDesired(childDesiredDTO);
+    expectedRfa1aFormDTO.setAdoptionHistory(adoptionHistoryDTO);
+    expectedRfa1aFormDTO.setReferences(referencesDTO);
+    expectedRfa1aFormDTO.setApplicantsDeclaration(applicantsDeclarationDTO);
+
+    RFA1aFormDTO getExpandedFormResponse =
+        clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "?" + API.QueryParams.EXPANDED + "=true")
+            .request(MediaType.APPLICATION_JSON)
+            .get(RFA1aFormDTO.class);
+
+    assertEqualsResponse(transformDTOtoJSON(expectedRfa1aFormDTO), transformDTOtoJSON(getExpandedFormResponse));
 
 
     WebTarget getExpandedCollectionTarget =
@@ -150,19 +153,18 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
         getExpandedCollectionTarget.request(MediaType.APPLICATION_JSON)
             .get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {});
 
+
     Collection<RFA1aFormDTO> filtered = getExpandedCollectionResponseForm.getCollection().stream()
-        .filter(b -> b.getId().equals(id))
+        .filter(b -> b.getId().equals(formId))
         .collect(Collectors.toCollection(ArrayList::new));
     getExpandedCollectionResponseForm.getCollection().clear();
     getExpandedCollectionResponseForm.getCollection().addAll(filtered);
 
-    VelocityHelper getVelocityExpandedCollectionResponseHelper = new VelocityHelper();
-    getVelocityExpandedCollectionResponseHelper.setParameter("form", expectedGetExpandedResponse);
-    String expectedGetExpandedCollectionResponse =
-        getVelocityExpandedCollectionResponseHelper
-            .process("fixtures/rfa/rfa-1a-form-get-expanded-collection-response.json");
+    List<RFA1aFormDTO> items = new ArrayList<>();
+    items.add(expectedRfa1aFormDTO);
+    RFA1aFormCollectionDTO expectedExpandedRfa1aFormCollectionResponse = new RFA1aFormCollectionDTO(items);
 
-    assertEqualsResponse(expectedGetExpandedCollectionResponse, transformDTOtoJSON(getExpandedCollectionResponseForm));
+    assertEqualsResponse(transformDTOtoJSON(expectedExpandedRfa1aFormCollectionResponse), transformDTOtoJSON(getExpandedCollectionResponseForm));
   }
 
   @Test

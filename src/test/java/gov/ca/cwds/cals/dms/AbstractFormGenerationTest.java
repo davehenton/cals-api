@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,10 @@ abstract class AbstractFormGenerationTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFormGenerationTest.class);
 
   protected void generatePdf(String templatePath, String scriptPath, String request) throws Exception {
+    generatePdf(templatePath, scriptPath, request, null);
+  }
+
+  protected void generatePdf(String templatePath, String scriptPath, String request, String generatedFormData) throws Exception {
     String script = fixture(scriptPath);
 
     Map jsonMap = (Map) new JsonSlurper().parseText(request);
@@ -44,9 +50,27 @@ abstract class AbstractFormGenerationTest {
 
     PDDocument generatedPdf = PDDocument.load(new File(outputFileName));
     List<PDField> fieldList = PdfTestHelper.getFields(generatedPdf);
+    StringBuilder builder = new StringBuilder();
     for (PDField field : fieldList) {
+//      if (StringUtils.isNoneEmpty(field.getValueAsString())) {
+        if (builder.length() == 0) {
+          builder.append("\n{");
+          appendRow(builder, field);
+        } else {
+          builder.append(",");
+          appendRow(builder, field);
+        }
+//      }
       LOGGER.info("placeholder = '{}', value = {}", field.getFullyQualifiedName(), field.getValueAsString());
     }
+    builder.append("\n}\n");
+    LOGGER.info(builder.toString());
+    JSONAssert.assertEquals(generatedFormData, builder.toString(), JSONCompareMode.STRICT);
+
     generatedPdf.close();
+  }
+
+  private StringBuilder appendRow(StringBuilder builder, PDField field) {
+    return builder.append(String.format("\n\t\"%s\": \"%s\"", field.getFullyQualifiedName(), field.getValueAsString()));
   }
 }

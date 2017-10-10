@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
-import static gov.ca.cwds.cals.Constants.API.RESIDENCE;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_RESIDENCE;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS_DECLARATION;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
@@ -86,7 +86,7 @@ public class RFA1aApplicantsDeclarationResource {
           Long formId,
       @ApiParam(
           required = true,
-          name = RESIDENCE,
+          name = RFA_1A_RESIDENCE,
           value = "The RFA-1A Applicants Declaration object"
       )
       @Valid

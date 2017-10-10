@@ -5,6 +5,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
+import io.dropwizard.testing.FixtureHelpers;
 import javax.ws.rs.core.GenericType;
 
 /**
@@ -12,8 +13,9 @@ import javax.ws.rs.core.GenericType;
  */
 
 @SuppressWarnings("squid:S2187")
-public class RFA1cResourceTest extends
-    BaseExternalEntityApiTest<RFA1cFormDTO> {
+public class RFA1cResourceTest extends BaseExternalEntityApiTest<RFA1cFormDTO> {
+
+  public final String FRA1C_FORM_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1c-form.json");
 
   @Override
   protected BaseExternalEntityApiHelper<RFA1cFormDTO> getExternalEntityApiHelper() {
@@ -26,8 +28,8 @@ public class RFA1cResourceTest extends
             API.RFA_1C_FORMS) {
 
           @Override
-          protected String getCreateFixture() {
-            return "fixtures/rfa/rfa-1c-form.json";
+          protected String getFixture() {
+            return FRA1C_FORM_FIXTURE;
           }
 
           @Override

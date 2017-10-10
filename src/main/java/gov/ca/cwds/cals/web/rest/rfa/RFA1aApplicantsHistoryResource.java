@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.APPLICANTS_HISTORY;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS_HISTORY;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team.
  */
 @Api(tags = {RFA})
-@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + APPLICANTS_HISTORY)
+@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RFA_1A_APPLICANTS_HISTORY)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aApplicantsHistoryResource {
@@ -85,7 +85,7 @@ public class RFA1aApplicantsHistoryResource {
           Long formId,
       @ApiParam(
           required = true,
-          name = APPLICANTS_HISTORY,
+          name = RFA_1A_APPLICANTS_HISTORY,
           value = "The RFA-1A ApplicantsHistory object"
       )
       @Valid

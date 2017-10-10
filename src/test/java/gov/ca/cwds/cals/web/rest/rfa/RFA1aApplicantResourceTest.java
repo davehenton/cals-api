@@ -16,6 +16,7 @@ import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfigurati
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
 import gov.ca.cwds.rest.exception.BaseExceptionResponse;
 import gov.ca.cwds.rest.exception.IssueDetails;
+import io.dropwizard.testing.FixtureHelpers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,10 +33,9 @@ import org.junit.Test;
  * @author CWDS CALS API Team
  */
 
-public class RFA1aApplicantResourceTest extends
-    BaseExternalEntityApiTest<ApplicantDTO> {
+public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<ApplicantDTO> {
 
-  public static String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-applicant.json";
+  public static String APPLICANT_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-applicant.json");
 
   @Override
   protected BaseExternalEntityApiHelper<ApplicantDTO> getExternalEntityApiHelper() {
@@ -44,8 +44,8 @@ public class RFA1aApplicantResourceTest extends
             clientTestRule, ApplicantDTO.class, API.RFA_1A_APPLICANTS) {
 
           @Override
-          protected String getCreateFixture() {
-            return APPLICANTS_FIXTURE_PATH;
+          protected String getFixture() {
+            return APPLICANT_FIXTURE;
           }
 
           @Override
@@ -193,7 +193,7 @@ public class RFA1aApplicantResourceTest extends
 
   private ApplicantDTO getApplicantDTO() throws IOException {
     return clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ApplicantDTO.class);
+        .readValue(APPLICANT_FIXTURE, ApplicantDTO.class);
   }
 
   @Test

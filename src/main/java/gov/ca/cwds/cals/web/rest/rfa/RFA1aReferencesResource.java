@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
-import static gov.ca.cwds.cals.Constants.API.RESIDENCE;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_RESIDENCE;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_REFERENCES;
 import static gov.ca.cwds.cals.Constants.RFA;
@@ -78,7 +78,7 @@ public class RFA1aReferencesResource {
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1A References object")
+      @ApiParam(required = true, name = RFA_1A_RESIDENCE, value = "The RFA-1A References object")
       @Valid
           ReferencesDTO references) {
     return resourceDelegate.update(formId, references);
