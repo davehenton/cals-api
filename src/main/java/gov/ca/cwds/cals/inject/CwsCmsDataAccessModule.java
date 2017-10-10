@@ -100,6 +100,8 @@ public class CwsCmsDataAccessModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(SessionFactory.class).annotatedWith(CmsSessionFactory.class).toInstance(cmsSessionFactory);
+    bind(SessionFactory.class).annotatedWith(CwsRsSessionFactory.class).toInstance(cmsSessionFactory);
+    bind(SessionFactory.class).annotatedWith(XaCmsSessionFactory.class).toInstance(cmsSessionFactory);
 
     // schema: cwscms
     bind(RecordChangeCwsCmsDao.class);
