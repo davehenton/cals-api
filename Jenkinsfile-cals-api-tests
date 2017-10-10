@@ -33,13 +33,13 @@ def notifyBuild(String buildStatus, Exception e) {
       to: "Alex.Kuznetsov@osi.ca.gov, leonid.marushevskiy@osi.gov.ca"
     )
 }
-
-node ('preint') {
+node  {
    def serverArti = Artifactory.newServer url: 'https://jcenter.bintray.com'
    def rtGradle = Artifactory.newGradleBuild()
    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')),
               [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
 			  parameters([
+			  [$class: 'NodeParameterDefinition', allowedSlaves: ['ALL (no restriction)'], defaultSlaves: ['preint'], description: 'Run tests on slaves', name: 'nname', nodeEligibility: [$class: 'IgnoreOfflineNodeEligibility'], triggerIfResult: 'multiSelectionDisallowed'],
 			  string(defaultValue: 'development', description: '', name: 'branch'),
 			  string(defaultValue: 'https://cals-api.preint.cwds.io/', description: '', name: 'APP_URL')]),pipelineTriggers([])])
 
