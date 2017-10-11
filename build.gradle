@@ -37,7 +37,7 @@ project.ext {
     coreApiVersion = '3.6.438'
     shiroSecurityVersion = '0.4.2'
     calsModelVersion = '0.4.3'
-    pdfGenerationVersion = '0.4.3'
+    pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     droolsVersion = '7.1.0.Final'
     dbunitVersion = '2.5.0'
