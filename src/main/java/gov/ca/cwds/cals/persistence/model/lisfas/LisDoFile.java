@@ -1,14 +1,13 @@
 package gov.ca.cwds.cals.persistence.model.lisfas;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
+import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-import java.io.Serializable;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @javax.persistence.Table(name = "lis_do_file")
@@ -19,7 +18,7 @@ public class LisDoFile implements PersistentObject {
     private Integer isnLisDoFile;
     private Integer doNbr;
     private String doName;
-    private String doStreetAddr;
+    private String doStreetNbr;
     private String doCity;
     private String doState;
     private String doZipCode;
@@ -64,13 +63,13 @@ public class LisDoFile implements PersistentObject {
     }
 
     @Basic
-    @javax.persistence.Column(name = "do_street_addr", nullable = true, length = 30)
-    public String getDoStreetAddr() {
-        return doStreetAddr;
+    @javax.persistence.Column(name = "do_street_nbr", nullable = true, length = 30)
+    public String getDoStreetNbr() {
+        return doStreetNbr;
     }
 
-    public void setDoStreetAddr(String doStreetAddr) {
-        this.doStreetAddr = doStreetAddr;
+    public void setDoStreetNbr(String doStreetNbr) {
+        this.doStreetNbr = doStreetNbr;
     }
 
     @Basic
