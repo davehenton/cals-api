@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.dms;
 
-import gov.ca.cwds.dms.services.pdf.PdfServiceTest;
+import gov.ca.cwds.dms.services.pdf.AbstractPdfServiceTest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author TPT-2 team
  */
-public abstract class AbstractFormGenerationTest extends PdfServiceTest {
+public abstract class AbstractFormGenerationTest extends AbstractPdfServiceTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFormGenerationTest.class);
 
@@ -24,7 +24,7 @@ public abstract class AbstractFormGenerationTest extends PdfServiceTest {
 
   @BeforeClass
   public static void setUpClass() {
-    PdfServiceTest.setUpClass();
+    AbstractPdfServiceTest.setUpClass();
     dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
   }
 
