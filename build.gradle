@@ -37,6 +37,7 @@ project.ext {
     coreApiVersion = '3.6.438'
     shiroSecurityVersion = '0.4.2'
     calsModelVersion = '0.4.3'
+    pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     droolsVersion = '7.1.0.Final'
     dbunitVersion = '2.5.0'
@@ -173,7 +174,14 @@ dependencies {
     testCompile group: 'org.hamcrest', name: 'hamcrest-junit', version: '2.0.0.0'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.194'
     testCompile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
-    testCompile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.7'
+    testCompile (group: 'gov.ca.cwds.services', name: 'pdf-generation', version: pdfGenerationVersion)
+    testCompile (group: 'gov.ca.cwds.services', name: 'pdf-generation-testing', version: pdfGenerationVersion) {
+        exclude group: 'org.apache.pdfbox'
+        exclude group: 'org.codehaus.groovy'
+        exclude group: 'org.apache.commons'
+        exclude group: 'junit', module: 'junit'
+        exclude group: 'io.dropwizard', module: 'dropwizard-testing'
+    }
     testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.12'
     testCompile('org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:2.23.2') {
         exclude group: 'javax.servlet', module: 'javax.servlet-api'

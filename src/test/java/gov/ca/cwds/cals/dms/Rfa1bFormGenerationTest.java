@@ -9,12 +9,12 @@ import org.junit.Test;
  */
 public class Rfa1bFormGenerationTest extends AbstractFormGenerationTest {
 
+  private static final String pdfTemplatePath = "dms/rfa1b-case/RFA-01B Criminal_Record_Statement.pdf";
+  private static final String groovyMappingPath = "dms/rfa1b-form/RFA-1B-form.groovy";
+  private static final String jsonDataPath = "fixtures/rfa/rfa-1b-form.json";
+
   @Test
   public void testPdfGeneration() throws Exception {
-    String templatePath = "dms/rfa1b-case/RFA-01B Criminal_Record_Statement.pdf";
-    String scriptPath = "dms/rfa1b-form/RFA-1B-form.groovy";
-    String request = fixture("fixtures/rfa/rfa-1b-form.json");
-
-    generatePdf(templatePath, scriptPath, request);
+    generateAndAssertPdf(pdfTemplatePath, fixture(groovyMappingPath), fixture(jsonDataPath));
   }
 }
