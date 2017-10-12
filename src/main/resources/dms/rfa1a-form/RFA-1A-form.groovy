@@ -1,5 +1,9 @@
 import org.apache.commons.lang3.StringUtils
 
+def dateIsoToUs = {
+    it ? [it[5..6], it[8..9], it[0..3]].join('/') : ''
+}
+
 def  getSafeJoinWith = {String separator, String... values ->
     String result = "";
     for(value in values) {
@@ -63,11 +67,11 @@ def getApplicantFormerSpouses = {index ->
 }
 
 def getApplicantFormerSpouseMarriageDateAndPlace = {
-    it?.with{getSafeJoinWith(" ", it?.date_of_marriage, getSafeJoinWith(", ", it?.place_of_marriage_city, it?.place_of_marriage_state?.id))}
+    it?.with{getSafeJoinWith(" ", dateIsoToUs(it?.date_of_marriage), getSafeJoinWith(", ", it?.place_of_marriage_city, it?.place_of_marriage_state?.id))}
 }
 
 def getMarriageEndDateAndPlace = {
-    it?.with{getSafeJoinWith(" ", date_of_marriage_end, getSafeJoinWith(", ", place_of_marriage_end_city, place_of_marriage_end_state?.id))}
+    it?.with{getSafeJoinWith(" ", dateIsoToUs(date_of_marriage_end), getSafeJoinWith(", ", place_of_marriage_end_city, place_of_marriage_end_state?.id))}
 }
 
 def getApplicantFormerSpouseDivorceDateAndPlace = {
@@ -86,7 +90,7 @@ def getAddressAndPhoneNumber = {
         'OTHER (SPECIFY)_pg 1' : jsonMap.is_other_type ? jsonMap.other_type_description : "",
         'APPLICANT ONE:  PREVIOUS NAMES USED: *including maiden name_pg 1' : getFullNames.call(jsonMap.applicants?.getAt(0)?.other_names),
         'APPLICANT ONE:  HIGHEST LEVEL OF EDUCATION COMPLETED_ pg 1' : jsonMap.applicants[0]?.highest_education_level?.value,
-        'APPLICANT ONE: DATE OF BIRTH_pg 1' : jsonMap.applicants[0]?.highest_education_level?.value,
+        'APPLICANT ONE: DATE OF BIRTH_pg 1' : dateIsoToUs(jsonMap.applicants[0]?.date_of_birth),
         'APPLICANT ONE:  GENDER_pg 1' : jsonMap.applicants[0]?.gender?.value,
         'APPLICANT ONE:  RACEETHNICITY_pg 1' : getApplicantRaceAndEthnicity(0),
         'APPLICANT ONE: DRIVERS LICENSE NUMBER_pg 1' : jsonMap.applicants[0]?.driver_license_number,
@@ -103,7 +107,7 @@ def getAddressAndPhoneNumber = {
         'APPLICANT TWO:_LAST: _pg 1' : jsonMap.applicants[1]?.last_name,
         'APPLICANT TWO:  PREVIOUS NAMES USED including maiden name_pg 1' : getFullNames.call(jsonMap.applicants?.getAt(1)?.other_names),
         'APPLICANT TWO:  HIGHEST LEVEL OF EDUCATION COMPLETED_pg 1' : jsonMap.applicants[1]?.highest_education_level?.value,
-        'APPLICANT TWO:  DATE OF BIRTH_pg 1' : jsonMap.applicants[1]?.highest_education_level?.value,
+        'APPLICANT TWO:  DATE OF BIRTH_pg 1' : dateIsoToUs(jsonMap.applicants[1]?.date_of_birth),
         'APPLICANT TWO:  GENDER_pg 1' : jsonMap.applicants[1]?.gender?.value,
         'APPLICANT TWO:  RACEETHNICITY_pg 1' : getApplicantRaceAndEthnicity(1),
         'APPLICANT TWO:  DRIVERS LICENSE NUMBER_pg 1' : jsonMap.applicants[1]?.driver_license_number,
@@ -126,18 +130,18 @@ def getAddressAndPhoneNumber = {
         'APPLICANT(S): CITY_2_pg 1' : (jsonMap.residence?.addresses?.find {it?.type?.value == "Mailing"})?.city,
         'REFERENCES:  FULL NAME_ROW 1_pg 4' : getFullName.call(jsonMap.references?.items[0]),
         'REFERENCES:  TELEPHONE NUMBER(S)_ROW 1_pg 4' : jsonMap.references?.items[0]?.phone_number,
-        'DATE_1_pg 4' : jsonMap.applicants_declaration?.applicant_signatures[0].signature_date,
+        'DATE_1_pg 4' : dateIsoToUs(jsonMap.applicants_declaration?.applicant_signatures[0].signature_date),
         'If more that one applicant, what is your relationship? OTHER (Explain)_pg 2' : jsonMap.other_relationship,
         'Place of Current Marriage/Domestic PartnerShip_pg 2' : getSafeJoinWith(", ", jsonMap.applicants_relationship?.place_of_relationship_city, jsonMap.applicants_relationship?.place_of_relationship_state?.id),
-        'Date of Current Marriage/Domestic Partnership_pg 2' : jsonMap.applicants_relationship?.date_of_relationship,
+        'Date of Current Marriage/Domestic Partnership_pg 2' : dateIsoToUs(jsonMap.applicants_relationship?.date_of_relationship),
         'Minor Children Residing in the Home:  Relationship to Applicants_ROW 1_pg 2' : getRelationshipsToApplicant(jsonMap.minor_children[0]),
         'Minor Children Residing in the Home:  Relationship to Applicants_ROW 2_pg 2' : getRelationshipsToApplicant(jsonMap.minor_children[1]),
         'Minor Children Residing in the Home:  Relationship to Applicants_ROW 3_pg 2' : getRelationshipsToApplicant(jsonMap.minor_children[2]),
         'Minor Children Residing in the Home:  Relationship to Applicants_ROW 4_pg 2' : getRelationshipsToApplicant(jsonMap.minor_children[3]),
-        'Minor Children Residing in the Home: Date of Birth_ROW 1_pg 2' : jsonMap.minor_children[0]?.date_of_birth,
-        'Minor Children Residing in the Home: Date of Birth_ROW 2_pg 2' : jsonMap.minor_children[1]?.date_of_birth,
-        'Minor Children Residing in the Home: Date of Birth_ROW 3_pg 2' : jsonMap.minor_children[2]?.date_of_birth,
-        'Minor Children Residing in the Home: Date of Birth_ROW 4_pg 2' : jsonMap.minor_children[3]?.date_of_birth,
+        'Minor Children Residing in the Home: Date of Birth_ROW 1_pg 2' : dateIsoToUs(jsonMap.minor_children[0]?.date_of_birth),
+        'Minor Children Residing in the Home: Date of Birth_ROW 2_pg 2' : dateIsoToUs(jsonMap.minor_children[1]?.date_of_birth),
+        'Minor Children Residing in the Home: Date of Birth_ROW 3_pg 2' : dateIsoToUs(jsonMap.minor_children[2]?.date_of_birth),
+        'Minor Children Residing in the Home: Date of Birth_ROW 4_pg 2' : dateIsoToUs(jsonMap.minor_children[3]?.date_of_birth),
         'Minor Children Residing in the Home: Gender_ROW 1_pg 2' : jsonMap.minor_children[0]?.gender?.value,
         'Minor Children Residing in the Home: Gender_ROW 2_pg 2' : jsonMap.minor_children[1]?.gender?.value,
         'Minor Children Residing in the Home: Gender_ROW 3_pg 2' : jsonMap.minor_children[2]?.gender?.value,
@@ -146,10 +150,10 @@ def getAddressAndPhoneNumber = {
         'Other Adult Residing In The Home:  Full Name (First, Middle, Initial & Last)_ROW 2_pg 2' : getFullName(jsonMap.other_adults[1]),
         'Other Adult Residing In The Home:  Full Name (First, Middle, Initial & Last)_ROW 3_pg 2' : getFullName(jsonMap.other_adults[2]),
         'Other Adult Residing In The Home:  Full Name (First, Middle, Initial & Last)_ROW 4_pg 2' : getFullName(jsonMap.other_adults[3]),
-        'Other Adult Residing In The Home: Date Of Birth_ROW 1_pg 2' : jsonMap.other_adults[0]?.date_of_birth,
-        'Other Adult Residing In The Home: Date Of Birth_ROW 2_pg 2' : jsonMap.other_adults[1]?.date_of_birth,
-        'Other Adult Residing In The Home: Date Of Birth_ROW 3_pg 2' : jsonMap.other_adults[2]?.date_of_birth,
-        'Other Adult Residing In The Home: Date Of Birth_ROW 4_pg 2' : jsonMap.other_adults[3]?.date_of_birth,
+        'Other Adult Residing In The Home: Date Of Birth_ROW 1_pg 2' : dateIsoToUs(jsonMap.other_adults[0]?.date_of_birth),
+        'Other Adult Residing In The Home: Date Of Birth_ROW 2_pg 2' : dateIsoToUs(jsonMap.other_adults[1]?.date_of_birth),
+        'Other Adult Residing In The Home: Date Of Birth_ROW 3_pg 2' : dateIsoToUs(jsonMap.other_adults[2]?.date_of_birth),
+        'Other Adult Residing In The Home: Date Of Birth_ROW 4_pg 2' : dateIsoToUs(jsonMap.other_adults[3]?.date_of_birth),
         'Other Adult Residing In The Home: Relationship To Applicant(s)_ROW 1_pg 2' : getRelationshipsToApplicant(jsonMap.other_adults[0]),
         'Other Adult Residing In The Home: Relationship To Applicant(s)_ROW 2_pg 2' : getRelationshipsToApplicant(jsonMap.other_adults[1]),
         'Other Adult Residing In The Home: Relationship To Applicant(s)_ROW 3_pg 2' : getRelationshipsToApplicant(jsonMap.other_adults[2]),
@@ -201,7 +205,7 @@ def getAddressAndPhoneNumber = {
         'EMAIL ADDRESS Row 1_pg 4' : jsonMap.references?.items[0]?.email,
         'EMAIL ADDRESS Row 2_pg 4' : jsonMap.references?.items[1]?.email,
         'EMAIL ADDRESS Row 3_pg 4' : jsonMap.references?.items[2]?.email,
-        'DATE_2_pg 4' : jsonMap.applicants_declaration?.applicant_signatures[1].signature_date,
+        'DATE_2_pg 4' : dateIsoToUs(jsonMap.applicants_declaration?.applicant_signatures[1].signature_date),
         'CITY AND COUNTY WHERE SIGNED Row1_pg 4' : jsonMap.applicants_declaration?.applicant_signatures[0].with{return getSafeJoinWith.call(", ", signature_city, signature_county?.value)},
         'CITY AND COUNTY WHERE SIGNED Row2_pg 4' : jsonMap.applicants_declaration?.applicant_signatures[1].with{return getSafeJoinWith.call(", ", signature_city, signature_county?.value)},
         'AGE(S): 0-3 yrs Check Box_pg 3' : [true: "Yes"].getAt(jsonMap.child_desired?.preferred_ages.any{it.id == 1} as String)?:"Off",
@@ -243,3 +247,4 @@ def getAddressAndPhoneNumber = {
         'If yes, nam of agency(s)_3_pg 3' : getSafeJoinWith.call(", ", jsonMap.adoption_history?.denial_history_q5?.agencies.collect{it.name} as String[]),
         'If yes, nam of agency(s)_4_pg 3' : getSafeJoinWith.call(", ", jsonMap.adoption_history?.suspension_revocation_history_q6?.agencies.collect{it.name} as String[]),
 ]
+
