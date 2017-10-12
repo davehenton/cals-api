@@ -509,10 +509,10 @@ public class FacilityService implements CrudsService {
 
     storePlacementHomeProfile(form, placementHomeId);
 
-    Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>();
-
     List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
         .orElse(Collections.emptyList());
+
+    Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>(applicants.size());
     for (ApplicantDTO applicant : applicants) {
       SubstituteCareProvider substituteCareProvider = storeSubstituteCareProvider(form, applicant);
       rfaApplicantIdsMap.put(applicant.getId(), substituteCareProvider);
