@@ -15,7 +15,6 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import io.dropwizard.jackson.Jackson;
-import io.dropwizard.testing.FixtureHelpers;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -31,6 +30,7 @@ import static gov.ca.cwds.cals.web.rest.rfa.RFA1aMinorChildrenResourceTest.MINOR
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResourceTest.OTHER_ADULTS_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aReferencesResourceTest.REFERENCES_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResourceTest.RESIDENCE_FIXTURE;
+import static io.dropwizard.testing.FixtureHelpers.fixture;
 
 /**
  * @author TPT-2 team
@@ -151,12 +151,7 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
 
     String request = mapper.writeValueAsString(rfa1aForm);
 
-//    System.out.println("request = " + request);
-//    generatePdf(templatePath, scriptPath, request);
-
-    String generatedFormData = FixtureHelpers.fixture("dms/rfa1a-case/rfa1a-generated-form-data.json");
-    System.out.println("mappingRequest = " + request);
-    generatePdf(templatePath, scriptPath, request, generatedFormData);
+    generateAndAssertPdf(templatePath, fixture(scriptPath), request);
   }
 
   private ApplicantDTO getApplicant(Long id, int seed) throws Exception {
