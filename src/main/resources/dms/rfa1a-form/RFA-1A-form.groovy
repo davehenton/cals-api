@@ -4,6 +4,10 @@ def dateIsoToUs = {
     it ? [it[5..6], it[8..9], it[0..3]].join('/') : ''
 }
 
+def formatPhoneNumber = {
+    it ? sprintf("(%s) %s-%s", it[0..2], it[3..5], it[6..9]) : ''
+}
+
 def  getSafeJoinWith = {String separator, String... values ->
     String result = "";
     for(value in values) {
@@ -55,7 +59,7 @@ def getApplicantRaceAndEthnicity = {
 }
 
 def getPhoneNumbers = {it, type ->
-    getSafeJoinWith(", ", it.findAll {it?.phone_type?.value == type}?.number as String[])
+    getSafeJoinWith(", ",(it.findAll {it?.phone_type?.value == type}?.number as String[]).collect{formatPhoneNumber(it)} as String[])
 }
 
 def getRelationshipsToApplicant = {
@@ -83,7 +87,7 @@ def getApplicantFormerSpouseDeathDateAndPlace = {
 }
 
 def getAddressAndPhoneNumber = {
-    it?.with{getSafeJoinWith.call(", ph: ", getAddress.call(address), phone?.with{"(" + number[0..2] + ") " + number[3..5] + "-" + number[6..9]})}
+    it?.with{getSafeJoinWith.call(", ph: ", getAddress.call(address), phone?.with{formatPhoneNumber(number)})}
 }
 
 [
@@ -129,7 +133,7 @@ def getAddressAndPhoneNumber = {
         'APPLICANT(S): STATE_2_pg 1' : (jsonMap.residence?.addresses?.find {it?.type?.value == "Mailing"})?.state?.id,
         'APPLICANT(S): CITY_2_pg 1' : (jsonMap.residence?.addresses?.find {it?.type?.value == "Mailing"})?.city,
         'REFERENCES:  FULL NAME_ROW 1_pg 4' : getFullName.call(jsonMap.references?.items[0]),
-        'REFERENCES:  TELEPHONE NUMBER(S)_ROW 1_pg 4' : jsonMap.references?.items[0]?.phone_number,
+        'REFERENCES:  TELEPHONE NUMBER(S)_ROW 1_pg 4' : formatPhoneNumber(jsonMap.references?.items[0]?.phone_number),
         'DATE_1_pg 4' : dateIsoToUs(jsonMap.applicants_declaration?.applicant_signatures[0].signature_date),
         'If more that one applicant, what is your relationship? OTHER (Explain)_pg 2' : jsonMap.other_relationship,
         'Place of Current Marriage/Domestic PartnerShip_pg 2' : getSafeJoinWith(", ", jsonMap.applicants_relationship?.place_of_relationship_city, jsonMap.applicants_relationship?.place_of_relationship_state?.id),
@@ -197,8 +201,8 @@ def getAddressAndPhoneNumber = {
         'If yes name the facilitys_ pg 3' : getSafeJoinWith.call(", ", jsonMap.adoption_history?.employment_in_facilities_q4?.facilities as String[]),
         'REFERENCES:  FULL NAME_ROW 2_pg 4' : getFullName.call(jsonMap.references?.items[1]),
         'REFERENCES:  FULL NAME_ROW 3_pg 4' : getFullName.call(jsonMap.references?.items[2]),
-        'REFERENCES:  TELEPHONE NUMBER(S)_ROW 2_pg 4' : jsonMap.references?.items[1]?.phone_number,
-        'REFERENCES:  TELEPHONE NUMBER(S)_ROW 3_pg 4' : jsonMap.references?.items[2]?.phone_number,
+        'REFERENCES:  TELEPHONE NUMBER(S)_ROW 2_pg 4' : formatPhoneNumber(jsonMap.references?.items[1]?.phone_number),
+        'REFERENCES:  TELEPHONE NUMBER(S)_ROW 3_pg 4' : formatPhoneNumber(jsonMap.references?.items[2]?.phone_number),
         'MAILING ADDRESSCITYSTATEZIP Row 1_pg 4' : getAddress(jsonMap.references?.items[0]?.mailing_address),
         'MAILING ADDRESSCITYSTATEZIP Row 2_pg 4' : getAddress(jsonMap.references?.items[1]?.mailing_address),
         'MAILING ADDRESSCITYSTATEZIP Row 3_pg 4' : getAddress(jsonMap.references?.items[2]?.mailing_address),
