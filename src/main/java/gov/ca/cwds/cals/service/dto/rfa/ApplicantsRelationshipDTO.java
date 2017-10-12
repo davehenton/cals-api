@@ -45,8 +45,7 @@ public class ApplicantsRelationshipDTO extends BaseDTO implements RequestRespons
     return relationshipType;
   }
 
-  public void setRelationshipType(
-      ApplicantRelationshipType relationshipType) {
+  public void setRelationshipType(ApplicantRelationshipType relationshipType) {
     this.relationshipType = relationshipType;
   }
 

@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa.helper;
 
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aMinorChildrenResourceTest.MINOR_CHILDREN_FIXTURE;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 
 import gov.ca.cwds.cals.Constants.API;
@@ -47,10 +48,7 @@ public class MinorChildHelper {
   }
 
   public MinorChildDTO getMinorChildDTO(ApplicantDTO reletiveApplicant) throws IOException {
-    MinorChildDTO minorChildDTO = clientTestRule.getMapper()
-        .readValue(
-            fixture(RFA1aMinorChildrenResourceTest.FIXTURES_RFA_RFA_1A_MINOR_CHILDREN_JSON),
-            MinorChildDTO.class);
+    MinorChildDTO minorChildDTO = clientTestRule.getMapper().readValue(MINOR_CHILDREN_FIXTURE, MinorChildDTO.class);
     // Assume that we have only one relationship object
     minorChildDTO.getRelationshipToApplicants().get(0).setApplicantId(reletiveApplicant.getId());
     return minorChildDTO;

@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
+import io.dropwizard.testing.FixtureHelpers;
 import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -19,7 +20,7 @@ import javax.ws.rs.core.MediaType;
 @SuppressWarnings("squid:S2187")
 public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
 
-  public static final String RFA1B_FORM_FIXTURE_PATH = "fixtures/rfa/rfa-1b-form.json";
+  public static final String RFA1B_FORM_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1b-form.json");
 
   @Override
   protected BaseExternalEntityApiHelper<RFA1bFormDTO> getExternalEntityApiHelper() {
@@ -29,8 +30,8 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
             API.RFA_1B_FORMS) {
 
           @Override
-          protected String getCreateFixture() {
-            return RFA1B_FORM_FIXTURE_PATH;
+          protected String getFixture() {
+            return RFA1B_FORM_FIXTURE;
           }
 
           @Override

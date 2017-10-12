@@ -6,13 +6,15 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
+import io.dropwizard.testing.FixtureHelpers;
 import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1aAdoptionHistoryResourceTest extends
-    BaseInternalEntityApiTest<AdoptionHistoryDTO> {
+public class RFA1aAdoptionHistoryResourceTest extends BaseInternalEntityApiTest<AdoptionHistoryDTO> {
+
+  public static final String ADOPTION_HISTORY_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-adoption-history.json");
 
   @Override
   protected BaseInternalEntityApiHelper<AdoptionHistoryDTO> getInternalEntityApiHelper() {
@@ -22,8 +24,8 @@ public class RFA1aAdoptionHistoryResourceTest extends
             clientTestRule, AdoptionHistoryDTO.class, API.RFA_1A_ADOPTION_HISTORY) {
 
           @Override
-          protected String getCreateFixture() {
-            return "fixtures/rfa/rfa-1a-adoption-history.json";
+          protected String getFixture() {
+            return ADOPTION_HISTORY_FIXTURE;
           }
         };
 

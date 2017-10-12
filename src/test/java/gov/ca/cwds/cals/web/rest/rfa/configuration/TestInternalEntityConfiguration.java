@@ -1,7 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa.configuration;
 
-import static io.dropwizard.testing.FixtureHelpers.fixture;
-
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import java.io.IOException;
@@ -27,10 +25,10 @@ public abstract class TestInternalEntityConfiguration<T extends BaseDTO> {
     return entityClass;
   }
 
-  protected abstract String getCreateFixture();
+  protected abstract String getFixture();
 
   public T createEntity() throws IOException {
-    String fixture = fixture(getCreateFixture());
+    String fixture = getFixture();
     return clientTestRule.getMapper().readValue(fixture, getEntityClass());
   }
 

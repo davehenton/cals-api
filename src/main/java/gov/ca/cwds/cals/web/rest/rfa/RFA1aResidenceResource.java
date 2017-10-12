@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
-import static gov.ca.cwds.cals.Constants.API.RESIDENCE;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_RESIDENCE;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
  * @author CWDS CALS API Team.
  */
 @Api(tags = {RFA})
-@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RESIDENCE)
+@Path(RFA_1A_FORMS + "/{" + RFA_1A_APPLICATION_ID + "}/" + RFA_1A_RESIDENCE)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aResidenceResource {
@@ -76,7 +76,7 @@ public class RFA1aResidenceResource {
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId,
-      @ApiParam(required = true, name = RESIDENCE, value = "The RFA-1A Residence object")
+      @ApiParam(required = true, name = RFA_1A_RESIDENCE, value = "The RFA-1A Residence object")
       @Valid
           ResidenceDTO residence) {
     return resourceDelegate.update(formId, residence);

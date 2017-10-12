@@ -200,7 +200,7 @@ public class RFA1aSubmitApplicationTest extends BaseRFAIntegrationTest {
 
 
   private void testIfPlacementHomeWasCreatedProperly(String placementHomeId) throws Exception {
-    String primarySubstituteCareProviderId = getPrimarySubstituteCareProviderIdByApplicantFirstName("Anna");
+    String primarySubstituteCareProviderId = getPrimarySubstituteCareProviderIdByApplicantFirstName("AFn");
 
     DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/PlacementHome.xml")

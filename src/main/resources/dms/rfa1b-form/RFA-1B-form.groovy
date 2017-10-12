@@ -30,7 +30,7 @@ def formatAddress = {
 }
 
 def dateIsoToUs = {
-    [it[5..6], it[8..9], it[0..3]].join('/')
+    it ? [it[5..6], it[8..9], it[0..3]].join('/') : ''
 }
 
 [
@@ -51,7 +51,7 @@ def dateIsoToUs = {
   'COUNTY': jsonMap.application_county?.value,
   'DATE': dateIsoToUs(jsonMap.application_date),
   'NAME OF RESOURCE FAMILY': jsonMap.resource_family_name,
-  'RESIDENCE ADDRESS STREET CITY ZIP': formatAddress(getAddressStreetCityStateZip(jsonMap.residence_address)),
+  'RFA_1A_RESIDENCE ADDRESS STREET CITY ZIP': formatAddress(getAddressStreetCityStateZip(jsonMap.residence_address)),
 
   'Date Of Birth': dateIsoToUs(jsonMap.date_of_birth),
   'Drivers License Number/State': jsonMap.driver_license +'/'+ jsonMap.driver_license_state?.id,

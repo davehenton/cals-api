@@ -12,7 +12,7 @@
         "zip": "98123",
         "city": "Rocklin",
         "state": {
-          "id": 6,
+          "id": "CA",
           "value": "California"
         },
         "type": {
@@ -25,7 +25,7 @@
         "zip": "98123",
         "city": "Rocklin",
         "state": {
-          "id": 6,
+          "id": "CA",
           "value": "California"
         },
         "type": {
@@ -75,7 +75,7 @@
     "date_of_relationship": "2017-04-12",
     "place_of_relationship_city": "Sacramento",
     "place_of_relationship_state": {
-      "id": 6,
+      "id": "CA",
       "value": "California"
     }
   },
@@ -86,7 +86,7 @@
           "id": 1,
           "value": "Married"
         },
-        "applicant_id": 1234567,
+        "applicant_id": 46,
         "name_prefix": {
           "id": 3,
           "value": "Mrs."
@@ -101,7 +101,7 @@
         "date_of_marriage": "2016-12-26",
         "place_of_marriage_city": "Sacramento",
         "place_of_marriage_state": {
-          "id": 6,
+          "id": "CA",
           "value": "California"
         },
         "marriage_termination_reason": {
@@ -111,7 +111,7 @@
         "date_of_marriage_end": "2016-12-26",
         "place_of_marriage_end_city": "Sacramento",
         "place_of_marriage_end_state": {
-          "id": 6,
+          "id": "CA",
           "value": "California"
         }
       }
@@ -184,7 +184,7 @@
       },
       "driver_license_number": "A1234567",
       "driver_license_state": {
-        "id": 6,
+        "id": "CA",
         "value": "California"
       },
       "email": "anna.smith@gmail.com",
@@ -200,8 +200,8 @@
           "street_address": "1702 Redoak Ct.",
           "city": "Rocklin",
           "state": {
-            "id": 2,
-            "value": "CA - California"
+            "id": "CA",
+            "value": "California"
           },
           "zip": "98123"
         }
@@ -275,10 +275,10 @@
         "id": 1,
         "value": "Alaskan Native"
       },
-      "driver_license_number": "MD123G3333232",
+      "driver_license_number": "A1234567",
       "driver_license_state": {
-        "id": 25,
-        "value": "Maryland"
+        "id": "CA",
+        "value": "California"
       },
       "email": "anna.smith@gmail.com",
       "employment": {
@@ -293,8 +293,8 @@
           "street_address": "1702 Redoak Ct.",
           "city": "Rocklin",
           "state": {
-            "id": 2,
-            "value": "CA - California"
+            "id": "CA",
+            "value": "California"
           },
           "zip": "98123"
         }
@@ -389,11 +389,11 @@
       "lived_in_other_state": true,
       "other_states_of_living": [
         {
-          "id": 50,
+          "id": "TX",
           "value": "Texas"
         },
         {
-          "id": 38,
+          "id": "NE",
           "value": "Nevada"
         }
       ],
@@ -418,7 +418,7 @@
         "zip": "98123",
         "city": "Rocklin",
         "state": {
-          "id": 6,
+          "id": "CA",
           "value": "California"
         },
         "type": {
@@ -428,10 +428,10 @@
       },
       "ssn": "464942323",
       "date_of_birth": "1981-12-26",
-      "driver_license": "MD123-1234-585-121",
+      "driver_license": "A1234567",
       "driver_license_state": {
-        "id": 25,
-        "value": "Maryland"
+        "id": "CA",
+        "value": "California"
       },
       "signature": "Anna Peterson",
       "application_date": "2017-07-02",
@@ -440,7 +440,7 @@
           "offense": "Offense description",
           "offense_city": "Sacramento",
           "offense_state": {
-            "id": 6,
+            "id": "CA",
             "value": "California"
           },
           "offense_date": "2014-03-12",
@@ -498,7 +498,7 @@
             "zip": "98123",
             "city": "Rocklin",
             "state": {
-              "id": 6,
+              "id": "CA",
               "value": "California"
             },
             "type": {
@@ -553,7 +553,7 @@
           "zip": "98123",
           "city": "Rocklin",
           "state": {
-            "id": 6,
+            "id": "CA",
             "value": "California"
           },
           "type": {
@@ -573,7 +573,7 @@
           "zip": "98123",
           "city": "Rocklin",
           "state": {
-            "id": 6,
+            "id": "CA",
             "value": "California"
           },
           "type": {
@@ -593,7 +593,7 @@
           "zip": "98123",
           "city": "Rocklin",
           "state": {
-            "id": 6,
+            "id": "CA",
             "value": "California"
           },
           "type": {

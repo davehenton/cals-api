@@ -106,8 +106,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
     return applicantsRelationship;
   }
 
-  public void setApplicantsRelationship(
-      ApplicantsRelationshipDTO applicantsRelationship) {
+  public void setApplicantsRelationship(ApplicantsRelationshipDTO applicantsRelationship) {
     this.applicantsRelationship = applicantsRelationship;
   }
 
@@ -123,8 +122,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
     return applicants;
   }
 
-  public void setApplicants(
-      List<ApplicantDTO> applicants) {
+  public void setApplicants(List<ApplicantDTO> applicants) {
     this.applicants = applicants;
   }
 
@@ -132,8 +130,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
     return minorChildren;
   }
 
-  public void setMinorChildren(
-      List<MinorChildDTO> minorChildren) {
+  public void setMinorChildren(List<MinorChildDTO> minorChildren) {
     this.minorChildren = minorChildren;
   }
 
@@ -141,8 +138,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
     return otherAdults;
   }
 
-  public void setOtherAdults(
-      List<OtherAdultDTO> otherAdults) {
+  public void setOtherAdults(List<OtherAdultDTO> otherAdults) {
     this.otherAdults = otherAdults;
   }
 
@@ -150,8 +146,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
     return rfa1cForms;
   }
 
-  public void setRfa1cForms(
-      List<RFA1cFormDTO> rfa1cForms) {
+  public void setRfa1cForms(List<RFA1cFormDTO> rfa1cForms) {
     this.rfa1cForms = rfa1cForms;
   }
 

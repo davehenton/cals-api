@@ -1,10 +1,9 @@
 package gov.ca.cwds.cals.web.rest.rfa.helper;
 
-import static io.dropwizard.testing.FixtureHelpers.fixture;
-
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
+import gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResourceTest;
 import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -25,16 +24,15 @@ public class ResidenceHelper {
   public ResidenceDTO putResidence(long formId, ResidenceDTO residenceDTO) {
     WebTarget target =
         clientTestRule.target(
-            API.RFA_1A_FORMS + "/" + formId + "/" + API.RESIDENCE);
+            API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_RESIDENCE);
     return target.request(MediaType.APPLICATION_JSON).put(
         Entity.entity(residenceDTO, MediaType.APPLICATION_JSON_TYPE), ResidenceDTO.class);
 
   }
 
   public ResidenceDTO getResidenceDTO() throws IOException {
-    String APPLICANTS_FIXTURE_PATH = "fixtures/rfa/rfa-1a-residence-request.json";
     return clientTestRule.getMapper()
-        .readValue(fixture(APPLICANTS_FIXTURE_PATH), ResidenceDTO.class);
+        .readValue(RFA1aResidenceResourceTest.RESIDENCE_FIXTURE, ResidenceDTO.class);
   }
 
 }
