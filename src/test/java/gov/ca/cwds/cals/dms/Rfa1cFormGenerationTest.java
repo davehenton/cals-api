@@ -9,13 +9,12 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
  */
 public class Rfa1cFormGenerationTest extends AbstractFormGenerationTest {
 
+  private static final String pdfTemplatePath = "dms/rfa1c-case/RFA-01C - Resource Family Application-Confidential.pdf";
+  private static final String groovyMappingPath = "dms/rfa1c-form/RFA-1C-form.groovy";
+  private static final String jsonDataPath = "fixtures/rfa/rfa-1c-form.json";
+
   @Test
   public void testPdfGeneration() throws Exception {
-    String templatePath = "dms/rfa1c-case/RFA-01C - Resource Family Application-Confidential.pdf";
-    String scriptPath = "dms/rfa1c-form/RFA-1C-form.groovy";
-    String request = fixture("fixtures/rfa/rfa-1c-form.json");
-
-    generatePdf(templatePath, scriptPath, request);
+    generateAndAssertPdf(pdfTemplatePath, fixture(groovyMappingPath), fixture(jsonDataPath));
   }
-
 }
