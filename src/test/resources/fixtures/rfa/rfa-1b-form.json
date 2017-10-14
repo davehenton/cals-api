@@ -53,14 +53,14 @@
   "application_date": "2017-07-02",
   "disclosures": [
     {
-      "offense": "Offense description",
+      "offense": "Offense description Offense description Offense description Offense description Offense description Offense description Offense description Offense description Offense description ",
       "offense_city": "Sacramento",
       "offense_state": {
         "id": "CA",
         "value": "California"
       },
       "offense_date": "2014-03-12",
-      "offense_details": "More details about offence",
+      "offense_details": "More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence ",
       "signature": "Anna Peterson",
       "application_date": "2017-07-02"
     }

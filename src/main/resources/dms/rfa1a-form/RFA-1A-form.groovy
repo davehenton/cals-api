@@ -14,10 +14,10 @@ def  getSafeJoinWith = {String separator, String... values ->
         if (!value) {
             continue;
         }
-        if (!result) {
-            result = value;
-        } else {
+        if (result) {
             result = StringUtils.joinWith(separator, result, value);
+        } else {
+            result = value;
         }
     }
     return result;
@@ -30,10 +30,10 @@ def getFullName = {
 def getFullNames = {
     String result = "";
     for(name in it) {
-        if (!result) {
-            result = getFullName(name);
-        } else {
+        if (result) {
             result = StringUtils.joinWith(", ", [result, getFullName(name)]);
+        } else {
+            result = getFullName(name);
         }
     }
     result;
@@ -79,7 +79,7 @@ def getMarriageEndDateAndPlace = {
 }
 
 def getApplicantFormerSpouseDivorceDateAndPlace = {
-    it?.with{marriage_termination_reason?.id != 2 ? getMarriageEndDateAndPlace(it) : ""}
+    it?.with{marriage_termination_reason?.id == 2 ? "" : getMarriageEndDateAndPlace(it)}
 }
 
 def getApplicantFormerSpouseDeathDateAndPlace = {
