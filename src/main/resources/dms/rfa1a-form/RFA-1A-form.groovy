@@ -246,7 +246,7 @@ def getAddressAndPhoneNumber = {
         'If Yes, who_pg 1' : getFullNames.call(jsonMap.residence?.other_people_using_residence_as_mailing),
         'Languages Spoken in the Home_pg 2' : getSafeJoinWith.call(", ", jsonMap.residence?.home_languages.collect{return it.value} as String[]),
         'Please provide direction, including major cross-street information, to your residence_pg 2' : jsonMap.residence?.directions_to_home,
-        'Body of Water' : [true: "1", false: "2"].getAt(jsonMap.residence?.body_of_water_exist as String)?:"Off",
+        'Body of Water. Check Box_pg 1' : [true: "1", false: "2"].getAt(jsonMap.residence?.body_of_water_exist as String)?:"Off",
         'Does any person not listed in this document use the residence as their mailing address? Check Box_pg 1' : [true: "1", false: "2"].getAt(jsonMap.residence?.others_using_residence_as_mailing as String)?:"Off",
         'If yes, nam of agency(s)_3_pg 3' : getSafeJoinWith.call(", ", jsonMap.adoption_history?.denial_history_q5?.agencies.collect{it.name} as String[]),
         'If yes, nam of agency(s)_4_pg 3' : getSafeJoinWith.call(", ", jsonMap.adoption_history?.suspension_revocation_history_q6?.agencies.collect{it.name} as String[]),
