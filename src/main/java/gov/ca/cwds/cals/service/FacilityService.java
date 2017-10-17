@@ -15,6 +15,7 @@ import gov.ca.cwds.cals.persistence.dao.cms.FacilityTypeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.LicenseStatusDao;
 import gov.ca.cwds.cals.persistence.dao.cms.PlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.StateDao;
+import gov.ca.cwds.cals.persistence.dao.cms.XASsaName3Dao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaBackgroundCheckDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaClientScpEthnicityDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaCountyOwnershipDao;
@@ -105,6 +106,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +186,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private XaOtherPeopleScpRelationshipDao xaOtherPeopleScpRelationshipDao;
+
+  @Inject
+  private XASsaName3Dao ssaName3Dao;
 
   @Inject
   private CountiesDao countiesDao;
@@ -533,12 +538,48 @@ public class FacilityService implements CrudsService {
           state -> outOfStateCheckMapper.toOutOfStateCheck(substituteCareProvider, state),
           applicant.getRfa1bForm());
 
+      prepareSubstituteCareProviderPhoneticSearchKeywords(substituteCareProvider);
     }
 
     storeOtherChildren(rfaApplicantIdsMap, form, storedPlacementHome);
     storeOtherAdults(rfaApplicantIdsMap, form, storedPlacementHome);
 
+    prepareAddressPhoneticSearchKeywords(storedPlacementHome);
+
     return storedPlacementHome;
+  }
+
+  private void prepareSubstituteCareProviderPhoneticSearchKeywords(
+      SubstituteCareProvider substituteCareProvider) {
+    SsaName3ParameterObject parameterObject = new SsaName3ParameterObject();
+    parameterObject.setTableName("SCP_PHTT");
+    parameterObject.setCrudOper("I");
+    parameterObject.setIdentifier(substituteCareProvider.getIdentifier());
+    parameterObject.setNameCd(" ");
+    parameterObject.setFirstName(substituteCareProvider.getFirstNm());
+    parameterObject.setMiddleName(substituteCareProvider.getMidIniNm());
+    parameterObject.setLastName(substituteCareProvider.getLastNm());
+    parameterObject.setStreettNumber(" ");
+    parameterObject.setStreetName(" ");
+    parameterObject.setGvrEntc((short) 0);
+    parameterObject.setUpdateTimeStamp(new Date());
+    parameterObject.setUpdateId(substituteCareProvider.getLstUpdId());
+
+    ssaName3Dao.callStoredProc(parameterObject);
+  }
+
+  private void prepareAddressPhoneticSearchKeywords(PlacementHome placementHome) {
+    SsaName3ParameterObject parameterObject = new SsaName3ParameterObject();
+    parameterObject.setTableName("ADR_PHNT");
+    parameterObject.setCrudOper("I");
+    parameterObject.setIdentifier(placementHome.getIdentifier());
+    parameterObject.setNameCd("P");
+    parameterObject.setStreettNumber(placementHome.getStreetNo());
+    parameterObject.setStreetName(placementHome.getStreetNm());
+    parameterObject.setGvrEntc(placementHome.getGvrEntc());
+    parameterObject.setUpdateTimeStamp(new Date());
+    parameterObject.setUpdateId(placementHome.getLstUpdId());
+    ssaName3Dao.callStoredProc(parameterObject);
   }
 
   private CountyOwnership storeCountyOwnership(String entityId, String discriminator, List<CountyType> counties) {
