@@ -1,52 +1,168 @@
 {
   "items": [
     {
-      "id": 1,
+      "id": 300,
+      "value": "Home Care Organization"
+    },
+    {
+      "id": 400,
+      "value": "Adoption Agency"
+    },
+    {
+      "id": 403,
+      "value": "Resource Family Home"
+    },
+    {
+      "id": 430,
       "value": "Foster Family Agency"
     },
     {
-      "id": 2,
+      "id": 431,
+      "value": "Foster Family AG-Sub"
+    },
+    {
+      "id": 433,
+      "value": "FFA Certified Home"
+    },
+    {
+      "id": 710,
       "value": "Small Family Home"
     },
     {
-      "id": 3,
+      "id": 711,
       "value": "Foster Family Home"
     },
     {
-      "id": 4,
+      "id": 720,
+      "value": "Crisis Nursery"
+    },
+    {
+      "id": 721,
+      "value": "Temporary Shelter Care Facility"
+    },
+    {
+      "id": 722,
+      "value": "Transitional Shelter Care"
+    },
+    {
+      "id": 726,
+      "value": "Transitional Housing Placement Program"
+    },
+    {
+      "id": 728,
+      "value": "Community Treatment Facility"
+    },
+    {
+      "id": 729,
+      "value": "GH-Enhanced Behavioral Supports Home"
+    },
+    {
+      "id": 730,
       "value": "Group Home"
     },
     {
-      "id": 5,
+      "id": 731,
+      "value": "Out Of State GH"
+    },
+    {
+      "id": 732,
+      "value": "Runaway And Homeless Youth Shelter-GH"
+    },
+    {
+      "id": 733,
+      "value": "Short Term Residential Therapeutic Program"
+    },
+    {
+      "id": 734,
+      "value": "ARFPSHN"
+    },
+    {
+      "id": 735,
+      "value": "Adult Residential"
+    },
+    {
+      "id": 736,
+      "value": "Resid FAC Chron Ill"
+    },
+    {
+      "id": 737,
+      "value": "ARF-Enhanced Behavioral Supports Home"
+    },
+    {
+      "id": 738,
+      "value": "Community Crisis Home-ARF"
+    },
+    {
+      "id": 740,
+      "value": "Residential-Elderly"
+    },
+    {
+      "id": 741,
+      "value": "Residential Elderly-Continuing Care"
+    },
+    {
+      "id": 771,
+      "value": "Rehab Facility"
+    },
+    {
+      "id": 772,
+      "value": "Social Rehabilitation Facility"
+    },
+    {
+      "id": 775,
+      "value": "Adult Day Care"
+    },
+    {
+      "id": 790,
       "value": "County Shelter/Recving Home(Non EA/AFDC)"
     },
     {
-      "id": 6,
+      "id": 791,
       "value": "Court Specified Home"
     },
     {
-      "id": 7,
+      "id": 792,
       "value": "Medical Facility"
     },
     {
-      "id": 8,
-      "value": "Tribe Specified Home"
-    },
-    {
-      "id": 9,
-      "value": "Foster Family Agency Certified Home"
-    },
-    {
-      "id": 10,
-      "value": "Guardian Home"
-    },
-    {
-      "id": 11,
+      "id": 793,
       "value": "Relative/NREFM Home"
     },
     {
-      "id": 12,
+      "id": 795,
+      "value": "Tribe Specified Home"
+    },
+    {
+      "id": 796,
+      "value": "Guardian Home"
+    },
+    {
+      "id": 800,
       "value": "Supervised Independent Living Placement"
+    },
+    {
+      "id": 810,
+      "value": "Family Day Care"
+    },
+    {
+      "id": 830,
+      "value": "Infant Center"
+    },
+    {
+      "id": 840,
+      "value": "School-Age DC Center"
+    },
+    {
+      "id": 845,
+      "value": "DC Center - Ill Child"
+    },
+    {
+      "id": 850,
+      "value": "Day Care Center"
+    },
+    {
+      "id": 999,
+      "value": "Dummy Facility"
     }
   ]
 }
