@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service;
 
 import java.io.Serializable;
 import java.util.Date;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author CWDS CALS API Team
@@ -33,7 +34,7 @@ public class SsaName3ParameterObject implements Serializable {
   }
 
   public String getCrudOper() {
-    return crudOper;
+    return handleEmptyValue(crudOper);
   }
 
   public void setCrudOper(String crudOper) {
@@ -41,7 +42,7 @@ public class SsaName3ParameterObject implements Serializable {
   }
 
   public String getIdentifier() {
-    return identifier;
+    return handleEmptyValue(identifier);
   }
 
   public void setIdentifier(String identifier) {
@@ -49,7 +50,7 @@ public class SsaName3ParameterObject implements Serializable {
   }
 
   public String getNameCd() {
-    return nameCd;
+    return handleEmptyValue(nameCd);
   }
 
   public void setNameCd(String nameCd) {
@@ -57,7 +58,7 @@ public class SsaName3ParameterObject implements Serializable {
   }
 
   public String getFirstName() {
-    return firstName;
+    return handleEmptyValue(firstName);
   }
 
   public void setFirstName(String firstName) {
@@ -65,7 +66,7 @@ public class SsaName3ParameterObject implements Serializable {
   }
 
   public String getMiddleName() {
-    return middleName;
+    return handleEmptyValue(middleName);
   }
 
   public void setMiddleName(String middleName) {
@@ -73,7 +74,7 @@ public class SsaName3ParameterObject implements Serializable {
   }
 
   public String getLastName() {
-    return lastName;
+    return handleEmptyValue(lastName);
   }
 
   public void setLastName(String lastName) {
@@ -81,15 +82,15 @@ public class SsaName3ParameterObject implements Serializable {
   }
 
   public String getStreettNumber() {
-    return streettNumber;
+    return handleEmptyValue(streettNumber);
   }
 
-  public void setStreettNumber(String streettNumber) {
+  public void setStreetNumber(String streettNumber) {
     this.streettNumber = streettNumber;
   }
 
   public String getStreetName() {
-    return streetName;
+    return handleEmptyValue(streetName);
   }
 
   public void setStreetName(String streetName) {
@@ -97,7 +98,7 @@ public class SsaName3ParameterObject implements Serializable {
   }
 
   public String getUpdateId() {
-    return updateId;
+    return handleEmptyValue(updateId);
   }
 
   public void setUpdateId(String updateId) {
@@ -118,6 +119,10 @@ public class SsaName3ParameterObject implements Serializable {
 
   public void setUpdateTimeStamp(Date updateTimeStamp) {
     this.updateTimeStamp = updateTimeStamp;
+  }
+
+  private static String handleEmptyValue(String value) {
+    return StringUtils.isNotEmpty(value) ? value : " ";
   }
 
 }

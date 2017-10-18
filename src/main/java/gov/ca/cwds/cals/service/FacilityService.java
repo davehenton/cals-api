@@ -555,12 +555,9 @@ public class FacilityService implements CrudsService {
     parameterObject.setTableName("SCP_PHTT");
     parameterObject.setCrudOper("I");
     parameterObject.setIdentifier(substituteCareProvider.getIdentifier());
-    parameterObject.setNameCd(" ");
     parameterObject.setFirstName(substituteCareProvider.getFirstNm());
     parameterObject.setMiddleName(substituteCareProvider.getMidIniNm());
     parameterObject.setLastName(substituteCareProvider.getLastNm());
-    parameterObject.setStreettNumber(" ");
-    parameterObject.setStreetName(" ");
     parameterObject.setGvrEntc((short) 0);
     parameterObject.setUpdateTimeStamp(new Date());
     parameterObject.setUpdateId(substituteCareProvider.getLstUpdId());
@@ -574,7 +571,7 @@ public class FacilityService implements CrudsService {
     parameterObject.setCrudOper("I");
     parameterObject.setIdentifier(placementHome.getIdentifier());
     parameterObject.setNameCd("P");
-    parameterObject.setStreettNumber(placementHome.getStreetNo());
+    parameterObject.setStreetNumber(placementHome.getStreetNo());
     parameterObject.setStreetName(placementHome.getStreetNm());
     parameterObject.setGvrEntc(placementHome.getGvrEntc());
     parameterObject.setUpdateTimeStamp(new Date());

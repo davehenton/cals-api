@@ -84,6 +84,21 @@ public class XASsaName3Dao {
       q.setParameter("LASTUPDTM", strdtts);
       q.setParameter("LASTUPDID", parameterObject.getUpdateId());
 
+      if (LOGGER.isInfoEnabled()) {
+        LOGGER.info("TABLENAME = {}", parameterObject.getTableName());
+        LOGGER.info("CRUDFUNCT = {}", parameterObject.getCrudOper());
+        LOGGER.info("IDENTIFIER = {}", parameterObject.getIdentifier());
+        LOGGER.info("NAMECODE = {}", parameterObject.getNameCd());
+        LOGGER.info("FIRSTNAME = {}", parameterObject.getFirstName());
+        LOGGER.info("MIDDLENAME = {}", parameterObject.getMiddleName());
+        LOGGER.info("LASTNAME = {}", parameterObject.getLastName());
+        LOGGER.info("STREETNUM = {}", parameterObject.getStreettNumber());
+        LOGGER.info("STREETNAME = {}", parameterObject.getStreetName());
+        LOGGER.info("GVRENTC = {}", String.valueOf(parameterObject.getGvrEntc()));
+        LOGGER.info("LASTUPDTM = {}", strdtts);
+        LOGGER.info("LASTUPDID = {}", parameterObject.getUpdateId());
+      }
+
       q.execute();
 
       final String returnStatus = (String) q.getOutputParameterValue("RETSTATUS");
