@@ -80,7 +80,6 @@ def sliceData = { String str, int... sizes ->
 
 def offenseData = sliceData(getSafeJoinWith(". ", jsonMap.disclosures[0]?.offense), [100, 130, 130] as int[])
 def offenseDetailsData = sliceData(getSafeJoinWith(". ", jsonMap.disclosures[0]?.offense_details), [60, *([130]*12)] as int[])
-
 [
         'COUNTY' : jsonMap.application_county?.value,
         'NAME OF RESOURCE FAMILY' : jsonMap.resource_family_name,
@@ -112,11 +111,13 @@ def offenseDetailsData = sliceData(getSafeJoinWith(". ", jsonMap.disclosures[0]?
         'Have you lived in a state other than California within the last five years?  no' : noValue(jsonMap.lived_in_other_state),
         'Have you ever been convicted of a crime in California? Yes' : yesValue(jsonMap.convicted_in_california),
         'Have you ever been convicted of a crime in California check no' : noValue(jsonMap.convicted_in_california),
-        'Have you ever been convicted of a crime in another state, federal court, military, or a jurisdiction outside of the U' : yesValue(jsonMap.convicted_in_another_state),
-        "Have you ever been convicted of a crime in California check yesHave you ever been convicted of a crime in another state, federal court, military, or a jurisdiction outside of the U.S. ?  no" : noValue(jsonMap.convicted_in_another_state),
         'Have you ever been convicted of a crime in California check yesHave you ever been arrested for a crime against a child or for spousal/cohabitant abuse? yes' : yesValue(jsonMap.arrested_for_crime),
         'Have you ever been convicted of a crime in California check yesHave you ever been convicted of a crime in California check yesHave you ever been arrested for a crime against a child or for spousal/cohabitant abuse? no' : noValue(jsonMap.arrested_for_crime),
         'What was the offense line 1' : offenseData[0],
         'What was the offense line 2' : offenseData[1],
         'What was the offense line 3' : offenseData[2],
+
+        'Have you ever been convicted of a crime in another state, federal court, military, or a jurisdiction outside of the U.S. ?  yes' : yesValue(jsonMap.convicted_in_another_state),
+        'Have you ever been convicted of a crime in California check yesHave you ever been convicted of a crime in another state, federal court, military, or a jurisdiction outside of the U.S. ?  no' : noValue(jsonMap.convicted_in_another_state)
 ]
+
