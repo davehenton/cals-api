@@ -7,6 +7,7 @@ import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.Constants.PhoneticSearchTables;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.Id;
 import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
@@ -538,7 +539,8 @@ public class FacilityService implements CrudsService {
           state -> outOfStateCheckMapper.toOutOfStateCheck(substituteCareProvider, state),
           applicant.getRfa1bForm());
 
-      prepareSubstituteCareProviderPhoneticSearchKeywords(substituteCareProvider);
+      prepareSubstituteCareProviderPhoneticSearchKeywords(substituteCareProvider,
+          storedPlacementHome);
     }
 
     storeOtherChildren(rfaApplicantIdsMap, form, storedPlacementHome);
@@ -550,14 +552,17 @@ public class FacilityService implements CrudsService {
   }
 
   private void prepareSubstituteCareProviderPhoneticSearchKeywords(
-      SubstituteCareProvider substituteCareProvider) {
+      SubstituteCareProvider substituteCareProvider,
+      PlacementHome placementHome) {
     SsaName3ParameterObject parameterObject = new SsaName3ParameterObject();
-    parameterObject.setTableName("SCP_PHTT");
+    parameterObject.setTableName(PhoneticSearchTables.SCP_PHTT);
     parameterObject.setCrudOper("I");
     parameterObject.setIdentifier(substituteCareProvider.getIdentifier());
     parameterObject.setFirstName(substituteCareProvider.getFirstNm());
     parameterObject.setMiddleName(substituteCareProvider.getMidIniNm());
     parameterObject.setLastName(substituteCareProvider.getLastNm());
+    parameterObject.setStreetNumber(placementHome.getStreetNo());
+    parameterObject.setStreetName(placementHome.getStreetNm());
     parameterObject.setGvrEntc((short) 0);
     parameterObject.setUpdateTimeStamp(new Date());
     parameterObject.setUpdateId(substituteCareProvider.getLstUpdId());
@@ -567,7 +572,7 @@ public class FacilityService implements CrudsService {
 
   private void prepareAddressPhoneticSearchKeywords(PlacementHome placementHome) {
     SsaName3ParameterObject parameterObject = new SsaName3ParameterObject();
-    parameterObject.setTableName("ADR_PHNT");
+    parameterObject.setTableName(PhoneticSearchTables.ADR_PHTT);
     parameterObject.setCrudOper("I");
     parameterObject.setIdentifier(placementHome.getIdentifier());
     parameterObject.setNameCd("P");
