@@ -37,6 +37,8 @@ swagger:
 
 upgardeDbOnStart: ${UPGRADE_DB_ON_START:-true}
 
+dmsURI: ${DMS_URI:-http://cals-api.dev.cwds.io:8086}
+
 lisDataSourceFactory:
   autoCommitByDefault: false
   driverClass: com.Connx.jdbc.TCJdbc.TCJdbcDriver
