@@ -21,6 +21,7 @@ import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildService;
 import gov.ca.cwds.cals.service.rfa.RFA1aMinorChildrenCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultService;
 import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultsCollectionService;
+import gov.ca.cwds.cals.service.rfa.RFA1aPDFGenerationService;
 import gov.ca.cwds.cals.service.rfa.RFA1aReferencesService;
 import gov.ca.cwds.cals.service.rfa.RFA1aResidenceService;
 import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
@@ -33,6 +34,9 @@ import gov.ca.cwds.data.cms.SystemMetaDao;
 import gov.ca.cwds.rest.api.domain.cms.SystemCodeCache;
 import gov.ca.cwds.rest.services.cms.CachingSystemCodeService;
 import gov.ca.cwds.rest.services.cms.SystemCodeService;
+import javax.ws.rs.client.Client;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.JerseyClientBuilder;
 
 /**
  * Identifies all CALS API business layer (services) classes available for dependency injection by
@@ -62,6 +66,7 @@ public class ServicesModule extends AbstractModule {
     // RFA
     bind(RFA1aFormService.class).toProvider(RFA1aFormServiceProvider.class);
     bind(RFA1aFormsCollectionService.class);
+    bind(RFA1aPDFGenerationService.class);
     bind(RFA1aApplicantService.class);
     bind(RFA1aApplicantsCollectionService.class);
     bind(RFA1aMinorChildService.class);
@@ -93,5 +98,15 @@ public class ServicesModule extends AbstractModule {
     SystemCodeCache systemCodeCache = (SystemCodeCache) systemCodeService;
     systemCodeCache.register();
     return systemCodeCache;
+  }
+
+  @Provides
+  public Client provideClient() {
+    JerseyClientBuilder clientBuilder = new JerseyClientBuilder()
+        .property(ClientProperties.CONNECT_TIMEOUT, 5000)
+        .property(ClientProperties.READ_TIMEOUT, 30000)
+        // Just ignore host verification, client will call trusted resources only
+        .hostnameVerifier((hostName, sslSession) -> true);
+    return clientBuilder.build();
   }
 }

@@ -60,5 +60,12 @@ public class ApplicationModule<T extends CalsApiConfiguration> extends AbstractM
   }
 
 
+  @Provides
+  @Named("dms.uri")
+  public String dmsURI(T configuration) {
+    return configuration.getDmsURI();
+  }
+
+
 
 }
