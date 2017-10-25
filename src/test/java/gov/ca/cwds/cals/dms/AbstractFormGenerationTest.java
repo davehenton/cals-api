@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
@@ -28,7 +29,8 @@ public abstract class AbstractFormGenerationTest extends AbstractPdfServiceTest 
     dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
   }
 
-  void generateAndAssertPdf(String pdfTemplatePath, String groovyMapping, String jsonData)
+  void generateAndAssertPdf(String pdfTemplatePath, String groovyMapping, String jsonData,
+      Map<String, String> expectedValuesMap)
       throws IOException {
 
     // calculate output file name
@@ -40,6 +42,9 @@ public abstract class AbstractFormGenerationTest extends AbstractPdfServiceTest 
     FileOutputStream pdfOutputStream = new FileOutputStream(new File(outputFileName));
     Map<String, String> expectedFieldsMap = generatePdf(pdfTemplatePath, pdfOutputStream,
         groovyMapping, jsonData);
+
+    Optional.ofNullable(expectedValuesMap).ifPresent(expectedFieldsMap::putAll);
+
     LOGGER.info("File is generated: {}", outputFileName);
 
     assertGeneratedPdf(expectedFieldsMap, FileUtils.readFileToByteArray(new File(outputFileName)));
