@@ -127,14 +127,19 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
     AdultChildDTO adultChild21 = getAdultChild(adultChildJson, applicant2Id);
     AdultChildDTO adultChild22 = getAdultChild(adultChildJson, applicant2Id);
 
+    //Rename
+
+    adultChild11.setFirstName(adultChild11.getFirstName() + "_1");
+    adultChild12.setFirstName(adultChild12.getFirstName() + "_2");
+    adultChild21.setFirstName(adultChild21.getFirstName() + "_3");
+    adultChild22.setFirstName(adultChild22.getFirstName() + "_4");
+
     adultChildren.add(adultChild11);
     adultChildren.add(adultChild12);
     adultChildren.add(adultChild21);
     adultChildren.add(adultChild22);
     applicantsHistoryDTO.setAdultChildren(adultChildren);
-
     rfa1aForm.setApplicantsHistory(applicantsHistoryDTO);
-
 
     ChildDesiredDTO childDesiredDTO = mapper.readValue(CHILD_DESIRED_FIXTURE, ChildDesiredDTO.class);
     rfa1aForm.setChildDesired(childDesiredDTO);

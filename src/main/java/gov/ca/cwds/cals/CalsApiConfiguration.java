@@ -16,6 +16,9 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
 
   private boolean upgardeDbOnStart = false;
 
+  private String dmsURI;
+
+
   @JsonProperty
   public DataSourceFactory getFasDataSourceFactory() {
     return fasDataSourceFactory;
@@ -72,4 +75,12 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
     this.upgardeDbOnStart = upgardeDbOnStart;
   }
 
+  @JsonProperty
+  public String getDmsURI() {
+    return dmsURI;
+  }
+
+  public void setDmsURI(String dmsURI) {
+    this.dmsURI = dmsURI;
+  }
 }

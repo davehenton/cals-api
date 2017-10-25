@@ -30,6 +30,8 @@ swagger:
 
 upgardeDbOnStart: ${UPGRADE_DB_ON_START:-false}
 
+dmsURI: ${DMS_URI:-http://cals-api.dev.cwds.io:8086}
+
 #nsDataSourceFactory:
 #  driverClass: org.h2.Driver
 #  user: sa
