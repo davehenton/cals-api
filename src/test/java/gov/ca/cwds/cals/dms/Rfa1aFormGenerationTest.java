@@ -14,6 +14,7 @@ import static gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResourceTest.RESIDENCE
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.AdultChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -29,7 +30,9 @@ import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import io.dropwizard.jackson.Jackson;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 
 /**
@@ -51,6 +54,13 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
 
     ApplicantDTO applicant1 = getApplicant(applicant1Id, 1);
     ApplicantDTO applicant2 = getApplicant(applicant2Id, 2);
+
+    applicant2.getEmployment().setIncome(4500.0f);
+
+    IncomeType incomeType = new IncomeType();
+    incomeType.setId(2L);
+    incomeType.setValue("monthly");
+    applicant2.getEmployment().setIncomeType(incomeType);
 
     List<ApplicantDTO> applicants = new ArrayList<>();
     applicants.add(applicant1);
@@ -156,8 +166,15 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
 
     String request = mapper.writeValueAsString(rfa1aForm);
 
-    generateAndAssertPdf(templatePath, fixture(scriptPath), "{}"); //Check generation for empty form
-    generateAndAssertPdf(templatePath, fixture(scriptPath), request);
+
+
+    generateAndAssertPdf(templatePath, fixture(scriptPath), "{}", new HashMap<>()); //Check generation for empty form
+
+    Map<String, String> expectedValuesMap = new HashMap<>();
+    expectedValuesMap.put("APPLICANT ONE:  ANNUAL INCOME_pg 1", "98000.0");
+    expectedValuesMap.put("APPLICANT TWO:  ANNUAL INCOME_pg 1", "54000.0");
+
+    generateAndAssertPdf(templatePath, fixture(scriptPath), request, expectedValuesMap);
   }
 
   private ApplicantDTO getApplicant(Long id, int seed) throws Exception {

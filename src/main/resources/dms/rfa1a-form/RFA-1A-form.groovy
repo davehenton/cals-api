@@ -62,6 +62,10 @@ def getPhoneNumbers = {it, type ->
     getSafeJoinWith(", ",(it.findAll {it?.phone_type?.value == type}?.number as String[]).collect{formatPhoneNumber(it)} as String[])
 }
 
+def getAnnualIncome = {
+    it?.with{(income_type?.id == 1 ? income : income * 12)}
+}
+
 def getRelationshipsToApplicant = {
     getSafeJoinWith(", ", it?.relationship_to_applicants?.collect{it.relationship_to_applicant.value} as String[])
 }
@@ -119,11 +123,11 @@ def getAddressAndPhoneNumber = {
         'APPLICANT TWO:  CELL PHONE NUMBER_pg 1' : getPhoneNumbers(jsonMap.applicants?.getAt(1)?.phones, "Cell"),
         'APPLICANT TWO:  HOME PHONE NUMBER_pg 1' : getPhoneNumbers(jsonMap.applicants?.getAt(1)?.phones, "Home"),
         'APPLICANT TWO:  WORK PHONE NUMBER_pg 1' : getPhoneNumbers(jsonMap.applicants?.getAt(1)?.phones, "Work"),
-        'APPLICANT TWO:  ANNUAL INCOME_pg 1' : jsonMap.applicants?.getAt(1)?.employment?.income as String,
+        'APPLICANT TWO:  ANNUAL INCOME_pg 1' : getAnnualIncome(jsonMap.applicants?.getAt(1)?.employment) as String,
         'APPLICANT TWO:  OCCUPATION_pg 1' : jsonMap.applicants?.getAt(1)?.employment?.occupation,
         'APPLICANT TWO:  EMAIL ADDRESS (OPTIONAL)_pg 1' : jsonMap.applicants?.getAt(1)?.email,
         'APPLICANT ONE:  OCCUPATION_pg 1' : jsonMap.applicants?.getAt(0)?.employment?.occupation,
-        'APPLICANT ONE:  ANNUAL INCOME_pg 1' : jsonMap.applicants?.getAt(0)?.employment?.income as String,
+        'APPLICANT ONE:  ANNUAL INCOME_pg 1' : getAnnualIncome(jsonMap.applicants?.getAt(0)?.employment) as String,
         'APPLICANT(S): PHYSICAL ADDRESS_pg 1' : (jsonMap.residence?.addresses?.find {it?.type?.value == "Residential"})?.street_address,
         'APPLICANT(S):  STATE_1_pg 1' : (jsonMap.residence?.addresses?.find {it?.type?.value == "Residential"})?.state?.id,
         'APPLICANT(S):  ZIP_1_pg 1' : (jsonMap.residence?.addresses?.find {it?.type?.value == "Residential"})?.zip,

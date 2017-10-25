@@ -1,8 +1,9 @@
 package gov.ca.cwds.cals.dms;
 
-import org.junit.Test;
-
 import static io.dropwizard.testing.FixtureHelpers.fixture;
+
+import java.util.HashMap;
+import org.junit.Test;
 
 /**
  * @author TPT-2 team
@@ -15,6 +16,7 @@ public class Rfa1cFormGenerationTest extends AbstractFormGenerationTest {
 
   @Test
   public void testPdfGeneration() throws Exception {
-    generateAndAssertPdf(pdfTemplatePath, fixture(groovyMappingPath), fixture(jsonDataPath));
+    generateAndAssertPdf(pdfTemplatePath, fixture(groovyMappingPath), fixture(jsonDataPath),
+        new HashMap<>());
   }
 }
