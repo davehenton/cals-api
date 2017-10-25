@@ -63,11 +63,15 @@ def getPhoneNumbers = {it, type ->
 }
 
 def getRelationshipsToApplicant = {
-    getSafeJoinWith(", ", it?.relationship_to_applicants.collect{it.relationship_to_applicant.value} as String[])
+    getSafeJoinWith(", ", it?.relationship_to_applicants?.collect {
+        it.relationship_to_applicant.value
+    } as String[])
 }
 
 def getApplicantFormerSpouses = {index ->
-    jsonMap.applicants_history?.former_spouses.findAll{it?.applicant_id == jsonMap.applicants[index]?.id}
+    jsonMap.applicants_history?.former_spouses?.findAll {
+        it?.applicant_id == jsonMap.applicants[index]?.id
+    }
 }
 
 def getApplicantFormerSpouseMarriageDateAndPlace = {
@@ -185,8 +189,8 @@ def getAddressAndPhoneNumber = {
         'Applicant(s) History: Applicant One: Marriage Date and Place City and State_ROW 1_pg 2'                                                                          : getApplicantFormerSpouseMarriageDateAndPlace(getApplicantFormerSpouses(0)?.getAt(0)),
         'Applicant(s) History: Applicant One: Marriage Date and Place City and State_ROW 2_pg 2'                                                                          : getApplicantFormerSpouseMarriageDateAndPlace(getApplicantFormerSpouses(0)?.getAt(1)),
         'Applicant(s) History: Applicant Two: Marriage Date and Place City and State_ROW 1_pg 2'                                                                          : getApplicantFormerSpouseMarriageDateAndPlace(getApplicantFormerSpouses(1)?.getAt(0)),
-        'Applicant(s) History: Applicant Two: Marriage Date and Place City and State_ROW 2_pg 2' : getApplicantFormerSpouseMarriageDateAndPlace(getApplicantFormerSpouses(1)?.getAt(1)),
-        'Applicant(s) History: Applicant One: Divorce Date and Place _ROW 1_pg 2' : getApplicantFormerSpouseDivorceDateAndPlace(getApplicantFormerSpouses(0)?.getAt(0)),
+        'Applicant(s) History: Applicant Two: Marriage Date and Place City and State_ROW 2_pg 2'                                                                          : getApplicantFormerSpouseMarriageDateAndPlace(getApplicantFormerSpouses(1)?.getAt(1)),
+        'Applicant(s) History: Applicant One: Divorce Date and Place _ROW 1_pg 2'                                                                                         : getApplicantFormerSpouseDivorceDateAndPlace(getApplicantFormerSpouses(0)?.getAt(0)),
         'Applicant(s) History: Applicant Two: Divorce Date and Place _ROW 1_pg 2'                                                                                         : getApplicantFormerSpouseDivorceDateAndPlace(getApplicantFormerSpouses(0)?.getAt(1)),
         'Applicant(s) History: Applicant One: Divorce Date and Place _ROW 2_pg 2'                                                                                         : getApplicantFormerSpouseDivorceDateAndPlace(getApplicantFormerSpouses(1)?.getAt(0)),
         'Applicant(s) History: Applicant Two: Divorce Date and Place _ROW 2_pg 2'                                                                                         : getApplicantFormerSpouseDivorceDateAndPlace(getApplicantFormerSpouses(1)?.getAt(1)),
@@ -262,10 +266,10 @@ def getAddressAndPhoneNumber = {
         'Sibling (Group Of): 0 Check Box_pg 3'                                                                                                                            : [1: "Yes"].getAt(jsonMap.child_desired?.preferred_sibling_group_up_to?.id) ?: "Off",
         'Sibling (Group Of): 2 Check Box_pg 3'                                                                                                                            : [2: "Yes"].getAt(jsonMap.child_desired?.preferred_sibling_group_up_to?.id) ?: "Off",
         'Sibling (Group Of): 3 Check Box_pg 3'                                                                                                                            : [3: "Yes"].getAt(jsonMap.child_desired?.preferred_sibling_group_up_to?.id) ?: "Off",
-        'Sibling (Group Of): 4 Check Box_pg 3'                                                                                                                            : [4: "Yes"].getAt(jsonMap.child_desired?.preferred_sibling_group_up_to?.id)?:"Off",
-        'Sibling (Group Of): 5 or more Check Box_pg 3'                                                                                                                    : [5: "Yes"].getAt(jsonMap.child_desired?.preferred_sibling_group_up_to?.id)?:"Off",
+        'Sibling (Group Of): 4 Check Box_pg 3'                                                                                                                            : [4: "Yes"].getAt(jsonMap.child_desired?.preferred_sibling_group_up_to?.id) ?: "Off",
+        'Sibling (Group Of): 5 or more Check Box_pg 3'                                                                                                                    : [5: "Yes"].getAt(jsonMap.child_desired?.preferred_sibling_group_up_to?.id) ?: "Off",
         'County_pg 1'                                                                                                                                                     : jsonMap.application_county?.value,
-        'Check Box_pg 1'                                                                                                                                                  : [true: "1", false: "2"].getAt(jsonMap.is_initial_application as String)?:"Off",
+        'Check Box_pg 1'                                                                                                                                                  : [true: "1", false: "2"].getAt(jsonMap.is_initial_application as String) ?: "Off",
         'Do you own, rent or lease the residence? Check Box_pg 1'                                                                                                         : ["Own": "1", "Rent": "2", "Lease": "3"].getAt(jsonMap.residence?.residence_ownership?.value) ?: "Off",
         'Weapons in the home?  Check Box_pg 1'                                                                                                                            : [true: "1", false: "2"].getAt(jsonMap.residence?.weapon_in_home as String) ?: "Off",
         'If more that one applicant, what is your relationship? check box_pg 2'                                                                                           : ["Married": "1", "Domestic Partnership": "2", "Related (Family Member)": "3", "Cohabitants": "1", "Other": "1"].getAt(jsonMap.applicants_relationship?.relationship_type?.value) ?: "Off",
@@ -280,7 +284,7 @@ def getAddressAndPhoneNumber = {
         'Has a Child been identified?- Check Box_pg 3Has a Child been identified?- Check Box_pg 3'                                                                        : [true: "1", false: "2"].getAt(jsonMap?.child_desired?.child_identified as String) ?: "Off",
         'Is the child currently in your home?  - Check Box_pg 3'                                                                                                          : [true: "1", false: "2"].getAt(jsonMap.child_desired?.child_in_home as String) ?: "Off",
         'Have you had a license, certification, or approval suspended, revoked, or rescinded?  Check Box_pg 3'                                                            : [true: "1", false: "2"].getAt(jsonMap.adoption_history?.suspension_revocation_history_q6?.had_suspensions_revocations as String) ?: "Off",
-        'Have you been subject to an exclusion order?   Check Box_pg 3'                                                                                                   : [true: "1", false: "2"].getAt(jsonMap.adoption_history?.was_subject_for_exclusion_order_q7 as String)?:"Off",
+        'Have you been subject to an exclusion order?   Check Box_pg 3'                                                                                                   : [true: "1", false: "2"].getAt(jsonMap.adoption_history?.was_subject_for_exclusion_order_q7 as String) ?: "Off",
         'Have you had a previous license, certification, relative or non relative extended family member, or resource family approval application denial?  Check Box_pg 3': [true: "1", false: "2"].getAt(jsonMap.adoption_history?.denial_history_q5?.had_denials as String) ?: "Off",
         'If Yes ,please discribe the location of the body of water and its size_pg 1'                                                                                     : jsonMap.residence?.body_of_water_exist ? jsonMap.residence?.body_of_water_description : "",
         'If Yes, who_pg 1'                                                                                                                                                : getFullNames.call(jsonMap.residence?.other_people_using_residence_as_mailing),
