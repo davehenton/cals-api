@@ -37,6 +37,8 @@ swagger:
 
 upgardeDbOnStart: ${UPGRADE_DB_ON_START:-true}
 
+dmsURI: ${DMS_URI:-http://cals-api.dev.cwds.io:8086}
+
 lisDataSourceFactory:
   autoCommitByDefault: false
   driverClass: com.Connx.jdbc.TCJdbc.TCJdbcDriver
@@ -198,6 +200,8 @@ logging:
     "io.dropwizard.server":
       level: INFO
     "io.dropwizard.jersey.DropwizardResourceConfig":
+      level: INFO
+    "gov.ca.cwds.cals.persistence.dao.cms.XASsaName3Dao":
       level: INFO
     "AUDIT":
       level: ALL
