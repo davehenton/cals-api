@@ -283,7 +283,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
     expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
     expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
-    helper.assertEquals(new String[]{"PKSB_PVDRT", "LST_UPD_TS"});
+    helper.assertEquals(new String[]{"PKSB_PVDRT", "LST_UPD_TS"}, new String[]{"FIRST_NM"});
   }
 
   private void testIfPhoneContactDetailsWasCreatedProperly(String substituteCareProviderId)
