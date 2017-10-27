@@ -399,6 +399,18 @@ public final class Constants {
       public static final String APPLICANT_DRIVER_LICENSE_IS_INVALID_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " driver's license field must have both State and Number";
 
+      public static final String OTHER_ADULT_IS_NOT_ADDED_AS_A_CHILD =
+          "System has discovered Other Adult with first name - [%s], last name - [%s] that is a child of applicant(s)"
+              + " but is not added to Adult Children of Applicant(s) section";
+
+      public static final String ADULT_CHILD_LIVING_IN_HOME_IS_NOT_ADDED_AS_OTHER_ADULT =
+          "System has discovered Adult Child of applicant(s) with first name - [%s], last name - [%s] that lives in home"
+              + " but is not added to Other Adults in the home section";
+
+      public static final String ADULT_CHILD_WRONG_LIVING_IN_HOME_FLAG =
+          "System has discovered Adult Child of applicant(s) with first name - [%s], last name - [%s] that does not live in home"
+              + " but is added to Other Adults residing in the home section";
+
       public static class Code {
 
         public static final String APPLICANT_FIRST_NAME = "BV000001";
@@ -420,6 +432,9 @@ public final class Constants {
         public static final String APPLICATION_HAS_NO_COUNTY = "BV000017";
         public static final String OTHER_ADULT_HAS_NO_FIRST_NAME = "BV000018";
         public static final String OTHER_ADULT_HAS_NO_LAST_NAME = "BV000019";
+        public static final String OTHER_ADULT_IS_NOT_ADDED_AS_ADULT_CHILD = "BV000020";
+        public static final String ADULT_CHILD_LIVING_IN_HOME_IS_NOT_ADDED_AS_OTHER_ADULT = "BV000021";
+        public static final String ADULT_CHILD_LIVING_IN_HOME_WRONG_FLAG = "BV000022";
 
         private Code() {
         }

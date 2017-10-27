@@ -1,18 +1,15 @@
 package gov.ca.cwds.cals.web.rest.rfa.helper;
 
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResourceTest.OTHER_ADULTS_FIXTURE;
-import static io.dropwizard.testing.FixtureHelpers.fixture;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
-import gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResourceTest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -40,9 +37,13 @@ public class OtherAdultsHelper {
   }
 
   public OtherAdultDTO getOtherAdultDTO(ApplicantDTO relativeApplicant) throws IOException {
+    return getOtherAdultDTO(relativeApplicant, OTHER_ADULTS_FIXTURE);
+  }
+
+  public OtherAdultDTO getOtherAdultDTO(ApplicantDTO relativeApplicant, String fixture)
+      throws IOException {
     OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
-        .readValue(OTHER_ADULTS_FIXTURE,
-            OtherAdultDTO.class);
+        .readValue(fixture, OtherAdultDTO.class);
     // Assume that we have only one relationship object
     otherAdultDTO.getRelationshipToApplicants().get(0).setApplicantId(relativeApplicant.getId());
     return otherAdultDTO;

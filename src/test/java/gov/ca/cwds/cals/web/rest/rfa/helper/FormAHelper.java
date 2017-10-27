@@ -34,8 +34,15 @@ public class FormAHelper {
     });
   }
 
+  public RFA1aFormDTO getRFA1aForm(Long formId) {
+    return clientTestRule
+        .target(API.RFA_1A_FORMS + "/" + formId + "?" + API.QueryParams.EXPANDED + "=true")
+        .request(MediaType.APPLICATION_JSON)
+        .get(RFA1aFormDTO.class);
+  }
+
   public RFA1aFormDTO createRFA1aForm() throws Exception {
-    RFA1aFormDTO rfaFormDTOBefore = getRfa1aForm();
+    RFA1aFormDTO rfaFormDTOBefore = createRfa1aForm();
     RFA1aFormDTO rfaFormDTOAfter = postRfa1aForm(rfaFormDTOBefore);
 
     assertNotNull(rfaFormDTOAfter);
@@ -53,7 +60,7 @@ public class FormAHelper {
         .post(Entity.entity(rfa1aForm, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
   }
 
-  public RFA1aFormDTO getRfa1aForm() throws Exception {
+  public RFA1aFormDTO createRfa1aForm() throws Exception {
     RFA1aFormDTO form = new RFA1aFormDTO();
     CountyType county = new CountyType();
     county.setId(34L);

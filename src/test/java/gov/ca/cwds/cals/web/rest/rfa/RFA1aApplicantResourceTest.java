@@ -4,7 +4,6 @@ import static gov.ca.cwds.cals.web.rest.rfa.helper.PhoneDTOHelper.createPhone;
 import static gov.ca.cwds.cals.web.rest.rfa.helper.PhoneDTOHelper.createPhoneNoExtension;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixtureTemplate;
-import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -407,7 +406,7 @@ public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applic
     VelocityHelper velocityHelper = new VelocityHelper();
     velocityHelper.setParameters(parameters);
     assertResponseByFixture(entity,
-        velocityHelper.process("fixtures/rfa/validation/validation_error_response.json"));
+        velocityHelper.process("fixtures/rfa/validation/validation-error-response.json"));
   }
 
 }
