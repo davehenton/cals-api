@@ -1,0 +1,15 @@
+{
+  "first_name": "NotAChild",
+  "middle_name": "NotAChild",
+  "last_name": "NotAChild",
+  "date_of_birth": "1980-09-23",
+  "relationship_to_applicants": [
+    {
+      "relationship_to_applicant": {
+        "id": 4,
+        "value": "Niece"
+      },
+      "applicant_id": 1234567
+    }
+  ]
+}

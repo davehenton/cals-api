@@ -26,18 +26,25 @@ public class ApplicantHelper {
   }
 
   public ApplicantDTO getApplicant() throws IOException {
-    return clientTestRule.getMapper()
-        .readValue(APPLICANT_FIXTURE, ApplicantDTO.class);
+    return getApplicantDTO();
   }
 
   public ApplicantDTO getValidApplicant() throws IOException {
-    ApplicantDTO applicant = clientTestRule.getMapper()
-        .readValue(APPLICANT_FIXTURE, ApplicantDTO.class);
+    ApplicantDTO applicant = getApplicantDTO();
 
     RFA1bFormDTO rfa1bForm = new FormBHelper(clientTestRule).getRfa1bForm();
     applicant.setRfa1bForm(rfa1bForm);
 
     return applicant;
+  }
+
+  public ApplicantDTO postApplicant(long formId) throws IOException {
+    return postApplicant(formId, getApplicantDTO());
+  }
+
+  private ApplicantDTO getApplicantDTO() throws IOException {
+    return clientTestRule.getMapper()
+        .readValue(APPLICANT_FIXTURE, ApplicantDTO.class);
   }
 
   public ApplicantDTO postApplicant(long formId, ApplicantDTO applicantDTO) {

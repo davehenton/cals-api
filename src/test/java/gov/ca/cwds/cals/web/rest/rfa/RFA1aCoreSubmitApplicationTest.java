@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
+import org.dbunit.dataset.SortedTable;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -35,7 +36,6 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     setUpCalsns();
     setUpCms();
   }
-
 
   @Test
   public void submitApplicationTest() throws Exception {
@@ -132,7 +132,8 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   private String[] getSubstituteCareProviderIds(String placementHomeId) throws Exception {
     String[] ids = new String[2];
-    ITable placementHomeInformation = dbUnitSupport.getTableFromDB("HM_SCP_T");
+    ITable placementHomeInformation =
+        new SortedTable(dbUnitSupport.getTableFromDB("HM_SCP_T"), new String[]{"SCPRVD_IND"});
     ITable placementHomeRow = dbUnitSupport
         .filterByColumnAndValue(placementHomeInformation, "FKPLC_HM_T", placementHomeId);
     for (int i = 0; i < ids.length; i++) {
@@ -270,7 +271,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     helper.assertEquals(
         new String[]{"IDENTIFIER", "LST_UPD_TS", "LIS_PER_ID",
-            "ETH_UD_CD", "HISP_UD_CD", "PASSBC_CD"});
+            "ETH_UD_CD", "HISP_UD_CD", "PASSBC_CD"}, new String[]{"FIRST_NM"});
   }
 
   private void testIfSubstituteCareProviderUCWasCreatedProperly(String substituteCareProviderId1,

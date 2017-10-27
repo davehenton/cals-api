@@ -12,6 +12,7 @@ import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
+import gov.ca.cwds.cals.service.rfa.RFA1aPDFGenerationService;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.TypedResourceDelegate;
@@ -30,8 +31,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CWDS CALS API Team
@@ -42,8 +48,14 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFA1aFormsResource {
 
+  private static final Logger LOG = LoggerFactory.getLogger(RFA1aFormsResource.class);
+
+  private static final String APPLICATION_PDF = "application/pdf";
   private TypedResourceDelegate<RFA1aFormsParameterObject, RFA1aFormDTO> resourceDelegate;
   private TypedResourceDelegate<Boolean, Request> collectionResourceDelegate;
+
+  @Inject
+  private RFA1aPDFGenerationService pdfGenerationService;
 
   @Inject
   public RFA1aFormsResource(
@@ -80,6 +92,7 @@ public class RFA1aFormsResource {
   //@UnitOfWork(CALSNS)
   @PUT
   @Path("/{" + RFA_1A_APPLICATION_ID + "}")
+  @Produces(MediaType.APPLICATION_JSON)
   @Timed
   @ApiResponses(
       value = {
@@ -103,6 +116,7 @@ public class RFA1aFormsResource {
   //@UnitOfWork(CALSNS)
   @GET
   @Path("/{" + RFA_1A_APPLICATION_ID + "}")
+  @Produces({MediaType.APPLICATION_JSON, APPLICATION_PDF})
   @Timed
   @ApiResponses(
       value = {
@@ -118,9 +132,47 @@ public class RFA1aFormsResource {
           Long formId,
       @QueryParam(EXPANDED)
       @ApiParam(name = EXPANDED, value = "Use 'true' to get form with all parts of form included")
-          boolean expanded) {
-    return resourceDelegate.get(new RFA1aFormsParameterObject(formId, expanded));
+          boolean expanded, @Context HttpHeaders headers) {
+
+    String accept = headers.getHeaderString(HttpHeaders.ACCEPT);
+    long startTime = System.currentTimeMillis();
+    Response response = null;
+    if (APPLICATION_PDF.equals(accept)) {
+      String documentId = pdfGenerationService.generatePDF(formId);
+      response = pdfGenerationService.getFormPdf(documentId);
+    } else {
+      RFA1aFormsParameterObject params = new RFA1aFormsParameterObject(formId, expanded);
+      response = resourceDelegate.get(params);
+    }
+    LOG.info("Get RFA1a form total time: {}", (System.currentTimeMillis() - startTime));
+    return response;
   }
+
+  @GET
+  @Path("{" + RFA_1A_APPLICATION_ID + "}/documentId")
+  @Produces({MediaType.TEXT_PLAIN})
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns RFA 1A generated document (PDF) Id by application Id", response = String.class)
+  public Response getGeneratedDocumentId(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long formId) {
+    long startTime = System.currentTimeMillis();
+    String docId = pdfGenerationService.generatePDF(formId);
+    LOG.info("Get RFA1a form generation time: {}", (System.currentTimeMillis() - startTime));
+    if (docId != null && !docId.isEmpty()) {
+      return Response.status(Status.OK).entity(docId).build();
+    }
+    return Response.status(Status.NOT_FOUND).build();
+  }
+
 
   @UnitOfWork(CALSNS)
   @GET

@@ -1,0 +1,15 @@
+{
+  "first_name": "SonFirstName3",
+  "middle_name": "SonMiddleName3",
+  "last_name": "SonLastName3",
+  "date_of_birth": "1995-07-14",
+  "relationship_to_applicants": [
+    {
+      "relationship_to_applicant": {
+        "id": 1,
+        "value": "Child"
+      },
+      "applicant_id": 1234567
+    }
+  ]
+}

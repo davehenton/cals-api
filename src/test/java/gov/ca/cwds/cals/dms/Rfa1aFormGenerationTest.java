@@ -1,6 +1,20 @@
 package gov.ca.cwds.cals.dms;
 
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResourceTest.ADOPTION_HISTORY_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANT_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResourceTest.APPLICANTS_DECLARATION_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsHistoryResourceTest.APPLICANTS_HISTORY_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsRelationshipResourceTest.APPLICANTS_RELATIONSHIP_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aChildDesiredResourceTest.CHILD_DESIRED_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResourceTest.RFA_1A_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aMinorChildrenResourceTest.MINOR_CHILDREN_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResourceTest.OTHER_ADULTS_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aReferencesResourceTest.REFERENCES_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResourceTest.RESIDENCE_FIXTURE;
+import static io.dropwizard.testing.FixtureHelpers.fixture;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.AdultChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -16,21 +30,10 @@ import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import io.dropwizard.jackson.Jackson;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
-
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResourceTest.ADOPTION_HISTORY_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANT_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResourceTest.APPLICANTS_DECLARATION_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsHistoryResourceTest.APPLICANTS_HISTORY_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsRelationshipResourceTest.APPLICANTS_RELATIONSHIP_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aChildDesiredResourceTest.CHILD_DESIRED_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aFormsResourceTest.RFA_1A_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aMinorChildrenResourceTest.MINOR_CHILDREN_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aOtherAdultsResourceTest.OTHER_ADULTS_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aReferencesResourceTest.REFERENCES_FIXTURE;
-import static gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResourceTest.RESIDENCE_FIXTURE;
-import static io.dropwizard.testing.FixtureHelpers.fixture;
 
 /**
  * @author TPT-2 team
@@ -51,6 +54,13 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
 
     ApplicantDTO applicant1 = getApplicant(applicant1Id, 1);
     ApplicantDTO applicant2 = getApplicant(applicant2Id, 2);
+
+    applicant2.getEmployment().setIncome(4500.0f);
+
+    IncomeType incomeType = new IncomeType();
+    incomeType.setId(2L);
+    incomeType.setValue("monthly");
+    applicant2.getEmployment().setIncomeType(incomeType);
 
     List<ApplicantDTO> applicants = new ArrayList<>();
     applicants.add(applicant1);
@@ -117,14 +127,19 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
     AdultChildDTO adultChild21 = getAdultChild(adultChildJson, applicant2Id);
     AdultChildDTO adultChild22 = getAdultChild(adultChildJson, applicant2Id);
 
+    //Rename
+
+    adultChild11.setFirstName(adultChild11.getFirstName() + "_1");
+    adultChild12.setFirstName(adultChild12.getFirstName() + "_2");
+    adultChild21.setFirstName(adultChild21.getFirstName() + "_3");
+    adultChild22.setFirstName(adultChild22.getFirstName() + "_4");
+
     adultChildren.add(adultChild11);
     adultChildren.add(adultChild12);
     adultChildren.add(adultChild21);
     adultChildren.add(adultChild22);
     applicantsHistoryDTO.setAdultChildren(adultChildren);
-
     rfa1aForm.setApplicantsHistory(applicantsHistoryDTO);
-
 
     ChildDesiredDTO childDesiredDTO = mapper.readValue(CHILD_DESIRED_FIXTURE, ChildDesiredDTO.class);
     rfa1aForm.setChildDesired(childDesiredDTO);
@@ -151,7 +166,15 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
 
     String request = mapper.writeValueAsString(rfa1aForm);
 
-    generateAndAssertPdf(templatePath, fixture(scriptPath), request);
+
+
+    generateAndAssertPdf(templatePath, fixture(scriptPath), "{}", new HashMap<>()); //Check generation for empty form
+
+    Map<String, String> expectedValuesMap = new HashMap<>();
+    expectedValuesMap.put("APPLICANT ONE:  ANNUAL INCOME_pg 1", "98000.0");
+    expectedValuesMap.put("APPLICANT TWO:  ANNUAL INCOME_pg 1", "54000.0");
+
+    generateAndAssertPdf(templatePath, fixture(scriptPath), request, expectedValuesMap);
   }
 
   private ApplicantDTO getApplicant(Long id, int seed) throws Exception {
