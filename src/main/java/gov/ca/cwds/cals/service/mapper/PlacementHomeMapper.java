@@ -78,7 +78,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "ctyprfDsc", constant = " ")
   @Mapping(target = "edPvrDsc", constant = " ")
   @Mapping(target = "envFctdsc", constant = " ")
-  @Mapping(target = "hazrdsDsc", constant = " ")
+  @Mapping(target = "hazrdsDsc", source = "form.residence.bodyOfWaterDescription")
   @Mapping(target = "lisPrfdsc", constant = " ")
   @Mapping(target = "petsDsc", constant = " ")
   @Mapping(target = "rlgActdsc", constant = " ")

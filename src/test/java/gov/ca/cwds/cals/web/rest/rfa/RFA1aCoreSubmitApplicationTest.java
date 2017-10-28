@@ -167,7 +167,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
                 "OLDFAC_ID", "OPRTD_BYCD", "OPRTD_BYID", "PH_ENDC", "CERTF_PNDT", "AP_STAT_DT",
                 "LST_UPD_TS", "BCK_PERSNM", "GNDR_ACPCD", "GEO_RGNTCD", "LA_VNDR_ID", "LICNSEE_NM",
                 "P_CITY_NM", "PYE_FSTNM", "PYE_LSTNM", "PYE_MIDNM", "PSTREET_NM", "PSTREET_NO",
-                "SPCHAR_DSC", "CTYPRF_DSC", "ED_PVR_DSC", "ENV_FCTDSC", "HAZRDS_DSC", "LIS_PRFDSC",
+                "SPCHAR_DSC", "CTYPRF_DSC", "ED_PVR_DSC", "ENV_FCTDSC", "LIS_PRFDSC",
                 "PETS_DSC", "RLG_ACTDSC", "CERT_CMPLT", "LA_P_CTYNM", "LA_P_FSTNM", "LA_P_LSTNM",
                 "LA_P_MIDNM", "LA_P_STNM", "LA_P_STNO", "LA_P_BSNSS", "ADHMONLY", "END_COMDSC",
                 "END_DT", "FKCNTY_CST", "LIC_APL_DT", "LIC_EFCTDT", "LIC_EXP_DT", "LIC_STATDT",
