@@ -32,7 +32,7 @@
     "id": 1,
     "value": "Own"
   },
-  "weapon_in_home": false,
+  "weapon_in_home": true,
   "body_of_water_exist": true,
   "body_of_water_description": "Spa pool",
   "others_using_residence_as_mailing": true,

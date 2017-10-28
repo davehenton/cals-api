@@ -113,6 +113,29 @@ public final class Utils {
 
   }
 
+  public static class PlacementHome {
+
+    public static final String WATER_BODY = "water body";
+    public static final String WEAPON_IN_HOME_BODY = "weapon in home";
+
+    private PlacementHome() {
+    }
+
+    public static String getHazardsDescription(ResidenceDTO residence) {
+      if (residence.isWeaponInHome() && residence.isBodyOfWaterExist()) {
+        return WATER_BODY + ", " + WEAPON_IN_HOME_BODY;
+      }
+      if (residence.isWeaponInHome() && !residence.isBodyOfWaterExist()) {
+        return WEAPON_IN_HOME_BODY;
+      }
+      if (!residence.isWeaponInHome() && residence.isBodyOfWaterExist()) {
+        return WATER_BODY;
+      }
+      return " ";
+    }
+
+  }
+
   public static class Applicant {
 
     private Applicant() {
