@@ -32,7 +32,7 @@ project.ext {
     projectDockerAppName = 'cals-api'
     projectMajorVersion = '0.4.5'
     projectVersion = projectMajorVersion + '-SNAPSHOT'
-    projectVersion = projectMajorVersion
+//    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
     coreApiVersion = '3.6.438'
     shiroSecurityVersion = '0.4.2'
