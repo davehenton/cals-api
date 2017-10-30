@@ -118,7 +118,7 @@ public class RestClientTestRule implements TestRule {
 
         JerseyClientBuilder clientBuilder = new JerseyClientBuilder()
             .property(ClientProperties.CONNECT_TIMEOUT, 5000)
-            .property(ClientProperties.READ_TIMEOUT, 20000)
+            .property(ClientProperties.READ_TIMEOUT, 60000)
             .hostnameVerifier((hostName, sslSession) -> {
               // Just ignore host verification for test purposes
               return true;
