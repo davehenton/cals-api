@@ -73,6 +73,10 @@ Set environment variable CALS_API_CONFIG to cals-api-lis-connx.yml to run docker
 #### Upgarde Data Base on Start
 - UPGRADE_DB_ON_START -- if "true" then application starts Liquibase Scripts for upgrading DB to the latest state (default true)  
 
+#### DMS configuration
+
+- DMS_URI -- is URI to the Document Management System.   
+
 #### Swagger Configuration Parameters**
 - LOGIN_URL -- Login URL 
 - SHOW_SWAGGER -- Show swagger (true | false) default - true
