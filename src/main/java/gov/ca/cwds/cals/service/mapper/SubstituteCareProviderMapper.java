@@ -53,7 +53,7 @@ public interface SubstituteCareProviderMapper {
   @Mapping(target = "emplStat", constant = "0")
   @Mapping(target = "primInc", constant = "0")
   @Mapping(target = "secInc", constant = "0")
-  @Mapping(target = "yrIncAmt", constant = "0")
+  @Mapping(target = "yrIncAmt", expression = "java(Utils.Applicant.getAnnualIncome(applicantDTO))")
   @Mapping(target = "hispCd", constant = "U")
   @Mapping(target = "mrtlStc", constant = "0")
   @Mapping(target = "lisownind", constant = "N")
