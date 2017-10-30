@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
+import java.math.BigDecimal;
 
 
 /**
@@ -20,7 +21,7 @@ public class EmploymentDTO extends BaseDTO {
 
   private String occupation;
 
-  private Float income;
+  private BigDecimal income;
 
   @CheckReferentialIntegrity(enrich = true)
   private IncomeType incomeType;
@@ -43,11 +44,11 @@ public class EmploymentDTO extends BaseDTO {
     this.occupation = occupation;
   }
 
-  public Float getIncome() {
+  public BigDecimal getIncome() {
     return income;
   }
 
-  public void setIncome(Float income) {
+  public void setIncome(BigDecimal income) {
     this.income = income;
   }
 

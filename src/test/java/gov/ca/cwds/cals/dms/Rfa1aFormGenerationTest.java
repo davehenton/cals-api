@@ -29,6 +29,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import io.dropwizard.jackson.Jackson;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +56,7 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
     ApplicantDTO applicant1 = getApplicant(applicant1Id, 1);
     ApplicantDTO applicant2 = getApplicant(applicant2Id, 2);
 
-    applicant2.getEmployment().setIncome(4500.0f);
+    applicant2.getEmployment().setIncome(new BigDecimal("4500.00"));
 
     IncomeType incomeType = new IncomeType();
     incomeType.setId(2L);
@@ -171,8 +172,8 @@ public class Rfa1aFormGenerationTest extends AbstractFormGenerationTest {
     generateAndAssertPdf(templatePath, fixture(scriptPath), "{}", new HashMap<>()); //Check generation for empty form
 
     Map<String, String> expectedValuesMap = new HashMap<>();
-    expectedValuesMap.put("APPLICANT ONE:  ANNUAL INCOME_pg 1", "98000.0");
-    expectedValuesMap.put("APPLICANT TWO:  ANNUAL INCOME_pg 1", "54000.0");
+    expectedValuesMap.put("APPLICANT ONE:  ANNUAL INCOME_pg 1", "98000.00");
+    expectedValuesMap.put("APPLICANT TWO:  ANNUAL INCOME_pg 1", "54000.00");
 
     generateAndAssertPdf(templatePath, fixture(scriptPath), request, expectedValuesMap);
   }

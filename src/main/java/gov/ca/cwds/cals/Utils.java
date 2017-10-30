@@ -8,6 +8,7 @@ import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.EmploymentDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
@@ -15,6 +16,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
 import gov.ca.cwds.rest.exception.ExpectedException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import javax.ws.rs.core.Response;
@@ -139,6 +141,18 @@ public final class Utils {
   public static class Applicant {
 
     private Applicant() {
+    }
+
+    public static BigDecimal getAnnualIncome(ApplicantDTO applicant) {
+      if (applicant.getEmployment() != null) {
+        EmploymentDTO employmentDTO = applicant.getEmployment();
+        return employmentDTO.getIncome() != null
+            && employmentDTO.getIncomeType() != null
+            && "monthly".equals(employmentDTO.getIncomeType().getValue())
+            ? employmentDTO.getIncome().multiply(new BigDecimal(12))
+            : employmentDTO.getIncome() != null ? employmentDTO.getIncome() : new BigDecimal(0);
+      }
+      return new BigDecimal(0);
     }
 
     public static String getCaliforniaDriverLicense(ApplicantDTO applicant, String defaultValue) {
