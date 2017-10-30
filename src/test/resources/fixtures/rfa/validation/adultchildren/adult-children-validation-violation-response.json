@@ -1,0 +1,34 @@
+{
+  "issue_details": [
+    {
+      "type": "business_validation",
+      "user_message": "System has discovered Other Adult with first name - [SonFirstName4], last name - [SonLastName4] that is a child of applicant(s) but is not added to Adult Children of Applicant(s) section",
+      "code": "BV000020",
+      "technical_message": "form-submission-validation"
+    },
+    {
+      "type": "business_validation",
+      "user_message": "System has discovered Other Adult with first name - [SonFirstName3], last name - [SonLastName3] that is a child of applicant(s) but is not added to Adult Children of Applicant(s) section",
+      "code": "BV000020",
+      "technical_message": "form-submission-validation"
+    },
+    {
+      "type": "business_validation",
+      "user_message": "System has discovered Adult Child of applicant(s) with first name - [SonFirstName1], last name - [SonLastName1] that lives in home but is not added to Other Adults in the home section",
+      "code": "BV000021",
+      "technical_message": "form-submission-validation"
+    },
+    {
+      "type": "business_validation",
+      "user_message": "System has discovered Adult Child of applicant(s) with first name - [SonFirstName2], last name - [SonLastName2] that does not live in home but is added to Other Adults residing in the home section",
+      "code": "BV000022",
+      "technical_message": "form-submission-validation"
+    },
+    {
+      "type": "business_validation",
+      "user_message": "System has discovered Other Adult with first name - [SonFirstName2], last name - [SonLastName2] that is a child of applicant(s) but is not added to Adult Children of Applicant(s) section",
+      "code": "BV000020",
+      "technical_message": "form-submission-validation"
+    }
+  ]
+}

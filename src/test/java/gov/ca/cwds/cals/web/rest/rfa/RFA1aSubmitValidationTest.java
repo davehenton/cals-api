@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixturePath;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import gov.ca.cwds.cals.Constants.AddressTypes;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -10,9 +11,17 @@ import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.rest.exception.BaseExceptionResponse;
+import gov.ca.cwds.rest.exception.IssueDetails;
+import io.dropwizard.jackson.Jackson;
+import io.dropwizard.testing.FixtureHelpers;
 import java.util.Iterator;
 import java.util.List;
 import javax.ws.rs.core.Response;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Equator;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -39,7 +48,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     Response response = statusHelper.submitApplication(form.getId());
     assertEquals(422, response.getStatus());
     assertResponseByFixturePath(
-        response, "fixtures/rfa/validation/first_name_form_submission_validation.json");
+        response, "fixtures/rfa/validation/first-name-form-submission-validation.json");
   }
 
   @Test
@@ -55,7 +64,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     Response response = statusHelper.submitApplication(form.getId());
     assertEquals(422, response.getStatus());
     assertResponseByFixturePath(
-        response, "fixtures/rfa/validation/last_name_form_submission_validation.json");
+        response, "fixtures/rfa/validation/last-name-form-submission-validation.json");
   }
 
   @Test
@@ -278,7 +287,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void validateApplicationHasNoCounty() throws Exception {
-    RFA1aFormDTO form = formAHelper.getRfa1aForm();
+    RFA1aFormDTO form = formAHelper.createRfa1aForm();
     form.setApplicationCounty(null);
     RFA1aFormDTO persistentForm = formAHelper.postRfa1aForm(form);
 
@@ -293,6 +302,55 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
         response, "fixtures/rfa/validation/application-has-no-county-response.json");
   }
 
+  @Test
+  public void validateAdultChildrenAndOtherAdultsCorrelation() throws Exception {
+    // There are Other Adults-children added to Other Adults Section
+    // and not all of them added to Adult Children Section
+
+    // There are grown-up children living in home (Adult Children Section)
+    // and not all of them is added to Other Adults section
+
+    Long formId = formAHelper.createRFA1aForm().getId();
+    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    residenceHelper.putResidence(formId, residence);
+    ApplicantDTO applicantDTO = applicantHelper.postApplicant(formId);
+    OtherAdultDTO otherAdultDTO1 = otherAdultHelper.postOtherAdult(formId,
+        otherAdultHelper.getOtherAdultDTO(applicantDTO,
+            FixtureHelpers.fixture(
+                "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults1.json")));
+    OtherAdultDTO otherAdultDTO2 = otherAdultHelper.postOtherAdult(formId,
+        otherAdultHelper.getOtherAdultDTO(applicantDTO,
+            FixtureHelpers.fixture(
+                "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults2.json")));
+    OtherAdultDTO otherAdultDTO3 = otherAdultHelper.postOtherAdult(formId,
+        otherAdultHelper.getOtherAdultDTO(applicantDTO,
+            FixtureHelpers.fixture(
+                "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults3.json")));
+    OtherAdultDTO otherAdultDTO4 = otherAdultHelper.postOtherAdult(formId,
+        otherAdultHelper.getOtherAdultDTO(applicantDTO,
+            FixtureHelpers.fixture(
+                "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults4.json")));
+    formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
+    formBHelper.postRfa1bForm(formId, otherAdultDTO1.getId(), formBHelper.getRfa1bForm());
+    formBHelper.postRfa1bForm(formId, otherAdultDTO2.getId(), formBHelper.getRfa1bForm());
+    formBHelper.postRfa1bForm(formId, otherAdultDTO3.getId(), formBHelper.getRfa1bForm());
+    //formBHelper.postRfa1bForm(formId, otherAdultDTO4.getId(), formBHelper.getRfa1bForm());
+
+    applicantsHistoryHelper.putApplicantsHistory(
+        formId, applicantsHistoryHelper.getApplicantHistoryDTO(
+            "fixtures/rfa/validation/adultchildren/rfa-1a-applicants-history.json"));
+
+    BaseExceptionResponse actualResponse = statusHelper.submitApplication(formId)
+        .readEntity(BaseExceptionResponse.class);
+    BaseExceptionResponse expectedResponse = Jackson.newObjectMapper().readValue(
+        FixtureHelpers.fixture(
+            "fixtures/rfa/validation/adultchildren/adult-children-validation-violation-response.json"),
+        BaseExceptionResponse.class);
+    assertTrue(CollectionUtils.isEqualCollection(
+        expectedResponse.getIssueDetails(),
+        actualResponse.getIssueDetails(), new CustomEquator()));
+  }
+
   private RFAAddressDTO getResidentialAddress(ResidenceDTO residence) {
     List<RFAAddressDTO> addresses = residence.getAddresses();
     for (Iterator<RFAAddressDTO> iterator = addresses.listIterator(); iterator.hasNext(); ) {
@@ -303,4 +361,35 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     }
     return null;
   }
+
+  /*TODO remove CustomEquator when api-core published correctly*/
+  private static class CustomEquator implements Equator<IssueDetails> {
+
+    @Override
+    public boolean equate(IssueDetails o1, IssueDetails o2) {
+      return o1 == o2 || o1 != null && customEquals(o1, o2);
+    }
+
+    @Override
+    public int hash(IssueDetails o) {
+      return o == null ? -1 : customHashCode(o);
+    }
+
+    private int customHashCode(IssueDetails o) {
+      return new HashCodeBuilder(17, 37)
+          .append(o.getCode()).append(o.getCode()).append(o.getType()).append(o.getUserMessage())
+          .toHashCode();
+    }
+
+    private boolean customEquals(IssueDetails o1, IssueDetails o2) {
+      EqualsBuilder equalsBuilder = new EqualsBuilder();
+      equalsBuilder.append(o1.getCode(), o2.getCode());
+      equalsBuilder.append(o1.getType(), o2.getType());
+      equalsBuilder.append(o1.getUserMessage(), o2.getUserMessage());
+      return equalsBuilder.isEquals();
+    }
+
+  }
+
 }
+

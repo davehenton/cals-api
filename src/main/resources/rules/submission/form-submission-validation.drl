@@ -7,8 +7,11 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO
 import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO
+import gov.ca.cwds.cals.service.dto.rfa.AdultChildDTO
 import gov.ca.cwds.cals.Utils
 import gov.ca.cwds.cals.Constants
 import gov.ca.cwds.cals.Constants.Validation
@@ -290,3 +293,57 @@ rule "Validate Applicant's Driver License"
     details.setTechnicalMessage(BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
     validationDetailsList.add(details);
 end
+
+rule "Other Adult is not added as Adult Children"
+  dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+      $form: RFA1aFormDTO()
+      $applicantsHistory: ApplicantsHistoryDTO() from $form.applicantsHistory
+      $otherAdult: OtherAdultDTO() from $form.otherAdults
+      $relationship: RelationshipToApplicantDTO() from $otherAdult.relationshipToApplicants
+      $relationshipToApplicantType: RelationshipToApplicantType(value == "Child" ) from $relationship.relationshipToApplicantType
+      not AdultChildDTO(livesInHome == true, firstName == $otherAdult.firstName, lastName == $otherAdult.lastName) from $applicantsHistory.adultChildren
+  then
+      IssueDetails details = new IssueDetails();
+      details.setCode(Validation.Business.Code.OTHER_ADULT_IS_NOT_ADDED_AS_ADULT_CHILD);
+      details.setUserMessage(String.format(Validation.Business.OTHER_ADULT_IS_NOT_ADDED_AS_A_CHILD,
+       $otherAdult.firstName, $otherAdult.lastName));
+      details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+      validationDetailsList.add(details);
+end
+
+rule "Adult Child living in home is not added as Other Adult"
+  dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+      $form: RFA1aFormDTO()
+      $applicantsHistory: ApplicantsHistoryDTO() from $form.applicantsHistory
+      $adultChild: AdultChildDTO(livesInHome == true) from $applicantsHistory.adultChildren
+      not OtherAdultDTO(firstName == $adultChild.firstName, lastName == $adultChild.lastName) from $form.otherAdults
+  then
+      IssueDetails details = new IssueDetails();
+      details.setCode(Validation.Business.Code.ADULT_CHILD_LIVING_IN_HOME_IS_NOT_ADDED_AS_OTHER_ADULT);
+      details.setUserMessage(String.format(Validation.Business.ADULT_CHILD_LIVING_IN_HOME_IS_NOT_ADDED_AS_OTHER_ADULT,
+      $adultChild.firstName, $adultChild.lastName));
+      details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+      validationDetailsList.add(details);
+end
+
+rule "Other Adult is a Child but not living in home as Adult Child"
+  dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+      $form: RFA1aFormDTO()
+      $applicantsHistory: ApplicantsHistoryDTO() from $form.applicantsHistory
+      $adultChild: AdultChildDTO(livesInHome == false) from $applicantsHistory.adultChildren
+      OtherAdultDTO(firstName == $adultChild.firstName, lastName == $adultChild.lastName) from $form.otherAdults
+  then
+      IssueDetails details = new IssueDetails();
+      details.setCode(Validation.Business.Code.ADULT_CHILD_LIVING_IN_HOME_WRONG_FLAG);
+      details.setUserMessage(String.format(Validation.Business.ADULT_CHILD_WRONG_LIVING_IN_HOME_FLAG,
+      $adultChild.firstName, $adultChild.lastName));
+      details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
+      validationDetailsList.add(details);
+end
+

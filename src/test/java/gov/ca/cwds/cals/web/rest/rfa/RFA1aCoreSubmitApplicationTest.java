@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
+import org.dbunit.dataset.SortedTable;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -35,7 +36,6 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     setUpCalsns();
     setUpCms();
   }
-
 
   @Test
   public void submitApplicationTest() throws Exception {
@@ -132,7 +132,8 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   private String[] getSubstituteCareProviderIds(String placementHomeId) throws Exception {
     String[] ids = new String[2];
-    ITable placementHomeInformation = dbUnitSupport.getTableFromDB("HM_SCP_T");
+    ITable placementHomeInformation =
+        new SortedTable(dbUnitSupport.getTableFromDB("HM_SCP_T"), new String[]{"SCPRVD_IND"});
     ITable placementHomeRow = dbUnitSupport
         .filterByColumnAndValue(placementHomeInformation, "FKPLC_HM_T", placementHomeId);
     for (int i = 0; i < ids.length; i++) {
@@ -166,7 +167,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
                 "OLDFAC_ID", "OPRTD_BYCD", "OPRTD_BYID", "PH_ENDC", "CERTF_PNDT", "AP_STAT_DT",
                 "LST_UPD_TS", "BCK_PERSNM", "GNDR_ACPCD", "GEO_RGNTCD", "LA_VNDR_ID", "LICNSEE_NM",
                 "P_CITY_NM", "PYE_FSTNM", "PYE_LSTNM", "PYE_MIDNM", "PSTREET_NM", "PSTREET_NO",
-                "SPCHAR_DSC", "CTYPRF_DSC", "ED_PVR_DSC", "ENV_FCTDSC", "HAZRDS_DSC", "LIS_PRFDSC",
+                "SPCHAR_DSC", "CTYPRF_DSC", "ED_PVR_DSC", "ENV_FCTDSC", "LIS_PRFDSC",
                 "PETS_DSC", "RLG_ACTDSC", "CERT_CMPLT", "LA_P_CTYNM", "LA_P_FSTNM", "LA_P_LSTNM",
                 "LA_P_MIDNM", "LA_P_STNM", "LA_P_STNO", "LA_P_BSNSS", "ADHMONLY", "END_COMDSC",
                 "END_DT", "FKCNTY_CST", "LIC_APL_DT", "LIC_EFCTDT", "LIC_EXP_DT", "LIC_STATDT",
@@ -270,7 +271,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     helper.assertEquals(
         new String[]{"IDENTIFIER", "LST_UPD_TS", "LIS_PER_ID",
-            "ETH_UD_CD", "HISP_UD_CD", "PASSBC_CD"});
+            "ETH_UD_CD", "HISP_UD_CD", "PASSBC_CD"}, new String[]{"FIRST_NM"});
   }
 
   private void testIfSubstituteCareProviderUCWasCreatedProperly(String substituteCareProviderId1,
@@ -283,7 +284,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     ReplacementDataSet expectedDataSet = helper.getExpectedDataSet();
     expectedDataSet.addReplacementObject("$substituteCareProviderId1", substituteCareProviderId1);
     expectedDataSet.addReplacementObject("$substituteCareProviderId2", substituteCareProviderId2);
-    helper.assertEquals(new String[]{"PKSB_PVDRT", "LST_UPD_TS"});
+    helper.assertEquals(new String[]{"PKSB_PVDRT", "LST_UPD_TS"}, new String[]{"FIRST_NM"});
   }
 
   private void testIfPhoneContactDetailsWasCreatedProperly(String substituteCareProviderId)
