@@ -135,7 +135,9 @@ dependencies {
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '4.39'
 
     compile group: 'org.kie', name: 'kie-api', version: droolsVersion
-    compile group: 'org.drools', name: 'drools-compiler', version: droolsVersion
+    compile (group: 'org.drools', name: 'drools-compiler', version: droolsVersion) {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }
     compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.1'
     compile group: 'org.slf4j', name: 'slf4j-ext', version: '1.7.25'
