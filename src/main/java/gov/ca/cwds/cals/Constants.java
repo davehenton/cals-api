@@ -45,6 +45,10 @@ public final class Constants {
 
     public static final String SYSTEM_INFORMATION = "system-information";
 
+    public static final String RFA_PACKET = "rfa-packet";
+
+    public static final String SUMMARY = "summary";
+
     public static final String FACILITIES = "facilities";
 
     public static final String CHILDREN = "children";

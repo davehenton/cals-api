@@ -13,6 +13,7 @@ import gov.ca.cwds.cals.service.FacilityChildService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
+import gov.ca.cwds.cals.service.dto.packet.PacketDTO;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
@@ -45,6 +46,7 @@ import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1bService;
 import gov.ca.cwds.cals.service.rfa.RFA1cCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1cService;
+import gov.ca.cwds.cals.service.rfa.RFAFormsPackageService;
 import gov.ca.cwds.cals.web.rest.DictionariesResource;
 import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
@@ -299,6 +301,14 @@ public class ResourcesModule extends AbstractModule {
       Injector injector) {
     return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aAdoptionHistoryService.class));
+  }
+
+  @Provides
+  @RFAPackageServiceBackedResource
+  public TypedResourceDelegate<Long, PacketDTO> rfaPackageServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(RFAFormsPackageService.class));
   }
 
   @Provides
