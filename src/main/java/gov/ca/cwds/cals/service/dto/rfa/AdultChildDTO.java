@@ -106,6 +106,10 @@ public class AdultChildDTO extends BaseDTO {
     return livesInHome;
   }
 
+  public Boolean livesInHome() {
+    return livesInHome;
+  }
+
   public void setLivesInHome(Boolean livesInHome) {
     this.livesInHome = livesInHome;
   }
