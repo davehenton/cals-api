@@ -1,5 +1,17 @@
 package gov.ca.cwds.cals.service.rfa.builder;
 
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_ADOPTION_HISTORY;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS_DECLARATION;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS_HISTORY;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS_RELATIONSHIP;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_CHILD_DESIRED;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_MINOR_CHILDREN;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_OTHER_ADULTS;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_REFERENCES;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_RESIDENCE;
+
+import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.packet.PacketDTO;
 import gov.ca.cwds.cals.service.dto.packet.PersonSummaryDTO;
 import gov.ca.cwds.cals.service.dto.packet.SectionSummaryDTO;
@@ -23,35 +35,35 @@ public class PacketBuilder {
   public PacketBuilder rfa1aSections(RFA1aFormDTO rfa1aFormDTO) {
     List<SectionSummaryDTO> rfa1aSections = new ArrayList<>();
 
-    rfa1aSections.add(new SectionSummaryDTO("applicants",
-        (null != rfa1aFormDTO.getApplicants()) && !rfa1aFormDTO.getApplicants().isEmpty()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_APPLICANTS,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getApplicants())));
 
-    rfa1aSections.add(new SectionSummaryDTO("residence",
-        null != rfa1aFormDTO.getResidence()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_RESIDENCE,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getResidence())));
 
-    rfa1aSections.add(new SectionSummaryDTO("applicants_relationship",
-        null != rfa1aFormDTO.getApplicantsRelationship()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_APPLICANTS_RELATIONSHIP,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getApplicantsRelationship())));
 
-    rfa1aSections.add(new SectionSummaryDTO("minor_children",
-        (null != rfa1aFormDTO.getMinorChildren()) && !rfa1aFormDTO.getMinorChildren().isEmpty()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_MINOR_CHILDREN,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getMinorChildren())));
 
-    rfa1aSections.add(new SectionSummaryDTO("other_adults",
-        (null != rfa1aFormDTO.getOtherAdults()) && !rfa1aFormDTO.getOtherAdults().isEmpty()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_OTHER_ADULTS,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getOtherAdults())));
 
-    rfa1aSections.add(new SectionSummaryDTO("applicants_history",
-        null != rfa1aFormDTO.getApplicantsHistory()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_APPLICANTS_HISTORY,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getApplicantsHistory())));
 
-    rfa1aSections.add(new SectionSummaryDTO("child_desired",
-        null != rfa1aFormDTO.getChildDesired()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_CHILD_DESIRED,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getChildDesired())));
 
-    rfa1aSections.add(new SectionSummaryDTO("foster_care",
-        null != rfa1aFormDTO.getAdoptionHistory()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_ADOPTION_HISTORY,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getAdoptionHistory())));
 
-    rfa1aSections.add(new SectionSummaryDTO("references",
-        null != rfa1aFormDTO.getReferences()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_REFERENCES,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getReferences())));
 
-    rfa1aSections.add(new SectionSummaryDTO("applicants_declaration",
-        null != rfa1aFormDTO.getApplicantsDeclaration()));
+    rfa1aSections.add(new SectionSummaryDTO(RFA_1A_APPLICANTS_DECLARATION,
+        checkIfSectionIsNotEmpty(rfa1aFormDTO.getApplicantsDeclaration())));
 
     this.rfa1aSections = rfa1aSections;
 
@@ -61,11 +73,11 @@ public class PacketBuilder {
   public PacketBuilder applicants(RFA1aFormDTO rfa1aFormDTO) {
     List<PersonSummaryDTO> applicants = new ArrayList<>();
 
-    if ((null != rfa1aFormDTO.getApplicants()) && !rfa1aFormDTO.getApplicants().isEmpty()) {
-
+    if (checkIfSectionIsNotEmpty(rfa1aFormDTO.getApplicants())) {
       for (ApplicantDTO applicant : rfa1aFormDTO.getApplicants()) {
         applicants.add(new PersonSummaryDTO(applicant.getId(), applicant.getFirstName(),
-            applicant.getLastName(), null != applicant.getRfa1bForm()));
+            applicant.getLastName(),
+            checkIfSectionIsNotEmpty(applicant.getRfa1bForm())));
       }
     }
     this.applicants = applicants;
@@ -76,10 +88,11 @@ public class PacketBuilder {
   public PacketBuilder otherAdults(RFA1aFormDTO rfa1aFormDTO) {
     List<PersonSummaryDTO> otherAdults = new ArrayList<>();
 
-    if ((null != rfa1aFormDTO.getOtherAdults()) && !rfa1aFormDTO.getOtherAdults().isEmpty()) {
+    if (checkIfSectionIsNotEmpty(rfa1aFormDTO.getOtherAdults())) {
       for (OtherAdultDTO otherAdult : rfa1aFormDTO.getOtherAdults()) {
         otherAdults.add(new PersonSummaryDTO(otherAdult.getId(), otherAdult.getFirstName(),
-            otherAdult.getLastName(), null != otherAdult.getRfa1bForm()));
+            otherAdult.getLastName(),
+            checkIfSectionIsNotEmpty(otherAdult.getRfa1bForm())));
       }
     }
     this.otherAdults = otherAdults;
@@ -90,18 +103,16 @@ public class PacketBuilder {
   public PacketBuilder adultChildren(RFA1aFormDTO rfa1aFormDTO) {
     List<PersonSummaryDTO> adultChildren = new ArrayList<>();
 
-    if ((null != rfa1aFormDTO.getOtherAdults()) && !rfa1aFormDTO.getOtherAdults().isEmpty()
-        && (null != rfa1aFormDTO.getApplicantsRelationship())) {
-
+    if (checkIfSectionIsNotEmpty(rfa1aFormDTO.getOtherAdults()) && checkIfSectionIsNotEmpty(
+        rfa1aFormDTO.getApplicantsRelationship())) {
       for (OtherAdultDTO otherAdult : rfa1aFormDTO.getOtherAdults()) {
-
         for (RelationshipToApplicantDTO relationshipToApplicant : otherAdult
             .getRelationshipToApplicants()) {
-
           if (relationshipToApplicant.getRelationshipToApplicantType().getValue()
               .equalsIgnoreCase("Child")) {
             adultChildren.add(new PersonSummaryDTO(otherAdult.getId(), otherAdult.getFirstName(),
-                otherAdult.getLastName(), null != otherAdult.getRfa1bForm()));
+                otherAdult.getLastName(),
+                checkIfSectionIsNotEmpty(otherAdult.getRfa1bForm())));
           }
         }
       }
@@ -116,5 +127,13 @@ public class PacketBuilder {
         this.applicants,
         this.otherAdults,
         this.adultChildren);
+  }
+
+  private Boolean checkIfSectionIsNotEmpty(BaseDTO dto) {
+    return null != dto;
+  }
+
+  private Boolean checkIfSectionIsNotEmpty(List<? extends BaseDTO> dtoList) {
+    return (null != dtoList) && !dtoList.isEmpty();
   }
 }
