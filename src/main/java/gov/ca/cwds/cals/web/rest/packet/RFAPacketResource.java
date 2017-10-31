@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.web.rest.packet;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.RFA_PACKET;
 import static gov.ca.cwds.cals.Constants.API.SUMMARY;
+import static gov.ca.cwds.cals.Constants.RFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
@@ -27,8 +28,8 @@ import javax.ws.rs.core.Response;
 /**
  * @author CWDS TPT-2
  */
-@Api(tags = {RFA_PACKET})
-@Path("/{" + RFA_1A_APPLICATION_ID + "}/" + SUMMARY)
+@Api(tags = {RFA})
+@Path(RFA_PACKET)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RFAPacketResource {
@@ -44,6 +45,7 @@ public class RFAPacketResource {
 
   @UnitOfWork(CALSNS)
   @GET
+  @Path("/{" + RFA_1A_APPLICATION_ID + "}/" + SUMMARY)
   @Timed
   @ApiResponses(
       value = {
