@@ -39,11 +39,15 @@ public final class Constants {
 
   public static final String RETURNED_CLASS_NAME_PARAM = "returnedClassName";
 
-  public static final String RFA = "rfa-1a";
+  public static final String RFA = "rfa-1abc";
 
   public static class API {
 
     public static final String SYSTEM_INFORMATION = "system-information";
+
+    public static final String RFA_PACKET = "rfa-packet";
+
+    public static final String SUMMARY = "summary";
 
     public static final String FACILITIES = "facilities";
 
