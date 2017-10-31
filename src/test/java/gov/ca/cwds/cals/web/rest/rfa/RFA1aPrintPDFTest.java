@@ -27,6 +27,7 @@ public class RFA1aPrintPDFTest extends BaseRFAIntegrationTest {
     setUpCalsns();
   }
 
+  @Ignore
   @Test
   public void getPDFTest() throws Exception {
     // For integration test only
