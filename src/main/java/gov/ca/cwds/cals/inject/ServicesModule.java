@@ -104,7 +104,7 @@ public class ServicesModule extends AbstractModule {
   public Client provideClient() {
     JerseyClientBuilder clientBuilder = new JerseyClientBuilder()
         .property(ClientProperties.CONNECT_TIMEOUT, 5000)
-        .property(ClientProperties.READ_TIMEOUT, 30000)
+        .property(ClientProperties.READ_TIMEOUT, 60000)
         // Just ignore host verification, client will call trusted resources only
         .hostnameVerifier((hostName, sslSession) -> true);
     return clientBuilder.build();
