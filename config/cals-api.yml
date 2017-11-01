@@ -208,6 +208,16 @@ webSecurity:
     # Prevent everything other than same origin
     Content-Security-Policy: default-src 'self' 'unsafe-inline';
 
+httpClient:
+  timeout: 20000ms
+  connectionTimeout: 10000ms
+  timeToLive: 1h
+  cookiesEnabled: false
+  maxConnections: 1024
+  maxConnectionsPerRoute: 1024
+  keepAlive: 0ms
+  retries: 0
+
 logging:
   level: ${LOGLEVEL:-WARN}
   loggers:

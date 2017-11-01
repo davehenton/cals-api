@@ -10,7 +10,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import org.glassfish.jersey.client.ClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,8 +63,6 @@ public class RFA1aPDFGenerationService {
         .path("/documents")
         .queryParam("mapping", RFA_1A_DMS_FORM_MAPPING_NAME)
         .build();
-    client.property(ClientProperties.CONNECT_TIMEOUT, 10000);
-    client.property(ClientProperties.READ_TIMEOUT,    20000);
     return client.target(uri).request()
         .post(Entity.entity(dto, MediaType.APPLICATION_JSON_TYPE), String.class);
   }
