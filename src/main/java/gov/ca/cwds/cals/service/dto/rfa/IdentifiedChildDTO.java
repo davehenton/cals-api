@@ -66,6 +66,9 @@ public class IdentifiedChildDTO extends BaseDTO {
   @Valid
   private RFAAddressDTO schoolAddress;
 
+  @ApiModelProperty(example = "true")
+  private boolean childInHome;
+
   public String getFirstName() {
     return firstName;
   }
@@ -127,8 +130,7 @@ public class IdentifiedChildDTO extends BaseDTO {
     return relationshipToApplicants;
   }
 
-  public void setRelationshipToApplicants(
-      List<RelationshipToApplicantDTO> relationshipToApplicants) {
+  public void setRelationshipToApplicants(List<RelationshipToApplicantDTO> relationshipToApplicants) {
     this.relationshipToApplicants = relationshipToApplicants;
   }
 
@@ -136,8 +138,7 @@ public class IdentifiedChildDTO extends BaseDTO {
     return schoolGrade;
   }
 
-  public void setSchoolGrade(
-      SchoolGradeType schoolGrade) {
+  public void setSchoolGrade(SchoolGradeType schoolGrade) {
     this.schoolGrade = schoolGrade;
   }
 
@@ -163,5 +164,13 @@ public class IdentifiedChildDTO extends BaseDTO {
 
   public void setNameSuffix(NameSuffixType nameSuffix) {
     this.nameSuffix = nameSuffix;
+  }
+
+  public boolean isChildInHome() {
+    return childInHome;
+  }
+
+  public void setChildInHome(boolean childInHome) {
+    this.childInHome = childInHome;
   }
 }

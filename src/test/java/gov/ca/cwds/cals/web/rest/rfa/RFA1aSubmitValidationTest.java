@@ -314,27 +314,27 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ResidenceDTO residence = residenceHelper.getResidenceDTO();
     residenceHelper.putResidence(formId, residence);
     ApplicantDTO applicantDTO = applicantHelper.postApplicant(formId);
-    OtherAdultDTO otherAdultDTO1 = otherAdultHelper.postOtherAdult(formId,
+    otherAdultHelper.postOtherAdult(formId,
         otherAdultHelper.getOtherAdultDTO(applicantDTO,
             FixtureHelpers.fixture(
                 "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults1.json")));
-    OtherAdultDTO otherAdultDTO2 = otherAdultHelper.postOtherAdult(formId,
+    otherAdultHelper.postOtherAdult(formId,
         otherAdultHelper.getOtherAdultDTO(applicantDTO,
             FixtureHelpers.fixture(
                 "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults2.json")));
-    OtherAdultDTO otherAdultDTO3 = otherAdultHelper.postOtherAdult(formId,
+    otherAdultHelper.postOtherAdult(formId,
         otherAdultHelper.getOtherAdultDTO(applicantDTO,
             FixtureHelpers.fixture(
                 "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults3.json")));
-    OtherAdultDTO otherAdultDTO4 = otherAdultHelper.postOtherAdult(formId,
+    otherAdultHelper.postOtherAdult(formId,
         otherAdultHelper.getOtherAdultDTO(applicantDTO,
             FixtureHelpers.fixture(
                 "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults4.json")));
     formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
-    formBHelper.postRfa1bForm(formId, otherAdultDTO1.getId(), formBHelper.getRfa1bForm());
-    formBHelper.postRfa1bForm(formId, otherAdultDTO2.getId(), formBHelper.getRfa1bForm());
-    formBHelper.postRfa1bForm(formId, otherAdultDTO3.getId(), formBHelper.getRfa1bForm());
-    //formBHelper.postRfa1bForm(formId, otherAdultDTO4.getId(), formBHelper.getRfa1bForm());
+    formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
+    formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
+    formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
+    formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
 
     applicantsHistoryHelper.putApplicantsHistory(
         formId, applicantsHistoryHelper.getApplicantHistoryDTO(
