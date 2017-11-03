@@ -73,8 +73,6 @@ public class MappingModule extends AbstractModule {
         .asEagerSingleton();
     bind(PhoneContactDetailMapper.class).to(PhoneContactDetailMapper.INSTANCE.getClass())
         .asEagerSingleton();
-    bind(RFA1aFormMapper.class).to(RFA1aFormMapper.INSTANCE.getClass())
-        .asEagerSingleton();
     bind(OtherChildrenInPlacementHomeMapper.class)
         .to(OtherChildrenInPlacementHomeMapper.INSTANCE.getClass())
         .asEagerSingleton();

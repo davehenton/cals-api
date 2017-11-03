@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa.helper;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -47,8 +48,7 @@ public class FormAHelper {
 
     assertNotNull(rfaFormDTOAfter);
     assertNotNull(rfaFormDTOAfter.getId());
-    assertTrue(rfaFormDTOAfter.isInitialApplication());
-    assertTrue(rfaFormDTOAfter.isOtherType());
+    assertFalse(rfaFormDTOAfter.isInitialApplication());
     assertEquals("otherDescription", rfaFormDTOAfter.getOtherTypeDescription());
     assertEquals(rfaFormDTOBefore.getApplicationCounty(), rfaFormDTOAfter.getApplicationCounty());
     return rfaFormDTOAfter;
@@ -66,8 +66,7 @@ public class FormAHelper {
     county.setId(34L);
     county.setValue("Sacramento");
     form.setApplicationCounty(county);
-    form.setInitialApplication(true);
-    form.setOtherType(true);
+    form.setInitialApplication(false);
     form.setOtherTypeDescription("otherDescription");
     return form;
   }

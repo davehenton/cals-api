@@ -27,11 +27,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   @JsonProperty("is_initial_application")
   @ApiModelProperty(value = "Is Initial Application Id", example = "false")
-  private boolean initialApplication;
-
-  @JsonProperty("is_other_type")
-  @ApiModelProperty(value = "Is Other Type", example = "false")
-  private boolean otherType;
+  private Boolean initialApplication;
 
   @ApiModelProperty(value = "Other Type Description", example = "Description")
   private String otherTypeDescription;
@@ -86,11 +82,11 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   @ApiModelProperty(hidden = true)
   private String placementHomeId;
 
-  public boolean isInitialApplication() {
+  public Boolean isInitialApplication() {
     return initialApplication;
   }
 
-  public void setInitialApplication(boolean initialApplication) {
+  public void setInitialApplication(Boolean initialApplication) {
     this.initialApplication = initialApplication;
   }
 
@@ -180,14 +176,6 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   public void setApplicantsDeclaration(ApplicantsDeclarationDTO applicantsDeclaration) {
     this.applicantsDeclaration = applicantsDeclaration;
-  }
-
-  public boolean isOtherType() {
-    return otherType;
-  }
-
-  public void setOtherType(boolean otherType) {
-    this.otherType = otherType;
   }
 
   public String getOtherTypeDescription() {

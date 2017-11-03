@@ -30,7 +30,6 @@ public interface RFA1aFormMapper {
 
   @Named("toRFA1aFormDTO")
   @Mapping(target = "initialApplication", source = "application.initialApplication")
-  @Mapping(target = "otherType", source = "application.otherType")
   @Mapping(target = "otherTypeDescription", source = "application.otherTypeDescription")
   @Mapping(target = "applicationCounty", source = "application.applicationCounty")
   @Mapping(target = "applicantsDeclaration", ignore = true)
@@ -69,7 +68,6 @@ public interface RFA1aFormMapper {
   List<RFA1aFormDTO> toExpandedRFA1aFormsDTO(List<RFA1aForm> forms);
 
   @Mapping(target = "application.initialApplication", source = "initialApplication")
-  @Mapping(target = "application.otherType", source = "otherType")
   @Mapping(target = "application.otherTypeDescription", source = "otherTypeDescription")
   @Mapping(target = "application.applicationCounty", source = "applicationCounty")
   @Mapping(target = "application", ignore = true)
