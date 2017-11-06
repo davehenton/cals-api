@@ -4,7 +4,6 @@
     "value": "Sacramento"
   },
   "child_identified": true,
-  "child_in_home": true,
   "identified_children": [
     {
       "first_name": "Collin",
@@ -50,7 +49,8 @@
           "id": 3,
           "value": "Mailing"
         }
-      }
+      },
+      "child_in_home": true
     }
   ]
 }

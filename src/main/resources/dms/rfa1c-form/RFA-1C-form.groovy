@@ -65,6 +65,6 @@ def getRelationshipToApplicants = {
 
   "Yes-Child has been identified": jsonMap.child_identified ? "Yes" : "Off",
   "No-Child has been identified": jsonMap.child_identified ? "Off" : "Yes",
-  "Yes-Child currently in home": jsonMap.child_in_home ? "Yes" : "Off",
-  "No-Child currently in home": jsonMap.child_in_home ? "Off" : "Yes"
+  "Yes-Child currently in home": jsonMap.identified_children.any{it.child_in_home} ? "Yes" : "Off",
+  "No-Child currently in home": jsonMap.identified_children.any{it.child_in_home} ? "Off" : "Yes"
 ]

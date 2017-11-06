@@ -95,7 +95,7 @@ def getAddressAndPhoneNumber = {
 }
 
 [
-        'OTHER (SPECIFY)_pg 1' : jsonMap.is_other_type ? jsonMap.other_type_description : "",
+        'OTHER (SPECIFY)_pg 1' : jsonMap.other_type_description,
         'APPLICANT ONE:  PREVIOUS NAMES USED: *including maiden name_pg 1' : getFullNames.call(jsonMap.applicants?.getAt(0)?.other_names),
         'APPLICANT ONE:  HIGHEST LEVEL OF EDUCATION COMPLETED_ pg 1' : jsonMap.applicants?.getAt(0)?.highest_education_level?.value,
         'APPLICANT ONE: DATE OF BIRTH_pg 1' : dateIsoToUs(jsonMap.applicants?.getAt(0)?.date_of_birth),

@@ -24,9 +24,6 @@ public class RFA1cFormDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(example = "true")
   private boolean childIdentified;
 
-  @ApiModelProperty(example = "true")
-  private boolean childInHome;
-
   @Valid
   private List<IdentifiedChildDTO> identifiedChildren = new ArrayList<>();
 
@@ -45,14 +42,6 @@ public class RFA1cFormDTO extends RFAExternalEntityDTO {
 
   public void setChildIdentified(boolean childIdentified) {
     this.childIdentified = childIdentified;
-  }
-
-  public boolean isChildInHome() {
-    return childInHome;
-  }
-
-  public void setChildInHome(boolean childInHome) {
-    this.childInHome = childInHome;
   }
 
   public CountyType getApplicationCounty() {
