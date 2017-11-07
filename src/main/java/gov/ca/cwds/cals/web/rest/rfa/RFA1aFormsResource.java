@@ -84,7 +84,7 @@ public class RFA1aFormsResource {
     // TODO: remove this temporary fix to support older versions of CALS DS
     if (application == null) {
       application = new RFA1aFormDTO();
-      application.setInitialApplication(true);
+      application.setInitialApplication(Boolean.TRUE);
     }
     return resourceDelegate.create(application);
   }
