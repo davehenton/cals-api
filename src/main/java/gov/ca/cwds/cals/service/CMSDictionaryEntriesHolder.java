@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.service;
 
-import gov.ca.cwds.cals.persistence.model.cms.County;
-import gov.ca.cwds.cals.persistence.model.cms.FacilityType;
-import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
-import gov.ca.cwds.cals.persistence.model.cms.State;
+import gov.ca.cwds.data.legacy.cms.entity.County;
+import gov.ca.cwds.data.legacy.cms.entity.FacilityType;
+import gov.ca.cwds.data.legacy.cms.entity.LicenseStatus;
+import gov.ca.cwds.data.legacy.cms.entity.State;
 
 /**
  * @author CWDS CALS API Team

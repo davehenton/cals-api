@@ -2,10 +2,10 @@ package gov.ca.cwds.cals.persistence.dao.lis;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.LisSessionFactory;
-import gov.ca.cwds.cals.persistence.dao.stream.QueryCreator;
 import gov.ca.cwds.cals.persistence.dao.stream.RecordChangesStreamer;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.data.BaseDaoImpl;
+import gov.ca.cwds.data.stream.QueryCreator;
 import java.util.Date;
 import java.util.stream.Stream;
 import org.hibernate.SessionFactory;

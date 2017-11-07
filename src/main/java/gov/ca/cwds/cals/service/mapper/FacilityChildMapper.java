@@ -1,19 +1,18 @@
 package gov.ca.cwds.cals.service.mapper;
 
 
-import gov.ca.cwds.cals.persistence.model.cms.BaseClient;
-import gov.ca.cwds.cals.persistence.model.cms.BaseOutOfHomePlacement;
-import gov.ca.cwds.cals.persistence.model.cms.BasePlacementEpisode;
-import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
-import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
+import gov.ca.cwds.data.legacy.cms.entity.BaseClient;
+import gov.ca.cwds.data.legacy.cms.entity.BaseOutOfHomePlacement;
+import gov.ca.cwds.data.legacy.cms.entity.BasePlacementEpisode;
+import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
+import gov.ca.cwds.data.legacy.cms.entity.County;
+import java.util.Set;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-
-import java.util.Set;
 
 /**
  *

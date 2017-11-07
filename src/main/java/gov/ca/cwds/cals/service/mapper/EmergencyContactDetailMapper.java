@@ -1,15 +1,14 @@
 package gov.ca.cwds.cals.service.mapper;
 
+import static gov.ca.cwds.cals.Constants.N;
+
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.persistence.model.cms.EmergencyContactDetail;
+import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
+import java.time.LocalDateTime;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.time.LocalDateTime;
 import org.mapstruct.factory.Mappers;
-
-import static gov.ca.cwds.cals.Constants.N;
 
 /**
  * @author CWDS CALS API Team

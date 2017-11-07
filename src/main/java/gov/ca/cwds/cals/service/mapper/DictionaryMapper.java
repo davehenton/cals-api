@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
-import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.DictionaryDTO;
+import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
+import gov.ca.cwds.data.legacy.cms.entity.LicenseStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

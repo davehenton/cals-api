@@ -2,11 +2,10 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeProfile;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeProfile;
+import java.time.LocalDateTime;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.time.LocalDateTime;
 import org.mapstruct.factory.Mappers;
 
 /**

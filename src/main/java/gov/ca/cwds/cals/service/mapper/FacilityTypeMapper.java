@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
+import gov.ca.cwds.data.legacy.cms.entity.FacilityType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -19,6 +20,6 @@ public interface FacilityTypeMapper {
 
     @Mapping(target = "code", source = "lgcId")
     @Mapping(target = "description", source = "shortDsc")
-    FacilityTypeDTO toFacilityTypeDTO(gov.ca.cwds.cals.persistence.model.cms.FacilityType facilityType);
+    FacilityTypeDTO toFacilityTypeDTO(FacilityType facilityType);
 
 }

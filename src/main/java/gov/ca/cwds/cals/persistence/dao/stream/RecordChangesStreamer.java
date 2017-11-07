@@ -2,6 +2,8 @@ package gov.ca.cwds.cals.persistence.dao.stream;
 
 import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.data.BaseDaoImpl;
+import gov.ca.cwds.data.stream.QueryCreator;
+import gov.ca.cwds.data.stream.ScalarResultsStreamer;
 
 /**
  * @author CWDS TPT-2

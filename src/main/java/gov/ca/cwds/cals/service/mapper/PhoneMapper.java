@@ -3,9 +3,9 @@ package gov.ca.cwds.cals.service.mapper;
 import static gov.ca.cwds.cals.Constants.PhoneTypes.ALTERNATE;
 import static gov.ca.cwds.cals.Constants.PhoneTypes.PRIMARY;
 
-import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
+import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

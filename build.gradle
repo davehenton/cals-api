@@ -34,7 +34,8 @@ project.ext {
     projectVersion = projectMajorVersion + '-SNAPSHOT'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '3.6.438'
+//coreApiVersion = '3.6.438'
+    coreApiVersion = '0.4.4-SNAPSHOT'
     shiroSecurityVersion = '0.4.2'
     calsModelVersion = '0.4.4'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
@@ -124,14 +125,8 @@ dependencies {
 
     compile (group: 'gov.ca.cwds.api', name: 'api-core', version: coreApiVersion , changing: true) {
         exclude group: 'org.glassfish.jersey.core'
-        exclude group: 'gov.ca.cwds.api', module: 'shiro-security'
-        exclude group: 'gov.ca.cwds.api', module: 'jwt-security'
     }
 
-    compile group: 'gov.ca.cwds.api', name:'shiro-security', version: shiroSecurityVersion
-
-    compile group: 'gov.ca.cwds.api', name:'shiro-security', version: shiroSecurityVersion
-    compile group: 'gov.ca.cwds.api', name:'jwt-security', version: shiroSecurityVersion
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '4.39'
 
     compile group: 'org.kie', name: 'kie-api', version: droolsVersion

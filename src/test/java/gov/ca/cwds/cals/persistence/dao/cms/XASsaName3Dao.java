@@ -1,6 +1,8 @@
 package gov.ca.cwds.cals.persistence.dao.cms;
 
-import gov.ca.cwds.cals.service.SsaName3ParameterObject;
+
+import gov.ca.cwds.data.legacy.cms.dao.SsaName3Dao;
+import gov.ca.cwds.data.legacy.cms.dao.SsaName3ParameterObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +12,8 @@ import org.slf4j.LoggerFactory;
 
 public class XASsaName3Dao {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(XASsaName3Dao.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(
+      SsaName3Dao.class);
 
 
   public void callStoredProc(SsaName3ParameterObject parameterObject) {

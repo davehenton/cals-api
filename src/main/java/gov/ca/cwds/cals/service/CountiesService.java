@@ -1,10 +1,10 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.dao.cms.CountiesDao;
-import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.service.dto.CountiesDTO;
 import gov.ca.cwds.cals.service.mapper.CountyMapper;
+import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
+import gov.ca.cwds.data.legacy.cms.entity.County;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
 import java.util.List;

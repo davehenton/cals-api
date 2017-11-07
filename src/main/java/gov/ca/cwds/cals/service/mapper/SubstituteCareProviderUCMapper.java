@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProviderUc;
 import java.time.LocalDateTime;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;

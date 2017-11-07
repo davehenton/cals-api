@@ -1,12 +1,11 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
+import gov.ca.cwds.data.legacy.cms.entity.BackgroundCheck;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**

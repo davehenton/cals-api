@@ -1,8 +1,5 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.BaseCountyLicenseCase;
-import gov.ca.cwds.cals.persistence.model.cms.BaseLicensingVisit;
-import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.CMSDictionaryEntriesHolder;
@@ -13,6 +10,9 @@ import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
+import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
+import gov.ca.cwds.data.legacy.cms.entity.BaseLicensingVisit;
+import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

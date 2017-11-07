@@ -39,39 +39,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
-import gov.ca.cwds.cals.persistence.model.cms.AddressPhoneticName;
-import gov.ca.cwds.cals.persistence.model.cms.AddressPhoneticNamePK;
-import gov.ca.cwds.cals.persistence.model.cms.BackgroundCheck;
-import gov.ca.cwds.cals.persistence.model.cms.ClientScpEthnicity;
-import gov.ca.cwds.cals.persistence.model.cms.CountyOwnership;
-import gov.ca.cwds.cals.persistence.model.cms.CountyOwnershipPK;
-import gov.ca.cwds.cals.persistence.model.cms.EmergencyContactDetail;
-import gov.ca.cwds.cals.persistence.model.cms.ExternalInterface;
-import gov.ca.cwds.cals.persistence.model.cms.ExternalInterfacePK;
-import gov.ca.cwds.cals.persistence.model.cms.LicenseStatus;
-import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
-import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
-import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
-import gov.ca.cwds.cals.persistence.model.cms.OutOfStateCheck;
-import gov.ca.cwds.cals.persistence.model.cms.PhoneContactDetail;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformationPK;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeNotes;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeProfile;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeProfilePK;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
-import gov.ca.cwds.cals.persistence.model.cms.State;
-import gov.ca.cwds.cals.persistence.model.cms.SubCareProviderPhoneticName;
-import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
-import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProviderUc;
-import gov.ca.cwds.cals.persistence.model.cms.VisitType;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.Client;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.CountyLicenseCase;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.LicensingVisit;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.OutOfHomePlacement;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementEpisode;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.StaffPerson;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
@@ -80,6 +47,41 @@ import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
+import gov.ca.cwds.data.legacy.cms.entity.AddressPhoneticName;
+import gov.ca.cwds.data.legacy.cms.entity.AddressPhoneticNamePK;
+import gov.ca.cwds.data.legacy.cms.entity.BackgroundCheck;
+import gov.ca.cwds.data.legacy.cms.entity.Client;
+import gov.ca.cwds.data.legacy.cms.entity.ClientScpEthnicity;
+import gov.ca.cwds.data.legacy.cms.entity.County;
+import gov.ca.cwds.data.legacy.cms.entity.CountyLicenseCase;
+import gov.ca.cwds.data.legacy.cms.entity.CountyOwnership;
+import gov.ca.cwds.data.legacy.cms.entity.CountyOwnershipPK;
+import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
+import gov.ca.cwds.data.legacy.cms.entity.ExternalInterface;
+import gov.ca.cwds.data.legacy.cms.entity.ExternalInterfacePK;
+import gov.ca.cwds.data.legacy.cms.entity.FacilityType;
+import gov.ca.cwds.data.legacy.cms.entity.LicenseStatus;
+import gov.ca.cwds.data.legacy.cms.entity.LicensingVisit;
+import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
+import gov.ca.cwds.data.legacy.cms.entity.OutOfHomePlacement;
+import gov.ca.cwds.data.legacy.cms.entity.OutOfStateCheck;
+import gov.ca.cwds.data.legacy.cms.entity.PhoneContactDetail;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementEpisode;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeInformation;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeInformationPK;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeNotes;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeProfile;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeProfilePK;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeUc;
+import gov.ca.cwds.data.legacy.cms.entity.StaffPerson;
+import gov.ca.cwds.data.legacy.cms.entity.State;
+import gov.ca.cwds.data.legacy.cms.entity.SubCareProviderPhoneticName;
+import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
+import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProviderUc;
+import gov.ca.cwds.data.legacy.cms.entity.VisitType;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import io.dropwizard.db.PooledDataSourceFactory;
@@ -119,8 +121,8 @@ public class DataAccessModule extends AbstractModule {
       PlacementEpisode.class,
       PlacementHome.class,
       StaffPerson.class,
-      gov.ca.cwds.cals.persistence.model.cms.FacilityType.class,
-      gov.ca.cwds.cals.persistence.model.cms.County.class,
+      FacilityType.class,
+      County.class,
       CountyLicenseCase.class,
       LicensingVisit.class,
       VisitType.class,

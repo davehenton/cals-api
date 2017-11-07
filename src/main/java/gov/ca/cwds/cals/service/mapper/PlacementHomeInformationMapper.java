@@ -2,9 +2,9 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeInformation;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeInformation;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.mapstruct.Mapper;
