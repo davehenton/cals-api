@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.County;
 import gov.ca.cwds.cals.service.dto.DistrictOfficeDTO;
+import gov.ca.cwds.data.legacy.cms.entity.County;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

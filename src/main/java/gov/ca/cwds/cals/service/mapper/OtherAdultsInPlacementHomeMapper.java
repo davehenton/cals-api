@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
-import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
+import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import java.time.LocalDate;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;

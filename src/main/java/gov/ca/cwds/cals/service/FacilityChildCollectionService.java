@@ -1,11 +1,11 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.dao.cms.ClientDao;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
+import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
 import java.util.List;

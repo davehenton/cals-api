@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.CountyDTO;
+import gov.ca.cwds.data.legacy.cms.entity.County;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -16,7 +17,7 @@ public interface CountyMapper {
     @Mapping(target = "code", source = "lgcId")
     @Mapping(target = "description", source = "shortDsc")
     @Mapping(target = "lisCode", ignore = true)
-    CountyDTO toCountyDTO(gov.ca.cwds.cals.persistence.model.cms.County county);
+    CountyDTO toCountyDTO(County county);
 
     @Mapping(target = "code", source = "tblCoNbr")
     @Mapping(target = "description", source = "tblCoDesc")

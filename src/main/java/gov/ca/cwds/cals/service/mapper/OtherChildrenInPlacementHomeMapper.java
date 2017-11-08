@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.OtherChildrenInPlacementHome;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.mapstruct.Mapper;

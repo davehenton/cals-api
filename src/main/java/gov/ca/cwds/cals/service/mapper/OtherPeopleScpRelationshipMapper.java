@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.OtherPeopleScpRelationship;
-import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
 import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO;
+import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
+import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
+import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 
 /**
  * @author CWDS CALS API Team

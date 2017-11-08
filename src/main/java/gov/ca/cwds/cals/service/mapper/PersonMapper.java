@@ -1,17 +1,16 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.BaseClient;
-import gov.ca.cwds.cals.persistence.model.cms.BaseStaffPerson;
 import gov.ca.cwds.cals.service.dto.PersonDTO;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-
+import gov.ca.cwds.data.legacy.cms.entity.BaseClient;
+import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.Set;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 /**
  * @author CWDS CALS API Team

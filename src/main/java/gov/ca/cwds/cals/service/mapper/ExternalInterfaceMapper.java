@@ -1,10 +1,9 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.cms.ExternalInterface;
+import gov.ca.cwds.data.legacy.cms.entity.ExternalInterface;
+import java.time.LocalDateTime;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.time.LocalDateTime;
 import org.mapstruct.factory.Mappers;
 
 /**

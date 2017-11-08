@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.persistence.model.cms.OtherAdultsInPlacementHome;
-import gov.ca.cwds.cals.persistence.model.cms.OutOfStateCheck;
-import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
+import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.OutOfStateCheck;
+import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

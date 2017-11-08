@@ -2,10 +2,10 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.persistence.model.cms.SubstituteCareProvider;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import java.time.LocalDateTime;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;

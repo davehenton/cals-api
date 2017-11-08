@@ -1,11 +1,11 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.persistence.model.cms.PlacementHomeUc;
-import gov.ca.cwds.cals.persistence.model.cms.legacy.PlacementHome;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeUc;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

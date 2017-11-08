@@ -3,9 +3,9 @@ package gov.ca.cwds.cals.service.mapper;
 import static gov.ca.cwds.cals.Constants.AddressTypes.MAIL;
 import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 
-import gov.ca.cwds.cals.persistence.model.cms.BasePlacementHome;
 import gov.ca.cwds.cals.service.CMSDictionaryEntriesHolder;
 import gov.ca.cwds.cals.service.dto.AddressDTO;
+import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
