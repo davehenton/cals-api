@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.cals.service.dto.CountyDTO;
-import gov.ca.cwds.data.legacy.cms.entity.County;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.County;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
