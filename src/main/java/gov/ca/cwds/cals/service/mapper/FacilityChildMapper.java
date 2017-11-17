@@ -6,7 +6,7 @@ import gov.ca.cwds.data.legacy.cms.entity.BaseClient;
 import gov.ca.cwds.data.legacy.cms.entity.BaseOutOfHomePlacement;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementEpisode;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
-import gov.ca.cwds.data.legacy.cms.entity.County;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.County;
 import java.util.Set;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
