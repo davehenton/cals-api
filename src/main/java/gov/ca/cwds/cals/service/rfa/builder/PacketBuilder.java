@@ -18,6 +18,7 @@ import gov.ca.cwds.cals.service.dto.packet.SectionSummaryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class PacketBuilder {
       for (ApplicantDTO applicant : rfa1aFormDTO.getApplicants()) {
         applicants.add(new PersonSummaryDTO(applicant.getId(), applicant.getFirstName(),
             applicant.getLastName(),
-            checkIfSectionIsNotEmpty(applicant.getRfa1bForm())));
+            checkIdIfExists(applicant.getRfa1bForm())));
       }
     }
     this.applicants = applicants;
@@ -92,7 +93,7 @@ public class PacketBuilder {
       for (OtherAdultDTO otherAdult : rfa1aFormDTO.getOtherAdults()) {
         otherAdults.add(new PersonSummaryDTO(otherAdult.getId(), otherAdult.getFirstName(),
             otherAdult.getLastName(),
-            checkIfSectionIsNotEmpty(otherAdult.getRfa1bForm())));
+            checkIdIfExists(otherAdult.getRfa1bForm())));
       }
     }
     this.otherAdults = otherAdults;
@@ -106,13 +107,12 @@ public class PacketBuilder {
     if (checkIfSectionIsNotEmpty(rfa1aFormDTO.getOtherAdults()) && checkIfSectionIsNotEmpty(
         rfa1aFormDTO.getApplicantsRelationship())) {
       for (OtherAdultDTO otherAdult : rfa1aFormDTO.getOtherAdults()) {
-        for (RelationshipToApplicantDTO relationshipToApplicant : otherAdult
-            .getRelationshipToApplicants()) {
+        for (RelationshipToApplicantDTO relationshipToApplicant : otherAdult.getRelationshipToApplicants()) {
           if (relationshipToApplicant.getRelationshipToApplicantType().getValue()
               .equalsIgnoreCase("Child")) {
             adultChildren.add(new PersonSummaryDTO(otherAdult.getId(), otherAdult.getFirstName(),
                 otherAdult.getLastName(),
-                checkIfSectionIsNotEmpty(otherAdult.getRfa1bForm())));
+                checkIdIfExists(otherAdult.getRfa1bForm())));
           }
         }
       }
@@ -127,6 +127,10 @@ public class PacketBuilder {
         this.applicants,
         this.otherAdults,
         this.adultChildren);
+  }
+
+  private Long checkIdIfExists(RFAExternalEntityDTO dto) {
+    return null != dto ? dto.getId() : null;
   }
 
   private Boolean checkIfSectionIsNotEmpty(BaseDTO dto) {
