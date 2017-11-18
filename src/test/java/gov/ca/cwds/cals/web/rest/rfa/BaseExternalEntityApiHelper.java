@@ -10,7 +10,6 @@ import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import gov.ca.cwds.cals.web.rest.rfa.helper.FormAHelper;
-import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -128,7 +127,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
     assertThat(response.getStatus()).isEqualTo(404);
   }
 
-  protected T createEntity(RFA1aFormDTO form) throws IOException {
+  protected T createEntity(RFA1aFormDTO form) throws Exception {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath());
@@ -137,7 +136,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
         Entity.entity(entity, MediaType.APPLICATION_JSON_TYPE), configuration.getEntityClass());
   }
 
-  private T findEntity(RFA1aFormDTO form, Long entityId) {
+  protected T findEntity(RFA1aFormDTO form, Long entityId) throws Exception {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS
