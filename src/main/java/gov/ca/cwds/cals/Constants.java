@@ -304,6 +304,8 @@ public final class Constants {
 
     public static final String CANNOT_PARSE_STREET_ADDRESS = "Cannot parse street address";
 
+    public static final String RFA_1C_FORM_ALREADY_EXISTS = "RFA1c form already exists";
+
     private ExpectedExceptionMessages() {
     }
 

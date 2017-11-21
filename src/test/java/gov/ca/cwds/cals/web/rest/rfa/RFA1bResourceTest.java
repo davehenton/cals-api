@@ -7,7 +7,6 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import io.dropwizard.testing.FixtureHelpers;
-import java.io.IOException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -49,7 +48,7 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
     return new BaseExternalEntityApiHelper<RFA1bFormDTO>(clientTestRule, configuration,
         formAHelper) {
       @Override
-      protected RFA1bFormDTO createEntity(RFA1aFormDTO form) throws IOException {
+      protected RFA1bFormDTO createEntity(RFA1aFormDTO form) throws Exception {
         ApplicantDTO applicantDTO = applicantHelper
             .getFirstExistedOrPostNewApplicant(form.getId(), applicantHelper.getValidApplicant());
         WebTarget target =
@@ -59,6 +58,18 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
         RFA1bFormDTO entity = configuration.createEntity();
         return target.request(MediaType.APPLICATION_JSON).post(
             Entity.entity(entity, MediaType.APPLICATION_JSON_TYPE), configuration.getEntityClass());
+      }
+
+      @Override
+      protected RFA1bFormDTO findEntity(RFA1aFormDTO form, Long entityId) throws Exception {
+        ApplicantDTO applicantDTO = applicantHelper
+            .getFirstExistedOrPostNewApplicant(form.getId(), applicantHelper.getValidApplicant());
+
+        WebTarget target =
+            clientTestRule.target(
+                API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath() + "/"
+                    + API.RFA_1A_APPLICANTS + "/" + applicantDTO.getId());
+        return target.request(MediaType.APPLICATION_JSON).get(configuration.getEntityClass());
       }
     };
   }
