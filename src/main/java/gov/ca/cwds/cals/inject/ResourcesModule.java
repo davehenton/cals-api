@@ -27,6 +27,9 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.dto.rfa.lic198b.LIC198bFormDTO;
+import gov.ca.cwds.cals.service.rfa.LIC198bCollectionService;
+import gov.ca.cwds.cals.service.rfa.LIC198bService;
 import gov.ca.cwds.cals.service.rfa.RFA1aAdoptionHistoryService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
@@ -55,6 +58,7 @@ import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
+import gov.ca.cwds.cals.web.rest.rfa.LIC198bFormsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsHistoryResource;
@@ -82,7 +86,9 @@ import gov.ca.cwds.rest.resources.TypedServiceBackedResourceDelegate;
  */
 public class ResourcesModule extends AbstractModule {
 
-  /** Default constructor */
+  /**
+   * Default constructor
+   */
   public ResourcesModule() {
     // Do nothing - Default Constructor
   }
@@ -110,6 +116,7 @@ public class ResourcesModule extends AbstractModule {
     bind(RFA1aApplicantsDeclarationResource.class);
     bind(RFA1bFormsResource.class);
     bind(RFA1cFormsResource.class);
+    bind(LIC198bFormsResource.class);
   }
 
   @Provides
@@ -277,6 +284,22 @@ public class ResourcesModule extends AbstractModule {
       Injector injector) {
     return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1bCollectionService.class));
+  }
+
+  @Provides
+  @LIC198bServiceBackedResource
+  public TypedResourceDelegate<
+      RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<LIC198bFormDTO>>
+  lis198bServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(injector.getInstance(LIC198bService.class));
+  }
+
+  @Provides
+  @LIC198bCollectionServiceBackedResource
+  public TypedResourceDelegate<Long, Request> lis198bCollectionServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(LIC198bCollectionService.class));
   }
 
   @Provides

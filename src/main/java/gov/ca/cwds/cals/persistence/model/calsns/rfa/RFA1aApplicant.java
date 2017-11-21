@@ -51,6 +51,10 @@ public class RFA1aApplicant extends RFAExternalEntity<ApplicantDTO> implements P
   @JoinColumn(name = "fra_1b_form_id")
   private RFA1bForm rfa1bForm;
 
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @JoinColumn(name = "lic_198b_form_id")
+  private LIC198bForm lic198bForm;
+
   public ApplicantDTO getApplicant() {
     return applicant;
   }
@@ -59,17 +63,24 @@ public class RFA1aApplicant extends RFAExternalEntity<ApplicantDTO> implements P
     this.applicant = applicant;
   }
 
-  @Override
-  public ApplicantDTO getEntityDTO() {
-    return getApplicant();
-  }
-
   public RFA1bForm getRfa1bForm() {
     return rfa1bForm;
   }
 
   public void setRFA1bForm(RFA1bForm rfa1bForm) {
     this.rfa1bForm = rfa1bForm;
+  }
+
+  public LIC198bForm getLic198bForm() {
+    return lic198bForm;
+  }
+  public void setLic198bForm(LIC198bForm lic198bForm) {
+    this.lic198bForm = lic198bForm;
+  }
+
+  @Override
+  public ApplicantDTO getEntityDTO() {
+    return getApplicant();
   }
 
   @Override

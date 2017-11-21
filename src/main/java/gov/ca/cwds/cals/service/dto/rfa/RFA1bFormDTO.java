@@ -10,7 +10,6 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
-import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEach;
 import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;

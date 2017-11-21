@@ -33,6 +33,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnership
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.LIC198bForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
@@ -52,15 +53,12 @@ import gov.ca.cwds.data.legacy.cms.entity.AddressPhoneticNamePK;
 import gov.ca.cwds.data.legacy.cms.entity.BackgroundCheck;
 import gov.ca.cwds.data.legacy.cms.entity.Client;
 import gov.ca.cwds.data.legacy.cms.entity.ClientScpEthnicity;
-import gov.ca.cwds.data.legacy.cms.entity.syscodes.County;
 import gov.ca.cwds.data.legacy.cms.entity.CountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.CountyOwnership;
 import gov.ca.cwds.data.legacy.cms.entity.CountyOwnershipPK;
 import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.ExternalInterface;
 import gov.ca.cwds.data.legacy.cms.entity.ExternalInterfacePK;
-import gov.ca.cwds.data.legacy.cms.entity.syscodes.FacilityType;
-import gov.ca.cwds.data.legacy.cms.entity.syscodes.LicenseStatus;
 import gov.ca.cwds.data.legacy.cms.entity.LicensingVisit;
 import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
@@ -77,10 +75,13 @@ import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeProfile;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeProfilePK;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeUc;
 import gov.ca.cwds.data.legacy.cms.entity.StaffPerson;
-import gov.ca.cwds.data.legacy.cms.entity.syscodes.State;
 import gov.ca.cwds.data.legacy.cms.entity.SubCareProviderPhoneticName;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProviderUc;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.County;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.FacilityType;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.LicenseStatus;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.State;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.VisitType;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
@@ -185,6 +186,7 @@ public class DataAccessModule extends AbstractModule {
       RFA1aMinorChild.class,
       RFA1aOtherAdult.class,
       RFA1bForm.class,
+      LIC198bForm.class,
       RFA1cForm.class
   ).build();
 

@@ -65,6 +65,10 @@ public final class Constants {
 
     public static final String RFA_1B_FORM = "rfa-1b-form";
 
+    public static final String LIC_198B_FORMS = "lic-198b-forms";
+    
+    public static final String LIC_198B_FORM = "lic-198b-form";
+
     public static final String RFA_1C_FORMS = "rfa-1c-forms";
 
     public static final String RFA_1A_APPLICANTS = "applicants";
@@ -118,6 +122,8 @@ public final class Constants {
       public static final String RFA_1C_FORM = "rfa1cForm";
 
       public static final String RFA_1B_FORM_ID = "rfa1bFormId";
+
+      public static final String LIC_198B_FORM_ID = "lic198bFormId";
 
       public static final String RFA_1C_FORM_ID = "rfa1cFormId";
 
@@ -307,6 +313,13 @@ public final class Constants {
 
     public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
     public static final String FORM_SUBMISSION_VALIDATION_SESSION = "formSubmissionValidationSession";
+
+    public static class Pattern {
+      public static final String ALFANUMERICAL_PATTERN = "^[a-zA-Z0-9\\s]*$";
+
+      private Pattern() {
+      }
+    }
 
     public static class Constraint {
 

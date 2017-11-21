@@ -38,6 +38,17 @@
             }
         ),
         @TypeDef(
+            name = "LIC198bFormJsonType",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "gov.ca.cwds.cals.service.dto.rfa.lic198b.LIC198bFormDTO"
+                )
+            }
+        ),
+        @TypeDef(
             name = "ApplicantHistoryJsonType",
             typeClass = JsonType.class,
             parameters = {
