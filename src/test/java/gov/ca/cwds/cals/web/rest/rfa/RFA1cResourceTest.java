@@ -7,7 +7,6 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import io.dropwizard.testing.FixtureHelpers;
-import java.io.IOException;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.GenericType;
 import org.junit.Assert;
