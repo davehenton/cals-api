@@ -18,9 +18,11 @@ import gov.ca.cwds.cals.inject.RFA1bCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1bServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1bFormCollectionDTO;
+import gov.ca.cwds.cals.web.rest.parameter.RFAApplicantAwareEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAApplicantAwareEntityUpdateParams;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityUpdateParams;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.TypedResourceDelegate;
@@ -94,6 +96,29 @@ public class RFA1bFormsResource {
   }
 
   @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + RFA_1A_APPLICANTS + "/{" + RFA_1A_APPLICANT_ID + "}")
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns RFA 1B Form for Applicant", response = RFA1bFormDTO.class)
+  public Response getRFA1bFormForApplicant(
+    @PathParam(RFA_1A_APPLICATION_ID)
+    @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+    Long applicationId,
+    @PathParam(RFA_1A_APPLICANT_ID)
+    @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The Applicant Id")
+    Long applicantId) {
+    return resourceDelegate.get(
+        new RFAApplicantAwareEntityGetParameterObject(applicationId, applicantId));
+  }
+
+  @UnitOfWork(CALSNS)
   @POST
   @Path("/" + RFA_1A_OTHER_ADULTS + "/{" + RFA_1A_OTHER_ADULT_ID + "}")
   @Timed
@@ -116,6 +141,29 @@ public class RFA1bFormsResource {
           RFA1bFormDTO rfa1bForm) {
     return resourceDelegate.create(
         new RFAOtherAdultAwareEntityUpdateParams<>(applicationId, otherAdultId, rfa1bForm));
+  }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + RFA_1A_OTHER_ADULTS + "/{" + RFA_1A_OTHER_ADULT_ID + "}")
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns RFA 1B Form for Other Adult", response = RFA1bFormDTO.class)
+  public Response getRFA1bFormForOtherAdult(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+      Long applicationId,
+      @PathParam(RFA_1A_OTHER_ADULT_ID)
+      @ApiParam(required = true, name = RFA_1A_OTHER_ADULT_ID, value = "The Other Adult Id")
+      Long otherAdultId) {
+    return resourceDelegate.get(
+        new RFAOtherAdultAwareEntityGetParameterObject(applicationId, otherAdultId));
   }
 
   @UnitOfWork(CALSNS)
