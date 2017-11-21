@@ -7,7 +7,6 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import io.dropwizard.testing.FixtureHelpers;
-import java.io.IOException;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.GenericType;
 import org.junit.Assert;
@@ -54,7 +53,7 @@ public class RFA1cResourceTest extends BaseExternalEntityApiTest<RFA1cFormDTO> {
 
     return new BaseExternalEntityApiHelper<RFA1cFormDTO>(clientTestRule, configuration, formAHelper) {
       @Override
-      protected RFA1cFormDTO createEntity(RFA1aFormDTO form) throws IOException {
+      protected RFA1cFormDTO createEntity(RFA1aFormDTO form) throws Exception {
         RFA1cFormDTO rfa1cFormDTO = super.createEntity(form);
         try {
           super.createEntity(form);
