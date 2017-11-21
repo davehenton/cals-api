@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.web.rest.parameter;
 
-import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.dto.BaseDTO;
 
 /**
  * @author CWDS CALS API Team

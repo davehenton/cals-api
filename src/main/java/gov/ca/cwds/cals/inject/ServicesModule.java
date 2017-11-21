@@ -28,9 +28,11 @@ import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1bService;
 import gov.ca.cwds.cals.service.rfa.RFA1cCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1cService;
-import gov.ca.cwds.cals.service.validation.business.DroolsService;
+import gov.ca.cwds.cals.service.validation.business.configuration.ValidationConfigurationRegistryImpl;
 import gov.ca.cwds.data.cms.SystemCodeDao;
 import gov.ca.cwds.data.cms.SystemMetaDao;
+import gov.ca.cwds.drools.DroolsService;
+import gov.ca.cwds.drools.validation.ValidationConfigurationRegistry;
 import gov.ca.cwds.rest.api.domain.cms.SystemCodeCache;
 import gov.ca.cwds.rest.services.cms.CachingSystemCodeService;
 import gov.ca.cwds.rest.services.cms.SystemCodeService;
@@ -84,6 +86,7 @@ public class ServicesModule extends AbstractModule {
     bind(RFA1aChildDesiredService.class);
     bind(RFA1aApplicantsDeclarationService.class);
     bind(DroolsService.class);
+    bind(ValidationConfigurationRegistry.class).to(ValidationConfigurationRegistryImpl.class).asEagerSingleton();
   }
 
   @Provides

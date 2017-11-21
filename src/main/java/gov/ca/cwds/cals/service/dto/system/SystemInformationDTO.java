@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.service.dto.system;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.dto.BaseDTO;
 
 /**
  * @author CWDS CALS API Team

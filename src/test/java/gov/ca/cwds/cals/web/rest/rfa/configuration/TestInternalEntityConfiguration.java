@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa.configuration;
 
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
+import gov.ca.cwds.dto.BaseDTO;
 import java.io.IOException;
 
 /**

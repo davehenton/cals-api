@@ -1,14 +1,9 @@
 package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
-import gov.ca.cwds.data.persistence.PersistentObject;
-import gov.ca.cwds.rest.api.Request;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import javax.persistence.Cacheable;
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +11,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /** @author CWDS CALS API Team */
 @MappedSuperclass

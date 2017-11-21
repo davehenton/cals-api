@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.dto;
 
+import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Response;
 
 import java.util.ArrayList;

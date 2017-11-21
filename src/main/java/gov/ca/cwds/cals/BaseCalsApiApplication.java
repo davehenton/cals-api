@@ -4,7 +4,6 @@ import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.google.inject.Injector;
-import gov.ca.cwds.cals.inject.InjectorHolder;
 import gov.ca.cwds.cals.web.rest.filters.RequestExecutionContextFilter;
 import gov.ca.cwds.cals.web.rest.filters.RequestResponseLoggingFilter;
 import gov.ca.cwds.rest.BaseApiApplication;
@@ -45,9 +44,6 @@ public abstract class BaseCalsApiApplication<T extends CalsApiConfiguration> ext
     runDataSourceHealthChecks(environment);
 
     Injector injector = guiceBundle.getInjector();
-
-    // Providing access to the guice injector from external classes such as custom validators
-    InjectorHolder.INSTANCE.setInjector(injector);
 
     environment.servlets()
         .addFilter("RequestExecutionContextManagingFilter",

@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
+import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;
 import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Cacheable;

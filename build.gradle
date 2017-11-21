@@ -34,13 +34,11 @@ project.ext {
     projectVersion = projectMajorVersion + '-SNAPSHOT'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
-//coreApiVersion = '3.6.438'
-    coreApiVersion = '0.4.4-SNAPSHOT'
+    coreApiVersion = '0.5.1-SNAPSHOT'
     shiroSecurityVersion = '0.4.3'
     calsModelVersion = '0.4.4'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
-    droolsVersion = '7.1.0.Final'
     dbunitVersion = '2.5.0'
     mainClass = 'gov.ca.cwds.cals.CalsApiApplication'
 
@@ -126,13 +124,12 @@ dependencies {
     compile (group: 'gov.ca.cwds.api', name: 'api-core', version: coreApiVersion , changing: true) {
         exclude group: 'org.glassfish.jersey.core'
     }
+    compile (group: 'gov.ca.cwds.api', name: 'drools-engine', version: coreApiVersion , changing: true)
 
     compile group: 'gov.ca.cwds.api', name:'jwt-security', version: shiroSecurityVersion
 
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '4.39'
 
-    compile group: 'org.kie', name: 'kie-api', version: droolsVersion
-    compile group: 'org.drools', name: 'drools-compiler', version: droolsVersion
     compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.1'
     compile group: 'org.slf4j', name: 'slf4j-ext', version: '1.7.25'

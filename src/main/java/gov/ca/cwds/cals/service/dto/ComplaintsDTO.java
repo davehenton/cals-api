@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Response;
 import java.util.HashSet;
 import java.util.Set;

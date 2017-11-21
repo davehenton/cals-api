@@ -19,11 +19,11 @@ import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
-import gov.ca.cwds.cals.service.validation.business.DroolsService;
-import gov.ca.cwds.cals.service.validation.business.configuration.DroolsFieldValidationConfiguration;
-import gov.ca.cwds.cals.service.validation.business.configuration.DroolsValidationConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
+import gov.ca.cwds.drools.DroolsConfiguration;
+import gov.ca.cwds.drools.DroolsService;
+import gov.ca.cwds.drools.validation.DroolsFieldValidationConfiguration;
 import gov.ca.cwds.rest.exception.BusinessValidationException;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.exception.IssueDetails;
@@ -216,7 +216,7 @@ public class RFA1aFormService
     }
   }
 
-  private DroolsValidationConfiguration<RFA1aFormDTO> createConfiguration() {
+  private DroolsConfiguration<RFA1aFormDTO> createConfiguration() {
     return new DroolsFieldValidationConfiguration<RFA1aFormDTO>() {
 
       @Override

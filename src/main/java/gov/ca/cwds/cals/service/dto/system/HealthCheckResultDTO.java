@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service.dto.system;
 
 import com.codahale.metrics.health.HealthCheck;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 
+import gov.ca.cwds.dto.BaseDTO;
 import java.util.HashMap;
 import java.util.Map;
 
