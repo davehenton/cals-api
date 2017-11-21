@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
+import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotNull;
 

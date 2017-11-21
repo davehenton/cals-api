@@ -1,22 +1,22 @@
 package gov.ca.cwds.cals.service.validation.business.configuration;
 
+import gov.ca.cwds.drools.DroolsConfiguration;
+import gov.ca.cwds.drools.validation.ValidationConfigurationRegistry;
+
 /**
  * @author CWDS CALS API Team
  */
 
-public class ValidationConfigurationRegistry {
-
-  public static final ValidationConfigurationRegistry INSTANCE = new ValidationConfigurationRegistry();
+public class ValidationConfigurationRegistryImpl implements ValidationConfigurationRegistry {
 
   public static final String APPLICANTS_DUPLICATE_NAME_POST = "APPLICANTS_DUPLICATE_NAME_POST";
   public static final String APPLICANTS_DUPLICATE_NAME_PUT = "APPLICANTS_DUPLICATE_NAME_PUT";
   public static final String APPLICANT_VALIDATION = "APPLICANT_VALIDATION";
 
-  private ValidationConfigurationRegistry() {
-  }
+  public ValidationConfigurationRegistryImpl() {}
 
-  public DroolsValidationConfiguration get(String configurationName) {
-    DroolsValidationConfiguration<?> res = null;
+  public DroolsConfiguration get(String configurationName) {
+    DroolsConfiguration<?> res = null;
     switch (configurationName) {
       case APPLICANTS_DUPLICATE_NAME_POST:
         res = ApplicantNamesDuplicationConstraintPostConfiguration.INSTANCE;

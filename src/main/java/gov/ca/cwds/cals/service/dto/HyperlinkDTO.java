@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
+import gov.ca.cwds.dto.BaseDTO;
 
 /**
  * @author CWDS CALS API Team

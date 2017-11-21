@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.dto.rfa;
 
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
+import gov.ca.cwds.dto.BaseDTO;
 
 /**
  * @author CWDS CALS API Team

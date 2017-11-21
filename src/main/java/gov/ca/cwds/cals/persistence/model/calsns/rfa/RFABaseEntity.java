@@ -5,8 +5,8 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.data.persistence.PersistentObject;
+import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;

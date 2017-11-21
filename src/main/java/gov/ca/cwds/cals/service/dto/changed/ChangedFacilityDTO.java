@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service.dto.changed;
 
 import gov.ca.cwds.cals.RecordChangeOperation;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
+import gov.ca.cwds.dto.BaseDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;

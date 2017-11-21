@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service.validation;
 
-import gov.ca.cwds.cals.inject.InjectorHolder;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
+import gov.ca.cwds.inject.InjectorHolder;
 
 /**
  * @author CWDS CALS API Team

@@ -11,7 +11,6 @@ import static gov.ca.cwds.cals.Constants.API.RFA_1A_OTHER_ADULTS;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_REFERENCES;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_RESIDENCE;
 
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.packet.PacketDTO;
 import gov.ca.cwds.cals.service.dto.packet.PersonSummaryDTO;
 import gov.ca.cwds.cals.service.dto.packet.SectionSummaryDTO;
@@ -20,6 +19,7 @@ import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAExternalEntityDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO;
+import gov.ca.cwds.dto.BaseDTO;
 import java.util.ArrayList;
 import java.util.List;
 

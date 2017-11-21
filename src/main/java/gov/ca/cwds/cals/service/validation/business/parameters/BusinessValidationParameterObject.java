@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.validation.business.parameters;
 
-import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.dto.BaseDTO;
 import java.io.Serializable;
 
 /**

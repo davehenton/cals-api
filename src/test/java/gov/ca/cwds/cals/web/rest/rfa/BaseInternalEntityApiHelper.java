@@ -7,12 +7,12 @@ import static org.junit.Assert.assertEquals;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestInternalEntityConfiguration;
 import gov.ca.cwds.cals.web.rest.rfa.helper.FormAHelper;
 import gov.ca.cwds.cals.web.rest.utils.VelocityHelper;
+import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.exception.BaseExceptionResponse;
 import gov.ca.cwds.rest.exception.IssueDetails;
 import java.io.IOException;

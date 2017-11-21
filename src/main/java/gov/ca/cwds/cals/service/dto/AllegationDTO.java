@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.dto.BaseDTO;
 
 @SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 /** @author CWDS CALS API Team */

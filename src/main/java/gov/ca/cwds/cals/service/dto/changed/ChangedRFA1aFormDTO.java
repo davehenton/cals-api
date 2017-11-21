@@ -2,8 +2,8 @@ package gov.ca.cwds.cals.service.dto.changed;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import gov.ca.cwds.cals.RecordChangeOperation;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.dto.BaseDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;

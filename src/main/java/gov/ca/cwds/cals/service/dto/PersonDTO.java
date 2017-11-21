@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 
+import gov.ca.cwds.dto.BaseDTO;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;

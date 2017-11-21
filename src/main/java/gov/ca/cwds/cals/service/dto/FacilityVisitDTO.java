@@ -4,6 +4,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
 import org.apache.commons.lang3.builder.EqualsBuilder;

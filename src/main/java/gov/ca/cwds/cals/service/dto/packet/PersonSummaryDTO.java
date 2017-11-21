@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.service.dto.packet;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
-import gov.ca.cwds.cals.service.dto.BaseDTO;
+import gov.ca.cwds.dto.BaseDTO;
 
 /**
  * @author CWDS TPT-2
