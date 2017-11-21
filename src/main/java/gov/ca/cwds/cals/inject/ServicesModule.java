@@ -9,6 +9,8 @@ import gov.ca.cwds.cals.service.DictionariesService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
+import gov.ca.cwds.cals.service.rfa.LIC198bCollectionService;
+import gov.ca.cwds.cals.service.rfa.LIC198bService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantsDeclarationService;
@@ -75,6 +77,8 @@ public class ServicesModule extends AbstractModule {
     bind(RFA1aMinorChildrenCollectionService.class);
     bind(RFA1bService.class);
     bind(RFA1bCollectionService.class);
+    bind(LIC198bService.class);
+    bind(LIC198bCollectionService.class);
     bind(RFA1cService.class);
     bind(RFA1cCollectionService.class);
     bind(RFA1aOtherAdultService.class);

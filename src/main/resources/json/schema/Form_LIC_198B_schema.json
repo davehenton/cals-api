@@ -1,0 +1,146 @@
+{
+  "definitions": {},
+  "type": "object",
+  "$id": "Form_LIC_198B",
+  "properties": {
+    "requestor_information": {
+      "$id": "/properties/requestor_information",
+      "type": "object",
+      "title": "Requestor Information",
+      "properties": {
+        "name": {
+          "$id": "/properties/requestor_information/name",
+          "type": "string",
+          "title": "Name of requestor",
+          "example": "Mr. John Dow"
+        },
+        "phone": {
+          "$id": "/properties/requestor_information/phone",
+          "type": "string",
+          "title": "Telephone",
+          "example": "(555)555-5555"
+        },
+        "fax": {
+          "$id": "/properties/requestor_information/fax",
+          "type": "string",
+          "title": "Fax",
+          "example": "(555)555-5555"
+        },
+        "email": {
+          "$id": "/properties/requestor_information/email",
+          "type": "string",
+          "title": "Email address",
+          "example": "example@email.address"
+        }
+      }
+    },
+    "identifying_data": {
+      "$id": "/properties/identifying_data",
+      "type": "object",
+      "title": "Identifying data",
+      "properties": {
+        "name": {
+          "$id": "/properties/identifying_data/name",
+          "type": "object",
+          "title": "Applicant's name",
+          "properties": {
+            "prefix": {
+              "type": "string",
+              "title": "Prefix"
+            },
+            "first": {
+              "type": "string",
+              "title": "First name"
+            },
+            "middle": {
+              "type": "string",
+              "title": "Middle name"
+            },
+            "last": {
+              "type": "string",
+              "title": "Last name"
+            },
+            "suffix": {
+              "type": "string",
+              "title": "Suffix"
+            }
+          }
+        },
+        "maiden_name": {
+          "$id": "/properties/identifying_data/maiden_name",
+          "type": "string",
+          "title": "Maiden name"
+        },
+        "alias_name": {
+          "$id": "/properties/identifying_data/alias_name",
+          "type": "string",
+          "title": "Alias name(s)"
+        },
+        "date_of_birth": {
+          "$id": "/properties/identifying_data/date_of_birth",
+          "type": "string",
+          "title": "Date of birth"
+        },
+        "state_of_birth": {
+          "$id": "/properties/identifying_data/state_of_birth",
+          "type": "string",
+          "title": "State of birth"
+        },
+        "gender": {
+          "$id": "/properties/identifying_data/gender",
+          "type": "string",
+          "title": "Gender"
+        },
+        "race": {
+          "$id": "/properties/identifying_data/race",
+          "type": "string",
+          "title": "Race"
+        },
+        "ssn": {
+          "$id": "/properties/identifying_data/ssn",
+          "type": "string",
+          "title": "Social security number"
+        },
+        "driver_license": {
+          "$id": "/properties/identifying_data/driver_licence",
+          "type": "object",
+          "title": "Driver license",
+          "properties": {
+            "number":{
+              "$id": "/properties/identifying_data/driver_licence/number",
+              "type": "string",
+              "title": "Number"
+            },
+            "state":{
+              "$id": "/properties/identifying_data/driver_licence/state",
+              "type": "string",
+              "title": "State"
+            }
+          }
+        },
+        "phone": {
+          "$id": "/properties/identifying_data/phone",
+          "type": "string",
+          "title": "Telephone",
+          "example": "(555)555-5555"
+        },
+        "email": {
+          "$id": "/properties/identifying_data/email",
+          "type": "string",
+          "title": "Email address",
+          "example": "example@email.address"
+        }
+      }
+    },
+    "addresses": {
+      "$id": "/properties/addresses",
+      "type": "array",
+      
+      
+    },
+    "has_been_perpetrator": {},
+    "perpetration_episodes": {},
+    "signatures": {},
+    "response": {}
+  }
+}

@@ -52,12 +52,24 @@ public class RFA1aOtherAdult extends RFAExternalEntity<OtherAdultDTO> implements
   @JoinColumn(name = "fra_1b_form_id")
   private RFA1bForm rfa1bForm;
 
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @JoinColumn(name = "lic_198b_form_id")
+  private LIC198bForm lic198bForm;
+
   public void setOtherAdult(OtherAdultDTO otherAdult) {
     this.otherAdult = otherAdult;
   }
 
   public OtherAdultDTO getOtherAdult() {
     return otherAdult;
+  }
+
+  public LIC198bForm getLic198bForm() {
+    return lic198bForm;
+  }
+
+  public void setLic198bForm(LIC198bForm lic198bForm) {
+    this.lic198bForm = lic198bForm;
   }
 
   @Override

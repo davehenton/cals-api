@@ -17,17 +17,16 @@ public class PersonSummaryDTO extends BaseDTO implements RequestResponse {
   private Long id;
   private String firstName;
   private String lastName;
-  private Boolean rfa1bFilled;
+  private Long rfa1bId;
 
   public PersonSummaryDTO() {
   }
 
-  public PersonSummaryDTO(Long id, String firstName, String lastName,
-      Boolean rfa1bFilled) {
+  public PersonSummaryDTO(Long id, String firstName, String lastName, Long rfa1bId) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.rfa1bFilled = rfa1bFilled;
+    this.rfa1bId = rfa1bId;
   }
 
   public Long getId() {
@@ -54,11 +53,11 @@ public class PersonSummaryDTO extends BaseDTO implements RequestResponse {
     this.lastName = lastName;
   }
 
-  public Boolean getRfa1bFilled() {
-    return rfa1bFilled;
+  public Long getRfa1bId() {
+    return rfa1bId;
   }
 
-  public void setRfa1bFilled(Boolean rfa1bFilled) {
-    this.rfa1bFilled = rfa1bFilled;
+  public void setRfa1bId(Long rfa1bId) {
+    this.rfa1bId = rfa1bId;
   }
 }

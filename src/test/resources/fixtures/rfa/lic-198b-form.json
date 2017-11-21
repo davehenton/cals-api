@@ -1,0 +1,219 @@
+{
+  "id": 0,
+  "requestor_info": {
+    "name": {
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "first_name": "AFn",
+      "middle_name": "N",
+      "last_name": "ALn",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      }
+    },
+    "phone": {
+      "phone_type": {
+        "id": 1,
+        "value": "Cell"
+      },
+      "number": "5555555555"
+    },
+    "fax": {
+      "phone_type": {
+        "value": "Fax",
+        "id": 5
+      },
+      "number": "5555555556"
+    },
+    "email": "example@mail.mail"
+  },
+  "identifying_data": {
+    "person_name": {
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "first_name": "BFn",
+      "middle_name": "BMn",
+      "last_name": "BLn",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      }
+    },
+    "other_names": [
+      {
+        "last_name": "MaidenName",
+        "name_type": {
+          "value": "Maiden",
+          "id": 4
+        }
+      },
+      {
+        "last_name": "AliasName",
+        "name_type": {
+          "value": "AKA",
+          "id": 1
+        }
+      }
+    ],
+    "phone_number": {
+      "phone_type": {
+        "value": "Cell",
+        "id": 1
+      },
+      "number": "5555555557"
+    },
+    "email": "example1@mail.mail",
+    "date_of_birth": "2000-11-20",
+    "state_of_birth": {
+      "value": "Alaska",
+      "id": "AK"
+    },
+    "gender": {
+      "value": "Male",
+      "id": 1
+    },
+    "race": {
+      "id": 1,
+      "value": "American Indian or Alaska Native"
+    },
+    "ethnicity": {
+      "id": 1,
+      "value": "Alaskan Native"
+    },
+    "ssn": "999999999",
+    "driver_license_number": "AS123456789012345678",
+    "driver_license_state": {
+      "value": "Alaska",
+      "id": "AK"
+    }
+  },
+  "last_five_years_addresses": [
+    {
+      "street_address": "1111 Street St.",
+      "zip": "99999",
+      "city": "City",
+      "state": {
+        "id": "CA",
+        "value": "California"
+      }
+    },
+    {
+      "street_address": "1112 Street St.",
+      "zip": "99999",
+      "city": "City",
+      "state": {
+        "id": "CA",
+        "value": "California"
+      }
+    }
+  ],
+  "has_been_perpetrator": true,
+  "perpetration_episodes": [
+    {
+      "date": "2011-11-20",
+      "city": "City",
+      "state": {
+        "id": "CA",
+        "value": "California"
+      },
+      "county": "County",
+      "circumstances": "Some Circumstances"
+    },
+    {
+      "date": "2011-11-21",
+      "city": "City",
+      "state": {
+        "id": "CA",
+        "value": "California"
+      },
+      "county": "County",
+      "circumstances": "Other Circumstances"
+    }
+  ],
+  "signatures": {
+    "signature_of_applicant": "Applicant Signature",
+    "sign_date_of_applicants": "2017-11-20",
+    "signature_of_witness": "Witness signature",
+    "sign_date_of_witness": "2017-11-20"
+  },
+  "responding_state": {
+    "reports": [
+      {
+        "report_date": "2011-11-20",
+        "report_number": "123-QWE",
+        "local_contact": {
+          "name_prefix": {
+            "id": 2,
+            "value": "Ms."
+          },
+          "first_name": "CFn",
+          "middle_name": "CMn",
+          "last_name": "CLn",
+          "name_suffix": {
+            "id": 5,
+            "value": "Jr"
+          }
+        },
+        "phone": {
+          "phone_type": {
+            "value": "Cell",
+            "id": 1
+          },
+          "number": "5555555558"
+        }
+      },
+      {
+        "report_date": "2011-11-21",
+        "report_number": "567-ASD",
+        "local_contact": {
+          "name_prefix": {
+            "id": 2,
+            "value": "Ms."
+          },
+          "first_name": "DFn",
+          "middle_name": "DMn",
+          "last_name": "DLn",
+          "name_suffix": {
+            "id": 5,
+            "value": "Jr"
+          }
+        },
+        "phone": {
+          "phone_type": {
+            "value": "Cell",
+            "id": 1
+          },
+          "number": "5555555559"
+        }
+      }
+    ],
+    "contact_name": {
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "first_name": "EFn",
+      "middle_name": "EMn",
+      "last_name": "ELn",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      }
+    },
+    "agency": "AGENCY",
+    "phone": {
+      "phone_type": {
+        "value": "Work",
+        "id": 3
+      },
+      "number": "5555555565",
+      "extension": "4321"
+    },
+    "email": "example@email.mail"
+  }
+}

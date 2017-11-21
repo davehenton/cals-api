@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.dto.rfa;
 
+import static gov.ca.cwds.cals.Constants.Validation.Pattern.ALFANUMERICAL_PATTERN;
 import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -35,7 +36,6 @@ import javax.validation.constraints.Size;
 public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   private static final long serialVersionUID = -4333411852074578122L;
-  public static final String ALFANUMERICAL_PATTERN = "^[a-zA-Z0-9\\s]*$";
 
   @ApiModelProperty(value = "Prefix")
   @CheckReferentialIntegrity(enrich = true)

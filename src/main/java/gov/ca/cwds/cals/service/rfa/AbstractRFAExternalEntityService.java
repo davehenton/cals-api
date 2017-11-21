@@ -40,6 +40,9 @@ public abstract class AbstractRFAExternalEntityService<
   }
 
   protected D extractDTO(T entity) {
+    if (entity == null) {
+      return null;
+    }
     D entityDTO = entity.getEntityDTO();
     entityDTO.setId(entity.getId());
     return entityDTO;

@@ -101,7 +101,10 @@ public interface RFA1aFormMapper {
   }
 
   default OtherAdultDTO toOtherAdultDTO(RFA1aOtherAdult entity) {
-    return entity.getOtherAdult();
+    OtherAdultDTO otherAdultDTO = entity.getOtherAdult();
+    Optional.ofNullable(entity.getRfa1bForm())
+        .ifPresent(rfa1bForm -> otherAdultDTO.setRfa1bForm(rfa1bForm.getEntityDTO()));
+    return otherAdultDTO;
   }
 
 

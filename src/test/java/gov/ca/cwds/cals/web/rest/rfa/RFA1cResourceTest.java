@@ -2,11 +2,14 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.rfa.configuration.TestExternalEntityConfiguration;
 import io.dropwizard.testing.FixtureHelpers;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.GenericType;
+import org.junit.Assert;
 
 /**
  * @author CWDS CALS API Team
@@ -48,7 +51,24 @@ public class RFA1cResourceTest extends BaseExternalEntityApiTest<RFA1cFormDTO> {
 
         };
 
-    return new BaseExternalEntityApiHelper<>(clientTestRule, configuration, formAHelper);
-  }
+    return new BaseExternalEntityApiHelper<RFA1cFormDTO>(clientTestRule, configuration, formAHelper) {
+      @Override
+      protected RFA1cFormDTO createEntity(RFA1aFormDTO form) throws Exception {
+        RFA1cFormDTO rfa1cFormDTO = super.createEntity(form);
+        try {
+          super.createEntity(form);
+          Assert.fail();
+        } catch (BadRequestException e) {
+          //ok
+        }
+        return rfa1cFormDTO;
+      }
 
+      @Override
+      public void getEntitiesByFormId() throws Exception {
+
+      }
+    };
+
+  }
 }
