@@ -18,8 +18,8 @@ public interface FacilityTypeMapper {
     @Mapping(target = "description", source = "tblFacTypeDesc")
     FacilityTypeDTO toFacilityTypeDTO(LisTableFile lisTableFile);
 
-    @Mapping(target = "code", source = "lgcId")
-    @Mapping(target = "description", source = "shortDsc")
+    @Mapping(target = "code", source = "logicalId")
+    @Mapping(target = "description", source = "shortDescription")
     FacilityTypeDTO toFacilityTypeDTO(FacilityType facilityType);
 
 }

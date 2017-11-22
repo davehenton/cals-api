@@ -13,7 +13,6 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1cCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1cServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1cFormCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import gov.ca.cwds.rest.api.Request;
@@ -161,10 +160,10 @@ public class RFA1cFormsResource {
       }
   )
   @ApiOperation(
-      value = "Returns RFA 1C Forms by Application Id",
-      response = RFA1cFormCollectionDTO.class
+      value = "Returns RFA 1C Form by Application Id",
+      response = RFA1cFormDTO.class
   )
-  public Response getRFA1cFormsByFormRFA1aFormId(
+  public Response getRFA1cFormByFormRFA1aFormId(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
           required = true,
@@ -172,7 +171,11 @@ public class RFA1cFormsResource {
           value = "The RFA-1A Application Id"
       )
           Long applicationId) {
-    return collectionResourceDelegate.get(applicationId);
+
+    RFAExternalEntityGetParameterObject paramsObj = new RFAExternalEntityGetParameterObject(
+        applicationId, null);
+
+    return resourceDelegate.get(paramsObj);
   }
 
   @UnitOfWork(CALSNS)
