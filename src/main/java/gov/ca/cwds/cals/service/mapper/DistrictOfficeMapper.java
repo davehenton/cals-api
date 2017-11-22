@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
 @Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface DistrictOfficeMapper {
 
-    @Mapping(target = "number", source = "logicalId")
-    @Mapping(target = "name", source = "shortDescription")
-    DistrictOfficeDTO toDistrictOffice(County county);
+  @Mapping(target = "number", source = "logicalId")
+  @Mapping(target = "name", source = "shortDescription")
+  DistrictOfficeDTO toDistrictOffice(County county);
 }
