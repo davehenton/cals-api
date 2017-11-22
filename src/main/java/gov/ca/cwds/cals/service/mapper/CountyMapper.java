@@ -14,8 +14,8 @@ import org.mapstruct.factory.Mappers;
 public interface CountyMapper {
     CountyMapper INSTANCE = Mappers.getMapper(CountyMapper.class);
 
-    @Mapping(target = "code", source = "lgcId")
-    @Mapping(target = "description", source = "shortDsc")
+    @Mapping(target = "code", source = "logicalId")
+    @Mapping(target = "description", source = "shortDescription")
     @Mapping(target = "lisCode", ignore = true)
     CountyDTO toCountyDTO(County county);
 

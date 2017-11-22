@@ -125,7 +125,7 @@ public interface FacilityMapper {
   @Mapping(target = "lastVisitDate",
       expression = "java(licensingVisit.getVisitDate() == null? " +
           "null : LocalDateTime.of(licensingVisit.getVisitDate(), java.time.LocalTime.MIN))")
-  @Mapping(target = "lastVisitReason.description", source = "visitType.shortDsc")
+  @Mapping(target = "lastVisitReason.description", source = "visitType.shortDescription")
   void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);
 
   ExpandedFacilityDTO toExpandedFacilityDTO(FacilityDTO facilityDTO,

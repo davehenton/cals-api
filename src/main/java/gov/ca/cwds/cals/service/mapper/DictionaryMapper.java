@@ -22,8 +22,8 @@ public interface DictionaryMapper {
   @Mapping(target = "code", ignore = true)
   DictionaryDTO toDictionary(BaseStaffPerson staffPerson);
 
-  @Mapping(target = "code", source = "lgcId")
-  @Mapping(target = "description", source = "shortDsc")
+  @Mapping(target = "code", source = "logicalId")
+  @Mapping(target = "description", source = "shortDescription")
   DictionaryDTO toDictionary(LicenseStatus licenseStatus);
 
   @Named("facilityStatus")

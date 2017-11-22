@@ -41,7 +41,7 @@ public interface FacilityChildMapper {
     @Mapping(target = "messages", ignore = true)
     FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO, BaseStaffPerson staffPerson);
 
-    @Mapping(target = "countyOfOrigin", source = "shortDsc")
+    @Mapping(target = "countyOfOrigin", source = "shortDescription")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "person", ignore = true)
     @Mapping(target = "dateOfPlacement", ignore = true)
