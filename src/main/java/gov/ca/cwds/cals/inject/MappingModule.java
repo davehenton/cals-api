@@ -1,12 +1,9 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
 import gov.ca.cwds.cals.service.mapper.ClientScpEthnicityMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.CountyMapper;
-import gov.ca.cwds.cals.service.mapper.EmergencyContactDetailMapper;
-import gov.ca.cwds.cals.service.mapper.ExternalInterfaceMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
@@ -51,12 +48,6 @@ public class MappingModule extends AbstractModule {
     bind(FacilityTypeMapper.class).to(FacilityTypeMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(RFA1aFormMapper.class).to(RFA1aFormMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(ExternalInterfaceMapper.class).to(ExternalInterfaceMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(EmergencyContactDetailMapper.class).to(EmergencyContactDetailMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(BackgroundCheckMapper.class).to(BackgroundCheckMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapper.INSTANCE.getClass())
         .asEagerSingleton();

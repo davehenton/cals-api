@@ -12,19 +12,14 @@ import gov.ca.cwds.cals.Constants.PhoneticSearchTables;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.StaffPerson;
 import gov.ca.cwds.cals.persistence.dao.cms.XASsaName3Dao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaBackgroundCheckDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaClientScpEthnicityDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaEmergencyContactDetailDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaExternalInterfaceDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaOtherAdultsInPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaOtherChildrenInPlacementHomeDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaOtherPeopleScpRelationshipDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaOutOfStateCheckDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaPhoneContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeInformationDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeNotesDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeProfileDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeUcDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaSubstituteCareProviderDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaSubstituteCareProviderUCDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
@@ -34,7 +29,6 @@ import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
@@ -51,11 +45,8 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
-import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
 import gov.ca.cwds.cals.service.mapper.ClientScpEthnicityMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
-import gov.ca.cwds.cals.service.mapper.EmergencyContactDetailMapper;
-import gov.ca.cwds.cals.service.mapper.ExternalInterfaceMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
@@ -71,6 +62,8 @@ import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderUCMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
+import gov.ca.cwds.cms.data.access.CWSIdentifier;
+import gov.ca.cwds.cms.data.access.parameter.PlacementHomeParameterObject;
 import gov.ca.cwds.cms.data.access.service.PlacementHomeService;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
@@ -79,14 +72,11 @@ import gov.ca.cwds.data.legacy.cms.dao.LicenseStatusDao;
 import gov.ca.cwds.data.legacy.cms.dao.PlacementHomeDao;
 import gov.ca.cwds.data.legacy.cms.dao.SsaName3ParameterObject;
 import gov.ca.cwds.data.legacy.cms.dao.StateDao;
-import gov.ca.cwds.data.legacy.cms.entity.BackgroundCheck;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
 import gov.ca.cwds.data.legacy.cms.entity.ClientScpEthnicity;
 import gov.ca.cwds.data.legacy.cms.entity.CountyOwnership;
-import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
-import gov.ca.cwds.data.legacy.cms.entity.ExternalInterface;
 import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
@@ -94,7 +84,6 @@ import gov.ca.cwds.data.legacy.cms.entity.OutOfStateCheck;
 import gov.ca.cwds.data.legacy.cms.entity.PhoneContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeInformation;
-import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeProfile;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProviderUc;
 import gov.ca.cwds.rest.api.Request;
@@ -140,34 +129,16 @@ public class FacilityService implements CrudsService {
   private LisTableFileDao lisTableFileDao;
 
   @Inject
-  private XaExternalInterfaceDao xaExternalInterfaceDao;
-
-  @Inject
   private PlacementHomeDao placementHomeDao;
 
   @Inject
-  private XaPlacementHomeUcDao xaPlacementHomeUcDao;
-
-  @Inject
-  private XaPlacementHomeNotesDao xaPlacementHomeNotesDao;
-
-  @Inject
   private XaEmergencyContactDetailDao xaEmergencyContactDetailDao;
-
-  @Inject
-  private XaBackgroundCheckDao xaBackgroundCheckDao;
 
   @Inject
   private XaSubstituteCareProviderDao xaSubstituteCareProviderDao;
 
   @Inject
   private XaSubstituteCareProviderUCDao xaSubstituteCareProviderUCDao;
-
-  @Inject
-  private XaPlacementHomeInformationDao xaPlacementHomeInformationDao;
-
-  @Inject
-  private XaPlacementHomeProfileDao xaPlacementHomeProfileDao;
 
   @Inject
   private XaPhoneContactDetailDao xaPhoneContactDetailDao;
@@ -203,16 +174,7 @@ public class FacilityService implements CrudsService {
   private ComplaintMapper complaintMapper;
 
   @Inject
-  private ExternalInterfaceMapper externalInterfaceMapper;
-
-  @Inject
   private PlacementHomeMapper placementHomeMapper;
-
-  @Inject
-  private EmergencyContactDetailMapper emergencyContactDetailMapper;
-
-  @Inject
-  private BackgroundCheckMapper backgroundCheckMapper;
 
   @Inject
   private ClientScpEthnicityMapper clientScpEthnicityMapper;
@@ -267,6 +229,9 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private LicenseStatusDao licenseStatusDao;
+
+  @Inject
+  private XaPlacementHomeInformationDao xaPlacementHomeInformationDao;
 
   @Inject
   private StateDao stateDao;
@@ -490,22 +455,9 @@ public class FacilityService implements CrudsService {
   }
 
   protected PlacementHome storePlacementHome(RFA1aFormDTO form) {
-    PlacementHome placementHome = placementHomeMapper.toPlacementHome(
-        form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));
-
-    PlacementHome storedPlacementHome = placementHomeService
-        .create(placementHome, getStaffPersonId());
+    PlacementHome placementHome = mapRfaFormtoPlacementHome(form);
+    PlacementHome storedPlacementHome = createPlacementHomeInCWSCMS(form, placementHome);
     String placementHomeId = storedPlacementHome.getIdentifier();
-
-    storeCountyOwnership(placementHomeId, "P", Collections.emptyList());
-
-    storeExternalInterface();
-
-    storeEmergencyContactDetail(placementHomeId);
-
-    storeBackgroundCheck();
-
-    storePlacementHomeProfile(form, placementHomeId);
 
     List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
         .orElse(Collections.emptyList());
@@ -538,8 +490,6 @@ public class FacilityService implements CrudsService {
     storeOtherChildren(rfaApplicantIdsMap, form, storedPlacementHome);
     storeOtherAdults(rfaApplicantIdsMap, form, storedPlacementHome);
 
-    prepareAddressPhoneticSearchKeywords(storedPlacementHome);
-
     return storedPlacementHome;
   }
 
@@ -562,18 +512,23 @@ public class FacilityService implements CrudsService {
     ssaName3Dao.callStoredProc(parameterObject);
   }
 
-  private void prepareAddressPhoneticSearchKeywords(PlacementHome placementHome) {
-    SsaName3ParameterObject parameterObject = new SsaName3ParameterObject();
-    parameterObject.setTableName(PhoneticSearchTables.ADR_PHTT);
-    parameterObject.setCrudOper("I");
-    parameterObject.setIdentifier(placementHome.getIdentifier());
-    parameterObject.setNameCd("P");
-    parameterObject.setStreetNumber(placementHome.getStreetNo());
-    parameterObject.setStreetName(placementHome.getStreetNm());
-    parameterObject.setGvrEntc(placementHome.getGvrEntc());
-    parameterObject.setUpdateTimeStamp(new Date());
-    parameterObject.setUpdateId(placementHome.getLastUpdateId());
-    ssaName3Dao.callStoredProc(parameterObject);
+  private PlacementHome createPlacementHomeInCWSCMS(RFA1aFormDTO form,
+      PlacementHome placementHome) {
+    PlacementHomeParameterObject parameterObject = new PlacementHomeParameterObject();
+    parameterObject.setStaffPersonId(getStaffPersonId());
+    parameterObject.setHomeLanguages(getHomeLanguages(form));
+    return placementHomeService
+        .create(placementHome, parameterObject);
+  }
+
+  private PlacementHome mapRfaFormtoPlacementHome(RFA1aFormDTO form) {
+    return placementHomeMapper.toPlacementHome(
+        form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));
+  }
+
+  private Set<? extends CWSIdentifier> getHomeLanguages(RFA1aFormDTO form) {
+    return Optional.ofNullable(form.getResidence())
+        .map(ResidenceDTO::getHomeLanguages).orElse(Collections.emptySet());
   }
 
   private CountyOwnership storeCountyOwnership(String entityId, String discriminator, List<CountyType> counties) {
@@ -611,22 +566,6 @@ public class FacilityService implements CrudsService {
     return xaSubstituteCareProviderUCDao.create(substituteCareProviderUc);
   }
 
-  private void storeExternalInterface() {
-    ExternalInterface externalInterface = externalInterfaceMapper.toExternalInterface("");
-    xaExternalInterfaceDao.create(externalInterface);
-  }
-
-  private void storeEmergencyContactDetail(String placementHomeId) {
-    EmergencyContactDetail emergencyContactDetail =
-        emergencyContactDetailMapper.toEmergencyContactDetail(placementHomeId);
-    xaEmergencyContactDetailDao.create(emergencyContactDetail);
-  }
-
-  private void storeBackgroundCheck() {
-    BackgroundCheck backgroundCheck = backgroundCheckMapper.toBackgroundCheck("");
-    xaBackgroundCheckDao.create(backgroundCheck);
-  }
-
   private PlacementHomeInformation storePlacementHomeInformation(RFA1aFormDTO form,
       ApplicantDTO applicantDTO, String placementHomeId, String substituteCareProviderId) {
     PlacementHomeInformation placementHomeInformation =
@@ -634,17 +573,6 @@ public class FacilityService implements CrudsService {
             form, applicantDTO, placementHomeId, substituteCareProviderId);
 
     return xaPlacementHomeInformationDao.create(placementHomeInformation);
-  }
-
-  private void storePlacementHomeProfile(RFA1aFormDTO form, String placementHomeId) {
-    Set<LanguageType> languageTypes = Optional.ofNullable(form.getResidence())
-        .map(ResidenceDTO::getHomeLanguages)
-        .orElse(Collections.emptySet());
-    for (LanguageType languageType : languageTypes) {
-      PlacementHomeProfile placementHomeProfile =
-          placementHomeProfileMapper.toPlacementHomeProfile(languageType, placementHomeId);
-      xaPlacementHomeProfileDao.create(placementHomeProfile);
-    }
   }
 
   private void storePhoneContactDetails(ApplicantDTO applicantDTO,
