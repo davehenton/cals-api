@@ -21,6 +21,7 @@ public interface PhoneContactDetailMapper {
   @Mapping(target = "estblshId", source = "substituteCareProviderId")
   @Mapping(target = "lstUpdId", ignore = true)
   @Mapping(target = "lstUpdTs", ignore = true)
+  @Mapping(target = "thirdId", ignore = true)
   PhoneContactDetail toPhoneContactDetail(PhoneDTO phoneDTO,
       String substituteCareProviderId);
 
