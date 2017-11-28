@@ -90,7 +90,13 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   private LocalDate applicationDate;
 
   @Valid
-  private List<DisclosureDTO> disclosures = new ArrayList<>();
+  private List<DisclosureDTO> convictedInCaliforniaDisclosures = new ArrayList<>();
+
+  @Valid
+  private List<DisclosureDTO> convictedInAnotherStateDisclosures = new ArrayList<>();
+
+  @Valid
+  private List<DisclosureDTO> arrestedForCrimeDisclosures = new ArrayList<>();
 
   public CountyType getApplicationCounty() {
     return applicationCounty;
@@ -237,12 +243,31 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
     this.applicationDate = applicationDate;
   }
 
-  public List<DisclosureDTO> getDisclosures() {
-    return disclosures;
+  public List<DisclosureDTO> getConvictedInCaliforniaDisclosures() {
+    return convictedInCaliforniaDisclosures;
   }
 
-  public void setDisclosures(List<DisclosureDTO> disclosures) {
-    this.disclosures = disclosures;
+  public void setConvictedInCaliforniaDisclosures(
+      List<DisclosureDTO> convictedInCaliforniaDisclosures) {
+    this.convictedInCaliforniaDisclosures = convictedInCaliforniaDisclosures;
+  }
+
+  public List<DisclosureDTO> getConvictedInAnotherStateDisclosures() {
+    return convictedInAnotherStateDisclosures;
+  }
+
+  public void setConvictedInAnotherStateDisclosures(
+      List<DisclosureDTO> convictedInAnotherStateDisclosures) {
+    this.convictedInAnotherStateDisclosures = convictedInAnotherStateDisclosures;
+  }
+
+  public List<DisclosureDTO> getArrestedForCrimeDisclosures() {
+    return arrestedForCrimeDisclosures;
+  }
+
+  public void setArrestedForCrimeDisclosures(
+      List<DisclosureDTO> arrestedForCrimeDisclosures) {
+    this.arrestedForCrimeDisclosures = arrestedForCrimeDisclosures;
   }
 
   public NameSuffixType getApplicantNameSuffix() {

@@ -78,16 +78,16 @@ def sliceData = { String str, int... sizes ->
     result
 }
 
-def offenseData = sliceData(getSafeJoinWith(". ", jsonMap.disclosures[0]?.offense), [100, 130, 130] as int[])
-def offenseDetailsData = sliceData(getSafeJoinWith(". ", jsonMap.disclosures[0]?.offense_details), [60, *([130]*12)] as int[])
+def offenseData = sliceData(getSafeJoinWith(". ", jsonMap.convicted_in_california_disclosures[0]?.offense), [100, 130, 130] as int[])
+def offenseDetailsData = sliceData(getSafeJoinWith(". ", jsonMap.convicted_in_california_disclosures[0]?.offense_details), [60, *([130]*12)] as int[])
 [
         'COUNTY' : jsonMap.application_county?.value,
         'NAME OF RESOURCE FAMILY' : jsonMap.resource_family_name,
         'YOUR FULL NAME PRINT CLEARLY' : getFullName(jsonMap),
         'RESIDENCE ADDRESS STREET CITY ZIP' : formatAddress(getAddressStreetCityStateZip(jsonMap.residence_address)),
         'DATE' : dateIsoToUs(jsonMap.application_date),
-        'In which state and city did you commit the offense' : [jsonMap.disclosures[0]?.offense_city, jsonMap.disclosures[0]?.offense_state?.value].join(', '),
-        'When did this happen' : dateIsoToUs(jsonMap.disclosures[0]?.offense_date),
+        'In which state and city did you commit the offense' : [jsonMap.convicted_in_california_disclosures[0]?.offense_city, jsonMap.convicted_in_california_disclosures[0]?.offense_state?.value].join(', '),
+        'When did this happen' : dateIsoToUs(jsonMap.convicted_in_california_disclosures[0]?.offense_date),
         'DATE_2' : dateIsoToUs(jsonMap.application_date),
         'Explain what happened line 1' : offenseDetailsData[0],
         'Explain what happened line 2' : offenseDetailsData[1],
