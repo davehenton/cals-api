@@ -1,6 +1,9 @@
 package gov.ca.cwds.cals.service.rfa;
 
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aApplicantDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aOtherAdultDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1bDao;
@@ -15,6 +18,7 @@ import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityUpdateParams;
+import gov.ca.cwds.rest.exception.ExpectedException;
 
 /**
  * @author CWDS CALS API Team
@@ -34,18 +38,21 @@ public class RFA1bService extends AbstractRFAExternalEntityService<RFA1bForm, RF
 
   @Override
   public RFA1bFormDTO create(RFAExternalEntityUpdateParameterObject<RFA1bFormDTO> request) {
+
+    RFA1bFormDTO rfa1bFormDTO = find(request);
+    if (rfa1bFormDTO != null) {
+      throw new ExpectedException(
+          Constants.ExpectedExceptionMessages.RFA_1B_FORM_ALREADY_EXISTS, BAD_REQUEST);
+    }
+
     RFA1bForm rfa1bForm = composeEntity(request);
     RFA1bDao dao = (RFA1bDao) getDao();
     if (request instanceof RFAApplicantAwareEntityUpdateParams) {
-
       RFAApplicantAwareEntityUpdateParams params = (RFAApplicantAwareEntityUpdateParams) request;
       rfa1bForm = dao.createForApplicant(rfa1bForm, params.getApplicantId());
-
     } else if (request instanceof RFAOtherAdultAwareEntityUpdateParams) {
-
       RFAOtherAdultAwareEntityUpdateParams params = (RFAOtherAdultAwareEntityUpdateParams) request;
       rfa1bForm = dao.createForOtherAdult(rfa1bForm, params.getOtherAdultId());
-
     }
     return extractDTO(rfa1bForm);
   }
