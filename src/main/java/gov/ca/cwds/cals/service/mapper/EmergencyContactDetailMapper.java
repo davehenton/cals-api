@@ -17,7 +17,7 @@ import org.mapstruct.factory.Mappers;
 public interface EmergencyContactDetailMapper {
   EmergencyContactDetailMapper INSTANCE = Mappers.getMapper(EmergencyContactDetailMapper.class);
 
-  @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
+  @Mapping(target = "identifier", expression = "java(Utils.StaffPerson.generate())")
   @Mapping(target = "estblshCd", constant = "P")
   @Mapping(target = "estblshId", source = "placementHomeId")
   @Mapping(target = "cntctNme", ignore = true) // TODO: 8/17/2017 mapping required
@@ -33,7 +33,7 @@ public interface EmergencyContactDetailMapper {
   @Mapping(target = "zipNo", ignore = true) // TODO: 8/17/2017 mapping required
   @Mapping(target = "zipSfxNo", ignore = true) // TODO: 8/17/2017 mapping required
   @Mapping(target = "frgAdrtB", constant = N)
-  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
+  @Mapping(target = "lstUpdId", expression = "java(Utils.StaffPerson.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   EmergencyContactDetail toEmergencyContactDetail(String placementHomeId);
 }

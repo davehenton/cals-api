@@ -18,12 +18,12 @@ import org.mapstruct.factory.Mappers;
 public interface PlacementHomeInformationMapper {
   PlacementHomeInformationMapper INSTANCE = Mappers.getMapper(PlacementHomeInformationMapper.class);
 
-  @Mapping(target = "thirdId", expression = "java(Utils.Id.generate())")
+  @Mapping(target = "thirdId", expression = "java(Utils.StaffPerson.generate())")
   @Mapping(target = "startDt", expression = "java(LocalDate.now())")
   @Mapping(target = "endDt", ignore = true)
   @Mapping(target = "licnseeCd", constant = "U")
   @Mapping(target = "crprvdrCd", constant = "Y")
-  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
+  @Mapping(target = "lstUpdId", expression = "java(Utils.StaffPerson.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   @Mapping(target = "fksbPvdrt", source = "substituteCareProviderId")
   @Mapping(target = "fkplcHmT", source = "placementHomeId")

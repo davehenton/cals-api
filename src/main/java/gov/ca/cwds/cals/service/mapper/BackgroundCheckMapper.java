@@ -15,12 +15,12 @@ import org.mapstruct.factory.Mappers;
 public interface BackgroundCheckMapper {
   BackgroundCheckMapper INSTANCE = Mappers.getMapper(BackgroundCheckMapper.class);
 
-  @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
+  @Mapping(target = "identifier", expression = "java(Utils.StaffPerson.generate())")
   @Mapping(target = "rcpntCd", ignore = true) // TODO: 8/18/2017
   @Mapping(target = "rcpntId", ignore = true) // TODO: 8/18/2017
   @Mapping(target = "bkgrchkc", constant = "-1") // TODO: 8/17/2017
   @Mapping(target = "bkgrchkDt", expression = "java(LocalDate.now())") // TODO: 8/17/2017
-  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
+  @Mapping(target = "lstUpdId", expression = "java(Utils.StaffPerson.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   @Mapping(target = "fkcoltrlT", ignore = true)  // TODO: 8/17/2017
   BackgroundCheck toBackgroundCheck(String stub);

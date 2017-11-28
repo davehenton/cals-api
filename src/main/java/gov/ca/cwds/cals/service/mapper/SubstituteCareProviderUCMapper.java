@@ -22,7 +22,7 @@ public interface SubstituteCareProviderUCMapper {
           "Utils.Applicant.getCaliforniaDriverLicense(applicant, Constants.SPACE)))")
   @Mapping(target = "firstNm", expression = "java(StringUtils.upperCase(applicant.getFirstName()))")
   @Mapping(target = "lastNm", expression = "java(StringUtils.upperCase(applicant.getLastName()))")
-  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
+  @Mapping(target = "lstUpdId", expression = "java(Utils.StaffPerson.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   SubstituteCareProviderUc toSubstituteCareProviderUC(String identifier, ApplicantDTO applicant);
 }

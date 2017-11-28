@@ -15,10 +15,10 @@ import org.mapstruct.factory.Mappers;
 public interface PlacementHomeProfileMapper {
   PlacementHomeProfileMapper INSTANCE = Mappers.getMapper(PlacementHomeProfileMapper.class);
 
-  @Mapping(target = "thirdId", expression = "java(Utils.Id.generate())")
+  @Mapping(target = "thirdId", expression = "java(Utils.StaffPerson.generate())")
   @Mapping(target = "chrctrC", source = "languageType.cwsId")
   @Mapping(target = "chrctrCd", constant = "L")
-  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
+  @Mapping(target = "lstUpdId", expression = "java(Utils.StaffPerson.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   @Mapping(target = "fkplcHmT", source = "placementHomeId")
   PlacementHomeProfile toPlacementHomeProfile(LanguageType languageType, String placementHomeId);

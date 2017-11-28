@@ -34,7 +34,7 @@ project.ext {
     projectVersion = projectMajorVersion + '-SNAPSHOT'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.5.1-SNAPSHOT'
+    coreApiVersion = '0.5.1.local-SNAPSHOT'
     shiroSecurityVersion = '0.4.3'
     calsModelVersion = '0.4.6'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
@@ -125,6 +125,7 @@ dependencies {
         exclude group: 'org.glassfish.jersey.core'
     }
     compile (group: 'gov.ca.cwds.api', name: 'drools-engine', version: coreApiVersion , changing: true)
+    compile (group: 'gov.ca.cwds.api', name: 'legacy-data-access-services', version: coreApiVersion , changing: true)
 
     compile group: 'gov.ca.cwds.api', name:'jwt-security', version: shiroSecurityVersion
 

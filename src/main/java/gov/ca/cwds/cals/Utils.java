@@ -68,16 +68,34 @@ public final class Utils {
 
   }
 
-  public static class Id {
+  public static class StaffPerson {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Id.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StaffPerson.class);
 
     public static final String DEFAULT_USER_ID = "0X5";
+
+    private StaffPerson() {
+    }
+
+    public static String getStaffPersonId() {
+      Subject currentUser = SecurityUtils.getSubject();
+      String staffPersonId = DEFAULT_USER_ID; //Default value
+      if (currentUser.getPrincipals() != null) {
+        @SuppressWarnings("rawtypes")
+        List principals = currentUser.getPrincipals().asList();
+        if (principals.size() > 1 && principals.get(1) instanceof PerryUserIdentity) {
+          PerryUserIdentity currentUserInfo = (PerryUserIdentity) principals.get(1);
+          if (currentUserInfo.getStaffId() != null) {
+            staffPersonId = currentUserInfo.getStaffId();
+          }
+        }
+      }
+      return staffPersonId;
+    }
+
+    //TODO remove
     private static final Object monitor = new Object();
     private static String lastId;
-
-    private Id() {
-    }
 
     public static String generate() {
       synchronized (monitor) {
@@ -96,22 +114,7 @@ public final class Utils {
       }
       return lastId;
     }
-
-    public static String getStaffPersonId() {
-      Subject currentUser = SecurityUtils.getSubject();
-      String staffPersonId = DEFAULT_USER_ID; //Default value
-      if (currentUser.getPrincipals() != null) {
-        @SuppressWarnings("rawtypes")
-        List principals = currentUser.getPrincipals().asList();
-        if (principals.size() > 1 && principals.get(1) instanceof PerryUserIdentity) {
-          PerryUserIdentity currentUserInfo = (PerryUserIdentity) principals.get(1);
-          if (currentUserInfo.getStaffId() != null) {
-            staffPersonId = currentUserInfo.getStaffId();
-          }
-        }
-      }
-      return staffPersonId;
-    }
+// end of remove
 
   }
 
