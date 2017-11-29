@@ -329,8 +329,6 @@ public class DataAccessModule extends AbstractModule {
     return xaCalsnsHibernateBundle.getSessionFactory();
   }
 
-
-
   @Provides
   @FasHibernateBundle
   public HibernateBundle<CalsApiConfiguration> getFasHibernateBundle() {

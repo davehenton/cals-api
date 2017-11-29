@@ -17,7 +17,8 @@ import org.hibernate.annotations.Type;
  */
 @NamedQuery(
     name = RFA1cForm.NAMED_QUERY_FIND_ALL_BY_FORM,
-    query = "FROM RFA1cForm f WHERE f.formId = :" + PARAM_FORM_ID + " ORDER BY f.createDateTime DESC"
+    query = "FROM RFA1cForm f WHERE f.formId = :" + PARAM_FORM_ID
+        + " ORDER BY f.createDateTime DESC"
 )
 @NamedQuery(
     name = RFA1cForm.NAMED_QUERY_FIND_BY_FORMA_ID_AND_FORMC_ID,

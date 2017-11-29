@@ -9,8 +9,7 @@ import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
-import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.Utils.Id;
+import gov.ca.cwds.cals.Utils.StaffPerson;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.XaRFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
@@ -78,7 +77,7 @@ public class RFA1aFormService
     RFA1aForm form = new RFA1aForm();
     rfa1aFomMapper.toRFA1aForm(form, formDTO);
 
-    String staffPersonId = Id.getStaffPersonId();
+    String staffPersonId = StaffPerson.getStaffPersonId();
     LocalDateTime now = LocalDateTime.now();
     form.setCreateDateTime(now);
     form.setCreateUserId(staffPersonId);
@@ -117,7 +116,7 @@ public class RFA1aFormService
 
   private RFA1aForm fillFormUpdateAttributes(RFA1aForm form) {
     form.setUpdateDateTime(LocalDateTime.now());
-    form.setUpdateUserId(Utils.Id.getStaffPersonId());
+    form.setUpdateUserId(StaffPerson.getStaffPersonId());
     return form;
   }
 
