@@ -78,7 +78,7 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
       }
 
     };
-     
+
   }
 
   @Override

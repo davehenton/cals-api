@@ -11,7 +11,6 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.Applicant;
 import gov.ca.cwds.cals.Utils.StaffPerson;
-import gov.ca.cwds.cals.persistence.dao.cms.XASsaName3Dao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaClientScpEthnicityDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaEmergencyContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaOtherAdultsInPlacementHomeDao;
@@ -146,9 +145,6 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private XaOtherPeopleScpRelationshipDao xaOtherPeopleScpRelationshipDao;
-
-  @Inject
-  private XASsaName3Dao ssaName3Dao;
 
   @Inject
   private CountiesDao countiesDao;
@@ -449,11 +445,6 @@ public class FacilityService implements CrudsService {
         placementHome.setPrimarySubstituteCareProvider(substituteCareProvider);
       }
       rfaApplicantIdsMap.put(applicant.getId(), substituteCareProvider);
-
-      storeOutOfStateChecks(
-          state -> outOfStateCheckMapper.toOutOfStateCheck(substituteCareProvider, state),
-          applicant.getRfa1bForm());
-
     }
 
     storeOtherChildren(rfaApplicantIdsMap, form, placementHome);
@@ -490,6 +481,7 @@ public class FacilityService implements CrudsService {
     parameterObject.setPlacementHomeId(placementHome.getIdentifier());
     parameterObject.setPhoneNumbers(mapPhoneContactDetails(applicant));
     parameterObject.setEthnicity(applicant.getEthnicity());
+    parameterObject.setOtherStatesOfLiving(applicant.getRfa1bForm().getOtherStatesOfLiving());
     return substituteCareProviderService.create(
         mapRFAEntitiesToSCP(form, applicant), parameterObject);
 

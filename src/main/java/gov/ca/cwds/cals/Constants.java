@@ -145,18 +145,6 @@ public final class Constants {
     }
   }
 
-  //TODO Remove
-  public static class PhoneticSearchTables {
-
-    public static final String SCP_PHTT = "SCP_PHTT";
-
-    public static final String ADR_PHTT = "ADR_PHTT";
-
-    private PhoneticSearchTables() {
-    }
-
-  }
-
   public enum DictionaryType {
     AGE_GROUP_TYPE(AgeGroupType.class),
     LANGUAGE_TYPE(LanguageType.class),
