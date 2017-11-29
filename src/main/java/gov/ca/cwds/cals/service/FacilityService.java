@@ -20,7 +20,6 @@ import gov.ca.cwds.cals.persistence.dao.cms.XaOtherPeopleScpRelationshipDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaOutOfStateCheckDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaPhoneContactDetailDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeInformationDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaSubstituteCareProviderDao;
 import gov.ca.cwds.cals.persistence.dao.cms.XaSubstituteCareProviderUCDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityInformationDao;
@@ -60,11 +59,12 @@ import gov.ca.cwds.cals.service.mapper.PlacementHomeInformationMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
-import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderUCMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.cms.data.access.CWSIdentifier;
 import gov.ca.cwds.cms.data.access.parameter.PlacementHomeParameterObject;
+import gov.ca.cwds.cms.data.access.parameter.SCPParameterObject;
 import gov.ca.cwds.cms.data.access.service.PlacementHomeService;
+import gov.ca.cwds.cms.data.access.service.SubstituteCareProviderService;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
 import gov.ca.cwds.data.legacy.cms.dao.FacilityTypeDao;
@@ -85,7 +85,6 @@ import gov.ca.cwds.data.legacy.cms.entity.PhoneContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeInformation;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
-import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProviderUc;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.exception.ExpectedException;
@@ -120,6 +119,9 @@ public class FacilityService implements CrudsService {
   private PlacementHomeService placementHomeService;
 
   @Inject
+  private SubstituteCareProviderService substituteCareProviderService;
+
+  @Inject
   private LisFacFileLisDao lisFacFileLisDao;
 
   @Inject
@@ -133,9 +135,6 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private XaEmergencyContactDetailDao xaEmergencyContactDetailDao;
-
-  @Inject
-  private XaSubstituteCareProviderDao xaSubstituteCareProviderDao;
 
   @Inject
   private XaSubstituteCareProviderUCDao xaSubstituteCareProviderUCDao;
@@ -181,9 +180,6 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private SubstituteCareProviderMapper substituteCareProviderMapper;
-
-  @Inject
-  private SubstituteCareProviderUCMapper substituteCareProviderUCMapper;
 
   @Inject
   private PlacementHomeInformationMapper placementHomeInformationMapper;
@@ -455,26 +451,26 @@ public class FacilityService implements CrudsService {
   }
 
   protected PlacementHome storePlacementHome(RFA1aFormDTO form) {
-    PlacementHome placementHome = mapRfaFormtoPlacementHome(form);
-    PlacementHome storedPlacementHome = createPlacementHomeInCWSCMS(form, placementHome);
-    String placementHomeId = storedPlacementHome.getIdentifier();
+    PlacementHome placementHome =
+        createPlacementHomeInCWSCMS(form, mapRfaFormToPlacementHome(form));
 
     List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
         .orElse(Collections.emptyList());
 
     Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>(applicants.size());
     for (ApplicantDTO applicant : applicants) {
-      SubstituteCareProvider substituteCareProvider = storeSubstituteCareProvider(form, applicant);
+      SubstituteCareProvider substituteCareProvider = createSubstituteCarePrivoderInCWSCMS(form,
+          applicant);
       rfaApplicantIdsMap.put(applicant.getId(), substituteCareProvider);
-      if (Utils.Applicant.isPrimary(form, applicant)) {
-        storedPlacementHome.setPrimarySubstituteCareProvider(substituteCareProvider);
-      }
 
-      storeSubstituteCareProviderUC(substituteCareProvider.getIdentifier(), applicant);
+      if (Utils.Applicant.isPrimary(form, applicant)) {
+        placementHome.setPrimarySubstituteCareProvider(substituteCareProvider);
+      }
 
       storeCountyOwnership(substituteCareProvider.getIdentifier(), "S", Collections.emptyList());
 
-      storePlacementHomeInformation(form, applicant, placementHomeId, substituteCareProvider.getIdentifier());
+      storePlacementHomeInformation(form, applicant, placementHome.getIdentifier(),
+          substituteCareProvider.getIdentifier());
 
       storePhoneContactDetails(applicant, substituteCareProvider.getIdentifier());
       storeEthnicity(applicant, substituteCareProvider.getIdentifier());
@@ -484,13 +480,21 @@ public class FacilityService implements CrudsService {
           applicant.getRfa1bForm());
 
       prepareSubstituteCareProviderPhoneticSearchKeywords(substituteCareProvider,
-          storedPlacementHome);
+          placementHome);
     }
 
-    storeOtherChildren(rfaApplicantIdsMap, form, storedPlacementHome);
-    storeOtherAdults(rfaApplicantIdsMap, form, storedPlacementHome);
+    storeOtherChildren(rfaApplicantIdsMap, form, placementHome);
+    storeOtherAdults(rfaApplicantIdsMap, form, placementHome);
 
-    return storedPlacementHome;
+    return placementHome;
+  }
+
+  private SubstituteCareProvider createSubstituteCarePrivoderInCWSCMS(RFA1aFormDTO form,
+      ApplicantDTO applicant) {
+    SCPParameterObject parameterObject = new SCPParameterObject();
+    parameterObject.setStaffPersonId(getStaffPersonId());
+    return substituteCareProviderService.create(
+        mapRFAEntitiesToSCP(form, applicant), parameterObject);
   }
 
   private void prepareSubstituteCareProviderPhoneticSearchKeywords(
@@ -521,7 +525,7 @@ public class FacilityService implements CrudsService {
         .create(placementHome, parameterObject);
   }
 
-  private PlacementHome mapRfaFormtoPlacementHome(RFA1aFormDTO form) {
+  private PlacementHome mapRfaFormToPlacementHome(RFA1aFormDTO form) {
     return placementHomeMapper.toPlacementHome(
         form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));
   }
@@ -540,7 +544,7 @@ public class FacilityService implements CrudsService {
     return null;
   }
 
-  private SubstituteCareProvider storeSubstituteCareProvider(RFA1aFormDTO form, ApplicantDTO applicant) {
+  private SubstituteCareProvider mapRFAEntitiesToSCP(RFA1aFormDTO form, ApplicantDTO applicant) {
     SubstituteCareProvider substituteCareProvider =
         substituteCareProviderMapper.toSubstituteCareProvider(applicant);
 
@@ -554,16 +558,7 @@ public class FacilityService implements CrudsService {
     substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
         substituteCareProvider, mailingAddress);
 
-    return xaSubstituteCareProviderDao.create(substituteCareProvider);
-  }
-
-  private SubstituteCareProviderUc storeSubstituteCareProviderUC(
-      String substituteCareProviderIdentifier, ApplicantDTO applicant) {
-
-    SubstituteCareProviderUc substituteCareProviderUc = substituteCareProviderUCMapper
-        .toSubstituteCareProviderUC(substituteCareProviderIdentifier, applicant);
-
-    return xaSubstituteCareProviderUCDao.create(substituteCareProviderUc);
+    return substituteCareProvider;
   }
 
   private PlacementHomeInformation storePlacementHomeInformation(RFA1aFormDTO form,
