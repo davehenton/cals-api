@@ -36,6 +36,9 @@ public class DisclosureDTO extends BaseDTO {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate offenseDate;
 
+  @ApiModelProperty("When did offense happen")
+  private String whenOffenseHappen;
+
   @ApiModelProperty(example = "More details about offence")
   private String offenseDetails;
 
@@ -77,6 +80,14 @@ public class DisclosureDTO extends BaseDTO {
 
   public void setOffenseDate(LocalDate offenseDate) {
     this.offenseDate = offenseDate;
+  }
+
+  public String getWhenOffenseHappen() {
+    return whenOffenseHappen;
+  }
+
+  public void setWhenOffenseHappen(String whenOffenseHappen) {
+    this.whenOffenseHappen = whenOffenseHappen;
   }
 
   public String getOffenseDetails() {

@@ -51,7 +51,7 @@
   },
   "signature": "Anna Peterson",
   "application_date": "2017-07-02",
-  "disclosures": [
+  "convicted_in_california_disclosures": [
     {
       "offense": "Offense description Offense description Offense description Offense description Offense description Offense description Offense description Offense description Offense description ",
       "offense_city": "Sacramento",
@@ -59,9 +59,40 @@
         "id": "CA",
         "value": "California"
       },
+      "when_offense_happen": "free form text",
       "offense_date": "2014-03-12",
       "offense_details": "More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence ",
       "signature": "Anna Peterson",
+      "application_date": "2017-07-02"
+    }
+  ],
+  "convicted_in_another_state_disclosures": [
+    {
+      "offense": "Offense description Offense description ",
+      "offense_city": "City",
+      "offense_state": {
+        "id": "AK",
+        "value": "Alaska"
+      },
+      "offense_date": "2014-03-12",
+      "when_offense_happen": "free form text",
+      "offense_details": "More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence ",
+      "signature": "Signature",
+      "application_date": "2017-07-02"
+    }
+  ],
+  "arrested_for_crime_disclosures": [
+    {
+      "offense": "Offense description Offense description ",
+      "offense_city": "Sacramento",
+      "offense_state": {
+        "id": "AK",
+        "value": "Alaska"
+      },
+      "offense_date": "2011-03-12",
+      "when_offense_happen": "free form text",
+      "offense_details": "More details about offence ",
+      "signature": "Signature 2",
       "application_date": "2017-07-02"
     }
   ]
