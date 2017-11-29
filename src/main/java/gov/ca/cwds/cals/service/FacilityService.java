@@ -27,7 +27,6 @@ import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
@@ -76,7 +75,6 @@ import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
 import gov.ca.cwds.data.legacy.cms.entity.ClientScpEthnicity;
-import gov.ca.cwds.data.legacy.cms.entity.CountyOwnership;
 import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
@@ -467,8 +465,6 @@ public class FacilityService implements CrudsService {
         placementHome.setPrimarySubstituteCareProvider(substituteCareProvider);
       }
 
-      storeCountyOwnership(substituteCareProvider.getIdentifier(), "S", Collections.emptyList());
-
       storePlacementHomeInformation(form, applicant, placementHome.getIdentifier(),
           substituteCareProvider.getIdentifier());
 
@@ -533,15 +529,6 @@ public class FacilityService implements CrudsService {
   private Set<? extends CWSIdentifier> getHomeLanguages(RFA1aFormDTO form) {
     return Optional.ofNullable(form.getResidence())
         .map(ResidenceDTO::getHomeLanguages).orElse(Collections.emptySet());
-  }
-
-  private CountyOwnership storeCountyOwnership(String entityId, String discriminator, List<CountyType> counties) {
-/*
-    CountyOwnership countyOwnership =
-        countyOwnershipMapper.toCountyOwnership(entityId, discriminator, counties);
-    return xaCountyOwnershipDao.create(countyOwnership);
-*/
-    return null;
   }
 
   private SubstituteCareProvider mapRFAEntitiesToSCP(RFA1aFormDTO form, ApplicantDTO applicant) {
