@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
-import gov.ca.cwds.cms.data.access.CWSIdentifier;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,7 +12,7 @@ import org.hibernate.annotations.NamedQuery;
 @Entity
 @Cacheable
 @Table(name = "language_type")
-public class LanguageType extends LegacyComplaintDictionary implements CWSIdentifier {
+public class LanguageType extends LegacyComplaintDictionary {
 
   private static final long serialVersionUID = 6826680604709572750L;
 

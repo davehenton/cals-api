@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.service.mapper.ClientScpEthnicityMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.CountyMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
@@ -49,8 +48,6 @@ public class MappingModule extends AbstractModule {
     bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(PlacementHomeProfileMapper.class).to(PlacementHomeProfileMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(ClientScpEthnicityMapper.class).to(ClientScpEthnicityMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(OtherChildrenInPlacementHomeMapper.class)
         .to(OtherChildrenInPlacementHomeMapper.INSTANCE.getClass())

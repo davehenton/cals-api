@@ -43,7 +43,6 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
-import gov.ca.cwds.cals.service.mapper.ClientScpEthnicityMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
@@ -72,7 +71,6 @@ import gov.ca.cwds.data.legacy.cms.dao.StateDao;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
-import gov.ca.cwds.data.legacy.cms.entity.ClientScpEthnicity;
 import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
@@ -169,9 +167,6 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private PlacementHomeMapper placementHomeMapper;
-
-  @Inject
-  private ClientScpEthnicityMapper clientScpEthnicityMapper;
 
   @Inject
   private SubstituteCareProviderMapper substituteCareProviderMapper;
@@ -455,8 +450,6 @@ public class FacilityService implements CrudsService {
       }
       rfaApplicantIdsMap.put(applicant.getId(), substituteCareProvider);
 
-      storeEthnicity(applicant, substituteCareProvider.getIdentifier());
-
       storeOutOfStateChecks(
           state -> outOfStateCheckMapper.toOutOfStateCheck(substituteCareProvider, state),
           applicant.getRfa1bForm());
@@ -496,6 +489,7 @@ public class FacilityService implements CrudsService {
     parameterObject.setPrimaryApplicant(Applicant.isPrimary(form, applicant));
     parameterObject.setPlacementHomeId(placementHome.getIdentifier());
     parameterObject.setPhoneNumbers(mapPhoneContactDetails(applicant));
+    parameterObject.setEthnicity(applicant.getEthnicity());
     return substituteCareProviderService.create(
         mapRFAEntitiesToSCP(form, applicant), parameterObject);
 
@@ -535,15 +529,6 @@ public class FacilityService implements CrudsService {
         substituteCareProvider, mailingAddress);
 
     return substituteCareProvider;
-  }
-
-  private void storeEthnicity(ApplicantDTO applicantDTO, String substituteCareProviderId) {
-    ClientScpEthnicity clientScpEthnicity = clientScpEthnicityMapper
-        .toClientScpEthnicity(applicantDTO, substituteCareProviderId);
-    clientScpEthnicity.setIdentifier(StaffPerson.generate());
-    clientScpEthnicity.setLstUpdId(getStaffPersonId());
-    clientScpEthnicity.setLstUpdTs(LocalDateTime.now());
-    xaClientScpEthnicityDao.create(clientScpEthnicity);
   }
 
   private void storeOtherChildren(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap,
