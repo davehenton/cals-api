@@ -86,7 +86,7 @@ def offenseDetailsData = sliceData(getSafeJoinWith(". ", jsonMap.convicted_in_ca
         'YOUR FULL NAME PRINT CLEARLY' : getFullName(jsonMap),
         'RESIDENCE ADDRESS STREET CITY ZIP' : formatAddress(getAddressStreetCityStateZip(jsonMap.residence_address)),
         'DATE' : dateIsoToUs(jsonMap.application_date),
-        'In which state and city did you commit the offense' : [jsonMap.convicted_in_california_disclosures.getAt(0)?.offense_city, jsonMap.convicted_in_california_disclosures[0]?.offense_state?.value].join(', '),
+        'In which state and city did you commit the offense' : [jsonMap.convicted_in_california_disclosures.getAt(0)?.offense_city, jsonMap.convicted_in_california_disclosures.getAt(0)?.offense_state?.value].join(', '),
         'When did this happen' : dateIsoToUs(jsonMap.convicted_in_california_disclosures.getAt(0)?.offense_date),
         'DATE_2' : dateIsoToUs(jsonMap.application_date),
         'Explain what happened line 1' : offenseDetailsData[0],
