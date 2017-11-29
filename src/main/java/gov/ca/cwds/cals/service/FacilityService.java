@@ -54,12 +54,12 @@ import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
 import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
-import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.cms.data.access.CWSIdentifier;
+import gov.ca.cwds.cms.data.access.domain.PhoneNumber;
 import gov.ca.cwds.cms.data.access.parameter.PlacementHomeParameterObject;
 import gov.ca.cwds.cms.data.access.parameter.SCPParameterObject;
 import gov.ca.cwds.cms.data.access.service.PlacementHomeService;
@@ -79,7 +79,6 @@ import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
 import gov.ca.cwds.data.legacy.cms.entity.OutOfStateCheck;
-import gov.ca.cwds.data.legacy.cms.entity.PhoneContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import gov.ca.cwds.rest.api.Request;
@@ -180,9 +179,6 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private PlacementHomeProfileMapper placementHomeProfileMapper;
-
-  @Inject
-  private PhoneContactDetailMapper phoneContactDetailMapper;
 
   @Inject
   private FasFacilityMapper fasFacilityMapper;
@@ -453,18 +449,13 @@ public class FacilityService implements CrudsService {
 
     Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>(applicants.size());
     for (ApplicantDTO applicant : applicants) {
-      SCPParameterObject parameterObject = new SCPParameterObject();
-      parameterObject.setStaffPersonId(getStaffPersonId());
-      parameterObject.setIsPrimaryApplicant(Applicant.isPrimary(form, applicant));
-      parameterObject.setPlacementHomeId(placementHome.getIdentifier());
-      SubstituteCareProvider substituteCareProvider = substituteCareProviderService.create(
-          mapRFAEntitiesToSCP(form, applicant), parameterObject);
+      SubstituteCareProvider substituteCareProvider = createSubstituteCareProviderInCWSCMS(form,
+          placementHome, applicant);
       if (Applicant.isPrimary(form, applicant)) {
         placementHome.setPrimarySubstituteCareProvider(substituteCareProvider);
       }
       rfaApplicantIdsMap.put(applicant.getId(), substituteCareProvider);
 
-      storePhoneContactDetails(applicant, substituteCareProvider.getIdentifier());
       storeEthnicity(applicant, substituteCareProvider.getIdentifier());
 
       storeOutOfStateChecks(
@@ -479,6 +470,24 @@ public class FacilityService implements CrudsService {
     storeOtherAdults(rfaApplicantIdsMap, form, placementHome);
 
     return placementHome;
+  }
+
+  private SubstituteCareProvider createSubstituteCareProviderInCWSCMS(RFA1aFormDTO form,
+      PlacementHome placementHome, ApplicantDTO applicant) {
+    SCPParameterObject parameterObject = new SCPParameterObject();
+    parameterObject.setStaffPersonId(getStaffPersonId());
+    parameterObject.setPrimaryApplicant(Applicant.isPrimary(form, applicant));
+    parameterObject.setPlacementHomeId(placementHome.getIdentifier());
+    List<PhoneNumber> phoneNumbers = applicant.getPhones().stream().map(
+        phoneNumber ->
+            new PhoneNumber(
+                phoneNumber.getNumber(),
+                phoneNumber.getExtension(),
+                phoneNumber.getPhoneType().getCwsShortCode()))
+        .collect(Collectors.toList());
+    parameterObject.setPhoneNumbers(phoneNumbers);
+    return substituteCareProviderService.create(
+        mapRFAEntitiesToSCP(form, applicant), parameterObject);
   }
 
   private void prepareSubstituteCareProviderPhoneticSearchKeywords(
@@ -534,22 +543,6 @@ public class FacilityService implements CrudsService {
         substituteCareProvider, mailingAddress);
 
     return substituteCareProvider;
-  }
-
-  private void storePhoneContactDetails(ApplicantDTO applicantDTO,
-      String substituteCareProviderId) {
-
-    Optional.ofNullable(applicantDTO.getPhones()).ifPresent(
-        phoneDTOS -> phoneDTOS.forEach(phoneDTO -> {
-          PhoneContactDetail phoneContactDetail = phoneContactDetailMapper
-              .toPhoneContactDetail(phoneDTO, substituteCareProviderId);
-          phoneContactDetail.setThirdId(StaffPerson.generate());
-          phoneContactDetail.setLstUpdId(getStaffPersonId());
-          phoneContactDetail.setLstUpdTs(LocalDateTime.now());
-          xaPhoneContactDetailDao.create(phoneContactDetail);
-        })
-    );
-
   }
 
   private void storeEthnicity(ApplicantDTO applicantDTO, String substituteCareProviderId) {
