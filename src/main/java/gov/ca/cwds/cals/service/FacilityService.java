@@ -461,7 +461,7 @@ public class FacilityService implements CrudsService {
             phoneContactDetail.setEstblshCd("S");
         phoneContactDetail.setPhoneNo(Long.parseLong(phoneNumber.getNumber()));
             if (StringUtils.isNotEmpty(phoneNumber.getExtension())) {
-              phoneContactDetail.setPhextNo(Integer.parseInt(phoneNumber.getExtension()));
+              phoneContactDetail.setPhextNo(Integer.valueOf(phoneNumber.getExtension()));
             }
             phoneContactDetail.setPhnTypCd(phoneNumber.getPhoneType().getCwsShortCode());
         phoneContactDetail.setThirdId(IdGenerator.generateId(staffPersonId));
