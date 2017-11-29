@@ -454,17 +454,18 @@ public class FacilityService implements CrudsService {
   }
 
   private List<PhoneContactDetail> mapPhoneContactDetails(ApplicantDTO applicantDTO) {
+    final String staffPersonId = getStaffPersonId();
     if (CollectionUtils.isNotEmpty(applicantDTO.getPhones())) {
       return applicantDTO.getPhones().stream().map(phoneNumber -> {
             PhoneContactDetail phoneContactDetail = new PhoneContactDetail();
             phoneContactDetail.setEstblshCd("S");
-            phoneContactDetail.setPhoneNo(Long.valueOf(phoneNumber.getNumber()));
+        phoneContactDetail.setPhoneNo(Long.parseLong(phoneNumber.getNumber()));
             if (StringUtils.isNotEmpty(phoneNumber.getExtension())) {
-              phoneContactDetail.setPhextNo(Integer.valueOf(phoneNumber.getExtension()));
+              phoneContactDetail.setPhextNo(Integer.parseInt(phoneNumber.getExtension()));
             }
             phoneContactDetail.setPhnTypCd(phoneNumber.getPhoneType().getCwsShortCode());
-            phoneContactDetail.setThirdId(IdGenerator.generateId(getStaffPersonId()));
-            phoneContactDetail.setLstUpdId(getStaffPersonId());
+        phoneContactDetail.setThirdId(IdGenerator.generateId(staffPersonId));
+        phoneContactDetail.setLstUpdId(staffPersonId);
             phoneContactDetail.setLstUpdTs(LocalDateTime.now());
             return phoneContactDetail;
           }
