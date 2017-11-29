@@ -307,6 +307,8 @@ public final class Constants {
 
     public static final String RFA_1C_FORM_ALREADY_EXISTS = "RFA1c form already exists";
 
+    public static final String RFA_1B_FORM_ALREADY_EXISTS = "RFA1b form already exists";
+
     private ExpectedExceptionMessages() {
     }
 

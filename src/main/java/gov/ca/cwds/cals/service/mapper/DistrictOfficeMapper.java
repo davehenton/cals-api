@@ -14,5 +14,5 @@ public interface DistrictOfficeMapper {
 
   @Mapping(target = "number", source = "logicalId")
   @Mapping(target = "name", source = "shortDescription")
-    DistrictOfficeDTO toDistrictOffice(County county);
+  DistrictOfficeDTO toDistrictOffice(County county);
 }
