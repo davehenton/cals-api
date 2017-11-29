@@ -36,6 +36,7 @@ public class ApplicationModule<T extends CalsApiConfiguration> extends AbstractM
         install(new AuditingModule());
         install(new MappingModule());
         install(new FiltersModule());
+      install(new DataAccessServicesModule());
     }
 
   public Bootstrap<T> getBootstrap() {

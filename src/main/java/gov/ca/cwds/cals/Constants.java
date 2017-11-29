@@ -145,17 +145,6 @@ public final class Constants {
     }
   }
 
-  public static class PhoneticSearchTables {
-
-    public static final String SCP_PHTT = "SCP_PHTT";
-
-    public static final String ADR_PHTT = "ADR_PHTT";
-
-    private PhoneticSearchTables() {
-    }
-
-  }
-
   public enum DictionaryType {
     AGE_GROUP_TYPE(AgeGroupType.class),
     LANGUAGE_TYPE(LanguageType.class),
@@ -305,6 +294,8 @@ public final class Constants {
     public static final String CANNOT_PARSE_STREET_ADDRESS = "Cannot parse street address";
 
     public static final String RFA_1C_FORM_ALREADY_EXISTS = "RFA1c form already exists";
+
+    public static final String RFA_1B_FORM_ALREADY_EXISTS = "RFA1b form already exists";
 
     private ExpectedExceptionMessages() {
     }

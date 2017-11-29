@@ -20,7 +20,7 @@ import org.mapstruct.factory.Mappers;
 public interface SubstituteCareProviderMapper {
   SubstituteCareProviderMapper INSTANCE = Mappers.getMapper(SubstituteCareProviderMapper.class);
 
-  @Mapping(target = "identifier", expression = "java(Utils.Id.generate())")
+  @Mapping(target = "identifier", expression = "java(Utils.StaffPerson.generate())")
   @Mapping(target = "addTelNo", constant = "0")
   @Mapping(target = "addExtNo", constant = "0")
   @Mapping(target = "birthDt", source = "dateOfBirth")
@@ -46,7 +46,7 @@ public interface SubstituteCareProviderMapper {
       expression = "java(applicantDTO.getNameSuffix() != null ? " +
           "applicantDTO.getNameSuffix().getValue() : Constants.SPACE)")
   @Mapping(target = "zipNo", ignore = true)
-  @Mapping(target = "lstUpdId", expression = "java(Utils.Id.getStaffPersonId())")
+  @Mapping(target = "lstUpdId", expression = "java(Utils.StaffPerson.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   @Mapping(target = "zipSfxNo", ignore = true)
   @Mapping(target = "education", source = "highestEducationLevel.cwsId")

@@ -1,5 +1,4 @@
-package gov.ca.cwds.cals.persistence.dao.cms;
-
+package gov.ca.cwds.cms.data.access.dao.placementhome;
 
 import gov.ca.cwds.data.legacy.cms.dao.SsaName3Dao;
 import gov.ca.cwds.data.legacy.cms.dao.SsaName3ParameterObject;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * @author CWDS CALS API Team
  */
 
-public class XASsaName3Dao {
+public class PlacementHomeSsaName3Dao {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(
       SsaName3Dao.class);
@@ -29,3 +28,5 @@ public class XASsaName3Dao {
   }
 
 }
+
+

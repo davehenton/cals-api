@@ -201,7 +201,7 @@ logging:
       level: INFO
     "io.dropwizard.jersey.DropwizardResourceConfig":
       level: INFO
-    "gov.ca.cwds.cals.persistence.dao.cms.XASsaName3Dao":
+    "gov.ca.cwds.data.legacy.cms.dao.SsaName3Dao":
       level: INFO
     "AUDIT":
       level: ALL

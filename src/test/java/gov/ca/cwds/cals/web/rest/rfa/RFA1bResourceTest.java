@@ -60,6 +60,7 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
             Entity.entity(entity, MediaType.APPLICATION_JSON_TYPE), configuration.getEntityClass());
       }
 
+
       @Override
       protected RFA1bFormDTO findEntity(RFA1aFormDTO form, Long entityId) throws Exception {
         ApplicantDTO applicantDTO = applicantHelper
@@ -71,7 +72,13 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
                     + API.RFA_1A_APPLICANTS + "/" + applicantDTO.getId());
         return target.request(MediaType.APPLICATION_JSON).get(configuration.getEntityClass());
       }
+
+      public void getEntitiesByFormId() throws Exception {
+
+      }
+
     };
+
   }
 
   @Override

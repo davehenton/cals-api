@@ -47,7 +47,6 @@ public class RFA1cFormsResource {
   private TypedResourceDelegate<
       RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<RFA1cFormDTO>>
       resourceDelegate;
-  private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
   @Inject
   public RFA1cFormsResource(
@@ -58,7 +57,6 @@ public class RFA1cFormsResource {
       @RFA1cCollectionServiceBackedResource
           TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
     this.resourceDelegate = resourceDelegate;
-    this.collectionResourceDelegate = collectionResourceDelegate;
   }
 
   @UnitOfWork(CALSNS)

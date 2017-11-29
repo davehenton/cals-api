@@ -125,6 +125,7 @@ dependencies {
         exclude group: 'org.glassfish.jersey.core'
     }
     compile (group: 'gov.ca.cwds.api', name: 'drools-engine', version: coreApiVersion , changing: true)
+    compile (group: 'gov.ca.cwds.api', name: 'legacy-data-access-services', version: coreApiVersion , changing: true)
 
     compile group: 'gov.ca.cwds.api', name:'jwt-security', version: shiroSecurityVersion
 

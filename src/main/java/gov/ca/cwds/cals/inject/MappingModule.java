@@ -1,13 +1,8 @@
 package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
-import gov.ca.cwds.cals.service.mapper.BackgroundCheckMapper;
-import gov.ca.cwds.cals.service.mapper.ClientScpEthnicityMapper;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.CountyMapper;
-import gov.ca.cwds.cals.service.mapper.CountyOwnershipMapper;
-import gov.ca.cwds.cals.service.mapper.EmergencyContactDetailMapper;
-import gov.ca.cwds.cals.service.mapper.ExternalInterfaceMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
@@ -17,12 +12,9 @@ import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
 import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
-import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
-import gov.ca.cwds.cals.service.mapper.PlacementHomeInformationMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
-import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderUCMapper;
 import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 
 /**
@@ -53,25 +45,9 @@ public class MappingModule extends AbstractModule {
         .asEagerSingleton();
     bind(RFA1aFormMapper.class).to(RFA1aFormMapper.INSTANCE.getClass())
         .asEagerSingleton();
-    bind(ExternalInterfaceMapper.class).to(ExternalInterfaceMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(CountyOwnershipMapper.class).to(CountyOwnershipMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(EmergencyContactDetailMapper.class).to(EmergencyContactDetailMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(BackgroundCheckMapper.class).to(BackgroundCheckMapper.INSTANCE.getClass())
-        .asEagerSingleton();
     bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapper.INSTANCE.getClass())
         .asEagerSingleton();
-    bind(SubstituteCareProviderUCMapper.class).to(SubstituteCareProviderUCMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(PlacementHomeInformationMapper.class).to(PlacementHomeInformationMapper.INSTANCE.getClass())
-        .asEagerSingleton();
     bind(PlacementHomeProfileMapper.class).to(PlacementHomeProfileMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(ClientScpEthnicityMapper.class).to(ClientScpEthnicityMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(PhoneContactDetailMapper.class).to(PhoneContactDetailMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(OtherChildrenInPlacementHomeMapper.class)
         .to(OtherChildrenInPlacementHomeMapper.INSTANCE.getClass())

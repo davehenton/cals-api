@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import gov.ca.cwds.cms.data.access.CWSIdentifier;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import javax.persistence.Cacheable;
@@ -28,7 +29,7 @@ import org.hibernate.annotations.NamedQuery;
 @Entity
 @Cacheable
 @Table(name = "state_type")
-public class StateType extends BaseDictionary {
+public class StateType extends BaseDictionary implements CWSIdentifier {
 
   public static final String NAMED_QUERY_FIND_ALL =
       NAMED_QUERY_PREFIX + ".StateType" + NAMED_QUERY_FIND_ALL_SUFFIX;

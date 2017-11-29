@@ -4,7 +4,7 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.RequestResponse;
-import gov.ca.cwds.cals.Utils;
+import gov.ca.cwds.cals.Utils.StaffPerson;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
@@ -45,7 +45,7 @@ public abstract class AbstractRFAInternalEntityService<T extends RequestResponse
           Constants.ExpectedExceptionMessages.RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
     }
     form.setUpdateDateTime(LocalDateTime.now());
-    form.setUpdateUserId(Utils.Id.getStaffPersonId());
+    form.setUpdateUserId(StaffPerson.getStaffPersonId());
 
     configuration.putEntityToTheForm(form, request);
 
