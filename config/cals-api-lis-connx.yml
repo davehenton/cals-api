@@ -201,8 +201,6 @@ logging:
       level: INFO
     "io.dropwizard.jersey.DropwizardResourceConfig":
       level: INFO
-    "gov.ca.cwds.data.legacy.cms.dao.SsaName3Dao":
-      level: INFO
     "AUDIT":
       level: ALL
   appenders:
