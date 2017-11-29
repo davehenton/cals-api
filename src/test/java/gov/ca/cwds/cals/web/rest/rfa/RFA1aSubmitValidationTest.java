@@ -331,10 +331,10 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
             FixtureHelpers.fixture(
                 "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults4.json")));
     formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
+    /*formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
     formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
     formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
-    formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
-    formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());
+    formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());*/
 
     applicantsHistoryHelper.putApplicantsHistory(
         formId, applicantsHistoryHelper.getApplicantHistoryDTO(
