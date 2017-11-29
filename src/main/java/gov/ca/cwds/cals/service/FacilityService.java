@@ -59,11 +59,11 @@ import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.cms.data.access.CWSIdentifier;
-import gov.ca.cwds.cms.data.access.domain.PhoneNumber;
 import gov.ca.cwds.cms.data.access.parameter.PlacementHomeParameterObject;
 import gov.ca.cwds.cms.data.access.parameter.SCPParameterObject;
 import gov.ca.cwds.cms.data.access.service.PlacementHomeService;
 import gov.ca.cwds.cms.data.access.service.SubstituteCareProviderService;
+import gov.ca.cwds.cms.data.access.utils.IdGenerator;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
 import gov.ca.cwds.data.legacy.cms.dao.FacilityTypeDao;
@@ -79,6 +79,7 @@ import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
 import gov.ca.cwds.data.legacy.cms.entity.OutOfStateCheck;
+import gov.ca.cwds.data.legacy.cms.entity.PhoneContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import gov.ca.cwds.rest.api.Request;
@@ -99,6 +100,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -472,22 +474,36 @@ public class FacilityService implements CrudsService {
     return placementHome;
   }
 
+  private List<PhoneContactDetail> mapPhoneContactDetails(ApplicantDTO applicantDTO) {
+    if (CollectionUtils.isNotEmpty(applicantDTO.getPhones())) {
+      return applicantDTO.getPhones().stream().map(phoneNumber -> {
+            PhoneContactDetail phoneContactDetail = new PhoneContactDetail();
+            phoneContactDetail.setEstblshCd("S");
+            phoneContactDetail.setPhoneNo(Long.valueOf(phoneNumber.getNumber()));
+            if (StringUtils.isNotEmpty(phoneNumber.getExtension())) {
+              phoneContactDetail.setPhextNo(Integer.valueOf(phoneNumber.getExtension()));
+            }
+            phoneContactDetail.setPhnTypCd(phoneNumber.getPhoneType().getCwsShortCode());
+            phoneContactDetail.setThirdId(IdGenerator.generateId(getStaffPersonId()));
+            phoneContactDetail.setLstUpdId(getStaffPersonId());
+            phoneContactDetail.setLstUpdTs(LocalDateTime.now());
+            return phoneContactDetail;
+          }
+      ).collect(Collectors.toList());
+    }
+    return Collections.EMPTY_LIST;
+  }
+
   private SubstituteCareProvider createSubstituteCareProviderInCWSCMS(RFA1aFormDTO form,
       PlacementHome placementHome, ApplicantDTO applicant) {
     SCPParameterObject parameterObject = new SCPParameterObject();
     parameterObject.setStaffPersonId(getStaffPersonId());
     parameterObject.setPrimaryApplicant(Applicant.isPrimary(form, applicant));
     parameterObject.setPlacementHomeId(placementHome.getIdentifier());
-    List<PhoneNumber> phoneNumbers = applicant.getPhones().stream().map(
-        phoneNumber ->
-            new PhoneNumber(
-                phoneNumber.getNumber(),
-                phoneNumber.getExtension(),
-                phoneNumber.getPhoneType().getCwsShortCode()))
-        .collect(Collectors.toList());
-    parameterObject.setPhoneNumbers(phoneNumbers);
+    parameterObject.setPhoneNumbers(mapPhoneContactDetails(applicant));
     return substituteCareProviderService.create(
         mapRFAEntitiesToSCP(form, applicant), parameterObject);
+
   }
 
   private void prepareSubstituteCareProviderPhoneticSearchKeywords(
