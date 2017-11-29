@@ -14,7 +14,6 @@ import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
 import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
 import gov.ca.cwds.cals.service.mapper.PhoneContactDetailMapper;
-import gov.ca.cwds.cals.service.mapper.PlacementHomeInformationMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
@@ -49,8 +48,6 @@ public class MappingModule extends AbstractModule {
     bind(RFA1aFormMapper.class).to(RFA1aFormMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(PlacementHomeInformationMapper.class).to(PlacementHomeInformationMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(PlacementHomeProfileMapper.class).to(PlacementHomeProfileMapper.INSTANCE.getClass())
         .asEagerSingleton();
