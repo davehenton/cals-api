@@ -59,6 +59,7 @@
         "id": "CA",
         "value": "California"
       },
+      "when_offense_happen": "free form text",
       "offense_date": "2014-03-12",
       "offense_details": "More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence ",
       "signature": "Anna Peterson",
@@ -74,6 +75,7 @@
         "value": "Alaska"
       },
       "offense_date": "2014-03-12",
+      "when_offense_happen": "free form text",
       "offense_details": "More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence ",
       "signature": "Signature",
       "application_date": "2017-07-02"
@@ -88,6 +90,7 @@
         "value": "Alaska"
       },
       "offense_date": "2011-03-12",
+      "when_offense_happen": "free form text",
       "offense_details": "More details about offence ",
       "signature": "Signature 2",
       "application_date": "2017-07-02"
