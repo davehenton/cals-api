@@ -11,18 +11,12 @@ import org.hibernate.SessionFactory;
 
 public class DataAccessServicesModule extends AbstractDataAccessServicesModule {
 
-  @Override
-  protected SessionFactory getPlacementHomeSessionFactory(Injector injector) {
-    return getXaCmsSessionFactory(injector);
-  }
-
-  @Override
-  protected SessionFactory getSubstituteCareProviderSessionFactory(Injector injector) {
-    return getXaCmsSessionFactory(injector);
-  }
-
   private SessionFactory getXaCmsSessionFactory(Injector injector) {
     return injector.getInstance(Key.get(SessionFactory.class, XaCmsSessionFactory.class));
   }
 
+  @Override
+  protected SessionFactory getDataAccessSercvicesSessionFactory(Injector injector) {
+    return getXaCmsSessionFactory(injector);
+  }
 }
