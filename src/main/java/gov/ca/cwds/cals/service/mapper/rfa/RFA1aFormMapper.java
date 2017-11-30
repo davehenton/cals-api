@@ -93,6 +93,10 @@ public interface RFA1aFormMapper {
     ApplicantDTO applicantDTO = entity.getApplicant();
     Optional.ofNullable(entity.getRfa1bForm())
         .ifPresent(rfa1bForm -> applicantDTO.setRfa1bForm(rfa1bForm.getEntityDTO()));
+
+    Optional.ofNullable(entity.getLic198bForm())
+        .ifPresent(lic198bForm -> applicantDTO.setLic198bForm(lic198bForm.getEntityDTO()));
+
     return applicantDTO;
   }
 
@@ -104,6 +108,10 @@ public interface RFA1aFormMapper {
     OtherAdultDTO otherAdultDTO = entity.getOtherAdult();
     Optional.ofNullable(entity.getRfa1bForm())
         .ifPresent(rfa1bForm -> otherAdultDTO.setRfa1bForm(rfa1bForm.getEntityDTO()));
+
+    Optional.ofNullable(entity.getLic198bForm())
+        .ifPresent(lic198bForm -> otherAdultDTO.setLic198bForm(lic198bForm.getEntityDTO()));
+
     return otherAdultDTO;
   }
 
