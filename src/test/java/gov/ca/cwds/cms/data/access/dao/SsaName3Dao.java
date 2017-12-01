@@ -1,6 +1,5 @@
-package gov.ca.cwds.cms.data.access.dao.placementhome;
+package gov.ca.cwds.cms.data.access.dao;
 
-import gov.ca.cwds.data.legacy.cms.dao.SsaName3Dao;
 import gov.ca.cwds.data.legacy.cms.dao.SsaName3ParameterObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +8,9 @@ import org.slf4j.LoggerFactory;
  * @author CWDS CALS API Team
  */
 
-public class PlacementHomeSsaName3Dao {
+public class SsaName3Dao {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(
-      SsaName3Dao.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SsaName3Dao.class);
 
 
   public void callStoredProc(SsaName3ParameterObject parameterObject) {
@@ -28,5 +26,4 @@ public class PlacementHomeSsaName3Dao {
   }
 
 }
-
 
