@@ -22,7 +22,6 @@ import org.mapstruct.factory.Mappers;
 public interface PlacementHomeMapper {
   PlacementHomeMapper INSTANCE = Mappers.getMapper(PlacementHomeMapper.class);
 
-  @Mapping(target = "identifier", expression = "java(Utils.StaffPerson.generate())")
   @Mapping(target = "ageFrmNo", constant = "0")
   @Mapping(target = "ageToNo", constant = "0")
   @Mapping(target = "atCapInd", constant = "N")
