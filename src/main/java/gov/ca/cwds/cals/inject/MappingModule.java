@@ -9,13 +9,9 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityTypeMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
-import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
-import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
-import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
-import gov.ca.cwds.cals.service.mapper.PlacementHomeProfileMapper;
+import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
-import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
 
 /**
  * DI (dependency injection) setup for mapping classes.
@@ -47,20 +43,9 @@ public class MappingModule extends AbstractModule {
         .asEagerSingleton();
     bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapper.INSTANCE.getClass())
         .asEagerSingleton();
-    bind(PlacementHomeProfileMapper.class).to(PlacementHomeProfileMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(OtherChildrenInPlacementHomeMapper.class)
-        .to(OtherChildrenInPlacementHomeMapper.INSTANCE.getClass())
-        .asEagerSingleton();
     bind(OtherAdultsInPlacementHomeMapper.class)
         .to(OtherAdultsInPlacementHomeMapper.INSTANCE.getClass())
         .asEagerSingleton();
-    bind(OtherPeopleScpRelationshipMapper.class)
-        .to(OtherPeopleScpRelationshipMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-    bind(OutOfStateCheckMapper.class).to(OutOfStateCheckMapper.INSTANCE.getClass())
-        .asEagerSingleton();
-
   }
 
 }

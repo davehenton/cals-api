@@ -17,7 +17,7 @@ import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
-import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
+import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.drools.DroolsConfiguration;

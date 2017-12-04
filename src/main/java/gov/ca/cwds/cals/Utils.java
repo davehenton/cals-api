@@ -14,7 +14,6 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
-import gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -92,29 +91,6 @@ public final class Utils {
       }
       return staffPersonId;
     }
-
-    //TODO remove
-    private static final Object monitor = new Object();
-    private static String lastId;
-
-    public static String generate() {
-      synchronized (monitor) {
-        String generated = null;
-        do {
-          generated = CmsKeyIdGenerator.generate(getStaffPersonId());
-          try {
-            monitor.wait(10L);
-          } catch (InterruptedException e) {
-            LOG.warn("Interrupted: " + e.getMessage(), e);
-            Thread.currentThread().interrupt();
-          }
-        } while (lastId != null && lastId.equals(generated));
-
-        lastId = generated;
-      }
-      return lastId;
-    }
-// end of remove
 
   }
 
