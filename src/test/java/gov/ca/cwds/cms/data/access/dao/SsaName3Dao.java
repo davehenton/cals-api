@@ -12,7 +12,6 @@ public class SsaName3Dao {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SsaName3Dao.class);
 
-
   public void callStoredProc(SsaName3ParameterObject parameterObject) {
     LOGGER.info("Calling store proc SsaName3 with parameters: {} {} {} {} {} {} {} {} {} {} {} {}",
         parameterObject.getTableName(), parameterObject.getCrudOper(),

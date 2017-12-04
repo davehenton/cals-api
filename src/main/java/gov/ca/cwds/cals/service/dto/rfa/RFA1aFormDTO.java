@@ -10,6 +10,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -54,7 +55,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty(hidden = true)
   @Valid
-  private List<MinorChildDTO> minorChildren;
+  private List<MinorChildDTO> minorChildren = new ArrayList<>();
 
   @ApiModelProperty(hidden = true)
   @Valid

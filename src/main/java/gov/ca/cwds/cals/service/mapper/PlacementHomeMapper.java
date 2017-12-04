@@ -22,7 +22,6 @@ import org.mapstruct.factory.Mappers;
 public interface PlacementHomeMapper {
   PlacementHomeMapper INSTANCE = Mappers.getMapper(PlacementHomeMapper.class);
 
-  @Mapping(target = "identifier", expression = "java(Utils.StaffPerson.generate())")
   @Mapping(target = "ageFrmNo", constant = "0")
   @Mapping(target = "ageToNo", constant = "0")
   @Mapping(target = "atCapInd", constant = "N")
@@ -70,8 +69,6 @@ public interface PlacementHomeMapper {
   @Mapping(target = "streetNm", expression = "java(Utils.Address.getStreetName(residentialAddress))")
   @Mapping(target = "streetNo", expression = "java(Utils.Address.getStreetNumber(residentialAddress))")
   @Mapping(target = "zipNo", source = "residentialAddress.zip")
-  @Mapping(target = "lastUpdateId", expression = "java(Utils.StaffPerson.getStaffPersonId())")
-  @Mapping(target = "lastUpdateTime", expression = "java(LocalDateTime.now())")
   @Mapping(target = "addrDsc", source = "form.residence.directionsToHome")
   @Mapping(target = "spcharDsc", constant = " ")
   @Mapping(target = "ctyprfDsc", constant = " ")
