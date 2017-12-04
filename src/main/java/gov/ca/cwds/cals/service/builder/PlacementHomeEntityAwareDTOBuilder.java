@@ -19,10 +19,10 @@ import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cms.data.access.CWSIdentifier;
-import gov.ca.cwds.cms.data.access.parameter.OtherAdultInHomeParameterObject;
-import gov.ca.cwds.cms.data.access.parameter.OtherChildInHomeParameterObject;
-import gov.ca.cwds.cms.data.access.parameter.PlacementHomeParameterObject;
-import gov.ca.cwds.cms.data.access.parameter.SCPParameterObject;
+import gov.ca.cwds.cms.data.access.dto.OtherAdultInHomeEntityAwareDTO;
+import gov.ca.cwds.cms.data.access.dto.OtherChildInHomeEntityAwareDTO;
+import gov.ca.cwds.cms.data.access.dto.PlacementHomeEntityAwareDTO;
+import gov.ca.cwds.cms.data.access.dto.SCPEntityAwareDTO;
 import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
@@ -46,9 +46,9 @@ import org.apache.commons.lang3.StringUtils;
  * @author CWDS CALS API Team
  */
 
-public class PlacementHomeParameterObjectBuilder {
+public class PlacementHomeEntityAwareDTOBuilder {
 
-  private final PlacementHomeParameterObject placementHomeParameterObject;
+  private final PlacementHomeEntityAwareDTO placementHomeEntityAwareDTO;
   private RFA1aFormDTO form;
   private Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>();
 
@@ -61,12 +61,13 @@ public class PlacementHomeParameterObjectBuilder {
   @Inject
   private OtherAdultsInPlacementHomeMapper otherAdultsInPlacementHomeMapper;
 
-  public PlacementHomeParameterObjectBuilder() {
-    placementHomeParameterObject = new PlacementHomeParameterObject(getStaffPersonId());
+  public PlacementHomeEntityAwareDTOBuilder() {
+    placementHomeEntityAwareDTO = new PlacementHomeEntityAwareDTO(getStaffPersonId());
   }
 
-  public void setForm(RFA1aFormDTO form) {
+  public PlacementHomeEntityAwareDTOBuilder appendForm(RFA1aFormDTO form) {
     this.form = form;
+    return this;
   }
 
   private Set<? extends CWSIdentifier> getHomeLanguages(RFA1aFormDTO form) {
@@ -79,41 +80,45 @@ public class PlacementHomeParameterObjectBuilder {
         form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));
   }
 
-  public void setEntity() {
-    placementHomeParameterObject.setEntity(mapRfaFormToPlacementHome(form));
+  public PlacementHomeEntityAwareDTOBuilder appendEntity() {
+    placementHomeEntityAwareDTO.setEntity(mapRfaFormToPlacementHome(form));
+    return this;
   }
 
-  public void setStaffPersonId() {
-    placementHomeParameterObject.setStaffPersonId(StaffPerson.getStaffPersonId());
+  public PlacementHomeEntityAwareDTOBuilder appendStaffPersonId() {
+    placementHomeEntityAwareDTO.setStaffPersonId(StaffPerson.getStaffPersonId());
+    return this;
   }
 
-  public void setHomeLanguages() {
-    placementHomeParameterObject.setHomeLanguages(getHomeLanguages(form));
+  public PlacementHomeEntityAwareDTOBuilder appendHomeLanguages() {
+    placementHomeEntityAwareDTO.setHomeLanguages(getHomeLanguages(form));
+    return this;
   }
 
-  public void setSubstituteCareProviders() {
+  public PlacementHomeEntityAwareDTOBuilder appendSubstituteCareProviders() {
     List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
         .orElse(Collections.emptyList());
     for (ApplicantDTO applicant : applicants) {
-      SCPParameterObject substituteCareProviderParameterObject =
+      SCPEntityAwareDTO scpEntityAwareDTO =
           buildSubstituteCareProviderParameterObject(form, applicant);
-      rfaApplicantIdsMap.put(applicant.getId(), substituteCareProviderParameterObject.getEntity());
-      placementHomeParameterObject.addSCPParameterObject(substituteCareProviderParameterObject);
+      rfaApplicantIdsMap.put(applicant.getId(), scpEntityAwareDTO.getEntity());
+      placementHomeEntityAwareDTO.addSCPParameterObject(scpEntityAwareDTO);
     }
+    return this;
   }
 
-  private SCPParameterObject buildSubstituteCareProviderParameterObject(
+  private SCPEntityAwareDTO buildSubstituteCareProviderParameterObject(
       RFA1aFormDTO form, ApplicantDTO applicant) {
     final String staffPersonId = getStaffPersonId();
-    SCPParameterObject parameterObject = new SCPParameterObject(staffPersonId);
-    parameterObject.setStaffPersonId(staffPersonId);
-    parameterObject.setPrimaryApplicant(Applicant.isPrimary(form, applicant));
-    parameterObject.setPhoneNumbers(mapPhoneContactDetails(applicant));
-    parameterObject.setEthnicity(applicant.getEthnicity());
-    parameterObject.setOtherStatesOfLiving(applicant.getRfa1bForm().getOtherStatesOfLiving());
+    SCPEntityAwareDTO entityAwareDTO = new SCPEntityAwareDTO(staffPersonId);
+    entityAwareDTO.setStaffPersonId(staffPersonId);
+    entityAwareDTO.setPrimaryApplicant(Applicant.isPrimary(form, applicant));
+    entityAwareDTO.setPhoneNumbers(mapPhoneContactDetails(applicant));
+    entityAwareDTO.setEthnicity(applicant.getEthnicity());
+    entityAwareDTO.setOtherStatesOfLiving(applicant.getRfa1bForm().getOtherStatesOfLiving());
     SubstituteCareProvider substituteCareProvider = mapRFAEntitiesToSCP(applicant);
-    parameterObject.setEntity(substituteCareProvider);
-    return parameterObject;
+    entityAwareDTO.setEntity(substituteCareProvider);
+    return entityAwareDTO;
   }
 
   private List<PhoneContactDetail> mapPhoneContactDetails(ApplicantDTO applicantDTO) {
@@ -155,22 +160,23 @@ public class PlacementHomeParameterObjectBuilder {
     return substituteCareProvider;
   }
 
-  public void setOtherChildrenInHome() {
+  public PlacementHomeEntityAwareDTOBuilder appendOtherChildrenInHome() {
     for (MinorChildDTO minorChildDTO : form.getMinorChildren()) {
       OtherChildrenInPlacementHome otherChildInHome = new OtherChildrenInPlacementHome();
       otherChildInHome.setBirthDt(minorChildDTO.getDateOfBirth());
       otherChildInHome.setGenderCd(minorChildDTO.getGender().getCwsShortCode());
       otherChildInHome.setOthchldNm("Undisclosed");
-      OtherChildInHomeParameterObject parameterObject = new OtherChildInHomeParameterObject(
+      OtherChildInHomeEntityAwareDTO entityAwareDTO = new OtherChildInHomeEntityAwareDTO(
           getStaffPersonId());
-      parameterObject.setEntity(otherChildInHome);
-      placementHomeParameterObject.addOtherChildrenInHomeParameterObject(parameterObject);
-      prepareRelationships(minorChildDTO, parameterObject);
+      entityAwareDTO.setEntity(otherChildInHome);
+      placementHomeEntityAwareDTO.addOtherChildrenInHomeParameterObject(entityAwareDTO);
+      prepareRelationships(minorChildDTO, entityAwareDTO);
     }
+    return this;
   }
 
   private void prepareRelationships(MinorChildDTO minorChildDTO,
-      OtherChildInHomeParameterObject parameterObject) {
+      OtherChildInHomeEntityAwareDTO entityAwareDTO) {
     for (RelationshipToApplicantDTO relationshipToApplicantDTO : minorChildDTO
         .getRelationshipToApplicants()) {
       SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
@@ -178,52 +184,53 @@ public class PlacementHomeParameterObjectBuilder {
       OtherPeopleScpRelationship relationship = new OtherPeopleScpRelationship();
       relationship.setClntrelc((short) 0);
       relationship.setSubstituteCareProvider(substituteCareProvider);
-      parameterObject.addRelationship(relationship);
+      entityAwareDTO.addRelationship(relationship);
     }
   }
 
-  public void setOtherAdultsInPlacementHome() {
+  public PlacementHomeEntityAwareDTOBuilder appendOtherAdultsInPlacementHome() {
     for (OtherAdultDTO otherAdultDTO : form.getOtherAdults()) {
       OtherAdultsInPlacementHome otherAdult = otherAdultsInPlacementHomeMapper
           .toOtherAdult(otherAdultDTO);
-      OtherAdultInHomeParameterObject parameterObject = new OtherAdultInHomeParameterObject(
+      OtherAdultInHomeEntityAwareDTO entityAwareDTO = new OtherAdultInHomeEntityAwareDTO(
           getStaffPersonId());
-      parameterObject.setEntity(otherAdult);
-      prepareRelationships(otherAdultDTO, parameterObject);
-      prepareOutOfStateChecks(otherAdultDTO, parameterObject);
-      placementHomeParameterObject.addOtherAdultInHomeParameterObject(parameterObject);
+      entityAwareDTO.setEntity(otherAdult);
+      prepareRelationships(otherAdultDTO, entityAwareDTO);
+      prepareOutOfStateChecks(otherAdultDTO, entityAwareDTO);
+      placementHomeEntityAwareDTO.addOtherAdultInHomeParameterObject(entityAwareDTO);
     }
+    return this;
   }
 
   private void prepareOutOfStateChecks(OtherAdultDTO otherAdultDTO,
-      OtherAdultInHomeParameterObject parameterObject) {
+      OtherAdultInHomeEntityAwareDTO entityAwareDTO) {
     if (otherAdultDTO.getRfa1bForm() != null &&
         CollectionUtils.isNotEmpty(otherAdultDTO.getRfa1bForm().getOtherStatesOfLiving())) {
       for (StateType state : otherAdultDTO.getRfa1bForm().getOtherStatesOfLiving()) {
         OutOfStateCheck outOfStateCheck = new OutOfStateCheck();
         outOfStateCheck.setStateC((short) state.getCwsId());
-        parameterObject.addOutOfStateCheck(outOfStateCheck);
+        entityAwareDTO.addOutOfStateCheck(outOfStateCheck);
       }
     }
   }
 
   private void prepareRelationships(OtherAdultDTO minorChildDTO,
-      OtherAdultInHomeParameterObject parameterObject) {
+      OtherAdultInHomeEntityAwareDTO entityAwareDTO) {
     for (RelationshipToApplicantDTO relationship : minorChildDTO.getRelationshipToApplicants()) {
       SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
           .get(relationship.getApplicantId());
       OtherPeopleScpRelationship otherPeopleScpRelationship = new OtherPeopleScpRelationship();
       otherPeopleScpRelationship.setClntrelc((short) 0);
       otherPeopleScpRelationship.setSubstituteCareProvider(substituteCareProvider);
-      parameterObject.addRelationship(otherPeopleScpRelationship);
+      entityAwareDTO.addRelationship(otherPeopleScpRelationship);
     }
   }
 
-  public PlacementHomeParameterObject getResult() {
-    return placementHomeParameterObject;
+  public PlacementHomeEntityAwareDTO getPlacementHomeEntityAwareDTO() {
+    return placementHomeEntityAwareDTO;
   }
 
-  public void setEmergencyContactDetail() {
+  public PlacementHomeEntityAwareDTOBuilder appendEmergencyContactDetail() {
     EmergencyContactDetail emergencyContactDetail = new EmergencyContactDetail();
 
     //this is bussiness information
@@ -233,6 +240,7 @@ public class PlacementHomeParameterObjectBuilder {
     // from searching for information that does not exist in the database.
     emergencyContactDetail.setFrgAdrtB(Constants.N);
 
-    placementHomeParameterObject.setEmergencyContactDetail(emergencyContactDetail);
+    placementHomeEntityAwareDTO.setEmergencyContactDetail(emergencyContactDetail);
+    return this;
   }
 }

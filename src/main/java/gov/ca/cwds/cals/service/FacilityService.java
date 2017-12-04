@@ -18,7 +18,7 @@ import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
-import gov.ca.cwds.cals.service.builder.PlacementHomeParameterObjectBuilder;
+import gov.ca.cwds.cals.service.builder.PlacementHomeEntityAwareDTOBuilder;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
@@ -338,18 +338,19 @@ public class FacilityService implements CrudsService {
   }
 
   protected PlacementHome storePlacementHome(RFA1aFormDTO form) {
-    PlacementHomeParameterObjectBuilder builder = new PlacementHomeParameterObjectBuilder();
+    PlacementHomeEntityAwareDTOBuilder builder = new PlacementHomeEntityAwareDTOBuilder();
     InjectorHolder.INSTANCE.getInjector().injectMembers(builder);
-    builder.setForm(form);
-    builder.setEntity();
-    builder.setStaffPersonId();
-    builder.setEmergencyContactDetail();
-    builder.setHomeLanguages();
-    builder.setSubstituteCareProviders();
-    builder.setOtherChildrenInHome();
-    builder.setOtherAdultsInPlacementHome();
+    builder
+        .appendForm(form)
+        .appendEntity()
+        .appendStaffPersonId()
+        .appendEmergencyContactDetail()
+        .appendHomeLanguages()
+        .appendSubstituteCareProviders()
+        .appendOtherChildrenInHome()
+        .appendOtherAdultsInPlacementHome();
     PlacementHome placementHome =
-        placementHomeService.create(builder.getResult());
+        placementHomeService.create(builder.getPlacementHomeEntityAwareDTO());
 
     return placementHome;
   }
