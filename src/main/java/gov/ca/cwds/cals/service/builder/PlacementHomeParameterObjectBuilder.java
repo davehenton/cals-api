@@ -23,6 +23,7 @@ import gov.ca.cwds.cms.data.access.parameter.OtherAdultInHomeParameterObject;
 import gov.ca.cwds.cms.data.access.parameter.OtherChildInHomeParameterObject;
 import gov.ca.cwds.cms.data.access.parameter.PlacementHomeParameterObject;
 import gov.ca.cwds.cms.data.access.parameter.SCPParameterObject;
+import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
@@ -221,4 +222,16 @@ public class PlacementHomeParameterObjectBuilder {
     return placementHomeParameterObject;
   }
 
+  public void setEmergencyContactDetail() {
+    EmergencyContactDetail emergencyContactDetail = new EmergencyContactDetail();
+
+    //this is bussiness information
+    //FOREIGN_ADDRESS_IND_VAR - This indicator variable is used to indicate
+    // if there are any occurrences of FOREIGN ADDRESSes related to this
+    // EMERGENCY CONTACT DETAIL. This will save unnecessary processing time
+    // from searching for information that does not exist in the database.
+    emergencyContactDetail.setFrgAdrtB(Constants.N);
+
+    placementHomeParameterObject.setEmergencyContactDetail(emergencyContactDetail);
+  }
 }

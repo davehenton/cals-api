@@ -343,6 +343,7 @@ public class FacilityService implements CrudsService {
     builder.setForm(form);
     builder.setEntity();
     builder.setStaffPersonId();
+    builder.setEmergencyContactDetail();
     builder.setHomeLanguages();
     builder.setSubstituteCareProviders();
     builder.setOtherChildrenInHome();

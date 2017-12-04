@@ -22,7 +22,7 @@ public interface OtherAdultsInPlacementHomeMapper {
 
   @Mapping(target = "birthDt", source = "dateOfBirth")
   @Mapping(target = "endDt", ignore = true)
-  @Mapping(target = "genderCd", ignore = true)
+  @Mapping(target = "genderCd", constant = "M")
   @Mapping(target = "othAdltnm", ignore = true)
   @Mapping(target = "startDt", expression = "java(LocalDate.now())")
 
