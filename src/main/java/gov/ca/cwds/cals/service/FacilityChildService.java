@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
-import gov.ca.cwds.data.legacy.cms.entity.BaseClient;
+import gov.ca.cwds.data.legacy.cms.entity.Client;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
 
@@ -25,7 +25,7 @@ public class FacilityChildService extends CrudServiceAdapter {
   @Override
   public Response find(Serializable params) {
     FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
-    BaseClient client = clientDao
+    Client client = clientDao
         .findByLicNumAndChildId(parameterObject.getLicenseNumber(), parameterObject.getChildId());
     return facilityChildMapper.toFacilityChildDTO(client);
   }

@@ -2,7 +2,7 @@ package gov.ca.cwds.cals.service.mapper;
 
 
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.data.legacy.cms.entity.BaseClient;
+import gov.ca.cwds.data.legacy.cms.entity.Client;
 import gov.ca.cwds.data.legacy.cms.entity.BaseOutOfHomePlacement;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementEpisode;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
@@ -30,7 +30,7 @@ public interface FacilityChildMapper {
     @Mapping(target = "assignedWorker", ignore = true)
     @Mapping(target = "facilityId", ignore = true)
     @Mapping(target = "messages", ignore = true)
-    FacilityChildDTO toFacilityChildDTO(BaseClient client);
+    FacilityChildDTO toFacilityChildDTO(Client client);
 
     @Mapping(target = "assignedWorker", source = "staffPerson")
     @Mapping(target = "id", ignore = true)
@@ -60,7 +60,7 @@ public interface FacilityChildMapper {
     FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO, BaseOutOfHomePlacement outOfHomePlacement);
 
     @AfterMapping
-    default void after(@MappingTarget FacilityChildDTO facilityChildDTO, BaseClient client) {
+    default void after(@MappingTarget FacilityChildDTO facilityChildDTO, Client client) {
         Set<? extends BasePlacementEpisode> placementEpisodes = client.getPlacementEpisodes();
         if (!placementEpisodes.isEmpty()) {
 
