@@ -3,61 +3,34 @@ package gov.ca.cwds.cals.service;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static gov.ca.cwds.cals.Utils.StaffPerson.getStaffPersonId;
 import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
-import gov.ca.cwds.cals.Utils.Applicant;
-import gov.ca.cwds.cals.persistence.dao.cms.XaClientScpEthnicityDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaEmergencyContactDetailDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaOtherAdultsInPlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaOtherChildrenInPlacementHomeDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaOtherPeopleScpRelationshipDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaOutOfStateCheckDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaPhoneContactDetailDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaPlacementHomeInformationDao;
-import gov.ca.cwds.cals.persistence.dao.cms.XaSubstituteCareProviderUCDao;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
+import gov.ca.cwds.cals.service.builder.PlacementHomeParameterObjectBuilder;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
-import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
-import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
-import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
-import gov.ca.cwds.cals.service.mapper.OtherChildrenInPlacementHomeMapper;
-import gov.ca.cwds.cals.service.mapper.OtherPeopleScpRelationshipMapper;
-import gov.ca.cwds.cals.service.mapper.OutOfStateCheckMapper;
-import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
-import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
-import gov.ca.cwds.cms.data.access.CWSIdentifier;
-import gov.ca.cwds.cms.data.access.parameter.PlacementHomeParameterObject;
-import gov.ca.cwds.cms.data.access.parameter.SCPParameterObject;
 import gov.ca.cwds.cms.data.access.service.PlacementHomeService;
-import gov.ca.cwds.cms.data.access.utils.IdGenerator;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
 import gov.ca.cwds.data.legacy.cms.dao.FacilityTypeDao;
@@ -67,13 +40,8 @@ import gov.ca.cwds.data.legacy.cms.dao.StateDao;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
-import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
-import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
-import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
-import gov.ca.cwds.data.legacy.cms.entity.OutOfStateCheck;
-import gov.ca.cwds.data.legacy.cms.entity.PhoneContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
-import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
+import gov.ca.cwds.inject.InjectorHolder;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.exception.ExpectedException;
@@ -81,17 +49,9 @@ import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,31 +80,7 @@ public class FacilityService implements CrudsService {
   private PlacementHomeDao placementHomeDao;
 
   @Inject
-  private XaEmergencyContactDetailDao xaEmergencyContactDetailDao;
-
-  @Inject
-  private XaSubstituteCareProviderUCDao xaSubstituteCareProviderUCDao;
-
-  @Inject
-  private XaPhoneContactDetailDao xaPhoneContactDetailDao;
-
-  @Inject
-  private XaClientScpEthnicityDao xaClientScpEthnicityDao;
-
-  @Inject
-  private XaOtherChildrenInPlacementHomeDao xaOtherChildrenDao;
-
-  @Inject
-  private XaOtherAdultsInPlacementHomeDao xaOtherAdultDao;
-
-  @Inject
-  private XaOtherPeopleScpRelationshipDao xaOtherPeopleScpRelationshipDao;
-
-  @Inject
   private CountiesDao countiesDao;
-
-  @Inject
-  private XaOutOfStateCheckDao xaOutOfStateCheckDao;
 
   @Inject
   private FacilityMapper facilityMapper;
@@ -156,12 +92,6 @@ public class FacilityService implements CrudsService {
   private ComplaintMapper complaintMapper;
 
   @Inject
-  private PlacementHomeMapper placementHomeMapper;
-
-  @Inject
-  private SubstituteCareProviderMapper substituteCareProviderMapper;
-
-  @Inject
   private FasFacilityMapper fasFacilityMapper;
 
   @Inject
@@ -169,18 +99,6 @@ public class FacilityService implements CrudsService {
 
   @Inject
   private FacilityChildMapper facilityChildMapper;
-
-  @Inject
-  private OtherChildrenInPlacementHomeMapper otherChildMapper;
-
-  @Inject
-  private OtherPeopleScpRelationshipMapper otherPeopleScpRelationshipMapper;
-
-  @Inject
-  private OtherAdultsInPlacementHomeMapper otherAdultMapper;
-
-  @Inject
-  private OutOfStateCheckMapper outOfStateCheckMapper;
 
   @Inject
   private ClientDao clientDao;
@@ -197,8 +115,6 @@ public class FacilityService implements CrudsService {
   @Inject
   private LicenseStatusDao licenseStatusDao;
 
-  @Inject
-  private XaPlacementHomeInformationDao xaPlacementHomeInformationDao;
 
   @Inject
   private StateDao stateDao;
@@ -422,191 +338,19 @@ public class FacilityService implements CrudsService {
   }
 
   protected PlacementHome storePlacementHome(RFA1aFormDTO form) {
-    PlacementHomeParameterObject placementHomeParameterObject =
-        buildPlacementParameterObject(form, mapRfaFormToPlacementHome(form));
-
-    List<ApplicantDTO> applicants = Optional.ofNullable(form.getApplicants())
-        .orElse(Collections.emptyList());
-
-    Map<Long, SubstituteCareProvider> rfaApplicantIdsMap = new HashMap<>(applicants.size());
-    for (ApplicantDTO applicant : applicants) {
-      SCPParameterObject substituteCareProviderParameterObject =
-          buildSubstituteCareProviderParameterObject(form, applicant);
-      rfaApplicantIdsMap.put(applicant.getId(), substituteCareProviderParameterObject.getEntity());
-      placementHomeParameterObject.addSCPParameterObject(substituteCareProviderParameterObject);
-    }
-
-    PlacementHome placementHome = placementHomeService.create(placementHomeParameterObject);
-
-    storeOtherChildren(rfaApplicantIdsMap, form, placementHome);
-    storeOtherAdults(rfaApplicantIdsMap, form, placementHome);
+    PlacementHomeParameterObjectBuilder builder = new PlacementHomeParameterObjectBuilder();
+    InjectorHolder.INSTANCE.getInjector().injectMembers(builder);
+    builder.setForm(form);
+    builder.setEntity();
+    builder.setStaffPersonId();
+    builder.setHomeLanguages();
+    builder.setSubstituteCareProviders();
+    builder.setOtherChildrenInHome();
+    builder.setOtherAdultsInPlacementHome();
+    PlacementHome placementHome =
+        placementHomeService.create(builder.getResult());
 
     return placementHome;
-  }
-
-  private List<PhoneContactDetail> mapPhoneContactDetails(ApplicantDTO applicantDTO) {
-    final String staffPersonId = getStaffPersonId();
-    if (CollectionUtils.isNotEmpty(applicantDTO.getPhones())) {
-      return applicantDTO.getPhones().stream().map(phoneNumber -> {
-            PhoneContactDetail phoneContactDetail = new PhoneContactDetail();
-            phoneContactDetail.setEstblshCd("S");
-        phoneContactDetail.setPhoneNo(Long.parseLong(phoneNumber.getNumber()));
-            if (StringUtils.isNotEmpty(phoneNumber.getExtension())) {
-              phoneContactDetail.setPhextNo(Integer.valueOf(phoneNumber.getExtension()));
-            }
-            phoneContactDetail.setPhnTypCd(phoneNumber.getPhoneType().getCwsShortCode());
-        phoneContactDetail.setLstUpdId(staffPersonId);
-            phoneContactDetail.setLstUpdTs(LocalDateTime.now());
-            return phoneContactDetail;
-          }
-      ).collect(Collectors.toList());
-    }
-    return Collections.EMPTY_LIST;
-  }
-
-  private SCPParameterObject buildSubstituteCareProviderParameterObject(
-      RFA1aFormDTO form, ApplicantDTO applicant) {
-    SCPParameterObject parameterObject = new SCPParameterObject();
-    parameterObject.setStaffPersonId(getStaffPersonId());
-    parameterObject.setPrimaryApplicant(Applicant.isPrimary(form, applicant));
-    parameterObject.setPhoneNumbers(mapPhoneContactDetails(applicant));
-    parameterObject.setEthnicity(applicant.getEthnicity());
-    parameterObject.setOtherStatesOfLiving(applicant.getRfa1bForm().getOtherStatesOfLiving());
-    SubstituteCareProvider substituteCareProvider = mapRFAEntitiesToSCP(form, applicant);
-    parameterObject.setEntity(substituteCareProvider);
-    return parameterObject;
-  }
-
-  private PlacementHomeParameterObject buildPlacementParameterObject(RFA1aFormDTO form,
-      PlacementHome placementHome) {
-    PlacementHomeParameterObject parameterObject = new PlacementHomeParameterObject();
-    parameterObject.setEntity(placementHome);
-    parameterObject.setStaffPersonId(getStaffPersonId());
-    parameterObject.setHomeLanguages(getHomeLanguages(form));
-    return parameterObject;
-  }
-
-  private PlacementHome mapRfaFormToPlacementHome(RFA1aFormDTO form) {
-    return placementHomeMapper.toPlacementHome(
-        form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));
-  }
-
-  private Set<? extends CWSIdentifier> getHomeLanguages(RFA1aFormDTO form) {
-    return Optional.ofNullable(form.getResidence())
-        .map(ResidenceDTO::getHomeLanguages).orElse(Collections.emptySet());
-  }
-
-  private SubstituteCareProvider mapRFAEntitiesToSCP(RFA1aFormDTO form, ApplicantDTO applicant) {
-    SubstituteCareProvider substituteCareProvider =
-        substituteCareProviderMapper.toSubstituteCareProvider(applicant);
-
-    substituteCareProviderMapper.toSubstituteCareProvider(substituteCareProvider, applicant.getRfa1bForm());
-
-    RFAAddressDTO residentialAddress = Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL);
-    substituteCareProviderMapper.toSubstituteCareProviderFromResidentialAddress(
-        substituteCareProvider, residentialAddress);
-
-    RFAAddressDTO mailingAddress = Utils.Address.getByType(form, Constants.AddressTypes.MAIL);
-    substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
-        substituteCareProvider, mailingAddress);
-
-    return substituteCareProvider;
-  }
-
-  private void storeOtherChildren(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap,
-      RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
-
-    form.getMinorChildren().forEach(minorChildDTO -> {
-      OtherChildrenInPlacementHome storedOtherChild = storeOtherChildrenInPlacementHome(persistedPlacementHome, minorChildDTO);
-      storeOtherChildrenScpRelationships(rfaApplicantIdsMap, minorChildDTO, storedOtherChild);
-    });
-  }
-
-  private OtherChildrenInPlacementHome storeOtherChildrenInPlacementHome(PlacementHome placementHome, MinorChildDTO minorChildDTO) {
-    OtherChildrenInPlacementHome otherChild = otherChildMapper.toOtherChild(minorChildDTO);
-    otherChild.setIdentifier(IdGenerator.generateId(getStaffPersonId()));
-    otherChild.setLstUpdId(getStaffPersonId());
-    otherChild.setLstUpdTs(LocalDateTime.now());
-    otherChild.setFkplcHmT(placementHome.getIdentifier());
-    return xaOtherChildrenDao.create(otherChild);
-  }
-
-  private void storeOtherChildrenScpRelationships(
-      Map<Long, SubstituteCareProvider> rfaApplicantIdsMap, MinorChildDTO minorChildDTO,
-      OtherChildrenInPlacementHome storedOtherChild) {
-    minorChildDTO.getRelationshipToApplicants().forEach(
-        relationshipToApplicantDTO -> {
-          SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
-              .get(relationshipToApplicantDTO.getApplicantId());
-          OtherPeopleScpRelationship relationship = otherPeopleScpRelationshipMapper
-              .toOtherChildScpRelationship(relationshipToApplicantDTO,
-                  storedOtherChild.getIdentifier(),
-                  substituteCareProvider);
-          relationship.setIdentifier(IdGenerator.generateId(getStaffPersonId()));
-          relationship.setLstUpdId(getStaffPersonId());
-          relationship.setLstUpdTs(LocalDateTime.now());
-          xaOtherPeopleScpRelationshipDao.create(relationship);
-        });
-  }
-
-  private void storeOtherAdults(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap, RFA1aFormDTO form, PlacementHome persistedPlacementHome) {
-    form.getOtherAdults()
-        .forEach(
-            otherAdultDTO -> {
-              OtherAdultsInPlacementHome storedOtherAdult =
-                  storeOtherAdultsInPlacementHome(persistedPlacementHome, otherAdultDTO);
-              storeOtherAdultScpRelationships(rfaApplicantIdsMap, otherAdultDTO, storedOtherAdult);
-              storeOutOfStateChecks(
-                  state -> outOfStateCheckMapper.toOutOfStateCheck(storedOtherAdult, state),
-                  otherAdultDTO.getRfa1bForm());
-            });
-  }
-
-  private OtherAdultsInPlacementHome storeOtherAdultsInPlacementHome(
-      PlacementHome persistedPlacementHome, OtherAdultDTO otherAdultDTO) {
-
-    OtherAdultsInPlacementHome otherAdult = otherAdultMapper.toOtherAdult(otherAdultDTO);
-    otherAdult.setIdentifier(IdGenerator.generateId(getStaffPersonId()));
-    otherAdult.setLstUpdId(getStaffPersonId());
-    otherAdult.setLstUpdTs(LocalDateTime.now());
-    otherAdult.setFkplcHmT(persistedPlacementHome.getIdentifier());
-
-    return xaOtherAdultDao.create(otherAdult);
-  }
-
-  private void storeOtherAdultScpRelationships(Map<Long, SubstituteCareProvider> rfaApplicantIdsMap,
-      OtherAdultDTO otherAdultDTO, OtherAdultsInPlacementHome storedOtherAdult) {
-    otherAdultDTO.getRelationshipToApplicants().forEach(
-        relationshipToApplicantDTO -> {
-          SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
-              .get(relationshipToApplicantDTO.getApplicantId());
-          OtherPeopleScpRelationship relationship = otherPeopleScpRelationshipMapper
-              .toOtherAdultScpRelationship(relationshipToApplicantDTO,
-                  storedOtherAdult.getIdentifier(),
-                  substituteCareProvider);
-          relationship.setIdentifier(IdGenerator.generateId(getStaffPersonId()));
-          relationship.setLstUpdId(getStaffPersonId());
-          relationship.setLstUpdTs(LocalDateTime.now());
-          xaOtherPeopleScpRelationshipDao.create(relationship);
-        });
-  }
-
-  private void storeOutOfStateChecks(Function<StateType, OutOfStateCheck> buildOutOfStateFunction,
-      RFA1bFormDTO formB) {
-    if (formB == null || CollectionUtils.isEmpty(formB.getOtherStatesOfLiving())) {
-      return;
-    }
-    formB.getOtherStatesOfLiving().forEach(state -> {
-      OutOfStateCheck outOfStateCheck = buildOutOfStateFunction.apply(state);
-      storeOutOfStateCheck(outOfStateCheck);
-    });
-  }
-
-  private void storeOutOfStateCheck(OutOfStateCheck outOfStateCheck) {
-    outOfStateCheck.setIdentifier(IdGenerator.generateId(getStaffPersonId()));
-    outOfStateCheck.setLstUpdId(getStaffPersonId());
-    outOfStateCheck.setLstUpdTs(LocalDateTime.now());
-    xaOutOfStateCheckDao.create(outOfStateCheck);
   }
 
 }

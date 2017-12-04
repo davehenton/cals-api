@@ -22,10 +22,17 @@ public interface OtherAdultsInPlacementHomeMapper {
 
   @Mapping(target = "birthDt", source = "dateOfBirth")
   @Mapping(target = "endDt", ignore = true)
-  @Mapping(target = "genderCd", constant = "M")
+  @Mapping(target = "genderCd", ignore = true)
   @Mapping(target = "othAdltnm", ignore = true)
   @Mapping(target = "startDt", expression = "java(LocalDate.now())")
+
+  /**
+   *  OTHER_ADULT_CODE - Indicates the type of other adult in the PLACEMENT_HOME
+   *  (e.g. O = Other Adult residing in the PLACEMENT HOME, S = Adult
+   *  with significant contact not residing in the PLACEMENT HOME)
+   */
   @Mapping(target = "othAdlCd", constant = "O")
+
   @Mapping(target = "resostInd", ignore = true)
   @Mapping(target = "passbcCd", constant = "U")
   @Mapping(target = "comntDsc", constant = "")

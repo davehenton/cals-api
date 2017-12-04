@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.service.mapper.rfa;
+package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
