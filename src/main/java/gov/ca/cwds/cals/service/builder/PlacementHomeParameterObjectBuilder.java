@@ -104,8 +104,9 @@ public class PlacementHomeParameterObjectBuilder {
 
   private SCPParameterObject buildSubstituteCareProviderParameterObject(
       RFA1aFormDTO form, ApplicantDTO applicant) {
-    SCPParameterObject parameterObject = new SCPParameterObject(getStaffPersonId());
-    parameterObject.setStaffPersonId(getStaffPersonId());
+    final String staffPersonId = getStaffPersonId();
+    SCPParameterObject parameterObject = new SCPParameterObject(staffPersonId);
+    parameterObject.setStaffPersonId(staffPersonId);
     parameterObject.setPrimaryApplicant(Applicant.isPrimary(form, applicant));
     parameterObject.setPhoneNumbers(mapPhoneContactDetails(applicant));
     parameterObject.setEthnicity(applicant.getEthnicity());
