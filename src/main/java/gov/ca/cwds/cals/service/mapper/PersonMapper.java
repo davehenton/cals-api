@@ -20,10 +20,10 @@ public interface PersonMapper {
 
     List<PersonDTO> toPerson(Set<Client> clients);
 
-    @Mapping(target = "firstName", source = "comFstNm")
-    @Mapping(target = "lastName", source = "comLstNm")
-    @Mapping(target = "gender", source = "genderCd")
-    @Mapping(target = "dateOfBirth", source = "birthDt")
+    @Mapping(target = "firstName", source = "commonFirstName")
+    @Mapping(target = "lastName", source = "commonLastName")
+    @Mapping(target = "gender", source = "genderCode")
+    @Mapping(target = "dateOfBirth", source = "birthDate")
 
     @Mapping(target = "id",          ignore = true)
     @Mapping(target = "age",         ignore = true)

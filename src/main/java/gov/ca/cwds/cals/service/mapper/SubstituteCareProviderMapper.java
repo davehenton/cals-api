@@ -20,7 +20,6 @@ import org.mapstruct.factory.Mappers;
 public interface SubstituteCareProviderMapper {
   SubstituteCareProviderMapper INSTANCE = Mappers.getMapper(SubstituteCareProviderMapper.class);
 
-  @Mapping(target = "identifier", expression = "java(Utils.StaffPerson.generate())")
   @Mapping(target = "addTelNo", constant = "0")
   @Mapping(target = "addExtNo", constant = "0")
   @Mapping(target = "birthDt", source = "dateOfBirth")

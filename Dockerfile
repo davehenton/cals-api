@@ -1,4 +1,4 @@
-FROM cwds/javajdk
+FROM cwds/javajdk:8u152
 RUN mkdir /opt/cals-api
 RUN mkdir /opt/cals-api/logs
 ADD config/*.yml /opt/cals-api/

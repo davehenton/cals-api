@@ -8,7 +8,7 @@ import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.changed.ChangedRFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
-import gov.ca.cwds.cals.service.mapper.rfa.RFA1aFormMapper;
+import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.rest.api.Request;
 import java.time.LocalDateTime;
 import java.util.List;
