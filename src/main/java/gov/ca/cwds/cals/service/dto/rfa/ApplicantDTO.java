@@ -15,6 +15,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.service.dto.rfa.lic198b.LIC198bFormDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
@@ -93,6 +94,10 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   @ApiModelProperty(hidden = true)
   @Valid
   private RFA1bFormDTO rfa1bForm;
+
+  @ApiModelProperty(hidden = true)
+  @Valid
+  private LIC198bFormDTO lic198bForm;
 
   public NamePrefixType getNamePrefix() {
     return namePrefix;
@@ -229,6 +234,14 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
 
   public void setRfa1bForm(RFA1bFormDTO rfa1bForm) {
     this.rfa1bForm = rfa1bForm;
+  }
+
+  public LIC198bFormDTO getLic198bForm() {
+    return lic198bForm;
+  }
+
+  public void setLic198bForm(LIC198bFormDTO lic198bForm) {
+    this.lic198bForm = lic198bForm;
   }
 
   @JsonIgnore

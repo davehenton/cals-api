@@ -6,7 +6,6 @@ import static gov.ca.cwds.cals.Constants.API.PathParams.LIC_198B_FORM_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICANT_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_OTHER_ADULT_ID;
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1B_FORM;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_OTHER_ADULTS;
@@ -88,7 +87,7 @@ public class LIC198bFormsResource {
       @PathParam(RFA_1A_APPLICANT_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The Applicant Id")
           Long applicantId,
-      @ApiParam(required = true, name = RFA_1B_FORM, value = "The LIC-198b Form object")
+      @ApiParam(required = true, name = LIC_198B_FORM, value = "The LIC-198b Form object")
       @Valid
           LIC198bFormDTO lic198bForm) {
     return resourceDelegate.create(
@@ -113,7 +112,7 @@ public class LIC198bFormsResource {
       @PathParam(RFA_1A_OTHER_ADULT_ID)
       @ApiParam(required = true, name = RFA_1A_OTHER_ADULT_ID, value = "The OtherAdult Id")
           Long otherAdultId,
-      @ApiParam(required = true, name = RFA_1B_FORM, value = "The LIC-198b Form object")
+      @ApiParam(required = true, name = LIC_198B_FORM, value = "The LIC-198b Form object")
       @Valid
           LIC198bFormDTO lic198bForm) {
     return resourceDelegate.create(

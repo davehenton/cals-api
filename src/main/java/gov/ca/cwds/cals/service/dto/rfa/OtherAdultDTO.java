@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
+import gov.ca.cwds.cals.service.dto.rfa.lic198b.LIC198bFormDTO;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
@@ -52,6 +53,10 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
   @ApiModelProperty(hidden = true)
   @Valid
   private RFA1bFormDTO rfa1bForm;
+
+  @ApiModelProperty(hidden = true)
+  @Valid
+  private LIC198bFormDTO lic198bForm;
 
   public NamePrefixType getNamePrefix() {
     return namePrefix;
@@ -118,5 +123,12 @@ public class OtherAdultDTO extends RFAExternalEntityDTO {
   public void setRfa1bForm(RFA1bFormDTO rfa1bForm) {
     this.rfa1bForm = rfa1bForm;
   }
-  
+
+  public void setLic198bForm(LIC198bFormDTO lic198bForm) {
+    this.lic198bForm = lic198bForm;
+  }
+
+  public LIC198bFormDTO getLic198bForm() {
+    return lic198bForm;
+  }
 }

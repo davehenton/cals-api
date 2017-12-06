@@ -66,8 +66,8 @@ public class RFA1bService extends AbstractRFAExternalEntityService<RFA1bForm, RF
     } else if (params instanceof RFAOtherAdultAwareEntityGetParameterObject) {
       RFA1aOtherAdult rfa1aOtherAdult = otherAdultDao.find(entityId);
       return extractDTO(rfa1aOtherAdult.getRfa1bForm());
-    }
-    return null;
+    } 
+    return super.find(params);
   }
 
   public RFA1bFormDTO find(RFAExternalEntityUpdateParameterObject<RFA1bFormDTO> params) {

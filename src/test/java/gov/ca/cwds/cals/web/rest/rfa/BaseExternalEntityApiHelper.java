@@ -127,7 +127,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
     assertThat(response.getStatus()).isEqualTo(404);
   }
 
-  protected T createEntity(RFA1aFormDTO form) throws Exception {
+  public T createEntity(RFA1aFormDTO form) throws Exception {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath());
@@ -136,7 +136,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
         Entity.entity(entity, MediaType.APPLICATION_JSON_TYPE), configuration.getEntityClass());
   }
 
-  protected T findEntity(RFA1aFormDTO form, Long entityId) throws Exception {
+  public T findEntity(RFA1aFormDTO form, Long entityId) throws Exception {
     WebTarget target =
         clientTestRule.target(
             API.RFA_1A_FORMS
@@ -149,4 +149,7 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
     return target.request(MediaType.APPLICATION_JSON).get(configuration.getEntityClass());
   }
 
+  public TestExternalEntityConfiguration<T> getConfiguration() {
+    return configuration;
+  }
 }
