@@ -49,7 +49,7 @@ public class LIC198bResourceTest extends BaseExternalEntityApiTest<LIC198bFormDT
     return new BaseExternalEntityApiHelper<LIC198bFormDTO>(clientTestRule, configuration,
         formAHelper) {
       @Override
-      protected LIC198bFormDTO createEntity(RFA1aFormDTO form) throws IOException {
+      public LIC198bFormDTO createEntity(RFA1aFormDTO form) throws IOException {
         ApplicantDTO applicantDTO = applicantHelper
             .getFirstExistedOrPostNewApplicant(form.getId(), applicantHelper.getValidApplicant());
         WebTarget target =
