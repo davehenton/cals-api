@@ -6,7 +6,6 @@ import static gov.ca.cwds.cals.Constants.API.PathParams.LIC_198B_FORM_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICANT_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_OTHER_ADULT_ID;
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1B_FORM;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_APPLICANTS;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_OTHER_ADULTS;
@@ -19,9 +18,11 @@ import gov.ca.cwds.cals.inject.LIC198bCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.LIC198bServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.collection.LIC198bFormCollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.lic198b.LIC198bFormDTO;
+import gov.ca.cwds.cals.web.rest.parameter.RFAApplicantAwareEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAApplicantAwareEntityUpdateParams;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityUpdateParams;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.TypedResourceDelegate;
@@ -88,12 +89,36 @@ public class LIC198bFormsResource {
       @PathParam(RFA_1A_APPLICANT_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The Applicant Id")
           Long applicantId,
-      @ApiParam(required = true, name = RFA_1B_FORM, value = "The LIC-198b Form object")
+      @ApiParam(required = true, name = LIC_198B_FORM, value = "The LIC-198b Form object")
       @Valid
           LIC198bFormDTO lic198bForm) {
     return resourceDelegate.create(
         new RFAApplicantAwareEntityUpdateParams<>(applicationId, applicantId, lic198bForm));
   }
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + RFA_1A_APPLICANTS + "/{" + RFA_1A_APPLICANT_ID + "}")
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns LIC-198b Form for Applicant", response = LIC198bFormDTO.class)
+  public Response getLIC198bFormForApplicant(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long applicationId,
+      @PathParam(RFA_1A_APPLICANT_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The Applicant Id")
+          Long applicantId) {
+    return resourceDelegate.get(
+        new RFAApplicantAwareEntityGetParameterObject(applicationId, applicantId));
+  }
+
 
   @UnitOfWork(CALSNS)
   @POST
@@ -113,12 +138,37 @@ public class LIC198bFormsResource {
       @PathParam(RFA_1A_OTHER_ADULT_ID)
       @ApiParam(required = true, name = RFA_1A_OTHER_ADULT_ID, value = "The OtherAdult Id")
           Long otherAdultId,
-      @ApiParam(required = true, name = RFA_1B_FORM, value = "The LIC-198b Form object")
+      @ApiParam(required = true, name = LIC_198B_FORM, value = "The LIC-198b Form object")
       @Valid
           LIC198bFormDTO lic198bForm) {
     return resourceDelegate.create(
         new RFAOtherAdultAwareEntityUpdateParams<>(applicationId, otherAdultId, lic198bForm));
   }
+
+
+  @UnitOfWork(CALSNS)
+  @GET
+  @Path("/" + RFA_1A_OTHER_ADULTS + "/{" + RFA_1A_OTHER_ADULT_ID + "}")
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns LIC-198b Form for Other Adult", response = LIC198bFormDTO.class)
+  public Response getLIC198bFormForOtherAdult(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long applicationId,
+      @PathParam(RFA_1A_OTHER_ADULT_ID)
+      @ApiParam(required = true, name = RFA_1A_OTHER_ADULT_ID, value = "The Other Adult Id")
+          Long otherAdultId) {
+    return resourceDelegate.get(
+        new RFAOtherAdultAwareEntityGetParameterObject(applicationId, otherAdultId));
+  }
+
 
   @UnitOfWork(CALSNS)
   @PUT

@@ -53,7 +53,7 @@ public class RFA1cResourceTest extends BaseExternalEntityApiTest<RFA1cFormDTO> {
 
     return new BaseExternalEntityApiHelper<RFA1cFormDTO>(clientTestRule, configuration, formAHelper) {
       @Override
-      protected RFA1cFormDTO createEntity(RFA1aFormDTO form) throws Exception {
+      public RFA1cFormDTO createEntity(RFA1aFormDTO form) throws Exception {
         RFA1cFormDTO rfa1cFormDTO = super.createEntity(form);
         try {
           super.createEntity(form);

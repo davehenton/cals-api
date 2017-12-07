@@ -1,5 +1,7 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
@@ -11,6 +13,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
@@ -48,7 +51,7 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
     return new BaseExternalEntityApiHelper<RFA1bFormDTO>(clientTestRule, configuration,
         formAHelper) {
       @Override
-      protected RFA1bFormDTO createEntity(RFA1aFormDTO form) throws Exception {
+      public RFA1bFormDTO createEntity(RFA1aFormDTO form) throws Exception {
         ApplicantDTO applicantDTO = applicantHelper
             .getFirstExistedOrPostNewApplicant(form.getId(), applicantHelper.getValidApplicant());
         WebTarget target =
@@ -60,19 +63,6 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
             Entity.entity(entity, MediaType.APPLICATION_JSON_TYPE), configuration.getEntityClass());
       }
 
-
-      @Override
-      protected RFA1bFormDTO findEntity(RFA1aFormDTO form, Long entityId) throws Exception {
-        ApplicantDTO applicantDTO = applicantHelper
-            .getFirstExistedOrPostNewApplicant(form.getId(), applicantHelper.getValidApplicant());
-
-        WebTarget target =
-            clientTestRule.target(
-                API.RFA_1A_FORMS + "/" + form.getId() + "/" + configuration.getApiPath() + "/"
-                    + API.RFA_1A_APPLICANTS + "/" + applicantDTO.getId());
-        return target.request(MediaType.APPLICATION_JSON).get(configuration.getEntityClass());
-      }
-
       public void getEntitiesByFormId() throws Exception {
 
       }
@@ -81,8 +71,18 @@ public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
 
   }
 
-  @Override
-  public void createEntity() throws Exception {
-    super.createEntity();
+  @Test
+  public void getRFA1bFormApplicantTest() throws Exception {
+    RFA1aFormDTO form1a = formAHelper.createRFA1aForm();
+    RFA1bFormDTO created = getExternalEntityApiHelper().createEntity(form1a);
+    ApplicantDTO applicantDTO = applicantHelper
+        .getFirstExistedOrPostNewApplicant(form1a.getId(), applicantHelper.getValidApplicant());
+    WebTarget target =
+        clientTestRule.target(
+            API.RFA_1A_FORMS + "/" + form1a.getId() + "/" + getExternalEntityApiHelper().getConfiguration().getApiPath() + "/"
+                + API.RFA_1A_APPLICANTS + "/" + applicantDTO.getId());
+    RFA1bFormDTO found = target.request().get(RFA1bFormDTO.class);
+    assertThat(found).isEqualTo(created);
   }
+
 }
