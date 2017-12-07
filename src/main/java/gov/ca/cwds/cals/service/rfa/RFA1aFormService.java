@@ -18,6 +18,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.cals.service.rfa.rules.submission.RFASubmissionDroolsConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
+import gov.ca.cwds.cms.data.access.service.DataAccessServicesException;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.drools.DroolsConfiguration;
 import gov.ca.cwds.drools.DroolsException;
@@ -188,7 +189,8 @@ public class RFA1aFormService
     return rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
   }
 
-  private PlacementHome storePlaceMentHome(RFA1aFormDTO expandedFormDTO) {
+  private PlacementHome storePlaceMentHome(RFA1aFormDTO expandedFormDTO)
+      throws DataAccessServicesException {
     return facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
   }
 

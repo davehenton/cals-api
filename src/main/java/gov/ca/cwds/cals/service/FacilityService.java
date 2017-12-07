@@ -30,6 +30,7 @@ import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
+import gov.ca.cwds.cms.data.access.service.DataAccessServicesException;
 import gov.ca.cwds.cms.data.access.service.PlacementHomeService;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
@@ -333,11 +334,12 @@ public class FacilityService implements CrudsService {
     throw new UnsupportedOperationException();
   }
 
-  public PlacementHome createPlacementHomeByRfaApplication(RFA1aFormDTO formDTO) {
+  public PlacementHome createPlacementHomeByRfaApplication(RFA1aFormDTO formDTO)
+      throws DataAccessServicesException {
     return storePlacementHome(formDTO);
   }
 
-  protected PlacementHome storePlacementHome(RFA1aFormDTO form) {
+  protected PlacementHome storePlacementHome(RFA1aFormDTO form) throws DataAccessServicesException {
     PlacementHomeEntityAwareDTOBuilder builder = new PlacementHomeEntityAwareDTOBuilder();
     InjectorHolder.INSTANCE.getInjector().injectMembers(builder);
     builder
