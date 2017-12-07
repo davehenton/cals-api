@@ -23,7 +23,8 @@ import org.junit.Test;
 @SuppressWarnings("squid:S2187")
 public class LIC198bResourceTest extends BaseExternalEntityApiTest<LIC198bFormDTO> {
 
-  public static final String LIC198B_FORM_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/lic-198b-form.json");
+  public static final String LIC198B_FORM_FIXTURE = FixtureHelpers
+      .fixture("fixtures/rfa/lic-198b-form.json");
 
   @Override
   protected BaseExternalEntityApiHelper<LIC198bFormDTO> getExternalEntityApiHelper() {
@@ -74,12 +75,13 @@ public class LIC198bResourceTest extends BaseExternalEntityApiTest<LIC198bFormDT
         .getFirstExistedOrPostNewApplicant(form1a.getId(), applicantHelper.getValidApplicant());
     WebTarget target =
         clientTestRule.target(
-            API.RFA_1A_FORMS + "/" + form1a.getId() + "/" + getExternalEntityApiHelper().getConfiguration().getApiPath() + "/"
+            API.RFA_1A_FORMS + "/" + form1a.getId() + "/" + getExternalEntityApiHelper()
+                .getConfiguration().getApiPath() + "/"
                 + API.RFA_1A_APPLICANTS + "/" + applicantDTO.getId());
-    LIC198bFormDTO found = target.request().get(getExternalEntityApiHelper().getConfiguration().getEntityClass());
+    LIC198bFormDTO found = target.request()
+        .get(getExternalEntityApiHelper().getConfiguration().getEntityClass());
     assertThat(found).isEqualTo(created);
   }
-
 
 
 }
