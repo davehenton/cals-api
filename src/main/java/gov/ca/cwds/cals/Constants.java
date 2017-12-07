@@ -279,6 +279,16 @@ public final class Constants {
     }
   }
 
+  public static class RulesConfigPaths {
+
+    public static final String FORM_SUBMISSION = "form-submission-rules";
+
+    public static final String FORM_INPROGRESS = "form-inprogress-rules";
+
+    private RulesConfigPaths() {
+    }
+  }
+
   public static class ExpectedExceptionMessages {
 
     public static final String COMPLAINT_NOT_FOUND_BY_ID = "Facility Complaint is not found by Facility Number and Complaint Id";

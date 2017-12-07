@@ -1,8 +1,0 @@
-<kmodule xmlns="http://www.drools.org/xsd/kmodule">
-  <kbase name="inProgressValidation" packages="rules.inprogress">
-    <ksession name="inProgressValidationSession"/>
-  </kbase>
-  <kbase name="formSubmissionValidation" packages="rules.submission">
-    <ksession name="formSubmissionValidationSession"/>
-  </kbase>
-</kmodule>
