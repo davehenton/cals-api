@@ -1,8 +1,9 @@
 package gov.ca.cwds.cals.service.validation.business.configuration;
 
+import static gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups.APPLICANT_NAMES_DUPLICATION_VALIDATION;
+import static gov.ca.cwds.cals.Constants.RulesConfigPaths.FORM_INPROGRESS;
 import static gov.ca.cwds.cals.Constants.Validation.DEFAULT_DROOLS_VALIDATION_SESSION;
 
-import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -17,26 +18,18 @@ import org.hibernate.Hibernate;
  * @author CWDS CALS API Team
  */
 public final class ApplicantNamesDuplicationConstraintPostConfiguration
-    implements DroolsConfiguration<Object[]>, CalsSessionFactoryAware,
+    extends DroolsConfiguration<Object[]> implements CalsSessionFactoryAware,
     RFA1aFormsDaoAware {
 
   public static final ApplicantNamesDuplicationConstraintPostConfiguration INSTANCE =
       new ApplicantNamesDuplicationConstraintPostConfiguration();
 
   private ApplicantNamesDuplicationConstraintPostConfiguration() {
-
+    super(
+        DEFAULT_DROOLS_VALIDATION_SESSION,
+        APPLICANT_NAMES_DUPLICATION_VALIDATION,
+        FORM_INPROGRESS);
   }
-
-  @Override
-  public String getAgendaGroup() {
-    return BusinessRulesAgendaGroups.APPLICANT_NAMES_DUPLICATION_VALIDATION;
-  }
-
-  @Override
-  public String getDroolsSessionName() {
-    return DEFAULT_DROOLS_VALIDATION_SESSION;
-  }
-
 
   @Override
   public RFA1aForm getValidatedFact(Object[] input) {

@@ -9,6 +9,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
+import gov.ca.cwds.drools.DroolsException;
 import gov.ca.cwds.rest.exception.BusinessValidationException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -61,7 +62,7 @@ public class RFA1aFormStatusResource {
           name = STATUS,
           value = "New Application status"
       )
-          RFAApplicationStatusDTO status) throws BusinessValidationException {
+          RFAApplicationStatusDTO status) throws BusinessValidationException, DroolsException {
     service.setApplicationStatus(formId, status);
     return Response.status(Status.OK).build();
   }

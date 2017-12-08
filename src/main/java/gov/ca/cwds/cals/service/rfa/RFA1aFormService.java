@@ -1,14 +1,12 @@
 package gov.ca.cwds.cals.service.rfa;
 
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static gov.ca.cwds.cals.Constants.Validation.FORM_SUBMISSION_VALIDATION_SESSION;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups;
 import gov.ca.cwds.cals.Utils.StaffPerson;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.XaRFA1aFormsDao;
@@ -18,11 +16,13 @@ import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
+import gov.ca.cwds.cals.service.rfa.rules.submission.RFASubmissionDroolsConfiguration;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
+import gov.ca.cwds.cms.data.access.service.DataAccessServicesException;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.drools.DroolsConfiguration;
+import gov.ca.cwds.drools.DroolsException;
 import gov.ca.cwds.drools.DroolsService;
-import gov.ca.cwds.drools.validation.DroolsFieldValidationConfiguration;
 import gov.ca.cwds.rest.exception.BusinessValidationException;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.exception.IssueDetails;
@@ -126,7 +126,8 @@ public class RFA1aFormService
     return new RFAApplicationStatusDTO(form.getStatus());
   }
 
-  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO) {
+  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO)
+      throws DroolsException {
     RFAApplicationStatus newStatus = statusDTO.getStatus();
     if (!changeStatusIfNotSubmitted(formId, newStatus)) {
       try {
@@ -158,7 +159,7 @@ public class RFA1aFormService
    * There is using XA Transaction
    */
   private void submitApplication(Long formId, RFAApplicationStatus newStatus)
-      throws NotSupportedException, SystemException {
+      throws NotSupportedException, SystemException, DroolsException {
 
     RFA1aFormDTO expandedFormDTO = getExpandedFormDTO(formId);
     performSubmissionValidation(expandedFormDTO);
@@ -188,7 +189,8 @@ public class RFA1aFormService
     return rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
   }
 
-  private PlacementHome storePlaceMentHome(RFA1aFormDTO expandedFormDTO) {
+  private PlacementHome storePlaceMentHome(RFA1aFormDTO expandedFormDTO)
+      throws DataAccessServicesException {
     return facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
   }
 
@@ -200,7 +202,7 @@ public class RFA1aFormService
     xaRfa1AFormsDao.update(fillFormUpdateAttributes(form));
   }
 
-  private void performSubmissionValidation(RFA1aFormDTO formDTO) {
+  private void performSubmissionValidation(RFA1aFormDTO formDTO) throws DroolsException {
     Validator validator = environment.getValidator();
     Optional.ofNullable(validator.validate(formDTO))
         .ifPresent(violations -> {
@@ -216,18 +218,7 @@ public class RFA1aFormService
   }
 
   private DroolsConfiguration<RFA1aFormDTO> createConfiguration() {
-    return new DroolsFieldValidationConfiguration<RFA1aFormDTO>() {
-
-      @Override
-      public String getDroolsSessionName() {
-        return FORM_SUBMISSION_VALIDATION_SESSION;
-      }
-
-      @Override
-      public String getAgendaGroup() {
-        return BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION;
-      }
-    };
+    return RFASubmissionDroolsConfiguration.INSTANCE;
   }
 
   private RFA1aForm findFormById(Long formId) {
