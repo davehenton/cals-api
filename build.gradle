@@ -34,7 +34,7 @@ project.ext {
     projectVersion = projectMajorVersion + '-SNAPSHOT'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.5.2-SNAPSHOT'
+    coreApiVersion = '0.5.2_98'
     shiroSecurityVersion = '0.4.3'
     calsModelVersion = '0.4.6'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
