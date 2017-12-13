@@ -345,7 +345,6 @@ public class FacilityService implements CrudsService {
     builder
         .appendForm(form)
         .appendEntity()
-        .appendStaffPersonId()
         .appendEmergencyContactDetail()
         .appendHomeLanguages()
         .appendSubstituteCareProviders()

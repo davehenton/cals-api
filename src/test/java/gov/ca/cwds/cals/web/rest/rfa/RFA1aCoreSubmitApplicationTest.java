@@ -20,12 +20,14 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.SortedTable;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
  */
 
+@Ignore
 public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   DBUnitSupport dbUnitSupport =

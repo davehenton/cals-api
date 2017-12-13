@@ -211,7 +211,8 @@ public class RFA1aFormService
           }
         });
 
-    Set<IssueDetails> detailsList = droolsService.validate(formDTO, createConfiguration());
+    Set<IssueDetails> detailsList = droolsService
+        .performBusinessRules(formDTO, createConfiguration());
     if (!detailsList.isEmpty()) {
       throw new BusinessValidationException(detailsList);
     }
