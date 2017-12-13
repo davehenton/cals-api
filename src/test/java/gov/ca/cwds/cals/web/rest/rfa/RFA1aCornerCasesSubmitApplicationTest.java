@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -85,6 +86,7 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
   }
 
   @Test
+  @Ignore
   public void unChangedSubmitStatusTest() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
@@ -98,6 +100,7 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
   }
 
   @Test
+  @Ignore
   public void changeStatusBackToDraftTest() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());

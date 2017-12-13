@@ -1,12 +1,12 @@
 package gov.ca.cwds.cals.service.builder;
 
+import static gov.ca.cwds.cals.Utils.StaffPerson.getPerryAccount;
 import static gov.ca.cwds.cals.Utils.StaffPerson.getStaffPersonId;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.Utils.Applicant;
-import gov.ca.cwds.cals.Utils.StaffPerson;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
@@ -62,7 +62,7 @@ public class PlacementHomeEntityAwareDTOBuilder {
   private OtherAdultsInPlacementHomeMapper otherAdultsInPlacementHomeMapper;
 
   public PlacementHomeEntityAwareDTOBuilder() {
-    placementHomeEntityAwareDTO = new PlacementHomeEntityAwareDTO(getStaffPersonId());
+    placementHomeEntityAwareDTO = new PlacementHomeEntityAwareDTO(getPerryAccount());
   }
 
   public PlacementHomeEntityAwareDTOBuilder appendForm(RFA1aFormDTO form) {
@@ -82,11 +82,6 @@ public class PlacementHomeEntityAwareDTOBuilder {
 
   public PlacementHomeEntityAwareDTOBuilder appendEntity() {
     placementHomeEntityAwareDTO.setEntity(mapRfaFormToPlacementHome(form));
-    return this;
-  }
-
-  public PlacementHomeEntityAwareDTOBuilder appendStaffPersonId() {
-    placementHomeEntityAwareDTO.setStaffPersonId(StaffPerson.getStaffPersonId());
     return this;
   }
 
@@ -110,8 +105,7 @@ public class PlacementHomeEntityAwareDTOBuilder {
   private SCPEntityAwareDTO buildSubstituteCareProviderParameterObject(
       RFA1aFormDTO form, ApplicantDTO applicant) {
     final String staffPersonId = getStaffPersonId();
-    SCPEntityAwareDTO entityAwareDTO = new SCPEntityAwareDTO(staffPersonId);
-    entityAwareDTO.setStaffPersonId(staffPersonId);
+    SCPEntityAwareDTO entityAwareDTO = new SCPEntityAwareDTO(getPerryAccount());
     entityAwareDTO.setPrimaryApplicant(Applicant.isPrimary(form, applicant));
     entityAwareDTO.setPhoneNumbers(mapPhoneContactDetails(applicant));
     entityAwareDTO.setEthnicity(applicant.getEthnicity());
@@ -167,7 +161,7 @@ public class PlacementHomeEntityAwareDTOBuilder {
       otherChildInHome.setGenderCd(minorChildDTO.getGender().getCwsShortCode());
       otherChildInHome.setOthchldNm("Undisclosed");
       OtherChildInHomeEntityAwareDTO entityAwareDTO = new OtherChildInHomeEntityAwareDTO(
-          getStaffPersonId());
+          getPerryAccount());
       entityAwareDTO.setEntity(otherChildInHome);
       placementHomeEntityAwareDTO.addOtherChildrenInHomeParameterObject(entityAwareDTO);
       prepareRelationships(minorChildDTO, entityAwareDTO);
@@ -193,7 +187,7 @@ public class PlacementHomeEntityAwareDTOBuilder {
       OtherAdultsInPlacementHome otherAdult = otherAdultsInPlacementHomeMapper
           .toOtherAdult(otherAdultDTO);
       OtherAdultInHomeEntityAwareDTO entityAwareDTO = new OtherAdultInHomeEntityAwareDTO(
-          getStaffPersonId());
+          getPerryAccount());
       entityAwareDTO.setEntity(otherAdult);
       prepareRelationships(otherAdultDTO, entityAwareDTO);
       prepareOutOfStateChecks(otherAdultDTO, entityAwareDTO);

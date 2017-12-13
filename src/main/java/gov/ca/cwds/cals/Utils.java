@@ -15,6 +15,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.exception.ExpectedException;
+import gov.ca.cwds.security.realm.PerryAccount;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -76,20 +77,26 @@ public final class Utils {
     private StaffPerson() {
     }
 
-    public static String getStaffPersonId() {
+    public static PerryAccount getPerryAccount() {
       Subject currentUser = SecurityUtils.getSubject();
-      String staffPersonId = DEFAULT_USER_ID; //Default value
       if (currentUser.getPrincipals() != null) {
         @SuppressWarnings("rawtypes")
         List principals = currentUser.getPrincipals().asList();
         if (principals.size() > 1 && principals.get(1) instanceof PerryUserIdentity) {
           PerryUserIdentity currentUserInfo = (PerryUserIdentity) principals.get(1);
           if (currentUserInfo.getStaffId() != null) {
-            staffPersonId = currentUserInfo.getStaffId();
+            return currentUserInfo;
           }
         }
       }
-      return staffPersonId;
+      PerryAccount perryAccount = new PerryAccount();
+      perryAccount.setStaffId(DEFAULT_USER_ID);
+      return perryAccount;
+    }
+
+    public static String getStaffPersonId() {
+      PerryAccount perryAccount = getPerryAccount();
+      return perryAccount.getStaffId();
     }
 
   }

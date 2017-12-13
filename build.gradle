@@ -34,8 +34,7 @@ project.ext {
     projectVersion = projectMajorVersion + '-SNAPSHOT'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.5.2_107'
-    shiroSecurityVersion = '0.4.3'
+    coreApiVersion = '0.5.2_111'
     calsModelVersion = '0.4.6'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
@@ -133,8 +132,6 @@ dependencies {
     compile (group: 'gov.ca.cwds.api', name: 'drools-engine', version: coreApiVersion , changing: true)
     compile (group: 'gov.ca.cwds.api', name: 'legacy-data-access-services', version: coreApiVersion , changing: true)
 
-    compile group: 'gov.ca.cwds.api', name:'jwt-security', version: shiroSecurityVersion
-
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '4.39'
 
     compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.46'
@@ -158,19 +155,16 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-compress', version: '1.14'
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
     compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
-    
     compile group: 'com.atomikos', name: 'transactions-hibernate4', version: '4.0.4'
-
     compile group: 'com.github.javafaker', name: 'javafaker', version: '0.13'
+    compile (group: 'gov.ca.cwds.cals', name: 'lis-data-model', version: calsModelVersion, changing: true)
+    compile (group: 'gov.ca.cwds.cals', name: 'cals-ns-data-model', version: calsModelVersion, changing: true)
 
     testCompile group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
     testCompile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: calsModelVersion, changing: true)
     testCompile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: calsModelVersion, changing: true)
-    compile (group: 'gov.ca.cwds.cals', name: 'lis-data-model', version: calsModelVersion, changing: true)
-    compile (group: 'gov.ca.cwds.cals', name: 'cals-ns-data-model', version: calsModelVersion, changing: true)
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'gov.ca.cwds.api', name: 'jwt-security', version: shiroSecurityVersion
     testCompile 'org.mockito:mockito-core:2.0.54-beta'
     testCompile group: 'org.hamcrest', name: 'hamcrest-junit', version: '2.0.0.0'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.194'
