@@ -22,7 +22,7 @@ public interface PersonMapper {
 
     @Mapping(target = "firstName", source = "commonFirstName")
     @Mapping(target = "lastName", source = "commonLastName")
-    @Mapping(target = "gender", source = "genderCode")
+    @Mapping(target = "gender", source = "gender")
     @Mapping(target = "dateOfBirth", source = "birthDate")
 
     @Mapping(target = "id",          ignore = true)
