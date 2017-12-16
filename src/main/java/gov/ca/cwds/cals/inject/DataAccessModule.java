@@ -78,9 +78,20 @@ import gov.ca.cwds.data.legacy.cms.entity.StaffPerson;
 import gov.ca.cwds.data.legacy.cms.entity.SubCareProviderPhoneticName;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProviderUc;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.ActiveServiceComponentType;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.ApprovalStatusType;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.CaseClosureReasonType;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.Country;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.County;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.DeathCircumstancesType;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.Ethnicity;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.FacilityType;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.ImmigrationStatus;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.Language;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.LicenseStatus;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.MaritalStatus;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.Religion;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.SecondaryAssignmentRoleType;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.State;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.VisitType;
 import gov.ca.cwds.inject.CmsHibernateBundle;
@@ -152,7 +163,20 @@ public class DataAccessModule extends AbstractModule {
       PlacementHomeUc.class,
       SubstituteCareProvider.class,
       SubstituteCareProviderUc.class,
-      SubCareProviderPhoneticName.class
+      SubCareProviderPhoneticName.class,
+      Country.class,
+      ImmigrationStatus.class,
+      MaritalStatus.class,
+      gov.ca.cwds.data.legacy.cms.entity.syscodes.NameType.class,
+      Ethnicity.class,
+      Language.class,
+      ActiveServiceComponentType.class,
+      ApprovalStatusType.class,
+      CaseClosureReasonType.class,
+      DeathCircumstancesType.class,
+      Religion.class,
+      SecondaryAssignmentRoleType.class
+
   ).build();
 
 
