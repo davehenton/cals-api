@@ -1,8 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.DBUnitAssertHelper;
 import gov.ca.cwds.cals.persistence.DBUnitSupport;
@@ -12,22 +9,24 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.SortedTable;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author CWDS CALS API Team
  */
 
-@Ignore
 public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   DBUnitSupport dbUnitSupport =
