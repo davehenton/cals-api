@@ -30,8 +30,10 @@ project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
-    projectMajorVersion = '0.5.2'
-    projectVersion = projectMajorVersion + '-SNAPSHOT'
+    projectMajorVersion = '0.5.3'
+//    projectVersion = projectMajorVersion + '-SNAPSHOT'
+
+    projectVersion = projectMajorVersion + '_TPT2-658' // Perry V2 support story release
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.5.3_TPT2-658_3'
@@ -51,6 +53,11 @@ project.ext {
     buildEnv = System.env.BUILD_ENV ?: (Os.isFamily(Os.FAMILY_WINDOWS) ? 'WIN_DEV' : 'JENKINS')
     devDockerHost = System.env.DEV_DOCKER_HOST ?: '192.168.99.100'
     devDockerPort = 2376
+
+    // Publishing configuration
+    snapshotMavenRepo = "http://sonar.dev.cwds.io:8081/artifactory/repo"
+    releaseMavenRepo = "http://sonar.dev.cwds.io:8081/artifactory/libs-release"
+    //artifactoryRepo = ((versionPropertyValue != null ) ? releaseMavenRepo : snapshotMavenRepo)
 }
 
 group projectGroup
@@ -311,9 +318,10 @@ publishing {
         }
     }
     repositories {
-        //mavenLocal()
+        mavenLocal()
         maven {
-            url "http://sonar.dev.cwds.io:8081/artifactory/repo"
+            //url snapshotMavenRepo
+            url releaseMavenRepo
         }
     }
 }
