@@ -29,6 +29,8 @@ import static org.junit.Assert.assertNotNull;
 
 public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
+  private static final String FIXTURE_PATH_TO_PRINCIPAL = "security/cals-api-principal.json";
+
   DBUnitSupport dbUnitSupport =
       new DBUnitSupportBuilder().buildForCMS(appRule.getConfiguration());
 
@@ -64,7 +66,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     otherAdultHelper.createOtherAdults(form.getId(), secondApplicant);
     minorChildHelper.createMinorChildren(form.getId(), applicantDTO);
 
-    Response response = statusHelper.submitApplication(form.getId());
+    Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     statusHelper.assertSubmitted(form.getId());
 

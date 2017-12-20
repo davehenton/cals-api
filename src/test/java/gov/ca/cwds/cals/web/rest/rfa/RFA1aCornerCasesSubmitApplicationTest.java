@@ -27,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTest {
 
+  private static final String FIXTURE_PATH_TO_PRINCIPAL = "security/cals-api-principal.json";
   private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
   @BeforeClass
@@ -90,10 +91,10 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
     residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
-    Response response = statusHelper.submitApplication(form.getId());
+    Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     statusHelper.assertSubmitted(form.getId());
-    response = statusHelper.submitApplication(form.getId());
+    response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     statusHelper.assertSubmitted(form.getId());
   }
@@ -103,7 +104,7 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
     residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
-    Response response = statusHelper.submitApplication(form.getId());
+    Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     statusHelper.assertSubmitted(form.getId());
     response = statusHelper.changeApplicationStatusTo(RFAApplicationStatus.DRAFT, form.getId());
