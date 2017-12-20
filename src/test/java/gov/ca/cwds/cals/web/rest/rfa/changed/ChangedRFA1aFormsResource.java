@@ -1,32 +1,25 @@
 package gov.ca.cwds.cals.web.rest.rfa.changed;
 
-import static gov.ca.cwds.cals.Constants.RFA;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static gov.ca.cwds.cals.web.rest.rfa.changed.ChangedRFA1aFormsResourceTest.PATH_CHANGED_RFA_1A_FORMS;
-import static gov.ca.cwds.cals.web.rest.rfa.changed.ChangedRFA1aFormsResourceTest.PATH_PARAM_DATE_AFTER;
-
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.service.dto.changed.ChangedRFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormsCollectionService;
 import gov.ca.cwds.rest.api.Response;
+import gov.ca.cwds.util.DateTimeUtils;
 import io.dropwizard.hibernate.UnitOfWork;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+
+import static gov.ca.cwds.cals.Constants.RFA;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
+import static gov.ca.cwds.cals.web.rest.rfa.changed.ChangedRFA1aFormsResourceTest.PATH_CHANGED_RFA_1A_FORMS;
+import static gov.ca.cwds.cals.web.rest.rfa.changed.ChangedRFA1aFormsResourceTest.PATH_PARAM_DATE_AFTER;
 
 /**
  * @author CWDS TPT-2
@@ -61,7 +54,7 @@ public class ChangedRFA1aFormsResource {
           String dateAfter
   ) {
     List<ChangedRFA1aFormDTO> changedRFA1aFormDTOList = rfa1aFormsCollectionService
-        .streamChangedRFA1aForms(BaseCalsApiIntegrationTest.toLocalDateTime(dateAfter))
+            .streamChangedRFA1aForms(DateTimeUtils.toLocalDateTime(dateAfter))
         .collect(Collectors.toList());
     return new CollectionDTO<>(changedRFA1aFormDTOList);
   }
