@@ -8,6 +8,10 @@
         "id": "CA",
         "value": "California"
       },
+      "zip_extension": "1111",
+      "longitude": -121.25118,
+      "lattitude": 38.74037,
+      "deliverable": true,
       "type": {
         "id": 1,
         "value": "Residential"
