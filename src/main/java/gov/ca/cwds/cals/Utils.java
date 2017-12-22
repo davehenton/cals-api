@@ -6,10 +6,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.dto.rfa.*;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.exception.ExpectedException;
-import gov.ca.cwds.security.realm.PerryAccount;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 
 import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
@@ -58,32 +55,6 @@ public final class Utils {
       return number;
     }
 
-
-  }
-
-  public static class StaffPerson {
-
-    public static final String DEFAULT_USER_ID = "0X5";
-
-    private StaffPerson() {
-    }
-
-    public static PerryAccount getPerryAccount() {
-        Optional<PerryAccount> perryAccount = Optional.empty();
-      Subject currentUser = SecurityUtils.getSubject();
-      if (currentUser.getPrincipals() != null) {
-          perryAccount = currentUser.getPrincipals().asList().stream().filter(principal -> principal instanceof PerryAccount).findAny();
-      }
-        return perryAccount.orElseThrow(IllegalStateException::new);
-    }
-
-    public static String getStaffPersonId() {
-      PerryAccount perryAccount = getPerryAccount();
-        if (StringUtils.isEmpty(perryAccount.getStaffId())) {
-            return DEFAULT_USER_ID;
-        }
-      return perryAccount.getStaffId();
-    }
 
   }
 
