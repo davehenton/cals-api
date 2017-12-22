@@ -159,13 +159,13 @@ public interface FacilityMapper {
 
     FacilityAddressMapper facilityAddressMapper = Mappers.getMapper(FacilityAddressMapper.class);
 
-    Integer residentialZipCode = placementHome.getZipNo();
-    Short residentialZipSuffix = placementHome.getZipSfxNo();
+    String residentialZipCode = placementHome.getZipNo();
+    String residentialZipSuffix = placementHome.getZipSfxNo();
     if (StringUtils
         .isNoneBlank(placementHome.getStreetNo(), placementHome.getStreetNm(),
             placementHome.getCityNm())
-        || residentialZipCode > 0
-        || residentialZipSuffix > 0) {
+        || StringUtils.isNotBlank(residentialZipCode)
+        || StringUtils.isNotBlank(residentialZipSuffix)) {
       FacilityAddressDTO residentialAddress = facilityAddressMapper
           .toResidentialAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper
@@ -173,12 +173,11 @@ public interface FacilityMapper {
       facilityAddressDTOs.add(residentialAddress);
     }
 
-    Integer mailZipCode = placementHome.getpZipNo();
-    Short mailZipSuffix = placementHome.getPyZipSfx();
+    String mailZipCode = placementHome.getpZipNo();
+    String mailZipSuffix = placementHome.getPyZipSfx();
     if (StringUtils.isNoneBlank(placementHome.getPstreetNo(), placementHome.getPstreetNm(),
-        placementHome.getpCityNm())
-        || mailZipCode > 0
-        || mailZipSuffix > 0) {
+        placementHome.getpCityNm()) || StringUtils.isNotBlank(mailZipCode)
+        || StringUtils.isNotBlank(mailZipSuffix)) {
       FacilityAddressDTO mailingAddress = facilityAddressMapper
           .toMailAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper.afterMapping(mailingAddress, placementHome, dictionaryEntriesHolder);
