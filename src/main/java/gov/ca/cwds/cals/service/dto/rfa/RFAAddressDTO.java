@@ -9,6 +9,8 @@ import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.Max;
+
 /**
  * @author CWDS CALS API Team.
  */
@@ -27,12 +29,25 @@ public class RFAAddressDTO extends BaseDTO {
   @ApiModelProperty(value = "zip", example = "98123")
   private String zip;
 
+  @ApiModelProperty(value = "Zip Extension", example = "123")
+  @Max(99999)
+  private String zipExtension;
+
   @ApiModelProperty(value = "City", example = "Rocklin")
   private String city;
 
   @ApiModelProperty(value = "State Type")
   @CheckStateReferentialIntegrity(enrich = true)
   private StateType state;
+
+  @ApiModelProperty(example = "-121.25118")
+  private Double longitude;
+
+  @ApiModelProperty(example = "38.74037")
+  private Double lattitude;
+
+  @ApiModelProperty(example = "true")
+  private Boolean deliverable;
 
   @ApiModelProperty(value = "Address Type")
   @CheckReferentialIntegrity(enrich = true)
@@ -78,4 +93,35 @@ public class RFAAddressDTO extends BaseDTO {
     this.type = type;
   }
 
+  public String getZipExtension() {
+    return zipExtension;
+  }
+
+  public void setZipExtension(String zipExtension) {
+    this.zipExtension = zipExtension;
+  }
+
+  public Double getLongitude() {
+    return longitude;
+  }
+
+  public void setLongitude(Double longitude) {
+    this.longitude = longitude;
+  }
+
+  public Double getLattitude() {
+    return lattitude;
+  }
+
+  public void setLattitude(Double lattitude) {
+    this.lattitude = lattitude;
+  }
+
+  public Boolean getDeliverable() {
+    return deliverable;
+  }
+
+  public void setDeliverable(Boolean deliverable) {
+    this.deliverable = deliverable;
+  }
 }

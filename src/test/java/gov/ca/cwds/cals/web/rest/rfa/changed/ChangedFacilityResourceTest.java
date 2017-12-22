@@ -1,6 +1,8 @@
 package gov.ca.cwds.cals.web.rest.rfa.changed;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
+import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.junit.Assert.assertTrue;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -9,6 +11,9 @@ import gov.ca.cwds.cals.service.dto.changed.ChangedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import javax.swing.text.DateFormatter;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -38,24 +43,24 @@ public class ChangedFacilityResourceTest extends BaseCalsApiIntegrationTest {
     if (TestModeUtils.isIntegrationTestsMode()) {
       return;
     }
-    clientTestRule.getMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    CollectionDTO<ChangedFacilityDTO> changedFacilities =
-        getChangedFacilitiesAfter(LocalDateTime.now(), LocalDateTime.now());
-    assertTrue(changedFacilities.getCollection().size() > 0);
+    CollectionDTO<TestChangedFacilityDTO> changedFacilities =
+        getChangedFacilitiesAfter("2017-12-19");
+    String fixture = fixture("fixtures/changed-facility-service.json");
+    assertEqualsResponse(fixture, transformDTOtoJSON(changedFacilities));
+
   }
 
-  private CollectionDTO<ChangedFacilityDTO> getChangedFacilitiesAfter(LocalDateTime dateAfter,
-      LocalDateTime lisDateAfter) {
+  private CollectionDTO<TestChangedFacilityDTO> getChangedFacilitiesAfter(String  dateAfter) {
     WebTarget target =
         clientTestRule.target(
             PATH_CHANGED_FACILITY
                 + "/?"
                 + DATE_AFTER
-                + "=1970-01-01&"
+                + "=" + dateAfter + "&"
                 + LIS_DATE_AFTER
-                + "=1970-01-01");
+                + "=" + dateAfter);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    return invocation.get(new GenericType<CollectionDTO<ChangedFacilityDTO>>() {
+    return invocation.get(new GenericType<CollectionDTO<TestChangedFacilityDTO>>() {
     });
 
   }

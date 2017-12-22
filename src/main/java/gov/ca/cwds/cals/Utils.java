@@ -1,30 +1,20 @@
 package gov.ca.cwds.cals;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-
 import com.google.common.base.Objects;
 import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
-import gov.ca.cwds.cals.auth.PerryUserIdentity;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
-import gov.ca.cwds.cals.service.dto.rfa.EmploymentDTO;
-import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.dto.rfa.*;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.exception.ExpectedException;
-import gov.ca.cwds.security.realm.PerryAccount;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import javax.ws.rs.core.Response;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  * @author CALS API Team
@@ -65,39 +55,6 @@ public final class Utils {
       return number;
     }
 
-
-  }
-
-  public static class StaffPerson {
-
-    private static final Logger LOG = LoggerFactory.getLogger(StaffPerson.class);
-
-    public static final String DEFAULT_USER_ID = "0X5";
-
-    private StaffPerson() {
-    }
-
-    public static PerryAccount getPerryAccount() {
-      Subject currentUser = SecurityUtils.getSubject();
-      if (currentUser.getPrincipals() != null) {
-        @SuppressWarnings("rawtypes")
-        List principals = currentUser.getPrincipals().asList();
-        if (principals.size() > 1 && principals.get(1) instanceof PerryUserIdentity) {
-          PerryUserIdentity currentUserInfo = (PerryUserIdentity) principals.get(1);
-          if (currentUserInfo.getStaffId() != null) {
-            return currentUserInfo;
-          }
-        }
-      }
-      PerryAccount perryAccount = new PerryAccount();
-      perryAccount.setStaffId(DEFAULT_USER_ID);
-      return perryAccount;
-    }
-
-    public static String getStaffPersonId() {
-      PerryAccount perryAccount = getPerryAccount();
-      return perryAccount.getStaffId();
-    }
 
   }
 

@@ -30,11 +30,11 @@ project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
-    projectMajorVersion = '0.5.2'
+    projectMajorVersion = '0.5.3'
     projectVersion = projectMajorVersion + '-SNAPSHOT'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.5.2_117'
+    coreApiVersion = '0.5.3_131'
     calsModelVersion = '0.4.6'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
@@ -51,6 +51,8 @@ project.ext {
     buildEnv = System.env.BUILD_ENV ?: (Os.isFamily(Os.FAMILY_WINDOWS) ? 'WIN_DEV' : 'JENKINS')
     devDockerHost = System.env.DEV_DOCKER_HOST ?: '192.168.99.100'
     devDockerPort = 2376
+    
+    commonsCollectionsVersion = '4.1'
 }
 
 group projectGroup
@@ -126,11 +128,11 @@ dependencies {
 // Dropwizard-guice 1.0.0.2 conflicts with jersey-client 2.25.
 // Exclude transitive dependencies.
 
-    compile (group: 'gov.ca.cwds.api', name: 'api-core', version: coreApiVersion , changing: true) {
+    compile (group: 'gov.ca.cwds.api', name: 'api-core', version: coreApiVersion) {
         exclude group: 'org.glassfish.jersey.core'
     }
-    compile (group: 'gov.ca.cwds.api', name: 'drools-engine', version: coreApiVersion , changing: true)
-    compile (group: 'gov.ca.cwds.api', name: 'legacy-data-access-services', version: coreApiVersion , changing: true)
+    compile group: 'gov.ca.cwds.api', name: 'drools-engine', version: coreApiVersion
+    compile group: 'gov.ca.cwds.api', name: 'legacy-data-access-services', version: coreApiVersion
 
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '4.39'
 
@@ -150,7 +152,7 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.2.8.Final'
 
     compile 'org.mapstruct:mapstruct-jdk8:' + mapstructVersion
-    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: commonsCollectionsVersion
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
     compile group: 'org.apache.commons', name: 'commons-compress', version: '1.14'
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
@@ -185,6 +187,7 @@ dependencies {
 
     testCompile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
     testCompile "org.dbunit:dbunit:$dbunitVersion"
+    testCompile group: 'gov.ca.cwds.api', name:'api-security-test-support', version: '0.5.3_312'
 
     apt 'org.mapstruct:mapstruct-processor:' + mapstructVersion
 }
