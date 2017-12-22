@@ -31,7 +31,6 @@ project.ext {
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
     projectMajorVersion = '0.5.2'
-    projectVersion = projectMajorVersion + '-SNAPSHOT'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.5.2_117'
@@ -43,14 +42,23 @@ project.ext {
 
     targetDockerHubOrganization = System.env.DOCKERHUB_ORG ?: 'cwds'
 
-    releaseDocker = System.getProperty("ReleaseDocker")
+    isRelease = System.getProperty("ReleaseDocker")
     buildNumber = System.getProperty('BuildNumber')
-    dockerTag = (releaseDocker == 'true' && buildNumber != null  ? projectMajorVersion + '_' + buildNumber + '-RC' : projectVersion )
+    customVersion = System.getProperty('CustomVersion')
+    projectSnapshotVersion = projectMajorVersion + "-SNAPSHOT"
+    projectReleaseVersion = (customVersion == null ? projectMajorVersion + '_' + buildNumber + '-RC' : customVersion )
+    projectVersion = (isRelease ? projectReleaseVersion : projectSnapshotVersion )
+    dockerTag = projectVersion
 
     // assumed that Windows users use the Docker Toolbox
     buildEnv = System.env.BUILD_ENV ?: (Os.isFamily(Os.FAMILY_WINDOWS) ? 'WIN_DEV' : 'JENKINS')
     devDockerHost = System.env.DEV_DOCKER_HOST ?: '192.168.99.100'
     devDockerPort = 2376
+
+    // Publishing configuration
+    snapshotMavenRepo = "http://sonar.dev.cwds.io:8081/artifactory/repo"
+    releaseMavenRepo = "http://sonar.dev.cwds.io:8081/artifactory/libs-release"
+    artifactoryRepo = (isRelease ? releaseMavenRepo : snapshotMavenRepo)
 }
 
 group projectGroup
@@ -307,13 +315,11 @@ publishing {
             from components.java
             groupId projectGroup
             artifactId rootProject.name
-            version version + ((System.properties.getProperty('build') != null) ? '.' + System.properties.getProperty('build') : '')
         }
     }
     repositories {
-        //mavenLocal()
         maven {
-            url "http://sonar.dev.cwds.io:8081/artifactory/repo"
+            url artifactoryRepo
         }
     }
 }
