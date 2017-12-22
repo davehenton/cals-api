@@ -1,16 +1,17 @@
 package gov.ca.cwds.cals.service.rfa;
 
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
-
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.RequestResponse;
-import gov.ca.cwds.cals.Utils.StaffPerson;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.rfa.factory.RFAInternalEntityConfiguration;
 import gov.ca.cwds.rest.exception.ExpectedException;
+import gov.ca.cwds.security.utils.PrincipalUtils;
+
 import java.time.LocalDateTime;
+
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 /**
  * @author CWDS CALS API Team.
@@ -45,7 +46,7 @@ public abstract class AbstractRFAInternalEntityService<T extends RequestResponse
           Constants.ExpectedExceptionMessages.RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
     }
     form.setUpdateDateTime(LocalDateTime.now());
-    form.setUpdateUserId(StaffPerson.getStaffPersonId());
+    form.setUpdateUserId(PrincipalUtils.getStaffPersonId());
 
     configuration.putEntityToTheForm(form, request);
 

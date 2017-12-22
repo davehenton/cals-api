@@ -1,9 +1,5 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static io.dropwizard.testing.FixtureHelpers.fixture;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
@@ -11,14 +7,18 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import io.dropwizard.jackson.Jackson;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import static io.dropwizard.testing.FixtureHelpers.fixture;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -27,6 +27,7 @@ import org.junit.Test;
 
 public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTest {
 
+  private static final String FIXTURE_PATH_TO_PRINCIPAL = "security/cals-api-principal.json";
   private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
   @BeforeClass
@@ -86,26 +87,24 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
   }
 
   @Test
-  @Ignore
   public void unChangedSubmitStatusTest() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
     residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
-    Response response = statusHelper.submitApplication(form.getId());
+    Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     statusHelper.assertSubmitted(form.getId());
-    response = statusHelper.submitApplication(form.getId());
+    response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     statusHelper.assertSubmitted(form.getId());
   }
 
   @Test
-  @Ignore
   public void changeStatusBackToDraftTest() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
     residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
-    Response response = statusHelper.submitApplication(form.getId());
+    Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     statusHelper.assertSubmitted(form.getId());
     response = statusHelper.changeApplicationStatusTo(RFAApplicationStatus.DRAFT, form.getId());

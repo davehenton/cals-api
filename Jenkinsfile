@@ -43,8 +43,8 @@ node ('tpt2-slave'){
    parameters([
       string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
       string(defaultValue: 'development', description: '', name: 'branch'),
-      booleanParam(defaultValue: false, description: 'Default release version template is: <majoreVersion>_<buildNumber>-RC', name: 'RELEASE'),
-      booleanParam(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
+      booleanParam(defaultValue: false, description: 'Default release version template is: <majorVersion>_<buildNumber>-RC', name: 'RELEASE'),
+      string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
       booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
       string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory')
       ]), pipelineTriggers([pollSCM('H/5 * * * *')])])
@@ -94,7 +94,7 @@ node ('tpt2-slave'){
 		cleanWs()
 	}
 	stage('Deploy Application'){
-	   checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', url: 'git@github.com:ca-cwds/de-ansible.git']]]
+	   checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/perf-poc']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', url: 'git@github.com:ca-cwds/de-ansible.git']]]
 	   sh 'ansible-playbook -e NEW_RELIC_AGENT=$USE_NEWRELIC  -e CALS_API_VERSION=$APP_VERSION -i $inventory deploy-calsapi.yml --vault-password-file ~/.ssh/vault.txt -vv'
 	   cleanWs()
 	   sleep (20)
