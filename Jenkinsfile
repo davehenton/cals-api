@@ -43,7 +43,8 @@ node ('tpt2-slave'){
    parameters([
       string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
       string(defaultValue: 'development', description: '', name: 'branch'),
-      booleanParam(defaultValue: false, description: '', name: 'RELEASE_DOCKER'),
+      booleanParam(defaultValue: false, description: 'Default release version template is: <majoreVersion>_<buildNumber>-RC', name: 'RELEASE'),
+      booleanParam(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
       booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
       string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory')
       ]), pipelineTriggers([pollSCM('H/5 * * * *')])])
@@ -55,7 +56,7 @@ node ('tpt2-slave'){
 		  rtGradle.useWrapper = true
    }
    stage('Build'){
-		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar'
+		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
    }
    stage('Unit Tests') {
        buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test jacocoTestReport', switches: '--stacktrace'
@@ -72,22 +73,19 @@ node ('tpt2-slave'){
     }
 
 	stage ('Push to artifactory'){
-      rtGradle.deployer repo:'libs-snapshot', server: serverArti
-	    // rtGradle.deployer repo:'libs-release', server: serverArti
-	    rtGradle.deployer.deployArtifacts = true
-		//buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'artifactoryPublish'
-		buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publish'
-		rtGradle.deployer.deployArtifacts = false
+      rtGradle.deployer.deployArtifacts = true
+		  buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publish -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
+		  rtGradle.deployer.deployArtifacts = false
 	}
 	stage ('Build Docker'){
 	   buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'createDockerImage'
 	   withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
-           buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker -DReleaseDocker=$RELEASE_DOCKER -DBuildNumber=$BUILD_NUMBER'
+           buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
        }
 	}
 	stage ('Build Tests Docker'){
   	   withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
-             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: ':docker-tests:dockerTestsPublish -DReleaseDocker=$RELEASE_DOCKER -DBuildNumber=$BUILD_NUMBER'
+             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: ':docker-tests:dockerTestsPublish -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
        }
   	}
 	stage('Clean Workspace') {
