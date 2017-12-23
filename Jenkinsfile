@@ -59,7 +59,7 @@ node ('tpt2-slave'){
     echo("RELEASE: ${params.RELEASE}")
     echo("BUILD_NUMBER: ${BUILD_NUMBER}")
     echo("OVERRIDE_VERSION: ${params.OVERRIDE_VERSION}")
-		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=${params.OVERRIDE_VERSION}'
+		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion="${params.OVERRIDE_VERSION}"'
    }
    stage('Unit Tests') {
        buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test jacocoTestReport', switches: '--stacktrace'
@@ -77,18 +77,18 @@ node ('tpt2-slave'){
 
 	stage ('Push to artifactory'){
       rtGradle.deployer.deployArtifacts = true
-		  buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publish -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=${params.OVERRIDE_VERSION}'
+		  buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publish -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion="${params.OVERRIDE_VERSION}"'
 		  rtGradle.deployer.deployArtifacts = false
 	}
 	stage ('Build Docker'){
 	   buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'createDockerImage'
 	   withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
-           buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=${params.OVERRIDE_VERSION}'
+           buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion="${params.OVERRIDE_VERSION}"'
        }
 	}
 	stage ('Build Tests Docker'){
   	   withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
-             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: ':docker-tests:dockerTestsPublish -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=${OVERRIDE_VERSION}'
+             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: ':docker-tests:dockerTestsPublish -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion="${params.OVERRIDE_VERSION}"'
        }
   	}
 	stage('Clean Workspace') {
