@@ -47,7 +47,7 @@ project.ext {
     customVersion = System.getProperty('CustomVersion')
     
     projectSnapshotVersion = projectMajorVersion + "-SNAPSHOT"
-    projectReleaseVersion = (customVersion == null && customVersion !="" ? projectMajorVersion + '_' + buildNumber + '-RC' : customVersion )
+    projectReleaseVersion = (customVersion == null && customVersion != "" || customVersion.startsWith('$') ? projectMajorVersion + '_' + buildNumber + '-RC' : customVersion )
     projectVersion = (isRelease ? projectReleaseVersion : projectSnapshotVersion )
     dockerTag = projectVersion
 
