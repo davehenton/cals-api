@@ -56,9 +56,9 @@ node ('tpt2-slave'){
 		  rtGradle.useWrapper = true
    }
    stage('Build'){
-    echo('RELEASE: ${params.RELEASE}')
-    echo('BUILD_NUMBER: ${BUILD_NUMBER}')
-    echo('OVERRIDE_VERSION: ${params.OVERRIDE_VERSION}')
+    echo("RELEASE: ${params.RELEASE}")
+    echo("BUILD_NUMBER: ${BUILD_NUMBER}")
+    echo("OVERRIDE_VERSION: ${params.OVERRIDE_VERSION}")
 		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=${params.OVERRIDE_VERSION}'
    }
    stage('Unit Tests') {
