@@ -83,7 +83,7 @@ node ('tpt2-slave'){
 	stage ('Build Docker'){
 	   buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'createDockerImage'
 	   withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
-           buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=${params.OVERRIDE_VERSION}
+           buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker -DRelease=$RELEASE -DBuildNumber=$BUILD_NUMBER -DCustomVersion=${params.OVERRIDE_VERSION}'
        }
 	}
 	stage ('Build Tests Docker'){
