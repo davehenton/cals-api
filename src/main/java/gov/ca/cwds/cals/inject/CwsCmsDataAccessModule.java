@@ -42,6 +42,7 @@ import gov.ca.cwds.data.legacy.cms.entity.syscodes.LicenseStatus;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.State;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.VisitType;
 import gov.ca.cwds.inject.CmsSessionFactory;
+import gov.ca.cwds.inject.CwsRsSessionFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
