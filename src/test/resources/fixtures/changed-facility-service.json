@@ -22,8 +22,7 @@
           "street_address" : "3775 North Market",
           "city" : "Sacramento",
           "state" : "CA",
-          "zip_code" : "95834",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95834"
         }
       } ],
       "children" : [ {
@@ -121,8 +120,7 @@
           "street_address" : "10 Rocky Ridge Drive",
           "city" : "Los Angeles",
           "state" : "CA",
-          "zip_code" : "91111",
-          "zip_suffix_code" : "0"
+          "zip_code" : "91111"
         }
       } ],
       "children" : [ {
@@ -205,8 +203,7 @@
           "street_address" : "Truxel Road",
           "city" : "Sacramento",
           "state" : "CA",
-          "zip_code" : "95834",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95834"
         }
       } ],
       "children" : [ {
@@ -255,8 +252,7 @@
           "street_address" : "P.O. Box 162",
           "city" : "Pala",
           "state" : "CA",
-          "zip_code" : "92089",
-          "zip_suffix_code" : "0"
+          "zip_code" : "92089"
         }
       } ],
       "children" : [ {
@@ -315,8 +311,7 @@
           "street_address" : "312 Elm St.",
           "city" : "Modesto",
           "state" : "CA",
-          "zip_code" : "95356",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95356"
         }
       } ],
       "children" : [ {
@@ -360,8 +355,7 @@
           "street_address" : "Jane Lane",
           "city" : "Bayly",
           "state" : "CA",
-          "zip_code" : "98888",
-          "zip_suffix_code" : "0"
+          "zip_code" : "98888"
         }
       } ],
       "children" : [ {
@@ -418,8 +412,7 @@
           "street_address" : "9 9th Street",
           "city" : "Stain",
           "state" : "CA",
-          "zip_code" : "32132",
-          "zip_suffix_code" : "0"
+          "zip_code" : "32132"
         }
       } ],
       "children" : [ {
@@ -513,8 +506,7 @@
           "street_address" : "1512 Columbia Street",
           "city" : "Woodland",
           "state" : "CA",
-          "zip_code" : "95695",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95695"
         }
       }, {
         "type" : "Mailing",
@@ -522,8 +514,7 @@
           "street_address" : "455 W. Main St., P. O. Box 3940",
           "city" : "Quincy",
           "state" : "CA",
-          "zip_code" : "95971",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95971"
         }
       } ],
       "children" : [ {
@@ -569,8 +560,7 @@
           "street_address" : "1 A St.",
           "city" : "Alp",
           "state" : "CA",
-          "zip_code" : "98658",
-          "zip_suffix_code" : "0"
+          "zip_code" : "98658"
         }
       } ],
       "children" : [ {
@@ -623,8 +613,7 @@
           "street_address" : "7987 Main Street",
           "city" : "Los Angeles",
           "state" : "CA",
-          "zip_code" : "92225",
-          "zip_suffix_code" : "0"
+          "zip_code" : "92225"
         }
       } ],
       "children" : [ {
@@ -715,8 +704,7 @@
           "street_address" : "Coylke Drive",
           "city" : "Sacramento",
           "state" : "CA",
-          "zip_code" : "95814",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95814"
         }
       } ],
       "children" : [ {
@@ -757,9 +745,7 @@
         "address" : {
           "street_address" : "101 Bounce St",
           "city" : "Durham",
-          "state" : "NC",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "NC"
         }
       } ],
       "children" : [ {
@@ -805,8 +791,7 @@
           "street_address" : "759 Main St.",
           "city" : "Monterey",
           "state" : "CA",
-          "zip_code" : "95628",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95628"
         }
       } ],
       "children" : [ {
@@ -854,8 +839,7 @@
           "street_address" : "444 Mourning Dove Alley",
           "city" : "Guardian City",
           "state" : "CA",
-          "zip_code" : "88888",
-          "zip_suffix_code" : "0"
+          "zip_code" : "88888"
         }
       } ],
       "children" : [ {
@@ -897,17 +881,14 @@
           "street_address" : "20 Main St",
           "city" : "Kern",
           "state" : "CA",
-          "zip_code" : "91111",
-          "zip_suffix_code" : "0"
+          "zip_code" : "91111"
         }
       }, {
         "type" : "Mailing",
         "address" : {
           "street_address" : "30 Main St",
           "city" : "Kern",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -998,8 +979,7 @@
           "street_address" : "street",
           "city" : "city",
           "state" : "CA",
-          "zip_code" : "94444",
-          "zip_suffix_code" : "0"
+          "zip_code" : "94444"
         }
       } ],
       "children" : [ {
@@ -1139,8 +1119,7 @@
           "street_address" : "956 Webster St",
           "city" : "El Centro",
           "state" : "CA",
-          "zip_code" : "95485",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95485"
         }
       }, {
         "type" : "Mailing",
@@ -1148,8 +1127,7 @@
           "street_address" : "956 Webser Stert",
           "city" : "El Centro",
           "state" : "CA",
-          "zip_code" : "95485",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95485"
         }
       } ],
       "children" : [ {
@@ -1191,8 +1169,7 @@
           "street_address" : "I dont know",
           "city" : "sac",
           "state" : "CA",
-          "zip_code" : "95834",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95834"
         }
       } ],
       "children" : [ {
@@ -1277,8 +1254,7 @@
           "street_address" : "101 Union Ave",
           "city" : "San Jose",
           "state" : "CA",
-          "zip_code" : "95128",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95128"
         }
       } ],
       "children" : [ {
@@ -1425,8 +1401,7 @@
           "street_address" : "2585 Harbor Oak Drive",
           "city" : "San Diego",
           "state" : "CA",
-          "zip_code" : "92115",
-          "zip_suffix_code" : "0"
+          "zip_code" : "92115"
         }
       } ],
       "children" : [ {
@@ -1472,8 +1447,7 @@
           "street_address" : "444 Mourningful",
           "city" : "Court Specified City",
           "state" : "CA",
-          "zip_code" : "22222",
-          "zip_suffix_code" : "0"
+          "zip_code" : "22222"
         }
       } ],
       "children" : [ {
@@ -1552,9 +1526,7 @@
         "address" : {
           "street_address" : "123 Street",
           "city" : "City",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -1594,9 +1566,7 @@
         "address" : {
           "street_address" : "101 McKenzie Dr",
           "city" : "Durham",
-          "state" : "NC",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "NC"
         }
       } ],
       "children" : [ {
@@ -1660,18 +1630,14 @@
         "address" : {
           "street_address" : "543 Mulberry Street",
           "city" : "Brawley",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       }, {
         "type" : "Mailing",
         "address" : {
           "street_address" : "3243 fdsfdsfdsfdsfd",
           "city" : "Brawley",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -1713,8 +1679,7 @@
           "street_address" : "Main St",
           "city" : "San Mateo",
           "state" : "CA",
-          "zip_code" : "11111",
-          "zip_suffix_code" : "0"
+          "zip_code" : "11111"
         }
       } ],
       "children" : [ {
@@ -1762,8 +1727,7 @@
           "street_address" : "23456 Palm Drive",
           "city" : "Blythe",
           "state" : "CA",
-          "zip_code" : "92225",
-          "zip_suffix_code" : "0"
+          "zip_code" : "92225"
         }
       } ],
       "children" : [ {
@@ -1816,9 +1780,7 @@
         "address" : {
           "street_address" : "46 Lovely Lane",
           "city" : "Makeitup",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -1915,8 +1877,7 @@
           "street_address" : "100 California St.",
           "city" : "San Andreas",
           "state" : "CA",
-          "zip_code" : "95249",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95249"
         }
       } ],
       "children" : [ {
@@ -1963,9 +1924,7 @@
         "address" : {
           "street_address" : "10 Main St",
           "city" : "Sacramento",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -2447,17 +2406,14 @@
           "street_address" : "200 Main St",
           "city" : "Kern9",
           "state" : "CA",
-          "zip_code" : "95533",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95533"
         }
       }, {
         "type" : "Mailing",
         "address" : {
           "street_address" : "30 Main St",
           "city" : "Kern",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -2535,8 +2491,7 @@
           "street_address" : "494949 Boggs Ln",
           "city" : "Lakeport",
           "state" : "CA",
-          "zip_code" : "95453",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95453"
         }
       } ],
       "children" : [ {
@@ -2642,8 +2597,7 @@
           "street_address" : "3300 Beach St",
           "city" : "San Diego",
           "state" : "CA",
-          "zip_code" : "95223",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95223"
         }
       } ],
       "children" : [ {
@@ -2852,8 +2806,7 @@
           "street_address" : "20 Main St",
           "city" : "Kern",
           "state" : "CA",
-          "zip_code" : "91111",
-          "zip_suffix_code" : "0"
+          "zip_code" : "91111"
         }
       }, {
         "type" : "Mailing",
@@ -2861,8 +2814,7 @@
           "street_address" : "20 Main St",
           "city" : "Kern",
           "state" : "CA",
-          "zip_code" : "91111",
-          "zip_suffix_code" : "0"
+          "zip_code" : "91111"
         }
       } ],
       "children" : [ {
@@ -2952,8 +2904,7 @@
           "street_address" : "4 Treestorm Street",
           "city" : "Santa Cruz",
           "state" : "CA",
-          "zip_code" : "68678",
-          "zip_suffix_code" : "0"
+          "zip_code" : "68678"
         }
       } ],
       "children" : [ {
@@ -3075,9 +3026,7 @@
         "address" : {
           "street_address" : "AAAA AA",
           "city" : "AAA",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -3127,7 +3076,7 @@
           "city" : "Quincy",
           "state" : "CA",
           "zip_code" : "95971",
-          "zip_suffix_code" : "71"
+          "zip_suffix_code" : "0071"
         }
       } ],
       "children" : [ {
@@ -3169,8 +3118,7 @@
           "street_address" : "KJHKJHK",
           "city" : "MILPITAS",
           "state" : "CA",
-          "zip_code" : "95133",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95133"
         }
       } ],
       "children" : [ {
@@ -3215,9 +3163,7 @@
         "address" : {
           "street_address" : "10 Main St",
           "city" : "Sacramento",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -3349,9 +3295,7 @@
         "address" : {
           "street_address" : "9168 Hidden Valley Rd",
           "city" : "Mountain Ranch",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       }, {
         "type" : "Mailing",
@@ -3359,8 +3303,7 @@
           "street_address" : "P. O. Box 3940",
           "city" : "Quincy",
           "state" : "CA",
-          "zip_code" : "95971",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95971"
         }
       } ],
       "children" : [ {
@@ -3416,7 +3359,7 @@
           "city" : "Chester",
           "state" : "CA",
           "zip_code" : "95974",
-          "zip_suffix_code" : "74"
+          "zip_suffix_code" : "0074"
         }
       } ],
       "children" : [ {
@@ -3458,8 +3401,7 @@
           "street_address" : "50 Granny Lane",
           "city" : "Chester",
           "state" : "CA",
-          "zip_code" : "95674",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95674"
         }
       }, {
         "type" : "Mailing",
@@ -3467,8 +3409,7 @@
           "street_address" : "50 Granny Lane",
           "city" : "Chester",
           "state" : "CA",
-          "zip_code" : "95674",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95674"
         }
       } ],
       "children" : [ {
@@ -3527,8 +3468,7 @@
           "street_address" : "Foster home payee address",
           "city" : "Lakeport",
           "state" : "CA",
-          "zip_code" : "95453",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95453"
         }
       } ],
       "children" : [ {
@@ -3583,8 +3523,7 @@
           "street_address" : "Sutter Street",
           "city" : "Sutter",
           "state" : "CA",
-          "zip_code" : "22222",
-          "zip_suffix_code" : "0"
+          "zip_code" : "22222"
         }
       } ],
       "children" : [ {
@@ -3700,9 +3639,7 @@
         "address" : {
           "street_address" : "3 3",
           "city" : "LA",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -3814,8 +3751,7 @@
           "street_address" : "1312 Mockingbird Lane",
           "city" : "Crow",
           "state" : "CA",
-          "zip_code" : "99995",
-          "zip_suffix_code" : "0"
+          "zip_code" : "99995"
         }
       } ],
       "children" : [ {
@@ -3898,8 +3834,7 @@
           "street_address" : "2809 Tyler Avenue",
           "city" : "Riverside",
           "state" : "CA",
-          "zip_code" : "94508",
-          "zip_suffix_code" : "0"
+          "zip_code" : "94508"
         }
       }, {
         "type" : "Mailing",
@@ -3907,8 +3842,7 @@
           "street_address" : "2809 Tyler Avenue",
           "city" : "Riverside",
           "state" : "CA",
-          "zip_code" : "94508",
-          "zip_suffix_code" : "0"
+          "zip_code" : "94508"
         }
       } ],
       "children" : [ {
@@ -3953,8 +3887,7 @@
           "street_address" : "5 Cherry Lane",
           "city" : "Santa Cruz",
           "state" : "CA",
-          "zip_code" : "95994",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95994"
         }
       } ],
       "children" : [ {
@@ -3996,8 +3929,7 @@
           "street_address" : "222 Holliston Ave.",
           "city" : "Troy",
           "state" : "CA",
-          "zip_code" : "91111",
-          "zip_suffix_code" : "0"
+          "zip_code" : "91111"
         }
       } ],
       "children" : [ {
@@ -4084,9 +4016,7 @@
         "address" : {
           "street_address" : "34 S St",
           "city" : "Oxnard",
-          "state" : "CA",
-          "zip_code" : "0",
-          "zip_suffix_code" : "0"
+          "state" : "CA"
         }
       } ],
       "children" : [ {
@@ -4132,8 +4062,7 @@
           "street_address" : "123 Hope S",
           "city" : "San Luis Obispo",
           "state" : "CA",
-          "zip_code" : "93405",
-          "zip_suffix_code" : "0"
+          "zip_code" : "93405"
         }
       } ],
       "children" : [ {
@@ -4268,8 +4197,7 @@
           "street_address" : "23 Thomas St.",
           "city" : "Burney",
           "state" : "CA",
-          "zip_code" : "95222",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95222"
         }
       } ],
       "children" : [ {
@@ -4343,8 +4271,7 @@
           "street_address" : "1200 Pasadena Terrace",
           "city" : "Los Angeles",
           "state" : "CA",
-          "zip_code" : "90210",
-          "zip_suffix_code" : "0"
+          "zip_code" : "90210"
         }
       } ],
       "children" : [ {
@@ -4559,8 +4486,7 @@
           "street_address" : "5566 Butterfield Ave",
           "city" : "San Diego",
           "state" : "CA",
-          "zip_code" : "95223",
-          "zip_suffix_code" : "0"
+          "zip_code" : "95223"
         }
       } ],
       "children" : [ {

@@ -1,13 +1,8 @@
 package gov.ca.cwds.cals.service.rfa;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
-
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.Utils.StaffPerson;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.XaRFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
@@ -26,18 +21,24 @@ import gov.ca.cwds.drools.DroolsService;
 import gov.ca.cwds.rest.exception.BusinessValidationException;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.exception.IssueDetails;
+import gov.ca.cwds.security.utils.PrincipalUtils;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.setup.Environment;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.Set;
+
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 /**
  * @author CWDS CALS API Team
@@ -77,7 +78,7 @@ public class RFA1aFormService
     RFA1aForm form = new RFA1aForm();
     rfa1aFomMapper.toRFA1aForm(form, formDTO);
 
-    String staffPersonId = StaffPerson.getStaffPersonId();
+    String staffPersonId = PrincipalUtils.getStaffPersonId();
     LocalDateTime now = LocalDateTime.now();
     form.setCreateDateTime(now);
     form.setCreateUserId(staffPersonId);
@@ -116,7 +117,7 @@ public class RFA1aFormService
 
   private RFA1aForm fillFormUpdateAttributes(RFA1aForm form) {
     form.setUpdateDateTime(LocalDateTime.now());
-    form.setUpdateUserId(StaffPerson.getStaffPersonId());
+    form.setUpdateUserId(PrincipalUtils.getStaffPersonId());
     return form;
   }
 
@@ -212,7 +213,7 @@ public class RFA1aFormService
         });
 
     Set<IssueDetails> detailsList = droolsService
-        .performBusinessRules(formDTO, createConfiguration());
+            .performBusinessRules(createConfiguration(), formDTO);
     if (!detailsList.isEmpty()) {
       throw new BusinessValidationException(detailsList);
     }

@@ -6,17 +6,19 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
-import java.time.LocalDateTime;
+import gov.ca.cwds.security.utils.PrincipalUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
+import java.time.LocalDateTime;
+
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class, Constants.class})
+@Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class, Constants.class, PrincipalUtils.class})
 public interface SubstituteCareProviderMapper {
   SubstituteCareProviderMapper INSTANCE = Mappers.getMapper(SubstituteCareProviderMapper.class);
 
@@ -45,7 +47,7 @@ public interface SubstituteCareProviderMapper {
       expression = "java(applicantDTO.getNameSuffix() != null ? " +
           "applicantDTO.getNameSuffix().getValue() : Constants.SPACE)")
   @Mapping(target = "zipNo", ignore = true)
-  @Mapping(target = "lstUpdId", expression = "java(Utils.StaffPerson.getStaffPersonId())")
+  @Mapping(target = "lstUpdId", expression = "java(PrincipalUtils.getStaffPersonId())")
   @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
   @Mapping(target = "zipSfxNo", ignore = true)
   @Mapping(target = "education", source = "highestEducationLevel.cwsId")
