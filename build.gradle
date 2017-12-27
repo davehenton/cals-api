@@ -42,7 +42,7 @@ project.ext {
 
     targetDockerHubOrganization = System.env.DOCKERHUB_ORG ?: 'cwds'
 
-    isRelease = System.getProperty("Release")
+    isRelease = System.getProperty("Release") == "true"
     buildNumber = System.getProperty('BuildNumber')
     customVersion = System.getProperty('CustomVersion')
     
