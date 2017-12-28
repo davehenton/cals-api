@@ -42,7 +42,7 @@ public class DatabaseHelper {
       String defaultSchema = getDatabase().getDefaultSchemaName();
       getDatabase().setDefaultSchemaName(schema);
       Liquibase liquibase = new Liquibase(script, new ClassLoaderResourceAccessor(), getDatabase());
-      parameters.forEach((k, v) -> liquibase.setChangeLogParameter(k, v));
+      parameters.forEach(liquibase::setChangeLogParameter);
       liquibase.update((String) null);
       getDatabase().setDefaultSchemaName(defaultSchema);
     } catch (Exception e) {
