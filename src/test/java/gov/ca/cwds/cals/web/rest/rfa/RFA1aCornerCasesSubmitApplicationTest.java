@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
+import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -88,6 +89,9 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
 
   @Test
   public void unChangedSubmitStatusTest() throws Exception {
+      if (TestModeUtils.isIntegrationTestsMode()) {
+          return;
+      }
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
     residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
@@ -101,6 +105,9 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
 
   @Test
   public void changeStatusBackToDraftTest() throws Exception {
+      if (TestModeUtils.isIntegrationTestsMode()) {
+          return;
+      }
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
     residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
