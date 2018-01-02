@@ -1,0 +1,91 @@
+{
+  "name_prefix": {
+    "id": 2,
+    "value": "Ms."
+  },
+  "first_name": "AFn2",
+  "middle_name": "N",
+  "last_name": "ALn2",
+  "name_suffix": {
+    "id": 5,
+    "value": "Jr"
+  },
+  "other_names": [
+    {
+      "name_prefix": {
+        "id": 2,
+        "value": "Ms."
+      },
+      "first_name": "AOnFn",
+      "middle_name": "N.",
+      "last_name": "AOnLn",
+      "name_suffix": {
+        "id": 5,
+        "value": "Jr"
+      },
+      "name_type": {
+        "id": 2,
+        "value": "Maiden"
+      }
+    }
+  ],
+  "highest_education_level": {
+    "id": 3,
+    "value": "High School or Equivalent"
+  },
+  "date_of_birth": "1981-12-26",
+  "gender": {
+    "id": 2,
+    "value": "Female"
+  },
+  "race": {
+    "id": 1,
+    "value": "American Indian or Alaska Native"
+  },
+  "ethnicity": {
+    "id": 1,
+    "value": "Alaskan Native"
+  },
+  "driver_license_number": "A1234567",
+  "driver_license_state": {
+    "id": "CA",
+    "value": "California"
+  },
+  "email": "anna.smith@gmail.com",
+  "employment": {
+    "employer_name": "HSH Inc.",
+    "occupation": "Sr. Analyst",
+    "income": 98000.00,
+    "income_type": {
+      "id": 1,
+      "value": "yearly"
+    },
+    "physical_address": {
+      "street_address": "1702 Redoak Ct.",
+      "zip": "98123",
+      "city": "Rocklin",
+      "state": {
+        "id": "AL",
+        "value": "CA - California"
+      }
+    }
+  },
+  "phones": [
+    {
+      "phone_type": {
+        "id": 1,
+        "value": "Cell"
+      },
+      "number": "5347589802"
+    },
+    {
+      "phone_type": {
+        "id": 3,
+        "value": "Work"
+      },
+      "number": "5347589803",
+      "extension": "1234567",
+      "preferred": true
+    }
+  ]
+}

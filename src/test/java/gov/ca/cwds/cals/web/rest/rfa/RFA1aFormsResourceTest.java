@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResourceTest.ADOPTION_HISTORY_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANT_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANT_FIXTURE2;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResourceTest.APPLICANTS_DECLARATION_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsHistoryResourceTest.APPLICANTS_HISTORY_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsRelationshipResourceTest.APPLICANTS_RELATIONSHIP_FIXTURE;
@@ -70,6 +71,11 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
         .request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(APPLICANT_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
 
+    ApplicantDTO applicantDTO2 = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS)
+            .request(MediaType.APPLICATION_JSON)
+            .post(Entity.entity(APPLICANT_FIXTURE2, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
+
+
     ResidenceDTO residenceDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_RESIDENCE)
         .request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(RESIDENCE_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ResidenceDTO.class);
@@ -120,6 +126,7 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
     List<ApplicantDTO> applicants = new ArrayList<>();
     applicants.add(applicantDTO);
+    applicants.add(applicantDTO2);
     expectedRfa1aFormDTO.setApplicants(applicants);
 
     expectedRfa1aFormDTO.setResidence(residenceDTO);

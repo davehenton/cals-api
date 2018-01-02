@@ -22,7 +22,7 @@ import org.hibernate.annotations.Type;
  */
 @NamedQuery(
     name = RFA1aApplicant.NAMED_QUERY_FIND_ALL_BY_FORM,
-    query = "FROM RFA1aApplicant a WHERE a.formId = :" + PARAM_FORM_ID
+    query = "FROM RFA1aApplicant a WHERE a.formId = :" + PARAM_FORM_ID + " ORDER BY id"
 )
 @NamedQuery(
     name = RFA1aApplicant.NAMED_QUERY_FIND_BY_FORM_ID_AND_APPLICANT_ID,
