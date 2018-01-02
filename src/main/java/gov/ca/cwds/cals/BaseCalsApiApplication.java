@@ -84,7 +84,6 @@ public abstract class BaseCalsApiApplication<T extends CalsApiConfiguration> ext
           calsnsDataSourceFactory.getProperties().get(HIBERNATE_DEFAULT_SCHEMA_PROPERTY_NAME));
     } catch (Exception e) {
       LOG.error("Upgarding of CALS_NS DB is failed. ", e);
-      throw new IllegalStateException(e);
     }
 
     LOG.info("Finish Upgrading CALS_NS DB");

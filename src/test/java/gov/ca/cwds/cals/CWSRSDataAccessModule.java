@@ -4,10 +4,10 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CMSRS;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Provides;
-import gov.ca.cwds.cals.inject.CmsRsHibernateBundle;
-import gov.ca.cwds.cals.inject.CwsRsSessionFactory;
 import gov.ca.cwds.cals.inject.DataAccessModule;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
+import gov.ca.cwds.inject.CwsRsHibernateBundle;
+import gov.ca.cwds.inject.CwsRsSessionFactory;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.SessionFactoryFactory;
@@ -20,11 +20,11 @@ import org.hibernate.SessionFactory;
 
 public class CWSRSDataAccessModule extends DataAccessModule {
 
-  private final ImmutableList<Class<?>> cmsrsEntities =
+  private final ImmutableList<Class<?>> cwsRsEntities =
       ImmutableList.<Class<?>>builder().add(RecordChange.class).build();
 
-  private final HibernateBundle<TestCalsApiConfiguration> cmsrsHibernateBundle =
-      new HibernateBundle<TestCalsApiConfiguration>(cmsrsEntities, new SessionFactoryFactory()) {
+  private final HibernateBundle<TestCalsApiConfiguration> cwsRsHibernateBundle =
+      new HibernateBundle<TestCalsApiConfiguration>(cwsRsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(
             TestCalsApiConfiguration configuration) {
@@ -39,7 +39,7 @@ public class CWSRSDataAccessModule extends DataAccessModule {
 
   public CWSRSDataAccessModule(Bootstrap<TestCalsApiConfiguration> bootstrap) {
     super(bootstrap);
-    bootstrap.addBundle(cmsrsHibernateBundle);
+    bootstrap.addBundle(cwsRsHibernateBundle);
   }
 
   @Override
@@ -48,15 +48,15 @@ public class CWSRSDataAccessModule extends DataAccessModule {
   }
 
   @Provides
-  @CmsRsHibernateBundle
+  @CwsRsHibernateBundle
   public HibernateBundle<TestCalsApiConfiguration> getCmsRsHibernateBundle() {
-    return cmsrsHibernateBundle;
+    return cwsRsHibernateBundle;
   }
 
   @Provides
   @CwsRsSessionFactory
   SessionFactory cmwrsSessionFactory() {
-    return cmsrsHibernateBundle.getSessionFactory();
+    return cwsRsHibernateBundle.getSessionFactory();
   }
 
 }
