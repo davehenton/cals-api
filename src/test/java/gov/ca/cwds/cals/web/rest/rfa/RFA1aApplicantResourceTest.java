@@ -35,6 +35,8 @@ import org.junit.Test;
 public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<ApplicantDTO> {
 
   public static String APPLICANT_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-applicant.json");
+  public static String APPLICANT_FIXTURE2 = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-applicant2.json");
+
 
   @Override
   protected BaseExternalEntityApiHelper<ApplicantDTO> getExternalEntityApiHelper() {
