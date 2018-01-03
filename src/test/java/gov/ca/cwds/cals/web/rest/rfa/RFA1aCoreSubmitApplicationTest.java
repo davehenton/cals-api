@@ -20,6 +20,7 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.SortedTable;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -68,7 +69,13 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
   }
 
   @Test
+  @Ignore
   public void submitApplicationTest() throws Exception {
+
+    if (TestModeUtils.isIntegrationTestsMode()) {
+      return;
+    }
+    
     RFA1aFormDTO form = submitApplication();
     statusHelper.assertSubmitted(form.getId());
   }
