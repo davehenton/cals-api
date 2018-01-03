@@ -1,5 +1,8 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.DBUnitAssertHelper;
 import gov.ca.cwds.cals.persistence.DBUnitSupport;
@@ -9,19 +12,16 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
-import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.ReplacementDataSet;
-import org.dbunit.dataset.SortedTable;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.ReplacementDataSet;
+import org.dbunit.dataset.SortedTable;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
@@ -40,11 +40,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     setUpCms();
   }
 
-  @Test
-  public void submitApplicationTest() throws Exception {
-    if (TestModeUtils.isIntegrationTestsMode()) {
-      return;
-    }
+  private RFA1aFormDTO submitApplication() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     ApplicantDTO applicantDTO = applicantHelper
         .postApplicant(form.getId(), applicantHelper.getValidApplicant());
@@ -68,6 +64,30 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
+
+    return form;
+  }
+
+  @Test
+  @Ignore
+  public void submitApplicationTest() throws Exception {
+
+    if (TestModeUtils.isIntegrationTestsMode()) {
+      return;
+    }
+    
+    RFA1aFormDTO form = submitApplication();
+    statusHelper.assertSubmitted(form.getId());
+  }
+
+  @Test
+  public void submitApplicationExtendedTest() throws Exception {
+    if (TestModeUtils.isIntegrationTestsMode()) {
+      return;
+    }
+
+    RFA1aFormDTO form = submitApplication();
+
     statusHelper.assertSubmitted(form.getId());
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId());

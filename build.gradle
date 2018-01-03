@@ -131,7 +131,7 @@ configurations.all {
 
 dependencies {
     compile group: 'com.connx.jdbc', name: 'connxjdbc', version: '12.4'
-    compile group: 'com.ibm', name: 'db2jcc4', version: '4.0.0'
+    compile group: 'com.ibm', name: 'db2jcc4', version: '4.21.29'
     compile group: 'com.ibm', name: 'db2jcc_license_cisuz', version: '4.0.0'
 
 // Dropwizard-guice 1.0.0.2 conflicts with jersey-client 2.25.
