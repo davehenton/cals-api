@@ -160,6 +160,8 @@ dependencies {
     
     compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.2.8.Final'
 
+    compile 'com.github.jonpeterson:jackson-module-model-versioning:1.2.2'
+
     compile 'org.mapstruct:mapstruct-jdk8:' + mapstructVersion
     compile group: 'org.apache.commons', name: 'commons-collections4', version: commonsCollectionsVersion
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
