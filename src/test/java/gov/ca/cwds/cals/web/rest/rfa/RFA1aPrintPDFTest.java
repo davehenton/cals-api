@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -27,6 +28,7 @@ public class RFA1aPrintPDFTest extends BaseRFAIntegrationTest {
     setUpCalsns();
   }
 
+  @Ignore
   @Test
   public void getPDFTest() throws Exception {
     // For integration test only
@@ -47,6 +49,7 @@ public class RFA1aPrintPDFTest extends BaseRFAIntegrationTest {
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
   }
 
+  @Ignore
   @Test
   public void getDocumentIdTest() throws Exception {
     // For integration test only
