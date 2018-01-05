@@ -19,6 +19,7 @@
     "id" : "34",
     "value" : "Sacramento"
   },
+  "facility_source":"CWS/CMS",
   "phones" : [ ],
   "addresses" : [ {
     "type": "Residential",
