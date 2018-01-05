@@ -69,6 +69,7 @@ public interface FacilityMapper {
   @Mapping(source = "lisFacFile.facOrigApplRecDate", target = "originalApplicationRecievedDate")
   @Mapping(source = "lisFacFile.facEmailAddress", target = "emailAddress")
   @Mapping(source = "lisFacFile.county", target = "county")
+  @Mapping(target = "facilitySource", constant = "LIS")
   FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
   @Mapping(target = "prelicensingVisitDate", ignore = true)
@@ -96,6 +97,7 @@ public interface FacilityMapper {
   @Mapping(target = "licenseeType", ignore = true)
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "emailAddress", ignore = true)
+  @Mapping(target = "facilitySource", constant = "CWS/CMS")
   FacilityDTO toFacilityDTO(BasePlacementHome placementHome,
       CMSDictionaryEntriesHolder dictionaryEntriesHolder);
 
