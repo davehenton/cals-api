@@ -161,6 +161,14 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
   @ApiModelProperty(required = true, readOnly = true, value = "2000-01-01 00:00:00")
   private LocalDateTime prelicensingVisitDate;
 
+  /**
+   * Source of the facility. Either CMS or LIS
+   */
+  @JsonProperty("facility_source")
+  @NotNull
+  @ApiModelProperty(required = true, readOnly = true, value = "Facility Source")
+  private String facilitySource;
+
   public URI getHref() {
     return href;
   }
@@ -351,6 +359,14 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
 
   public void setPhone(List<PersonPhoneDTO> phone) {
     this.phone = new ArrayList<>(phone);
+  }
+
+  public String getFacilitySource() {
+    return facilitySource;
+  }
+
+  public void setFacilitySource(String facilitySource) {
+    this.facilitySource = facilitySource;
   }
 
   @Override

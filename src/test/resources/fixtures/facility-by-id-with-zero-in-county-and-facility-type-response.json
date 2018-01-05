@@ -10,6 +10,7 @@
     "number" : "34",
     "name" : "Sacramento"
   },
+  "facility_source":"CWS/CMS",
   "license_number" : "126571",
   "status" : {
     "id" : "0003",
