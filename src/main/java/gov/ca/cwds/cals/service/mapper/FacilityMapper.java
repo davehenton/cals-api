@@ -3,19 +3,10 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.CMSDictionaryEntriesHolder;
-import gov.ca.cwds.cals.service.dto.ComplaintDTO;
-import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
-import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
-import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
-import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
+import gov.ca.cwds.cals.service.dto.*;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BaseLicensingVisit;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
@@ -23,6 +14,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -70,6 +65,7 @@ public interface FacilityMapper {
   @Mapping(source = "lisFacFile.facEmailAddress", target = "emailAddress")
   @Mapping(source = "lisFacFile.county", target = "county")
   @Mapping(target = "facilitySource", constant = "LIS")
+  @Mapping(source = "lisFacFile.facIncCapEffDate", target = "capacityLastChanged")
   FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
   @Mapping(target = "prelicensingVisitDate", ignore = true)
@@ -98,6 +94,7 @@ public interface FacilityMapper {
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "emailAddress", ignore = true)
   @Mapping(target = "facilitySource", constant = "CWS/CMS")
+  @Mapping(target = "capacityLastChanged", ignore = true)
   FacilityDTO toFacilityDTO(BasePlacementHome placementHome,
       CMSDictionaryEntriesHolder dictionaryEntriesHolder);
 
