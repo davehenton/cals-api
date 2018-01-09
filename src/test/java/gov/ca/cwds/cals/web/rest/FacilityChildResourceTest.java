@@ -50,6 +50,18 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
     }
 
     @Test
+    public void testGetFacilityChildrenWithAssignedWorkerPresent() throws Exception {
+        String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
+        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "412252222");
+        WebTarget target = clientTestRule.target(pathInfo);
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        FacilityChildrenDTO facilityChildDTO = invocation.get(FacilityChildrenDTO.class);
+
+        String fixture = fixture("fixtures/facility-children-response-assigned-worker-present.json");
+        assertEqualsResponse(fixture, transformDTOtoJSON(facilityChildDTO));
+    }
+
+    @Test
     public void testGetFacilityChild() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
         pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "577000449") + "/AyRhLiI07n";
