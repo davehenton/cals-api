@@ -29,6 +29,7 @@
             "id": 1,
             "value": "Child"
           },
+          "relationship_to_applicant_freeform": "Child",
           "applicant_id": 1234567
         }
       ],
