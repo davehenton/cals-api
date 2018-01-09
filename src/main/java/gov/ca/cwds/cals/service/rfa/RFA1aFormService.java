@@ -1,5 +1,9 @@
 package gov.ca.cwds.cals.service.rfa;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
@@ -24,21 +28,16 @@ import gov.ca.cwds.rest.exception.IssueDetails;
 import gov.ca.cwds.security.utils.PrincipalUtils;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.setup.Environment;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.Set;
 import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.Set;
-
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CWDS CALS API Team
@@ -177,6 +176,10 @@ public class RFA1aFormService
       updateFormAfterPlacementHomeCreation(formId, storedPlacementHome.getIdentifier(),
           newStatus);
       userTransaction.commit();
+    } catch (BusinessValidationException e) {
+      userTransaction.rollback();
+      LOG.error("Can not create Placement Home because of BusinessValidationException", e);
+      throw e;
     } catch (Exception e) {
       userTransaction.rollback();
       LOG.error("Can not create Placement Home", e);
