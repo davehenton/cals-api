@@ -158,13 +158,9 @@ public interface FacilityMapper {
 
     FacilityAddressMapper facilityAddressMapper = Mappers.getMapper(FacilityAddressMapper.class);
 
-    String residentialZipCode = placementHome.getZipNo();
-    String residentialZipSuffix = placementHome.getZipSfxNo();
-    if (StringUtils
-        .isNoneBlank(placementHome.getStreetNo(), placementHome.getStreetNm(),
-            placementHome.getCityNm())
-        || StringUtils.isNotBlank(residentialZipCode)
-        || StringUtils.isNotBlank(residentialZipSuffix)) {
+    if (!StringUtils
+        .isAllBlank(placementHome.getStreetNo(), placementHome.getStreetNm(),
+            placementHome.getCityNm(), placementHome.getZipNo(), placementHome.getZipSfxNo())){
       FacilityAddressDTO residentialAddress = facilityAddressMapper
           .toResidentialAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper
@@ -174,9 +170,8 @@ public interface FacilityMapper {
 
     String mailZipCode = placementHome.getpZipNo();
     String mailZipSuffix = placementHome.getPyZipSfx();
-    if (StringUtils.isNoneBlank(placementHome.getPstreetNo(), placementHome.getPstreetNm(),
-        placementHome.getpCityNm()) || StringUtils.isNotBlank(mailZipCode)
-        || StringUtils.isNotBlank(mailZipSuffix)) {
+    if (!StringUtils.isAllBlank(placementHome.getPstreetNo(), placementHome.getPstreetNm(),
+        placementHome.getpCityNm(), mailZipCode, mailZipSuffix)) {
       FacilityAddressDTO mailingAddress = facilityAddressMapper
           .toMailAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper.afterMapping(mailingAddress, placementHome, dictionaryEntriesHolder);
@@ -193,15 +188,14 @@ public interface FacilityMapper {
     PhoneMapper phoneMapper = Mappers.getMapper(PhoneMapper.class);
 
     PersonPhoneDTO primaryPhone = phoneMapper.toPrimaryPhoneDTO(placementHome);
-    if (primaryPhone != null) {
+    if (null != primaryPhone && StringUtils.isNotBlank(primaryPhone.getNumber())) {
       personPhoneDTOS.add(primaryPhone);
     }
 
     PersonPhoneDTO alternativePhone = phoneMapper.toAlternatePhoneDTO(placementHome);
-    if (alternativePhone != null) {
+    if (alternativePhone != null && StringUtils.isNotBlank(alternativePhone.getNumber())) {
       personPhoneDTOS.add(alternativePhone);
     }
     facilityDTO.setPhone(personPhoneDTOS);
   }
-
 }
