@@ -89,7 +89,16 @@
           "value": "San Francisco"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "l;khvgjlh",
+              "city": "lkjbgl",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -1545,7 +1554,16 @@
           "value": "Sacramento"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "New RH",
+              "city": "Sacramento",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -1689,7 +1707,24 @@
           "value": "Butte"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "Bad Wy",
+              "city": "Chico",
+              "state": "CA"
+            }
+          },
+          {
+            "type": "Mailing",
+            "address": {
+              "street_address": "BAD WAY",
+              "city": "CHICO",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -2615,7 +2650,16 @@
           "value": "Yolo"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "ll",
+              "city": "l",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -2671,7 +2715,16 @@
           "value": "Santa Clara"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "312",
+              "city": "Sunnyvale",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -2857,7 +2910,16 @@
           "value": "Napa"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "Sacramento",
+              "city": "Sacramento",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -3120,7 +3182,16 @@
           "value": "Monterey"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "Main St",
+              "city": "Monterey",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -3235,7 +3306,16 @@
           "value": "Monterey"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "1234 Street Name",
+              "city": "Monterey",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -3320,7 +3400,16 @@
           "value": "Napa"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "dfhdhbd",
+              "city": "ddgfd",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -4022,7 +4111,16 @@
         },
         "capacity": 0,
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "Mason St",
+              "city": "Antwerp",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -4060,7 +4158,16 @@
           "value": "Mendocino"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "Elm Street",
+              "city": "Mendocino",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -4286,7 +4393,16 @@
           "value": "Colusa"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "abc123abc123",
+              "city": "abc123abc123",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -4640,7 +4756,16 @@
           "value": "Sutter"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "a",
+              "city": "a",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -4694,7 +4819,24 @@
           "value": "Contra Costa"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "Kids Street",
+              "city": "Walnut Creek",
+              "state": "CA"
+            }
+          },
+          {
+            "type": "Mailing",
+            "address": {
+              "street_address": "Kids Way",
+              "city": "Walnut Creek",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {
@@ -4788,7 +4930,16 @@
           "value": "Merced"
         },
         "phones": [],
-        "addresses": [],
+        "addresses": [
+          {
+            "type": "Residential",
+            "address": {
+              "street_address": "SOC158 street",
+              "city": "SOC158",
+              "state": "CA"
+            }
+          }
+        ],
         "facility_source": "CWS/CMS",
         "children": [
           {

@@ -188,12 +188,12 @@ public interface FacilityMapper {
     PhoneMapper phoneMapper = Mappers.getMapper(PhoneMapper.class);
 
     PersonPhoneDTO primaryPhone = phoneMapper.toPrimaryPhoneDTO(placementHome);
-    if (null != primaryPhone &&  null != primaryPhone.getNumber()) {
+    if (null != primaryPhone && StringUtils.isNotBlank(primaryPhone.getNumber())) {
       personPhoneDTOS.add(primaryPhone);
     }
 
     PersonPhoneDTO alternativePhone = phoneMapper.toAlternatePhoneDTO(placementHome);
-    if (alternativePhone != null && null != alternativePhone.getNumber()) {
+    if (alternativePhone != null && StringUtils.isNotBlank(alternativePhone.getNumber())) {
       personPhoneDTOS.add(alternativePhone);
     }
     facilityDTO.setPhone(personPhoneDTOS);
