@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service.mapper;
 
+import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.CMSDictionaryEntriesHolder;
@@ -32,6 +33,7 @@ import org.mapstruct.factory.Mappers;
         DistrictOfficeMapper.class, DictionaryMapper.class,
         TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityMapper {
+
   FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
 
   /**
@@ -165,7 +167,7 @@ public interface FacilityMapper {
 
     if (!StringUtils
         .isAllBlank(placementHome.getStreetNo(), placementHome.getStreetNm(),
-            placementHome.getCityNm(), placementHome.getZipNo(), placementHome.getZipSfxNo())){
+            placementHome.getCityNm(), placementHome.getZipNo(), placementHome.getZipSfxNo())) {
       FacilityAddressDTO residentialAddress = facilityAddressMapper
           .toResidentialAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper
@@ -173,10 +175,8 @@ public interface FacilityMapper {
       facilityAddressDTOs.add(residentialAddress);
     }
 
-    String mailZipCode = placementHome.getpZipNo();
-    String mailZipSuffix = placementHome.getPyZipSfx();
     if (!StringUtils.isAllBlank(placementHome.getPstreetNo(), placementHome.getPstreetNm(),
-        placementHome.getpCityNm(), mailZipCode, mailZipSuffix)) {
+        placementHome.getpCityNm(), placementHome.getpZipNo(), placementHome.getPyZipSfx())) {
       FacilityAddressDTO mailingAddress = facilityAddressMapper
           .toMailAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper.afterMapping(mailingAddress, placementHome, dictionaryEntriesHolder);
@@ -193,16 +193,15 @@ public interface FacilityMapper {
     PhoneMapper phoneMapper = Mappers.getMapper(PhoneMapper.class);
 
     PersonPhoneDTO primaryPhone = phoneMapper.toPrimaryPhoneDTO(placementHome);
-    if (null != primaryPhone && StringUtils.isNotBlank(primaryPhone.getNumber()) &&
-        !primaryPhone.getNumber().equalsIgnoreCase("null")) {
+    if (Utils.Phone.checkIfPhoneDTOIsValid(primaryPhone)) {
       personPhoneDTOS.add(primaryPhone);
     }
 
     PersonPhoneDTO alternativePhone = phoneMapper.toAlternatePhoneDTO(placementHome);
-    if (alternativePhone != null && StringUtils.isNotBlank(alternativePhone.getNumber())
-        && !alternativePhone.getNumber().equalsIgnoreCase("null")) {
+    if (Utils.Phone.checkIfPhoneDTOIsValid(alternativePhone)) {
       personPhoneDTOS.add(alternativePhone);
     }
+
     facilityDTO.setPhone(personPhoneDTOS);
   }
 }
