@@ -26,7 +26,7 @@ public abstract class FacilityPostMappingProcessor {
       ResidentialAddressMapper.class);
 
   @AfterMapping
-  protected void MapLisPhonesAndAddresses(LisFacFile lisFacFile,
+  protected void mapLisPhonesAndAddresses(LisFacFile lisFacFile,
       @MappingTarget FacilityDTO facilityDTO) {
     mapAddresses(lisFacFile, facilityDTO);
     mapPhones(lisFacFile, facilityDTO);
