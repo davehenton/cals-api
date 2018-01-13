@@ -1,9 +1,5 @@
 package gov.ca.cwds.cals.service;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMSRS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.CompositeIterator;
 import gov.ca.cwds.cals.RecordChangeOperation;
@@ -14,14 +10,18 @@ import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.changed.ChangedFacilityDTO;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static gov.ca.cwds.cals.Constants.UnitOfWork.*;
 
 /**
  * @author CWDS TPT-2
@@ -44,10 +44,20 @@ public class ChangedFacilityService extends FacilityService {
   }
 
   @UnitOfWork(CMSRS)
-  protected RecordChanges handleCwsCmsFacilityIds(Date after) {
+  protected RecordChanges handleCwsCmsFacilityIds(Date dateAfter) {
     RecordChanges recordChanges = new RecordChanges();
-    recordChangeCwsCmsDao.streamChangedFacilityRecords(after).forEach(recordChanges::add);
+    recordChangeCwsCmsDao.streamChangedFacilityRecords(buildDateForCwsCms(dateAfter)).forEach(recordChanges::add);
     return recordChanges;
+  }
+
+  private Date buildDateForCwsCms(Date date) {
+    Date dateAfter;
+    if (date == null) {
+      dateAfter = Date.from(LocalDateTime.now().minusYears(100).toInstant(OffsetDateTime.now().getOffset()));
+    } else {
+      dateAfter = date;
+    }
+    return dateAfter;
   }
 
   @UnitOfWork(LIS)
