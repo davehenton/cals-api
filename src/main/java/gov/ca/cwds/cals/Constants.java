@@ -29,6 +29,8 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
  */
 public final class Constants {
 
+  static final String NULL_STRING = "null";
+
   public static final String Y = "Y";
 
   public static final String N = "N";
