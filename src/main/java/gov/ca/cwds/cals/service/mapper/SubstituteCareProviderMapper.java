@@ -1,10 +1,10 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import gov.ca.cwds.security.utils.PrincipalUtils;
 import org.apache.commons.lang3.StringUtils;

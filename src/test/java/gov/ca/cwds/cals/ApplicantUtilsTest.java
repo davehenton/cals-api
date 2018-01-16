@@ -1,12 +1,14 @@
 package gov.ca.cwds.cals;
 
-import static org.junit.Assert.assertEquals;
-
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.EmploymentDTO;
-import java.math.BigDecimal;
+import gov.ca.cwds.cals.util.Utils;
 import org.junit.Test;
+
+import java.math.BigDecimal;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author CWDS CALS API Team

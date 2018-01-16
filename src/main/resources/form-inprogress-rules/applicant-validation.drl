@@ -4,7 +4,7 @@ import gov.ca.cwds.cals.service.dto.rfa.*
 import gov.ca.cwds.cals.Constants
 import gov.ca.cwds.cals.Constants.Validation.Business
 import gov.ca.cwds.cals.Constants.Validation.Business.Code
-import gov.ca.cwds.cals.Utils
+import gov.ca.cwds.cals.util.Utils
 import gov.ca.cwds.rest.exception.IssueDetails;
 
 global java.util.Set validationDetailsList;
