@@ -9,12 +9,12 @@ import gov.ca.cwds.cals.persistence.dao.lis.RecordChangeLisDao;
 import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.changed.ChangedFacilityDTO;
+import gov.ca.cwds.cals.util.DateTimeUtils;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,13 +51,7 @@ public class ChangedFacilityService extends FacilityService {
   }
 
   private Date buildDateForCwsCms(Date date) {
-    Date dateAfter;
-    if (date == null) {
-      dateAfter = Date.from(LocalDateTime.now().minusYears(100).toInstant(OffsetDateTime.now().getOffset()));
-    } else {
-      dateAfter = date;
-    }
-    return dateAfter;
+    return date == null ? DateTimeUtils.toDate(LocalDateTime.now().minusYears(100)) : date;
   }
 
   @UnitOfWork(LIS)

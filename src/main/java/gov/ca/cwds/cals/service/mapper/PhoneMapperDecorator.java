@@ -9,27 +9,27 @@ import org.apache.commons.lang3.StringUtils;
  */
 public abstract class PhoneMapperDecorator implements PhoneMapper {
 
-    private PhoneMapper delegate;
+  private PhoneMapper delegate;
 
-    public PhoneMapperDecorator(PhoneMapper delegate) {
-        this.delegate = delegate;
-    }
+  public PhoneMapperDecorator(PhoneMapper delegate) {
+    this.delegate = delegate;
+  }
 
-    @Override
-    public PersonPhoneDTO toPrimaryPhoneDTO(BasePlacementHome placementHome) {
-      PersonPhoneDTO personPhoneDTO = null;
-        if (StringUtils.isNotBlank(placementHome.getPrmTelNo())) {
-          personPhoneDTO = delegate.toPrimaryPhoneDTO(placementHome);
-        }
-      return personPhoneDTO;
+  @Override
+  public PersonPhoneDTO toPrimaryPhoneDTO(BasePlacementHome placementHome) {
+    PersonPhoneDTO personPhoneDTO = null;
+    if (StringUtils.isNotBlank(placementHome.getPrmTelNo())) {
+      personPhoneDTO = delegate.toPrimaryPhoneDTO(placementHome);
     }
+    return personPhoneDTO;
+  }
 
-    @Override
-    public PersonPhoneDTO toAlternatePhoneDTO(BasePlacementHome placementHome) {
-      PersonPhoneDTO personPhoneDTO = null;
-        if (StringUtils.isNotBlank(placementHome.getBckTelNo())) {
-          personPhoneDTO = delegate.toAlternatePhoneDTO(placementHome);
-        }
-      return personPhoneDTO;
+  @Override
+  public PersonPhoneDTO toAlternatePhoneDTO(BasePlacementHome placementHome) {
+    PersonPhoneDTO personPhoneDTO = null;
+    if (StringUtils.isNotBlank(placementHome.getBckTelNo())) {
+      personPhoneDTO = delegate.toAlternatePhoneDTO(placementHome);
     }
+    return personPhoneDTO;
+  }
 }

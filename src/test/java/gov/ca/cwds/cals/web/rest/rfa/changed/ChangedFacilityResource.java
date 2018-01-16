@@ -4,15 +4,14 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.service.ChangedFacilityService;
 import gov.ca.cwds.cals.service.dto.changed.ChangedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
-import org.apache.commons.lang.time.DateUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static gov.ca.cwds.cals.util.DateTimeUtils.toDate;
 import static gov.ca.cwds.cals.web.rest.rfa.changed.ChangedFacilityResourceTest.*;
 
 /**
@@ -35,7 +34,7 @@ public class ChangedFacilityResource {
   ) throws ParseException {
     List<ChangedFacilityDTO> changedFacilityDTOList = changedFacilityService
             .changedFacilitiesStream(
-                    getDateFromString(stringDateAfter), getDateFromString(stringLisDateAfter)).collect(Collectors.toList());
+                    toDate(stringDateAfter), toDate(stringLisDateAfter)).collect(Collectors.toList());
     return new CollectionDTO<>(changedFacilityDTOList);
   }
 
@@ -47,13 +46,8 @@ public class ChangedFacilityResource {
   ) throws ParseException {
     List<ChangedFacilityDTO> changedFacilityDTOList = changedFacilityService
             .changedFacilitiesStream(
-                    null, getDateFromString(stringLisDateAfter)).collect(Collectors.toList());
+                    null, toDate(stringLisDateAfter)).collect(Collectors.toList());
     return new CollectionDTO<>(changedFacilityDTOList);
-  }
-
-  private Date getDateFromString(@QueryParam(LIS_DATE_AFTER) String stringLisDateAfter) throws ParseException {
-    String[] patterns = new String[]{"yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"};
-    return DateUtils.parseDate(stringLisDateAfter, patterns);
   }
 
 }

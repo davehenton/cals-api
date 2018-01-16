@@ -1,8 +1,11 @@
-package gov.ca.cwds.cals;
+package gov.ca.cwds.cals.util;
 
 import com.google.common.base.Objects;
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
+import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.*;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.exception.ExpectedException;
@@ -13,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import static gov.ca.cwds.cals.Constants.NULL_STRING;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
@@ -44,7 +48,6 @@ public final class Utils {
   public static class Phone {
 
     private Phone() {
-
     }
 
     public static String formatNumber(PhoneDTO phone) {
@@ -55,7 +58,10 @@ public final class Utils {
       return number;
     }
 
-
+    public static boolean checkIfPhoneDTOIsValid(PersonPhoneDTO phone) {
+      return (null != phone && StringUtils.isNotBlank(phone.getNumber()) && !phone.getNumber()
+          .equalsIgnoreCase("null"));
+    }
   }
 
   public static class PlacementHome {
@@ -182,6 +188,43 @@ public final class Utils {
       return numberAndName[partIndex];
     }
 
+    public static boolean checkIfLisResidentialAddressIsValid(final LisFacFile lisFacFile) {
+      return checkIfLisResidentialAddressIsNotBlank(lisFacFile) &&
+          checkIfLisResidentialAddressIsNotNullString(lisFacFile);
+    }
+
+    public static boolean checkIfLisMailAddressIsValid(final LisFacFile lisFacFile) {
+      return checkIfLisMailAddressIsNotBlank(lisFacFile) &&
+          checkIfLisMailAddressIsNotNullString(lisFacFile);
+    }
+
+    private static boolean checkIfLisResidentialAddressIsNotBlank(final LisFacFile lisFacFile) {
+      return !StringUtils
+          .isAllBlank(lisFacFile.getFacResStreetAddr(), lisFacFile.getFacResCity(),
+              lisFacFile.getFacResState(), lisFacFile.getFacResZipCode());
+    }
+
+    private static boolean checkIfLisResidentialAddressIsNotNullString(
+        final LisFacFile lisFacFile) {
+      return !lisFacFile.getFacResStreetAddr().equalsIgnoreCase(NULL_STRING) ||
+          !lisFacFile.getFacResCity().equalsIgnoreCase(NULL_STRING) ||
+          !lisFacFile.getFacResState().equalsIgnoreCase(NULL_STRING) ||
+          !lisFacFile.getFacResZipCode().equalsIgnoreCase(NULL_STRING);
+    }
+
+    private static boolean checkIfLisMailAddressIsNotBlank(final LisFacFile lisFacFile) {
+      return !StringUtils
+          .isAllBlank(lisFacFile.getFacMailStreetAddr(), lisFacFile.getFacMailCity(),
+              lisFacFile.getFacMailState(), lisFacFile.getFacMailZipCode());
+    }
+
+    private static boolean checkIfLisMailAddressIsNotNullString(
+        final LisFacFile lisFacFile) {
+      return !lisFacFile.getFacMailStreetAddr().equalsIgnoreCase(NULL_STRING) ||
+          !lisFacFile.getFacMailCity().equalsIgnoreCase(NULL_STRING) ||
+          !lisFacFile.getFacMailState().equalsIgnoreCase(NULL_STRING) ||
+          !lisFacFile.getFacMailZipCode().equalsIgnoreCase(NULL_STRING);
+    }
   }
 
   public static class County {

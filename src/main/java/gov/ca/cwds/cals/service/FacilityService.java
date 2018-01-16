@@ -1,13 +1,7 @@
 package gov.ca.cwds.cals.service;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
-
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
@@ -24,20 +18,12 @@ import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
-import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
-import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
-import gov.ca.cwds.cals.service.mapper.FacilityMapper;
-import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
+import gov.ca.cwds.cals.service.mapper.*;
+import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.cms.data.access.service.DataAccessServicesException;
 import gov.ca.cwds.cms.data.access.service.PlacementHomeService;
-import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
-import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
-import gov.ca.cwds.data.legacy.cms.dao.FacilityTypeDao;
-import gov.ca.cwds.data.legacy.cms.dao.LicenseStatusDao;
-import gov.ca.cwds.data.legacy.cms.dao.PlacementHomeDao;
-import gov.ca.cwds.data.legacy.cms.dao.StateDao;
+import gov.ca.cwds.data.legacy.cms.dao.*;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
@@ -48,13 +34,17 @@ import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static gov.ca.cwds.cals.Constants.UnitOfWork.*;
+import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 /**
  * CRUD service for {@link gov.ca.cwds.cals.service.dto.FacilityDTO}
