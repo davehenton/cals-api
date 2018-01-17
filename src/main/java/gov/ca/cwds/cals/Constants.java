@@ -319,13 +319,6 @@ public final class Constants {
     public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
     public static final String FORM_SUBMISSION_VALIDATION_SESSION = "formSubmissionValidationSession";
 
-    public static class Pattern {
-      public static final String ALFANUMERICAL_PATTERN = "^[a-zA-Z0-9\\s]*$";
-
-      private Pattern() {
-      }
-    }
-
     public static class Constraint {
 
       public static final String BETWEEN_LENGTH_MESSAGE =
