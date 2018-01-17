@@ -19,6 +19,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -38,6 +39,7 @@ public class ChangedFacilityResourceTest extends BaseCalsApiIntegrationTest {
     setUpLis();
   }
 
+  @Ignore
   @Test
   public void getChangedFacilitiesTest() throws Exception {
     if (TestModeUtils.isIntegrationTestsMode()) {
