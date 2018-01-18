@@ -20,21 +20,10 @@ public class ApplicantDTOTest extends BeanValidationTestSupport<ApplicantDTO> {
         ApplicantDTO applicant = new ApplicantDTO();
         applicant.setMiddleName(middleName);
         Set<ConstraintViolation<ApplicantDTO>> violations = validate(applicant);
-        assertEquals(violations.size(), 1);
+        assertEquals(1, violations.size());
         String actualMessage = violations.iterator().next().getMessage();
         String expectedMessage = getMaxLengthMessage(middleName, 20);
         assertEquals(expectedMessage, actualMessage);
     }
 
-    @Test
-    public void applicantHasNonAlphaNumericMiddleName() {
-        String middleName = ".";
-        ApplicantDTO applicant = new ApplicantDTO();
-        applicant.setMiddleName(middleName);
-        Set<ConstraintViolation<ApplicantDTO>> violations = validate(applicant);
-        assertEquals(violations.size(), 1);
-        String actualMessage = violations.iterator().next().getMessage();
-        String expectedMessage = getAlphaNumericMessage(middleName);
-        assertEquals(expectedMessage, actualMessage);
-    }
 }

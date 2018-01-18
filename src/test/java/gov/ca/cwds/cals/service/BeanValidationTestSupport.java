@@ -46,11 +46,6 @@ public class BeanValidationTestSupport<T> {
               .replace("{max}", String.valueOf(max));
   }
 
-  protected String getAlphaNumericMessage(String middleName) {
-      return Constraint.ALPHANUMERIC_MESSAGE
-              .replace("${validatedValue}", middleName);
-  }
-
   protected String getNumericMessage(String middleName) {
       return Constraint.NUMERIC_MESSAGE
               .replace("${validatedValue}", middleName);

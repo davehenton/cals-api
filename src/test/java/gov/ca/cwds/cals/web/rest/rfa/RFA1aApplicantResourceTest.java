@@ -130,57 +130,6 @@ public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applic
   }
 
   @Test
-  public void checkFirstNameAlphanumericTest() throws Exception {
-    String invalidValue = "1@4";
-    try {
-      ApplicantDTO applicantDTO = getApplicantDTO();
-      applicantDTO.setFirstName(invalidValue);
-      RFA1aFormDTO form = formAHelper.createRFA1aForm();
-      applicantHelper.postApplicant(form.getId(), applicantDTO);
-      fail();
-    } catch (ClientErrorException e) {
-      Map<String, Object> parameters = new HashMap<>();
-
-      BaseExceptionResponse exceptionResponse = e.getResponse()
-          .readEntity(BaseExceptionResponse.class);
-      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
-      IssueDetails detail = issueDetails.iterator().next();
-      parameters.put("incident_id", detail.getIncidentId());
-      parameters.put("property", "firstName");
-      parameters.put("invalid_value", invalidValue);
-
-      parameters.put("user_message",
-          invalidValue + " is invalid. Only alphanumerical characters and spaces are allowed");
-      checkValidationResponse(e, parameters);
-    }
-  }
-
-  @Test
-  public void checkLastNameAlphanumericTest() throws Exception {
-    String invalidValue = "1@4";
-    try {
-      ApplicantDTO applicantDTO = getApplicantDTO();
-      applicantDTO.setLastName(invalidValue);
-      RFA1aFormDTO form = formAHelper.createRFA1aForm();
-      applicantHelper.postApplicant(form.getId(), applicantDTO);
-      fail();
-    } catch (ClientErrorException e) {
-      Map<String, Object> parameters = new HashMap<>();
-
-      BaseExceptionResponse exceptionResponse = e.getResponse()
-          .readEntity(BaseExceptionResponse.class);
-      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
-      IssueDetails detail = issueDetails.iterator().next();
-      parameters.put("incident_id", detail.getIncidentId());
-      parameters.put("property", "lastName");
-      parameters.put("invalid_value", invalidValue);
-      parameters.put("user_message",
-          invalidValue + " is invalid. Only alphanumerical characters and spaces are allowed");
-      checkValidationResponse(e, parameters);
-    }
-  }
-
-  @Test
   public void postDuplicateApplicantsValidationTest() throws Exception {
     try {
       RFA1aFormDTO form = formAHelper.createRFA1aForm();
