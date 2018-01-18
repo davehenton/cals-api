@@ -20,7 +20,6 @@ import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -54,7 +53,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType nameSuffix;
 
-  private List<TypedPersonNameDTO> otherNames = new ArrayList<>();
+  private List<TypedPersonNameDTO> otherNames;
 
   @CheckReferentialIntegrity(enrich = true)
   private EducationLevelType highestEducationLevel;
@@ -85,7 +84,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   private EmploymentDTO employment;
 
   @Valid
-  private List<PhoneDTO> phones = new ArrayList<>();
+  private List<PhoneDTO> phones;
 
   @ApiModelProperty(hidden = true)
   @Valid
