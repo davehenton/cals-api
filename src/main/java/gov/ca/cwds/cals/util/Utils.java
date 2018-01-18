@@ -1,27 +1,24 @@
-package gov.ca.cwds.cals;
-
-import static gov.ca.cwds.cals.Constants.NULL_STRING;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+package gov.ca.cwds.cals.util;
 
 import com.google.common.base.Objects;
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
-import gov.ca.cwds.cals.service.dto.rfa.EmploymentDTO;
-import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.dto.rfa.*;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.exception.ExpectedException;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import javax.ws.rs.core.Response;
-import org.apache.commons.lang3.StringUtils;
+
+import static gov.ca.cwds.cals.Constants.NULL_STRING;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  * @author CALS API Team

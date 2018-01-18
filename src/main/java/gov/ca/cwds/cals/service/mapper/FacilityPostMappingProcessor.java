@@ -1,16 +1,17 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
-import java.util.ArrayList;
-import java.util.List;
+import gov.ca.cwds.cals.util.Utils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author CWDS CALS API Team

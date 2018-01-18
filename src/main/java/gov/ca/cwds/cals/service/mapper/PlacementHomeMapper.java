@@ -1,19 +1,20 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author CWDS CALS API Team
