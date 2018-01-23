@@ -189,12 +189,12 @@ public class RFA1aFormService
 
       StringBuilder sb = new StringBuilder();
       sb.append(e.getMessage());
-      sb.append("\n");
+      sb.append('\n');
       Throwable cause = e.getCause();
       while (cause != null) {
         sb.append(" Cause: ");
         sb.append(cause.getMessage());
-        sb.append("\n");
+        sb.append('\n');
         cause = cause.getCause();
       }
 
