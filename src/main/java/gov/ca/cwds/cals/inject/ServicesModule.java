@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.service.DictionariesService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
+import gov.ca.cwds.cals.service.builder.FacilityParameterObjectCMSAwareBuilder;
 import gov.ca.cwds.cals.service.rfa.LIC198bCollectionService;
 import gov.ca.cwds.cals.service.rfa.LIC198bService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
@@ -38,9 +39,10 @@ import gov.ca.cwds.drools.validation.ValidationConfigurationRegistry;
 import gov.ca.cwds.rest.api.domain.cms.SystemCodeCache;
 import gov.ca.cwds.rest.services.cms.CachingSystemCodeService;
 import gov.ca.cwds.rest.services.cms.SystemCodeService;
-import javax.ws.rs.client.Client;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.JerseyClientBuilder;
+
+import javax.ws.rs.client.Client;
 
 /**
  * Identifies all CALS API business layer (services) classes available for dependency injection by
@@ -66,6 +68,7 @@ public class ServicesModule extends AbstractModule {
     bind(DictionariesService.class);
     bind(FacilityService.class).toProvider(FacilityServiceProvider.class);
     bind(ChangedFacilityService.class).toProvider(ChangedFacilityServiceProvider.class);
+    bind(FacilityParameterObjectCMSAwareBuilder.class).toProvider(FacilityParameterObjectBuilderProvider.class);
 
     // RFA
     bind(RFA1aFormService.class).toProvider(RFA1aFormServiceProvider.class);

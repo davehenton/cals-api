@@ -12,18 +12,27 @@ import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
+import gov.ca.cwds.cals.service.builder.FacilityParameterObjectBuilder;
 import gov.ca.cwds.cals.service.builder.PlacementHomeEntityAwareDTOBuilder;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.mapper.*;
-import gov.ca.cwds.cals.util.Utils;
+import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
+import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
+import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
+import gov.ca.cwds.cals.service.mapper.FacilityMapper;
+import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.cms.data.access.service.DataAccessServicesException;
 import gov.ca.cwds.cms.data.access.service.PlacementHomeService;
-import gov.ca.cwds.data.legacy.cms.dao.*;
+import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
+import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
+import gov.ca.cwds.data.legacy.cms.dao.FacilityTypeDao;
+import gov.ca.cwds.data.legacy.cms.dao.LicenseStatusDao;
+import gov.ca.cwds.data.legacy.cms.dao.PlacementHomeDao;
+import gov.ca.cwds.data.legacy.cms.dao.StateDao;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
@@ -38,12 +47,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.*;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 /**
@@ -106,9 +116,11 @@ public class FacilityService implements CrudsService {
   @Inject
   private LicenseStatusDao licenseStatusDao;
 
-
   @Inject
   private StateDao stateDao;
+
+  @Inject
+  private FacilityParameterObjectBuilder facilityParameterObjectBuilder;
 
   public FacilityService() {
     // default constructor
@@ -120,7 +132,7 @@ public class FacilityService implements CrudsService {
   }
 
   protected FacilityDTO findExpandedById(String id) {
-    return findByParameterObject(Utils.createExpandedFacilityParameterObject(id));
+    return findByParameterObject(facilityParameterObjectBuilder.createExpandedFacilityParameterObject(id));
   }
 
   private FacilityDTO findByParameterObject(FacilityParameterObject parameterObject) {
@@ -155,7 +167,7 @@ public class FacilityService implements CrudsService {
 
     if (parameterObject.isExpanded()) {
       List<FacilityChildDTO> facilityChildren =
-          findFacilityChildredByLicenseNumber(parameterObject.getLicenseNumber());
+              findFacilityChildredByLicenseNumber(Integer.valueOf(parameterObject.getLicenseNumber()));
       List<FacilityInspectionDTO> inspections =
           findInspectionsByFacilityId(parameterObject.getLicenseNumber());
       List<ComplaintDTO> complaints =
@@ -182,14 +194,14 @@ public class FacilityService implements CrudsService {
   }
 
   @UnitOfWork(FAS)
-  protected List<FacilityInspectionDTO> findInspectionsByFacilityId(Integer licenseNumber) {
+  protected List<FacilityInspectionDTO> findInspectionsByFacilityId(String licenseNumber) {
     return inspectionDao
         .findDeficienciesByFacilityNumber(licenseNumber).stream()
         .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
   }
 
   @UnitOfWork(FAS)
-  protected List<ComplaintDTO> findComplaintsByFacilityId(Integer licenseNumber) {
+  protected List<ComplaintDTO> findComplaintsByFacilityId(String licenseNumber) {
     return complaintReportLic802Dao
         .findComplaintsByFacilityNumber(licenseNumber).stream()
         .map(complaintMapper::entityToDTO).collect(Collectors.toList());
@@ -236,7 +248,7 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(LIS)
   protected LisFacFile findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
-    LisFacFile lisFacFile = lisFacFileLisDao.find(parameterObject.getLicenseNumber());
+    LisFacFile lisFacFile = lisFacFileLisDao.find(Integer.valueOf(parameterObject.getLicenseNumber()));
     if (lisFacFile == null) {
       return null;
     }
@@ -264,14 +276,14 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(LIS)
   protected void attachVisitsData(FacilityInformation facilityInformation) {
-    BigInteger facilityLastVisitReasonCode = facilityInformation.getFacLastVisitReason();
+    Long facilityLastVisitReasonCode = facilityInformation.getFacLastVisitReason();
     if (facilityLastVisitReasonCode != null) {
       LisTableFile facilityLastVisitReason =
           lisTableFileDao.findVisitReasonType(facilityLastVisitReasonCode.intValue());
       facilityInformation.setFacilityLastVisitReason(facilityLastVisitReason);
     }
 
-    BigInteger facilityLastDeferredVisitReasonCode = facilityInformation.getFacLastDeferVisitReason();
+    Long facilityLastDeferredVisitReasonCode = facilityInformation.getFacLastDeferVisitReason();
     if (facilityLastDeferredVisitReasonCode != null) {
       LisTableFile facilityLastDeferredVisitReason =
           lisTableFileDao.findVisitReasonType(facilityLastDeferredVisitReasonCode.intValue());
@@ -282,7 +294,7 @@ public class FacilityService implements CrudsService {
   @UnitOfWork(FAS)
   protected FacilityInformation findFacilityInfoByLicenseNumber(
       FacilityParameterObject parameterObject) {
-    return facilityInformationDao.find(BigInteger.valueOf(parameterObject.getLicenseNumber()));
+    return facilityInformationDao.find(Long.valueOf(parameterObject.getLicenseNumber()));
   }
 
   @UnitOfWork(FAS)

@@ -8,26 +8,12 @@ import java.io.Serializable;
 public class FacilityParameterObject implements Serializable {
     public static final long serialVersionUID = 42L;
 
-    private Boolean expanded = Boolean.FALSE;
+    private boolean expanded;
     private String facilityId;
-    private Integer licenseNumber;
+    private String licenseNumber;
     private String unitOfWork;
 
-    public FacilityParameterObject(String unitOfWork) {
-        this.unitOfWork = unitOfWork;
-    }
-
-    public FacilityParameterObject(String facilityId, String unitOfWork) {
-        this.facilityId = facilityId;
-        this.unitOfWork = unitOfWork;
-    }
-
-    public FacilityParameterObject(Integer licenseNumber, String unitOfWork) {
-        this.licenseNumber = licenseNumber;
-        this.unitOfWork = unitOfWork;
-    }
-
-    public Boolean isExpanded() {
+    public boolean isExpanded() {
         return expanded;
     }
 
@@ -39,11 +25,23 @@ public class FacilityParameterObject implements Serializable {
         return facilityId;
     }
 
-    public Integer getLicenseNumber() {
+    public String getLicenseNumber() {
         return licenseNumber;
     }
 
     public String getUnitOfWork() {
         return unitOfWork;
+    }
+
+    public void setFacilityId(String facilityId) {
+        this.facilityId = facilityId;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
+    }
+
+    public void setUnitOfWork(String unitOfWork) {
+        this.unitOfWork = unitOfWork;
     }
 }

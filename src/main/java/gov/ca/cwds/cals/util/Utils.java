@@ -6,8 +6,12 @@ import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
-import gov.ca.cwds.cals.service.dto.rfa.*;
-import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.EmploymentDTO;
+import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,8 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static gov.ca.cwds.cals.Constants.NULL_STRING;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 /**
  * @author CALS API Team
@@ -26,23 +28,6 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 public final class Utils {
 
   private Utils() {
-  }
-
-  public static FacilityParameterObject createFacilityParameterObject(String facilityNumber) {
-    FacilityParameterObject parameterObject;
-    try {
-      Integer licenseNumber = Integer.valueOf(facilityNumber);
-      parameterObject = new FacilityParameterObject(licenseNumber, LIS);
-    } catch (NumberFormatException e) {
-      parameterObject = new FacilityParameterObject(facilityNumber, CMS);
-    }
-    return parameterObject;
-  }
-
-  public static FacilityParameterObject createExpandedFacilityParameterObject(String facilityNumber) {
-    FacilityParameterObject parameterObject = createFacilityParameterObject(facilityNumber);
-    parameterObject.setExpanded(Boolean.TRUE);
-    return parameterObject;
   }
 
   public static class Phone {
