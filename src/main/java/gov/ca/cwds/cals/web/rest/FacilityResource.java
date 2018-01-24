@@ -3,11 +3,15 @@ package gov.ca.cwds.cals.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.FacilityServiceBackedResource;
+import gov.ca.cwds.cals.service.builder.FacilityParameterObjectCMSAwareBuilder;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -29,12 +33,12 @@ import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityResource {
 
+    @Inject
+    @FacilityServiceBackedResource
     private ResourceDelegate resourceDelegate;
 
     @Inject
-    public FacilityResource(@FacilityServiceBackedResource ResourceDelegate resourceDelegate) {
-        this.resourceDelegate = resourceDelegate;
-    }
+    private FacilityParameterObjectCMSAwareBuilder parameterObjectBuilder;
 
     @GET
     @Timed
@@ -47,7 +51,7 @@ public class FacilityResource {
     public Response getFacilityById(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
         value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS") String facilityNumber) {
 
-        FacilityParameterObject parameterObject = Utils.createFacilityParameterObject(facilityNumber);
+        FacilityParameterObject parameterObject = parameterObjectBuilder.createFacilityParameterObject(facilityNumber);
         return resourceDelegate.get(parameterObject);
     }
 }

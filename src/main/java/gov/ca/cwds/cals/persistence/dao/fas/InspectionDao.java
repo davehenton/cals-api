@@ -25,11 +25,11 @@ public class InspectionDao extends BaseDaoImpl<Rrcpoc> {
     super(sessionFactory);
   }
 
-  public List<Rr809Dn> findDeficienciesByFacilityNumber(Integer facilityNumber) {
+  public List<Rr809Dn> findDeficienciesByFacilityNumber(String facilityNumber) {
     Session currentSession = getSessionFactory().getCurrentSession();
     Query<Rr809Dn> namedQuery =
         currentSession.createNamedQuery(Rr809Dn.NQ_FIND_BY_FACILITY_NUMBER, Rr809Dn.class);
-    namedQuery.setParameter("facilityNumberText", formatFacilityNumber(facilityNumber));
+    namedQuery.setParameter("facilityNumberText", formatFacilityNumber(Integer.valueOf(facilityNumber)));
     return namedQuery.list();
   }
 

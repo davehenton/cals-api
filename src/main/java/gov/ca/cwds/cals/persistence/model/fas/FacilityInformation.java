@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 /**
@@ -37,8 +36,8 @@ public class FacilityInformation implements PersistentObject {
   private String fnamLoc;
   private String rndmeditcomments;
   private String untitled;
-  private BigInteger fasAnlReqVstNbrTimesMissed;
-  private BigInteger fasAnlReqVstTimesOverdue;
+  private Long fasAnlReqVstNbrTimesMissed;
+  private Long fasAnlReqVstTimesOverdue;
   private LocalDateTime fasAnlReqLastVstMissedDate;
   private LocalDateTime fasAnlReqVstOverdueDate;
   private LocalDateTime fasAnlReqVstMissedDate;
@@ -47,8 +46,8 @@ public class FacilityInformation implements PersistentObject {
   private LocalDateTime fasAnlReqVstDuebyDate;
   private LocalDateTime fasLastAnlReqVisitDate;
   private String fasAnlReqVstDue;
-  private BigInteger fasReqVstNbrTimesMissed;
-  private BigInteger fasReqVstNbrTimesOverdue;
+  private Long fasReqVstNbrTimesMissed;
+  private Long fasReqVstNbrTimesOverdue;
   private LocalDateTime fasReqLastVstMissedDate;
   private LocalDateTime fasReqVstOverdueDate;
   private LocalDateTime fasReqVstMissedDate;
@@ -70,51 +69,51 @@ public class FacilityInformation implements PersistentObject {
   private LocalDateTime facAccreditationExpireDate;
   private LocalDateTime facAccreditationDate;
   private String fasAccAgency;
-  private BigInteger facAccreditationCode;
+  private Long facAccreditationCode;
   private LocalDateTime facStrtpAppDeniedDate;
   private LocalDateTime facStrtpAppRecvDate;
   private String fnAccred;
   private String fnamAccred;
-  private BigInteger facLocIndicator;
-  private BigInteger facChangeLocInd;
-  private BigInteger facDoNbr;
+  private Long facLocIndicator;
+  private Long facChangeLocInd;
+  private Long facDoNbr;
   private String facEmailAddress;
   private String facRegionCo;
   private String facRegionDo;
   private String facDeficiency;
   private String facComplaint;
-  private BigInteger facNbrNew;
+  private Long facNbrNew;
   private String facGhIndicator;
   private String facFcrbProgram;
   private String facDualNumber;
   private String facDualId;
   private LocalDateTime facBillingDate;
-  private BigInteger facPrimaryNbr;
+  private Long facPrimaryNbr;
   private String facAggStatus;
   private String facLegalActionIndicator;
   private String facActionCode;
-  private BigInteger facRegionNbr;
-  private BigInteger facCfrsIdNbr;
-  private BigInteger facFmRegionNbr;
-  private BigInteger facCoNbr;
+  private Long facRegionNbr;
+  private Long facCfrsIdNbr;
+  private Long facFmRegionNbr;
+  private Long facCoNbr;
   private LocalDateTime facClientServedApprDate;
-  private BigInteger facClientServed;
+  private Long facClientServed;
   private String fnLegal;
   private String fnamLegal;
   private String d6;
-  private BigInteger facNonamb65PlusNbr;
-  private BigInteger facAmb65PlusNbr;
-  private BigInteger facNonamb1864Nbr;
-  private BigInteger facAmb1864Nbr;
-  private BigInteger facNonamb117Nbr;
-  private BigInteger facAmb117Nbr;
+  private Long facNonamb65PlusNbr;
+  private Long facAmb65PlusNbr;
+  private Long facNonamb1864Nbr;
+  private Long facAmb1864Nbr;
+  private Long facNonamb117Nbr;
+  private Long facAmb117Nbr;
   private String fnAmb;
   private String fnamAmb;
   private String d5;
   private LocalDateTime facPreLicVisitDate;
-  private BigInteger facAnnualVisitYear;
+  private Long facAnnualVisitYear;
   private LocalDateTime facLastDeferVisitDate;
-  private BigInteger facLastDeferVisitReason;
+  private Long facLastDeferVisitReason;
   private LocalDateTime facRenewalDeferDate;
   private LocalDateTime facPostLicDeferDate;
   private LocalDateTime facRenewalVisitDate;
@@ -127,7 +126,7 @@ public class FacilityInformation implements PersistentObject {
   private LocalDateTime facAnnual10MoVisitDate;
   private String facAnnual22MoVisitAppr;
   private String facAnnual10MoVisitAppr;
-  private BigInteger facLastVisitReason;
+  private Long facLastVisitReason;
   private LocalDateTime facLastVisitDate;
   private String fnVisit;
   private String fnamVisit;
@@ -174,19 +173,19 @@ public class FacilityInformation implements PersistentObject {
   private String facilityZip;
   private String facilityStatusText;
   private String facilityState;
-  private BigInteger facilityStatus;
+  private Long facilityStatus;
   private String facilityCity;
-  private BigInteger facilityCapacity;
+  private Long facilityCapacity;
   private String facilityAddress;
   private String facilityTypeText;
   private String facilityName;
   private String facilityType;
-  private BigInteger facilityNumber;
+  private Long facilityNumber;
   private String d1;
-  private BigInteger facOldFfaNbr;
+  private Long facOldFfaNbr;
   private String facPin;
   private String archiveFlag;
-  private BigInteger facSfmIdNbr;
+  private Long facSfmIdNbr;
   private LocalDateTime facPlacementDate;
   private String facPlacementReady;
   private LocalDateTime facMidYrVisitDate;
@@ -339,21 +338,21 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fas_anl_req_vst_nbr_times_missed", nullable = true, precision = 0)
-  public BigInteger getFasAnlReqVstNbrTimesMissed() {
+  public Long getFasAnlReqVstNbrTimesMissed() {
     return fasAnlReqVstNbrTimesMissed;
   }
 
-  public void setFasAnlReqVstNbrTimesMissed(BigInteger fasAnlReqVstNbrTimesMissed) {
+  public void setFasAnlReqVstNbrTimesMissed(Long fasAnlReqVstNbrTimesMissed) {
     this.fasAnlReqVstNbrTimesMissed = fasAnlReqVstNbrTimesMissed;
   }
 
   @Basic
   @Column(name = "fas_anl_req_vst_times_overdue", nullable = true, precision = 0)
-  public BigInteger getFasAnlReqVstTimesOverdue() {
+  public Long getFasAnlReqVstTimesOverdue() {
     return fasAnlReqVstTimesOverdue;
   }
 
-  public void setFasAnlReqVstTimesOverdue(BigInteger fasAnlReqVstTimesOverdue) {
+  public void setFasAnlReqVstTimesOverdue(Long fasAnlReqVstTimesOverdue) {
     this.fasAnlReqVstTimesOverdue = fasAnlReqVstTimesOverdue;
   }
 
@@ -439,21 +438,21 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fas_req_vst_nbr_times_missed", nullable = true, precision = 0)
-  public BigInteger getFasReqVstNbrTimesMissed() {
+  public Long getFasReqVstNbrTimesMissed() {
     return fasReqVstNbrTimesMissed;
   }
 
-  public void setFasReqVstNbrTimesMissed(BigInteger fasReqVstNbrTimesMissed) {
+  public void setFasReqVstNbrTimesMissed(Long fasReqVstNbrTimesMissed) {
     this.fasReqVstNbrTimesMissed = fasReqVstNbrTimesMissed;
   }
 
   @Basic
   @Column(name = "fas_req_vst_nbr_times_overdue", nullable = true, precision = 0)
-  public BigInteger getFasReqVstNbrTimesOverdue() {
+  public Long getFasReqVstNbrTimesOverdue() {
     return fasReqVstNbrTimesOverdue;
   }
 
-  public void setFasReqVstNbrTimesOverdue(BigInteger fasReqVstNbrTimesOverdue) {
+  public void setFasReqVstNbrTimesOverdue(Long fasReqVstNbrTimesOverdue) {
     this.fasReqVstNbrTimesOverdue = fasReqVstNbrTimesOverdue;
   }
 
@@ -669,11 +668,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_accreditation_code", nullable = true, precision = 0)
-  public BigInteger getFacAccreditationCode() {
+  public Long getFacAccreditationCode() {
     return facAccreditationCode;
   }
 
-  public void setFacAccreditationCode(BigInteger facAccreditationCode) {
+  public void setFacAccreditationCode(Long facAccreditationCode) {
     this.facAccreditationCode = facAccreditationCode;
   }
 
@@ -719,31 +718,31 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_loc_indicator", nullable = true, precision = 0)
-  public BigInteger getFacLocIndicator() {
+  public Long getFacLocIndicator() {
     return facLocIndicator;
   }
 
-  public void setFacLocIndicator(BigInteger facLocIndicator) {
+  public void setFacLocIndicator(Long facLocIndicator) {
     this.facLocIndicator = facLocIndicator;
   }
 
   @Basic
   @Column(name = "fac_change_loc_ind", nullable = true, precision = 0)
-  public BigInteger getFacChangeLocInd() {
+  public Long getFacChangeLocInd() {
     return facChangeLocInd;
   }
 
-  public void setFacChangeLocInd(BigInteger facChangeLocInd) {
+  public void setFacChangeLocInd(Long facChangeLocInd) {
     this.facChangeLocInd = facChangeLocInd;
   }
 
   @Basic
   @Column(name = "fac_do_nbr", nullable = true, precision = 0)
-  public BigInteger getFacDoNbr() {
+  public Long getFacDoNbr() {
     return facDoNbr;
   }
 
-  public void setFacDoNbr(BigInteger facDoNbr) {
+  public void setFacDoNbr(Long facDoNbr) {
     this.facDoNbr = facDoNbr;
   }
 
@@ -799,11 +798,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_nbr_new", nullable = true, precision = 0)
-  public BigInteger getFacNbrNew() {
+  public Long getFacNbrNew() {
     return facNbrNew;
   }
 
-  public void setFacNbrNew(BigInteger facNbrNew) {
+  public void setFacNbrNew(Long facNbrNew) {
     this.facNbrNew = facNbrNew;
   }
 
@@ -859,11 +858,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_primary_nbr", nullable = true, precision = 0)
-  public BigInteger getFacPrimaryNbr() {
+  public Long getFacPrimaryNbr() {
     return facPrimaryNbr;
   }
 
-  public void setFacPrimaryNbr(BigInteger facPrimaryNbr) {
+  public void setFacPrimaryNbr(Long facPrimaryNbr) {
     this.facPrimaryNbr = facPrimaryNbr;
   }
 
@@ -899,41 +898,41 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_region_nbr", nullable = true, precision = 0)
-  public BigInteger getFacRegionNbr() {
+  public Long getFacRegionNbr() {
     return facRegionNbr;
   }
 
-  public void setFacRegionNbr(BigInteger facRegionNbr) {
+  public void setFacRegionNbr(Long facRegionNbr) {
     this.facRegionNbr = facRegionNbr;
   }
 
   @Basic
   @Column(name = "fac_cfrs_id_nbr", nullable = true, precision = 0)
-  public BigInteger getFacCfrsIdNbr() {
+  public Long getFacCfrsIdNbr() {
     return facCfrsIdNbr;
   }
 
-  public void setFacCfrsIdNbr(BigInteger facCfrsIdNbr) {
+  public void setFacCfrsIdNbr(Long facCfrsIdNbr) {
     this.facCfrsIdNbr = facCfrsIdNbr;
   }
 
   @Basic
   @Column(name = "fac_fm_region_nbr", nullable = true, precision = 0)
-  public BigInteger getFacFmRegionNbr() {
+  public Long getFacFmRegionNbr() {
     return facFmRegionNbr;
   }
 
-  public void setFacFmRegionNbr(BigInteger facFmRegionNbr) {
+  public void setFacFmRegionNbr(Long facFmRegionNbr) {
     this.facFmRegionNbr = facFmRegionNbr;
   }
 
   @Basic
   @Column(name = "fac_co_nbr", nullable = true, precision = 0)
-  public BigInteger getFacCoNbr() {
+  public Long getFacCoNbr() {
     return facCoNbr;
   }
 
-  public void setFacCoNbr(BigInteger facCoNbr) {
+  public void setFacCoNbr(Long facCoNbr) {
     this.facCoNbr = facCoNbr;
   }
 
@@ -949,11 +948,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_client_served", nullable = true, precision = 0)
-  public BigInteger getFacClientServed() {
+  public Long getFacClientServed() {
     return facClientServed;
   }
 
-  public void setFacClientServed(BigInteger facClientServed) {
+  public void setFacClientServed(Long facClientServed) {
     this.facClientServed = facClientServed;
   }
 
@@ -989,61 +988,61 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_nonamb_65_plus_nbr", nullable = true, precision = 0)
-  public BigInteger getFacNonamb65PlusNbr() {
+  public Long getFacNonamb65PlusNbr() {
     return facNonamb65PlusNbr;
   }
 
-  public void setFacNonamb65PlusNbr(BigInteger facNonamb65PlusNbr) {
+  public void setFacNonamb65PlusNbr(Long facNonamb65PlusNbr) {
     this.facNonamb65PlusNbr = facNonamb65PlusNbr;
   }
 
   @Basic
   @Column(name = "fac_amb_65_plus_nbr", nullable = true, precision = 0)
-  public BigInteger getFacAmb65PlusNbr() {
+  public Long getFacAmb65PlusNbr() {
     return facAmb65PlusNbr;
   }
 
-  public void setFacAmb65PlusNbr(BigInteger facAmb65PlusNbr) {
+  public void setFacAmb65PlusNbr(Long facAmb65PlusNbr) {
     this.facAmb65PlusNbr = facAmb65PlusNbr;
   }
 
   @Basic
   @Column(name = "fac_nonamb_18_64_nbr", nullable = true, precision = 0)
-  public BigInteger getFacNonamb1864Nbr() {
+  public Long getFacNonamb1864Nbr() {
     return facNonamb1864Nbr;
   }
 
-  public void setFacNonamb1864Nbr(BigInteger facNonamb1864Nbr) {
+  public void setFacNonamb1864Nbr(Long facNonamb1864Nbr) {
     this.facNonamb1864Nbr = facNonamb1864Nbr;
   }
 
   @Basic
   @Column(name = "fac_amb_18_64_nbr", nullable = true, precision = 0)
-  public BigInteger getFacAmb1864Nbr() {
+  public Long getFacAmb1864Nbr() {
     return facAmb1864Nbr;
   }
 
-  public void setFacAmb1864Nbr(BigInteger facAmb1864Nbr) {
+  public void setFacAmb1864Nbr(Long facAmb1864Nbr) {
     this.facAmb1864Nbr = facAmb1864Nbr;
   }
 
   @Basic
   @Column(name = "fac_nonamb_1_17_nbr", nullable = true, precision = 0)
-  public BigInteger getFacNonamb117Nbr() {
+  public Long getFacNonamb117Nbr() {
     return facNonamb117Nbr;
   }
 
-  public void setFacNonamb117Nbr(BigInteger facNonamb117Nbr) {
+  public void setFacNonamb117Nbr(Long facNonamb117Nbr) {
     this.facNonamb117Nbr = facNonamb117Nbr;
   }
 
   @Basic
   @Column(name = "fac_amb_1_17_nbr", nullable = true, precision = 0)
-  public BigInteger getFacAmb117Nbr() {
+  public Long getFacAmb117Nbr() {
     return facAmb117Nbr;
   }
 
-  public void setFacAmb117Nbr(BigInteger facAmb117Nbr) {
+  public void setFacAmb117Nbr(Long facAmb117Nbr) {
     this.facAmb117Nbr = facAmb117Nbr;
   }
 
@@ -1089,11 +1088,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_annual_visit_year", nullable = true, precision = 0)
-  public BigInteger getFacAnnualVisitYear() {
+  public Long getFacAnnualVisitYear() {
     return facAnnualVisitYear;
   }
 
-  public void setFacAnnualVisitYear(BigInteger facAnnualVisitYear) {
+  public void setFacAnnualVisitYear(Long facAnnualVisitYear) {
     this.facAnnualVisitYear = facAnnualVisitYear;
   }
 
@@ -1109,11 +1108,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_last_defer_visit_reason", nullable = true, precision = 0)
-  public BigInteger getFacLastDeferVisitReason() {
+  public Long getFacLastDeferVisitReason() {
     return facLastDeferVisitReason;
   }
 
-  public void setFacLastDeferVisitReason(BigInteger facLastDeferVisitReason) {
+  public void setFacLastDeferVisitReason(Long facLastDeferVisitReason) {
     this.facLastDeferVisitReason = facLastDeferVisitReason;
   }
 
@@ -1239,11 +1238,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_last_visit_reason", nullable = true, precision = 0)
-  public BigInteger getFacLastVisitReason() {
+  public Long getFacLastVisitReason() {
     return facLastVisitReason;
   }
 
-  public void setFacLastVisitReason(BigInteger facLastVisitReason) {
+  public void setFacLastVisitReason(Long facLastVisitReason) {
     this.facLastVisitReason = facLastVisitReason;
   }
 
@@ -1709,11 +1708,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "facility_status", nullable = true, precision = 0)
-  public BigInteger getFacilityStatus() {
+  public Long getFacilityStatus() {
     return facilityStatus;
   }
 
-  public void setFacilityStatus(BigInteger facilityStatus) {
+  public void setFacilityStatus(Long facilityStatus) {
     this.facilityStatus = facilityStatus;
   }
 
@@ -1729,11 +1728,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "facility_capacity", nullable = true, precision = 0)
-  public BigInteger getFacilityCapacity() {
+  public Long getFacilityCapacity() {
     return facilityCapacity;
   }
 
-  public void setFacilityCapacity(BigInteger facilityCapacity) {
+  public void setFacilityCapacity(Long facilityCapacity) {
     this.facilityCapacity = facilityCapacity;
   }
 
@@ -1779,11 +1778,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Id
   @Column(name = "facility_number")
-  public BigInteger getFacilityNumber() {
+  public Long getFacilityNumber() {
     return facilityNumber;
   }
 
-  public void setFacilityNumber(BigInteger facilityNumber) {
+  public void setFacilityNumber(Long facilityNumber) {
     this.facilityNumber = facilityNumber;
   }
 
@@ -1799,11 +1798,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_old_ffa_nbr", nullable = true, precision = 0)
-  public BigInteger getFacOldFfaNbr() {
+  public Long getFacOldFfaNbr() {
     return facOldFfaNbr;
   }
 
-  public void setFacOldFfaNbr(BigInteger facOldFfaNbr) {
+  public void setFacOldFfaNbr(Long facOldFfaNbr) {
     this.facOldFfaNbr = facOldFfaNbr;
   }
 
@@ -1829,11 +1828,11 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_sfm_id_nbr", nullable = true, precision = 0)
-  public BigInteger getFacSfmIdNbr() {
+  public Long getFacSfmIdNbr() {
     return facSfmIdNbr;
   }
 
-  public void setFacSfmIdNbr(BigInteger facSfmIdNbr) {
+  public void setFacSfmIdNbr(Long facSfmIdNbr) {
     this.facSfmIdNbr = facSfmIdNbr;
   }
 

@@ -1,8 +1,8 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
+import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.service.dto.ComplaintsDTO;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.rest.api.Request;
@@ -32,7 +32,7 @@ public class ComplaintsCollectionService implements CrudsService {
     @Override
     public Response find(Serializable facilityNumber) {
         List<ComplaintReportLic802> facilityComplaints = complaintReportLic802Dao
-                .findComplaintsByFacilityNumber((Integer) facilityNumber);
+                .findComplaintsByFacilityNumber(String.valueOf(facilityNumber));
         if (CollectionUtils.isEmpty(facilityComplaints)) {
             return null;
         }
