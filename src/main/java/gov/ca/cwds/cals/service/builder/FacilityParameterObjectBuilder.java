@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.builder;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.data.legacy.cms.dao.PlacementHomeDao;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
@@ -26,7 +27,12 @@ public class FacilityParameterObjectBuilder {
             parameterObject = new FacilityParameterObject();
             parameterObject.setFacilityId(facilityNumber);
             parameterObject.setUnitOfWork(CMS);
-            parameterObject.setLicenseNumber(placementHomeDao.find(facilityNumber).getLicenseNo());
+            PlacementHome placementHome = placementHomeDao.find(facilityNumber);
+            if (placementHome != null) {
+                parameterObject.setLicenseNumber(placementHome.getLicenseNo());
+            } else {
+                throw new IllegalStateException("Data inconsistency found. There is no placement home discovered with ID - " + facilityNumber);
+            }
         }
         return parameterObject;
     }

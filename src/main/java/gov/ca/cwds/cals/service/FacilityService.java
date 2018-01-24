@@ -12,7 +12,7 @@ import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
-import gov.ca.cwds.cals.service.builder.FacilityParameterObjectBuilder;
+import gov.ca.cwds.cals.service.builder.FacilityParameterObjectCMSAwareBuilder;
 import gov.ca.cwds.cals.service.builder.PlacementHomeEntityAwareDTOBuilder;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
@@ -43,10 +43,12 @@ import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -120,7 +122,7 @@ public class FacilityService implements CrudsService {
   private StateDao stateDao;
 
   @Inject
-  private FacilityParameterObjectBuilder facilityParameterObjectBuilder;
+  private FacilityParameterObjectCMSAwareBuilder facilityParameterObjectBuilder;
 
   public FacilityService() {
     // default constructor
@@ -195,16 +197,22 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(FAS)
   protected List<FacilityInspectionDTO> findInspectionsByFacilityId(String licenseNumber) {
-    return inspectionDao
-        .findDeficienciesByFacilityNumber(licenseNumber).stream()
-        .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
+    if (StringUtils.isNotBlank(licenseNumber)) {
+      return inspectionDao
+              .findDeficienciesByFacilityNumber(licenseNumber).stream()
+              .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
+    }
+    return Collections.EMPTY_LIST;
   }
 
   @UnitOfWork(FAS)
   protected List<ComplaintDTO> findComplaintsByFacilityId(String licenseNumber) {
-    return complaintReportLic802Dao
-        .findComplaintsByFacilityNumber(licenseNumber).stream()
-        .map(complaintMapper::entityToDTO).collect(Collectors.toList());
+    if (StringUtils.isNotBlank(licenseNumber)) {
+      return complaintReportLic802Dao
+              .findComplaintsByFacilityNumber(licenseNumber).stream()
+              .map(complaintMapper::entityToDTO).collect(Collectors.toList());
+    }
+    return Collections.EMPTY_LIST;
   }
 
   private FacilityDTO loadFacilityFromCwsCms(FacilityParameterObject parameterObject) {
