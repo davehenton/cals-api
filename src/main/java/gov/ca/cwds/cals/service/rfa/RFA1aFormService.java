@@ -181,9 +181,26 @@ public class RFA1aFormService
       LOG.error("Can not create Placement Home because of BusinessValidationException", e);
       throw e;
     } catch (Exception e) {
-      userTransaction.rollback();
-      LOG.error("Can not create Placement Home", e);
-      throw new SystemException(e.getMessage());
+      try {
+        userTransaction.rollback();
+      } catch (Exception re) {
+        LOG.warn(re.getMessage(), re);
+      }
+
+      StringBuilder sb = new StringBuilder();
+      sb.append(e.getMessage());
+      sb.append('\n');
+      Throwable cause = e.getCause();
+      while (cause != null) {
+        sb.append(" Cause: ");
+        sb.append(cause.getMessage());
+        sb.append('\n');
+        cause = cause.getCause();
+      }
+
+      LOG.error("Can not create Placement Home: \n", e);
+
+      throw new SystemException(sb.toString());
     }
   }
 

@@ -18,8 +18,10 @@ import java.time.LocalDateTime;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class, Constants.class, PrincipalUtils.class})
+@Mapper(imports = {LocalDateTime.class, Utils.class, StringUtils.class, Constants.class,
+    PrincipalUtils.class})
 public interface SubstituteCareProviderMapper {
+
   SubstituteCareProviderMapper INSTANCE = Mappers.getMapper(SubstituteCareProviderMapper.class);
 
   @Mapping(target = "addTelNo", constant = "0")
@@ -28,7 +30,10 @@ public interface SubstituteCareProviderMapper {
   @Mapping(target = "caDlicNo", expression = "java(Utils.Applicant.getCaliforniaDriverLicense(" +
       "applicantDTO, Constants.SPACE))")
   @Mapping(target = "cityNm", ignore = true)
-  @Mapping(target = "emplyrNm", source = "employment.employerName")
+  @Mapping(target = "emplyrNm",
+      expression = "java(applicantDTO.getEmployment() != null "
+          + " && applicantDTO.getEmployment().getEmployerName() != null "
+          + " ? applicantDTO.getEmployment().getEmployerName() : Constants.SPACE)")
   @Mapping(target = "firstNm", source = "firstName")
   @Mapping(target = "frgAdrtB", constant = "N")
   @Mapping(target = "genderInd", source = "gender.cwsShortCode")
