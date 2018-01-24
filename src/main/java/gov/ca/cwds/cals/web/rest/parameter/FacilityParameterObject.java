@@ -17,7 +17,7 @@ public class FacilityParameterObject implements Serializable {
         return expanded;
     }
 
-    public void setExpanded(Boolean expanded) {
+    public void setExpanded(boolean expanded) {
         this.expanded = expanded;
     }
 

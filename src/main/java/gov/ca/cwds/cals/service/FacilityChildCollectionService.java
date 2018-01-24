@@ -6,7 +6,6 @@ import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
-import gov.ca.cwds.data.legacy.cms.dao.PlacementHomeDao;
 import gov.ca.cwds.rest.api.Response;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -24,9 +23,6 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
 
   @Inject
   private FacilityChildMapper facilityChildMapper;
-
-  @Inject
-  private PlacementHomeDao placementHomeDao;
 
   public FacilityChildCollectionService() {
   }
