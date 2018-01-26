@@ -201,6 +201,10 @@
       "value": "Stanislaus"
     },
     {
+      "id": 59,
+      "value": "State of California"
+    },
+    {
       "id": 51,
       "value": "Sutter"
     },
@@ -231,10 +235,6 @@
     {
       "id": 58,
       "value": "Yuba"
-    },
-    {
-      "id": 59,
-      "value": "State of California"
     }
   ]
 }
