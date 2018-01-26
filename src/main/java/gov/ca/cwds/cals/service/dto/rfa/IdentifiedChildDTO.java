@@ -13,7 +13,6 @@ import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -55,7 +54,7 @@ public class IdentifiedChildDTO extends BaseDTO {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfPlacement;
 
-  private List<RelationshipToApplicantDTO> relationshipToApplicants = new ArrayList<>();
+  private List<RelationshipToApplicantDTO> relationshipToApplicants;
 
   @CheckReferentialIntegrity(enrich = true)
   private SchoolGradeType schoolGrade;

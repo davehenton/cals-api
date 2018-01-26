@@ -9,7 +9,6 @@ import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEach;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
@@ -25,7 +24,7 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty(value = "List of Addresses")
   @Valid
-  private List<RFAAddressDTO> addresses = new ArrayList<>();
+  private List<RFAAddressDTO> addresses;
 
   @ApiModelProperty(value = "Is Physical Mailing Similar", example = "false")
   private boolean physicalMailingSimilar;

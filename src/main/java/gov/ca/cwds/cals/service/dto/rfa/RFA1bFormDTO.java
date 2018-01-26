@@ -14,7 +14,6 @@ import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -90,13 +89,13 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   private LocalDate applicationDate;
 
   @Valid
-  private List<DisclosureDTO> convictedInCaliforniaDisclosures = new ArrayList<>();
+  private List<DisclosureDTO> convictedInCaliforniaDisclosures;
 
   @Valid
-  private List<DisclosureDTO> convictedInAnotherStateDisclosures = new ArrayList<>();
+  private List<DisclosureDTO> convictedInAnotherStateDisclosures;
 
   @Valid
-  private List<DisclosureDTO> arrestedForCrimeDisclosures = new ArrayList<>();
+  private List<DisclosureDTO> arrestedForCrimeDisclosures;
 
   public CountyType getApplicationCounty() {
     return applicationCounty;

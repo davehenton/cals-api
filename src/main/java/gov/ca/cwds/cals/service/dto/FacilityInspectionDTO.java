@@ -11,7 +11,6 @@ import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.validation.Date;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +31,7 @@ public class FacilityInspectionDTO extends BaseDTO implements Response {
 
     private LocalDateTime representativeSignatureDate;
 
-    private List<FacilityDeficiencyDTO> deficiencies = new ArrayList<>(4);
+    private List<FacilityDeficiencyDTO> deficiencies;
 
     public String getId() {
         return id;

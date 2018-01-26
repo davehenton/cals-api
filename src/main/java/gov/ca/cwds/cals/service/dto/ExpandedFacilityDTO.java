@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,13 +9,13 @@ import java.util.Objects;
  */
 public class ExpandedFacilityDTO extends FacilityDTO {
   @JsonProperty("children")
-  private List<FacilityChildDTO> children = new ArrayList<>();
+  private List<FacilityChildDTO> children;
 
   @JsonProperty("inspections")
-  private List<FacilityInspectionDTO> inspections = new ArrayList<>();
+  private List<FacilityInspectionDTO> inspections;
 
   @JsonProperty("complaints")
-  private List<ComplaintDTO> complaints = new ArrayList<>();
+  private List<ComplaintDTO> complaints;
 
   public List<FacilityChildDTO> getChildren() {
     return children;
