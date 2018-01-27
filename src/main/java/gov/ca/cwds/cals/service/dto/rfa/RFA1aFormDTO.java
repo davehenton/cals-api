@@ -10,10 +10,8 @@ import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
-
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 
 /**
  * @author CWDS CALS API Team.
@@ -56,7 +54,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty(hidden = true)
   @Valid
-  private List<MinorChildDTO> minorChildren = new ArrayList<>();
+  private List<MinorChildDTO> minorChildren;
 
   @ApiModelProperty(hidden = true)
   @Valid
