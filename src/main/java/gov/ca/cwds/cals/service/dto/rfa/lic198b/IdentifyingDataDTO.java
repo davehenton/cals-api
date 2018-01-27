@@ -18,7 +18,6 @@ import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
@@ -39,7 +38,7 @@ public class IdentifyingDataDTO extends BaseDTO {
 
   @ApiModelProperty("Applicant's other names")
   @Valid
-  private List<TypedPersonNameDTO> otherNames = new ArrayList<>();
+  private List<TypedPersonNameDTO> otherNames;
 
   @ApiModelProperty("Phone number")
   @Valid

@@ -15,7 +15,7 @@ public class FacilityInspectionsDTO extends BaseDTO implements Response {
 
     private static final long serialVersionUID = 9143585256908266652L;
 
-    private ArrayList<FacilityInspectionDTO> inspections = new ArrayList<>();
+    private ArrayList<FacilityInspectionDTO> inspections;
 
 
     public List<FacilityInspectionDTO> getInspections() {

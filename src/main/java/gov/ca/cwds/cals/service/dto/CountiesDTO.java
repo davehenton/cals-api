@@ -13,7 +13,7 @@ public class CountiesDTO extends BaseDTO implements Response {
 
     private static final long serialVersionUID = 6849073315397309087L;
 
-    private List<CountyDTO> counties = new ArrayList<>();
+    private List<CountyDTO> counties;
 
     public List<CountyDTO> getCounties() {
         return counties;
