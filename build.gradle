@@ -34,7 +34,7 @@ project.ext {
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
     coreApiVersion = '0.5.5_231-RC'
-    calsModelVersion = '0.5.6_425-RC'
+    calsModelVersion = '0.4.6'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     dbunitVersion = '2.5.0'
@@ -59,8 +59,8 @@ project.ext {
     commonsCollectionsVersion = '4.1'
 
     // Publishing configuration
-    snapshotMavenRepo = "http://sonar.dev.cwds.io:8081/artifactory/repo"
-    releaseMavenRepo = "http://sonar.dev.cwds.io:8081/artifactory/libs-release"
+    snapshotMavenRepo = "http://pr.dev.cwds.io/artifactory/repo"
+    releaseMavenRepo = "http://pr.dev.cwds.io/artifactory/libs-release"
     artifactoryRepo = (isRelease ? releaseMavenRepo : snapshotMavenRepo)
 }
 
@@ -70,7 +70,7 @@ version projectVersion
 repositories {
     mavenLocal()
     maven {
-        url "http://pr.dev.cwds.io/artifactory/repo"
+        url artifactoryRepo
     }
 }
 
