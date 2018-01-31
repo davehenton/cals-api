@@ -128,7 +128,7 @@ public interface RFA1aFormMapper {
       return null;
     }
 
-    List<ApplicantDTO> newList = new ArrayList<>();
+    List<ApplicantDTO> newList = new ArrayList<>(list.size());
     for (RFA1aApplicant rFA1aApplicant : list) {
       newList.add(toApplicantDTO(rFA1aApplicant));
     }
@@ -141,7 +141,7 @@ public interface RFA1aFormMapper {
       return null;
     }
 
-    List<MinorChildDTO> newList = new ArrayList<>();
+    List<MinorChildDTO> newList = new ArrayList<>(list.size());
     for (RFA1aMinorChild rFA1aMinorChild : list) {
       newList.add(toMinorChildDTO(rFA1aMinorChild));
     }
@@ -154,7 +154,7 @@ public interface RFA1aFormMapper {
       return null;
     }
 
-    List<OtherAdultDTO> newList = new ArrayList<>();
+    List<OtherAdultDTO> newList = new ArrayList<>(list.size());
     for (RFA1aOtherAdult rFA1aOtherAdult : list) {
       newList.add(toOtherAdultDTO(rFA1aOtherAdult));
     }
@@ -167,7 +167,7 @@ public interface RFA1aFormMapper {
       return null;
     }
 
-    List<RFA1cFormDTO> newList = new ArrayList<>();
+    List<RFA1cFormDTO> newList = new ArrayList<>(list.size());
     for (RFA1cForm rFA1cForm : list) {
       newList.add(toRFA1cFormDTO(rFA1cForm));
     }
