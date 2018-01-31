@@ -10,6 +10,7 @@ import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.mapstruct.InheritConfiguration;
@@ -24,8 +25,10 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author CWDS CALS API Team.
  */
+@SuppressWarnings("squid:S1168") // "Empty arrays and collections should be returned instead of null", it was designed to return null for empty list
 @Mapper
 public interface RFA1aFormMapper {
+
   RFA1aFormMapper INSTANCE = Mappers.getMapper(RFA1aFormMapper.class);
 
   @Named("toRFA1aFormDTO")
@@ -120,13 +123,57 @@ public interface RFA1aFormMapper {
     return entity.getEntityDTO();
   }
 
-  List<ApplicantDTO> toListApplicantDTO(List<RFA1aApplicant> list);
+  default List<ApplicantDTO> toListApplicantDTO(List<RFA1aApplicant> list) {
+    if (list == null || list.isEmpty()) {
+      return null;
+    }
 
-  List<MinorChildDTO> toListMinorChildDTO(List<RFA1aMinorChild> list);
+    List<ApplicantDTO> newList = new ArrayList<>();
+    for (RFA1aApplicant rFA1aApplicant : list) {
+      newList.add(toApplicantDTO(rFA1aApplicant));
+    }
 
-  List<OtherAdultDTO> toListOtherAdultDTO(List<RFA1aOtherAdult> list);
+    return newList;
+  }
 
-  List<RFA1cFormDTO> toListRFA1cFormDTO(List<RFA1cForm> list);
+  default List<MinorChildDTO> toListMinorChildDTO(List<RFA1aMinorChild> list) {
+    if (list == null || list.isEmpty()) {
+      return null;
+    }
+
+    List<MinorChildDTO> newList = new ArrayList<>();
+    for (RFA1aMinorChild rFA1aMinorChild : list) {
+      newList.add(toMinorChildDTO(rFA1aMinorChild));
+    }
+
+    return newList;
+  }
+
+  default List<OtherAdultDTO> toListOtherAdultDTO(List<RFA1aOtherAdult> list) {
+    if (list == null || list.isEmpty()) {
+      return null;
+    }
+
+    List<OtherAdultDTO> newList = new ArrayList<>();
+    for (RFA1aOtherAdult rFA1aOtherAdult : list) {
+      newList.add(toOtherAdultDTO(rFA1aOtherAdult));
+    }
+
+    return newList;
+  }
+
+  default List<RFA1cFormDTO> toListRFA1cFormDTO(List<RFA1cForm> list) {
+    if (list == null || list.isEmpty()) {
+      return null;
+    }
+
+    List<RFA1cFormDTO> newList = new ArrayList<>();
+    for (RFA1cForm rFA1cForm : list) {
+      newList.add(toRFA1cFormDTO(rFA1cForm));
+    }
+
+    return newList;
+  }
 
 
 }
