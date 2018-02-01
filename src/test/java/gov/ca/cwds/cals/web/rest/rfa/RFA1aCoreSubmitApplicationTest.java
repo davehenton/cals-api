@@ -194,7 +194,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
                 "PETS_DSC", "RLG_ACTDSC", "CERT_CMPLT", "LA_P_CTYNM", "LA_P_FSTNM", "LA_P_LSTNM",
                 "LA_P_MIDNM", "LA_P_STNM", "LA_P_STNO", "LA_P_BSNSS", "ADHMONLY", "END_COMDSC",
                 "END_DT", "FKCNTY_CST", "LIC_APL_DT", "LIC_EFCTDT", "LIC_EXP_DT", "LIC_STATDT",
-                "NEWLIC_NO"
+                "NEWLIC_NO", "LICENSR_CD"
             });
   }
 
