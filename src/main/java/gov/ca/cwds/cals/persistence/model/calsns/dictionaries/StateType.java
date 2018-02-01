@@ -19,7 +19,7 @@ import org.hibernate.annotations.NamedQuery;
 /**
  * @author CWDS CALS API Team
  */
-@NamedQuery(name = StateType.NAMED_QUERY_FIND_ALL, query = "FROM StateType ORDER BY id ASC")
+@NamedQuery(name = StateType.NAMED_QUERY_FIND_ALL, query = "FROM StateType ORDER BY value ASC")
 
 @NamedQuery(
     name = StateType.NAMED_QUERY_FIND_STATE_BY_CODE,
