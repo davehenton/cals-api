@@ -50,6 +50,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
+import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -90,8 +91,10 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "address-type-response.json";
   private static final String FIXTURES_SIBLING_GROUP_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "sibling-group-type-response.json";
-  private static final String FIXTURES_STATE_TYPE_RESPONSE_JSON =
-      BASE_DICTIONARY_PATH + "state-type-response.json";
+  private static final String FIXTURES_STATE_TYPE_RESPONSE_JSON_H2 =
+      BASE_DICTIONARY_PATH + "state-type-response-h2.json";
+  private static final String FIXTURES_STATE_TYPE_RESPONSE_JSON_PG =
+      BASE_DICTIONARY_PATH + "state-type-response-pg.json";
   private static final String FIXTURES_RESIDENCE_OWNERSHIP_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "residence-ownership-type-response.json";
   private static final String FIXTURES_APPLICANT_RELATIONSHIP_TYPE_RESPONSE_JSON =
@@ -126,6 +129,22 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
     CollectionDTO<T> collectionDTO = invocation.get(genericType);
     assertNotNull(collectionDTO);
     String fixture = fixture(fixturePath);
+    assertEqualsResponse(fixture, transformDTOtoJSON(collectionDTO));
+  }
+
+  private <T extends BaseDictionary> void baseDictionaryTest(
+      String path, String fixturePathH2, String fixturePathPG, GenericType<CollectionDTO<T>> genericType)
+      throws Exception {
+    WebTarget target = clientTestRule.target(Constants.API.DICTIONARIES + "/" + path);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    CollectionDTO<T> collectionDTO = invocation.get(genericType);
+    assertNotNull(collectionDTO);
+    String fixture;
+    if (TestModeUtils.isIntegrationTestsMode()) {
+      fixture = fixture(fixturePathPG);
+    } else {
+      fixture = fixture(fixturePathH2);
+    }
     assertEqualsResponse(fixture, transformDTOtoJSON(collectionDTO));
   }
 
@@ -241,7 +260,7 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
   public void getStateTypeTest() throws Exception {
     baseDictionaryTest(
         STATE_TYPE_PATH,
-        FIXTURES_STATE_TYPE_RESPONSE_JSON,
+        FIXTURES_STATE_TYPE_RESPONSE_JSON_H2, FIXTURES_STATE_TYPE_RESPONSE_JSON_PG,
         new GenericType<CollectionDTO<StateType>>() {
         });
   }
