@@ -105,13 +105,13 @@ public class PlacementHomeEntityAwareDTOBuilder {
               phoneContactDetail.setPhextNo(Integer.valueOf(phoneNumber.getExtension()));
             }
             phoneContactDetail.setPhnTypCd(phoneNumber.getPhoneType().getCwsShortCode());
-        phoneContactDetail.setLstUpdId(PrincipalUtils.getStaffPersonId());
+            phoneContactDetail.setLstUpdId(PrincipalUtils.getStaffPersonId());
             phoneContactDetail.setLstUpdTs(LocalDateTime.now());
             return phoneContactDetail;
           }
       ).collect(Collectors.toList());
     }
-    return Collections.EMPTY_LIST;
+    return Collections.emptyList();
   }
 
   private SubstituteCareProvider mapRFAEntitiesToSCP(ApplicantDTO applicant) {
@@ -134,42 +134,48 @@ public class PlacementHomeEntityAwareDTOBuilder {
   }
 
   public PlacementHomeEntityAwareDTOBuilder appendOtherChildrenInHome() {
-    for (MinorChildDTO minorChildDTO : form.getMinorChildren()) {
-      OtherChildrenInPlacementHome otherChildInHome = new OtherChildrenInPlacementHome();
-      otherChildInHome.setBirthDt(minorChildDTO.getDateOfBirth());
-      otherChildInHome.setGenderCd(minorChildDTO.getGender().getCwsShortCode());
-      otherChildInHome.setOthchldNm("Undisclosed");
-      OtherChildInHomeEntityAwareDTO entityAwareDTO = new OtherChildInHomeEntityAwareDTO();
-      entityAwareDTO.setEntity(otherChildInHome);
-      placementHomeEntityAwareDTO.addOtherChildrenInHomeParameterObject(entityAwareDTO);
-      prepareRelationships(minorChildDTO, entityAwareDTO);
-    }
+    Optional.ofNullable(form.getMinorChildren()).ifPresent(minorChildren ->
+        minorChildren.forEach(minorChildDTO -> {
+          OtherChildrenInPlacementHome otherChildInHome = new OtherChildrenInPlacementHome();
+          otherChildInHome.setBirthDt(minorChildDTO.getDateOfBirth());
+          otherChildInHome.setGenderCd(minorChildDTO.getGender().getCwsShortCode());
+          otherChildInHome.setOthchldNm("Undisclosed");
+          OtherChildInHomeEntityAwareDTO entityAwareDTO = new OtherChildInHomeEntityAwareDTO();
+          entityAwareDTO.setEntity(otherChildInHome);
+          placementHomeEntityAwareDTO.addOtherChildrenInHomeParameterObject(entityAwareDTO);
+          prepareRelationships(minorChildDTO, entityAwareDTO);
+        })
+    );
     return this;
   }
 
   private void prepareRelationships(MinorChildDTO minorChildDTO,
       OtherChildInHomeEntityAwareDTO entityAwareDTO) {
-    for (RelationshipToApplicantDTO relationshipToApplicantDTO : minorChildDTO
-        .getRelationshipToApplicants()) {
-      SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
-          .get(relationshipToApplicantDTO.getApplicantId());
-      OtherPeopleScpRelationship relationship = new OtherPeopleScpRelationship();
-      relationship.setClntrelc((short) 0);
-      relationship.setSubstituteCareProvider(substituteCareProvider);
-      entityAwareDTO.addRelationship(relationship);
-    }
+    Optional.ofNullable(minorChildDTO.getRelationshipToApplicants())
+        .ifPresent(relationshipToApplicantDTOs ->
+            relationshipToApplicantDTOs.forEach(relationshipToApplicantDTO -> {
+              SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
+                  .get(relationshipToApplicantDTO.getApplicantId());
+              OtherPeopleScpRelationship relationship = new OtherPeopleScpRelationship();
+              relationship.setClntrelc((short) 0);
+              relationship.setSubstituteCareProvider(substituteCareProvider);
+              entityAwareDTO.addRelationship(relationship);
+            })
+        );
   }
 
   public PlacementHomeEntityAwareDTOBuilder appendOtherAdultsInPlacementHome() {
-    for (OtherAdultDTO otherAdultDTO : form.getOtherAdults()) {
-      OtherAdultsInPlacementHome otherAdult = otherAdultsInPlacementHomeMapper
-          .toOtherAdult(otherAdultDTO);
-      OtherAdultInHomeEntityAwareDTO entityAwareDTO = new OtherAdultInHomeEntityAwareDTO();
-      entityAwareDTO.setEntity(otherAdult);
-      prepareRelationships(otherAdultDTO, entityAwareDTO);
-      prepareOutOfStateChecks(otherAdultDTO, entityAwareDTO);
-      placementHomeEntityAwareDTO.addOtherAdultInHomeParameterObject(entityAwareDTO);
-    }
+    Optional.ofNullable(form.getOtherAdults()).ifPresent(otherAdultDTOs ->
+        otherAdultDTOs.forEach(otherAdultDTO -> {
+          OtherAdultsInPlacementHome otherAdult = otherAdultsInPlacementHomeMapper
+              .toOtherAdult(otherAdultDTO);
+          OtherAdultInHomeEntityAwareDTO entityAwareDTO = new OtherAdultInHomeEntityAwareDTO();
+          entityAwareDTO.setEntity(otherAdult);
+          prepareRelationships(otherAdultDTO, entityAwareDTO);
+          prepareOutOfStateChecks(otherAdultDTO, entityAwareDTO);
+          placementHomeEntityAwareDTO.addOtherAdultInHomeParameterObject(entityAwareDTO);
+        })
+    );
     return this;
   }
 
@@ -187,14 +193,17 @@ public class PlacementHomeEntityAwareDTOBuilder {
 
   private void prepareRelationships(OtherAdultDTO minorChildDTO,
       OtherAdultInHomeEntityAwareDTO entityAwareDTO) {
-    for (RelationshipToApplicantDTO relationship : minorChildDTO.getRelationshipToApplicants()) {
-      SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
-          .get(relationship.getApplicantId());
-      OtherPeopleScpRelationship otherPeopleScpRelationship = new OtherPeopleScpRelationship();
-      otherPeopleScpRelationship.setClntrelc((short) 0);
-      otherPeopleScpRelationship.setSubstituteCareProvider(substituteCareProvider);
-      entityAwareDTO.addRelationship(otherPeopleScpRelationship);
-    }
+    Optional.ofNullable(minorChildDTO.getRelationshipToApplicants())
+        .ifPresent(relationshipToApplicantDTOs ->
+            relationshipToApplicantDTOs.forEach(relationship -> {
+              SubstituteCareProvider substituteCareProvider = rfaApplicantIdsMap
+                  .get(relationship.getApplicantId());
+              OtherPeopleScpRelationship otherPeopleScpRelationship = new OtherPeopleScpRelationship();
+              otherPeopleScpRelationship.setClntrelc((short) 0);
+              otherPeopleScpRelationship.setSubstituteCareProvider(substituteCareProvider);
+              entityAwareDTO.addRelationship(otherPeopleScpRelationship);
+            })
+        );
   }
 
   public PlacementHomeEntityAwareDTO getPlacementHomeEntityAwareDTO() {

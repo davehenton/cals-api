@@ -34,7 +34,6 @@ import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import io.dropwizard.testing.FixtureHelpers;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ws.rs.client.Entity;
@@ -122,7 +121,6 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
     RFA1aFormDTO expectedRfa1aFormDTO = clientTestRule.getMapper().readValue(RFA_1A_FIXTURE, RFA1aFormDTO.class);
     expectedRfa1aFormDTO.setId(formId);
-    expectedRfa1aFormDTO.setRfa1cForms(Collections.emptyList());
 
     List<ApplicantDTO> applicants = new ArrayList<>();
     applicants.add(applicantDTO);
