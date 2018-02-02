@@ -31,6 +31,7 @@ import io.dropwizard.setup.Environment;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
@@ -107,11 +108,15 @@ public class RFA1aFormService
   @UnitOfWork(CALSNS)
   @Override
   public RFA1aFormDTO update(RFA1aFormsParameterObject parameterObject, RFA1aFormDTO formDTO) {
-    RFA1aForm form = findFormById(
-        parameterObject.getFormId());
-    rfa1aFomMapper.toRFA1aForm(form, formDTO);
-    rfa1AFormsDao.update(fillFormUpdateAttributes(form));
-    return rfa1aFomMapper.toRFA1aFormDTO(form);
+    final Long formId = parameterObject.getFormId();
+    AtomicReference<RFA1aFormDTO> updated = new AtomicReference<>();
+    Optional.ofNullable(findFormById(formId)).ifPresent(rfa1aForm -> {
+      formDTO.setId(formId);
+      rfa1aFomMapper.toRFA1aForm(rfa1aForm, formDTO);
+      rfa1AFormsDao.update(fillFormUpdateAttributes(rfa1aForm));
+      updated.set(rfa1aFomMapper.toRFA1aFormDTO(rfa1aForm));
+    });
+    return updated.get();
   }
 
   private RFA1aForm fillFormUpdateAttributes(RFA1aForm form) {
