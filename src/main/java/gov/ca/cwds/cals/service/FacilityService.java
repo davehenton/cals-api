@@ -143,7 +143,7 @@ public class FacilityService implements CrudsService {
   private FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
     LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
     if (lisDsLisFacFile == null) {
-      LOGGER.error(
+      LOGGER.warn(
           "!!!Facility was not found in LIS by license number {}",
           parameterObject.getLicenseNumber());
       return null;
