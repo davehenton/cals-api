@@ -1,17 +1,9 @@
 package gov.ca.cwds.cals.inject;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CALSNS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CMS;
-
 import com.google.common.collect.ImmutableList;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.CalsApiConfiguration;
-import gov.ca.cwds.cals.persistence.model.RecordChange;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
@@ -102,15 +94,20 @@ import io.dropwizard.hibernate.SessionFactoryFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CALSNS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CMS;
+
 /** @author CWDS CALS API Team */
 public class DataAccessModule extends AbstractModule {
 
   private final ImmutableList<Class<?>> lisEntities = ImmutableList.<Class<?>>builder().add(
       LisFacFile.class,
       LisTableFile.class,
-      LisDoFile.class,
-
-      RecordChange.class
+      LisDoFile.class
   ).build();
 
 
@@ -121,9 +118,7 @@ public class DataAccessModule extends AbstractModule {
       ComplaintReportLic802.class,
       LpaInformation.class,
       Rrcpoc.class,
-      Rr809Dn.class,
-
-      RecordChange.class
+      Rr809Dn.class
   ).build();
 
 

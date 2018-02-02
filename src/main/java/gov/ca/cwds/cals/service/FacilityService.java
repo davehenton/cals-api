@@ -121,9 +121,6 @@ public class FacilityService implements CrudsService {
   @Inject
   private StateDao stateDao;
 
-  @Inject
-  private FacilityParameterObjectCMSAwareBuilder facilityParameterObjectBuilder;
-
   public FacilityService() {
     // default constructor
   }
@@ -133,11 +130,7 @@ public class FacilityService implements CrudsService {
     return findByParameterObject((FacilityParameterObject) params);
   }
 
-  protected FacilityDTO findExpandedById(String id) {
-    return findByParameterObject(facilityParameterObjectBuilder.createExpandedFacilityParameterObject(id));
-  }
-
-  private FacilityDTO findByParameterObject(FacilityParameterObject parameterObject) {
+  protected FacilityDTO findByParameterObject(FacilityParameterObject parameterObject) {
     FacilityDTO facilityDTO = null;
     if (LIS.equals(parameterObject.getUnitOfWork())) {
       facilityDTO = loadFacilityFromLis(parameterObject);
@@ -150,7 +143,7 @@ public class FacilityService implements CrudsService {
   private FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
     LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
     if (lisDsLisFacFile == null) {
-      LOGGER.error(
+      LOGGER.warn(
           "!!!Facility was not found in LIS by license number {}",
           parameterObject.getLicenseNumber());
       return null;
