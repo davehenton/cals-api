@@ -12,7 +12,6 @@ import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
-import gov.ca.cwds.cals.service.builder.FacilityParameterObjectCMSAwareBuilder;
 import gov.ca.cwds.cals.service.builder.PlacementHomeEntityAwareDTOBuilder;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
