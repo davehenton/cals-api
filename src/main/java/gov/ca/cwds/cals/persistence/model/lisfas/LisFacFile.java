@@ -122,8 +122,6 @@ public class LisFacFile implements PersistentObject {
   private String facLocIndicator;
   private String facType999CaciIndicator;
   private Integer facBilingual;
-  private Integer facRegionDo;
-  private Integer facRegionCo;
 
   @Id
   @Column(name = "fac_nbr", nullable = false)
@@ -1113,26 +1111,6 @@ public class LisFacFile implements PersistentObject {
 
   public void setFacBilingual(Integer facBilingual) {
     this.facBilingual = facBilingual;
-  }
-
-  @Basic
-  @Column(name = "fac_region_do", nullable = false)
-  public Integer getFacRegionDo() {
-    return facRegionDo;
-  }
-
-  public void setFacRegionDo(Integer facRegionDo) {
-    this.facRegionDo = facRegionDo;
-  }
-
-  @Basic
-  @Column(name = "fac_region_co", nullable = false)
-  public Integer getFacRegionCo() {
-    return facRegionCo;
-  }
-
-  public void setFacRegionCo(Integer facRegionCo) {
-    this.facRegionCo = facRegionCo;
   }
 
   @Override
