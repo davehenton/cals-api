@@ -1,0 +1,11 @@
+{
+  "issue_details": [
+    {
+      "incident_id": "$incident_id",
+      "type": "business_validation",
+      "user_message": "Applicant with first name - [ ], last name - [setLastName] and name suffix - [Jr] has empty first name",
+      "technical_message": "applicant-validation",
+      "code": "BV000001"
+    }
+  ]
+}

@@ -36,38 +36,6 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   }
 
   @Test
-  public void firstNameValidationSubmissionTest() throws Exception {
-    RFA1aFormDTO form = formAHelper.createRFA1aForm();
-
-    ApplicantDTO applicant = applicantHelper.getValidApplicant();
-    applicant.setFirstName(null);
-    applicantHelper.postApplicant(form.getId(), applicant);
-
-    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
-
-    Response response = statusHelper.submitApplication(form.getId());
-    assertEquals(422, response.getStatus());
-    assertResponseByFixturePath(
-        response, "fixtures/rfa/validation/first-name-form-submission-validation.json");
-  }
-
-  @Test
-  public void lastNameValidationSubmissionTest() throws Exception {
-    RFA1aFormDTO form = formAHelper.createRFA1aForm();
-
-    ApplicantDTO applicant = applicantHelper.getValidApplicant();
-    applicant.setLastName(null);
-    applicantHelper.postApplicant(form.getId(), applicant);
-
-    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
-
-    Response response = statusHelper.submitApplication(form.getId());
-    assertEquals(422, response.getStatus());
-    assertResponseByFixturePath(
-        response, "fixtures/rfa/validation/last-name-form-submission-validation.json");
-  }
-
-  @Test
   public void applicantDriverLicenseNumberIsNullValidationSubmissionTest() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
 
@@ -104,7 +72,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
 
     residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
-    ApplicantDTO applicantDto = applicantHelper.postApplicant(form.getId(), new ApplicantDTO());
+    ApplicantDTO applicantDto = applicantHelper.postApplicant(form.getId(), applicantHelper.getApplicant());
     applicantHelper.deleteApplicant(form.getId(), applicantDto.getId());
 
     Response response = statusHelper.submitApplication(form.getId());
