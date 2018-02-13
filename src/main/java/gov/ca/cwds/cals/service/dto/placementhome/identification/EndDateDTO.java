@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SimpleDictionary;
+import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
 import java.time.LocalDate;
 
 
@@ -21,8 +22,9 @@ import java.time.LocalDate;
     "reason_type",
     "comments"
 })
-public class EndDateDTO {
+public class EndDateDTO implements FormNameAware {
 
+  public static final String PH_PAGE_ID_END_DATE = "PH_page_ID_End_Date";
   /**
    * End Date
    * <p>
@@ -85,4 +87,8 @@ public class EndDateDTO {
     this.comments = comments;
   }
 
+  @Override
+  public String formName() {
+    return PH_PAGE_ID_END_DATE;
+  }
 }

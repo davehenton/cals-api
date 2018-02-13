@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
+import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -28,8 +29,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     "backup_contact",
     "options"
 })
-public class CommonInfoDTO {
+public class CommonInfoDTO implements FormNameAware {
 
+  public static final String PH_PAGE_ID_COMMON_INFO = "PH_page_ID_common_info";
   /**
    * Name
    * <p>
@@ -256,4 +258,8 @@ public class CommonInfoDTO {
         .append(facType, rhs.facType).isEquals();
   }
 
+  @Override
+  public String formName() {
+    return PH_PAGE_ID_COMMON_INFO;
+  }
 }

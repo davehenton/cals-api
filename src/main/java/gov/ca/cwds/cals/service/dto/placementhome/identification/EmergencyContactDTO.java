@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SimpleDictionary;
+import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
 
 
 /**
@@ -27,8 +28,9 @@ import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SimpleDictionary;
     "foreign_zip",
     "foreign_addr_desc"
 })
-public class EmergencyContactDTO {
+public class EmergencyContactDTO implements FormNameAware {
 
+  public static final String PH_PAGE_ID_EMERGENCY_CONTACT = "PH_page_ID_Emergency_Contact";
   /**
    * Name
    * <p>
@@ -306,4 +308,8 @@ public class EmergencyContactDTO {
     this.foreignAddrDesc = foreignAddrDesc;
   }
 
+  @Override
+  public String formName() {
+    return PH_PAGE_ID_EMERGENCY_CONTACT;
+  }
 }
