@@ -205,10 +205,10 @@ public final class Utils {
 
     private static boolean checkIfLisMailAddressIsNotNullString(
         final LisFacFile lisFacFile) {
-      return !lisFacFile.getFacMailStreetAddr().equalsIgnoreCase(NULL_STRING) ||
-          !lisFacFile.getFacMailCity().equalsIgnoreCase(NULL_STRING) ||
-          !lisFacFile.getFacMailState().equalsIgnoreCase(NULL_STRING) ||
-          !lisFacFile.getFacMailZipCode().equalsIgnoreCase(NULL_STRING);
+      return (StringUtils.isNotBlank(lisFacFile.getFacMailStreetAddr()) && !lisFacFile.getFacMailStreetAddr().equalsIgnoreCase(NULL_STRING)) ||
+             (StringUtils.isNotBlank(lisFacFile.getFacMailCity()) && !lisFacFile.getFacMailCity().equalsIgnoreCase(NULL_STRING)) ||
+             (StringUtils.isNotBlank(lisFacFile.getFacMailState()) && !lisFacFile.getFacMailState().equalsIgnoreCase(NULL_STRING)) ||
+             (StringUtils.isNotBlank(lisFacFile.getFacMailState()) && !lisFacFile.getFacMailZipCode().equalsIgnoreCase(NULL_STRING));
     }
   }
 

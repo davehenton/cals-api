@@ -300,13 +300,13 @@ public class FacilityService implements CrudsService {
   @UnitOfWork(FAS)
   protected LpaInformation findAssignedWorkerInformation(LisFacFile lisFacFile) {
     if (lisFacFile.getFacDoNbr() == null) {
-      throw new ExpectedException(
-          Constants.ExpectedExceptionMessages.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN,
-          EXPECTATION_FAILED);
+      LOGGER.warn(Constants.ExpectedExceptionMessages.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN);
+      return null;
+    } else {
+      String lpaCode =
+              String.format("%02d", lisFacFile.getFacDoNbr().getDoNbr()) + lisFacFile.getFacDoEvalCode();
+      return lpaInformationDao.findByLpaCode(lpaCode);
     }
-    String lpaCode =
-        String.format("%02d", lisFacFile.getFacDoNbr().getDoNbr()) + lisFacFile.getFacDoEvalCode();
-    return lpaInformationDao.findByLpaCode(lpaCode);
   }
 
   @UnitOfWork(CMS)
