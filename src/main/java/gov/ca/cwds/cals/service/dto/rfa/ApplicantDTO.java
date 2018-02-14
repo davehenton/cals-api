@@ -108,7 +108,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   }
 
   public void setFirstName(String firstName) {
-    this.firstName = firstName;
+    this.firstName = firstName == null ? null : firstName.trim();
   }
 
   public String getMiddleName() {
@@ -116,7 +116,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   }
 
   public void setMiddleName(String middleName) {
-    this.middleName = middleName;
+    this.middleName = middleName == null ? null : middleName.trim();
   }
 
   public String getLastName() {
@@ -124,7 +124,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   }
 
   public void setLastName(String lastName) {
-    this.lastName = lastName;
+     this.lastName = lastName == null ? null : lastName.trim();
   }
 
   public List<TypedPersonNameDTO> getOtherNames() {
