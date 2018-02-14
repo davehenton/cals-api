@@ -23,16 +23,37 @@ services:
     env_file: .env
 
   cals-api:
-    image: cwds/cals-api
-    hostname: cals-api
+      image: cwds/cals-api
+      hostname: cals-api
+      depends_on:
+        cals_db2_data:
+          condition: service_started
+        postgresql_data:
+          condition: service_started
+        perry:
+          condition: service_started
+      restart: on-failure
+      ports:
+        - ${API_PORT}:8080
+      env_file: .env
+
+
+  forms_api:
+    image: cwds/forms-api
+    hostname: forms-api
+    environment:
+          SWAGGER_JSON_URL: http://localhost:${FORMS_API_PORT}/swagger.json
+          SWAGGER_CALLBACK_URL: http://localhost:${FORMS_API_PORT}/swagger
+          SHIRO_CONFIG_PATH: /opt/forms-api/config/shiro.ini
     depends_on:
-      cals_db2_data:
-        condition: service_started
-      postgresql_data:
-        condition: service_started
-      perry:
-        condition: service_started
+            postgresql_data:
+              condition: service_started
+            perry:
+              condition: service_started
     restart: on-failure
     ports:
-      - ${API_PORT}:8080
+     - ${FORMS_API_PORT}:${FORMS_API_PORT}
     env_file: .env
+
+
+
