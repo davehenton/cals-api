@@ -71,17 +71,6 @@ public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applic
   }
 
   @Test
-  public void twoEmptyApplicantsTest() throws Exception {
-    try {
-      RFA1aFormDTO form = formAHelper.createRFA1aForm();
-      applicantHelper.postApplicant(form.getId(), new ApplicantDTO());
-      applicantHelper.postApplicant(form.getId(), new ApplicantDTO());
-    } catch (ClientErrorException e) {
-      assertEquals(422, e.getResponse().getStatus());
-    }
-  }
-
-  @Test
   public void checkMaxFirstNameSizeTest() throws Exception {
     try {
       ApplicantDTO applicantDTO = getApplicantDTO();
@@ -338,6 +327,62 @@ public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applic
       assertResponseByFixtureTemplate(entity,
           "fixtures/rfa/validation/applicant-duplicate-phone-numbers-response.json",
           parameters);
+    }
+  }
+
+  @Test
+  public void testEmptyFirstNameValidation() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    ApplicantDTO applicant = getApplicantDTO();
+
+    applicant.setFirstName(" ");
+    applicant.setLastName("setLastName");
+
+    try {
+      applicantHelper.postApplicant(form.getId(), applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+              .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+              "fixtures/rfa/validation/applicant-empty-first-name-response.json",
+              parameters);
+    }
+  }
+
+  @Test
+  public void testEmptyLastNameValidation() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    ApplicantDTO applicant = getApplicantDTO();
+
+    applicant.setFirstName("setFirstName");
+    applicant.setLastName(" ");
+
+    try {
+      applicantHelper.postApplicant(form.getId(), applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+              .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+              "fixtures/rfa/validation/applicant-empty-last-name-response.json",
+              parameters);
     }
   }
 

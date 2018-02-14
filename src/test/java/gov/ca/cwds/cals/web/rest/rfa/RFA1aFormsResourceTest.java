@@ -208,11 +208,11 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
   @Test
   public void getAllApplicationFormsTest() throws Exception {
     RFA1aFormDTO rfaFormCreate1 = formAHelper.createRFA1aForm();
-    applicantHelper.postApplicant(rfaFormCreate1.getId(), new ApplicantDTO());
+    applicantHelper.postApplicant(rfaFormCreate1.getId(), applicantHelper.getApplicant());
     RFA1aFormDTO rfaFormCreate2 = formAHelper.createRFA1aForm();
-    applicantHelper.postApplicant(rfaFormCreate2.getId(), new ApplicantDTO());
+    applicantHelper.postApplicant(rfaFormCreate2.getId(), applicantHelper.getApplicant());
     RFA1aFormDTO rfaFormCreate3 = formAHelper.createRFA1aForm();
-    applicantHelper.postApplicant(rfaFormCreate3.getId(), new ApplicantDTO());
+    applicantHelper.postApplicant(rfaFormCreate3.getId(), applicantHelper.getApplicant());
 
     assertNotEquals(rfaFormCreate1, rfaFormCreate2);
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);
