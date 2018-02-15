@@ -20,9 +20,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static gov.ca.cwds.cals.Constants.API.PLACEMENTHOMES;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
@@ -42,7 +42,7 @@ public class PlacementHomeResource {
   private static final String PH_END_DATE = "PH_page_ID_End_Date";
   private static final String PH_COMMON_INFO = "PH_page_ID_common_info";
   private static final String SCHEMA_VERSION = "1";
-  private static final Random random = new Random();
+  private static final SecureRandom random = new SecureRandom();
 
   private static final String ADDRESS_EXAMPLE = "{\n" +
           "  \"street_no\": \"ABCDEFGHIJKLMNOPQRSTUVWX\",\n" +
