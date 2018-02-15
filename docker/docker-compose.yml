@@ -23,7 +23,7 @@ services:
     env_file: .env
 
   cals-api:
-      image: cwds/cals-api
+      image: cwds/cals-api:POC_RapidForms
       hostname: cals-api
       depends_on:
         cals_db2_data:
