@@ -53,7 +53,7 @@ public class AddressDTO implements FormNameAware {
    * <p>
    */
   @JsonProperty("state")
-  private SimpleDictionary state;
+  private StateDTO state;
   /**
    * ZIP
    * <p>
@@ -154,7 +154,7 @@ public class AddressDTO implements FormNameAware {
    * <p>
    */
   @JsonProperty("state")
-  public SimpleDictionary getState() {
+  public StateDTO getState() {
     return state;
   }
 
@@ -163,7 +163,7 @@ public class AddressDTO implements FormNameAware {
    * <p>
    */
   @JsonProperty("state")
-  public void setState(SimpleDictionary state) {
+  public void setState(StateDTO state) {
     this.state = state;
   }
 

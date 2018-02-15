@@ -35,6 +35,8 @@ public final class Constants {
 
     public static final String COMPLAINTS = "complaints";
 
+    public static final String PLACEMENTHOMES = "placement-homes";
+
     public static final String DICTIONARIES = "dictionaries";
 
     public static final String INSPECTIONS = "inspections";
