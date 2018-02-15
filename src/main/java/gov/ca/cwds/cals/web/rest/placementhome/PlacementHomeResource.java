@@ -45,12 +45,12 @@ public class PlacementHomeResource {
   private static final SecureRandom random = new SecureRandom();
 
   private static final String ADDRESS_EXAMPLE = "{\n" +
-          "  \"street_no\": \"ABCDEFGHIJKLMNOPQRSTUVWX\",\n" +
-          "  \"street_name\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZAB\",\n" +
-          "  \"city\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZAB\",\n" +
+          "  \"street_no\": \"123\",\n" +
+          "  \"street_name\": \"Maple POC St\",\n" +
+          "  \"city\": \"Sacramento\",\n" +
           "  \"state\": {\n" +
           "    \"id\": \"AB\",\n" +
-          "    \"value\": \"ABCDEFGHIJKLMNOPQR\"\n" +
+          "    \"value\": \"California\"\n" +
           "  },\n" +
           "  \"zip\": \"95833\",\n" +
           "  \"zip_ext\": \"1234\",\n" +
@@ -68,21 +68,21 @@ public class PlacementHomeResource {
           "  \"comment\": \"ABCDEF\"\n" +
           "}";
   private static final String COMMON_INFO_EXAMPLE = "{\n" +
-          "  \"name\": \"ABCDEFGHIJKLMNOPQRSTUVWX\",\n" +
-          "  \"primary_scp\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZAB\",\n" +
+          "  \"name\": \"John Johjson\",\n" +
+          "  \"primary_scp\": \"Mary SCP Allison\",\n" +
           "  \"fac_type\": {\n" +
           "    \"id\": 677,\n" +
-          "    \"value\": \"ABCDEFGHIJKLMNO\"\n" +
+          "    \"value\": \"TBD\"\n" +
           "  },\n" +
           "  \"operated_by\": {\n" +
           "    \"id\": 936,\n" +
-          "    \"value\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"\n" +
+          "    \"value\": \"John Johjson\"\n" +
           "  },\n" +
           "  \"sub_type\": {\n" +
           "    \"id\": 870,\n" +
           "    \"value\": \"ABCDEF\"\n" +
           "  },\n" +
-          "  \"license_number\": \"ABCDEFGHIJKLMNOP\",\n" +
+          "  \"license_number\": \"N3234342\",\n" +
           "  \"age_range\": {\n" +
           "    \"from\": 9,\n" +
           "    \"to\": 21\n" +
@@ -116,7 +116,7 @@ public class PlacementHomeResource {
           "}";
 
   private static final String EMERGENCY_CONTACT_EXAMPLE = "{\n" +
-          "  \"name\": \"ABCDEFGHIJKLMNOPQRSTUVWX\",\n" +
+          "  \"name\": \"Mary Allison\",\n" +
           "  \"phone\": {\n" +
           "    \"phone\": \"9995555555\",\n" +
           "    \"ext\": 677\n" +
@@ -126,12 +126,12 @@ public class PlacementHomeResource {
           "    \"ext\": 736\n" +
           "  },\n" +
           "  \"email\": \"TRTWETW@MAIL.COM\",\n" +
-          "  \"street_no\": \"ABCDEFGHIJKLMNO\",\n" +
-          "  \"street_name\": \"ABCDEFGHIJK\",\n" +
-          "  \"city\": \"ABCDEF\",\n" +
+          "  \"street_no\": \"879\",\n" +
+          "  \"street_name\": \"Alstead\",\n" +
+          "  \"city\": \"Sacramento\",\n" +
           "  \"state\": {\n" +
           "    \"id\": \"AB\",\n" +
-          "    \"value\": \"ABCDEFGHIJKLMNOPQRSTUVWX\"\n" +
+          "    \"value\": \"California\"\n" +
           "  },\n" +
           "  \"zip\": \"99999\",\n" +
           "  \"zip_ext\": \"1234\",\n" +
