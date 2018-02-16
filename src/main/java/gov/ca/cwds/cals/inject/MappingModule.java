@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.CountyMapper;
+import gov.ca.cwds.cals.service.mapper.EmergencyContactMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
@@ -24,28 +25,31 @@ public class MappingModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(FacilityMapper.class).to(FacilityMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(PlacementHomeMapper.class).to(PlacementHomeMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(FasFacilityMapper.class).to(FasFacilityMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(FacilityChildMapper.class).to(FacilityChildMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(FacilityInspectionMapper.class).to(FacilityInspectionMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(ComplaintMapper.class).to(ComplaintMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(CountyMapper.class).to(CountyMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(FacilityTypeMapper.class).to(FacilityTypeMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(RFA1aFormMapper.class).to(RFA1aFormMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(SubstituteCareProviderMapper.class).to(SubstituteCareProviderMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .asEagerSingleton();
     bind(OtherAdultsInPlacementHomeMapper.class)
-        .to(OtherAdultsInPlacementHomeMapper.INSTANCE.getClass())
-        .asEagerSingleton();
+            .to(OtherAdultsInPlacementHomeMapper.INSTANCE.getClass())
+            .asEagerSingleton();
+    bind(EmergencyContactMapper.class)
+            .to(EmergencyContactMapper.INSTANCE.getClass())
+            .asEagerSingleton();
   }
 
 }
