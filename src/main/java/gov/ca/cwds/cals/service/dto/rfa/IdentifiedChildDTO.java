@@ -5,6 +5,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.Constants.Validation.Constraint;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 /**
  * @author CWDS CALS API Team
@@ -28,12 +30,15 @@ public class IdentifiedChildDTO extends BaseDTO {
   private static final long serialVersionUID = -3350081068637258668L;
 
   @ApiModelProperty(example = "Collin")
+  @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
   private String firstName;
 
   @ApiModelProperty(example = "P.")
+  @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
   private String middleName;
 
   @ApiModelProperty(example = "Martin")
+  @Size(max = 25, message = Constraint.MAX_LENGTH_MESSAGE)
   private String lastName;
 
   @ApiModelProperty(value = "Suffix")
