@@ -40,6 +40,7 @@ swagger:
 upgardeDbOnStart: ${UPGRADE_DB_ON_START:-true}
 
 dmsURI: ${DMS_URI:-http://cals-api.dev.cwds.io:8086}
+formsApiURI: ${FORMS_API_URI:-http://localhost:8088}
 
 lisDataSourceFactory:
   driverClass: org.postgresql.Driver

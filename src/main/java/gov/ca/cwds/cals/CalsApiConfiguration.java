@@ -18,6 +18,8 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
 
   private String dmsURI;
 
+  private String formsApiURI;
+
 
   @JsonProperty
   public DataSourceFactory getFasDataSourceFactory() {
@@ -82,5 +84,14 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
 
   public void setDmsURI(String dmsURI) {
     this.dmsURI = dmsURI;
+  }
+
+  @JsonProperty
+  public String getFormsApiURI() {
+    return formsApiURI;
+  }
+
+  public void setFormsApiURI(String formsApiURI) {
+    this.formsApiURI = formsApiURI;
   }
 }
