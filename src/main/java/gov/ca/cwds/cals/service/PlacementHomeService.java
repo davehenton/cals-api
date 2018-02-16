@@ -60,7 +60,9 @@ public class PlacementHomeService extends CrudServiceAdapter {
     FormsPackageDTO result = new FormsPackageDTO();
     result.setExternalEntityId(placementHomeId);
     result.setDescription("Some Description");
+
     result.setFormInstances(Arrays.asList(emergencyContactFormDTO));
+    result.getFormInstances().addAll(getFormInstances());
     return result;
 
   }
@@ -69,7 +71,6 @@ public class PlacementHomeService extends CrudServiceAdapter {
     FormInstanceDTO formInstance = new FormInstanceDTO();
     formInstance.setName(PH_EMERGENCY_CONTACT);
     formInstance.setSchemaVersion(SCHEMA_VERSION);
-    formInstance.setPackageId(PACKAGE_ID);
 
     EmergencyContactDTO emergencyContactDTO = emergencyContactMapper.toEmergencyContactDTO(emergencyContactDetail);
     ObjectMapper mapper = new ObjectMapper();
@@ -79,21 +80,11 @@ public class PlacementHomeService extends CrudServiceAdapter {
 
   }
 
-  private FormsPackageDTO getMockedPackage(String id) {
-    FormsPackageDTO result = new FormsPackageDTO();
-    result.setId(PACKAGE_ID);
-    result.setExternalEntityId(id);
-    result.setDescription("Some Description");
-    result.setFormInstances(getformInstances());
-    return result;
-  }
 
-
-  private static List<FormInstanceDTO> getformInstances() {
+  private static List<FormInstanceDTO> getFormInstances() {
     List<FormInstanceDTO> formInstanceDTOList = new ArrayList<>();
     formInstanceDTOList.add(getFormInstance(PH_ADDRESS));
     formInstanceDTOList.add(getFormInstance(PH_COMMON_INFO));
-    formInstanceDTOList.add(getFormInstance(PH_EMERGENCY_CONTACT));
     formInstanceDTOList.add(getFormInstance(PH_END_DATE));
 
     return formInstanceDTOList;
@@ -104,7 +95,6 @@ public class PlacementHomeService extends CrudServiceAdapter {
     FormInstanceDTO formInstance = new FormInstanceDTO();
     formInstance.setName(formName);
     formInstance.setSchemaVersion(SCHEMA_VERSION);
-    formInstance.setPackageId(PACKAGE_ID);
     formInstance.setFormId(String.valueOf(random.nextInt()));
     formInstance.setContent(getContent(formName));
     return formInstance;
