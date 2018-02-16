@@ -67,6 +67,10 @@ public class ApplicationModule<T extends CalsApiConfiguration> extends AbstractM
     return configuration.getDmsURI();
   }
 
-
+  @Provides
+  @Named("formsAPI.uri")
+  public String formsApiURI(T configuration) {
+    return configuration.getFormsApiURI();
+  }
 
 }
