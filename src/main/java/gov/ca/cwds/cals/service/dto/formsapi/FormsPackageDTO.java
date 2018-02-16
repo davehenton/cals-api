@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gov.ca.cwds.dto.BaseDTO;
+import gov.ca.cwds.rest.api.Response;
+
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
 //Default reflection hashcode and equals resides in BaseDTO
 @SuppressFBWarnings("SE_BAD_FIELD")
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class FormsPackageDTO extends BaseDTO {
+public class FormsPackageDTO extends BaseDTO implements Response {
 
   private static final long serialVersionUID = -8232213245227685772L;
   
