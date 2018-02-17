@@ -5,7 +5,6 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import gov.ca.cwds.cals.Constants.Validation.Constraint;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
@@ -17,8 +16,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.List;
 import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 /**
  * @author CWDS CALS API Team
@@ -78,9 +75,7 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
 
-  @ApiModelProperty(name = "Driver's License Number", example = "AS123456789012345678")
-  @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
-  @Pattern(regexp = "^[A-Za-z0-9]*$")
+  @ApiModelProperty(example = "MD123-1234-585-121")
   private String driverLicense;
 
   @CheckStateReferentialIntegrity(enrich = true)
