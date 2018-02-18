@@ -80,7 +80,6 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
 
   @ApiModelProperty(name = "Driver's License Number", example = "AS123456789012345678")
   @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
-  @Pattern(regexp = "^[A-Za-z0-9]*$")
   private String driverLicense;
 
   @CheckStateReferentialIntegrity(enrich = true)
