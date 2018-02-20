@@ -24,9 +24,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +42,8 @@ import org.slf4j.LoggerFactory;
 @Produces(MediaType.APPLICATION_JSON)
 public class PlacementHomeResource {
 
+  public static final String TOKEN_PARAM_NAME = "token";
+  public static final String FORMS_PACKAGES_PATH = "/forms/packages";
   @Inject
   @Named("formsAPI.uri")
   private String formsApiURI;
@@ -51,8 +56,6 @@ public class PlacementHomeResource {
   @Inject
   @PlacementHomeServiceBackendResource
   private ResourceDelegate placementHomeResource;
-
-
 
   @UnitOfWork(CMS)
   @GET
@@ -67,14 +70,19 @@ public class PlacementHomeResource {
   @ApiOperation(value = "Returns PlacementHome in Package representation", response = FormsPackageDTO.class)
   public Response getPlacementhome(
           @PathParam("id")
-          @ApiParam(required = true, name = "id", value = "The id of the Placementhome to find", example = "AaQshqm0Mb") final String id
+          @ApiParam(required = true, name = "id", value = "The id of the Placementhome to find", example = "AaQshqm0Mb") final String id,
+          @Context UriInfo uriInfo
   ) {
-
-    FormsPackageDTO responce = getInprogressPackage(id);
+    FormsPackageDTO responce = getInprogressPackage(id, extractToken(uriInfo));
     if (responce != null) {
       return Response.status(Response.Status.OK).entity(responce).build();
     }
     return placementHomeResource.get(id);
+  }
+
+  private String extractToken(@Context UriInfo uriInfo) {
+    MultivaluedMap<String, String> queryParameters = uriInfo.getQueryParameters();
+    return queryParameters.getFirst(TOKEN_PARAM_NAME);
   }
 
 
@@ -90,25 +98,28 @@ public class PlacementHomeResource {
   @ApiOperation(value = "Saves and returns Forms Package for Placement Home", response = FormsPackageDTO.class)
   public Response saveFormsPackage(
       @ApiParam(name = "formsPackage", value = "The FormsPackageDTO object") @Valid
-          FormsPackageDTO formsPackageDTO) {
+          FormsPackageDTO formsPackageDTO,
+      @Context UriInfo uriInfo) {
+    String token = extractToken(uriInfo);
     if (formsPackageDTO.getId() == null){
-      return postFormsPackage(formsPackageDTO);
+      return postFormsPackage(formsPackageDTO, token);
     } else {
-      return putFormsPackage(formsPackageDTO);
+      return putFormsPackage(formsPackageDTO, token);
     }
   }
 
-  private FormsPackageDTO getInprogressPackage(String id) {
+  private FormsPackageDTO getInprogressPackage(String id, String token) {
     URI uri = UriBuilder.fromUri(formsApiURI)
-        .path("/forms/packages")
+        .path(FORMS_PACKAGES_PATH)
         .queryParam("extId", id)
+        .queryParam(TOKEN_PARAM_NAME, token)
         .build();
     Response response = client.target(uri).request().get();
     FormsPackageDTO packageDTO = null;
     if (response.getStatus() == 200) {
       packageDTO = response.readEntity(FormsPackageDTO.class);
     } else if (response.getStatus() == 500) {
-      throw new RuntimeException(response.getStatusInfo().getReasonPhrase());
+      throw new IllegalStateException(response.getStatusInfo().getReasonPhrase());
     } else {
       LOG.error("Problems during formsPackage retrieving ", new Exception(response.getStatus() + " " + response.getStatusInfo().getReasonPhrase()));
     }
@@ -116,19 +127,21 @@ public class PlacementHomeResource {
   }
 
 
-  private Response postFormsPackage(FormsPackageDTO packageDTO) {
+  private Response postFormsPackage(FormsPackageDTO packageDTO, String token) {
     UriBuilder uriBuilder = UriBuilder.fromUri(formsApiURI);
-    uriBuilder.path("/forms/packages");
+    uriBuilder.path(FORMS_PACKAGES_PATH);
+    uriBuilder.queryParam(TOKEN_PARAM_NAME, token);
     URI uri = uriBuilder.build();
     return client.target(uri).request()
         .post(Entity.entity(packageDTO, MediaType.APPLICATION_JSON_TYPE));
   }
 
-  private Response putFormsPackage(FormsPackageDTO packageDTO) {
+  private Response putFormsPackage(FormsPackageDTO packageDTO, String token) {
     assert (null == packageDTO.getId());
     UriBuilder uriBuilder = UriBuilder.fromUri(formsApiURI);
-    uriBuilder.path("/forms/packages");
+    uriBuilder.path(FORMS_PACKAGES_PATH);
     uriBuilder.path("/" + packageDTO.getId());
+    uriBuilder.queryParam(TOKEN_PARAM_NAME, token);
     URI uri = uriBuilder.build();
     return client.target(uri).request()
         .put(Entity.entity(packageDTO, MediaType.APPLICATION_JSON_TYPE));
