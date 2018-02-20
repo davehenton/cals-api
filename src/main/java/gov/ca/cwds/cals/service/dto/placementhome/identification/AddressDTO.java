@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SimpleDictionary;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenericSimpleDictionaryImpl;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 
 
 /**
@@ -34,18 +36,21 @@ public class AddressDTO implements FormNameAware {
    * Street No.
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("street_no")
   private String streetNo;
   /**
    * Street Name.
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("street_name")
   private String streetName;
   /**
    * City
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("city")
   private String city;
   /**
@@ -70,12 +75,13 @@ public class AddressDTO implements FormNameAware {
    * Geographic Region
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("geo_region")
   private String geoRegion;
   @JsonProperty("county")
-  private SimpleDictionary county;
+  private GenericSimpleDictionaryImpl county;
   @JsonProperty("foreign_country")
-  private SimpleDictionary foreignCountry;
+  private GenericSimpleDictionaryImpl foreignCountry;
   /**
    * Foreign ZIP
    * <p>
@@ -92,6 +98,7 @@ public class AddressDTO implements FormNameAware {
    * Comment
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("comment")
   private String comment;
 
@@ -227,7 +234,7 @@ public class AddressDTO implements FormNameAware {
   }
 
   @JsonProperty("county")
-  public void setCounty(SimpleDictionary county) {
+  public void setCounty(GenericSimpleDictionaryImpl county) {
     this.county = county;
   }
 
@@ -237,7 +244,7 @@ public class AddressDTO implements FormNameAware {
   }
 
   @JsonProperty("foreign_country")
-  public void setForeignCountry(SimpleDictionary foreignCountry) {
+  public void setForeignCountry(GenericSimpleDictionaryImpl foreignCountry) {
     this.foreignCountry = foreignCountry;
   }
 

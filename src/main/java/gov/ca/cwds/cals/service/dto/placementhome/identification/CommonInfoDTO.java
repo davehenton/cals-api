@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -36,12 +37,14 @@ public class CommonInfoDTO implements FormNameAware {
    * Name
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("name")
   private String name;
   /**
    * Primary Substitute Care Provider
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("primary_scp")
   private String primaryScp;
   @JsonProperty("fac_type")
@@ -54,6 +57,7 @@ public class CommonInfoDTO implements FormNameAware {
    * License Number
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("license_number")
   private String licenseNumber;
   /**
