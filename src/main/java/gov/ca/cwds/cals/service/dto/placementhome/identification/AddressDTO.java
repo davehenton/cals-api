@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SimpleDictionary;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenericSimpleDictionaryImpl;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 
 
 /**
@@ -35,18 +36,21 @@ public class AddressDTO implements FormNameAware {
    * Street No.
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("street_no")
   private String streetNo;
   /**
    * Street Name.
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("street_name")
   private String streetName;
   /**
    * City
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("city")
   private String city;
   /**
@@ -71,6 +75,7 @@ public class AddressDTO implements FormNameAware {
    * Geographic Region
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("geo_region")
   private String geoRegion;
   @JsonProperty("county")
@@ -93,6 +98,7 @@ public class AddressDTO implements FormNameAware {
    * Comment
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("comment")
   private String comment;
 

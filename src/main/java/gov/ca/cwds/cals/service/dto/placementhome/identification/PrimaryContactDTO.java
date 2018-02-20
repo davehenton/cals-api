@@ -4,6 +4,7 @@ package gov.ca.cwds.cals.service.dto.placementhome.identification;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -17,6 +18,7 @@ public class PrimaryContactDTO {
 
   @JsonProperty("phone")
   private PhoneDTO phone;
+  @RemoveTrailingSpaces
   @JsonProperty("fax")
   private String fax;
 

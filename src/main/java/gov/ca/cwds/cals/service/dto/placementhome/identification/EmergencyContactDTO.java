@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SimpleDictionary;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 
 
 /**
@@ -35,6 +36,7 @@ public class EmergencyContactDTO implements FormNameAware {
    * Name
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("name")
   private String name;
   @JsonProperty("phone")
@@ -45,24 +47,28 @@ public class EmergencyContactDTO implements FormNameAware {
    * E-mail address
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("email")
   private String email;
   /**
    * Street No.
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("street_no")
   private String streetNo;
   /**
    * Street Name.
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("street_name")
   private String streetName;
   /**
    * City
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("city")
   private String city;
   /**
@@ -75,12 +81,14 @@ public class EmergencyContactDTO implements FormNameAware {
    * ZIP
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("zip")
   private String zip;
   /**
    * ZIP Ext.
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("zip_ext")
   private String zipExt;
   @JsonProperty("foreign_country")
@@ -89,12 +97,14 @@ public class EmergencyContactDTO implements FormNameAware {
    * Foreign ZIP
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("foreign_zip")
   private String foreignZip;
   /**
    * Foreign Address Description (Province name, etc)
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("foreign_addr_desc")
   private String foreignAddrDesc;
 
