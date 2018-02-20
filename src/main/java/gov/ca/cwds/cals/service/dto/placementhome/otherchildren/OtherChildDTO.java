@@ -62,6 +62,7 @@ import java.util.ArrayList;
     "spec_characteristics",
     "relationships"
 })
+@SuppressWarnings({"squid:S3437", "squid:S2160"}) //LocalDate is serializable
 public class OtherChildDTO extends BaseDTO {
 
   private static final long serialVersionUID = -3582081005282844696L;
