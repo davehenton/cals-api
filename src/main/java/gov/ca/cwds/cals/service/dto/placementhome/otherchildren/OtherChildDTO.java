@@ -7,13 +7,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
-import gov.ca.cwds.cals.service.dto.placementhome.otherchildren.RelationshipDTO;
 import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.validation.Date;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
