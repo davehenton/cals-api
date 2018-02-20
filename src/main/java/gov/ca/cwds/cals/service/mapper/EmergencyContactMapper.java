@@ -26,6 +26,5 @@ public interface EmergencyContactMapper {
   @Mapping(target = "state.id", source = "stateC")
   @Mapping(source = "zipNo", target = "zip")
   @Mapping(source = "zipSfxNo", target = "zipExt")
-    //frgAdrtB - foreign address indicator
   EmergencyContactDTO toEmergencyContactDTO(EmergencyContactDetail emergencyContactDetail);
 }
