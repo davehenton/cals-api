@@ -10,6 +10,8 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityTypeMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeCommonInfoMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeEndDateMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
@@ -49,6 +51,12 @@ public class MappingModule extends AbstractModule {
             .asEagerSingleton();
     bind(EmergencyContactMapper.class)
             .to(EmergencyContactMapper.INSTANCE.getClass())
+            .asEagerSingleton();
+    bind(PlacementHomeCommonInfoMapper.class)
+            .to(PlacementHomeCommonInfoMapper.INSTANCE.getClass())
+            .asEagerSingleton();
+    bind(PlacementHomeEndDateMapper.class)
+            .to(PlacementHomeEndDateMapper.INSTANCE.getClass())
             .asEagerSingleton();
   }
 
