@@ -16,17 +16,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class OperatedByDTO {
 
   @JsonProperty("id")
-  private Integer id;
+  private String id;
   @JsonProperty("value")
   private String value;
 
   @JsonProperty("id")
-  public Integer getId() {
+  public String getId() {
     return id;
   }
 
   @JsonProperty("id")
-  public void setId(Integer id) {
+  public void setId(String id) {
     this.id = id;
   }
 

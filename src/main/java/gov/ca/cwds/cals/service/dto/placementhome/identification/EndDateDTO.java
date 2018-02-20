@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenericSimpleDictionaryImpl;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SimpleDictionary;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
 import java.time.LocalDate;
@@ -33,7 +34,7 @@ public class EndDateDTO implements FormNameAware {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate endDate;
   @JsonProperty("reason_type")
-  private SimpleDictionary reasonType;
+  private GenericSimpleDictionaryImpl reasonType;
   /**
    * Comments
    * <p>
@@ -45,7 +46,7 @@ public class EndDateDTO implements FormNameAware {
    * End Date
    * <p>
    */
-  @JsonProperty("name")
+  @JsonProperty("end_date")
   public LocalDate getEndDate() {
     return endDate;
   }
@@ -54,7 +55,7 @@ public class EndDateDTO implements FormNameAware {
    * End Date
    * <p>
    */
-  @JsonProperty("name")
+  @JsonProperty("end_date")
   public void setEndDate(LocalDate endDate) {
     this.endDate = endDate;
   }
@@ -65,7 +66,7 @@ public class EndDateDTO implements FormNameAware {
   }
 
   @JsonProperty("reason_type")
-  public void setReasonType(SimpleDictionary reasonType) {
+  public void setReasonType(GenericSimpleDictionaryImpl reasonType) {
     this.reasonType = reasonType;
   }
 

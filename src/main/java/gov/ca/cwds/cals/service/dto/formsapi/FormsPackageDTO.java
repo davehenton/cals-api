@@ -6,6 +6,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class FormsPackageDTO extends BaseDTO implements Response {
 
   private String description;
 
-  private List<FormInstanceDTO> formInstances;
+  private List<FormInstanceDTO> formInstances = new ArrayList<>();
 
   public Long getId() {
     return id;

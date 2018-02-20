@@ -4,18 +4,23 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.service.dto.formsapi.FormInstanceDTO;
+import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
 import gov.ca.cwds.cals.service.dto.formsapi.FormsPackageDTO;
+import gov.ca.cwds.cals.service.dto.placementhome.identification.CommonInfoDTO;
 import gov.ca.cwds.cals.service.dto.placementhome.identification.EmergencyContactDTO;
 import gov.ca.cwds.cals.service.mapper.EmergencyContactMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeCommonInfoMapper;
+import gov.ca.cwds.cals.service.mapper.PlacementHomeEndDateMapper;
 import gov.ca.cwds.cms.data.access.dao.EmergencyContactDetailDao;
+import gov.ca.cwds.data.legacy.cms.dao.PlacementHomeDao;
 import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.rest.api.Response;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PlacementHomeService extends CrudServiceAdapter {
@@ -29,13 +34,20 @@ public class PlacementHomeService extends CrudServiceAdapter {
   private static final SecureRandom random = new SecureRandom();
 
   @Inject
-  private gov.ca.cwds.cms.data.access.service.PlacementHomeService placementHomeService;
-
-  @Inject
   private EmergencyContactDetailDao emergencyContactDetailDao;
 
   @Inject
+  private PlacementHomeDao placementHomeDao;
+
+  @Inject
   private EmergencyContactMapper emergencyContactMapper;
+
+  @Inject
+  private PlacementHomeCommonInfoMapper placementHomeCommonInfoMapper;
+
+  @Inject
+  private PlacementHomeEndDateMapper placementHomeEndDateMapper;
+
 
   @Override
   public Response find(Serializable params) {
@@ -48,49 +60,57 @@ public class PlacementHomeService extends CrudServiceAdapter {
     return responce;
   }
 
-
   private FormsPackageDTO getPlacementHomePackage(String placementHomeId) {
+    PlacementHome placementHome = placementHomeDao.find(placementHomeId);
+    if(placementHome == null) {
+      return null;
+    }
+    FormsPackageDTO result = new FormsPackageDTO();
+    result.setExternalEntityId(placementHomeId);
+    result.setDescription("Some Description");
+    result.getFormInstances().addAll(getFormInstances(placementHome));
+    return result.getFormInstances().isEmpty() ? null : result;
+  }
 
+  private List<FormInstanceDTO> getFormInstances(PlacementHome placementHome) {
+    List<FormInstanceDTO> formInstanceDTOList = new ArrayList<>();
+    formInstanceDTOList.add(getFormForPlacementHome(placementHome));
+    formInstanceDTOList.add(getFormForEmergencyContact(placementHome.getIdentifier()));
+    formInstanceDTOList.add(getFormForEndDate(placementHome));
+    formInstanceDTOList.add(getMockedFormInstance(PH_ADDRESS));
+
+    return formInstanceDTOList;
+  }
+
+  private FormInstanceDTO getFormForPlacementHome(PlacementHome placementHome) {
+    return generateForm(placementHomeCommonInfoMapper.toCommonInfoDTO(placementHome), PH_COMMON_INFO);
+  }
+
+  private FormInstanceDTO getFormForEndDate(PlacementHome placementHome) {
+    return generateForm(placementHomeEndDateMapper.toEndDateDTO(placementHome), PH_END_DATE);
+  }
+
+  private FormInstanceDTO getFormForEmergencyContact(String placementHomeId) {
     EmergencyContactDetail emergencyContactDetail = emergencyContactDetailDao.findByEstblshId(placementHomeId);
     if (emergencyContactDetail == null) {
       return null;
     }
-    FormInstanceDTO emergencyContactFormDTO = getEmergencyContactForm(emergencyContactDetail);
-
-    FormsPackageDTO result = new FormsPackageDTO();
-    result.setExternalEntityId(placementHomeId);
-    result.setDescription("Some Description");
-
-    result.setFormInstances(Arrays.asList(emergencyContactFormDTO));
-    result.getFormInstances().addAll(getFormInstances());
-    return result;
-
+    EmergencyContactDTO emergencyContactDTO = emergencyContactMapper.toEmergencyContactDTO(emergencyContactDetail);
+    return generateForm(emergencyContactDTO, PH_EMERGENCY_CONTACT);
   }
 
-  private FormInstanceDTO getEmergencyContactForm(EmergencyContactDetail emergencyContactDetail) {
+  private FormInstanceDTO generateForm(FormNameAware formNameAware, String formName) {
     FormInstanceDTO formInstance = new FormInstanceDTO();
-    formInstance.setName(PH_EMERGENCY_CONTACT);
+    formInstance.setName(formName);
     formInstance.setSchemaVersion(SCHEMA_VERSION);
-
-    EmergencyContactDTO emergencyContactDTO = emergencyContactMapper.toEmergencyContactDTO(emergencyContactDetail);
     ObjectMapper mapper = new ObjectMapper();
-    JsonNode node = mapper.valueToTree(emergencyContactDTO);
+    JsonNode node = mapper.valueToTree(formNameAware);
     formInstance.setContent(node);
     return formInstance;
 
   }
 
-
-  private static List<FormInstanceDTO> getFormInstances() {
-    List<FormInstanceDTO> formInstanceDTOList = new ArrayList<>();
-    formInstanceDTOList.add(getFormInstance(PH_ADDRESS));
-    formInstanceDTOList.add(getFormInstance(PH_COMMON_INFO));
-    formInstanceDTOList.add(getFormInstance(PH_END_DATE));
-
-    return formInstanceDTOList;
-  }
-
-  private static FormInstanceDTO getFormInstance(String formName) {
+  private static FormInstanceDTO getMockedFormInstance(String formName) {
 
     FormInstanceDTO formInstance = new FormInstanceDTO();
     formInstance.setName(formName);

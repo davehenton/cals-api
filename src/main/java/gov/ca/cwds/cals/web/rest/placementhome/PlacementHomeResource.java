@@ -26,10 +26,10 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import javax.ws.rs.core.UriBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 @Api(
         value = PLACEMENTHOMES,
@@ -51,7 +51,6 @@ public class PlacementHomeResource {
   @Inject
   @PlacementHomeServiceBackendResource
   private ResourceDelegate placementHomeResource;
-
 
 
   @UnitOfWork(CMS)
