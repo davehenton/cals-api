@@ -22,8 +22,9 @@ public class PhoneDTO {
    * Ext.
    * <p>
    */
+  @RemoveTrailingSpaces
   @JsonProperty("ext")
-  private Integer ext;
+  private String ext;
 
   @JsonProperty("phone")
   public String getPhone() {
@@ -40,7 +41,7 @@ public class PhoneDTO {
    * <p>
    */
   @JsonProperty("ext")
-  public Integer getExt() {
+  public String getExt() {
     return ext;
   }
 
@@ -49,7 +50,7 @@ public class PhoneDTO {
    * <p>
    */
   @JsonProperty("ext")
-  public void setExt(Integer ext) {
+  public void setExt(String ext) {
     this.ext = ext;
   }
 
