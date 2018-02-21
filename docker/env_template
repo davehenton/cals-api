@@ -11,9 +11,10 @@ LOGOUT_URL=http://localhost:${PERRY_PORT}/perry/authn/logout
 DEV_MODE=true
 
 
+
 #cals-db2-data
 LOGLEVEL=INFO
-DB_CMS_DB2_HOST=localhost
+DB_CMS_DB2_HOST=cals_db2_data
 DB_CMS_DB2_PORT=50000
 DB_CMS_JDBC_URL=jdbc:db2://cals_db2_data:${DB_CMS_DB2_PORT}/DB0TDEV
 
@@ -32,6 +33,7 @@ SWAGGER_JSON_URL=http://localhost:${API_PORT}/swagger.json
 SWAGGER_CALLBACK_URL=http://localhost:${API_PORT}/swagger
 API_PORT=8080
 #SWAGGER_TOKEN_URL=https://web.dev.cwds.io/perry/authn/token
+FORMS_API_URI=http://forms_api:8088
 
 
 #forms-api

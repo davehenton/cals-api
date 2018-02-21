@@ -1,12 +1,13 @@
 package gov.ca.cwds.cals.service;
 
+import static io.dropwizard.testing.FixtureHelpers.fixture;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.service.dto.formsapi.FormInstanceDTO;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
 import gov.ca.cwds.cals.service.dto.formsapi.FormsPackageDTO;
-import gov.ca.cwds.cals.service.dto.placementhome.identification.CommonInfoDTO;
 import gov.ca.cwds.cals.service.dto.placementhome.identification.EmergencyContactDTO;
 import gov.ca.cwds.cals.service.mapper.EmergencyContactMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeAddressMapper;
@@ -22,6 +23,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class PlacementHomeService extends CrudServiceAdapter {
@@ -31,6 +34,7 @@ public class PlacementHomeService extends CrudServiceAdapter {
   private static final String PH_EMERGENCY_CONTACT = "PH_page_ID_Emergency_Contact";
   private static final String PH_END_DATE = "PH_page_ID_End_Date";
   private static final String PH_COMMON_INFO = "PH_page_ID_common_info";
+  private static final String PH_PAGE_OTHER_CHILDREN_CHILD= "PH_page_Other_Children_child";
   private static final String SCHEMA_VERSION = "1";
   private static final SecureRandom random = new SecureRandom();
 
@@ -76,6 +80,7 @@ public class PlacementHomeService extends CrudServiceAdapter {
     formInstanceDTOList.add(getFormForEmergencyContact(placementHome.getIdentifier()));
     formInstanceDTOList.add(getFormForEndDate(placementHome));
     formInstanceDTOList.add(getFormForAddress(placementHome));
+    formInstanceDTOList.addAll(getMockedOtherChildren());
     return formInstanceDTOList;
   }
 
@@ -110,4 +115,35 @@ public class PlacementHomeService extends CrudServiceAdapter {
     return formInstance;
 
   }
+
+  private Collection<? extends FormInstanceDTO> getMockedOtherChildren() {
+    FormInstanceDTO child1 = getMockedChild("child1");
+    FormInstanceDTO child2 = getMockedChild("child2");
+    return Arrays.asList(child1, child2);
+  }
+
+  private static FormInstanceDTO getMockedChild(String fileName) {
+    FormInstanceDTO formInstance = new FormInstanceDTO();
+    formInstance.setName(PH_PAGE_OTHER_CHILDREN_CHILD);
+    formInstance.setSchemaVersion(SCHEMA_VERSION);
+    formInstance.setFormId(String.valueOf(random.nextInt()));
+    formInstance.setContent(getContent(fileName));
+    return formInstance;
+  }
+
+  private static JsonNode getContent(String fileName) {
+    ObjectMapper mapper = new ObjectMapper();
+    String json = fixture("fixtures/"+fileName+".json");
+    try {
+      return mapper.readTree(json);
+    } catch (IOException e) {
+      return null;
+    }
+  }
+
+
 }
+
+
+
+

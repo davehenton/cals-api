@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
+import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
 import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.validation.Date;
 import io.swagger.annotations.ApiModelProperty;
@@ -63,7 +64,10 @@ import java.util.ArrayList;
     "relationships"
 })
 @SuppressWarnings({"squid:S3437", "squid:S2160"}) //LocalDate is serializable
-public class OtherChildDTO extends BaseDTO {
+public class OtherChildDTO extends BaseDTO implements FormNameAware {
+
+  private static final String PH_PAGE_OTHER_CHILDREN_CHILD= "PH_page_Other_Children_child";
+
 
   private static final long serialVersionUID = -3582081005282844696L;
   /**
@@ -214,5 +218,9 @@ public class OtherChildDTO extends BaseDTO {
       ArrayList<RelationshipDTO> relationships) {
     this.relationships = relationships;
   }
-    
+
+  @Override
+  public String formName() {
+    return PH_PAGE_OTHER_CHILDREN_CHILD;
+  }
 }

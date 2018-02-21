@@ -1,0 +1,26 @@
+{
+  "name": "Child First",
+  "date_of_birth": "2001-02-25",
+  "gender": {
+    "id": 1,
+    "value": "Male"
+  },
+  "annual_unearned_income": 0.00,
+  "spec_characteristics": "Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
+  "relationships": [
+    {
+      "scp_name": "Some Name",
+      "relationship": {
+        "id": 1,
+        "value": "Child"
+      }
+    },
+    {
+      "scp_name": "Other Name",
+      "relationship": {
+        "id": 2,
+        "value": "Sibling"
+      }
+    }
+  ]
+}

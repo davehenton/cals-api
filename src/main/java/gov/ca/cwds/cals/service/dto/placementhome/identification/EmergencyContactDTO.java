@@ -31,7 +31,7 @@ import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 })
 public class EmergencyContactDTO implements FormNameAware {
 
-  public static final String PH_PAGE_ID_EMERGENCY_CONTACT = "PH_page_ID_Emergency_Contact";
+  private static final String PH_PAGE_ID_EMERGENCY_CONTACT = "PH_page_ID_Emergency_Contact";
   /**
    * Name
    * <p>
