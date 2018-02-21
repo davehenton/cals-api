@@ -23,7 +23,7 @@ services:
     env_file: .env
 
   cals-api:
-      image: cwds/cals-api:0.5.7-POC-7
+      image: cwds/cals-api:0.5.7-POC-9
       hostname: cals-api
       depends_on:
         cals_db2_data:

@@ -8,7 +8,10 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.service.dto.formsapi.FormInstanceDTO;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
 import gov.ca.cwds.cals.service.dto.formsapi.FormsPackageDTO;
+import gov.ca.cwds.cals.service.dto.placementhome.identification.AddressDTO;
+import gov.ca.cwds.cals.service.dto.placementhome.identification.CommonInfoDTO;
 import gov.ca.cwds.cals.service.dto.placementhome.identification.EmergencyContactDTO;
+import gov.ca.cwds.cals.service.dto.placementhome.identification.EndDateDTO;
 import gov.ca.cwds.cals.service.dto.placementhome.otherchildren.OtherChildrenDTO;
 import gov.ca.cwds.cals.service.mapper.EmergencyContactMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeAddressMapper;
@@ -76,26 +79,26 @@ public class PlacementHomeService extends CrudServiceAdapter {
   }
 
   private FormInstanceDTO getFormForPlacementHome(PlacementHome placementHome) {
-    return generateForm(placementHomeCommonInfoMapper.toCommonInfoDTO(placementHome));
+    return generateForm(placementHomeCommonInfoMapper.toCommonInfoDTO(placementHome), CommonInfoDTO.PH_PAGE_ID_COMMON_INFO);
   }
 
   private FormInstanceDTO getFormForEndDate(PlacementHome placementHome) {
-    return generateForm(placementHomeEndDateMapper.toEndDateDTO(placementHome));
+    return generateForm(placementHomeEndDateMapper.toEndDateDTO(placementHome), EndDateDTO.PH_PAGE_ID_END_DATE);
   }
 
   private FormInstanceDTO getFormForAddress(PlacementHome placementHome) {
-    return generateForm(placementHomeAddressMapper.toAddressDTO(placementHome));
+    return generateForm(placementHomeAddressMapper.toAddressDTO(placementHome), AddressDTO.PH_PAGE_ID_ADDRESS);
   }
 
   private FormInstanceDTO getFormForEmergencyContact(String placementHomeId) {
     EmergencyContactDetail emergencyContactDetail = emergencyContactDetailDao.findByEstblshId(placementHomeId);
     EmergencyContactDTO emergencyContactDTO = emergencyContactMapper.toEmergencyContactDTO(emergencyContactDetail);
-    return generateForm(emergencyContactDTO);
+    return generateForm(emergencyContactDTO, EmergencyContactDTO.PH_PAGE_ID_EMERGENCY_CONTACT);
   }
 
-  private FormInstanceDTO generateForm(FormNameAware formNameAware) {
+  private FormInstanceDTO generateForm(FormNameAware formNameAware, String formName) {
     FormInstanceDTO formInstance = new FormInstanceDTO();
-    formInstance.setName(formNameAware.formName());
+    formInstance.setName(formName);
     formInstance.setSchemaVersion(SCHEMA_VERSION);
     ObjectMapper mapper = new ObjectMapper();
     JsonNode node = mapper.valueToTree(formNameAware);
