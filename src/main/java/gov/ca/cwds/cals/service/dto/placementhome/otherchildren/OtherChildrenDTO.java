@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 @SuppressWarnings({"squid:S3437", "squid:S2160"}) //LocalDate is serializable
 public class OtherChildrenDTO extends BaseDTO implements FormNameAware {
-  private static final String PH_PAGE_OTHER_CHILDREN= "PH_page_Other_Children";
+  public static final String PH_PAGE_OTHER_CHILDREN= "PH_page_Other_Children";
   
   @JsonProperty("children")
   private ArrayList<OtherChildDTO> children;

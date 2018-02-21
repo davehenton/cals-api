@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.service.dto.formsapi.FormInstanceDTO;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
 import gov.ca.cwds.cals.service.dto.formsapi.FormsPackageDTO;
 import gov.ca.cwds.cals.service.dto.placementhome.identification.EmergencyContactDTO;
+import gov.ca.cwds.cals.service.dto.placementhome.otherchildren.OtherChildrenDTO;
 import gov.ca.cwds.cals.service.mapper.EmergencyContactMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeAddressMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeCommonInfoMapper;
@@ -26,14 +27,7 @@ import java.util.List;
 
 public class PlacementHomeService extends CrudServiceAdapter {
 
-  private static final Long PACKAGE_ID = 123L;
-  private static final String PH_ADDRESS = "PH_page_ID_Address";
-  private static final String PH_EMERGENCY_CONTACT = "PH_page_ID_Emergency_Contact";
-  private static final String PH_END_DATE = "PH_page_ID_End_Date";
-  private static final String PH_COMMON_INFO = "PH_page_ID_common_info";
-  private static final String PH_PAGE_OTHER_CHILDREN_CHILD= "PH_page_Other_Children_child";
   private static final String SCHEMA_VERSION = "1";
-  private static final SecureRandom random = new SecureRandom();
 
   @Inject
   private EmergencyContactDetailDao emergencyContactDetailDao;
@@ -82,26 +76,26 @@ public class PlacementHomeService extends CrudServiceAdapter {
   }
 
   private FormInstanceDTO getFormForPlacementHome(PlacementHome placementHome) {
-    return generateForm(placementHomeCommonInfoMapper.toCommonInfoDTO(placementHome), PH_COMMON_INFO);
+    return generateForm(placementHomeCommonInfoMapper.toCommonInfoDTO(placementHome));
   }
 
   private FormInstanceDTO getFormForEndDate(PlacementHome placementHome) {
-    return generateForm(placementHomeEndDateMapper.toEndDateDTO(placementHome), PH_END_DATE);
+    return generateForm(placementHomeEndDateMapper.toEndDateDTO(placementHome));
   }
 
   private FormInstanceDTO getFormForAddress(PlacementHome placementHome) {
-    return generateForm(placementHomeAddressMapper.toAddressDTO(placementHome), PH_ADDRESS);
+    return generateForm(placementHomeAddressMapper.toAddressDTO(placementHome));
   }
 
   private FormInstanceDTO getFormForEmergencyContact(String placementHomeId) {
     EmergencyContactDetail emergencyContactDetail = emergencyContactDetailDao.findByEstblshId(placementHomeId);
     EmergencyContactDTO emergencyContactDTO = emergencyContactMapper.toEmergencyContactDTO(emergencyContactDetail);
-    return generateForm(emergencyContactDTO, PH_EMERGENCY_CONTACT);
+    return generateForm(emergencyContactDTO);
   }
 
-  private FormInstanceDTO generateForm(FormNameAware formNameAware, String formName) {
+  private FormInstanceDTO generateForm(FormNameAware formNameAware) {
     FormInstanceDTO formInstance = new FormInstanceDTO();
-    formInstance.setName(formName);
+    formInstance.setName(formNameAware.formName());
     formInstance.setSchemaVersion(SCHEMA_VERSION);
     ObjectMapper mapper = new ObjectMapper();
     JsonNode node = mapper.valueToTree(formNameAware);
@@ -112,9 +106,8 @@ public class PlacementHomeService extends CrudServiceAdapter {
 
   private FormInstanceDTO getMockedOtherChildren() {
     FormInstanceDTO formInstance = new FormInstanceDTO();
-    formInstance.setName(PH_PAGE_OTHER_CHILDREN_CHILD);
+    formInstance.setName(OtherChildrenDTO.PH_PAGE_OTHER_CHILDREN);
     formInstance.setSchemaVersion(SCHEMA_VERSION);
-    formInstance.setFormId(String.valueOf(random.nextInt()));
     formInstance.setContent(getContent("other_children"));
     return formInstance;
   }
