@@ -16,17 +16,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class FormsDictionaryDTO {
 
   @JsonProperty("id")
-  private String id;
+  private Integer id;
   @JsonProperty("value")
   private String value;
 
   @JsonProperty("id")
-  public String getId() {
+  public Integer getId() {
     return id;
   }
 
   @JsonProperty("id")
-  public void setId(String id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
