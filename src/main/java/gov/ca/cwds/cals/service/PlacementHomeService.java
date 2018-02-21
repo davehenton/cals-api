@@ -98,9 +98,6 @@ public class PlacementHomeService extends CrudServiceAdapter {
 
   private FormInstanceDTO getFormForEmergencyContact(String placementHomeId) {
     EmergencyContactDetail emergencyContactDetail = emergencyContactDetailDao.findByEstblshId(placementHomeId);
-    if (emergencyContactDetail == null) {
-      return null;
-    }
     EmergencyContactDTO emergencyContactDTO = emergencyContactMapper.toEmergencyContactDTO(emergencyContactDetail);
     return generateForm(emergencyContactDTO, PH_EMERGENCY_CONTACT);
   }
