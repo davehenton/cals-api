@@ -18,7 +18,7 @@ public interface PlacementHomeCommonInfoMapper {
   @Mapping(source = "licenseNo", target = "licenseNumber")
   @Mapping(source = "ageFrmNo", target = "ageRange.from")
   @Mapping(source = "ageToNo", target = "ageRange.to")
-  @Mapping(source = "facilityType", target = "facType.code")
+  @Mapping(source = "facilityType", target = "facType.id")
   @Mapping(source = "oprtdByid", target = "operatedBy.id")
   @Mapping(source = "maxCapNo", target = "capacity.bedsAvailable")
   @Mapping(source = "licCapNo", target = "capacity.placements")

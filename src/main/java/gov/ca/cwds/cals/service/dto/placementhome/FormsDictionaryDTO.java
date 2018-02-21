@@ -1,5 +1,5 @@
 
-package gov.ca.cwds.cals.service.dto.placementhome.identification;
+package gov.ca.cwds.cals.service.dto.placementhome;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
     "id",
     "value"
 })
-public class OperatedByDTO {
+public class FormsDictionaryDTO {
 
   @JsonProperty("id")
   private String id;
@@ -55,10 +55,10 @@ public class OperatedByDTO {
     if (other == this) {
       return true;
     }
-    if (!(other instanceof OperatedByDTO)) {
+    if (!(other instanceof FormsDictionaryDTO)) {
       return false;
     }
-    OperatedByDTO rhs = ((OperatedByDTO) other);
+    FormsDictionaryDTO rhs = ((FormsDictionaryDTO) other);
     return new EqualsBuilder().append(id, rhs.id).append(value, rhs.value).isEquals();
   }
 

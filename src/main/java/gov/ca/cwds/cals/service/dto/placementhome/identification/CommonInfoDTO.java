@@ -4,8 +4,8 @@ package gov.ca.cwds.cals.service.dto.placementhome.identification;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
+import gov.ca.cwds.cals.service.dto.placementhome.FormsDictionaryDTO;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -48,11 +48,11 @@ public class CommonInfoDTO implements FormNameAware {
   @JsonProperty("primary_scp")
   private String primaryScp;
   @JsonProperty("fac_type")
-  private FacilityTypeDTO facType;
+  private FormsDictionaryDTO facType;
   @JsonProperty("operated_by")
-  private OperatedByDTO operatedBy;
+  private FormsDictionaryDTO operatedBy;
   @JsonProperty("sub_type")
-  private SubTypeDTO subType;
+  private FormsDictionaryDTO subType;
   /**
    * License Number
    * <p>
@@ -116,32 +116,32 @@ public class CommonInfoDTO implements FormNameAware {
   }
 
   @JsonProperty("fac_type")
-  public FacilityTypeDTO getFacType() {
+  public FormsDictionaryDTO getFacType() {
     return facType;
   }
 
   @JsonProperty("fac_type")
-  public void setFacType(FacilityTypeDTO facType) {
+  public void setFacType(FormsDictionaryDTO facType) {
     this.facType = facType;
   }
 
   @JsonProperty("operated_by")
-  public OperatedByDTO getOperatedBy() {
+  public FormsDictionaryDTO getOperatedBy() {
     return operatedBy;
   }
 
   @JsonProperty("operated_by")
-  public void setOperatedBy(OperatedByDTO operatedBy) {
+  public void setOperatedBy(FormsDictionaryDTO operatedBy) {
     this.operatedBy = operatedBy;
   }
 
   @JsonProperty("sub_type")
-  public SubTypeDTO getSubType() {
+  public FormsDictionaryDTO getSubType() {
     return subType;
   }
 
   @JsonProperty("sub_type")
-  public void setSubType(SubTypeDTO subType) {
+  public void setSubType(FormsDictionaryDTO subType) {
     this.subType = subType;
   }
 
