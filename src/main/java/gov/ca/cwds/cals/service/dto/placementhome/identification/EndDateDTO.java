@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenericSimpleDictionaryImpl;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SimpleDictionary;
 import gov.ca.cwds.cals.service.dto.formsapi.FormNameAware;
+import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import java.time.LocalDate;
 
 
@@ -40,6 +41,7 @@ public class EndDateDTO implements FormNameAware {
    * <p>
    */
   @JsonProperty("comments")
+  @RemoveTrailingSpaces
   private String comments;
 
   /**

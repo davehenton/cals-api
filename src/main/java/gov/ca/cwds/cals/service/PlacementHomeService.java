@@ -18,13 +18,10 @@ import gov.ca.cwds.data.legacy.cms.dao.PlacementHomeDao;
 import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.rest.api.Response;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class PlacementHomeService extends CrudServiceAdapter {
@@ -80,7 +77,7 @@ public class PlacementHomeService extends CrudServiceAdapter {
     formInstanceDTOList.add(getFormForEmergencyContact(placementHome.getIdentifier()));
     formInstanceDTOList.add(getFormForEndDate(placementHome));
     formInstanceDTOList.add(getFormForAddress(placementHome));
-    formInstanceDTOList.addAll(getMockedOtherChildren());
+    formInstanceDTOList.add(getMockedOtherChildren());
     return formInstanceDTOList;
   }
 
@@ -113,18 +110,12 @@ public class PlacementHomeService extends CrudServiceAdapter {
 
   }
 
-  private Collection<? extends FormInstanceDTO> getMockedOtherChildren() {
-    FormInstanceDTO child1 = getMockedChild("child1");
-    FormInstanceDTO child2 = getMockedChild("child2");
-    return Arrays.asList(child1, child2);
-  }
-
-  private static FormInstanceDTO getMockedChild(String fileName) {
+  private FormInstanceDTO getMockedOtherChildren() {
     FormInstanceDTO formInstance = new FormInstanceDTO();
     formInstance.setName(PH_PAGE_OTHER_CHILDREN_CHILD);
     formInstance.setSchemaVersion(SCHEMA_VERSION);
     formInstance.setFormId(String.valueOf(random.nextInt()));
-    formInstance.setContent(getContent(fileName));
+    formInstance.setContent(getContent("other_children"));
     return formInstance;
   }
 
@@ -137,6 +128,8 @@ public class PlacementHomeService extends CrudServiceAdapter {
       return null;
     }
   }
+
+  
 
 
 }
