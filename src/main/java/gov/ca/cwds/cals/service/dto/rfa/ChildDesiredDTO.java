@@ -9,7 +9,6 @@ import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrityForEach;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ public class ChildDesiredDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty(value = "Preferred Age(s)")
   @CheckReferentialIntegrityForEach(enrich = true)
-  private List<AgeGroupType> preferredAges = new ArrayList<>();
+  private List<AgeGroupType> preferredAges;
 
   @ApiModelProperty(value = "Preferred Sibling(Group Of)")
   @CheckReferentialIntegrity

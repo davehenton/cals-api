@@ -1,32 +1,32 @@
 {
   "items": [
     {
-      "id": "AK",
-      "value": "Alaska"
-    },
-    {
       "id": "AL",
       "value": "Alabama"
+    },
+    {
+      "id": "AK",
+      "value": "Alaska"
     },
     {
       "id": "AM",
       "value": "American Samoa"
     },
     {
-      "id": "AR",
-      "value": "Arkansas"
-    },
-    {
       "id": "AZ",
       "value": "Arizona"
+    },
+    {
+      "id": "AR",
+      "value": "Arkansas"
     },
     {
       "id": "CA",
       "value": "California"
     },
     {
-      "id": "CM",
-      "value": "Northern Marianas Islands"
+      "id": "CZ",
+      "value": "Canal Zone"
     },
     {
       "id": "CO",
@@ -37,16 +37,12 @@
       "value": "Connecticut"
     },
     {
-      "id": "CZ",
-      "value": "Canal Zone"
+      "id": "DE",
+      "value": "Delaware"
     },
     {
       "id": "DC",
       "value": "District of Columbia"
-    },
-    {
-      "id": "DE",
-      "value": "Delaware"
     },
     {
       "id": "FL",
@@ -65,10 +61,6 @@
       "value": "Hawaii"
     },
     {
-      "id": "IA",
-      "value": "Iowa"
-    },
-    {
       "id": "ID",
       "value": "Idaho"
     },
@@ -79,6 +71,10 @@
     {
       "id": "IN",
       "value": "Indiana"
+    },
+    {
+      "id": "IA",
+      "value": "Iowa"
     },
     {
       "id": "KS",
@@ -93,16 +89,16 @@
       "value": "Louisiana"
     },
     {
-      "id": "MA",
-      "value": "Massachusetts"
+      "id": "ME",
+      "value": "Maine"
     },
     {
       "id": "MD",
       "value": "Maryland"
     },
     {
-      "id": "ME",
-      "value": "Maine"
+      "id": "MA",
+      "value": "Massachusetts"
     },
     {
       "id": "MI",
@@ -113,28 +109,24 @@
       "value": "Minnesota"
     },
     {
-      "id": "MO",
-      "value": "Missouri"
-    },
-    {
       "id": "MS",
       "value": "Mississippi"
+    },
+    {
+      "id": "MO",
+      "value": "Missouri"
     },
     {
       "id": "MT",
       "value": "Montana"
     },
     {
-      "id": "NC",
-      "value": "North Carolina"
-    },
-    {
-      "id": "ND",
-      "value": "North Dakota"
-    },
-    {
       "id": "NE",
       "value": "Nebraska"
+    },
+    {
+      "id": "NV",
+      "value": "Nevada"
     },
     {
       "id": "NH",
@@ -149,12 +141,20 @@
       "value": "New Mexico"
     },
     {
-      "id": "NV",
-      "value": "Nevada"
-    },
-    {
       "id": "NY",
       "value": "New York"
+    },
+    {
+      "id": "NC",
+      "value": "North Carolina"
+    },
+    {
+      "id": "ND",
+      "value": "North Dakota"
+    },
+    {
+      "id": "CM",
+      "value": "Northern Marianas Islands"
     },
     {
       "id": "OH",
@@ -193,40 +193,40 @@
       "value": "Tennessee"
     },
     {
-      "id": "TT",
-      "value": "Trust Territories"
-    },
-    {
       "id": "TX",
       "value": "Texas"
+    },
+    {
+      "id": "TT",
+      "value": "Trust Territories"
     },
     {
       "id": "UT",
       "value": "Utah"
     },
     {
-      "id": "VA",
-      "value": "Virginia"
+      "id": "VT",
+      "value": "Vermont"
     },
     {
       "id": "VI",
       "value": "Virgin Islands"
     },
     {
-      "id": "VT",
-      "value": "Vermont"
+      "id": "VA",
+      "value": "Virginia"
     },
     {
       "id": "WA",
       "value": "Washington"
     },
     {
-      "id": "WI",
-      "value": "Wisconsin"
-    },
-    {
       "id": "WV",
       "value": "West Virginia"
+    },
+    {
+      "id": "WI",
+      "value": "Wisconsin"
     },
     {
       "id": "WY",

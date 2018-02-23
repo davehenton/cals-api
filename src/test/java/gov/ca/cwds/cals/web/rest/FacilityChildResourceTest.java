@@ -1,5 +1,16 @@
 package gov.ca.cwds.cals.web.rest;
 
+import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
+import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
+import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+
 import static gov.ca.cwds.cals.Constants.API.CHILDREN;
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
@@ -7,16 +18,7 @@ import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsR
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
-import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author CWDS CALS API Team
@@ -28,8 +30,21 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
         setUpCms();
     }
 
+    private FacilityChildrenDTO getChiildrenByFacilityId(String facilityId) {
+        String pathInfo = FACILITIES + "/{" + FACILITY_ID + "}/" + CHILDREN;
+        pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", facilityId);
+        WebTarget target = clientTestRule.target(pathInfo);
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        return invocation.get(FacilityChildrenDTO.class);
+    }
+
     @Test
-    public void testGetFacilityChildren() throws Exception {
+    public void testGetChildrenFromCWSFacility() throws Exception {
+        assertTrue(getChiildrenByFacilityId("9120      ").getChildren().size() > 0);
+    }
+
+    @Test
+    public void testGetChildrenFromLISFacility() throws Exception {
         String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
         pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "577000449");
         WebTarget target = clientTestRule.target(pathInfo);
@@ -46,6 +61,18 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
             }                                        }
 
         String fixture = fixture("fixtures/facility-children-response.json");
+        assertEqualsResponse(fixture, transformDTOtoJSON(facilityChildDTO));
+    }
+
+    @Test
+    public void testGetFacilityChildrenWithAssignedWorkerPresent() throws Exception {
+        String pathInfo = FACILITIES + "/{"+ FACILITY_ID + "}/" + CHILDREN;
+        pathInfo = pathInfo.replace("{"+ FACILITY_ID + "}", "412252222");
+        WebTarget target = clientTestRule.target(pathInfo);
+        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+        FacilityChildrenDTO facilityChildDTO = invocation.get(FacilityChildrenDTO.class);
+
+        String fixture = fixture("fixtures/facility-children-response-assigned-worker-present.json");
         assertEqualsResponse(fixture, transformDTOtoJSON(facilityChildDTO));
     }
 

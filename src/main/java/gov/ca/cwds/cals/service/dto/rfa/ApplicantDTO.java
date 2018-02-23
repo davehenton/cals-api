@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.dto.rfa;
 
-import static gov.ca.cwds.cals.Constants.Validation.Pattern.ALFANUMERICAL_PATTERN;
 import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,7 +20,6 @@ import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -43,22 +41,19 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   private NamePrefixType namePrefix;
 
   @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
-  @Pattern(regexp = ALFANUMERICAL_PATTERN, message = Constraint.ALPHANUMERIC_MESSAGE)
   private String firstName;
 
   @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
-  @Pattern(regexp = ALFANUMERICAL_PATTERN, message = Constraint.ALPHANUMERIC_MESSAGE)
   private String middleName;
 
   @Size(max = 25, message = Constraint.MAX_LENGTH_MESSAGE)
-  @Pattern(regexp = ALFANUMERICAL_PATTERN, message = Constraint.ALPHANUMERIC_MESSAGE)
   private String lastName;
 
   @ApiModelProperty(value = "Suffix")
   @CheckReferentialIntegrity(enrich = true)
   private NameSuffixType nameSuffix;
 
-  private List<TypedPersonNameDTO> otherNames = new ArrayList<>();
+  private List<TypedPersonNameDTO> otherNames;
 
   @CheckReferentialIntegrity(enrich = true)
   private EducationLevelType highestEducationLevel;
@@ -89,7 +84,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   private EmploymentDTO employment;
 
   @Valid
-  private List<PhoneDTO> phones = new ArrayList<>();
+  private List<PhoneDTO> phones;
 
   @ApiModelProperty(hidden = true)
   @Valid
@@ -113,7 +108,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   }
 
   public void setFirstName(String firstName) {
-    this.firstName = firstName;
+    this.firstName = firstName == null ? null : firstName.trim();
   }
 
   public String getMiddleName() {
@@ -121,7 +116,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   }
 
   public void setMiddleName(String middleName) {
-    this.middleName = middleName;
+    this.middleName = middleName == null ? null : middleName.trim();
   }
 
   public String getLastName() {
@@ -129,7 +124,7 @@ public class ApplicantDTO extends RFAExternalEntityDTO implements Serializable {
   }
 
   public void setLastName(String lastName) {
-    this.lastName = lastName;
+     this.lastName = lastName == null ? null : lastName.trim();
   }
 
   public List<TypedPersonNameDTO> getOtherNames() {

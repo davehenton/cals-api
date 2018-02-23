@@ -3,19 +3,11 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.CMSDictionaryEntriesHolder;
-import gov.ca.cwds.cals.service.dto.ComplaintDTO;
-import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
-import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
-import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.cals.service.dto.FacilityDTO;
-import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
-import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
+import gov.ca.cwds.cals.service.dto.*;
+import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BaseLicensingVisit;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
@@ -23,6 +15,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -32,6 +28,7 @@ import org.mapstruct.factory.Mappers;
         DistrictOfficeMapper.class, DictionaryMapper.class,
         TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityMapper {
+
   FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
 
   /**
@@ -69,6 +66,8 @@ public interface FacilityMapper {
   @Mapping(source = "lisFacFile.facOrigApplRecDate", target = "originalApplicationRecievedDate")
   @Mapping(source = "lisFacFile.facEmailAddress", target = "emailAddress")
   @Mapping(source = "lisFacFile.county", target = "county")
+  @Mapping(target = "facilitySource", constant = "LIS")
+  @Mapping(source = "lisFacFile.facIncCapEffDate", target = "capacityLastChanged")
   FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
   @Mapping(target = "prelicensingVisitDate", ignore = true)
@@ -96,6 +95,8 @@ public interface FacilityMapper {
   @Mapping(target = "licenseeType", ignore = true)
   @Mapping(target = "messages", ignore = true)
   @Mapping(target = "emailAddress", ignore = true)
+  @Mapping(target = "facilitySource", constant = "CWS/CMS")
+  @Mapping(target = "capacityLastChanged", ignore = true)
   FacilityDTO toFacilityDTO(BasePlacementHome placementHome,
       CMSDictionaryEntriesHolder dictionaryEntriesHolder);
 
@@ -159,13 +160,9 @@ public interface FacilityMapper {
 
     FacilityAddressMapper facilityAddressMapper = Mappers.getMapper(FacilityAddressMapper.class);
 
-    Integer residentialZipCode = placementHome.getZipNo();
-    Short residentialZipSuffix = placementHome.getZipSfxNo();
-    if (StringUtils
-        .isNoneBlank(placementHome.getStreetNo(), placementHome.getStreetNm(),
-            placementHome.getCityNm())
-        || residentialZipCode > 0
-        || residentialZipSuffix > 0) {
+    if (!StringUtils
+        .isAllBlank(placementHome.getStreetNo(), placementHome.getStreetNm(),
+            placementHome.getCityNm(), placementHome.getZipNo(), placementHome.getZipSfxNo())) {
       FacilityAddressDTO residentialAddress = facilityAddressMapper
           .toResidentialAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper
@@ -173,12 +170,8 @@ public interface FacilityMapper {
       facilityAddressDTOs.add(residentialAddress);
     }
 
-    Integer mailZipCode = placementHome.getpZipNo();
-    Short mailZipSuffix = placementHome.getPyZipSfx();
-    if (StringUtils.isNoneBlank(placementHome.getPstreetNo(), placementHome.getPstreetNm(),
-        placementHome.getpCityNm())
-        || mailZipCode > 0
-        || mailZipSuffix > 0) {
+    if (!StringUtils.isAllBlank(placementHome.getPstreetNo(), placementHome.getPstreetNm(),
+        placementHome.getpCityNm(), placementHome.getpZipNo(), placementHome.getPyZipSfx())) {
       FacilityAddressDTO mailingAddress = facilityAddressMapper
           .toMailAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper.afterMapping(mailingAddress, placementHome, dictionaryEntriesHolder);
@@ -195,15 +188,15 @@ public interface FacilityMapper {
     PhoneMapper phoneMapper = Mappers.getMapper(PhoneMapper.class);
 
     PersonPhoneDTO primaryPhone = phoneMapper.toPrimaryPhoneDTO(placementHome);
-    if (primaryPhone != null) {
+    if (Utils.Phone.checkIfPhoneDTOIsValid(primaryPhone)) {
       personPhoneDTOS.add(primaryPhone);
     }
 
     PersonPhoneDTO alternativePhone = phoneMapper.toAlternatePhoneDTO(placementHome);
-    if (alternativePhone != null) {
+    if (Utils.Phone.checkIfPhoneDTOIsValid(alternativePhone)) {
       personPhoneDTOS.add(alternativePhone);
     }
+
     facilityDTO.setPhone(personPhoneDTOS);
   }
-
 }

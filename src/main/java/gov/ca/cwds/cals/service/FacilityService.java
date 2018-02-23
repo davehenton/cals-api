@@ -1,13 +1,7 @@
 package gov.ca.cwds.cals.service;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
-
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
@@ -48,13 +42,20 @@ import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
 
 /**
  * CRUD service for {@link gov.ca.cwds.cals.service.dto.FacilityDTO}
@@ -116,7 +117,6 @@ public class FacilityService implements CrudsService {
   @Inject
   private LicenseStatusDao licenseStatusDao;
 
-
   @Inject
   private StateDao stateDao;
 
@@ -129,11 +129,7 @@ public class FacilityService implements CrudsService {
     return findByParameterObject((FacilityParameterObject) params);
   }
 
-  protected FacilityDTO findExpandedById(String id) {
-    return findByParameterObject(Utils.createExpandedFacilityParameterObject(id));
-  }
-
-  private FacilityDTO findByParameterObject(FacilityParameterObject parameterObject) {
+  protected FacilityDTO findByParameterObject(FacilityParameterObject parameterObject) {
     FacilityDTO facilityDTO = null;
     if (LIS.equals(parameterObject.getUnitOfWork())) {
       facilityDTO = loadFacilityFromLis(parameterObject);
@@ -146,7 +142,7 @@ public class FacilityService implements CrudsService {
   private FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
     LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
     if (lisDsLisFacFile == null) {
-      LOGGER.error(
+      LOGGER.warn(
           "!!!Facility was not found in LIS by license number {}",
           parameterObject.getLicenseNumber());
       return null;
@@ -165,7 +161,7 @@ public class FacilityService implements CrudsService {
 
     if (parameterObject.isExpanded()) {
       List<FacilityChildDTO> facilityChildren =
-          findFacilityChildredByLicenseNumber(parameterObject.getLicenseNumber());
+              findFacilityChildredByLicenseNumber(Integer.valueOf(parameterObject.getLicenseNumber()));
       List<FacilityInspectionDTO> inspections =
           findInspectionsByFacilityId(parameterObject.getLicenseNumber());
       List<ComplaintDTO> complaints =
@@ -192,17 +188,23 @@ public class FacilityService implements CrudsService {
   }
 
   @UnitOfWork(FAS)
-  protected List<FacilityInspectionDTO> findInspectionsByFacilityId(Integer licenseNumber) {
-    return inspectionDao
-        .findDeficienciesByFacilityNumber(licenseNumber).stream()
-        .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
+  protected List<FacilityInspectionDTO> findInspectionsByFacilityId(String licenseNumber) {
+    if (StringUtils.isNotBlank(licenseNumber)) {
+      return inspectionDao
+              .findDeficienciesByFacilityNumber(licenseNumber).stream()
+              .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
+    }
+    return Collections.EMPTY_LIST;
   }
 
   @UnitOfWork(FAS)
-  protected List<ComplaintDTO> findComplaintsByFacilityId(Integer licenseNumber) {
-    return complaintReportLic802Dao
-        .findComplaintsByFacilityNumber(licenseNumber).stream()
-        .map(complaintMapper::entityToDTO).collect(Collectors.toList());
+  protected List<ComplaintDTO> findComplaintsByFacilityId(String licenseNumber) {
+    if (StringUtils.isNotBlank(licenseNumber)) {
+      return complaintReportLic802Dao
+              .findComplaintsByFacilityNumber(licenseNumber).stream()
+              .map(complaintMapper::entityToDTO).collect(Collectors.toList());
+    }
+    return Collections.EMPTY_LIST;
   }
 
   private FacilityDTO loadFacilityFromCwsCms(FacilityParameterObject parameterObject) {
@@ -246,7 +248,7 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(LIS)
   protected LisFacFile findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
-    LisFacFile lisFacFile = lisFacFileLisDao.find(parameterObject.getLicenseNumber());
+    LisFacFile lisFacFile = lisFacFileLisDao.find(Integer.valueOf(parameterObject.getLicenseNumber()));
     if (lisFacFile == null) {
       return null;
     }
@@ -274,14 +276,14 @@ public class FacilityService implements CrudsService {
 
   @UnitOfWork(LIS)
   protected void attachVisitsData(FacilityInformation facilityInformation) {
-    BigInteger facilityLastVisitReasonCode = facilityInformation.getFacLastVisitReason();
+    Long facilityLastVisitReasonCode = facilityInformation.getFacLastVisitReason();
     if (facilityLastVisitReasonCode != null) {
       LisTableFile facilityLastVisitReason =
           lisTableFileDao.findVisitReasonType(facilityLastVisitReasonCode.intValue());
       facilityInformation.setFacilityLastVisitReason(facilityLastVisitReason);
     }
 
-    BigInteger facilityLastDeferredVisitReasonCode = facilityInformation.getFacLastDeferVisitReason();
+    Long facilityLastDeferredVisitReasonCode = facilityInformation.getFacLastDeferVisitReason();
     if (facilityLastDeferredVisitReasonCode != null) {
       LisTableFile facilityLastDeferredVisitReason =
           lisTableFileDao.findVisitReasonType(facilityLastDeferredVisitReasonCode.intValue());
@@ -292,19 +294,19 @@ public class FacilityService implements CrudsService {
   @UnitOfWork(FAS)
   protected FacilityInformation findFacilityInfoByLicenseNumber(
       FacilityParameterObject parameterObject) {
-    return facilityInformationDao.find(BigInteger.valueOf(parameterObject.getLicenseNumber()));
+    return facilityInformationDao.find(Long.valueOf(parameterObject.getLicenseNumber()));
   }
 
   @UnitOfWork(FAS)
   protected LpaInformation findAssignedWorkerInformation(LisFacFile lisFacFile) {
     if (lisFacFile.getFacDoNbr() == null) {
-      throw new ExpectedException(
-          Constants.ExpectedExceptionMessages.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN,
-          EXPECTATION_FAILED);
+      LOGGER.warn(Constants.ExpectedExceptionMessages.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN);
+      return null;
+    } else {
+      String lpaCode =
+              String.format("%02d", lisFacFile.getFacDoNbr().getDoNbr()) + lisFacFile.getFacDoEvalCode();
+      return lpaInformationDao.findByLpaCode(lpaCode);
     }
-    String lpaCode =
-        String.format("%02d", lisFacFile.getFacDoNbr().getDoNbr()) + lisFacFile.getFacDoEvalCode();
-    return lpaInformationDao.findByLpaCode(lpaCode);
   }
 
   @UnitOfWork(CMS)

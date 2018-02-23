@@ -35,6 +35,8 @@ import org.junit.Test;
 public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<ApplicantDTO> {
 
   public static String APPLICANT_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-applicant.json");
+  public static String APPLICANT_FIXTURE2 = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-applicant2.json");
+
 
   @Override
   protected BaseExternalEntityApiHelper<ApplicantDTO> getExternalEntityApiHelper() {
@@ -66,17 +68,6 @@ public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applic
   @Override
   public void getEntitiesByFormId() throws Exception {
     getExternalEntityApiHelper().getEntitiesByFormId();
-  }
-
-  @Test
-  public void twoEmptyApplicantsTest() throws Exception {
-    try {
-      RFA1aFormDTO form = formAHelper.createRFA1aForm();
-      applicantHelper.postApplicant(form.getId(), new ApplicantDTO());
-      applicantHelper.postApplicant(form.getId(), new ApplicantDTO());
-    } catch (ClientErrorException e) {
-      assertEquals(422, e.getResponse().getStatus());
-    }
   }
 
   @Test
@@ -123,57 +114,6 @@ public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applic
       parameters.put("invalid_value", "1234567890123456789012345X");
       parameters
           .put("user_message", "1234567890123456789012345X exceeds maximum length of 25");
-      checkValidationResponse(e, parameters);
-    }
-  }
-
-  @Test
-  public void checkFirstNameAlphanumericTest() throws Exception {
-    String invalidValue = "1@4";
-    try {
-      ApplicantDTO applicantDTO = getApplicantDTO();
-      applicantDTO.setFirstName(invalidValue);
-      RFA1aFormDTO form = formAHelper.createRFA1aForm();
-      applicantHelper.postApplicant(form.getId(), applicantDTO);
-      fail();
-    } catch (ClientErrorException e) {
-      Map<String, Object> parameters = new HashMap<>();
-
-      BaseExceptionResponse exceptionResponse = e.getResponse()
-          .readEntity(BaseExceptionResponse.class);
-      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
-      IssueDetails detail = issueDetails.iterator().next();
-      parameters.put("incident_id", detail.getIncidentId());
-      parameters.put("property", "firstName");
-      parameters.put("invalid_value", invalidValue);
-
-      parameters.put("user_message",
-          invalidValue + " is invalid. Only alphanumerical characters and spaces are allowed");
-      checkValidationResponse(e, parameters);
-    }
-  }
-
-  @Test
-  public void checkLastNameAlphanumericTest() throws Exception {
-    String invalidValue = "1@4";
-    try {
-      ApplicantDTO applicantDTO = getApplicantDTO();
-      applicantDTO.setLastName(invalidValue);
-      RFA1aFormDTO form = formAHelper.createRFA1aForm();
-      applicantHelper.postApplicant(form.getId(), applicantDTO);
-      fail();
-    } catch (ClientErrorException e) {
-      Map<String, Object> parameters = new HashMap<>();
-
-      BaseExceptionResponse exceptionResponse = e.getResponse()
-          .readEntity(BaseExceptionResponse.class);
-      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
-      IssueDetails detail = issueDetails.iterator().next();
-      parameters.put("incident_id", detail.getIncidentId());
-      parameters.put("property", "lastName");
-      parameters.put("invalid_value", invalidValue);
-      parameters.put("user_message",
-          invalidValue + " is invalid. Only alphanumerical characters and spaces are allowed");
       checkValidationResponse(e, parameters);
     }
   }
@@ -387,6 +327,62 @@ public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applic
       assertResponseByFixtureTemplate(entity,
           "fixtures/rfa/validation/applicant-duplicate-phone-numbers-response.json",
           parameters);
+    }
+  }
+
+  @Test
+  public void testEmptyFirstNameValidation() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    ApplicantDTO applicant = getApplicantDTO();
+
+    applicant.setFirstName(" ");
+    applicant.setLastName("setLastName");
+
+    try {
+      applicantHelper.postApplicant(form.getId(), applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+              .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+              "fixtures/rfa/validation/applicant-empty-first-name-response.json",
+              parameters);
+    }
+  }
+
+  @Test
+  public void testEmptyLastNameValidation() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    ApplicantDTO applicant = getApplicantDTO();
+
+    applicant.setFirstName("setFirstName");
+    applicant.setLastName(" ");
+
+    try {
+      applicantHelper.postApplicant(form.getId(), applicant);
+      fail();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+
+      String entity = e.getResponse().readEntity(String.class);
+      Map<String, Object> parameters = new HashMap<>();
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+              .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      IssueDetails detail = issueDetails.iterator().next();
+      parameters.put("incident_id", detail.getIncidentId());
+
+      assertResponseByFixtureTemplate(entity,
+              "fixtures/rfa/validation/applicant-empty-last-name-response.json",
+              parameters);
     }
   }
 

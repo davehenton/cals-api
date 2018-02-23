@@ -5,12 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
-import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -55,7 +54,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty(hidden = true)
   @Valid
-  private List<MinorChildDTO> minorChildren = new ArrayList<>();
+  private List<MinorChildDTO> minorChildren;
 
   @ApiModelProperty(hidden = true)
   @Valid

@@ -12,7 +12,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO
 import gov.ca.cwds.cals.service.dto.rfa.AdultChildDTO
-import gov.ca.cwds.cals.Utils
+import gov.ca.cwds.cals.util.Utils
 import gov.ca.cwds.cals.Constants
 import gov.ca.cwds.cals.Constants.Validation
 import gov.ca.cwds.cals.Constants.Validation.Business

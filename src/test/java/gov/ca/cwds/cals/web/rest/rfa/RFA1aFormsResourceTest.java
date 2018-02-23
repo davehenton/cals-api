@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResourceTest.ADOPTION_HISTORY_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANT_FIXTURE;
+import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantResourceTest.APPLICANT_FIXTURE2;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResourceTest.APPLICANTS_DECLARATION_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsHistoryResourceTest.APPLICANTS_HISTORY_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsRelationshipResourceTest.APPLICANTS_RELATIONSHIP_FIXTURE;
@@ -33,7 +34,6 @@ import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import io.dropwizard.testing.FixtureHelpers;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ws.rs.client.Entity;
@@ -69,6 +69,11 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicantDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS)
         .request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(APPLICANT_FIXTURE, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
+
+    ApplicantDTO applicantDTO2 = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS)
+            .request(MediaType.APPLICATION_JSON)
+            .post(Entity.entity(APPLICANT_FIXTURE2, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
+
 
     ResidenceDTO residenceDTO = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_RESIDENCE)
         .request(MediaType.APPLICATION_JSON)
@@ -116,10 +121,10 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
     RFA1aFormDTO expectedRfa1aFormDTO = clientTestRule.getMapper().readValue(RFA_1A_FIXTURE, RFA1aFormDTO.class);
     expectedRfa1aFormDTO.setId(formId);
-    expectedRfa1aFormDTO.setRfa1cForms(Collections.emptyList());
 
     List<ApplicantDTO> applicants = new ArrayList<>();
     applicants.add(applicantDTO);
+    applicants.add(applicantDTO2);
     expectedRfa1aFormDTO.setApplicants(applicants);
 
     expectedRfa1aFormDTO.setResidence(residenceDTO);
@@ -203,11 +208,11 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
   @Test
   public void getAllApplicationFormsTest() throws Exception {
     RFA1aFormDTO rfaFormCreate1 = formAHelper.createRFA1aForm();
-    applicantHelper.postApplicant(rfaFormCreate1.getId(), new ApplicantDTO());
+    applicantHelper.postApplicant(rfaFormCreate1.getId(), applicantHelper.getApplicant());
     RFA1aFormDTO rfaFormCreate2 = formAHelper.createRFA1aForm();
-    applicantHelper.postApplicant(rfaFormCreate2.getId(), new ApplicantDTO());
+    applicantHelper.postApplicant(rfaFormCreate2.getId(), applicantHelper.getApplicant());
     RFA1aFormDTO rfaFormCreate3 = formAHelper.createRFA1aForm();
-    applicantHelper.postApplicant(rfaFormCreate3.getId(), new ApplicantDTO());
+    applicantHelper.postApplicant(rfaFormCreate3.getId(), applicantHelper.getApplicant());
 
     assertNotEquals(rfaFormCreate1, rfaFormCreate2);
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);

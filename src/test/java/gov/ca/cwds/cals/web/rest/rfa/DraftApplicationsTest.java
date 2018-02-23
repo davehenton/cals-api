@@ -11,6 +11,8 @@ import javax.ws.rs.core.MediaType;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.IOException;
+
 /**
  * @author CWDS CALS API Team
  */
@@ -31,7 +33,7 @@ public class DraftApplicationsTest extends BaseRFAIntegrationTest {
     assertEquals(previousSize + 1, formAHelper.getRFA1aForms().getCollection().size());
   }
 
-  private RFA1aFormDTO createInProgressForm() {
+  private RFA1aFormDTO createInProgressForm() throws IOException{
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS);
     RFA1aFormDTO rfaForm =
         target
@@ -39,7 +41,7 @@ public class DraftApplicationsTest extends BaseRFAIntegrationTest {
             .post(
                 Entity.entity(new RFA1aFormDTO(), MediaType.APPLICATION_JSON_TYPE),
                 RFA1aFormDTO.class);
-    applicantHelper.postApplicant(rfaForm.getId(), new ApplicantDTO());
+    applicantHelper.postApplicant(rfaForm.getId(), applicantHelper.getApplicant());
     return rfaForm;
   }
 

@@ -1,28 +1,29 @@
 package gov.ca.cwds.cals.service.dto;
 
-import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
-import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
-import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.Identifiable;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.Identifiable;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.api.domain.DomainObject;
 import io.swagger.annotations.ApiModelProperty;
+import org.glassfish.jersey.linking.InjectLink;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import org.glassfish.jersey.linking.InjectLink;
+
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
+import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
 
 /**
  * {@link DomainObject} representing a facility.
@@ -45,6 +46,13 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
   @NotNull
   @ApiModelProperty(required = true, value = "Facility ID", example = "193600010")
   private String id;
+
+  @JsonProperty("capacity_last_changed")
+  @NotNull
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
+  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT)
+  @ApiModelProperty(value = "yyyy-MM-dd", example = "2000-01-01")
+  private LocalDate capacityLastChanged;
 
   @JsonProperty("type")
   @NotNull
@@ -160,6 +168,14 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
   @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT + " " + TIME_FORMAT)
   @ApiModelProperty(required = true, readOnly = true, value = "2000-01-01 00:00:00")
   private LocalDateTime prelicensingVisitDate;
+
+  /**
+   * Source of the facility. Either CMS or LIS
+   */
+  @JsonProperty("facility_source")
+  @NotNull
+  @ApiModelProperty(required = true, readOnly = true, value = "Facility Source")
+  private String facilitySource;
 
   public URI getHref() {
     return href;
@@ -351,6 +367,22 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
 
   public void setPhone(List<PersonPhoneDTO> phone) {
     this.phone = new ArrayList<>(phone);
+  }
+
+  public String getFacilitySource() {
+    return facilitySource;
+  }
+
+  public void setFacilitySource(String facilitySource) {
+    this.facilitySource = facilitySource;
+  }
+
+  public LocalDate getCapacityLastChanged() {
+    return capacityLastChanged;
+  }
+
+  public void setCapacityLastChanged(LocalDate capacityLastChanged) {
+    this.capacityLastChanged = capacityLastChanged;
   }
 
   @Override

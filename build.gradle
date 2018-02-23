@@ -30,14 +30,11 @@ project.ext {
     projectGroup = 'gov.ca.cwds.cals'
     projectDockerGroup = 'cwds'
     projectDockerAppName = 'cals-api'
-    projectMajorVersion = '0.5.3'
-//    projectVersion = projectMajorVersion + '-SNAPSHOT'
-
-    projectVersion = projectMajorVersion + '_TPT2-658' // Perry V2 support story release
+    projectMajorVersion = '0.5.7'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.5.3_TPT2-658_3'
-    calsModelVersion = '0.4.6'
+    coreApiVersion = '0.5.7_316-RC'
+    calsModelVersion = '0.5.6_426-RC'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     dbunitVersion = '2.5.0'
@@ -45,19 +42,26 @@ project.ext {
 
     targetDockerHubOrganization = System.env.DOCKERHUB_ORG ?: 'cwds'
 
-    releaseDocker = System.getProperty("ReleaseDocker")
+    isRelease = System.getProperty("Release") == "true"
     buildNumber = System.getProperty('BuildNumber')
-    dockerTag = (releaseDocker == 'true' && buildNumber != null  ? projectMajorVersion + '_' + buildNumber + '-RC' : projectVersion )
+    customVersion = System.getProperty('CustomVersion')
+
+    projectSnapshotVersion = projectMajorVersion + "-SNAPSHOT"
+    projectReleaseVersion = (customVersion == null || customVersion == "" || customVersion.startsWith('$') ? projectMajorVersion + '_' + buildNumber + '-RC' : customVersion )
+    projectVersion = (isRelease ? projectReleaseVersion : projectSnapshotVersion )
+    dockerTag = projectVersion
 
     // assumed that Windows users use the Docker Toolbox
     buildEnv = System.env.BUILD_ENV ?: (Os.isFamily(Os.FAMILY_WINDOWS) ? 'WIN_DEV' : 'JENKINS')
     devDockerHost = System.env.DEV_DOCKER_HOST ?: '192.168.99.100'
     devDockerPort = 2376
 
+    commonsCollectionsVersion = '4.1'
+
     // Publishing configuration
-    snapshotMavenRepo = "http://sonar.dev.cwds.io:8081/artifactory/repo"
-    releaseMavenRepo = "http://sonar.dev.cwds.io:8081/artifactory/libs-release"
-    //artifactoryRepo = ((versionPropertyValue != null ) ? releaseMavenRepo : snapshotMavenRepo)
+    snapshotMavenRepo = "http://pr.dev.cwds.io/artifactory/repo"
+    releaseMavenRepo = "http://pr.dev.cwds.io/artifactory/libs-release"
+    artifactoryRepo = (isRelease ? releaseMavenRepo : snapshotMavenRepo)
 }
 
 group projectGroup
@@ -66,7 +70,7 @@ version projectVersion
 repositories {
     mavenLocal()
     maven {
-        url "http://sonar.dev.cwds.io:8081/artifactory/repo"
+        url artifactoryRepo
     }
 }
 
@@ -90,11 +94,11 @@ sonarqube {
         property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
         property "sonar.exclusions",
                 "src/main/java/gov/ca/cwds/cals/persistence/model/cms/*.*, " +
-                "src/main/java/gov/ca/cwds/cals/persistence/model/fas/*.*, " +
-                "src/main/java/gov/ca/cwds/cals/persistence/model/lisfas/*.*, " +
-                "src/test/resources/liquibase/cms/dml/*.xml, " +
-                "src/test/resources/liquibase/fas/dml/*.xml, " +
-                "src/test/resources/liquibase/lis/dml/*.xml"
+                        "src/main/java/gov/ca/cwds/cals/persistence/model/fas/*.*, " +
+                        "src/main/java/gov/ca/cwds/cals/persistence/model/lisfas/*.*, " +
+                        "src/test/resources/liquibase/cms/dml/*.xml, " +
+                        "src/test/resources/liquibase/fas/dml/*.xml, " +
+                        "src/test/resources/liquibase/lis/dml/*.xml"
     }
 }
 
@@ -104,7 +108,7 @@ jacocoTestReport {
         csv.enabled false
         html.destination "${project.buildDir}/jacocoHtml"
     }
-    
+
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
@@ -127,17 +131,18 @@ configurations.all {
 
 dependencies {
     compile group: 'com.connx.jdbc', name: 'connxjdbc', version: '12.4'
-    compile group: 'com.ibm', name: 'db2jcc4', version: '4.0.0'
+    compile group: 'com.ibm', name: 'db2jcc4', version: '4.21.29'
     compile group: 'com.ibm', name: 'db2jcc_license_cisuz', version: '4.0.0'
 
 // Dropwizard-guice 1.0.0.2 conflicts with jersey-client 2.25.
 // Exclude transitive dependencies.
 
-    compile (group: 'gov.ca.cwds.api', name: 'api-core', version: coreApiVersion , changing: true) {
+    compile (group: 'gov.ca.cwds.api', name: 'api-core', version: coreApiVersion) {
         exclude group: 'org.glassfish.jersey.core'
     }
-    compile (group: 'gov.ca.cwds.api', name: 'drools-engine', version: coreApiVersion , changing: true)
-    compile (group: 'gov.ca.cwds.api', name: 'legacy-data-access-services', version: coreApiVersion , changing: true)
+    compile group: 'gov.ca.cwds.api', name: 'drools-engine', version: coreApiVersion
+    compile group: 'gov.ca.cwds.api', name: 'legacy-data-access-services', version: coreApiVersion
+    compile group: 'gov.ca.cwds.api', name: 'api-core-common', version: coreApiVersion
 
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '4.39'
 
@@ -153,11 +158,11 @@ dependencies {
             'org.postgresql:postgresql:9.4.1208.jre7',
             'io.dropwizard:dropwizard-testing:' + dropwizardVersion
     )
-    
+
     compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.2.8.Final'
 
     compile 'org.mapstruct:mapstruct-jdk8:' + mapstructVersion
-    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: commonsCollectionsVersion
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
     compile group: 'org.apache.commons', name: 'commons-compress', version: '1.14'
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
@@ -192,6 +197,7 @@ dependencies {
 
     testCompile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
     testCompile "org.dbunit:dbunit:$dbunitVersion"
+    testCompile group: 'gov.ca.cwds.api', name:'api-security-test-support', version: '0.5.3_312'
 
     apt 'org.mapstruct:mapstruct-processor:' + mapstructVersion
 }
@@ -314,14 +320,11 @@ publishing {
             from components.java
             groupId projectGroup
             artifactId rootProject.name
-            version version + ((System.properties.getProperty('build') != null) ? '.' + System.properties.getProperty('build') : '')
         }
     }
     repositories {
-        mavenLocal()
         maven {
-            //url snapshotMavenRepo
-            url releaseMavenRepo
+            url artifactoryRepo
         }
     }
 }

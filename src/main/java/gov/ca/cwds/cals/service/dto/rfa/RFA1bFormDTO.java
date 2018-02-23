@@ -5,6 +5,7 @@ import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.Constants.Validation.Constraint;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
@@ -14,9 +15,9 @@ import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrity;
 import gov.ca.cwds.cals.service.validation.field.CheckStateReferentialIntegrityForEach;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 /**
  * @author CWDS CALS API Team
@@ -76,7 +77,8 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
   private LocalDate dateOfBirth;
 
-  @ApiModelProperty(example = "MD123-1234-585-121")
+  @ApiModelProperty(name = "Driver's License Number", example = "AS123456789012345678")
+  @Size(max = 20, message = Constraint.MAX_LENGTH_MESSAGE)
   private String driverLicense;
 
   @CheckStateReferentialIntegrity(enrich = true)
@@ -90,13 +92,13 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   private LocalDate applicationDate;
 
   @Valid
-  private List<DisclosureDTO> convictedInCaliforniaDisclosures = new ArrayList<>();
+  private List<DisclosureDTO> convictedInCaliforniaDisclosures;
 
   @Valid
-  private List<DisclosureDTO> convictedInAnotherStateDisclosures = new ArrayList<>();
+  private List<DisclosureDTO> convictedInAnotherStateDisclosures;
 
   @Valid
-  private List<DisclosureDTO> arrestedForCrimeDisclosures = new ArrayList<>();
+  private List<DisclosureDTO> arrestedForCrimeDisclosures;
 
   public CountyType getApplicationCounty() {
     return applicationCounty;

@@ -1,11 +1,12 @@
 package gov.ca.cwds.cals;
 
-import static gov.ca.cwds.cals.Utils.PlacementHome.WATER_BODY;
-import static gov.ca.cwds.cals.Utils.PlacementHome.WEAPON_IN_HOME_BODY;
-
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.util.Utils;
 import org.junit.Assert;
 import org.junit.Test;
+
+import static gov.ca.cwds.cals.util.Utils.PlacementHome.WATER_BODY;
+import static gov.ca.cwds.cals.util.Utils.PlacementHome.WEAPON_IN_HOME_BODY;
 
 /**
  * @author CWDS CALS API Team

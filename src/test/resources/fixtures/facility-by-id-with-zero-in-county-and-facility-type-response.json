@@ -10,6 +10,7 @@
     "number" : "34",
     "name" : "Sacramento"
   },
+  "facility_source":"CWS/CMS",
   "license_number" : "126571",
   "status" : {
     "id" : "0003",
@@ -26,22 +27,20 @@
     "number" : "9164578228"
   } ],
   "addresses" : [ {
-    "type": "Residential",
+    "type" : "Residential",
     "address" : {
       "street_address" : "2114 H St.",
       "city" : "Sacramento",
       "state" : "CA",
-      "zip_code" : "95814",
-      "zip_suffix_code" : "0"
+      "zip_code" : "95814"
     }
   }, {
-    "type": "Mailing",
+    "type" : "Mailing",
     "address" : {
       "street_address" : "2114 H St.",
-      "state": "CA",
       "city" : "Sacramento",
-      "zip_code" : "95814",
-      "zip_suffix_code" : "0"
+      "state" : "CA",
+      "zip_code" : "95814"
     }
   } ]
 }

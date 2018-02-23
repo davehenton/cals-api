@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -25,7 +24,7 @@ public class RFA1cFormDTO extends RFAExternalEntityDTO {
   private boolean childIdentified;
 
   @Valid
-  private List<IdentifiedChildDTO> identifiedChildren = new ArrayList<>();
+  private List<IdentifiedChildDTO> identifiedChildren;
 
   public List<IdentifiedChildDTO> getIdentifiedChildren() {
     return identifiedChildren;

@@ -7,7 +7,6 @@ import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.Utils.StaffPerson;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.XaRFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
@@ -26,11 +25,13 @@ import gov.ca.cwds.drools.DroolsService;
 import gov.ca.cwds.rest.exception.BusinessValidationException;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.exception.IssueDetails;
+import gov.ca.cwds.security.utils.PrincipalUtils;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.setup.Environment;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
@@ -77,7 +78,7 @@ public class RFA1aFormService
     RFA1aForm form = new RFA1aForm();
     rfa1aFomMapper.toRFA1aForm(form, formDTO);
 
-    String staffPersonId = StaffPerson.getStaffPersonId();
+    String staffPersonId = PrincipalUtils.getStaffPersonId();
     LocalDateTime now = LocalDateTime.now();
     form.setCreateDateTime(now);
     form.setCreateUserId(staffPersonId);
@@ -107,16 +108,20 @@ public class RFA1aFormService
   @UnitOfWork(CALSNS)
   @Override
   public RFA1aFormDTO update(RFA1aFormsParameterObject parameterObject, RFA1aFormDTO formDTO) {
-    RFA1aForm form = findFormById(
-        parameterObject.getFormId());
-    rfa1aFomMapper.toRFA1aForm(form, formDTO);
-    rfa1AFormsDao.update(fillFormUpdateAttributes(form));
-    return rfa1aFomMapper.toRFA1aFormDTO(form);
+    final Long formId = parameterObject.getFormId();
+    AtomicReference<RFA1aFormDTO> updated = new AtomicReference<>();
+    Optional.ofNullable(findFormById(formId)).ifPresent(rfa1aForm -> {
+      formDTO.setId(formId);
+      rfa1aFomMapper.toRFA1aForm(rfa1aForm, formDTO);
+      rfa1AFormsDao.update(fillFormUpdateAttributes(rfa1aForm));
+      updated.set(rfa1aFomMapper.toRFA1aFormDTO(rfa1aForm));
+    });
+    return updated.get();
   }
 
   private RFA1aForm fillFormUpdateAttributes(RFA1aForm form) {
     form.setUpdateDateTime(LocalDateTime.now());
-    form.setUpdateUserId(StaffPerson.getStaffPersonId());
+    form.setUpdateUserId(PrincipalUtils.getStaffPersonId());
     return form;
   }
 
@@ -176,10 +181,31 @@ public class RFA1aFormService
       updateFormAfterPlacementHomeCreation(formId, storedPlacementHome.getIdentifier(),
           newStatus);
       userTransaction.commit();
-    } catch (Exception e) {
+    } catch (BusinessValidationException e) {
       userTransaction.rollback();
-      LOG.error("Can not create Placement Home", e);
-      throw new SystemException(e.getMessage());
+      LOG.error("Can not create Placement Home because of BusinessValidationException", e);
+      throw e;
+    } catch (Exception e) {
+      try {
+        userTransaction.rollback();
+      } catch (Exception re) {
+        LOG.warn(re.getMessage(), re);
+      }
+
+      StringBuilder sb = new StringBuilder();
+      sb.append(e.getMessage());
+      sb.append('\n');
+      Throwable cause = e.getCause();
+      while (cause != null) {
+        sb.append(" Cause: ");
+        sb.append(cause.getMessage());
+        sb.append('\n');
+        cause = cause.getCause();
+      }
+
+      LOG.error("Can not create Placement Home: \n", e);
+
+      throw new SystemException(sb.toString());
     }
   }
 
@@ -212,7 +238,7 @@ public class RFA1aFormService
         });
 
     Set<IssueDetails> detailsList = droolsService
-        .performBusinessRules(formDTO, createConfiguration());
+            .performBusinessRules(createConfiguration(), formDTO);
     if (!detailsList.isEmpty()) {
       throw new BusinessValidationException(detailsList);
     }

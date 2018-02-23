@@ -27,8 +27,9 @@ import org.junit.Test;
  * @author CWDS CALS API Team
  */
 
-@Ignore
 public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
+
+  private static final String FIXTURE_PATH_TO_PRINCIPAL = "security/cals-api-principal.json";
 
   DBUnitSupport dbUnitSupport =
       new DBUnitSupportBuilder().buildForCMS(appRule.getConfiguration());
@@ -39,11 +40,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     setUpCms();
   }
 
-  @Test
-  public void submitApplicationTest() throws Exception {
-    if (TestModeUtils.isIntegrationTestsMode()) {
-      return;
-    }
+  private RFA1aFormDTO submitApplication() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     ApplicantDTO applicantDTO = applicantHelper
         .postApplicant(form.getId(), applicantHelper.getValidApplicant());
@@ -65,8 +62,32 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     otherAdultHelper.createOtherAdults(form.getId(), secondApplicant);
     minorChildHelper.createMinorChildren(form.getId(), applicantDTO);
 
-    Response response = statusHelper.submitApplication(form.getId());
+    Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
+
+    return form;
+  }
+
+  @Test
+  @Ignore
+  public void submitApplicationTest() throws Exception {
+
+    if (TestModeUtils.isIntegrationTestsMode()) {
+      return;
+    }
+    
+    RFA1aFormDTO form = submitApplication();
+    statusHelper.assertSubmitted(form.getId());
+  }
+
+  @Test
+  public void submitApplicationExtendedTest() throws Exception {
+    if (TestModeUtils.isIntegrationTestsMode()) {
+      return;
+    }
+
+    RFA1aFormDTO form = submitApplication();
+
     statusHelper.assertSubmitted(form.getId());
 
     WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId());
@@ -173,7 +194,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
                 "PETS_DSC", "RLG_ACTDSC", "CERT_CMPLT", "LA_P_CTYNM", "LA_P_FSTNM", "LA_P_LSTNM",
                 "LA_P_MIDNM", "LA_P_STNM", "LA_P_STNO", "LA_P_BSNSS", "ADHMONLY", "END_COMDSC",
                 "END_DT", "FKCNTY_CST", "LIC_APL_DT", "LIC_EFCTDT", "LIC_EXP_DT", "LIC_STATDT",
-                "NEWLIC_NO"
+                "NEWLIC_NO", "LICENSR_CD"
             });
   }
 

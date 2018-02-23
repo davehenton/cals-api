@@ -9,20 +9,28 @@ public class FacilityChildParameterObject implements Serializable {
 
   public static final long serialVersionUID = 42L;
 
-  private String licenseNumber;
   private String childId;
+  private FacilityParameterObject facilityParameterObject;
 
-  public FacilityChildParameterObject(String licenseNumber, String childId) {
-    this.licenseNumber = licenseNumber;
+  public FacilityChildParameterObject(FacilityParameterObject facilityParameterObject, String childId) {
+    this.facilityParameterObject = facilityParameterObject;
     this.childId = childId;
   }
 
-  public FacilityChildParameterObject(String licenseNumber) {
-    this(licenseNumber, null);
+  public FacilityChildParameterObject(FacilityParameterObject facilityParameterObject) {
+    this(facilityParameterObject, null);
   }
 
   public String getLicenseNumber() {
-    return licenseNumber;
+    return facilityParameterObject.getLicenseNumber();
+  }
+
+  public String getFacilityId() {
+    return facilityParameterObject.getFacilityId();
+  }
+
+  public String getUnitOfWork() {
+    return facilityParameterObject.getUnitOfWork();
   }
 
   public String getChildId() {

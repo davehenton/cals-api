@@ -12,7 +12,7 @@ import org.hibernate.annotations.NamedQuery;
 /**
  * @author CWDS CALS API Team
  */
-@NamedQuery(name = CountyType.NAMED_QUERY_FIND_ALL, query = "FROM CountyType ORDER BY id ASC")
+@NamedQuery(name = CountyType.NAMED_QUERY_FIND_ALL, query = "FROM CountyType ORDER BY value ASC")
 @Entity
 @Cacheable
 @Table(name = "county_type")

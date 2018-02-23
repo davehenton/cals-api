@@ -2,23 +2,12 @@ package gov.ca.cwds.cals.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import gov.ca.cwds.cals.TestCalsApiConfiguration;
+import gov.ca.cwds.cals.CalsApiConfiguration;
 import gov.ca.cwds.cals.web.rest.rfa.LoggingFilter;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import gov.ca.cwds.security.jwt.JwtConfiguration;
 import gov.ca.cwds.security.jwt.JwtService;
 import io.dropwizard.testing.junit.DropwizardAppRule;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URI;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
-import java.util.Properties;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.WebTarget;
 import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.JerseyClientBuilder;
@@ -28,6 +17,18 @@ import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+import java.util.Properties;
+
 /**
  * @author CWDS CALS API Team
  */
@@ -35,13 +36,13 @@ public class RestClientTestRule implements TestRule {
 
   private static final Logger LOG = LoggerFactory.getLogger(RestClientTestRule.class);
 
-  private final DropwizardAppRule<TestCalsApiConfiguration> dropWizardApplication;
+  private final DropwizardAppRule<CalsApiConfiguration> dropWizardApplication;
 
   private Client client;
   private ObjectMapper mapper;
   private String token;
 
-  public RestClientTestRule(DropwizardAppRule<TestCalsApiConfiguration> dropWizardApplication) {
+  public RestClientTestRule(DropwizardAppRule<CalsApiConfiguration> dropWizardApplication) {
     this.dropWizardApplication = dropWizardApplication;
     if (TestModeUtils.isIntegrationTestsMode()) {
       try {

@@ -4,8 +4,10 @@ import gov.ca.cwds.cals.service.dto.rfa.*
 import gov.ca.cwds.cals.Constants
 import gov.ca.cwds.cals.Constants.Validation.Business
 import gov.ca.cwds.cals.Constants.Validation.Business.Code
-import gov.ca.cwds.cals.Utils
+import gov.ca.cwds.cals.util.Utils
 import gov.ca.cwds.rest.exception.IssueDetails;
+
+import org.apache.commons.lang3.StringUtils
 
 global java.util.Set validationDetailsList;
 
@@ -46,6 +48,38 @@ rule "Validate Applicant phone numbers duplication"
               $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
               $applicant.getLastName() != null ? $applicant.getLastName() : "",
               $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
+    details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate Applicant first name"
+  dialect "mvel"
+  agenda-group "applicant-validation"
+  when
+      $applicant: ApplicantDTO(StringUtils.isBlank(firstName))
+  then
+    IssueDetails details = new IssueDetails();
+    details.setCode(Code.APPLICANT_FIRST_NAME);
+    details.setUserMessage(String.format(Business.APPLICANT_FIRST_NAME_IS_EMPTY_MESSAGE,
+      $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
+      $applicant.getLastName() != null ? $applicant.getLastName() : "",
+      $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
+    details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
+    validationDetailsList.add(details);
+end
+
+rule "Validate Applicant last name"
+  dialect "mvel"
+  agenda-group "applicant-validation"
+  when
+      $applicant: ApplicantDTO(StringUtils.isBlank(lastName))
+  then
+    IssueDetails details = new IssueDetails();
+    details.setCode(Code.APPLICANT_LAST_NAME);
+    details.setUserMessage(String.format(Business.APPLICANT_LAST_NAME_IS_EMPTY_MESSAGE,
+       $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
+       $applicant.getLastName() != null ? $applicant.getLastName() : "",
+       $applicant.getNameSuffix() != null ? $applicant.getNameSuffix().getValue() : ""));
     details.setTechnicalMessage(Constants.BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
     validationDetailsList.add(details);
 end

@@ -1,33 +1,13 @@
 package gov.ca.cwds.cals;
 
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AgeGroupType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ApplicantRelationshipType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EducationLevelType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.EthnicityType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.IncomeType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LanguageType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.LicenseType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.MarriageTerminationReasonType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NamePrefixType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameSuffixType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.NameType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RaceType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.ResidenceOwnershipType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SchoolGradeType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.SiblingGroupType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.*;
 
 /**
  * @author CWDS CALS API Team
  */
 public final class Constants {
+
+  public static final String NULL_STRING = "null";
 
   public static final String Y = "Y";
 
@@ -255,8 +235,6 @@ public final class Constants {
 
     public static final String CMS = "cwscms";
 
-    public static final String CMSRS = "cwscmsrs";
-
     public static final String CALSNS = "calsns";
 
     public static final String XA_CMS = "xa_cwscms";
@@ -316,13 +294,6 @@ public final class Constants {
 
     public static final String DEFAULT_DROOLS_VALIDATION_SESSION = "inProgressValidationSession";
     public static final String FORM_SUBMISSION_VALIDATION_SESSION = "formSubmissionValidationSession";
-
-    public static class Pattern {
-      public static final String ALFANUMERICAL_PATTERN = "^[a-zA-Z0-9\\s]*$";
-
-      private Pattern() {
-      }
-    }
 
     public static class Constraint {
 

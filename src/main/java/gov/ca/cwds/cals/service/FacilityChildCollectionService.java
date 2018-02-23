@@ -7,32 +7,32 @@ import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.rest.api.Response;
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * @author CWDS CALS API Team
  */
 public class FacilityChildCollectionService extends CrudServiceAdapter {
 
+  @Inject
   private ClientDao clientDao;
-  private FacilityChildMapper facilityChildMapper;
 
   @Inject
-  public FacilityChildCollectionService(ClientDao clientDao,
-      FacilityChildMapper facilityChildMapper) {
-    this.clientDao = clientDao;
-    this.facilityChildMapper = facilityChildMapper;
+  private FacilityChildMapper facilityChildMapper;
+
+  public FacilityChildCollectionService() {
   }
 
   @Override
   public Response find(Serializable params) {
+    FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
     List<FacilityChildDTO> facilityChildDTOs = clientDao
-        .streamByLicenseNumber(((FacilityChildParameterObject) params).getLicenseNumber())
-        .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
-
+            .streamByLicenseNumber(parameterObject.getLicenseNumber())
+            .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
     if (CollectionUtils.isEmpty(facilityChildDTOs)) {
       return null;
     } else {
@@ -41,4 +41,5 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
       return facilityChildrenDTO;
     }
   }
+
 }

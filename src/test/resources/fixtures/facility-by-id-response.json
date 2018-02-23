@@ -19,15 +19,14 @@
     "id" : "34",
     "value" : "Sacramento"
   },
+  "facility_source":"CWS/CMS",
   "phones" : [ ],
   "addresses" : [ {
     "type": "Residential",
     "address" : {
       "street_address" : "10 Main St",
       "city" : "Sacramento",
-      "state" : "CA",
-      "zip_code" : "0",
-      "zip_suffix_code" : "0"
+      "state" : "CA"
     }
   } ]
 }

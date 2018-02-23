@@ -11,13 +11,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -76,22 +70,27 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject {
 
   @OneToMany
   @JoinColumn(name = "application_id")
+  @OrderBy("id")
   private List<RFA1aApplicant> applicants;
 
   @OneToMany
   @JoinColumn(name = "application_id")
+  @OrderBy("id")
   private List<RFA1aMinorChild> minorChildren;
 
   @OneToMany
   @JoinColumn(name = "application_id")
+  @OrderBy("id")
   private List<RFA1aOtherAdult> otherAdults;
 
   @OneToMany
   @JoinColumn(name = "application_id")
+  @OrderBy("id")
   private List<RFA1bForm> rfa1bForms;
 
   @OneToMany
   @JoinColumn(name = "application_id")
+  @OrderBy("id")
   private List<RFA1cForm> rfa1cForms;
 
   @Type(type = "AdoptionHistoryJsonType")

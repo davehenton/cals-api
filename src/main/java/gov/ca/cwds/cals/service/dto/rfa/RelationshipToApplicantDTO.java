@@ -16,12 +16,15 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RelationshipToApplicantDTO extends BaseDTO {
 
-  private static final long serialVersionUID = 8554818249973630219L;
+  private static final long serialVersionUID = -5029663335457181428L;
 
   @JsonProperty("relationship_to_applicant")
   @ApiModelProperty(value = "Relationship to Applicant")
   @CheckReferentialIntegrity(enrich = true)
   private RelationshipToApplicantType relationshipToApplicantType;
+
+  @ApiModelProperty(value = "Relationship to Applicant free form", example = "Child")
+  private String relationshipToApplicantFreeform;
 
   @ApiModelProperty(value = "Applicant Id", example = "1234567")
   private Long applicantId;
@@ -33,6 +36,15 @@ public class RelationshipToApplicantDTO extends BaseDTO {
   public void setRelationshipToApplicantType(
       RelationshipToApplicantType relationshipToApplicantType) {
     this.relationshipToApplicantType = relationshipToApplicantType;
+  }
+
+
+  public String getRelationshipToApplicantFreeform() {
+    return relationshipToApplicantFreeform;
+  }
+
+  public void setRelationshipToApplicantFreeform(String relationshipToApplicantFreeform) {
+    this.relationshipToApplicantFreeform = relationshipToApplicantFreeform;
   }
 
   public Long getApplicantId() {

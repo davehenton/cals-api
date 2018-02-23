@@ -1,19 +1,20 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.Utils;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author CWDS CALS API Team
@@ -26,15 +27,15 @@ public interface PlacementHomeMapper {
   @Mapping(target = "ageToNo", constant = "0")
   @Mapping(target = "atCapInd", constant = "N")
   @Mapping(target = "bckPersnm", constant = " ")
-  @Mapping(target = "bckExtNo", constant = "0")
-  @Mapping(target = "bckTelNo", constant = "0")
+  @Mapping(target = "bckExtNo", ignore = true)
+  @Mapping(target = "bckTelNo", ignore = true)
   @Mapping(target = "chlcrPlcd", constant = "U")
   @Mapping(target = "cityNm", source = "residentialAddress.city")
   @Mapping(target = "clSrvdc", constant = "0")
   @Mapping(target = "confEfind", constant = "N")
   @Mapping(target = "curOcpNo", constant = "0")
   @Mapping(target = "emrShltcd", constant = "U")
-  @Mapping(target = "faxNo", constant = "0")
+  @Mapping(target = "faxNo", ignore = true)
   @Mapping(target = "frgAdrtB", constant = "N")
   @Mapping(target = "gndrAcpcd", constant = " ")
   @Mapping(target = "geoRgntcd", constant = " ")
@@ -53,10 +54,10 @@ public interface PlacementHomeMapper {
   @Mapping(target = "pyeFstnm", constant = " ")
   @Mapping(target = "pyeLstnm", constant = " ")
   @Mapping(target = "pyeMidnm", constant = " ")
-  @Mapping(target = "payeeStateCode", constant = "0")
+  @Mapping(target = "payeeStateCode", ignore = true)
   @Mapping(target = "pstreetNm", constant = " ")
   @Mapping(target = "pstreetNo", constant = " ")
-  @Mapping(target = "pZipNo", constant = "0")
+  //@Mapping(target = "pZipNo", constant = "0")
   @Mapping(target = "facilityType", constant = "6914")
   @Mapping(target = "prmCnctnm",
       expression = "java(Utils.Applicant.getFirstLastName(Utils.Applicant.getPrimary(form)))")
@@ -78,8 +79,8 @@ public interface PlacementHomeMapper {
   @Mapping(target = "lisPrfdsc", constant = " ")
   @Mapping(target = "petsDsc", constant = " ")
   @Mapping(target = "rlgActdsc", constant = " ")
-  @Mapping(target = "pyZipSfx", constant = "0")
-  @Mapping(target = "zipSfxNo", constant = "0")
+  //@Mapping(target = "pyZipSfx", constant = "0")
+  //@Mapping(target = "zipSfxNo", constant = "0")
   @Mapping(target = "apStatTp", constant = "0")
   @Mapping(target = "certCmplt", constant = " ")
   @Mapping(target = "laPCtynm", constant = " ")
@@ -89,14 +90,14 @@ public interface PlacementHomeMapper {
   @Mapping(target = "laPayeeState", constant = "0")
   @Mapping(target = "laPStnm", constant = " ")
   @Mapping(target = "laPStno", constant = " ")
-  @Mapping(target = "laPZipno", constant = "0")
-  @Mapping(target = "laPZpsfx", constant = "0")
+  //@Mapping(target = "laPZipno", constant = "0")
+  //@Mapping(target = "laPZpsfx", constant = "0")
   @Mapping(target = "laPBsnss", constant = " ")
-  @Mapping(target = "laPPhNo", constant = "0")
-  @Mapping(target = "laPPhEx", constant = "0")
+  @Mapping(target = "laPPhNo", ignore = true)
+  @Mapping(target = "laPPhEx", ignore = true)
   @Mapping(target = "adhmonly", constant = " ")
-  @Mapping(target = "pyeExtNo", constant = "0")
-  @Mapping(target = "pyeTelNo", constant = "0")
+  @Mapping(target = "pyeExtNo", ignore = true)
+  @Mapping(target = "pyeTelNo", ignore = true)
   @Mapping(target = "arcassInd", constant = "N")
   @Mapping(target = "comfacInd", constant = "N")
   @Mapping(target = "trnhsgInd", constant = "N")

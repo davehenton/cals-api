@@ -6,13 +6,11 @@ import com.codahale.metrics.health.HealthCheck;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.service.dto.system.SystemInformationDTO;
 import gov.ca.cwds.cals.service.dto.system.HealthCheckResultDTO;
-import gov.ca.cwds.rest.api.ApiException;
+import gov.ca.cwds.cals.service.dto.system.SystemInformationDTO;
 import io.dropwizard.setup.Environment;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.SortedMap;
@@ -20,6 +18,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CWDS CALS API Team
@@ -28,6 +28,8 @@ import javax.ws.rs.core.MediaType;
 @Path(SYSTEM_INFORMATION)
 @Produces(MediaType.APPLICATION_JSON)
 public class SystemInformationResource {
+
+  private static final Logger LOG = LoggerFactory.getLogger(SystemInformationResource.class);
 
   private static final String VERSION_PROPERTIES_FILE = "version.properties";
   private static final String BUILD_VERSION = "build.version";
@@ -57,8 +59,8 @@ public class SystemInformationResource {
     try {
       InputStream is = ClassLoader.getSystemResourceAsStream(VERSION_PROPERTIES_FILE);
       versionProperties.load(is);
-    } catch (IOException e) {
-      throw new ApiException("Can't read version.properties", e);
+    } catch (Exception e) {
+      LOG.error("Can't read version.properties", e);
     }
     return versionProperties;
   }

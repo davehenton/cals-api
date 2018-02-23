@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -18,10 +17,10 @@ import javax.validation.Valid;
 public class ApplicantsHistoryDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty("List of Former Spouses and Domestic Partners")
-  private List<FormerSpouseDTO> formerSpouses = new ArrayList<>();
+  private List<FormerSpouseDTO> formerSpouses;
 
   @ApiModelProperty("List of Adult Children")
-  private List<AdultChildDTO> adultChildren = new ArrayList<>();
+  private List<AdultChildDTO> adultChildren;
 
   @Valid
   public List<FormerSpouseDTO> getFormerSpouses() {

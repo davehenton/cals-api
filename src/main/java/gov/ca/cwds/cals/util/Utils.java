@@ -1,30 +1,26 @@
-package gov.ca.cwds.cals;
-
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+package gov.ca.cwds.cals.util;
 
 import com.google.common.base.Objects;
+import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
-import gov.ca.cwds.cals.auth.PerryUserIdentity;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
+import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
+import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.EmploymentDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
-import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.exception.ExpectedException;
-import gov.ca.cwds.security.realm.PerryAccount;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import javax.ws.rs.core.Response;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static gov.ca.cwds.cals.Constants.NULL_STRING;
 
 /**
  * @author CALS API Team
@@ -34,27 +30,9 @@ public final class Utils {
   private Utils() {
   }
 
-  public static FacilityParameterObject createFacilityParameterObject(String facilityNumber) {
-    FacilityParameterObject parameterObject;
-    try {
-      Integer licenseNumber = Integer.valueOf(facilityNumber);
-      parameterObject = new FacilityParameterObject(licenseNumber, LIS);
-    } catch (NumberFormatException e) {
-      parameterObject = new FacilityParameterObject(facilityNumber, CMS);
-    }
-    return parameterObject;
-  }
-
-  public static FacilityParameterObject createExpandedFacilityParameterObject(String facilityNumber) {
-    FacilityParameterObject parameterObject = createFacilityParameterObject(facilityNumber);
-    parameterObject.setExpanded(Boolean.TRUE);
-    return parameterObject;
-  }
-
   public static class Phone {
 
     private Phone() {
-
     }
 
     public static String formatNumber(PhoneDTO phone) {
@@ -65,40 +43,10 @@ public final class Utils {
       return number;
     }
 
-
-  }
-
-  public static class StaffPerson {
-
-    private static final Logger LOG = LoggerFactory.getLogger(StaffPerson.class);
-
-    public static final String DEFAULT_USER_ID = "0X5";
-
-    private StaffPerson() {
+    public static boolean checkIfPhoneDTOIsValid(PersonPhoneDTO phone) {
+      return (null != phone && StringUtils.isNotBlank(phone.getNumber()) && !phone.getNumber()
+          .equalsIgnoreCase("null"));
     }
-
-    public static PerryAccount getPerryAccount() {
-      Subject currentUser = SecurityUtils.getSubject();
-      if (currentUser.getPrincipals() != null) {
-        @SuppressWarnings("rawtypes")
-        List principals = currentUser.getPrincipals().asList();
-        if (principals.size() > 1 && principals.get(1) instanceof PerryUserIdentity) {
-          PerryUserIdentity currentUserInfo = (PerryUserIdentity) principals.get(1);
-          if (currentUserInfo.getStaffId() != null) {
-            return currentUserInfo;
-          }
-        }
-      }
-      PerryAccount perryAccount = new PerryAccount();
-      perryAccount.setStaffId(DEFAULT_USER_ID);
-      return perryAccount;
-    }
-
-    public static String getStaffPersonId() {
-      PerryAccount perryAccount = getPerryAccount();
-      return perryAccount.getStaffId();
-    }
-
   }
 
   public static class PlacementHome {
@@ -225,6 +173,43 @@ public final class Utils {
       return numberAndName[partIndex];
     }
 
+    public static boolean checkIfLisResidentialAddressIsValid(final LisFacFile lisFacFile) {
+      return checkIfLisResidentialAddressIsNotBlank(lisFacFile) &&
+          checkIfLisResidentialAddressIsNotNullString(lisFacFile);
+    }
+
+    public static boolean checkIfLisMailAddressIsValid(final LisFacFile lisFacFile) {
+      return checkIfLisMailAddressIsNotBlank(lisFacFile) &&
+          checkIfLisMailAddressIsNotNullString(lisFacFile);
+    }
+
+    private static boolean checkIfLisResidentialAddressIsNotBlank(final LisFacFile lisFacFile) {
+      return !StringUtils
+          .isAllBlank(lisFacFile.getFacResStreetAddr(), lisFacFile.getFacResCity(),
+              lisFacFile.getFacResState(), lisFacFile.getFacResZipCode());
+    }
+
+    private static boolean checkIfLisResidentialAddressIsNotNullString(
+        final LisFacFile lisFacFile) {
+      return !lisFacFile.getFacResStreetAddr().equalsIgnoreCase(NULL_STRING) ||
+          !lisFacFile.getFacResCity().equalsIgnoreCase(NULL_STRING) ||
+          !lisFacFile.getFacResState().equalsIgnoreCase(NULL_STRING) ||
+          !lisFacFile.getFacResZipCode().equalsIgnoreCase(NULL_STRING);
+    }
+
+    private static boolean checkIfLisMailAddressIsNotBlank(final LisFacFile lisFacFile) {
+      return !StringUtils
+          .isAllBlank(lisFacFile.getFacMailStreetAddr(), lisFacFile.getFacMailCity(),
+              lisFacFile.getFacMailState(), lisFacFile.getFacMailZipCode());
+    }
+
+    private static boolean checkIfLisMailAddressIsNotNullString(
+        final LisFacFile lisFacFile) {
+      return (StringUtils.isNotBlank(lisFacFile.getFacMailStreetAddr()) && !lisFacFile.getFacMailStreetAddr().equalsIgnoreCase(NULL_STRING)) ||
+             (StringUtils.isNotBlank(lisFacFile.getFacMailCity()) && !lisFacFile.getFacMailCity().equalsIgnoreCase(NULL_STRING)) ||
+             (StringUtils.isNotBlank(lisFacFile.getFacMailState()) && !lisFacFile.getFacMailState().equalsIgnoreCase(NULL_STRING)) ||
+             (StringUtils.isNotBlank(lisFacFile.getFacMailState()) && !lisFacFile.getFacMailZipCode().equalsIgnoreCase(NULL_STRING));
+    }
   }
 
   public static class County {
