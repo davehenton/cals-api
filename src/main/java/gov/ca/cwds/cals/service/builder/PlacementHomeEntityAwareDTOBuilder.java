@@ -88,7 +88,7 @@ public class PlacementHomeEntityAwareDTOBuilder {
     SCPEntityAwareDTO entityAwareDTO = new SCPEntityAwareDTO();
     entityAwareDTO.setPrimaryApplicant(Applicant.isPrimary(form, applicant));
     entityAwareDTO.setPhoneNumbers(mapPhoneContactDetails(applicant));
-    entityAwareDTO.setEthnicity(applicant.getEthnicity());
+    entityAwareDTO.setEthnicityList(Arrays.asList(applicant.getEthnicity()));
     entityAwareDTO.setOtherStatesOfLiving(applicant.getRfa1bForm().getOtherStatesOfLiving());
     SubstituteCareProvider substituteCareProvider = mapRFAEntitiesToSCP(applicant);
     entityAwareDTO.setEntity(substituteCareProvider);
