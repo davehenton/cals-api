@@ -123,6 +123,8 @@ public class DataAccessModule extends AbstractModule {
       PlacementHomeInformation.class,
       PlacementHomeInformationPK.class,
       PlacementHomeNotes.class,
+      PlacementFacilityTypeHistory.class,
+      PlacementFacilityTypeHistoryPK.class,
       OtherPeopleScpRelationship.class,
       OutOfStateCheck.class,
       OtherAdultsInPlacementHome.class,
