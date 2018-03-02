@@ -1,0 +1,8 @@
+<!DOCTYPE dataset SYSTEM "$schemaPath">
+<dataset>
+    <PFACHIST
+        FKPLC_HM_T="$placementHomeId"
+        PLC_FCLC="$faciltiyType"
+        END_TS="[NULL]"
+     />
+</dataset>
