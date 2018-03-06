@@ -1,7 +1,9 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static gov.ca.cwds.cals.Constants.Validation.Business.Code.APPLICANT_PHONE_NUMBERS_DUPLICATION;
 import static gov.ca.cwds.cals.web.rest.rfa.helper.PhoneDTOHelper.createPhone;
 import static gov.ca.cwds.cals.web.rest.rfa.helper.PhoneDTOHelper.createPhoneNoExtension;
+import static gov.ca.cwds.cals.web.rest.rfa.helper.PhoneDTOHelper.createPhoneNumberType;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixture;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixtureTemplate;
 import static org.junit.Assert.assertEquals;
@@ -327,6 +329,38 @@ public class RFA1aApplicantResourceTest extends BaseExternalEntityApiTest<Applic
       assertResponseByFixtureTemplate(entity,
           "fixtures/rfa/validation/applicant-duplicate-phone-numbers-response.json",
           parameters);
+    }
+  }
+
+  @Test
+  public void testDuplicatePhoneNumbersButExtension() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    ApplicantDTO applicant = getApplicantDTO();
+    applicant.getPhones().clear();
+    applicant.getPhones().add(createPhone());
+    applicant.getPhones().add(createPhoneNoExtension());
+    assertNoSuchError(() -> applicantHelper.postApplicant(form.getId(), applicant), APPLICANT_PHONE_NUMBERS_DUPLICATION);
+  }
+
+  @Test
+  public void testBlankPhonesAreNotDuplicated() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    ApplicantDTO applicant = getApplicantDTO();
+    applicant.getPhones().clear();
+    applicant.getPhones().add(createPhone(" ", "   ", false, createPhoneNumberType()));
+    applicant.getPhones().add(createPhone(null, "     ", false, createPhoneNumberType()));
+    assertNoSuchError(() -> applicantHelper.postApplicant(form.getId(), applicant), APPLICANT_PHONE_NUMBERS_DUPLICATION);
+  }
+
+  private void assertNoSuchError(Runnable runnable, String errorCode) {
+    try {
+      runnable.run();
+    } catch (ClientErrorException e) {
+      assertEquals(422, e.getResponse().getStatus());
+      BaseExceptionResponse exceptionResponse = e.getResponse()
+          .readEntity(BaseExceptionResponse.class);
+      Set<IssueDetails> issueDetails = exceptionResponse.getIssueDetails();
+      assert issueDetails.stream().noneMatch(issueDetail -> errorCode.equals(issueDetail.getCode()));
     }
   }
 
