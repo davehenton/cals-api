@@ -197,7 +197,7 @@ dependencies {
 
     testCompile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
     testCompile "org.dbunit:dbunit:$dbunitVersion"
-    testCompile group: 'gov.ca.cwds.api', name:'api-security-test-support', version: '0.5.3_312'
+    testCompile group: 'gov.ca.cwds.api', name:'api-security-test-support', version: '1.5.7-SNAPSHOT'
 
     apt 'org.mapstruct:mapstruct-processor:' + mapstructVersion
 }
