@@ -3,6 +3,7 @@ package gov.ca.cwds.cals;
 import com.google.inject.Module;
 import com.google.inject.Provides;
 import gov.ca.cwds.authorizer.PlacementHomeCreateAuthorizer;
+import gov.ca.cwds.authorizer.SubstituteCareProviderCreateAuthorizer;
 import gov.ca.cwds.cals.Constants.Authorize;
 import gov.ca.cwds.cals.inject.ApplicationModule;
 import gov.ca.cwds.cals.inject.DataAccessModule;
@@ -45,6 +46,12 @@ public class CalsApiApplication extends BaseCalsApiApplication<CalsApiConfigurat
         install(new SecurityModule(BaseApiApplication::getInjector)
             .addAuthorizer(Authorize.PLACEMENT_HOME_CREATE, PlacementHomeCreateAuthorizer.class)
         );
+
+        install(new SecurityModule(BaseApiApplication::getInjector)
+            .addAuthorizer(Authorize.SUBSTITUTE_CARE_PROVIDER_CREATE, SubstituteCareProviderCreateAuthorizer.class)
+        );
+
+
       }
 
     };
