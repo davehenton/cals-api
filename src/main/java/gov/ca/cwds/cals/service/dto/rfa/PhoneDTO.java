@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.Constants.Validation.Constraint;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.service.validation.field.CheckReferentialIntegrity;
+import gov.ca.cwds.cals.service.validation.field.SizeIfNotBlank;
 import gov.ca.cwds.dto.BaseDTO;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -27,12 +28,12 @@ public class PhoneDTO extends BaseDTO {
   @NotNull
   private PhoneNumberType phoneType;
 
-  @Size(min = 10, max = 10)
-  @Pattern(regexp = "^\\d*", message = Constraint.NUMERIC_MESSAGE)
+  @SizeIfNotBlank(min = 10, max = 10)
+  @Pattern(regexp = "\\s*|^\\d*", message = Constraint.NUMERIC_MESSAGE)
   private String number;
 
-  @Size(max = 7)
-  @Pattern(regexp = "^\\d*", message = Constraint.NUMERIC_MESSAGE)
+  @SizeIfNotBlank(max = 7)
+  @Pattern(regexp = "\\s*|^\\d*", message = Constraint.NUMERIC_MESSAGE)
   private String extension;
 
   private Boolean preferred;

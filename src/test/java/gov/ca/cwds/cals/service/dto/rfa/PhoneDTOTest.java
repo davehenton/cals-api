@@ -27,6 +27,15 @@ public class PhoneDTOTest extends BeanValidationTestSupport<PhoneDTO> {
   }
 
   @Test
+  public void phoneNumberValidationTestBlank() {
+    PhoneDTO phone = new PhoneDTO();
+    phone.setNumber(" ");
+    phone.setPhoneType(new PhoneNumberType());
+    Set<ConstraintViolation<PhoneDTO>> violations = removeDbSessionViolation(validate(phone));
+    assertTrue(violations.isEmpty());
+  }
+
+  @Test
   public void phoneNumberNullValidationTest() {
     PhoneDTO phone = new PhoneDTO();
     phone.setPhoneType(new PhoneNumberType());

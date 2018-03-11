@@ -11,6 +11,10 @@ import org.apache.commons.lang3.StringUtils
 
 global java.util.Set validationDetailsList;
 
+function boolean equalsIncludingBlanks (String val1, String val2) {
+    return StringUtils.isAllBlank(val1, val2) || StringUtils.isNoneBlank(val1, val2) && val1.equals(val2);
+}
+
 rule "Validate Applicant's preferred phone"
   dialect "mvel"
   agenda-group "applicant-validation"
@@ -38,8 +42,8 @@ rule "Validate Applicant phone numbers duplication"
   agenda-group "applicant-validation"
   when
       $applicant: ApplicantDTO()
-      $phone: PhoneDTO() from $applicant.phones
-      exists PhoneDTO(this.uuid != $phone.uuid, number == $phone.number, extension == $phone.extension) from $applicant.phones
+      $phone: PhoneDTO(!StringUtils.isAllBlank(number, extension)) from $applicant.phones
+      exists PhoneDTO(this.uuid != $phone.uuid, equalsIncludingBlanks(number, $phone.number), equalsIncludingBlanks(extension, $phone.extension)) from $applicant.phones
   then
     IssueDetails details = new IssueDetails();
     details.setCode(Code.APPLICANT_PHONE_NUMBERS_DUPLICATION);

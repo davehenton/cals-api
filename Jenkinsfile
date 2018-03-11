@@ -43,6 +43,7 @@ node ('tpt2-slave'){
    parameters([
       string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
       string(defaultValue: 'development', description: '', name: 'branch'),
+      string(defaultValue: '', description: 'Used for mergerequest default is empty', name: 'refspec'),
       booleanParam(defaultValue: false, description: 'Default release version template is: <majorVersion>_<buildNumber>-RC', name: 'RELEASE_PROJECT'),
       string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
       booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
@@ -50,7 +51,7 @@ node ('tpt2-slave'){
       ]), pipelineTriggers([pollSCM('H/5 * * * *')])])
   try {
    stage('Preparation') {
-		  git branch: '$branch', url: 'https://github.com/ca-cwds/cals-api.git'
+		  checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
 		  rtGradle.tool = "Gradle_35"
 		  rtGradle.resolver repo:'repo', server: serverArti
 		  rtGradle.useWrapper = true
@@ -103,12 +104,12 @@ node ('tpt2-slave'){
 	   sleep (20)
   }
   stage('Smoke Tests') {
-      git branch: 'development', url: 'https://github.com/ca-cwds/cals-api.git'
+      checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'smokeTest --stacktrace'
       publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/smokeTest', reportFiles: 'index.html', reportName: 'Smoke Tests Report', reportTitles: 'Smoke tests summary'])
   }
   stage('Integration Tests') {
-      git branch: 'development', url: 'https://github.com/ca-cwds/cals-api.git'
+      checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'integrationTest --stacktrace'
       publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/integrationTest', reportFiles: 'index.html', reportName: 'Integration Tests Report', reportTitles: 'Integration tests summary'])
       cleanWs()

@@ -75,7 +75,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     if (TestModeUtils.isIntegrationTestsMode()) {
       return;
     }
-    
+
     RFA1aFormDTO form = submitApplication();
     statusHelper.assertSubmitted(form.getId());
   }
@@ -118,7 +118,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[0]);
     testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[1]);
-
+    testIfPlacementFacilityTypeHistoryWasCreatedProperly(form.getPlacementHomeId());
   }
 
   private void testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(
@@ -375,5 +375,32 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     assertEquals(2, actualTable.getRowCount());
   }
 
+  private void testIfPlacementFacilityTypeHistoryWasCreatedProperly(String placementHomeId)
+      throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/PlacementFacilityTypeHistory.xml")
+        .setTestedTableName("PFACHIST")
+        .appendTableFilter("FKPLC_HM_T", placementHomeId)
+        .appendTemplateParameter("faciltiyType", getFacilityType(placementHomeId))
+        .appendTemplateParameter("placementHomeId", placementHomeId)
+        .build();
+
+    ITable actualTable = helper.getActualTable();
+    assertEquals(1, actualTable.getRowCount());
+    helper.assertEquals(new String[]{
+        "THIRD_ID",
+        "CREATN_TS",
+        "LST_UPD_ID",
+        "LST_UPD_TS",
+        "START_TS"});
+  }
+
+  private Object getFacilityType(String placementHomeId) throws Exception {
+    ITable placementHomeInformation =
+        new SortedTable(dbUnitSupport.getTableFromDB("PLC_HM_T"), new String[]{"IDENTIFIER"});
+    ITable placementHomeRow = dbUnitSupport
+        .filterByColumnAndValue(placementHomeInformation, "IDENTIFIER", placementHomeId);
+    return placementHomeRow.getValue(0, "PLC_FCLC");
+  }
 
 }
