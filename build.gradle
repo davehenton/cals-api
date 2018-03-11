@@ -33,7 +33,7 @@ project.ext {
     projectMajorVersion = '0.5.8'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '0.5.8_375-RC'
+    coreApiVersion = '1.6.1_407-RC'
     calsModelVersion = '0.5.8_473-RC'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
@@ -45,7 +45,7 @@ project.ext {
     isRelease = System.getProperty("Release") == "true"
     buildNumber = System.getProperty('BuildNumber')
     customVersion = System.getProperty('CustomVersion')
-    
+
     projectSnapshotVersion = projectMajorVersion + "-SNAPSHOT"
     projectReleaseVersion = (customVersion == null || customVersion == "" || customVersion.startsWith('$') ? projectMajorVersion + '_' + buildNumber + '-RC' : customVersion )
     projectVersion = (isRelease ? projectReleaseVersion : projectSnapshotVersion )
