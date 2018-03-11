@@ -33,7 +33,8 @@ project.ext {
     projectMajorVersion = '0.5.8'
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '1.5.8-SNAPSHOT'
+    coreApiVersion = '1.6.1_405-RC'
+    apiSecurityVersion = '1.6.1_363-RC'
     calsModelVersion = '0.5.8_473-RC'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
@@ -197,7 +198,7 @@ dependencies {
 
     testCompile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
     testCompile "org.dbunit:dbunit:$dbunitVersion"
-    testCompile group: 'gov.ca.cwds.api', name:'api-security-test-support', version: '1.5.7-SNAPSHOT'
+    testCompile group: 'gov.ca.cwds.api', name:'api-security-test-support', version: apiSecurityVersion
 
     apt 'org.mapstruct:mapstruct-processor:' + mapstructVersion
 }
