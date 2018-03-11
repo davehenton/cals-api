@@ -34,7 +34,7 @@ project.ext {
 //    projectVersion = projectMajorVersion
     dropwizardVersion = '1.1.0'
     coreApiVersion = '1.6.1_407-RC'
-    calsModelVersion = '0.5.6_426-RC'
+    calsModelVersion = '0.5.8_473-RC'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     dbunitVersion = '2.5.0'
