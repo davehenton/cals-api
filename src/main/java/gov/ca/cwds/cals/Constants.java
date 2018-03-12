@@ -125,6 +125,15 @@ public final class Constants {
     }
   }
 
+  public static class Authorize {
+    public static final String PLACEMENT_HOME_CREATE = "placementHome:create";
+
+    public static final String SUBSTITUTE_CARE_PROVIDER_CREATE = "substituteCareProvider:create";
+
+    private Authorize() {
+    }
+  }
+
   public enum DictionaryType {
     AGE_GROUP_TYPE(AgeGroupType.class),
     LANGUAGE_TYPE(LanguageType.class),

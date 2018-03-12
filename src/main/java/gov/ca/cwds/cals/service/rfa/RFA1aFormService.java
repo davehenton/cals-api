@@ -37,6 +37,7 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -185,7 +186,12 @@ public class RFA1aFormService
       userTransaction.rollback();
       LOG.error("Can not create Placement Home because of BusinessValidationException", e);
       throw e;
-    } catch (Exception e) {
+    } catch (UnauthorizedException e) {
+      userTransaction.rollback();
+      LOG.error("Can not create Placement Home because of UnauthorizedException", e);
+      throw e;
+    }
+    catch (Exception e) {
       try {
         userTransaction.rollback();
       } catch (Exception re) {
