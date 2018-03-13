@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixturePath;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import gov.ca.cwds.cals.Constants.AddressTypes;
@@ -35,37 +34,6 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     setUpCalsns();
   }
 
-  @Test
-  public void applicantDriverLicenseNumberIsNullValidationSubmissionTest() throws Exception {
-    RFA1aFormDTO form = formAHelper.createRFA1aForm();
-
-    ApplicantDTO applicant = applicantHelper.getValidApplicant();
-    applicant.setDriverLicenseNumber(null);
-    applicantHelper.postApplicant(form.getId(), applicant);
-
-    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
-
-    Response response = statusHelper.submitApplication(form.getId());
-    assertEquals(422, response.getStatus());
-    assertResponseByFixturePath(
-        response, "fixtures/rfa/validation/applicant-driver-license-violation-response.json");
-  }
-
-  @Test
-  public void applicantDriverLicenseStateIsNullValidationSubmissionTest() throws Exception {
-    RFA1aFormDTO form = formAHelper.createRFA1aForm();
-    ApplicantDTO applicant = applicantHelper.getValidApplicant();
-
-    applicant.setDriverLicenseState(null);
-    applicantHelper.postApplicant(form.getId(), applicant);
-
-    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
-
-    Response response = statusHelper.submitApplication(form.getId());
-    assertEquals(422, response.getStatus());
-    assertResponseByFixturePath(
-        response, "fixtures/rfa/validation/applicant-driver-license-violation-response.json");
-  }
 
   @Test
   public void validateApplicationHasNoApplicant() throws Exception {
@@ -203,54 +171,6 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     Response response = statusHelper.submitApplication(form.getId());
     assertResponseByFixturePath(
         response, "fixtures/rfa/validation/application-has-no-residential-address-response.json");
-  }
-
-  @Test
-  public void validateResidentialAddressHasNoStreetName() throws Exception {
-    RFA1aFormDTO form = formAHelper.createRFA1aForm();
-
-    ApplicantDTO applicant = applicantHelper.getValidApplicant();
-    applicantHelper.postApplicant(form.getId(), applicant);
-
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
-    getResidentialAddress(residence).setStreetAddress("100");
-    residenceHelper.putResidence(form.getId(), residence);
-
-    Response response = statusHelper.submitApplication(form.getId());
-    assertResponseByFixturePath(
-        response, "fixtures/rfa/validation/residential-address-has-no-street-name-response.json");
-  }
-
-  @Test
-  public void validateResidentialAddressHasNoState() throws Exception {
-    RFA1aFormDTO form = formAHelper.createRFA1aForm();
-
-    ApplicantDTO applicant = applicantHelper.getValidApplicant();
-    applicantHelper.postApplicant(form.getId(), applicant);
-
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
-    getResidentialAddress(residence).setState(null);
-    residenceHelper.putResidence(form.getId(), residence);
-
-    Response response = statusHelper.submitApplication(form.getId());
-    assertResponseByFixturePath(
-        response, "fixtures/rfa/validation/residential-address-has-no-state-response.json");
-  }
-
-  @Test
-  public void validateResidentialAddressHasNoZipCode() throws Exception {
-    RFA1aFormDTO form = formAHelper.createRFA1aForm();
-
-    ApplicantDTO applicant = applicantHelper.getValidApplicant();
-    applicantHelper.postApplicant(form.getId(), applicant);
-
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
-    getResidentialAddress(residence).setZip(" ");
-    residenceHelper.putResidence(form.getId(), residence);
-
-    Response response = statusHelper.submitApplication(form.getId());
-    assertResponseByFixturePath(
-        response, "fixtures/rfa/validation/residential-address-has-no-zip-code-response.json");
   }
 
   @Test

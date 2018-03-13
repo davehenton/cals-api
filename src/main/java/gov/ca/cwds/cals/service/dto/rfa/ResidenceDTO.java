@@ -27,23 +27,23 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
   private List<RFAAddressDTO> addresses;
 
   @ApiModelProperty(value = "Is Physical Mailing Similar", example = "false")
-  private boolean physicalMailingSimilar;
+  private Boolean physicalMailingSimilar;
 
   @ApiModelProperty(value = "Residence Ownership Type")
   @CheckReferentialIntegrity(enrich = true)
   private ResidenceOwnershipType residenceOwnership;
 
   @ApiModelProperty(value = "Is Weapon In Home", example = "false")
-  private boolean weaponInHome;
+  private Boolean weaponInHome;
 
   @ApiModelProperty(value = "Is Body Of Water Exist", example = "true")
-  private boolean bodyOfWaterExist;
+  private Boolean bodyOfWaterExist;
 
   @ApiModelProperty(value = "Body Of Water Description", example = "Description here")
   private String bodyOfWaterDescription;
 
   @ApiModelProperty(value = "Is Others Using Residence As Mailing", example = "true")
-  private boolean othersUsingResidenceAsMailing;
+  private Boolean othersUsingResidenceAsMailing;
 
   @ApiModelProperty(value = "Other People Using Residence As Mailing")
   @Valid
@@ -64,11 +64,11 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
     this.addresses = addresses;
   }
 
-  public boolean isPhysicalMailingSimilar() {
+  public Boolean getPhysicalMailingSimilar() {
     return physicalMailingSimilar;
   }
 
-  public void setPhysicalMailingSimilar(boolean physicalMailingSimilar) {
+  public void setPhysicalMailingSimilar(Boolean physicalMailingSimilar) {
     this.physicalMailingSimilar = physicalMailingSimilar;
   }
 
@@ -80,19 +80,19 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
     this.residenceOwnership = residenceOwnership;
   }
 
-  public boolean isWeaponInHome() {
+  public Boolean getWeaponInHome() {
     return weaponInHome;
   }
 
-  public void setWeaponInHome(boolean weaponInHome) {
+  public void setWeaponInHome(Boolean weaponInHome) {
     this.weaponInHome = weaponInHome;
   }
 
-  public boolean isBodyOfWaterExist() {
+  public Boolean getBodyOfWaterExist() {
     return bodyOfWaterExist;
   }
 
-  public void setBodyOfWaterExist(boolean bodyOfWaterExist) {
+  public void setBodyOfWaterExist(Boolean bodyOfWaterExist) {
     this.bodyOfWaterExist = bodyOfWaterExist;
   }
 
@@ -104,11 +104,11 @@ public class ResidenceDTO extends BaseDTO implements RequestResponse {
     this.bodyOfWaterDescription = bodyOfWaterDescription;
   }
 
-  public boolean isOthersUsingResidenceAsMailing() {
+  public Boolean getOthersUsingResidenceAsMailing() {
     return othersUsingResidenceAsMailing;
   }
 
-  public void setOthersUsingResidenceAsMailing(boolean othersUsingResidenceAsMailing) {
+  public void setOthersUsingResidenceAsMailing(Boolean othersUsingResidenceAsMailing) {
     this.othersUsingResidenceAsMailing = othersUsingResidenceAsMailing;
   }
 

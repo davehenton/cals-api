@@ -1,5 +1,7 @@
 package gov.ca.cwds.cals.util;
 
+import static gov.ca.cwds.cals.Constants.NULL_STRING;
+
 import com.google.common.base.Objects;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
@@ -13,14 +15,11 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.rest.exception.ExpectedException;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-
-import static gov.ca.cwds.cals.Constants.NULL_STRING;
+import javax.ws.rs.core.Response;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author CALS API Team
@@ -58,13 +57,13 @@ public final class Utils {
     }
 
     public static String getHazardsDescription(ResidenceDTO residence) {
-      if (residence.isWeaponInHome() && residence.isBodyOfWaterExist()) {
+      if (residence.getWeaponInHome() && residence.getBodyOfWaterExist()) {
         return WATER_BODY + ", " + WEAPON_IN_HOME_BODY;
       }
-      if (residence.isWeaponInHome() && !residence.isBodyOfWaterExist()) {
+      if (residence.getWeaponInHome() && !residence.getBodyOfWaterExist()) {
         return WEAPON_IN_HOME_BODY;
       }
-      if (!residence.isWeaponInHome() && residence.isBodyOfWaterExist()) {
+      if (!residence.getWeaponInHome() && residence.getBodyOfWaterExist()) {
         return WATER_BODY;
       }
       return " ";

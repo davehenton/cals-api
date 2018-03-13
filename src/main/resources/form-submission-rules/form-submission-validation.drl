@@ -150,7 +150,7 @@ rule "Validate that residential address exists"
   when
     $form : RFA1aFormDTO();
     $residence: ResidenceDTO() from $form.residence;
-    not RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+    not RFAAddressDTO(type != null && type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
   then
     IssueDetails details = new IssueDetails();
     details.setCode(Validation.Business.Code.APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS);
@@ -158,6 +158,7 @@ rule "Validate that residential address exists"
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
     validationDetailsList.add(details);
 end
+/*
 
 rule "Validate that residential address has street name"
       dialect "mvel"
@@ -165,7 +166,7 @@ rule "Validate that residential address has street name"
   when
     $form : RFA1aFormDTO();
     $residence: ResidenceDTO() from $form.residence;
-    $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+    $address: RFAAddressDTO(type != null && type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
     eval(StringUtils.isBlank(Utils.Address.getSilentStreetName($address)));
   then
     IssueDetails details = new IssueDetails();
@@ -181,7 +182,7 @@ rule "Validate that residential address has city"
   when
     $form : RFA1aFormDTO();
     $residence: ResidenceDTO() from $form.residence;
-    $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+    $address: RFAAddressDTO(type != null && type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
     eval(StringUtils.isBlank($address.getCity()));
   then
     IssueDetails details = new IssueDetails();
@@ -197,7 +198,7 @@ rule "Validate that residential address has state"
   when
     $form : RFA1aFormDTO();
     $residence: ResidenceDTO() from $form.residence;
-    $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+    $address: RFAAddressDTO(type != null && type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
     not StateType() from $address.state;
   then
     IssueDetails details = new IssueDetails();
@@ -213,7 +214,7 @@ rule "Validate that residential address has zip code"
   when
     $form : RFA1aFormDTO();
     $residence: ResidenceDTO() from $form.residence;
-    $address: RFAAddressDTO(type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
+    $address: RFAAddressDTO(type != null && type.value == AddressTypes.RESIDENTIAL) from $residence.addresses;
     eval(StringUtils.isBlank($address.getZip()));
   then
     IssueDetails details = new IssueDetails();
@@ -222,6 +223,7 @@ rule "Validate that residential address has zip code"
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
     validationDetailsList.add(details);
 end
+*/
 
 rule "Validate that application has county"
       dialect "mvel"
@@ -237,6 +239,7 @@ rule "Validate that application has county"
     validationDetailsList.add(details);
 end
 
+/*
 rule "Validate Applicant's First Name"
       dialect "mvel"
   agenda-group "form-submission-validation"
@@ -246,7 +249,7 @@ rule "Validate Applicant's First Name"
     eval(StringUtils.isBlank($applicant.getFirstName()))
   then
     IssueDetails details = new IssueDetails();
-    details.setCode(Validation.Business.Code.APPLICANT_FIRST_NAME);
+    details.setCode(Validation.Business.Code.REQUIRED_APPLICANT_FIRST_NAME);
     details.setUserMessage(String.format(Validation.Business.APPLICANT_FIRST_NAME_IS_EMPTY_MESSAGE,
         $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
         $applicant.getLastName() != null ? $applicant.getLastName() : "",
@@ -254,7 +257,9 @@ rule "Validate Applicant's First Name"
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
     validationDetailsList.add(details);
 end
+*/
 
+/*
 rule "Applicant's Empty Last Name"
       dialect "mvel"
   agenda-group "form-submission-validation"
@@ -272,7 +277,9 @@ rule "Applicant's Empty Last Name"
     details.setTechnicalMessage(BusinessRulesAgendaGroups.FORM_SUBMISSION_VALIDATION);
     validationDetailsList.add(details);
 end
+*/
 
+/*
 rule "Validate Applicant's Driver License"
   dialect "mvel"
   agenda-group "form-submission-validation"
@@ -293,6 +300,7 @@ rule "Validate Applicant's Driver License"
     details.setTechnicalMessage(BusinessRulesAgendaGroups.APPLICANT_VALIDATION);
     validationDetailsList.add(details);
 end
+*/
 
 rule "Other Adult is not added as Adult Children"
   dialect "mvel"
