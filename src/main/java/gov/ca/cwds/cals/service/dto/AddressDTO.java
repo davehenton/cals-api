@@ -17,7 +17,7 @@ import java.util.Objects;
 public class AddressDTO extends BaseDTO {
 
     private static final long serialVersionUID = 1921798483033435568L;
-    
+
     private Long id;
 
     @RemoveTrailingSpaces
@@ -66,6 +66,7 @@ public class AddressDTO extends BaseDTO {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getStreetAddress() {
         return streetAddress;
     }
@@ -73,6 +74,7 @@ public class AddressDTO extends BaseDTO {
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
     }
+
     public String getCity() {
         return city;
     }
@@ -80,6 +82,7 @@ public class AddressDTO extends BaseDTO {
     public void setCity(String city) {
         this.city = city;
     }
+
     public String getState() {
         return state;
     }
@@ -87,6 +90,7 @@ public class AddressDTO extends BaseDTO {
     public void setState(String state) {
         this.state = state;
     }
+
     public String getZipCode() {
         return zipCode;
     }
@@ -94,6 +98,7 @@ public class AddressDTO extends BaseDTO {
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
+
     public String getZipSuffixCode() {
         return zipSuffixCode;
     }
@@ -101,6 +106,7 @@ public class AddressDTO extends BaseDTO {
     public void setZipSuffixCode(String zipSuffixCode) {
         this.zipSuffixCode = zipSuffixCode;
     }
+
     public BigDecimal getLongitude() {
         return longitude;
     }
@@ -108,6 +114,7 @@ public class AddressDTO extends BaseDTO {
     public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
+
     public BigDecimal getLattitude() {
         return lattitude;
     }
@@ -115,6 +122,7 @@ public class AddressDTO extends BaseDTO {
     public void setLattitude(BigDecimal lattitude) {
         this.lattitude = lattitude;
     }
+
     public Boolean getDeliverable() {
         return deliverable;
     }
