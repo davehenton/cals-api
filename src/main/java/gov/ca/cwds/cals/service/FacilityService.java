@@ -25,7 +25,7 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.service.mapper.FasFacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.cms.data.access.service.DataAccessServicesException;
-import gov.ca.cwds.cms.data.access.service.PlacementHomeService;
+import gov.ca.cwds.cms.data.access.service.impl.PlacementHomeCoreService;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
 import gov.ca.cwds.data.legacy.cms.dao.FacilityTypeDao;
@@ -39,7 +39,6 @@ import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.inject.InjectorHolder;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
-import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
 import org.apache.commons.lang3.StringUtils;
@@ -67,7 +66,7 @@ public class FacilityService implements CrudsService {
   private static final Logger LOGGER = LoggerFactory.getLogger(FacilityService.class);
 
   @Inject
-  private PlacementHomeService placementHomeService;
+  private PlacementHomeCoreService placementHomeService;
 
   @Inject
   private LisFacFileLisDao lisFacFileLisDao;

@@ -2,8 +2,13 @@ package gov.ca.cwds.cals;
 
 import com.google.inject.Module;
 import com.google.inject.Provides;
+import gov.ca.cwds.authorizer.PlacementHomeCreateAuthorizer;
+import gov.ca.cwds.authorizer.SubstituteCareProviderCreateAuthorizer;
+import gov.ca.cwds.cals.Constants.Authorize;
 import gov.ca.cwds.cals.inject.ApplicationModule;
 import gov.ca.cwds.cals.inject.DataAccessModule;
+import gov.ca.cwds.rest.BaseApiApplication;
+import gov.ca.cwds.security.module.SecurityModule;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 
@@ -38,6 +43,15 @@ public class CalsApiApplication extends BaseCalsApiApplication<CalsApiConfigurat
           }
 
         });
+        install(new SecurityModule(BaseApiApplication::getInjector)
+            .addAuthorizer(Authorize.PLACEMENT_HOME_CREATE, PlacementHomeCreateAuthorizer.class)
+        );
+
+        install(new SecurityModule(BaseApiApplication::getInjector)
+            .addAuthorizer(Authorize.SUBSTITUTE_CARE_PROVIDER_CREATE, SubstituteCareProviderCreateAuthorizer.class)
+        );
+
+
       }
 
     };

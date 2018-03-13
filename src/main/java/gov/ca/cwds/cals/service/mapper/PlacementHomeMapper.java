@@ -48,7 +48,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "licStc", constant = "0")
   @Mapping(target = "licBsnc", constant = "0")
   @Mapping(target = "licnseeNm", constant = " ")
-  @Mapping(target = "licensrCd", constant = "NA")
+  @Mapping(target = "licensrCd", constant = "CT")
   @Mapping(target = "facltyNm", ignore = true)
   @Mapping(target = "pCityNm", constant = " ")
   @Mapping(target = "pyeFstnm", constant = " ")
