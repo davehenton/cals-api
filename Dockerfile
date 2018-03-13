@@ -2,7 +2,7 @@ FROM cwds/javajdk:8u161
 RUN mkdir /opt/cals-api
 RUN mkdir /opt/cals-api/logs
 ADD config/*.yml /opt/cals-api/
-ADD config/shiro_v2.ini /opt/cals-api/config/shiro.ini
+ADD config/shiro.ini /opt/cals-api/config/shiro.ini
 ADD config/testKeyStore.jks /opt/cals-api/config/testKeyStore.jks
 ADD config/enc.jceks /opt/cals-api/config/enc.jceks
 ADD build/libs/cals-api-dist.jar /opt/cals-api/cals-api.jar
