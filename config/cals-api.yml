@@ -36,6 +36,7 @@ swagger:
   jsonUrl: ${SWAGGER_JSON_URL:-http://localhost:8080/swagger.json}
 #  callbackUrl: https://cals-api.dev.cwds.io/swagger
   callbackUrl: ${SWAGGER_CALLBACK_URL:-http://localhost:8080/swagger}
+  tokenUrl: ${SWAGGER_TOKEN_URL:-http://localhost:8090/authn/token}
 
 upgardeDbOnStart: ${UPGRADE_DB_ON_START:-true}
 
