@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   perry:
-    image: cwds/perry:0.4.5-HF12
+    image: cwds/perry:1.6.1_376-RC
     hostname: perry
     ports:
       - ${PERRY_PORT}:8080
