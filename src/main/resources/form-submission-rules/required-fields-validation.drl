@@ -1,0 +1,433 @@
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO
+import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO
+import gov.ca.cwds.cals.service.dto.rfa.TypedPersonNameDTO
+import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO
+import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.RelationshipToApplicantType
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO
+import gov.ca.cwds.cals.service.dto.rfa.AdultChildDTO
+import gov.ca.cwds.cals.util.Utils
+import gov.ca.cwds.cals.Constants
+import gov.ca.cwds.cals.Constants.Validation
+import gov.ca.cwds.cals.Constants.Validation.Business
+import gov.ca.cwds.cals.Constants.BusinessRulesAgendaGroups
+import gov.ca.cwds.cals.Constants.AddressTypes
+import org.apache.commons.lang3.StringUtils
+import gov.ca.cwds.rest.exception.IssueDetails
+import gov.ca.cwds.rest.exception.IssueType
+import gov.ca.cwds.cals.Constants.Validation.Business.Code
+
+global java.util.Set validationDetailsList;
+
+/*
+The following Cards and Fields must have values populated in order for submit to be allowed.
+
+*Additional Applicants*
+The above acceptance criteria will be applicable for all subsequent applicants added to the application.
+
+
+
+_About This Residence Card_
+- Do you Own...
+- Weapons In Home
+- Body of Water
+- Does Any Person Not Listed....
+- Language Spoken....
+*/
+
+
+
+/*
+*Applicant 1 - Information*
+_Name Card_
+- Legal First Name
+*/
+rule "Validate that Legal First Name is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    eval(StringUtils.isBlank($applicant.getFirstName()))
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].firstName");
+    details.setCode(Code.REQUIRED_APPLICANT_FIRST_NAME);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's First Name"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+*Applicant 1 - Information*
+_Name Card_
+- Legal Last Name
+*/
+rule "Validate that Legal Last Name is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    eval(StringUtils.isBlank($applicant.getLastName()))
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].lastName");
+    details.setCode(Code.REQUIRED_APPLICANT_LAST_NAME);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Last Name"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+For each alias added to a given applicant...
+- First Name
+*/
+rule "Validate that Alias First Name is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $alias : TypedPersonNameDTO() from $applicant.otherNames;
+    eval(StringUtils.isBlank($alias.getFirstName()));
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].otherNames[?].firstName");
+    details.setCode(Code.REQUIRED_APPLICANT_OTHER_NAMES_FIRST_NAME);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Alias First Name"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+
+/*
+For each alias added to a given applicant...
+- Last Name
+*/
+rule "Validate that Alias Last Name is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $alias : TypedPersonNameDTO() from $applicant.otherNames;
+    eval(StringUtils.isBlank($alias.getLastName()));
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].otherNames[?].lastName");
+    details.setCode(Code.REQUIRED_APPLICANT_OTHER_NAMES_LAST_NAME);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Alias Last Name"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+_More About Applicant Card_
+- Date of Birth
+*/
+rule "Validate that dateOfBirth is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO(dateOfBirth == null) from $form.applicants;
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].dateOfBirth");
+    details.setCode(Code.REQUIRED_APPLICANT_DATE_OF_BIRTH);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Date of Birth"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+_More About Applicant Card_
+- Drivers License State (Note: The Drivers License Number and Drivers License State have already been coded to show conditional required for State when Licence Number is entered)
+*/
+rule "Validate that Drivers License State is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    eval(StringUtils.isNotBlank($applicant.getDriverLicenseNumber()));
+    eval($applicant.getDriverLicenseState() == null);
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].driverLicenceState");
+    details.setCode(Code.REQUIRED_APPLICANT_DRIVER_LICENSE_STATE);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Driver License State") + " (the field is required if Drivers License Number is present)");
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+_More About Applicant Card_
+- Drivers License Number (Note: if Driver License State is present Number is required)
+*/
+rule "Validate that Drivers License Number is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    eval($applicant.getDriverLicenseState() != null);
+    eval(StringUtils.isBlank($applicant.getDriverLicenseNumber()));
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].driverLicenceNumber");
+    details.setCode(Code.REQUIRED_APPLICANT_DRIVER_LICENSE_NUMBER);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Driver License Number") + " (the field is required if Drivers License State is present)");
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+  _Phone Number Card_
+  - Phone Number
+  For each new phone number that is added, the Phone Number field will be required
+  (Testing Note: User must REMOVE the additional phone number fields from the form if they do not want to have any issues with the required information.)
+*/
+rule "Validate that Phone Number is present if more than one on the form"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    eval($applicant.getPhones().size() > 1);
+    $phone : PhoneDTO() from $applicant.phones
+    eval(StringUtils.isBlank($phone.getNumber()));
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].phones[?].number");
+    details.setCode(Code.REQUIRED_APPLICANT_PHONE_NUMBER);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Phone Number"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+ *Applicant (s) - Residence*
+ _Address Card_
+ - Physical Address
+*/
+rule "Validate that Residence Street Address is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    $address : RFAAddressDTO() from $form.residence.addresses;
+    eval(StringUtils.isBlank($address.getStreetAddress()));
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.addresses[?].streetAddress");
+    details.setCode(Code.REQUIRED_RESIDENCE_STREET_ADDRESS);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Residence Street Address"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+ *Applicant (s) - Residence*
+ _Address Card_
+ - City
+*/
+rule "Validate that Residence Address Street is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    $address : RFAAddressDTO() from $form.residence.addresses;
+    eval(StringUtils.isBlank($address.getCity()));
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.addresses[?].city");
+    details.setCode(Code.REQUIRED_RESIDENCE_ADDRESS_CITY);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Residence Address City"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+ *Applicant (s) - Residence*
+ _Address Card_
+ - State
+*/
+rule "Validate that Residence Address State is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    $address : RFAAddressDTO() from $form.residence.addresses;
+    eval($address.getState() == null);
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.addresses[?].state");
+    details.setCode(Code.REQUIRED_RESIDENCE_ADDRESS_STATE);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Residence Address State"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+ *Applicant (s) - Residence*
+ _Address Card_
+ - Zip
+*/
+rule "Validate that Residence Address Zip Code is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    $address : RFAAddressDTO() from $form.residence.addresses;
+    eval(StringUtils.isBlank($address.getZip()));
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.addresses[?].zip");
+    details.setCode(Code.REQUIRED_RESIDENCE_ADDRESS_ZIP);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Residence Address Zip Code"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+ *Applicant (s) - Residence*
+ _Address Card_
+ - Mailing Address The Same As Physical Address
+*/
+rule "Validate that Mailing Address The Same As Physical Address field is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    eval($form.getResidence().getPhysicalMailingSimilar() == null);
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.physicalMailingSimilar");
+    details.setCode(Code.REQUIRED_PHYSICAL_MAILING_THE_SAME);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Mailing Address The Same As Physical Address"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+
+/*
+_About This Residence Card_
+- Do you Own...
+*/
+
+rule "Validate that Ownership field is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    eval($form.getResidence().getResidenceOwnership() == null);
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.residenceOwnership");
+    details.setCode(Code.REQUIRED_RESIDENCE_OWNERSHIP);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Residence Ownership"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+_About This Residence Card_
+- Weapons In Home
+*/
+
+rule "Validate that Weapon In Home field is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    eval($form.getResidence().getWeaponInHome() == null);
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.weaponInHome");
+    details.setCode(Code.REQUIRED_WEAPON_IN_HOME_FIELD);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Weapon In Home"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+_About This Residence Card_
+- Body of Water
+*/
+
+rule "Validate that Body of Water field is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    eval($form.getResidence().getBodyOfWaterExist() == null);
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.bodyOfWaterExist");
+    details.setCode(Code.REQUIRED_BODY_OF_WATER_EXIST_FIELD);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Body of Water"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+_About This Residence Card_
+- Does Any Person Not Listed....
+*/
+
+rule "Validate that Does Any Person Not Listed... field is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    eval($form.getResidence().getOthersUsingResidenceAsMailing() == null);
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.otherPeopleUsingResidenceAsMailing[?]");
+    details.setCode(Code.REQUIRED_OTHER_PEOPLE_IN_RESIDENCE);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Does Any Person Not Listed..."));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+
+/*
+_About This Residence Card_
+- Language Spoken....
+*/
+
+rule "Validate that Language Spoken field is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    eval($form.getResidence() != null);
+    eval($form.getResidence().getHomeLanguages() == null || $form.getResidence().getHomeLanguages().size() == 0) ;
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.residence.bodyOfWaterExist");
+    details.setCode(Code.REQUIRED_HOME_LANGUAGES);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Language Spoken"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
