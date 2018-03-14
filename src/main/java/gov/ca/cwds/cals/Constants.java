@@ -411,6 +411,8 @@ public final class Constants {
           "System has discovered Adult Child of applicant(s) with first name - [%s], last name - [%s] that does not live in home"
               + " but is added to Other Adults residing in the home section";
 
+      public static final String REQUIRED_FIELD_MESSAGE= "Required field [%s] is not provided";
+
       public static class Code {
 
         public static final String APPLICANT_FIRST_NAME = "BV000001";
@@ -425,16 +427,36 @@ public final class Constants {
         public static final String MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT = "BV000010";
         public static final String APPLICATION_HAS_NO_RESIDENCE = "BV000011";
         public static final String APPLICATION_HAS_NO_RESIDENTIAL_ADDRESS = "BV000012";
-        public static final String RESIDENTIAL_ADDRESS_HAS_NO_STREET_NAME = "BV000013";
-        public static final String RESIDENTIAL_ADDRESS_HAS_NO_CITY = "BV000014";
-        public static final String RESIDENTIAL_ADDRESS_HAS_NO_STATE = "BV000015";
-        public static final String RESIDENTIAL_ADDRESS_HAS_NO_ZIP_CODE = "BV000016";
         public static final String APPLICATION_HAS_NO_COUNTY = "BV000017";
         public static final String OTHER_ADULT_HAS_NO_FIRST_NAME = "BV000018";
         public static final String OTHER_ADULT_HAS_NO_LAST_NAME = "BV000019";
         public static final String OTHER_ADULT_IS_NOT_ADDED_AS_ADULT_CHILD = "BV000020";
         public static final String ADULT_CHILD_LIVING_IN_HOME_IS_NOT_ADDED_AS_OTHER_ADULT = "BV000021";
         public static final String ADULT_CHILD_LIVING_IN_HOME_WRONG_FLAG = "BV000022";
+
+
+
+
+        // Constraint Violation Codes
+        public static final String REQUIRED_FIELD = "CV000001";
+        public static final String REQUIRED_APPLICANT_FIRST_NAME = "CV000002";
+        public static final String REQUIRED_APPLICANT_LAST_NAME = "CV000003";
+        public static final String REQUIRED_APPLICANT_OTHER_NAMES_FIRST_NAME = "CV000004";
+        public static final String REQUIRED_APPLICANT_OTHER_NAMES_LAST_NAME = "CV000005";
+        public static final String REQUIRED_APPLICANT_DATE_OF_BIRTH = "CV000006";
+        public static final String REQUIRED_APPLICANT_DRIVER_LICENSE_STATE = "CV000007";
+        public static final String REQUIRED_APPLICANT_DRIVER_LICENSE_NUMBER = "CV000008";
+        public static final String REQUIRED_APPLICANT_PHONE_NUMBER = "CV000009";
+        public static final String REQUIRED_RESIDENCE_STREET_ADDRESS = "CV000010";
+        public static final String REQUIRED_RESIDENCE_ADDRESS_CITY = "CV000011";
+        public static final String REQUIRED_RESIDENCE_ADDRESS_STATE = "CV000012";
+        public static final String REQUIRED_RESIDENCE_ADDRESS_ZIP = "CV000013";
+        public static final String REQUIRED_PHYSICAL_MAILING_THE_SAME = "CV000014";
+        public static final String REQUIRED_RESIDENCE_OWNERSHIP = "CV000015";
+        public static final String REQUIRED_WEAPON_IN_HOME_FIELD = "CV000016";
+        public static final String REQUIRED_BODY_OF_WATER_EXIST_FIELD = "CV000017";
+        public static final String REQUIRED_OTHER_PEOPLE_IN_RESIDENCE = "CV000018";
+        public static final String REQUIRED_HOME_LANGUAGES = "CV000019";
 
         private Code() {
         }

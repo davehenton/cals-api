@@ -63,7 +63,7 @@ rule "Validate Applicant first name"
       $applicant: ApplicantDTO(StringUtils.isBlank(firstName))
   then
     IssueDetails details = new IssueDetails();
-    details.setCode(Code.APPLICANT_FIRST_NAME);
+    details.setCode(Code.REQUIRED_APPLICANT_FIRST_NAME);
     details.setUserMessage(String.format(Business.APPLICANT_FIRST_NAME_IS_EMPTY_MESSAGE,
       $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
       $applicant.getLastName() != null ? $applicant.getLastName() : "",
@@ -79,7 +79,7 @@ rule "Validate Applicant last name"
       $applicant: ApplicantDTO(StringUtils.isBlank(lastName))
   then
     IssueDetails details = new IssueDetails();
-    details.setCode(Code.APPLICANT_LAST_NAME);
+    details.setCode(Code.REQUIRED_APPLICANT_LAST_NAME);
     details.setUserMessage(String.format(Business.APPLICANT_LAST_NAME_IS_EMPTY_MESSAGE,
        $applicant.getFirstName() != null ? $applicant.getFirstName() : "",
        $applicant.getLastName() != null ? $applicant.getLastName() : "",
