@@ -19,6 +19,7 @@ import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_WEAPO
 import static org.junit.Assert.assertEquals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -71,10 +72,34 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_APPLICANT_DRIVER_LICENSE_STATE)));// "CV000007";
     //Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_APPLICANT_DRIVER_LICENSE_NUMBER)));// "CV000008"); //see checkDriverLicenseNumberFormTest()
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_APPLICANT_PHONE_NUMBER)));// "CV000009";
+
+    // Residence Card
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_RESIDENCE_STREET_ADDRESS)));// "CV000010";
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_RESIDENCE_ADDRESS_CITY)));// "CV000011";
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_RESIDENCE_ADDRESS_STATE)));// "CV000012";
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_RESIDENCE_ADDRESS_ZIP)));// "CV000013";
+
+    List<IssueDetails> streetIssues = cvIssues.stream()
+        .filter(issueDetails -> issueDetails.getCode().equals(REQUIRED_RESIDENCE_STREET_ADDRESS))
+        .collect(Collectors.toList());
+    Assert.assertEquals(1, streetIssues.size());
+
+    List<IssueDetails> cityIssues = cvIssues.stream()
+        .filter(issueDetails -> issueDetails.getCode().equals(REQUIRED_RESIDENCE_ADDRESS_CITY))
+        .collect(Collectors.toList());
+    Assert.assertEquals(1, cityIssues.size());
+
+    List<IssueDetails> stateIssues = cvIssues.stream()
+        .filter(issueDetails -> issueDetails.getCode().equals(REQUIRED_RESIDENCE_ADDRESS_STATE))
+        .collect(Collectors.toList());
+    Assert.assertEquals(1, stateIssues.size());
+
+    List<IssueDetails> zipIssues = cvIssues.stream()
+        .filter(issueDetails -> issueDetails.getCode().equals(REQUIRED_RESIDENCE_ADDRESS_ZIP))
+        .collect(Collectors.toList());
+    Assert.assertEquals(1, zipIssues.size());
+
+
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_PHYSICAL_MAILING_THE_SAME)));// "CV000014";
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_RESIDENCE_OWNERSHIP)));// "CV000015";
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_WEAPON_IN_HOME_FIELD)));// "CV000016";
@@ -108,10 +133,7 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
             Collectors.toList());
 
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_APPLICANT_DRIVER_LICENSE_NUMBER)));// "CV000008");
-
   }
-
-
 
   private RFA1aFormDTO prepareValidForm() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
@@ -152,24 +174,33 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
     residenceDTO.setPhysicalMailingSimilar(null);
     residenceDTO.setWeaponInHome(null);
     residenceDTO.setHomeLanguages(null);
-    residenceDTO.setAddresses(Arrays.asList(new RFAAddressDTO(), new RFAAddressDTO()));
+
+    //Create residential address
+    RFAAddressDTO residentialAddress = new RFAAddressDTO();
+    AddressType addressType = new AddressType();
+    addressType.setId(1L);
+    addressType.setValue("Residential");
+    residentialAddress.setType(addressType);
+
+    residenceDTO.setAddresses(
+        Arrays.asList(
+            // Resiadential address
+            residentialAddress,
+            // Empty Address object
+            new RFAAddressDTO()
+        )
+    );
     residenceHelper.putResidence(form.getId(), residenceDTO);
 
     return form;
   }
 
-
-
-
   public static class IssueDetailesList {
-
     @JsonProperty("issue_details")
     List<IssueDetails> issueDetails;
-
     public List<IssueDetails> getIssueDetails() {
       return issueDetails;
     }
-
     public void setIssueDetails(List<IssueDetails> issueDetails) {
       this.issueDetails = issueDetails;
     }
