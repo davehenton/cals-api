@@ -70,8 +70,9 @@ public interface FacilityChildMapper {
             County county = placementEpisode.getCounty();
             facilityChildMapper.toFacilityChildDTO(facilityChildDTO, county);
 
-            BaseStaffPerson staffPerson = placementEpisode.getStaffPerson();
-            facilityChildMapper.toFacilityChildDTO(facilityChildDTO, staffPerson);
+// this logic needs to be reworked, StaffPerson is not the person who adds/removes child from placement home
+//            BaseStaffPerson staffPerson = placementEpisode.getStaffPerson();
+//            facilityChildMapper.toFacilityChildDTO(facilityChildDTO, staffPerson);
 
             Set<? extends BaseOutOfHomePlacement> outOfHomePlacements = placementEpisode.getOutOfHomePlacements();
             if (!outOfHomePlacements.isEmpty()) {
