@@ -1,7 +1,8 @@
 import org.apache.tools.ant.filters.FixCrLfFilter
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.apache.tools.ant.taskdefs.condition.Os
-
+import java.text.SimpleDateFormat
+import org.ajoberstar.grgit.Grgit
 import static org.gradle.api.logging.LogLevel.INFO
 
 
@@ -22,6 +23,7 @@ plugins {
     id 'net.ltgt.apt' version '0.9'
     id "net.foragerr.jmeter" version "1.0.7-3.0-BETA"
     id "com.github.hierynomus.license" version "0.14.0"
+    id "org.ajoberstar.grgit" version "1.5.1-rc.3"
 }
 
 project.logging.setLevelInternal(INFO)
@@ -254,6 +256,25 @@ task copyConfig(type: Copy) {
     into 'build/docker/config'
 }
 
+task versionTxt()  {
+    doLast {
+        new File("$projectDir/version.txt").text = """
+Version: $projectVersion
+Build.number: ${System.getenv("BUILD_NUMBER") ?: "IDE"}
+Revision: ${Grgit.open(dir: '.').head().id}
+Buildtime: ${new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date())}
+Application-name: CWDS cals-api
+"""
+    }
+}
+
+task copyVersion(type: Copy, dependsOn: versionTxt) {
+    from '.'
+    include 'version.txt'
+    into 'build/docker'
+}
+
+
 task copyDist(type: Copy, dependsOn: shadowJar) {
     from 'build/libs'
     into 'build/docker/libs'
@@ -267,14 +288,14 @@ task readArguments() {
     }
 }
 
-task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyDist] ) {
+task calsApiDocker(type: Docker,  dependsOn: [copyConfig, copyVersion, copyDist] ) {
     dockerfile = "Dockerfile"
     project.group = projectDockerGroup
     applicationName = projectDockerAppName
     tagVersion = dockerTag
 }
 
-task createDockerImage(type:Exec, dependsOn: [convertEntrypointToLF, shadowJar]) {
+task createDockerImage(type:Exec, dependsOn: [convertEntrypointToLF, copyVersion, shadowJar]) {
     commandLine 'docker',  'build',  '-t',  'cwds/cals-api', '.'
 }
 
