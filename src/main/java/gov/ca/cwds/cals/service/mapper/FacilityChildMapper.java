@@ -2,10 +2,10 @@ package gov.ca.cwds.cals.service.mapper;
 
 
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.data.legacy.cms.entity.Client;
 import gov.ca.cwds.data.legacy.cms.entity.BaseOutOfHomePlacement;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementEpisode;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
+import gov.ca.cwds.data.legacy.cms.entity.Client;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.County;
 import java.util.Set;
 import org.mapstruct.AfterMapping;
@@ -70,9 +70,10 @@ public interface FacilityChildMapper {
             County county = placementEpisode.getCounty();
             facilityChildMapper.toFacilityChildDTO(facilityChildDTO, county);
 
-            BaseStaffPerson staffPerson = placementEpisode.getStaffPerson();
-            facilityChildMapper.toFacilityChildDTO(facilityChildDTO, staffPerson);
-
+            //This logic needs to be reworked, StaffPerson is not the person who
+            //adds/removes children from placement home
+            //BaseStaffPerson staffPerson = placementEpisode.getStaffPerson();
+            //facilityChildMapper.toFacilityChildDTO(facilityChildDTO, staffPerson);
             Set<? extends BaseOutOfHomePlacement> outOfHomePlacements = placementEpisode.getOutOfHomePlacements();
             if (!outOfHomePlacements.isEmpty()) {
 

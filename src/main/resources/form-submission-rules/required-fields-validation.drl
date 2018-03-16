@@ -25,6 +25,8 @@ import gov.ca.cwds.rest.exception.IssueDetails
 import gov.ca.cwds.rest.exception.IssueType
 import gov.ca.cwds.cals.Constants.Validation.Business.Code
 
+import java.util.ArrayList
+
 global java.util.Set validationDetailsList;
 
 /*
@@ -198,21 +200,23 @@ end
   (Testing Note: User must REMOVE the additional phone number fields from the form if they do not want to have any issues with the required information.)
 */
 rule "Validate that Phone Number is present if more than one on the form"
-      dialect "mvel"
+      dialect "java"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
     $applicant : ApplicantDTO() from $form.applicants;
     eval($applicant.getPhones().size() > 1);
-    $phone : PhoneDTO() from $applicant.phones
-    eval(StringUtils.isBlank($phone.getNumber()));
+    $phones : ArrayList() from collect(PhoneDTO(StringUtils.isBlank(number)) from $applicant.phones)
+
   then
-    IssueDetails details = new IssueDetails();
-    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].phones[?].number");
-    details.setCode(Code.REQUIRED_APPLICANT_PHONE_NUMBER);
-    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Phone Number"));
-    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
-    validationDetailsList.add(details);
+    for (int i = 0; i < $phones.size(); i++) {
+      IssueDetails details = new IssueDetails();
+      details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].phones[?].number");
+      details.setCode(Code.REQUIRED_APPLICANT_PHONE_NUMBER);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Phone Number"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
 end
 
 /*
@@ -221,20 +225,24 @@ end
  - Physical Address
 */
 rule "Validate that Residence Street Address is present"
-      dialect "mvel"
+      dialect "java"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
     eval($form.getResidence() != null);
-    $address : RFAAddressDTO() from $form.residence.addresses;
-    eval(StringUtils.isBlank($address.getStreetAddress()));
+    $addresses : ArrayList() from collect(
+          RFAAddressDTO(type != null && type.id == 1 /* Residential */, StringUtils.isBlank(streetAddress))
+          from $form.residence.addresses
+          );
   then
-    IssueDetails details = new IssueDetails();
-    details.setProperty("rfa1a.residence.addresses[?].streetAddress");
-    details.setCode(Code.REQUIRED_RESIDENCE_STREET_ADDRESS);
-    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Residence Street Address"));
-    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
-    validationDetailsList.add(details);
+    for (int i = 0; i < $addresses.size(); i++) {
+      IssueDetails details = new IssueDetails();
+      details.setProperty("rfa1a.residence.addresses[residential_" + i + "].streetAddress");
+      details.setCode(Code.REQUIRED_RESIDENCE_STREET_ADDRESS);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Physical Address Street"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
 end
 
 /*
@@ -243,20 +251,24 @@ end
  - City
 */
 rule "Validate that Residence Address Street is present"
-      dialect "mvel"
+      dialect "java"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
     eval($form.getResidence() != null);
-    $address : RFAAddressDTO() from $form.residence.addresses;
-    eval(StringUtils.isBlank($address.getCity()));
+    $addresses : ArrayList() from collect(
+      RFAAddressDTO(type != null && type.id == 1 /* Residential */, StringUtils.isBlank(city))
+      from $form.residence.addresses
+      );
   then
-    IssueDetails details = new IssueDetails();
-    details.setProperty("rfa1a.residence.addresses[?].city");
-    details.setCode(Code.REQUIRED_RESIDENCE_ADDRESS_CITY);
-    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Residence Address City"));
-    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
-    validationDetailsList.add(details);
+    for (int i = 0; i < $addresses.size(); i++) {
+      IssueDetails details = new IssueDetails();
+      details.setProperty("rfa1a.residence.addresses[residential_" + i + "].city");
+      details.setCode(Code.REQUIRED_RESIDENCE_ADDRESS_CITY);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Physical Address City"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
 end
 
 /*
@@ -265,20 +277,24 @@ end
  - State
 */
 rule "Validate that Residence Address State is present"
-      dialect "mvel"
+      dialect "java"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
     eval($form.getResidence() != null);
-    $address : RFAAddressDTO() from $form.residence.addresses;
-    eval($address.getState() == null);
+    $addresses : ArrayList() from collect(
+          RFAAddressDTO(type != null && type.id == 1 /* Residential */, state == null)
+          from $form.residence.addresses
+          );
   then
-    IssueDetails details = new IssueDetails();
-    details.setProperty("rfa1a.residence.addresses[?].state");
-    details.setCode(Code.REQUIRED_RESIDENCE_ADDRESS_STATE);
-    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Residence Address State"));
-    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
-    validationDetailsList.add(details);
+    for (int i = 0; i < $addresses.size(); i++) {
+      IssueDetails details = new IssueDetails();
+      details.setProperty("rfa1a.residence.addresses[residential_" + i + "].state");
+      details.setCode(Code.REQUIRED_RESIDENCE_ADDRESS_STATE);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Physical Address State"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
 end
 
 /*
@@ -287,20 +303,24 @@ end
  - Zip
 */
 rule "Validate that Residence Address Zip Code is present"
-      dialect "mvel"
+      dialect "java"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
     eval($form.getResidence() != null);
-    $address : RFAAddressDTO() from $form.residence.addresses;
-    eval(StringUtils.isBlank($address.getZip()));
+    $addresses : ArrayList() from collect(
+              RFAAddressDTO(type != null && type.id == 1 /* Residential */, StringUtils.isBlank(zip))
+              from $form.residence.addresses
+              );
   then
-    IssueDetails details = new IssueDetails();
-    details.setProperty("rfa1a.residence.addresses[?].zip");
-    details.setCode(Code.REQUIRED_RESIDENCE_ADDRESS_ZIP);
-    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Residence Address Zip Code"));
-    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
-    validationDetailsList.add(details);
+    for (int i = 0; i < $addresses.size(); i++) {
+      IssueDetails details = new IssueDetails();
+      details.setProperty("rfa1a.residence.addresses[residential_" + i + "].zip");
+      details.setCode(Code.REQUIRED_RESIDENCE_ADDRESS_ZIP);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Physical Address Zip"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
 end
 
 /*
@@ -402,7 +422,7 @@ rule "Validate that Does Any Person Not Listed... field is present"
     eval($form.getResidence().getOthersUsingResidenceAsMailing() == null);
   then
     IssueDetails details = new IssueDetails();
-    details.setProperty("rfa1a.residence.otherPeopleUsingResidenceAsMailing[?]");
+    details.setProperty("rfa1a.residence.otherUsingResidenceAsMailing");
     details.setCode(Code.REQUIRED_OTHER_PEOPLE_IN_RESIDENCE);
     details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Does Any Person Not Listed..."));
     details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
