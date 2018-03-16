@@ -40,36 +40,35 @@ node ('tpt2-slave'){
    def serverArti = Artifactory.server 'CWDS_DEV'
    def rtGradle = Artifactory.newGradleBuild()
    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')), disableConcurrentBuilds(), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
-   parameters([
-      string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
-      string(defaultValue: 'development', description: '', name: 'branch'),
-      string(defaultValue: '', description: 'Used for mergerequest default is empty', name: 'refspec'),
-      booleanParam(defaultValue: false, description: 'Default release version template is: <majorVersion>_<buildNumber>-RC', name: 'RELEASE_PROJECT'),
-      string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
-      booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
-      string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory')
-      ]), pipelineTriggers([pollSCM('H/5 * * * *')])])
+       parameters([
+          string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
+          string(defaultValue: 'development', description: '', name: 'branch'),
+          string(defaultValue: '', description: 'Used for mergerequest default is empty', name: 'refspec'),
+          booleanParam(defaultValue: false, description: 'Default release version template is: <majorVersion>_<buildNumber>-RC', name: 'RELEASE_PROJECT'),
+          string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
+          booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
+          string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory')
+       ])
+   ])
   try {
-   stage('Preparation') {
-		  checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
-		  rtGradle.tool = "Gradle_35"
-		  rtGradle.resolver repo:'repo', server: serverArti
-		  rtGradle.useWrapper = true
-   }
-   stage('Build'){
-    echo("RELEASE: ${params.RELEASE_PROJECT}")
-    echo("BUILD_NUMBER: ${BUILD_NUMBER}")
-    echo("OVERRIDE_VERSION: ${params.OVERRIDE_VERSION}")
-		def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar -DRelease=$RELEASE_PROJECT -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
+    stage('Preparation') {
+        checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
+        rtGradle.tool = "Gradle_35"
+        rtGradle.resolver repo:'repo', server: serverArti
+        rtGradle.useWrapper = true
+    }
+    stage('Build'){
+        echo("RELEASE: ${params.RELEASE_PROJECT}")
+        echo("BUILD_NUMBER: ${BUILD_NUMBER}")
+        echo("OVERRIDE_VERSION: ${params.OVERRIDE_VERSION}")
+        def buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar -DRelease=$RELEASE_PROJECT -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
    }
    stage('Unit Tests') {
-       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test jacocoTestReport', switches: '--stacktrace'
-	     publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/test', reportFiles: 'index.html', reportName: 'JUnit Report', reportTitles: 'JUnit tests summary'])
+        buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test jacocoTestReport', switches: '--stacktrace'
    }
    stage('License Report') {
-      		buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'downloadLicenses'
-      		publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/license', reportFiles: 'license-dependency.html', reportName: 'License Report', reportTitles: 'License summary'])
-      }
+        buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'downloadLicenses'
+   }
    stage('SonarQube analysis'){
 		withSonarQubeEnv('Core-SonarQube') {
 			buildInfo = rtGradle.run buildFile: 'build.gradle', switches: '--info', tasks: 'sonarqube'
@@ -106,13 +105,10 @@ node ('tpt2-slave'){
   stage('Smoke Tests') {
       checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'smokeTest --stacktrace'
-      publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/smokeTest', reportFiles: 'index.html', reportName: 'Smoke Tests Report', reportTitles: 'Smoke tests summary'])
   }
   stage('Integration Tests') {
       checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'integrationTest --stacktrace'
-      publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/integrationTest', reportFiles: 'index.html', reportName: 'Integration Tests Report', reportTitles: 'Integration tests summary'])
-      cleanWs()
   }
  } catch (Exception e)    {
  	   errorcode = e
@@ -120,9 +116,12 @@ node ('tpt2-slave'){
   	   notifyBuild(currentBuild.result,errorcode)
   	   throw e;
  }finally {
-	   publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/smokeTest', reportFiles: 'index.html', reportName: 'Smoke Tests Reports', reportTitles: 'Smoke tests summary'])
-	   publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/integrationTest', reportFiles: 'index.html', reportName: 'Integration Tests Reports', reportTitles: 'Integration tests summary'])
-	   publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/test', reportFiles: 'index.html', reportName: 'JUnitReports', reportTitles: 'JUnit tests summary'])
+      archiveArtifacts allowEmptyArchive: true, artifacts: 'version.txt', fingerprint: true, onlyIfSuccessful: true
+      fingerprint 'version.txt'
+	  publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/test', reportFiles: 'index.html', reportName: 'JUnit Report', reportTitles: 'JUnit tests summary'])
+      publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/license', reportFiles: 'license-dependency.html', reportName: 'License Report', reportTitles: 'License summary'])
+      publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/smokeTest', reportFiles: 'index.html', reportName: 'Smoke Tests Report', reportTitles: 'Smoke tests summary'])
+      publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/integrationTest', reportFiles: 'index.html', reportName: 'Integration Tests Report', reportTitles: 'Integration tests summary'])
        cleanWs()
  }
 }
