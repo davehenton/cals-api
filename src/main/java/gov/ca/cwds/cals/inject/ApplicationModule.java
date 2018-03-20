@@ -19,25 +19,25 @@ public class ApplicationModule<T extends CalsApiConfiguration> extends AbstractM
   private Bootstrap<T> bootstrap;
 
   public ApplicationModule(Bootstrap<T> bootstrap) {
-        super();
-        this.bootstrap = bootstrap;
-    }
+    super();
+    this.bootstrap = bootstrap;
+  }
 
-    /**
-     * Configure and initialize API components, including services, rest, data access objects
-     * (DAO), web service filters, and auditing.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    protected void configure() {
-        install(new ServicesModule());
-        install(new ResourcesModule());
-        install(new AuditingModule());
-        install(new MappingModule());
-        install(new FiltersModule());
-      install(new DataAccessServicesModule());
-    }
+  /**
+   * Configure and initialize API components, including services, rest, data access objects
+   * (DAO), web service filters, and auditing.
+   *
+   * {@inheritDoc}
+   */
+  @Override
+  protected void configure() {
+    install(new ServicesModule());
+    install(new ResourcesModule());
+    install(new AuditingModule());
+    install(new MappingModule());
+    install(new FiltersModule());
+    install(new DataAccessServicesModule());
+  }
 
   public Bootstrap<T> getBootstrap() {
     return bootstrap;
@@ -66,7 +66,6 @@ public class ApplicationModule<T extends CalsApiConfiguration> extends AbstractM
   public String dmsURI(T configuration) {
     return configuration.getDmsURI();
   }
-
 
 
 }

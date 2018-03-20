@@ -1,5 +1,9 @@
 package gov.ca.cwds.cals.service;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
@@ -41,20 +45,14 @@ import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.services.CrudsService;
 import io.dropwizard.hibernate.UnitOfWork;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static javax.ws.rs.core.Response.Status.EXPECTATION_FAILED;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CRUD service for {@link gov.ca.cwds.cals.service.dto.FacilityDTO}
@@ -193,7 +191,7 @@ public class FacilityService implements CrudsService {
               .findDeficienciesByFacilityNumber(licenseNumber).stream()
               .map(facilityInspectionMapper::toFacilityInspectionDto).collect(Collectors.toList());
     }
-    return Collections.EMPTY_LIST;
+    return Collections.emptyList();
   }
 
   @UnitOfWork(FAS)
@@ -203,7 +201,7 @@ public class FacilityService implements CrudsService {
               .findComplaintsByFacilityNumber(licenseNumber).stream()
               .map(complaintMapper::entityToDTO).collect(Collectors.toList());
     }
-    return Collections.EMPTY_LIST;
+    return Collections.emptyList();
   }
 
   private FacilityDTO loadFacilityFromCwsCms(FacilityParameterObject parameterObject) {
@@ -351,10 +349,7 @@ public class FacilityService implements CrudsService {
         .appendSubstituteCareProviders()
         .appendOtherChildrenInHome()
         .appendOtherAdultsInPlacementHome();
-    PlacementHome placementHome =
-        placementHomeService.create(builder.getPlacementHomeEntityAwareDTO());
-
-    return placementHome;
+    return placementHomeService.create(builder.getPlacementHomeEntityAwareDTO());
   }
 
 }
