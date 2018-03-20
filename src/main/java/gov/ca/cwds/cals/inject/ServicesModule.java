@@ -5,6 +5,7 @@ import com.google.inject.Provides;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
 import gov.ca.cwds.cals.service.DictionariesService;
+import gov.ca.cwds.cals.service.FacilityChildService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
@@ -38,10 +39,9 @@ import gov.ca.cwds.drools.validation.ValidationConfigurationRegistry;
 import gov.ca.cwds.rest.api.domain.cms.SystemCodeCache;
 import gov.ca.cwds.rest.services.cms.CachingSystemCodeService;
 import gov.ca.cwds.rest.services.cms.SystemCodeService;
+import javax.ws.rs.client.Client;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.JerseyClientBuilder;
-
-import javax.ws.rs.client.Client;
 
 /**
  * Identifies all CALS API business layer (services) classes available for dependency injection by
@@ -64,6 +64,7 @@ public class ServicesModule extends AbstractModule {
     bind(FacilityInspectionCollectionService.class);
     bind(FacilityInspectionService.class);
     bind(CountiesService.class);
+    bind(FacilityChildService.class);
     bind(DictionariesService.class);
     bind(FacilityService.class).toProvider(FacilityServiceProvider.class);
     bind(FacilityParameterObjectCMSAwareBuilder.class).toProvider(FacilityParameterObjectBuilderProvider.class);
