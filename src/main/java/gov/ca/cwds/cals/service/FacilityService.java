@@ -166,7 +166,6 @@ public class FacilityService implements CrudsService {
       facilityDTO = facilityMapper
           .toExpandedFacilityDTO(facilityDTO, facilityChildren, inspections, complaints);
     }
-
     return facilityDTO;
   }
 
