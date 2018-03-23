@@ -4,16 +4,17 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.FasSessionFactory;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.data.BaseDaoImpl;
+import java.util.List;
+import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.NoResultException;
-import java.util.List;
-
-/** @author CWDS CALS API Team */
+/**
+ * @author CWDS CALS API Team
+ */
 public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ComplaintReportLic802Dao.class);
@@ -33,13 +34,13 @@ public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802>
   }
 
   public ComplaintReportLic802 findComplaintByFacilityIdAndComplaintId(
-      Integer facilityId, String complaintId) {
+      String facilityId, String complaintId) {
     Session session = getSessionFactory().getCurrentSession();
     Class<ComplaintReportLic802> entityClass = getEntityClass();
     Query<ComplaintReportLic802> query =
         session.createNamedQuery(
             ComplaintReportLic802.FIND_COMPLAINTS_BY_FACILITY_ID_AND_COMPLAINT_NUMBER, entityClass);
-    query.setParameter(ComplaintReportLic802.PARAM_FACILITY_NUMBER, String.valueOf(facilityId));
+    query.setParameter(ComplaintReportLic802.PARAM_FACILITY_NUMBER, facilityId);
     query.setParameter(ComplaintReportLic802.PARAM_COMPLAINT_ID, complaintId);
     ComplaintReportLic802 res = null;
     try {

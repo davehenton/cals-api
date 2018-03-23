@@ -19,53 +19,67 @@ import org.junit.Test;
 
 public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
-    public static final String FACILITY_ID = "100001317";
-    public static final String WRONG_FACILITY_ID = "-1";
-    public static final String COMPLAINT_ID = "24-CR-241214-20050106141240";
-    public static final String WRONG_COMPLAINT_ID = "-1";
+  private static final String FACILITY_ID = "100001317";
+  private static final String ALPHANUMERICAL_FACILITY_ID = "EEwv7B3197";
+  private static final String WRONG_FACILITY_ID = "-1";
+  private static final String COMPLAINT_ID = "24-CR-241214-20050106141240";
+  private static final String WRONG_COMPLAINT_ID = "-1";
 
-    @BeforeClass
-    public static void beforeClass() throws Exception {
-        setUpFas();
-    }
+  @BeforeClass
+  public static void beforeClass() throws Exception {
+    setUpFas();
+  }
 
-    @Test
-    public void getAllFacilityComplaintsTest() throws Exception {
-        WebTarget target = clientTestRule.target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS);
-        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-        ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
+  @Test
+  public void getAllFacilityComplaintsTest() throws Exception {
+    WebTarget target = clientTestRule
+        .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
 
-        String fixture = fixture("fixtures/complaints-response.json");
-        assertEqualsResponse(fixture, transformDTOtoJSON(complaintsDTO));
-    }
+    String fixture = fixture("fixtures/complaints-response.json");
+    assertEqualsResponse(fixture, transformDTOtoJSON(complaintsDTO));
+  }
 
-    @Test
-    public void getAllFacilityComplaintsWrongFacilityIdTest() throws JsonProcessingException {
-        WebTarget target = clientTestRule.target(FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS);
-        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-        Response response = invocation.get();
-        assertEquals(404, response.getStatus());
-    }
+  @Test
+  public void getAllFacilityComplaintsAlphanumericalIdTest() {
+    WebTarget target = clientTestRule
+        .target(FACILITIES + "/" + ALPHANUMERICAL_FACILITY_ID + "/" + Constants.API.COMPLAINTS);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    Response response = invocation.get();
+    assertEquals(404, response.getStatus());
+  }
 
-    @Test
-    public void getFacilityComplaintTest() throws Exception {
-        WebTarget target = clientTestRule
-                .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID);
-        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-        ComplaintDTO complaintDTO = invocation.get(ComplaintDTO.class);
+  @Test
+  public void getAllFacilityComplaintsWrongFacilityIdTest() throws JsonProcessingException {
+    WebTarget target = clientTestRule
+        .target(FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    Response response = invocation.get();
+    assertEquals(404, response.getStatus());
+  }
 
-        String fixture = fixture("fixtures/complaint-response.json");
-        assertEqualsResponse(fixture, transformDTOtoJSON(complaintDTO));
-    }
+  @Test
+  public void getFacilityComplaintTest() throws Exception {
+    WebTarget target = clientTestRule
+        .target(
+            FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + COMPLAINT_ID);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    ComplaintDTO complaintDTO = invocation.get(ComplaintDTO.class);
 
-    @Test
-    public void getFacilityWrongComplaintTest() throws Exception {
-        WebTarget target = clientTestRule
-                .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/" + WRONG_COMPLAINT_ID);
-        Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-        Response response = invocation.get();
+    String fixture = fixture("fixtures/complaint-response.json");
+    assertEqualsResponse(fixture, transformDTOtoJSON(complaintDTO));
+  }
 
-        assertEquals(404, response.getStatus());
-    }
+  @Test
+  public void getFacilityWrongComplaintTest() throws Exception {
+    WebTarget target = clientTestRule
+        .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS + "/"
+            + WRONG_COMPLAINT_ID);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    Response response = invocation.get();
+
+    assertEquals(404, response.getStatus());
+  }
 
 }
