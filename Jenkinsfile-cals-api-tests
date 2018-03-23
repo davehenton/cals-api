@@ -59,8 +59,6 @@ node  {
    stage('Run tests'){
      writeFile file: "gradle.properties", text: "cals.api.url=${APP_URL}"
 	 buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'integrationTest'
-	 publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/integrationTest', reportFiles: 'index.html', reportName: 'Integration Test Report', reportTitles: ''])
-     cleanWs()
 	}
 
  } catch (Exception e)    {
@@ -69,7 +67,8 @@ node  {
 	   notifyBuild(currentBuild.result,errorcode)
 	   throw e;
  }finally {
-
+	 publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/tests/integrationTest', reportFiles: 'index.html', reportName: 'Integration Test Report', reportTitles: ''])
+     cleanWs()
  }
 
 
