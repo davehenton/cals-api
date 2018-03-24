@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author CWDS CALS API Team
+ * Dao for finding Complaints by facility id or complaint id.
  *
- * Dao for finding Complaints by facility id or complaint id
+ * @author CWDS CALS API Team
  */
 public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802> {
 
