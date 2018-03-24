@@ -57,8 +57,7 @@ public class FacilityComplaintResource {
     @ApiOperation(value = "Returns Complaints collection by Facility Id", response = ComplaintsDTO.class)
     public Response getFacilityComplaintsByFacilityId(
             @PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
-                    value = "The id of the Facility") Integer facilityId) {
-
+                    value = "The id of the Facility") String facilityId) {
         return resourceCollectionDelegate.get(facilityId);
     }
 
@@ -71,12 +70,10 @@ public class FacilityComplaintResource {
     @ApiOperation(value = "Returns Complaint by Facility Id and Complaint Id", response = ComplaintDTO.class)
     public Response getFacilityComplaintByFacilityIdAndComplaintId(
             @PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
-                    value = "The id of the Facility") Integer facilityId,
+                    value = "The id of the Facility") String facilityId,
             @PathParam(COMPLAINT_ID) @ApiParam(required = true, name = COMPLAINT_ID,
                     value = "The id of the Complaint") String complaintId) {
-
         return resourceEntityDelegate.get(new FacilityComplaintParameterObject(facilityId, complaintId));
     }
 
 }
-

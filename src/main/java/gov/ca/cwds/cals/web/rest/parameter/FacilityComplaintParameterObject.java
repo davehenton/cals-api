@@ -7,22 +7,23 @@ import java.io.Serializable;
  */
 
 public class FacilityComplaintParameterObject implements Serializable {
-    public static final long serialVersionUID = 42L;
 
-    private Integer facilityId;
+  public static final long serialVersionUID = 42L;
 
-    private String complaintId;
+  private String facilityId;
 
-    public FacilityComplaintParameterObject(Integer facilityId, String complaintId) {
-        this.facilityId = facilityId;
-        this.complaintId = complaintId;
-    }
+  private String complaintId;
 
-    public Integer getFacilityId() {
-        return facilityId;
-    }
+  public FacilityComplaintParameterObject(String facilityId, String complaintId) {
+    this.facilityId = facilityId;
+    this.complaintId = complaintId;
+  }
 
-    public String getComplaintId() {
-        return complaintId;
-    }
+  public String getFacilityId() {
+    return facilityId;
+  }
+
+  public String getComplaintId() {
+    return complaintId;
+  }
 }
