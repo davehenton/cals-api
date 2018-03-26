@@ -5,18 +5,17 @@ import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.client.JerseyClient;
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * @author CWDS CALS API Team
@@ -44,7 +43,8 @@ public abstract class BaseCalsApiIntegrationTest {
       };
 
   @Rule
-  public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
+  public RestClientTestRule<CalsApiConfiguration> clientTestRule
+      = new RestClientTestRule<>(appRule);
 
   protected static DatabaseHelper getFasDatabaseHelper() {
     DataSourceFactory dataSourceFactory = appRule.getConfiguration().getFasDataSourceFactory();
