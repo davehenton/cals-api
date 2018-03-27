@@ -8,6 +8,7 @@ import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.security.test.TestSecurityFilter;
+import gov.ca.cwds.test.support.JsonIdentityAuthParams;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -23,6 +24,9 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
   private static final String FACILITY_ID = "E6tloOO0Ql";
   private static final String FACILITY_FROM_LIS_ID = "193600001";
+  public static final String PRINCIPAL_NO_PRIVILAGES_JSON = "security/principal-no-privilages.json";
+  public static final String PRINCIPAL_PRIV_CWS_CASE_MANAGEMENT_SYSTEM_JSON = "security/principal-priv-CWS_Case_Management_System.json";
+  public static final String PRINCIPAL_PRIV_RESOURCE_MANAGEMENT_JSON = "security/principal-priv-Resource_Management.json";
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -87,9 +91,11 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
   public void testUnauthorizedCallGetFacilityByFacilityId() throws Exception {
     String targetString = Constants.API.FACILITIES + "/" + FACILITY_ID
         + '?' + TestSecurityFilter.PATH_TO_PRINCIPAL_FIXTURE + '='
-        + "security/principal-no-privilages.json";
+        + PRINCIPAL_NO_PRIVILAGES_JSON;
 
-    WebTarget target = clientTestRule.target(targetString);
+    JsonIdentityAuthParams params = new JsonIdentityAuthParams(
+        fixture(PRINCIPAL_NO_PRIVILAGES_JSON));
+    WebTarget target = clientTestRule.target(targetString, params);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     Response response = invocation.get();
     assertEquals(HttpStatus.SC_FORBIDDEN, response.getStatus());
@@ -99,9 +105,12 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
   public void testCallGetFacilityByFacilityIdByPrivCWSCaseManagementSystem() throws Exception {
     String targetString = Constants.API.FACILITIES + "/" + FACILITY_ID
         + '?' + TestSecurityFilter.PATH_TO_PRINCIPAL_FIXTURE + '='
-        + "security/principal-priv-CWS_Case_Management_System.json";
+        + PRINCIPAL_PRIV_CWS_CASE_MANAGEMENT_SYSTEM_JSON;
 
-    WebTarget target = clientTestRule.target(targetString);
+    JsonIdentityAuthParams params = new JsonIdentityAuthParams(
+        fixture(PRINCIPAL_PRIV_CWS_CASE_MANAGEMENT_SYSTEM_JSON));
+
+    WebTarget target = clientTestRule.target(targetString, params);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     Response response = invocation.get();
     assertEquals(HttpStatus.SC_OK, response.getStatus());
@@ -111,9 +120,12 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
   public void testCallGetFacilityByFacilityIdByPrivResourceManagement() throws Exception {
     String targetString = Constants.API.FACILITIES + "/" + FACILITY_ID
         + '?' + TestSecurityFilter.PATH_TO_PRINCIPAL_FIXTURE + '='
-        + "security/principal-priv-Resource_Management.json";
+        + PRINCIPAL_PRIV_RESOURCE_MANAGEMENT_JSON;
 
-    WebTarget target = clientTestRule.target(targetString);
+    JsonIdentityAuthParams params = new JsonIdentityAuthParams(
+        fixture(PRINCIPAL_PRIV_RESOURCE_MANAGEMENT_JSON));
+    
+    WebTarget target = clientTestRule.target(targetString, params);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     Response response = invocation.get();
     assertEquals(HttpStatus.SC_OK, response.getStatus());

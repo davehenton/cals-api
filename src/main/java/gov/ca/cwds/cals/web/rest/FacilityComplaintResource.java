@@ -1,5 +1,11 @@
 package gov.ca.cwds.cals.web.rest;
 
+import static gov.ca.cwds.cals.Constants.API.COMPLAINTS;
+import static gov.ca.cwds.cals.Constants.API.FACILITIES;
+import static gov.ca.cwds.cals.Constants.API.PathParams.COMPLAINT_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.ComplaintServiceBackedResource;
@@ -14,19 +20,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import static gov.ca.cwds.cals.Constants.API.COMPLAINTS;
-import static gov.ca.cwds.cals.Constants.API.FACILITIES;
-import static gov.ca.cwds.cals.Constants.API.PathParams.COMPLAINT_ID;
-import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 
 /**
  * @author CWDS CALS API Team
