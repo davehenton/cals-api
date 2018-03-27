@@ -48,7 +48,7 @@ node ('tpt2-slave'){
           string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
           booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
           string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory'),
-          string(defaultValue: 'http://cals-api.dev.cwds.io/', description: '', name: 'APP_URL'),
+          string(defaultValue: 'https://cals-api.dev.cwds.io/', description: '', name: 'APP_URL'),
           string(defaultValue: 'https://web.dev.cwds.io/', description: 'Perry base URL', name: 'PERRY_URL'),
           string(defaultValue: 'https://web.dev.cwds.io/perry/login', description: 'The URL where the login form posts a login information', name: 'LOGIN_FORM_TARGET_URL')
        ])
