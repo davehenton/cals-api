@@ -323,7 +323,7 @@ task dropDockerImage(type:Exec) {
 
 }
 
-task publishDocker(dependsOn: [pushDockerVersionTagged, pushDockerLatest]) {
+task publishDocker(dependsOn: [pushDockerLatest, pushDockerVersionTagged]) {
     doLast {
         println 'Published'
     }
