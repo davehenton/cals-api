@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.web.rest;
+package gov.ca.cwds.cals.web.rest.facility;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
@@ -37,7 +37,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
 
-    String fixture = fixture("fixtures/complaints-response.json");
+    String fixture = fixture("fixtures/facility/complaints-response.json");
     assertEqualsResponse(fixture, transformDTOtoJSON(complaintsDTO));
   }
 
@@ -67,7 +67,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     ComplaintDTO complaintDTO = invocation.get(ComplaintDTO.class);
 
-    String fixture = fixture("fixtures/complaint-response.json");
+    String fixture = fixture("fixtures/facility/complaint-response.json");
     assertEqualsResponse(fixture, transformDTOtoJSON(complaintDTO));
   }
 

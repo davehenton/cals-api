@@ -1,4 +1,4 @@
-package gov.ca.cwds.cals.web.rest;
+package gov.ca.cwds.cals.web.rest.facility;
 
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
@@ -23,8 +23,8 @@ import org.junit.Test;
  */
 public class FacilityInspectionsTest extends BaseCalsApiIntegrationTest {
 
-    private static final String INSPECTIONS_RESPONSE_JSON = "fixtures/facility-inspections-response.json";
-    private static final String INSPECTION_RESPONSE_JSON = "fixtures/facility-inspection-response.json";
+    private static final String INSPECTIONS_RESPONSE_JSON = "fixtures/facility/facility-inspections-response.json";
+    private static final String INSPECTION_RESPONSE_JSON = "fixtures/facility/facility-inspection-response.json";
 
     public static final Integer FACILITY_NUMBER = 100001732;
     public static final String INSPECTION_ID = "24-CR-CCHR-6T5TUV-20060829145639";

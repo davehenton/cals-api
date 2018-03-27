@@ -10,6 +10,7 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
   private DataSourceFactory fasDataSourceFactory;
   private DataSourceFactory lisDataSourceFactory;
   private DataSourceFactory calsnsDataSourceFactory;
+  private DataSourceFactory cmsRsDataSourceFactory;
 
   private XADataSourceFactory xaCalsnsDataSourceFactory;
   private XADataSourceFactory xaCmsDataSourceFactory;
@@ -82,5 +83,15 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
 
   public void setDmsURI(String dmsURI) {
     this.dmsURI = dmsURI;
+  }
+
+  @JsonProperty
+  public DataSourceFactory getCmsRsDataSourceFactory() {
+    return cmsRsDataSourceFactory;
+  }
+
+  @JsonProperty
+  public void setCmsRsDataSourceFactory(DataSourceFactory dataSourceFactory) {
+    this.cmsRsDataSourceFactory = dataSourceFactory;
   }
 }
