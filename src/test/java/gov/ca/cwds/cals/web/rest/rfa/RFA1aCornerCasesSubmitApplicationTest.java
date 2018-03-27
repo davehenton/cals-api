@@ -36,6 +36,7 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
 
     setUpCalsns();
     setUpCms();
+    setUpCmsRs();
   }
 
   @Test

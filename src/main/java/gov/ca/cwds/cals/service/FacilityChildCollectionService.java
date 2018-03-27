@@ -5,11 +5,12 @@ import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
-import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
+import gov.ca.cwds.cms.data.access.service.impl.ClientCoreService;
+import gov.ca.cwds.data.legacy.cms.entity.Client;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 
 /**
@@ -18,7 +19,7 @@ import org.apache.commons.collections4.CollectionUtils;
 public class FacilityChildCollectionService extends CrudServiceAdapter {
 
   @Inject
-  private ClientDao clientDao;
+  private ClientCoreService clientService;
 
   @Inject
   private FacilityChildMapper facilityChildMapper;
@@ -29,9 +30,13 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   @Override
   public Response find(Serializable params) {
     FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
-    List<FacilityChildDTO> facilityChildDTOs = clientDao
-            .streamByLicenseNumber(parameterObject.getLicenseNumber())
-            .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
+    List<Client> clients = clientService
+        .getClientsByLicenseNumber(parameterObject.getLicenseNumber());
+    List<FacilityChildDTO> facilityChildDTOs = new ArrayList<>(clients.size());
+    for (Client client : clients) {
+      facilityChildDTOs.add(facilityChildMapper.toFacilityChildDTO(client));
+    }
+
     if (CollectionUtils.isEmpty(facilityChildDTOs)) {
       return null;
     } else {
