@@ -116,7 +116,6 @@ node ('tpt2-slave'){
             perry.url=${PERRY_URL}
             login.form.target.url=${LOGIN_FORM_TARGET_URL}
        '''
-      System.out.println(gradlePropsText)  
       writeFile file: "gradle.properties", text: gradlePropsText
       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'integrationTest --stacktrace'
   }
