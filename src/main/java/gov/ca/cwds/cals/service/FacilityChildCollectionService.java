@@ -34,18 +34,18 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   @Override
   public Response find(Serializable params) {
     FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
-    List<FacilityChildDTO> facilityChildDTOs = new ArrayList<>();
+    List<FacilityChildDTO> facilityChildDtos = new ArrayList<>();
     String licenseNumber = licenseNumberProvider.get(parameterObject);
     if (licenseNumber != null) {
-      facilityChildDTOs = clientDao
+      facilityChildDtos = clientDao
           .streamByLicenseNumber(licenseNumber)
           .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
     }
-    if (CollectionUtils.isEmpty(facilityChildDTOs)) {
+    if (CollectionUtils.isEmpty(facilityChildDtos)) {
       return null;
     } else {
       FacilityChildrenDTO facilityChildrenDTO = new FacilityChildrenDTO();
-      facilityChildrenDTO.setChildren(facilityChildDTOs);
+      facilityChildrenDTO.setChildren(facilityChildDtos);
       return facilityChildrenDTO;
     }
   }

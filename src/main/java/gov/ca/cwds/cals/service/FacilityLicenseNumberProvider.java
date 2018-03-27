@@ -16,11 +16,12 @@ public class FacilityLicenseNumberProvider {
   private PlacementHomeDao placementHomeDao;
 
   /**
-   * Calculates license number depending on facility source
+   * Calculates license number depending on facility source.
    */
   public String get(FacilityChildParameterObject parameterObject) {
     if (parameterObject.getUnitOfWork() == UnitOfWork.CMS) {
-      //TODO replace with license number specific request to get rid of loading the whole PlacementHome
+      //TODO replace with license number specific request
+      // to get rid of loading the whole PlacementHome
       PlacementHome placementHome = placementHomeDao.find(parameterObject.getFacilityId());
       if (placementHome != null) {
         return placementHome.getLicenseNo();

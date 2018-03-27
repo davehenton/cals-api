@@ -11,15 +11,12 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class FacilityParameterObjectBuilder {
 
-  public FacilityParameterObject createFacilityParameterObject(String facilityNumber) {
-    FacilityParameterObject parameterObject;
-    if (NumberUtils.isCreatable(facilityNumber)) {
-      parameterObject = new FacilityParameterObject();
-      parameterObject.setFacilityId(facilityNumber);
+  public FacilityParameterObject createFacilityParameterObject(String facilityId) {
+    FacilityParameterObject parameterObject = new FacilityParameterObject();
+    parameterObject.setFacilityId(facilityId);
+    if (NumberUtils.isCreatable(facilityId)) {
       parameterObject.setUnitOfWork(LIS);
     } else {
-      parameterObject = new FacilityParameterObject();
-      parameterObject.setFacilityId(facilityNumber);
       parameterObject.setUnitOfWork(CMS);
     }
     return parameterObject;
