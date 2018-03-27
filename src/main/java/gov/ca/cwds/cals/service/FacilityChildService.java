@@ -14,7 +14,12 @@ import java.io.Serializable;
 public class FacilityChildService extends CrudServiceAdapter {
 
   private ClientDao clientDao;
+
   private FacilityChildMapper facilityChildMapper;
+
+  @Inject
+  private FacilityLicenseNumberProvider licenseNumberProvider;
+
 
   @Inject
   public FacilityChildService(ClientDao clientDao, FacilityChildMapper facilityChildMapper) {
@@ -25,8 +30,12 @@ public class FacilityChildService extends CrudServiceAdapter {
   @Override
   public Response find(Serializable params) {
     FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
-    Client client = clientDao
-        .findByLicNumAndChildId(parameterObject.getLicenseNumber(), parameterObject.getChildId());
-    return facilityChildMapper.toFacilityChildDTO(client);
+    String licenseNumber = licenseNumberProvider.get(parameterObject);
+    if (licenseNumber != null) {
+      Client client = clientDao
+          .findByLicNumAndChildId(licenseNumber, parameterObject.getChildId());
+      return facilityChildMapper.toFacilityChildDTO(client);
+    }
+    return null;
   }
 }

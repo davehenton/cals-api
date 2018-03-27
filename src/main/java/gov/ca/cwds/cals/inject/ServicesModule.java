@@ -9,10 +9,11 @@ import gov.ca.cwds.cals.service.DictionariesService;
 import gov.ca.cwds.cals.service.FacilityChildService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
+import gov.ca.cwds.cals.service.FacilityLicenseNumberProvider;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FasFacilityService;
 import gov.ca.cwds.cals.service.LisFacilityService;
-import gov.ca.cwds.cals.service.builder.FacilityParameterObjectCMSAwareBuilder;
+import gov.ca.cwds.cals.service.builder.FacilityParameterObjectBuilder;
 import gov.ca.cwds.cals.service.rfa.LIC198bCollectionService;
 import gov.ca.cwds.cals.service.rfa.LIC198bService;
 import gov.ca.cwds.cals.service.rfa.RFA1aApplicantService;
@@ -73,9 +74,8 @@ public class ServicesModule extends AbstractModule {
     bind(FasFacilityService.class).toProvider(FasFacilityServiceProvider.class);
     bind(CwsFacilityService.class).toProvider(CwsFacilityServiceProvider.class);
     bind(LisFacilityService.class).toProvider(LisFacilityServiceProvider.class);
-    bind(FacilityParameterObjectCMSAwareBuilder.class)
-        .toProvider(FacilityParameterObjectBuilderProvider.class);
-
+    bind(FacilityParameterObjectBuilder.class);
+    bind(FacilityLicenseNumberProvider.class);
     // RFA
     bind(RFA1aFormService.class).toProvider(RFA1aFormServiceProvider.class);
     bind(RFA1aFormsCollectionService.class);

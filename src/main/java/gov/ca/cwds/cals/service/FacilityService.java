@@ -82,11 +82,11 @@ public class FacilityService implements CrudsService {
     if (parameterObject.isExpanded()) {
       List<FacilityChildDTO> facilityChildren =
           cwsFacilityService.findFacilityChildredByLicenseNumber(
-              Integer.valueOf(parameterObject.getLicenseNumber()));
+              Integer.valueOf(parameterObject.getFacilityId()));
       List<FacilityInspectionDTO> inspections =
-          fasFacilityService.findInspectionsByFacilityId(parameterObject.getLicenseNumber());
+          fasFacilityService.findInspectionsByFacilityId(parameterObject.getFacilityId());
       List<ComplaintDTO> complaints =
-          fasFacilityService.findComplaintsByFacilityId(parameterObject.getLicenseNumber());
+          fasFacilityService.findComplaintsByFacilityId(parameterObject.getFacilityId());
       facilityDto = facilityMapper
           .toExpandedFacilityDTO(facilityDto, facilityChildren, inspections, complaints);
     }
@@ -100,9 +100,9 @@ public class FacilityService implements CrudsService {
       List<FacilityChildDTO> facilityChildren = cwsFacilityService.findFacilityChildredByFacilityId(
           parameterObject.getFacilityId());
       List<FacilityInspectionDTO> inspections = fasFacilityService.findInspectionsByFacilityId(
-          parameterObject.getLicenseNumber());
+          facilityDto.getLicenseNumber());
       List<ComplaintDTO> complaints = fasFacilityService.findComplaintsByFacilityId(
-          parameterObject.getLicenseNumber());
+          facilityDto.getLicenseNumber());
       facilityDto = facilityMapper
           .toExpandedFacilityDTO(facilityDto, facilityChildren, inspections, complaints);
     }

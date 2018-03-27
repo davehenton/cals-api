@@ -21,10 +21,6 @@ public class FacilityChildParameterObject implements Serializable {
     this(facilityParameterObject, null);
   }
 
-  public String getLicenseNumber() {
-    return facilityParameterObject.getLicenseNumber();
-  }
-
   public String getFacilityId() {
     return facilityParameterObject.getFacilityId();
   }
