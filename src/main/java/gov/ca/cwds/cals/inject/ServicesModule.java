@@ -4,11 +4,14 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
+import gov.ca.cwds.cals.service.CwsFacilityService;
 import gov.ca.cwds.cals.service.DictionariesService;
 import gov.ca.cwds.cals.service.FacilityChildService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
+import gov.ca.cwds.cals.service.FasFacilityService;
+import gov.ca.cwds.cals.service.LisFacilityService;
 import gov.ca.cwds.cals.service.builder.FacilityParameterObjectCMSAwareBuilder;
 import gov.ca.cwds.cals.service.rfa.LIC198bCollectionService;
 import gov.ca.cwds.cals.service.rfa.LIC198bService;
@@ -66,8 +69,12 @@ public class ServicesModule extends AbstractModule {
     bind(CountiesService.class);
     bind(FacilityChildService.class);
     bind(DictionariesService.class);
-    bind(FacilityService.class).toProvider(FacilityServiceProvider.class);
-    bind(FacilityParameterObjectCMSAwareBuilder.class).toProvider(FacilityParameterObjectBuilderProvider.class);
+    bind(FacilityService.class);
+    bind(FasFacilityService.class).toProvider(FasFacilityServiceProvider.class);
+    bind(CwsFacilityService.class).toProvider(CwsFacilityServiceProvider.class);
+    bind(LisFacilityService.class).toProvider(LisFacilityServiceProvider.class);
+    bind(FacilityParameterObjectCMSAwareBuilder.class)
+        .toProvider(FacilityParameterObjectBuilderProvider.class);
 
     // RFA
     bind(RFA1aFormService.class).toProvider(RFA1aFormServiceProvider.class);
@@ -92,7 +99,8 @@ public class ServicesModule extends AbstractModule {
     bind(RFA1aChildDesiredService.class);
     bind(RFA1aApplicantsDeclarationService.class);
     bind(DroolsService.class);
-    bind(ValidationConfigurationRegistry.class).to(ValidationConfigurationRegistryImpl.class).asEagerSingleton();
+    bind(ValidationConfigurationRegistry.class).to(ValidationConfigurationRegistryImpl.class)
+        .asEagerSingleton();
   }
 
   @Provides

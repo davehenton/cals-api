@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.service.mapper;
 import static gov.ca.cwds.cals.Constants.AddressTypes.MAIL;
 import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 
-import gov.ca.cwds.cals.service.CMSDictionaryEntriesHolder;
+import gov.ca.cwds.cals.service.CwsDictionaryEntriesHolder;
 import gov.ca.cwds.cals.service.dto.AddressDTO;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +31,7 @@ public interface AddressMapper {
     @Mapping(target = "lattitude", ignore = true)
     @Mapping(target = "deliverable", ignore = true)
     AddressDTO toResidentialAddressDTO(BasePlacementHome placementHome,
-        CMSDictionaryEntriesHolder dictionaryEntriesHolder);
+        CwsDictionaryEntriesHolder dictionaryEntriesHolder);
 
     @Named(MAIL)
     @Mapping(target = "streetAddress", expression = "java(StringUtils.trimToEmpty(placementHome.getPstreetNo()) + ' ' + placementHome.getPstreetNm())")
@@ -44,6 +44,6 @@ public interface AddressMapper {
     @Mapping(target = "lattitude", ignore = true)
     @Mapping(target = "deliverable", ignore = true)
     AddressDTO toMailAddressDTO(BasePlacementHome placementHome,
-        CMSDictionaryEntriesHolder dictionaryEntriesHolder);
+        CwsDictionaryEntriesHolder dictionaryEntriesHolder);
 }
 
