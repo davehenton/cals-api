@@ -1,16 +1,5 @@
 package gov.ca.cwds.cals.web.rest;
 
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
-import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
 import static gov.ca.cwds.cals.Constants.API.CHILDREN;
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
@@ -19,6 +8,16 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.assertTrue;
+
+import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
+import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
+import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
@@ -40,7 +39,7 @@ public class FacilityChildResourceTest  extends BaseCalsApiIntegrationTest {
 
     @Test
     public void testGetChildrenFromCWSFacility() throws Exception {
-        assertTrue(getChiildrenByFacilityId("9120      ").getChildren().size() > 0);
+        assertTrue(getChiildrenByFacilityId("4K1f8zu0Mc").getChildren().size() > 0);
     }
 
     @Test
