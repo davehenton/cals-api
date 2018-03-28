@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants.UnitOfWork;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.cms.data.access.service.impl.ClientCoreService;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 public class FacilityChildService extends CrudServiceAdapter {
 
   private ClientCoreService clientService;
+
   private FacilityChildMapper facilityChildMapper;
 
   @Inject
@@ -26,9 +28,14 @@ public class FacilityChildService extends CrudServiceAdapter {
   @Override
   public Response find(Serializable params) {
     FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
-    Client client = clientService
-        .getClientByLicNumAndChildId(parameterObject.getLicenseNumber(),
-            parameterObject.getChildId());
+    Client client = null;
+    if (parameterObject.getUnitOfWork().equals(UnitOfWork.CMS)) {
+      client = clientService.getClientByFacilityIdAndChildId(parameterObject.getFacilityId(),
+          parameterObject.getChildId());
+    } else {
+      client = clientService.getClientByLicNumAndChildId(parameterObject.getFacilityId(),
+          parameterObject.getChildId());
+    }
     return facilityChildMapper.toFacilityChildDTO(client);
   }
 }

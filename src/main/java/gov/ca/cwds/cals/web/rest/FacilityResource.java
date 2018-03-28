@@ -7,7 +7,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import gov.ca.cwds.authorizer.PlacementHomeReadAuthorizer;
 import gov.ca.cwds.cals.inject.FacilityServiceBackedResource;
-import gov.ca.cwds.cals.service.builder.FacilityParameterObjectCMSAwareBuilder;
+import gov.ca.cwds.cals.service.builder.FacilityParameterObjectBuilder;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
@@ -25,8 +25,7 @@ import javax.ws.rs.core.Response;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 /**
- *  @author CALS API Team
- *
+ * @author CALS API Team
  */
 
 @Api(value = FACILITIES, tags = FACILITIES)
@@ -34,26 +33,28 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 @Produces(MediaType.APPLICATION_JSON)
 public class FacilityResource {
 
-    @Inject
-    @FacilityServiceBackedResource
-    private ResourceDelegate resourceDelegate;
+  @Inject
+  @FacilityServiceBackedResource
+  private ResourceDelegate resourceDelegate;
 
-    @Inject
-    private FacilityParameterObjectCMSAwareBuilder parameterObjectBuilder;
+  @Inject
+  private FacilityParameterObjectBuilder parameterObjectBuilder;
 
-    @GET
-    @Timed
-    @Path("/{" + FACILITY_ID + "}")
-    @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
-            @ApiResponse(code = 404, message = "Not found"),
-            @ApiResponse(code = 417, message = "Expectation Failed"),
-            @ApiResponse(code = 406, message = "Accept Header not supported")})
-    @ApiOperation(value = "Returns Facility by Id", response = FacilityDTO.class)
-    @RequiresPermissions(PlacementHomeReadAuthorizer.PLACEMENT_HOME_READ_PERMISSION)
-    public Response getFacilityById(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
-        value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS") String facilityNumber) {
+  @GET
+  @Timed
+  @Path("/{" + FACILITY_ID + "}")
+  @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
+      @ApiResponse(code = 404, message = "Not found"),
+      @ApiResponse(code = 417, message = "Expectation Failed"),
+      @ApiResponse(code = 406, message = "Accept Header not supported")})
+  @ApiOperation(value = "Returns Facility by Id", response = FacilityDTO.class)
+  @RequiresPermissions(PlacementHomeReadAuthorizer.PLACEMENT_HOME_READ_PERMISSION)
+  public Response getFacilityById(
+      @PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
+          value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS") String facilityNumber) {
 
-        FacilityParameterObject parameterObject = parameterObjectBuilder.createFacilityParameterObject(facilityNumber);
-        return resourceDelegate.get(parameterObject);
-    }
+    FacilityParameterObject parameterObject = parameterObjectBuilder
+        .createFacilityParameterObject(facilityNumber);
+    return resourceDelegate.get(parameterObject);
+  }
 }

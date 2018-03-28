@@ -1,1 +1,11 @@
-{  "user": "Onotole",  "staffId": "0X5",  "county_code": "37",  "county_cws_code": "1104",  "county_name": "San Diego",  "privileges": [    "CWS Case Management System",    "Sensitive Persons"  ]}
+{
+  "user": "Onotole",
+  "staffId": "0X5",
+  "county_code": "37",
+  "county_cws_code": "1104",
+  "county_name": "San Diego",
+  "privileges": [
+    "CWS Case Management System",
+    "Sensitive Persons"
+  ]
+}

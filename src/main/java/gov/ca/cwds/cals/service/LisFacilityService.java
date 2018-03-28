@@ -43,7 +43,7 @@ public class LisFacilityService {
     if (lisDsLisFacFile == null) {
       LOGGER.warn(
           "!!!Facility was not found in LIS by license number {}",
-          parameterObject.getLicenseNumber());
+          parameterObject.getFacilityId());
       return null;
     }
     LpaInformation lpaInformation = lisDsLisFacFile.getFacDoEvalCode() != null
@@ -55,7 +55,7 @@ public class LisFacilityService {
   @UnitOfWork(LIS)
   LisFacFile findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
     LisFacFile lisFacFile = lisFacFileLisDao
-        .find(Integer.valueOf(parameterObject.getLicenseNumber()));
+        .find(Integer.valueOf(parameterObject.getFacilityId()));
     if (lisFacFile == null) {
       return null;
     }
