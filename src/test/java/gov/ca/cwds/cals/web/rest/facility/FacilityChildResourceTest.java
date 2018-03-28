@@ -14,6 +14,7 @@ import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDto;
 import gov.ca.cwds.security.test.TestSecurityFilter;
+import gov.ca.cwds.test.support.JsonIdentityAuthParams;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -25,6 +26,8 @@ import org.junit.Test;
  * @author CWDS CALS API Team
  */
 public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
+
+  public static final String SECURITY_CLIENT_PRINCIPAL_SAME_COUNTY_SEALED_JSON = "security/client/principal-same-county-sealed.json";
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -76,9 +79,10 @@ public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
   public void testGetFacilityChildrenWithAssignedWorkerPresent() throws Exception {
     String pathInfo = FACILITIES + "/{" + FACILITY_ID + "}/" + CHILDREN + "?"
         + TestSecurityFilter.PATH_TO_PRINCIPAL_FIXTURE + '='
-        + "security/client/principal-same-county-sealed.json";
+        + SECURITY_CLIENT_PRINCIPAL_SAME_COUNTY_SEALED_JSON;
     pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", "412252222");
-    WebTarget target = clientTestRule.target(pathInfo);
+    JsonIdentityAuthParams params = new JsonIdentityAuthParams(fixture(SECURITY_CLIENT_PRINCIPAL_SAME_COUNTY_SEALED_JSON));
+    WebTarget target = clientTestRule.target(pathInfo, params);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     FacilityChildrenDto facilityChildDTO = invocation.get(FacilityChildrenDto.class);
 
