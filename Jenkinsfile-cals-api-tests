@@ -58,11 +58,11 @@ node  {
 
 	}
    stage('Run tests'){
-     def gradlePropsText = '''
+     def gradlePropsText = """
               cals.api.url=${APP_URL}
               perry.url=${PERRY_URL}
               login.form.target.url=${LOGIN_FORM_TARGET_URL}
-         '''
+         """
      writeFile file: "gradle.properties", text: gradlePropsText
 	 buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'integrationTest'
 	}
