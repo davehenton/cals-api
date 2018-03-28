@@ -11,6 +11,9 @@ import org.apache.commons.lang3.math.NumberUtils;
  */
 public class FacilityParameterObjectBuilder {
 
+  /**
+   * Creates parameter object with source system and facility id.
+   */
   public FacilityParameterObject createFacilityParameterObject(String facilityId) {
     FacilityParameterObject parameterObject = new FacilityParameterObject();
     parameterObject.setFacilityId(facilityId);

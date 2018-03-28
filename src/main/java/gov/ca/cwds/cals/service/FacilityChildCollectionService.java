@@ -26,15 +26,15 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   @Override
   public Response find(Serializable params) {
     FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
-    FacilityChildrenDto facilityChildrenDTO = new FacilityChildrenDto();
+    FacilityChildrenDto facilityChildrenDto = new FacilityChildrenDto();
     if (parameterObject.getUnitOfWork().equals(UnitOfWork.CMS)) {
-      facilityChildrenDTO.getChildren()
+      facilityChildrenDto.getChildren()
           .addAll(getChildrenFromCwsFacility(parameterObject.getFacilityId()));
     } else {
-      facilityChildrenDTO.getChildren()
+      facilityChildrenDto.getChildren()
           .addAll(getChildrenFromLisFacility(parameterObject.getFacilityId()));
     }
-    return facilityChildrenDTO.getChildren().isEmpty() ? null : facilityChildrenDTO;
+    return facilityChildrenDto.getChildren().isEmpty() ? null : facilityChildrenDto;
   }
 
   private List<FacilityChildDTO> getChildrenFromCwsFacility(String facilityId) {

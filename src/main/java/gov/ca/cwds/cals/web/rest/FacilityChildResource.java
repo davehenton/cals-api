@@ -53,9 +53,11 @@ public class FacilityChildResource {
   @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
       @ApiResponse(code = 404, message = "Not found"),
       @ApiResponse(code = 406, message = "Accept Header not supported")})
-  @ApiOperation(value = "Returns Children collection by Facility Id", response = FacilityChildrenDto.class)
+  @ApiOperation(value = "Returns Children collection by Facility Id",
+      response = FacilityChildrenDto.class)
   public Response getChildren(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
-      value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS") String facilityNumber) {
+      value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS")
+      String facilityNumber) {
     return collectionResourceDelegate.get(new FacilityChildParameterObject(
         facilityParameterObjectBuilder.createFacilityParameterObject(facilityNumber)));
   }
@@ -67,10 +69,13 @@ public class FacilityChildResource {
   @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
       @ApiResponse(code = 404, message = "Not found"),
       @ApiResponse(code = 406, message = "Accept Header not supported")})
-  @ApiOperation(value = "Returns Child by Facility Id and Child Id", response = FacilityChildDTO.class)
+  @ApiOperation(value = "Returns Child by Facility Id and Child Id",
+      response = FacilityChildDTO.class)
   public Response getChild(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
-      value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS") String facilityNumber,
-      @PathParam(CHILD_ID) @ApiParam(required = true, name = CHILD_ID, value = "The id of the Client") String childId) {
+      value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS")
+      String facilityNumber,
+      @PathParam(CHILD_ID) @ApiParam(required = true, name = CHILD_ID,
+          value = "The id of the Client") String childId) {
     return resourceDelegate.get(new FacilityChildParameterObject(
         facilityParameterObjectBuilder.createFacilityParameterObject(facilityNumber), childId));
   }

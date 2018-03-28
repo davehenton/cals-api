@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * DTO for transferring collection of children.
+ *
  * @author CWDS CALS API Team
  */
 @SuppressWarnings("squid:S2160") //reflection equals hashcode is used in superclass
