@@ -12,7 +12,7 @@ import gov.ca.cwds.cals.inject.FacilityChildCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.FacilityChildServiceBackedResource;
 import gov.ca.cwds.cals.service.builder.FacilityParameterObjectBuilder;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
+import gov.ca.cwds.cals.service.dto.FacilityChildrenDto;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.rest.resources.ResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -53,7 +53,7 @@ public class FacilityChildResource {
   @ApiResponses(value = {@ApiResponse(code = 401, message = "Not Authorized"),
       @ApiResponse(code = 404, message = "Not found"),
       @ApiResponse(code = 406, message = "Accept Header not supported")})
-  @ApiOperation(value = "Returns Children collection by Facility Id", response = FacilityChildrenDTO.class)
+  @ApiOperation(value = "Returns Children collection by Facility Id", response = FacilityChildrenDto.class)
   public Response getChildren(@PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
       value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS") String facilityNumber) {
     return collectionResourceDelegate.get(new FacilityChildParameterObject(

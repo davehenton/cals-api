@@ -1,9 +1,10 @@
 package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.Constants.UnitOfWork;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
-import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
+import gov.ca.cwds.cms.data.access.service.impl.ClientCoreService;
 import gov.ca.cwds.data.legacy.cms.entity.Client;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.io.Serializable;
  */
 public class FacilityChildService extends CrudServiceAdapter {
 
-  private ClientDao clientDao;
+  private ClientCoreService clientService;
 
   private FacilityChildMapper facilityChildMapper;
 
@@ -22,20 +23,23 @@ public class FacilityChildService extends CrudServiceAdapter {
 
 
   @Inject
-  public FacilityChildService(ClientDao clientDao, FacilityChildMapper facilityChildMapper) {
-    this.clientDao = clientDao;
+  public FacilityChildService(ClientCoreService clientService,
+      FacilityChildMapper facilityChildMapper) {
+    this.clientService = clientService;
     this.facilityChildMapper = facilityChildMapper;
   }
 
   @Override
   public Response find(Serializable params) {
     FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
-    String licenseNumber = licenseNumberProvider.get(parameterObject);
-    if (licenseNumber != null) {
-      Client client = clientDao
-          .findByLicNumAndChildId(licenseNumber, parameterObject.getChildId());
-      return facilityChildMapper.toFacilityChildDTO(client);
+    Client client = null;
+    if (parameterObject.getUnitOfWork().equals(UnitOfWork.CMS)) {
+      client = clientService.getClientByFacilityIdAndChildId(parameterObject.getFacilityId(),
+          parameterObject.getChildId());
+    } else {
+      client = clientService.getClientByLicNumAndChildId(parameterObject.getFacilityId(),
+          parameterObject.getChildId());
     }
-    return null;
+    return facilityChildMapper.toFacilityChildDTO(client);
   }
 }
