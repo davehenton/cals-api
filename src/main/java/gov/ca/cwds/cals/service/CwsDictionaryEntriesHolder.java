@@ -6,10 +6,12 @@ import gov.ca.cwds.data.legacy.cms.entity.syscodes.LicenseStatus;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.State;
 
 /**
+ * Dto that provides values of some dictionaries in CWS/CMS.
+ *
  * @author CWDS CALS API Team
  */
 
-public class CMSDictionaryEntriesHolder {
+public class CwsDictionaryEntriesHolder {
 
   private County applicationCounty;
   private LicenseStatus licenseStatus;

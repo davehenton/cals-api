@@ -1,18 +1,6 @@
 {
   "children": [
     {
-      "id": "ASBfiop0ND",
-      "person": {
-        "gender": "M",
-        "age": 27,
-        "first_name": "zippy",
-        "last_name": "word",
-        "date_of_birth": "1991-03-03"
-      },
-      "date_of_placement": "2003-04-18",
-      "county_of_origin": "San Diego"
-    },
-    {
       "id": "BoxGE6B0Pc",
       "person": {
         "gender": "M",

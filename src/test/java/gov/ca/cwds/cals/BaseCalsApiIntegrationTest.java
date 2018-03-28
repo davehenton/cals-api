@@ -5,18 +5,17 @@ import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.client.JerseyClient;
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * @author CWDS CALS API Team
@@ -44,7 +43,8 @@ public abstract class BaseCalsApiIntegrationTest {
       };
 
   @Rule
-  public RestClientTestRule clientTestRule = new RestClientTestRule(appRule);
+  public RestClientTestRule<CalsApiConfiguration> clientTestRule
+      = new RestClientTestRule<>(appRule);
 
   protected static DatabaseHelper getFasDatabaseHelper() {
     DataSourceFactory dataSourceFactory = appRule.getConfiguration().getFasDataSourceFactory();
@@ -54,6 +54,12 @@ public abstract class BaseCalsApiIntegrationTest {
 
   protected static DatabaseHelper getCmsDatabaseHelper() {
     DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCmsDataSourceFactory();
+    return new DatabaseHelper(
+        dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+  }
+
+  protected static DatabaseHelper getCmsRsDatabaseHelper() {
+    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCmsRsDataSourceFactory();
     return new DatabaseHelper(
         dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
   }
@@ -85,6 +91,12 @@ public abstract class BaseCalsApiIntegrationTest {
   public static void setUpCms() throws Exception {
     if (!TestModeUtils.isIntegrationTestsMode()) {
       getCmsDatabaseHelper().runScript("liquibase/cwscms_database_master.xml");
+    }
+  }
+
+  public static void setUpCmsRs() throws Exception {
+    if (!TestModeUtils.isIntegrationTestsMode()) {
+      getCmsRsDatabaseHelper().runScript("liquibase/cwscmsrs_database_master.xml");
     }
   }
 

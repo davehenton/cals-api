@@ -38,6 +38,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
   public static void beforeClass() throws Exception {
     setUpCalsns();
     setUpCms();
+    setUpCmsRs();
   }
 
   private RFA1aFormDTO submitApplication() throws Exception {

@@ -2,22 +2,24 @@ package gov.ca.cwds.cals.inject;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import gov.ca.cwds.cals.service.FacilityService;
+import gov.ca.cwds.cals.service.LisFacilityService;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 
 /**
+ * Guice provider for proxy service creating.
+ *
  * @author CWDS TPT-2
  */
-public class FacilityServiceProvider extends AbstractInjectProvider<FacilityService> {
+public class LisFacilityServiceProvider extends AbstractInjectProvider<LisFacilityService> {
 
   @Inject
-  public FacilityServiceProvider(Injector injector,
+  public LisFacilityServiceProvider(Injector injector,
       UnitOfWorkAwareProxyFactory unitOfWorkAwareProxyFactory) {
     super(injector, unitOfWorkAwareProxyFactory);
   }
 
   @Override
-  public Class<FacilityService> getServiceClass() {
-    return FacilityService.class;
+  public Class<LisFacilityService> getServiceClass() {
+    return LisFacilityService.class;
   }
 }
