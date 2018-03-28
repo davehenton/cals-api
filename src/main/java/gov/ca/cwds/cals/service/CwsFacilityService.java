@@ -58,7 +58,7 @@ public class CwsFacilityService {
    */
   public FacilityDTO loadFacilityFromCwsCms(FacilityParameterObject parameterObject) {
     AtomicReference<FacilityDTO> facilityDTO = new AtomicReference<>();
-    findFacilityById(parameterObject).ifPresent((p)->{
+    findFacilityById(parameterObject).ifPresent((p) -> {
       CwsDictionaryEntriesHolder dictionaryEntriesHolder = buildCwsDictionaryEntriesHolder(p);
       facilityDTO.set(facilityMapper.toFacilityDTO(p, dictionaryEntriesHolder));
     });
