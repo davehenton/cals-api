@@ -48,7 +48,7 @@ public class FacilityResource {
       @ApiResponse(code = 417, message = "Expectation Failed"),
       @ApiResponse(code = 406, message = "Accept Header not supported")})
   @ApiOperation(value = "Returns Facility by Id", response = FacilityDTO.class)
-  @RequiresPermissions(PlacementHomeReadAuthorizer.PLACEMENT_HOME_READ_PERMISSION)
+  @RequiresPermissions(FacilityReadStaticAuthorizer.FACILITY_READ_PERMISSION)
   public Response getFacilityById(
       @PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
           value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS") String facilityNumber) {
