@@ -1,1 +1,11 @@
-{ "user": "Onotole", "staffId": "0X5", "county_code": "38", "county_cws_code": "1105", "county_name": "San Francisco", "privileges": [ "CWS Case Management System",    "Sealed"   ] }
+{
+  "user": "Onotole",
+  "staffId": "0X5",
+  "county_code": "38",
+  "county_cws_code": "1105",
+  "county_name": "San Francisco",
+  "privileges": [
+    "CWS Case Management System",
+    "Sealed"
+  ]
+}

@@ -7,7 +7,7 @@ import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsR
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
-import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
+import gov.ca.cwds.cals.service.dto.FacilityChildrenDto;
 import gov.ca.cwds.security.test.TestSecurityFilter;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Invocation;
@@ -64,21 +64,21 @@ public class FacilityChildAuthorizationTest extends BaseCalsApiIntegrationTest {
   }
 
   private void getFacilityChildren(String principal, String childrenFixture) throws Exception {
-    FacilityChildrenDTO facilityChildDTO = getFacilityChildrenDTO(principal);
+    FacilityChildrenDto facilityChildDTO = getFacilityChildrenDTO(principal);
 
     String fixture = fixture(
         childrenFixture);
     assertEqualsResponse(fixture, transformDTOtoJSON(facilityChildDTO));
   }
 
-  private FacilityChildrenDTO getFacilityChildrenDTO(String principal) {
+  private FacilityChildrenDto getFacilityChildrenDTO(String principal) {
     String pathInfo = FACILITIES + "/{" + FACILITY_ID + "}/" + CHILDREN + "?"
         + TestSecurityFilter.PATH_TO_PRINCIPAL_FIXTURE + '='
         + principal;
     pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", "412252222");
     WebTarget target = clientTestRule.target(pathInfo);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    return invocation.get(FacilityChildrenDTO.class);
+    return invocation.get(FacilityChildrenDto.class);
   }
 
 

@@ -23,9 +23,6 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   @Inject
   private FacilityChildMapper facilityChildMapper;
 
-  @Inject
-  private FacilityLicenseNumberProvider licenseNumberProvider;
-
   @Override
   public Response find(Serializable params) {
     FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;

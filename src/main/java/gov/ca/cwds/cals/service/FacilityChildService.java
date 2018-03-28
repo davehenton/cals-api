@@ -19,10 +19,6 @@ public class FacilityChildService extends CrudServiceAdapter {
   private FacilityChildMapper facilityChildMapper;
 
   @Inject
-  private FacilityLicenseNumberProvider licenseNumberProvider;
-
-
-  @Inject
   public FacilityChildService(ClientCoreService clientService,
       FacilityChildMapper facilityChildMapper) {
     this.clientService = clientService;

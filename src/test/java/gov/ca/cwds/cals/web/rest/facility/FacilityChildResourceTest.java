@@ -1,18 +1,5 @@
 package gov.ca.cwds.cals.web.rest.facility;
 
-import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
-import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
-import gov.ca.cwds.cals.service.dto.FacilityChildrenDTO;
-import gov.ca.cwds.cals.web.rest.rfa.helper.StatusHelper;
-import gov.ca.cwds.security.test.TestSecurityFilter;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-
 import static gov.ca.cwds.cals.Constants.API.CHILDREN;
 import static gov.ca.cwds.cals.Constants.API.FACILITIES;
 import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
@@ -20,14 +7,24 @@ import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsR
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
+import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
+import gov.ca.cwds.cals.service.dto.FacilityChildrenDto;
+import gov.ca.cwds.security.test.TestSecurityFilter;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author CWDS CALS API Team
  */
 public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
-
-  protected StatusHelper statusHelper = new StatusHelper(clientTestRule);
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -35,12 +32,12 @@ public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
     setUpCmsRs();
   }
 
-  private FacilityChildrenDTO getChildrenByFacilityId(String facilityId) {
+  private FacilityChildrenDto getChildrenByFacilityId(String facilityId) {
     String pathInfo = FACILITIES + "/{" + FACILITY_ID + "}/" + CHILDREN;
     pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", facilityId);
     WebTarget target = clientTestRule.target(pathInfo);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    return invocation.get(FacilityChildrenDTO.class);
+    return invocation.get(FacilityChildrenDto.class);
   }
 
   @Test
@@ -49,12 +46,17 @@ public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
+  public void testGetChildrenFromUnlicensedCWSFacility() throws Exception {
+    assertEquals(2, getChildrenByFacilityId("8ivb6Yc03k").getChildren().size());
+  }
+
+  @Test
   public void testGetChildrenFromLISFacility() throws Exception {
     String pathInfo = FACILITIES + "/{" + FACILITY_ID + "}/" + CHILDREN;
     pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", "577000449");
     WebTarget target = clientTestRule.target(pathInfo);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    FacilityChildrenDTO facilityChildDTO = invocation.get(FacilityChildrenDTO.class);
+    FacilityChildrenDto facilityChildDTO = invocation.get(FacilityChildrenDto.class);
 
     // age of child is calculated by current date, so there is workaround for test
     for (FacilityChildDTO childDTO : facilityChildDTO.getChildren()) {
@@ -78,7 +80,7 @@ public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
     pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", "412252222");
     WebTarget target = clientTestRule.target(pathInfo);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    FacilityChildrenDTO facilityChildDTO = invocation.get(FacilityChildrenDTO.class);
+    FacilityChildrenDto facilityChildDTO = invocation.get(FacilityChildrenDto.class);
 
     String fixture = fixture(
         "fixtures/facility/facility-children-response-assigned-worker-present.json");
@@ -108,7 +110,7 @@ public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
     WebTarget target = clientTestRule.target(pathInfo);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     try {
-      invocation.get(FacilityChildrenDTO.class);
+      invocation.get(FacilityChildrenDto.class);
       fail("Correct response is not expected");
     } catch (NotFoundException e) {
       assertThat("HTTP 404 Not Found").isEqualTo(e.getMessage());
@@ -123,7 +125,7 @@ public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
     WebTarget target = clientTestRule.target(pathInfo);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     try {
-      invocation.get(FacilityChildrenDTO.class);
+      invocation.get(FacilityChildrenDto.class);
       fail("Correct response is not expected");
     } catch (NotFoundException e) {
       assertThat("HTTP 404 Not Found").isEqualTo(e.getMessage());

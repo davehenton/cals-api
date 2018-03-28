@@ -9,7 +9,6 @@ import gov.ca.cwds.cals.service.DictionariesService;
 import gov.ca.cwds.cals.service.FacilityChildService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
-import gov.ca.cwds.cals.service.FacilityLicenseNumberProvider;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FasFacilityService;
 import gov.ca.cwds.cals.service.LisFacilityService;
@@ -75,7 +74,6 @@ public class ServicesModule extends AbstractModule {
     bind(CwsFacilityService.class).toProvider(CwsFacilityServiceProvider.class);
     bind(LisFacilityService.class).toProvider(LisFacilityServiceProvider.class);
     bind(FacilityParameterObjectBuilder.class);
-    bind(FacilityLicenseNumberProvider.class);
     // RFA
     bind(RFA1aFormService.class).toProvider(RFA1aFormServiceProvider.class);
     bind(RFA1aFormsCollectionService.class);
