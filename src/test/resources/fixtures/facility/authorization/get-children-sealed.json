@@ -1,0 +1,16 @@
+{
+  "children": [
+    {
+      "id": "BoxGE6B0Pc",
+      "person": {
+        "gender": "M",
+        "age": 19,
+        "first_name": "Roger",
+        "last_name": "Rabbit",
+        "date_of_birth": "1998-04-08"
+      },
+      "date_of_placement": "2003-07-01",
+      "county_of_origin": "San Diego"
+    }
+  ]
+}

@@ -244,6 +244,8 @@ public final class Constants {
 
     public static final String CMS = "cwscms";
 
+    public static final String CMS_RS = "cwscmsrs";
+
     public static final String CALSNS = "calsns";
 
     public static final String XA_CMS = "xa_cwscms";

@@ -1,5 +1,13 @@
 package gov.ca.cwds.cals.inject;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS_RS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CALSNS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CMS;
+
 import com.google.common.collect.ImmutableList;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -59,18 +67,13 @@ import gov.ca.cwds.data.legacy.cms.entity.syscodes.State;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.VisitType;
 import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
+import gov.ca.cwds.inject.CwsRsHibernateBundle;
+import gov.ca.cwds.inject.CwsRsSessionFactory;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.SessionFactoryFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
-
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CALSNS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CMS;
 
 /** @author CWDS CALS API Team */
 public class DataAccessModule extends AbstractModule {
@@ -149,6 +152,10 @@ public class DataAccessModule extends AbstractModule {
 
   ).build();
 
+  public static final ImmutableList<Class<?>> cwsRsEntities = ImmutableList.<Class<?>>builder().add(
+
+  ).build();
+
 
   private final ImmutableList<Class<?>> calsnsEntities = ImmutableList.<Class<?>>builder().add(
       // Dictionaries
@@ -223,6 +230,19 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
+  private final HibernateBundle<CalsApiConfiguration> cmsRsHibernateBundle =
+      new HibernateBundle<CalsApiConfiguration>(cwsRsEntities, new SessionFactoryFactory()) {
+        @Override
+        public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+          return configuration.getCmsRsDataSourceFactory();
+        }
+
+        @Override
+        public String name() {
+          return CMS_RS;
+        }
+      };
+
   private final HibernateBundle<CalsApiConfiguration> xaCmsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
         @Override
@@ -276,6 +296,7 @@ public class DataAccessModule extends AbstractModule {
   public DataAccessModule(Bootstrap<? extends CalsApiConfiguration> bootstrap) {
     bootstrap.addBundle(fasHibernateBundle);
     bootstrap.addBundle(cmsHibernateBundle);
+    bootstrap.addBundle(cmsRsHibernateBundle);
     bootstrap.addBundle(lisHibernateBundle);
     bootstrap.addBundle(calsnsHibernateBundle);
     bootstrap.addBundle(xaCmsHibernateBundle);
@@ -297,6 +318,12 @@ public class DataAccessModule extends AbstractModule {
   @CmsSessionFactory
   SessionFactory cmsSessionFactory() {
     return cmsHibernateBundle.getSessionFactory();
+  }
+
+  @Provides
+  @CwsRsSessionFactory
+  SessionFactory cmsRsSessionFactory() {
+    return cmsRsHibernateBundle.getSessionFactory();
   }
 
   @Provides
@@ -333,6 +360,12 @@ public class DataAccessModule extends AbstractModule {
   @CmsHibernateBundle
   public HibernateBundle<CalsApiConfiguration> getCmsHibernateBundle() {
     return cmsHibernateBundle;
+  }
+
+  @Provides
+  @CwsRsHibernateBundle
+  public HibernateBundle<CalsApiConfiguration> getCmsRsHibernateBundle() {
+    return cmsRsHibernateBundle;
   }
 
   @Provides
