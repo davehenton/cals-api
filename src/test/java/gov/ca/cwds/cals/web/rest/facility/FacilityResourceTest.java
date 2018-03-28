@@ -58,6 +58,14 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
+  public void testGetFacilityByWrongCWSFacilityId() throws Exception {
+    WebTarget target = clientTestRule.target(Constants.API.FACILITIES + "/" + "AAAAAA");
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    Response response = invocation.get();
+    assertEquals(404, response.getStatus());
+  }
+
+  @Test
   public void testGetFacilityByFacilityId() throws Exception {
     WebTarget target = clientTestRule.target(Constants.API.FACILITIES + "/" + FACILITY_ID);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
