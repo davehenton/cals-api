@@ -148,7 +148,7 @@ cmsRsDataSourceFactory:
   user: ${DB_CMS_RS_USER:-db2inst1}
   password: ${DB_CMS_RS_PASSWORD:-db2inst1-pwd}
   url: ${DB_CMS_RS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/DB0TDEV}
-  validationQuery: "select count(*) from ${DB_RS_CMS_SCHEMA:-CWSRS1}.CLIENT_CNTY"
+  validationQuery: "select count(*) from ${DB_CMS_RS_SCHEMA:-CWSRS1}.CLIENT_CNTY"
   logValidationErrors: true
   initialSize: 0
   minSize: 0
