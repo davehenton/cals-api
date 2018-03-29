@@ -3,7 +3,6 @@ package gov.ca.cwds.cals.service;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.authorizer.FacilityReadStaticAuthorizer;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
@@ -15,7 +14,6 @@ import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.rest.services.CrudsService;
 import java.io.Serializable;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 /**
  * @author CWDS CALS API Team
@@ -34,7 +32,6 @@ public class ComplaintService implements CrudsService {
   }
 
   @Override
-  @RequiresPermissions(FacilityReadStaticAuthorizer.FACILITY_READ_PERMISSION)
   public Response find(Serializable parametersObject) {
     FacilityComplaintParameterObject parameterObject;
     if (parametersObject instanceof FacilityComplaintParameterObject) {
