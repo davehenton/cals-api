@@ -9,6 +9,7 @@ import static io.dropwizard.testing.FixtureHelpers.fixture;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDto;
 import gov.ca.cwds.security.test.TestSecurityFilter;
+import gov.ca.cwds.test.support.JsonIdentityAuthParams;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -76,7 +77,8 @@ public class FacilityChildAuthorizationTest extends BaseCalsApiIntegrationTest {
         + TestSecurityFilter.PATH_TO_PRINCIPAL_FIXTURE + '='
         + principal;
     pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", "412252222");
-    WebTarget target = clientTestRule.target(pathInfo);
+    JsonIdentityAuthParams params = new JsonIdentityAuthParams(fixture(principal));
+    WebTarget target = clientTestRule.target(pathInfo, params);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     return invocation.get(FacilityChildrenDto.class);
   }
