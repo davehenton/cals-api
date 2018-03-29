@@ -41,9 +41,9 @@ node  {
 			  parameters([
 			  [$class: 'NodeParameterDefinition', allowedSlaves: ['ALL (no restriction)'], defaultSlaves: ['preint'], description: 'Run tests on slaves', name: 'nname', nodeEligibility: [$class: 'IgnoreOfflineNodeEligibility'], triggerIfResult: 'multiSelectionDisallowed'],
 			  string(defaultValue: 'development', description: '', name: 'branch'),
-			  string(defaultValue: 'https://cals-api.preint.cwds.io/', description: '', name: 'APP_URL'),
-			  string(defaultValue: 'https://web.dev.cwds.io/', description: 'Perry base URL', name: 'PERRY_URL'),
-        string(defaultValue: 'https://web.dev.cwds.io/perry/login', description: 'The URL where the login form posts a login information', name: 'LOGIN_FORM_TARGET_URL')
+			  string(defaultValue: 'https://calsapi.preint.cwds.io/', description: '', name: 'APP_URL'),
+			  string(defaultValue: 'https://web.preint.cwds.io/', description: 'Perry base URL', name: 'PERRY_URL'),
+        string(defaultValue: 'https://web.preint.cwds.io/perry/login', description: 'The URL where the login form posts a login information', name: 'LOGIN_FORM_TARGET_URL')
 			  ]),pipelineTriggers([])])
    def errorcode = null;
    def buildInfo = '';
