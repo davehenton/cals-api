@@ -5,7 +5,7 @@ import static gov.ca.cwds.cals.Constants.API.PathParams.FACILITY_ID;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-import gov.ca.cwds.authorizer.PlacementHomeReadAuthorizer;
+import gov.ca.cwds.authorizer.FacilityReadStaticAuthorizer;
 import gov.ca.cwds.cals.inject.FacilityServiceBackedResource;
 import gov.ca.cwds.cals.service.builder.FacilityParameterObjectBuilder;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
@@ -48,7 +48,7 @@ public class FacilityResource {
       @ApiResponse(code = 417, message = "Expectation Failed"),
       @ApiResponse(code = 406, message = "Accept Header not supported")})
   @ApiOperation(value = "Returns Facility by Id", response = FacilityDTO.class)
-  @RequiresPermissions(PlacementHomeReadAuthorizer.PLACEMENT_HOME_READ_PERMISSION)
+  @RequiresPermissions(FacilityReadStaticAuthorizer.FACILITY_READ_PERMISSION)
   public Response getFacilityById(
       @PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
           value = "Currently it's PLC_HM_T.IDENTIFIER for CWSCMS or lis_fac_file.fac_nbr for LIS") String facilityNumber) {
