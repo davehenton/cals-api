@@ -24,6 +24,7 @@ plugins {
     id "net.foragerr.jmeter" version "1.0.7-3.0-BETA"
     id "com.github.hierynomus.license" version "0.14.0"
     id "org.ajoberstar.grgit" version "1.5.1-rc.3"
+    id "se.bjurr.gitchangelog.git-changelog-gradle-plugin" version "1.55"
 }
 
 project.logging.setLevelInternal(INFO)
@@ -385,4 +386,11 @@ task checkDockerService {
             throw new GradleException('Docker service is not available. Windows users should run Docker Quickstart Terminal of Docker Toolbox')
         }
     }
+}
+
+task generateReleaseNotes(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+    fromRef = "master"
+    toRef = "development"
+    file = new File("release-notes/release_notes" + "_" + projectVersion + ".md")
+    templateContent = file('release-notes/release_notes.mustache').getText('UTF-8')
 }
