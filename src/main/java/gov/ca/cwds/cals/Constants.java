@@ -481,6 +481,12 @@ public final class Constants {
         public static final String REQUIRED_BODY_OF_WATER_EXIST_FIELD = "CV000017";
         public static final String REQUIRED_OTHER_PEOPLE_IN_RESIDENCE = "CV000018";
         public static final String REQUIRED_HOME_LANGUAGES = "CV000019";
+        public static final String REQUIRED_MINOR_CHILD_DATE_OF_BIRTH = "CV000020";
+        public static final String REQUIRED_MINOR_CHILD_GENDER = "CV000021";
+        public static final String REQUIRED_MINOR_CHILD_FINANCIALLY_SUPPORTED = "CV000022";
+        public static final String REQUIRED_MINOR_CHILD_ADOPTED = "CV000023";
+        public static final String REQUIRED_MINOR_CHILD_RELATIONSHIP_APPLICANT_ID = "CV000024";
+
 
         private Code() {
         }

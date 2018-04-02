@@ -200,7 +200,7 @@ end
   (Testing Note: User must REMOVE the additional phone number fields from the form if they do not want to have any issues with the required information.)
 */
 rule "Validate that Phone Number is present if more than one on the form"
-      dialect "java"
+  dialect "java"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
@@ -449,5 +449,117 @@ rule "Validate that Language Spoken field is present"
     details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Language Spoken"));
     details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
     validationDetailsList.add(details);
+end
+
+
+/*
+ Minor Child required fields validation
+*/
+
+rule "Validate that relationship is filled for Minor Child"
+  dialect "java"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $minorChild: MinorChildDTO(relationshipToApplicants != null && relationshipToApplicants.size() > 0)
+        from $form.minorChildren;
+    $invalidRelationships : ArrayList()
+      from collect(
+        RelationshipToApplicantDTO(
+          relationshipToApplicantType != null
+          || StringUtils.isNotBlank(relationshipToApplicantFreeform), applicantId == null
+        ) from $minorChild.relationshipToApplicants)
+  then
+   for (int i = 0; i < $invalidRelationships.size(); i++) {
+      IssueDetails details = new IssueDetails();
+      details.setProperty(
+          "rfa1a.minorChildren[id=" + $minorChild.getId() + "].relationshipToApplicants[?].applicantId");
+      details.setCode(Code.REQUIRED_MINOR_CHILD_RELATIONSHIP_APPLICANT_ID);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE,
+                                                "applicanId for Minor Child's relationship"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
+end
+
+
+rule "Validate that Minor Child's dateOfBirth is present"
+  dialect "java"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $minorChildren : ArrayList() from collect(MinorChildDTO(dateOfBirth == null)
+            from $form.minorChildren);
+  then
+    for(Object minorChild: $minorChildren){
+      IssueDetails details = new IssueDetails();
+      details.setProperty(
+          "rfa1a.minorChildren[id=" + ((MinorChildDTO) minorChild).getId() + "].dateOfBirth");
+      details.setCode(Code.REQUIRED_MINOR_CHILD_DATE_OF_BIRTH);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE,
+                                                "Date of birth for Minor Child"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
+end
+
+rule "Validate that Minor Child's gender is present"
+  dialect "java"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $minorChildren : ArrayList() from collect(MinorChildDTO(gender == null)
+            from $form.minorChildren);
+  then
+    for(Object minorChild: $minorChildren){
+      IssueDetails details = new IssueDetails();
+      details.setProperty(
+          "rfa1a.minorChildren[id=" + ((MinorChildDTO) minorChild).getId() + "].gender");
+      details.setCode(Code.REQUIRED_MINOR_CHILD_GENDER);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE,
+                                                "Gender for Minor Child"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
+end
+
+rule "Validate that childFinanciallySupported field is present in the Minor Child object"
+  dialect "java"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $minorChildren : ArrayList() from collect(MinorChildDTO(childFinanciallySupported == null)
+            from $form.minorChildren);
+  then
+    for(Object minorChild: $minorChildren){
+      IssueDetails details = new IssueDetails();
+      details.setProperty(
+          "rfa1a.minorChildren[id=" + ((MinorChildDTO) minorChild).getId() + "].childFinanciallySupported");
+      details.setCode(Code.REQUIRED_MINOR_CHILD_FINANCIALLY_SUPPORTED);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE,
+                                                "childFinanciallySupported for Minor Child"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
+end
+
+rule "Validate that childAdopted field is present in the Minor Child object"
+  dialect "java"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $minorChildren : ArrayList() from collect(MinorChildDTO(childAdopted == null)
+            from $form.minorChildren);
+  then
+    for(Object minorChild: $minorChildren){
+      IssueDetails details = new IssueDetails();
+      details.setProperty(
+          "rfa1a.minorChildren[id=" + ((MinorChildDTO) minorChild).getId() + "].childAdopted");
+      details.setCode(Code.REQUIRED_MINOR_CHILD_ADOPTED);
+      details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE,
+                                                "childAdopted for Minor Child"));
+      details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+      validationDetailsList.add(details);
+    }
 end
 
