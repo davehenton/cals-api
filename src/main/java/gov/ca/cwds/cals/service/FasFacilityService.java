@@ -52,7 +52,7 @@ public class FasFacilityService {
   @UnitOfWork(FAS)
   FacilityInformation findFacilityInfoByLicenseNumber(
       FacilityParameterObject parameterObject) {
-    return facilityInformationDao.find(Long.valueOf(parameterObject.getLicenseNumber()));
+    return facilityInformationDao.find(Long.valueOf(parameterObject.getFacilityId()));
   }
 
   @UnitOfWork(FAS)

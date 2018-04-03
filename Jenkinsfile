@@ -48,7 +48,7 @@ node ('tpt2-slave'){
           string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
           booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
           string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory'),
-          string(defaultValue: 'http://cals-api.dev.cwds.io/', description: '', name: 'APP_URL'),
+          string(defaultValue: 'https://cals-api.dev.cwds.io/', description: '', name: 'APP_URL'),
           string(defaultValue: 'https://web.dev.cwds.io/', description: 'Perry base URL', name: 'PERRY_URL'),
           string(defaultValue: 'https://web.dev.cwds.io/perry/login', description: 'The URL where the login form posts a login information', name: 'LOGIN_FORM_TARGET_URL')
        ])
@@ -111,11 +111,11 @@ node ('tpt2-slave'){
   }
   stage('Integration Tests') {
       checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
-      def gradlePropsText = '''
-           cals.api.url=${APP_URL}
-           perry.url=${PERRY_URL}
-           login.form.target.url=${LOGIN_FORM_TARGET_URL}
-      '''
+      def gradlePropsText = """
+         cals.api.url=${APP_URL}
+	 perry.url=${PERRY_URL}
+	 login.form.target.url=${LOGIN_FORM_TARGET_URL}
+	 """
       writeFile file: "gradle.properties", text: gradlePropsText
       buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'integrationTest --stacktrace'
   }

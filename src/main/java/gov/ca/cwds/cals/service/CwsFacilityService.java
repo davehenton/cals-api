@@ -21,6 +21,7 @@ import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import io.dropwizard.hibernate.UnitOfWork;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -59,10 +60,12 @@ public class CwsFacilityService {
    * Load facility from CWS.
    */
   public FacilityDTO loadFacilityFromCwsCms(FacilityParameterObject parameterObject) {
-    BasePlacementHome placementHome = findFacilityById(parameterObject);
-    CwsDictionaryEntriesHolder dictionaryEntriesHolder = buildCwsDictionaryEntriesHolder(
-        placementHome);
-    return facilityMapper.toFacilityDTO(placementHome, dictionaryEntriesHolder);
+    AtomicReference<FacilityDTO> facilityDTO = new AtomicReference<>();
+    findFacilityById(parameterObject).ifPresent((p) -> {
+      CwsDictionaryEntriesHolder dictionaryEntriesHolder = buildCwsDictionaryEntriesHolder(p);
+      facilityDTO.set(facilityMapper.toFacilityDTO(p, dictionaryEntriesHolder));
+    });
+    return facilityDTO.get();
   }
 
   @UnitOfWork(CMS)
@@ -83,15 +86,15 @@ public class CwsFacilityService {
   }
 
   @UnitOfWork(CMS)
-  protected BasePlacementHome findFacilityById(FacilityParameterObject parameterObject) {
+  protected Optional<PlacementHome> findFacilityById(FacilityParameterObject parameterObject) {
     Optional<PlacementHome> placementHome = Optional
-        .of(placementHomeDao.findByFacilityId(parameterObject.getFacilityId()));
+        .ofNullable(placementHomeDao.findByFacilityId(parameterObject.getFacilityId()));
     Optional<BaseStaffPerson> staffPerson = placementHome
         .map(PlacementHome::getCountyLicenseCase)
         .map(BaseCountyLicenseCase::getStaffPerson);
     staffPerson.ifPresent(
         person -> person.setCounty(countiesDao.findByLogicalId(person.getCntySpfcd())));
-    return placementHome.orElse(null);
+    return placementHome;
   }
 
   @UnitOfWork(CMS)

@@ -24,6 +24,7 @@ plugins {
     id "net.foragerr.jmeter" version "1.0.7-3.0-BETA"
     id "com.github.hierynomus.license" version "0.14.0"
     id "org.ajoberstar.grgit" version "1.5.1-rc.3"
+    id "se.bjurr.gitchangelog.git-changelog-gradle-plugin" version "1.55"
 }
 
 project.logging.setLevelInternal(INFO)
@@ -34,9 +35,9 @@ project.ext {
     projectDockerAppName = 'cals-api'
     projectMajorVersion = '0.6.2'
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '1.6.2_520-RC'
-    apiSecurityVersion = '1.6.1_399-RC'
-    calsModelVersion = '0.6.2_492-RC'
+    coreApiVersion = '1.6.2_555-RC'
+    apiSecurityVersion = '1.6.2_418-RC'
+    cwdsModelVersion = '0.6.2_492-RC'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     dbunitVersion = '2.5.0'
@@ -173,12 +174,12 @@ dependencies {
     compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
     compile group: 'com.atomikos', name: 'transactions-hibernate4', version: '4.0.4'
     compile group: 'com.github.javafaker', name: 'javafaker', version: '0.13'
-    compile (group: 'gov.ca.cwds.cals', name: 'cals-ns-data-model', version: calsModelVersion, changing: true)
+    compile (group: 'gov.ca.cwds.cals', name: 'cals-ns-data-model', version: cwdsModelVersion, changing: true)
 
     testCompile group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
-    testCompile (group: 'gov.ca.cwds.cals', name: 'lis-data-model', version: calsModelVersion, changing: true)
-    testCompile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: calsModelVersion, changing: true)
-    testCompile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: calsModelVersion, changing: true)
+    testCompile (group: 'gov.ca.cwds.cals', name: 'lis-data-model', version: cwdsModelVersion, changing: true)
+    testCompile (group: 'gov.ca.cwds.cals', name: 'fas-data-model', version: cwdsModelVersion, changing: true)
+    testCompile (group: 'gov.ca.cwds.cals', name: 'cws-cms-data-model', version: cwdsModelVersion, changing: true)
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'org.mockito:mockito-core:2.0.54-beta'
@@ -323,7 +324,7 @@ task dropDockerImage(type:Exec) {
 
 }
 
-task publishDocker(dependsOn: [pushDockerVersionTagged, pushDockerLatest]) {
+task publishDocker(dependsOn: [pushDockerLatest, pushDockerVersionTagged]) {
     doLast {
         println 'Published'
     }
@@ -385,4 +386,11 @@ task checkDockerService {
             throw new GradleException('Docker service is not available. Windows users should run Docker Quickstart Terminal of Docker Toolbox')
         }
     }
+}
+
+task generateReleaseNotes(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+    fromRef = "master"
+    toRef = "development"
+    file = new File("release-notes/release_notes" + "_" + projectVersion + ".md")
+    templateContent = file('release-notes/release_notes.mustache').getText('UTF-8')
 }

@@ -1,5 +1,9 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static io.dropwizard.testing.FixtureHelpers.fixture;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.API;
@@ -8,18 +12,13 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import io.dropwizard.jackson.Jackson;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import static io.dropwizard.testing.FixtureHelpers.fixture;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 
 /**
@@ -36,6 +35,7 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
 
     setUpCalsns();
     setUpCms();
+    setUpCmsRs();
   }
 
   @Test

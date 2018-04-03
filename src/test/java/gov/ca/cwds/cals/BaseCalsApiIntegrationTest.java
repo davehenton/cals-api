@@ -58,6 +58,12 @@ public abstract class BaseCalsApiIntegrationTest {
         dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
   }
 
+  protected static DatabaseHelper getCmsRsDatabaseHelper() {
+    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCmsRsDataSourceFactory();
+    return new DatabaseHelper(
+        dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+  }
+
   protected static DatabaseHelper getCalsnsDatabaseHelper() {
     DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCalsnsDataSourceFactory();
     return new DatabaseHelper(
@@ -85,6 +91,12 @@ public abstract class BaseCalsApiIntegrationTest {
   public static void setUpCms() throws Exception {
     if (!TestModeUtils.isIntegrationTestsMode()) {
       getCmsDatabaseHelper().runScript("liquibase/cwscms_database_master.xml");
+    }
+  }
+
+  public static void setUpCmsRs() throws Exception {
+    if (!TestModeUtils.isIntegrationTestsMode()) {
+      getCmsRsDatabaseHelper().runScript("liquibase/cwscmsrs_database_master.xml");
     }
   }
 

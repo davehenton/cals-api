@@ -30,16 +30,15 @@ In order for the CALS API successfully connect to the above databases the follow
 #### DB2 - CMS database
 - DB_CMS_USER -- the CMS database username
 - DB_CMS_PASSWORD -- the CMS database password
-- DB_CMS_DB2_HOST -- the CMS DB2 host (IP - address)
-- DB_CMS_DB2_PORT -- the CMS DB2 port number
-- DB_CMS_DB_NAME  -- the CMS database name 
 - DB_CMS_JDBC_URL -- the CMS database URL in Java Database Connectivity format
-
 - DB_CMS_SCHEMA -- the CMS database schema the tables belong to.
-- DB_CMS_CP_INITIAL_SIZE -- the CMS connections pool iniitial size (default: 2)  
-- DB_CMS_CP_MIN_SIZE -- the CMS connections pool minimum size (default: 2)
 - DB_CMS_CP_MAX_SIZE -- the CMS connections pool maximum size (default: 8)
 
+- DB_CMS_RS_USER - the CMS RS database username
+- DB_CMS_RS_PASSWORD - the CMS RS database password
+- DB_CMS_RS_JDBC_URL - JDBC URL for CWS RS database
+- DB_CMS_RS_SCHEMA - schema name for CWS RS
+- DB_CMS_RS_CP_MAX_SIZE - the CMS connections pool maximum size (default: 8)
 #### Postgres - NS database
 
 Add to __postgresql.conf__ on PostgeSQL server parameter __max_prepared_connections__ to nonzero value, this property need to be set for XATransactions
@@ -47,8 +46,6 @@ Add to __postgresql.conf__ on PostgeSQL server parameter __max_prepared_connecti
 - DB_NS_USER -- the NS database username
 - DB_NS_PASSWORD -- the NS database password
 - DB_NS_JDBC_URL -- the NS database URL in Java Database Connectivity format
-- DB_NS_CP_INITIAL_SIZE -- the NS connections pool iniitial size (default: 2) 
-- DB_NS_CP_MIN_SIZE -- the NS connections pool minimum size (default: 2)
 - DB_NS_CP_MAX_SIZE -- the NS connections pool maximum size (default: 8)
 
 
@@ -57,16 +54,12 @@ Set environment variable CALS_API_CONFIG to cals-api-lis-connx.yml to run docker
 - DB_LIS_USER -- the LIS datasource username
 - DB_LIS_PASSWORD -- the LIS datasource password
 - DB_LIS_JDBC_URL -- the LIS datasource URL in Java Database Connectivity format
-- DB_LIS_CP_INITIAL_SIZE -- the LIS connections pool iniitial size (default: 2)
-- DB_LIS_CP_MIN_SIZE -- the LIS connections pool minimum size (default: 2)
 - DB_LIS_CP_MAX_SIZE -- the LIS connections pool maximum size (default: 8)
 
 #### Postgres - FAS Legacy database
 - DB_FAS_USER -- the FAS datasource username
 - DB_FAS_PASSWORD -- the FAS datasource password
 - DB_FAS_JDBC_URL -- the FAS datasource URL in Java Database Connectivity format
-- DB_FAS_CP_INITIAL_SIZE -- the FAS connections pool iniitial size (default: 2)
-- DB_FAS_CP_MIN_SIZE -- the FAS connections pool minimum size (default: 2)
 - DB_FAS_CP_MAX_SIZE -- the FAS connections pool maximum size (default: 8)
 - DB_FAS_DEFAULT_SCHEMA -- the FAS default database schema (default: public)
 
