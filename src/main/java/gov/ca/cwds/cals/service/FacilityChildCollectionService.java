@@ -21,7 +21,7 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   private ClientCoreService clientService;
 
   @Inject
-  private AssignedWorkerService assignedWorkerService;
+  private ChildAssignedWorkerService childAssignedWorkerService;
 
   @Inject
   private FacilityChildMapper facilityChildMapper;
@@ -44,7 +44,7 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
     return clientService.streamByFacilityId(facilityId).stream()
         .map(facilityChildMapper::toFacilityChildDTO).map(facilityChildDTO -> facilityChildMapper
             .toFacilityChildDTO(facilityChildDTO,
-                assignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId())
+                childAssignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId())
                     .orElse(null)))
         .collect(Collectors.toList());
   }
@@ -53,7 +53,7 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
     return clientService.getClientsByLicenseNumber(licenseNumber).stream()
         .map(facilityChildMapper::toFacilityChildDTO).map(facilityChildDTO -> facilityChildMapper
             .toFacilityChildDTO(facilityChildDTO,
-                assignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId())
+                childAssignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId())
                     .orElse(null))).collect(Collectors.toList());
   }
 

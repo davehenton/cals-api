@@ -16,7 +16,7 @@ import java.util.Optional;
  *
  * @author CWDS CALS-1
  */
-public class AssignedWorkerService {
+public class ChildAssignedWorkerService {
 
   @Inject
   private CaseDao caseDao;
@@ -24,20 +24,18 @@ public class AssignedWorkerService {
   @Inject
   private ReferralDao referralDao;
 
-  public AssignedWorkerService() {
+  public ChildAssignedWorkerService() {
     // default constructor
   }
 
   public Optional<StaffPerson> findAssignedWorkerForClient(String clientId) {
     List<Case> caseList = caseDao.findActiveByClient(clientId);
-
     if (!caseList.isEmpty()) {
       return Optional.ofNullable(caseList.get(0)).map(Case::getStaffPerson);
     }
 
-    List<Referral> referralList = referralDao.getReferralsByClientId(clientId);
-    List<Referral> modifiableReferralList = new ArrayList<>(referralList);
-
+    List<Referral> modifiableReferralList = new ArrayList<>(
+        referralDao.getReferralsByClientId(clientId));
     if (modifiableReferralList.isEmpty()) {
       return Optional.empty();
     }
@@ -47,6 +45,10 @@ public class AssignedWorkerService {
   }
 
   public List<Referral> sortReferralList(List<Referral> referralList) {
+    if (null == referralList) {
+      return null;
+    }
+
     if (referralList.size() > 1) {
       referralList.sort(Comparator
           .comparing(Referral::getClosureDate, Comparator.nullsFirst(Comparator.reverseOrder()))

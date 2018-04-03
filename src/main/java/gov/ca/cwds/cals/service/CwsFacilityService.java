@@ -54,7 +54,7 @@ public class CwsFacilityService {
   private FacilityChildMapper facilityChildMapper;
 
   @Inject
-  private AssignedWorkerService assignedWorkerService;
+  private ChildAssignedWorkerService childAssignedWorkerService;
 
   /**
    * Load facility from CWS.
@@ -73,7 +73,7 @@ public class CwsFacilityService {
     return clientDao.streamByLicenseNumber(licenseNumber)
         .map(facilityChildMapper::toFacilityChildDTO).map(facilityChildDTO -> facilityChildMapper
             .toFacilityChildDTO(facilityChildDTO,
-                assignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId()).orElse(null)))
+                childAssignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId()).orElse(null)))
         .collect(Collectors.toList());
   }
 
