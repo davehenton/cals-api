@@ -402,6 +402,9 @@ public final class Constants {
       public static final String OTHER_ADULT_HAS_NO_LAST_NAME_MESSAGE =
           OTHER_ADULT_WITH_NAME + " has no last name";
 
+      public static final String OTHER_ADULT_HAS_NO_DATE_OF_BIRTH_MESSAGE =
+          OTHER_ADULT_WITH_NAME + " has no date of birth";
+
       public static final String MINOR_CHILD_HAS_NO_REFERENCE_TO_APPLICANT_MESSAGE =
           "Some minor child has no reference to any applicant";
 
@@ -457,6 +460,7 @@ public final class Constants {
         public static final String OTHER_ADULT_IS_NOT_ADDED_AS_ADULT_CHILD = "BV000020";
         public static final String ADULT_CHILD_LIVING_IN_HOME_IS_NOT_ADDED_AS_OTHER_ADULT = "BV000021";
         public static final String ADULT_CHILD_LIVING_IN_HOME_WRONG_FLAG = "BV000022";
+        public static final String OTHER_ADULT_HAS_NO_DATE_OF_BIRTH = "BV000023";
 
 
 

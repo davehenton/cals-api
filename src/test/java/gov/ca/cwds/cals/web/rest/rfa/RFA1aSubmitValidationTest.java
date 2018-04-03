@@ -136,6 +136,28 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   }
 
   @Test
+  public void validateOtherAdultHasNoDateOfBirth() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+
+    ApplicantDTO applicant = applicantHelper.getValidApplicant();
+    ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
+
+    OtherAdultDTO otherAdult = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    otherAdult.setDateOfBirth(null);
+    otherAdultHelper.postOtherAdult(form.getId(), otherAdult);
+
+    OtherAdultDTO otherAdult2 = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    otherAdultHelper.postOtherAdult(form.getId(), otherAdult2);
+
+    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    residenceHelper.putResidence(form.getId(), residence);
+
+    Response response = statusHelper.submitApplication(form.getId());
+    assertResponseByFixturePath(
+        response, "fixtures/rfa/validation/other-adult-has-no-date-of-birth.json");
+  }
+
+  @Test
   public void validateMinorChildHasNoReferenceToApplicant() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
 
