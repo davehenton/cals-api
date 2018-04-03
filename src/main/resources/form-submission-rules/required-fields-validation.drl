@@ -458,16 +458,6 @@ end
  Minor Child required fields validation
 */
 
-function boolean isRelationshipPresentForMinorChild(MinorChildDTO minorChild) {
-  List<RelationshipToApplicantDTO> relationships = minorChild.getRelationshipToApplicants();
-  boolean res = false;
-  for(RelationshipToApplicantDTO rs : relationships) {
-    res |= StringUtils.isNotBlank(rs.getRelationshipToApplicantFreeform())
-        || rs.getRelationshipToApplicantType() != null;
-  }
-  return res;
-}
-
 rule "Validate that relationship is filled for Minor Child"
   dialect "java"
   agenda-group "form-submission-validation"
