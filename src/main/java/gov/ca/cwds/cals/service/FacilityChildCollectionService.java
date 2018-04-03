@@ -23,6 +23,9 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   @Inject
   private FacilityChildMapper facilityChildMapper;
 
+  @Inject
+  private AssignedWorkerService assignedWorkerService;
+
   public FacilityChildCollectionService() {
   }
 
@@ -30,8 +33,12 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   public Response find(Serializable params) {
     FacilityChildParameterObject parameterObject = (FacilityChildParameterObject) params;
     List<FacilityChildDTO> facilityChildDTOs = clientDao
-            .streamByLicenseNumber(parameterObject.getLicenseNumber())
-            .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
+        .streamByLicenseNumber(parameterObject.getLicenseNumber())
+        .map(facilityChildMapper::toFacilityChildDTO).map(facilityChildDTO -> facilityChildMapper
+            .toFacilityChildDTO(facilityChildDTO,
+                assignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId())
+                    .orElse(null)))
+        .collect(Collectors.toList());
     if (CollectionUtils.isEmpty(facilityChildDTOs)) {
       return null;
     } else {
@@ -40,5 +47,4 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
       return facilityChildrenDTO;
     }
   }
-
 }
