@@ -16,6 +16,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Equator;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -107,7 +108,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     residenceHelper.putResidence(form.getId(), residence);
 
     Response response = statusHelper.submitApplication(form.getId());
-    assert response.getStatus() == 200;
+    Assert.assertNotEquals(422, response.getStatus());
   }
 
   @Test
@@ -151,7 +152,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     residenceHelper.putResidence(form.getId(), residence);
 
     Response response = statusHelper.submitApplication(form.getId());
-    assert response.getStatus() == 200;
+    Assert.assertNotEquals(422, response.getStatus());
   }
 
   @Test

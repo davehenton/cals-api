@@ -62,7 +62,7 @@ rule "Validate that other adult has reference to applicant"
   when
     $form : RFA1aFormDTO();
     $otherAdult: OtherAdultDTO() from $form.otherAdults;
-    $relationship: RelationshipToApplicantDTO(relationshipToApplicantType != null) from $otherAdult.relationshipToApplicants;
+    $relationship : RelationshipToApplicantDTO((relationshipToApplicantType != null) || relationshipToApplicantFreeform != null) from $otherAdult.relationshipToApplicants;
     not ApplicantDTO(id == $relationship.applicantId) from $form.applicants;
   then
     IssueDetails details = new IssueDetails();
@@ -80,7 +80,8 @@ rule "Validate that other adult has first name"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
-    $otherAdult: OtherAdultDTO(!relationshipToApplicants.isEmpty()) from $form.otherAdults;
+    $otherAdult: OtherAdultDTO() from $form.otherAdults;
+    exists (RelationshipToApplicantDTO((relationshipToApplicantType != null) || relationshipToApplicantFreeform != null) from $otherAdult.relationshipToApplicants)
     eval(StringUtils.isBlank($otherAdult.getFirstName()))
   then
     IssueDetails details = new IssueDetails();
@@ -98,7 +99,8 @@ rule "Validate that other adult has last name"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
-    $otherAdult: OtherAdultDTO(!relationshipToApplicants.isEmpty()) from $form.otherAdults;
+    $otherAdult: OtherAdultDTO() from $form.otherAdults;
+    exists (RelationshipToApplicantDTO((relationshipToApplicantType != null) || relationshipToApplicantFreeform != null) from $otherAdult.relationshipToApplicants)
     eval(StringUtils.isBlank($otherAdult.getLastName()))
   then
     IssueDetails details = new IssueDetails();
@@ -116,7 +118,8 @@ rule "Validate that other adult has date of birth"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
-    $otherAdult: OtherAdultDTO(!relationshipToApplicants.isEmpty(), dateOfBirth == null) from $form.otherAdults;
+    $otherAdult: OtherAdultDTO(dateOfBirth == null) from $form.otherAdults;
+    exists (RelationshipToApplicantDTO((relationshipToApplicantType != null) || relationshipToApplicantFreeform != null) from $otherAdult.relationshipToApplicants)
   then
     IssueDetails details = new IssueDetails();
     details.setCode(Business.Code.OTHER_ADULT_HAS_NO_DATE_OF_BIRTH);
