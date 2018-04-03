@@ -7,6 +7,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.web.rest.RestClientTestRule;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.client.Entity;
@@ -55,6 +56,7 @@ public class MinorChildHelper {
 
   public MinorChildDTO buildNewMinorChildDTO(ApplicantDTO reletiveApplicant) throws IOException {
     MinorChildDTO minorChildDTO = clientTestRule.getMapper().readValue(MINOR_CHILDREN_FIXTURE, MinorChildDTO.class);
+    minorChildDTO.setDateOfBirth(LocalDate.now().minusYears(10));
     // Assume that we have only one relationship object
     minorChildDTO.getRelationshipToApplicants().get(0).setApplicantId(reletiveApplicant.getId());
     return minorChildDTO;

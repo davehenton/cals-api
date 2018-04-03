@@ -12,6 +12,7 @@ import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR_CHILD_DATE_OF_BIRTH;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR_CHILD_FINANCIALLY_SUPPORTED;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR_CHILD_GENDER;
+import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR_CHILD_RELATIONSHIP_APPLICANT_ID;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_OTHER_PEOPLE_IN_RESIDENCE;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_PHYSICAL_MAILING_THE_SAME;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_RESIDENCE_ADDRESS_CITY;
@@ -25,7 +26,6 @@ import static org.junit.Assert.assertNotEquals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.GenderType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -36,7 +36,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.dto.rfa.TypedPersonNameDTO;
 import gov.ca.cwds.rest.exception.IssueDetails;
-import java.time.LocalDate;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -201,16 +201,37 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
   }
 
   @Test
+  public void validateRequiredFieldsForMinorChildWhenRelationshipsIsNull() throws Exception {
+    RFA1aFormDTO rfa1aForm = prepareValidForm();
+    ApplicantDTO firstApplicant = rfa1aForm.getFirstApplicant();
+    MinorChildDTO minorChild = buildEmptyMinorChild(firstApplicant);
+
+    minorChild.setRelationshipToApplicants(null);
+    minorChildHelper.postMinorChild(rfa1aForm.getId(), minorChild);
+
+    Response response = statusHelper.submitApplication(rfa1aForm.getId());
+    assertNotEquals(422, response.getStatus());
+  }
+
+  @Test
+  public void validateRequiredFieldsForMinorChildWhenRelationshipsIsEmpty() throws Exception {
+    RFA1aFormDTO rfa1aForm = prepareValidForm();
+    ApplicantDTO firstApplicant = rfa1aForm.getFirstApplicant();
+    MinorChildDTO minorChild = buildEmptyMinorChild(firstApplicant);
+
+    minorChild.setRelationshipToApplicants(Collections.emptyList());
+    minorChildHelper.postMinorChild(rfa1aForm.getId(), minorChild);
+
+    Response response = statusHelper.submitApplication(rfa1aForm.getId());
+    assertNotEquals(422, response.getStatus());
+  }
+
+  @Test
   public void validateRequiredFieldsForMinorChild() throws Exception {
     RFA1aFormDTO rfa1aForm = prepareValidForm();
     ApplicantDTO firstApplicant = rfa1aForm.getFirstApplicant();
-    MinorChildDTO minorChild = minorChildHelper.buildNewMinorChildDTO(firstApplicant);
-    minorChild.setDateOfBirth(null);
-    minorChild.setGender(null);
-    minorChild.setChildFinanciallySupported(null);
-    minorChild.setChildAdopted(null);
+    MinorChildDTO minorChild = buildEmptyMinorChild(firstApplicant);
     minorChild.getRelationshipToApplicants().get(0).setApplicantId(null);
-
     minorChild = minorChildHelper.postMinorChild(rfa1aForm.getId(), minorChild);
 
     List<IssueDetails> cvIssues = getIssueDetails(rfa1aForm);
@@ -219,21 +240,28 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_MINOR_CHILD_GENDER)));// "CV000021";
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_MINOR_CHILD_FINANCIALLY_SUPPORTED)));// "CV000022";
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_MINOR_CHILD_ADOPTED)));// "CV000023";
+    Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_MINOR_CHILD_RELATIONSHIP_APPLICANT_ID)));// "CV000024";
+  }
 
-    // Check fulfilled minor child
-    minorChild.setDateOfBirth(LocalDate.now().minusYears(10));
-    GenderType genderType = new GenderType();
-    genderType.setId(1L);
-    genderType.setValue("Male");
-    minorChild.setGender(genderType);
-    minorChild.setChildFinanciallySupported(true);
-    minorChild.setChildAdopted(false);
-    minorChild.getRelationshipToApplicants().get(0).setApplicantId(firstApplicant.getId());
-
-    minorChildHelper.putMinorChild(rfa1aForm.getId(), minorChild);
+  @Test
+  public void validateRequiredFieldsForMinorChildFulfilled() throws Exception {
+    RFA1aFormDTO rfa1aForm = prepareValidForm();
+    ApplicantDTO firstApplicant = rfa1aForm.getFirstApplicant();
+    MinorChildDTO minorChild = minorChildHelper.buildNewMinorChildDTO(firstApplicant);
+    minorChild = minorChildHelper.postMinorChild(rfa1aForm.getId(), minorChild);
 
     Response response = statusHelper.submitApplication(rfa1aForm.getId());
     assertNotEquals(422, response.getStatus());
+  }
+
+
+  private MinorChildDTO buildEmptyMinorChild(ApplicantDTO firstApplicant) throws IOException {
+    MinorChildDTO minorChild = minorChildHelper.buildNewMinorChildDTO(firstApplicant);
+    minorChild.setDateOfBirth(null);
+    minorChild.setGender(null);
+    minorChild.setChildFinanciallySupported(null);
+    minorChild.setChildAdopted(null);
+    return minorChild;
   }
 
 

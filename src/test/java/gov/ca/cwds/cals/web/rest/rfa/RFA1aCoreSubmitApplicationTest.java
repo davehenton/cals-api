@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.persistence.DBUnitAssertHelper;
 import gov.ca.cwds.cals.persistence.DBUnitSupport;
 import gov.ca.cwds.cals.persistence.DBUnitSupportBuilder;
@@ -12,8 +12,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
+import java.time.format.DateTimeFormatter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import org.dbunit.dataset.ITable;
@@ -66,6 +65,8 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
 
+    form = formAHelper.getRFA1aForm(form.getId());
+
     return form;
   }
 
@@ -91,9 +92,6 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
     statusHelper.assertSubmitted(form.getId());
 
-    WebTarget target = clientTestRule.target(API.RFA_1A_FORMS + "/" + form.getId());
-    form = target.request(MediaType.APPLICATION_JSON).get(RFA1aFormDTO.class);
-
     String placementHomeId = form.getPlacementHomeId();
     assertNotNull(placementHomeId);
     String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
@@ -115,7 +113,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
         substituteCareProviderIds);
 
     testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId());
-    testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId());
+    testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId(), form);
 
     testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[0]);
     testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[1]);
@@ -352,9 +350,11 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
         new String[]{"OTH_ADLTNM"});
   }
 
-  private void testIfOtherChildrenWasCreatedProperly(String placementHomeId) throws Exception {
+  private void testIfOtherChildrenWasCreatedProperly(String placementHomeId, RFA1aFormDTO form) throws Exception {
     DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/MinorChildrenInPlacementHome.xml")
+        .appendTemplateParameter("birthDate", form.getMinorChildren().get(0)
+            .getDateOfBirth().format(DateTimeFormatter.ofPattern(DATE_FORMAT)))
         .setTestedTableName("OTH_KIDT")
         .appendTableFilter("FKPLC_HM_T", placementHomeId)
         .build();
