@@ -142,10 +142,10 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
 
-    MinorChildDTO minorChild = minorChildHelper.getMinorChildDTO(persistentApplicant);
+    MinorChildDTO minorChild = minorChildHelper.buildNewMinorChildDTO(persistentApplicant);
     minorChild.getRelationshipToApplicants().iterator().next().setApplicantId(-1L);
     minorChildHelper.postMinorChild(form.getId(), minorChild);
-    MinorChildDTO minorChild2 = minorChildHelper.getMinorChildDTO(persistentApplicant);
+    MinorChildDTO minorChild2 = minorChildHelper.buildNewMinorChildDTO(persistentApplicant);
     minorChildHelper.postMinorChild(form.getId(), minorChild2);
 
     ResidenceDTO residence = residenceHelper.getResidenceDTO();

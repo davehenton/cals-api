@@ -8,6 +8,11 @@ import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_APPLI
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_APPLICANT_PHONE_NUMBER;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_BODY_OF_WATER_EXIST_FIELD;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_HOME_LANGUAGES;
+import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR_CHILD_ADOPTED;
+import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR_CHILD_DATE_OF_BIRTH;
+import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR_CHILD_FINANCIALLY_SUPPORTED;
+import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR_CHILD_GENDER;
+import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_MINOR_CHILD_RELATIONSHIP_APPLICANT_ID;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_OTHER_PEOPLE_IN_RESIDENCE;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_PHYSICAL_MAILING_THE_SAME;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_RESIDENCE_ADDRESS_CITY;
@@ -17,18 +22,21 @@ import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_RESID
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_RESIDENCE_STREET_ADDRESS;
 import static gov.ca.cwds.cals.Constants.Validation.Business.Code.REQUIRED_WEAPON_IN_HOME_FIELD;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.AddressType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.PhoneNumberType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.dto.rfa.TypedPersonNameDTO;
 import gov.ca.cwds.rest.exception.IssueDetails;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -53,14 +61,7 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
 
     RFA1aFormDTO form = prepareEmptyForm();
 
-    Response response = statusHelper.submitApplication(form.getId());
-    assertEquals(422, response.getStatus());
-
-    IssueDetailesList issueDetailesList = response.readEntity(IssueDetailesList.class);
-    List<IssueDetails> cvIssues = issueDetailesList.getIssueDetails().stream()
-        .filter(issueDetails -> issueDetails.getCode().startsWith("CV")).collect(
-            Collectors.toList());
-
+    List<IssueDetails> cvIssues = getIssueDetails(form);
 
     // First and Last Names are validated on save progress stage 
     //Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_APPLICANT_FIRST_NAME)));// "CV000002";
@@ -109,6 +110,16 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
 
   }
 
+  private List<IssueDetails> getIssueDetails(RFA1aFormDTO form) {
+    Response response = statusHelper.submitApplication(form.getId());
+    assertEquals(422, response.getStatus());
+
+    IssueDetailesList issueDetailesList = response.readEntity(IssueDetailesList.class);
+    return issueDetailesList.getIssueDetails().stream()
+        .filter(issueDetails -> issueDetails.getCode().startsWith("CV")).collect(
+            Collectors.toList());
+  }
+
   @Test
   public void checkDriverLicenseNumberFormTest() throws Exception {
     RFA1aFormDTO form = prepareValidForm();
@@ -124,13 +135,7 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
 
     applicantHelper.postApplicant(form.getId(), applicant);
 
-    Response response = statusHelper.submitApplication(form.getId());
-    assertEquals(422, response.getStatus());
-
-    IssueDetailesList issueDetailesList = response.readEntity(IssueDetailesList.class);
-    List<IssueDetails> cvIssues = issueDetailesList.getIssueDetails().stream()
-        .filter(issueDetails -> issueDetails.getCode().startsWith("CV")).collect(
-            Collectors.toList());
+    List<IssueDetails> cvIssues = getIssueDetails(form);
 
     Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_APPLICANT_DRIVER_LICENSE_NUMBER)));// "CV000008");
   }
@@ -141,7 +146,7 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
     applicantHelper.postApplicant(form.getId(), applicant);
     ResidenceDTO residenceDTO = residenceHelper.getResidenceDTO();
     residenceHelper.putResidence(form.getId(), residenceDTO);
-    return form;
+    return formAHelper.getRFA1aForm(form.getId());
   }
 
   private RFA1aFormDTO prepareEmptyForm() throws Exception {
@@ -194,6 +199,71 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
 
     return form;
   }
+
+  @Test
+  public void validateRequiredFieldsForMinorChildWhenRelationshipsIsNull() throws Exception {
+    RFA1aFormDTO rfa1aForm = prepareValidForm();
+    ApplicantDTO firstApplicant = rfa1aForm.getFirstApplicant();
+    MinorChildDTO minorChild = buildEmptyMinorChild(firstApplicant);
+
+    minorChild.setRelationshipToApplicants(null);
+    minorChildHelper.postMinorChild(rfa1aForm.getId(), minorChild);
+
+    Response response = statusHelper.submitApplication(rfa1aForm.getId());
+    assertNotEquals(422, response.getStatus());
+  }
+
+  @Test
+  public void validateRequiredFieldsForMinorChildWhenRelationshipsIsEmpty() throws Exception {
+    RFA1aFormDTO rfa1aForm = prepareValidForm();
+    ApplicantDTO firstApplicant = rfa1aForm.getFirstApplicant();
+    MinorChildDTO minorChild = buildEmptyMinorChild(firstApplicant);
+
+    minorChild.setRelationshipToApplicants(Collections.emptyList());
+    minorChildHelper.postMinorChild(rfa1aForm.getId(), minorChild);
+
+    Response response = statusHelper.submitApplication(rfa1aForm.getId());
+    assertNotEquals(422, response.getStatus());
+  }
+
+  @Test
+  public void validateRequiredFieldsForMinorChild() throws Exception {
+    RFA1aFormDTO rfa1aForm = prepareValidForm();
+    ApplicantDTO firstApplicant = rfa1aForm.getFirstApplicant();
+    MinorChildDTO minorChild = buildEmptyMinorChild(firstApplicant);
+    minorChild.getRelationshipToApplicants().get(0).setApplicantId(null);
+    minorChild = minorChildHelper.postMinorChild(rfa1aForm.getId(), minorChild);
+
+    List<IssueDetails> cvIssues = getIssueDetails(rfa1aForm);
+
+    Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_MINOR_CHILD_DATE_OF_BIRTH)));// "CV000020";
+    Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_MINOR_CHILD_GENDER)));// "CV000021";
+    Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_MINOR_CHILD_FINANCIALLY_SUPPORTED)));// "CV000022";
+    Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_MINOR_CHILD_ADOPTED)));// "CV000023";
+    Assert.assertTrue(cvIssues.stream().anyMatch(id -> id.getCode().equals(REQUIRED_MINOR_CHILD_RELATIONSHIP_APPLICANT_ID)));// "CV000024";
+  }
+
+  @Test
+  public void validateRequiredFieldsForMinorChildFulfilled() throws Exception {
+    RFA1aFormDTO rfa1aForm = prepareValidForm();
+    ApplicantDTO firstApplicant = rfa1aForm.getFirstApplicant();
+    MinorChildDTO minorChild = minorChildHelper.buildNewMinorChildDTO(firstApplicant);
+    minorChild = minorChildHelper.postMinorChild(rfa1aForm.getId(), minorChild);
+
+    Response response = statusHelper.submitApplication(rfa1aForm.getId());
+    assertNotEquals(422, response.getStatus());
+  }
+
+
+  private MinorChildDTO buildEmptyMinorChild(ApplicantDTO firstApplicant) throws IOException {
+    MinorChildDTO minorChild = minorChildHelper.buildNewMinorChildDTO(firstApplicant);
+    minorChild.setDateOfBirth(null);
+    minorChild.setGender(null);
+    minorChild.setChildFinanciallySupported(null);
+    minorChild.setChildAdopted(null);
+    return minorChild;
+  }
+
 
   public static class IssueDetailesList {
     @JsonProperty("issue_details")
