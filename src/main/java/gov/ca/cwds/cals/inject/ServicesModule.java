@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import gov.ca.cwds.cals.service.AssignedWorkerService;
 import gov.ca.cwds.cals.service.ComplaintService;
 import gov.ca.cwds.cals.service.CountiesService;
 import gov.ca.cwds.cals.service.CwsFacilityService;
@@ -75,6 +76,7 @@ public class ServicesModule extends AbstractModule {
     bind(LisFacilityService.class).toProvider(LisFacilityServiceProvider.class);
     bind(FacilityParameterObjectCMSAwareBuilder.class)
         .toProvider(FacilityParameterObjectBuilderProvider.class);
+    bind(AssignedWorkerService.class);
 
     // RFA
     bind(RFA1aFormService.class).toProvider(RFA1aFormServiceProvider.class);

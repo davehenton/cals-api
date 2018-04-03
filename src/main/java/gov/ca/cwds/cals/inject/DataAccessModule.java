@@ -145,7 +145,18 @@ public class DataAccessModule extends AbstractModule {
       CaseClosureReasonType.class,
       DeathCircumstancesType.class,
       Religion.class,
-      SecondaryAssignmentRoleType.class
+
+      SecondaryAssignmentRoleType.class,
+      Case.class,
+      LongText.class,
+      ChildClient.class,
+      CaseAssignment.class,
+      CaseLoad.class,
+      StaffPersonCaseLoad.class,
+      ReferralAssignment.class,
+      Referral.class,
+      CaseLoadWeighting.class,
+      ReferralClient.class
 
   ).build();
 

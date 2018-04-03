@@ -81,7 +81,7 @@ public class FacilityService implements CrudsService {
     fasFacilityMapper.toFacilityDTO(facilityDto, facilityInformation);
     if (parameterObject.isExpanded()) {
       List<FacilityChildDTO> facilityChildren =
-          cwsFacilityService.findFacilityChildredByLicenseNumber(
+          cwsFacilityService.findFacilityChildrenByLicenseNumber(
               Integer.valueOf(parameterObject.getLicenseNumber()));
       List<FacilityInspectionDTO> inspections =
           fasFacilityService.findInspectionsByFacilityId(parameterObject.getLicenseNumber());
@@ -97,7 +97,7 @@ public class FacilityService implements CrudsService {
     FacilityDTO facilityDto = cwsFacilityService.loadFacilityFromCwsCms(parameterObject);
 
     if (parameterObject.isExpanded()) {
-      List<FacilityChildDTO> facilityChildren = cwsFacilityService.findFacilityChildredByFacilityId(
+      List<FacilityChildDTO> facilityChildren = cwsFacilityService.findFacilityChildrenByFacilityId(
           parameterObject.getFacilityId());
       List<FacilityInspectionDTO> inspections = fasFacilityService.findInspectionsByFacilityId(
           parameterObject.getLicenseNumber());
