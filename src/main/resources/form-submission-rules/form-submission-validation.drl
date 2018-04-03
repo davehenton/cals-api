@@ -80,7 +80,7 @@ rule "Validate that other adult has first name"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
-    $otherAdult: OtherAdultDTO() from $form.otherAdults;
+    $otherAdult: OtherAdultDTO(!relationshipToApplicants.isEmpty()) from $form.otherAdults;
     eval(StringUtils.isBlank($otherAdult.getFirstName()))
   then
     IssueDetails details = new IssueDetails();
@@ -98,7 +98,7 @@ rule "Validate that other adult has last name"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
-    $otherAdult: OtherAdultDTO() from $form.otherAdults;
+    $otherAdult: OtherAdultDTO(!relationshipToApplicants.isEmpty()) from $form.otherAdults;
     eval(StringUtils.isBlank($otherAdult.getLastName()))
   then
     IssueDetails details = new IssueDetails();
@@ -116,7 +116,7 @@ rule "Validate that other adult has date of birth"
   agenda-group "form-submission-validation"
   when
     $form : RFA1aFormDTO();
-    $otherAdult: OtherAdultDTO(dateOfBirth == null) from $form.otherAdults;
+    $otherAdult: OtherAdultDTO(!relationshipToApplicants.isEmpty(), dateOfBirth == null) from $form.otherAdults;
   then
     IssueDetails details = new IssueDetails();
     details.setCode(Business.Code.OTHER_ADULT_HAS_NO_DATE_OF_BIRTH);

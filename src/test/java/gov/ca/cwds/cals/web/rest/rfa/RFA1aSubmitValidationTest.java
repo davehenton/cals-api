@@ -115,6 +115,29 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   }
 
   @Test
+  public void doNotValidateOtherAdultRequiredAttributesOnRelationshipAbsence() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+
+    ApplicantDTO applicant = applicantHelper.getValidApplicant();
+    ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
+
+    OtherAdultDTO otherAdult = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    otherAdult.getRelationshipToApplicants().clear();
+    otherAdult.setFirstName(" ");
+    otherAdult.setLastName(" ");
+    otherAdult.setDateOfBirth(null);
+    otherAdultHelper.postOtherAdult(form.getId(), otherAdult);
+    OtherAdultDTO otherAdult2 = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    otherAdultHelper.postOtherAdult(form.getId(), otherAdult2);
+
+    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    residenceHelper.putResidence(form.getId(), residence);
+
+    Response response = statusHelper.submitApplication(form.getId());
+    assert response.getStatus() == 200;
+  }
+
+  @Test
   public void validateOtherAdultHasNoLastName() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
 
