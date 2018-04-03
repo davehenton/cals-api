@@ -62,7 +62,7 @@ rule "Validate that other adult has reference to applicant"
   when
     $form : RFA1aFormDTO();
     $otherAdult: OtherAdultDTO() from $form.otherAdults;
-    $relationship: RelationshipToApplicantDTO() from $otherAdult.relationshipToApplicants;
+    $relationship: RelationshipToApplicantDTO(relationshipToApplicantType != null) from $otherAdult.relationshipToApplicants;
     not ApplicantDTO(id == $relationship.applicantId) from $form.applicants;
   then
     IssueDetails details = new IssueDetails();

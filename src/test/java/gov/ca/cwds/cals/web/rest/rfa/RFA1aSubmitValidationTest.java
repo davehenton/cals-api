@@ -4,12 +4,7 @@ import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseB
 import static org.junit.Assert.assertTrue;
 
 import gov.ca.cwds.cals.Constants.AddressTypes;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
-import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
-import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.dto.rfa.*;
 import gov.ca.cwds.rest.exception.BaseExceptionResponse;
 import gov.ca.cwds.rest.exception.IssueDetails;
 import io.dropwizard.jackson.Jackson;
@@ -91,6 +86,28 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     Response response = statusHelper.submitApplication(form.getId());
     assertResponseByFixturePath(
         response, "fixtures/rfa/validation/other-adult-has-no-reference-to-applicant.json");
+  }
+
+  @Test
+  public void skipValidateOtherAdultHasNoReferenceToApplicantOnEmptyType() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+
+    ApplicantDTO applicant = applicantHelper.getValidApplicant();
+    ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
+
+    OtherAdultDTO otherAdult = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    RelationshipToApplicantDTO relationshipToApplicantDTO = otherAdult.getRelationshipToApplicants().get(0);
+    relationshipToApplicantDTO.setApplicantId(-1L);
+    relationshipToApplicantDTO.setRelationshipToApplicantType(null);
+    otherAdultHelper.postOtherAdult(form.getId(), otherAdult);
+    OtherAdultDTO otherAdult2 = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    otherAdultHelper.postOtherAdult(form.getId(), otherAdult2);
+
+    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    residenceHelper.putResidence(form.getId(), residence);
+
+    Response response = statusHelper.submitApplication(form.getId());
+    assert response.getStatus() == 200;
   }
 
   @Test
