@@ -28,6 +28,9 @@ public class ChildAssignedWorkerService {
     // default constructor
   }
 
+  /**
+   * Method that returns StaffPerson for the Child(Client) by id.
+   */
   public Optional<StaffPerson> findAssignedWorkerForClient(String clientId) {
     List<Case> caseList = caseDao.findActiveByClient(clientId);
     if (!caseList.isEmpty()) {
