@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -27,13 +27,13 @@ public class FacilityVisitDTO extends BaseDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDateTime visitDate;
+    private LocalDate visitDate;
 
     @JsonProperty("visit_deferred_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
     @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
     @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDateTime visitDeferredDate;
+    private LocalDate visitDeferredDate;
 
     public String getVisitType() {
         return visitType;
@@ -51,19 +51,19 @@ public class FacilityVisitDTO extends BaseDTO {
         this.approval = approval;
     }
 
-    public LocalDateTime getVisitDate() {
+    public LocalDate getVisitDate() {
         return visitDate;
     }
 
-    public void setVisitDate(LocalDateTime visitDate) {
+    public void setVisitDate(LocalDate visitDate) {
         this.visitDate = visitDate;
     }
 
-    public LocalDateTime getVisitDeferredDate() {
+    public LocalDate getVisitDeferredDate() {
         return visitDeferredDate;
     }
 
-    public void setVisitDeferredDate(LocalDateTime visitDeferredDate) {
+    public void setVisitDeferredDate(LocalDate visitDeferredDate) {
         this.visitDeferredDate = visitDeferredDate;
     }
 

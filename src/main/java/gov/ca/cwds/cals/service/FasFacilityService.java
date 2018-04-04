@@ -61,10 +61,7 @@ public class FasFacilityService {
       LOGGER.warn(Constants.ExpectedExceptionMessages.DISTRICT_OFFICE_IS_UNEXPECTEDLY_UNKNOWN);
       return null;
     } else {
-      String lpaCode =
-          String.format("%02d", lisFacFile.getFacDoNbr().getDoNbr()) + lisFacFile
-              .getFacDoEvalCode();
-      return lpaInformationDao.findByLpaCode(lpaCode);
+      return lpaInformationDao.findByLpaCode(lisFacFile.getFacDoEvalCode());
     }
   }
 
