@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -16,65 +16,65 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @SuppressWarnings("squid:S3437")   //LocalDateTime is serializable
 public class FacilityVisitDTO extends BaseDTO {
 
-    @JsonProperty("visit_type")
-    @ApiModelProperty(required = false, readOnly = false, value = "VisitType", example = "Renewal")
-    private String visitType;
+  @JsonProperty("visit_type")
+  @ApiModelProperty(required = false, readOnly = false, value = "VisitType", example = "Renewal")
+  private String visitType;
 
-    @ApiModelProperty(required = false, readOnly = false, value = "Approval", example = "Approved")
-    private String approval;
+  @ApiModelProperty(required = false, readOnly = false, value = "Approval", example = "Approved")
+  private String approval;
 
-    @JsonProperty("visit_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
-    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
-    @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDateTime visitDate;
+  @JsonProperty("visit_date")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
+  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
+  @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
+  private LocalDate visitDate;
 
-    @JsonProperty("visit_deferred_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
-    @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
-    @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
-    private LocalDateTime visitDeferredDate;
+  @JsonProperty("visit_deferred_date")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT)
+  @gov.ca.cwds.rest.validation.Date(format = DATE_FORMAT, required = false)
+  @ApiModelProperty(required = false, readOnly = false, value = "yyyy-MM-dd", example = "2000-01-01")
+  private LocalDate visitDeferredDate;
 
-    public String getVisitType() {
-        return visitType;
-    }
+  public String getVisitType() {
+    return visitType;
+  }
 
-    public void setVisitType(String visitType) {
-        this.visitType = visitType;
-    }
+  public void setVisitType(String visitType) {
+    this.visitType = visitType;
+  }
 
-    public String getApproval() {
-        return approval;
-    }
+  public String getApproval() {
+    return approval;
+  }
 
-    public void setApproval(String approval) {
-        this.approval = approval;
-    }
+  public void setApproval(String approval) {
+    this.approval = approval;
+  }
 
-    public LocalDateTime getVisitDate() {
-        return visitDate;
-    }
+  public LocalDate getVisitDate() {
+    return visitDate;
+  }
 
-    public void setVisitDate(LocalDateTime visitDate) {
-        this.visitDate = visitDate;
-    }
+  public void setVisitDate(LocalDate visitDate) {
+    this.visitDate = visitDate;
+  }
 
-    public LocalDateTime getVisitDeferredDate() {
-        return visitDeferredDate;
-    }
+  public LocalDate getVisitDeferredDate() {
+    return visitDeferredDate;
+  }
 
-    public void setVisitDeferredDate(LocalDateTime visitDeferredDate) {
-        this.visitDeferredDate = visitDeferredDate;
-    }
+  public void setVisitDeferredDate(LocalDate visitDeferredDate) {
+    this.visitDeferredDate = visitDeferredDate;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        return EqualsBuilder.reflectionEquals(this, o);
-    }
+  @Override
+  public boolean equals(Object o) {
+    return EqualsBuilder.reflectionEquals(this, o);
+  }
 
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
+  @Override
+  public int hashCode() {
+    return HashCodeBuilder.reflectionHashCode(this);
+  }
 
 }

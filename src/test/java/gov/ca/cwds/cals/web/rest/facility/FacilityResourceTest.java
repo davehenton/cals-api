@@ -19,11 +19,11 @@ import org.junit.Test;
 
 public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
-  private static final String LICENSE_NUMBER = "193600110";
+  private static final String LICENSE_NUMBER = "100004470";
   private static final String WRONG_LICENSE_NUMBER = "-1";
 
   private static final String FACILITY_ID = "E6tloOO0Ql";
-  private static final String FACILITY_FROM_LIS_ID = "193600001";
+  private static final String FACILITY_FROM_LIS_ID = "100004582";
   public static final String PRINCIPAL_NO_PRIVILAGES_JSON = "security/principal-no-privilages.json";
   public static final String PRINCIPAL_PRIV_CWS_CASE_MANAGEMENT_SYSTEM_JSON = "security/principal-priv-CWS_Case_Management_System.json";
   public static final String PRINCIPAL_PRIV_RESOURCE_MANAGEMENT_JSON = "security/principal-priv-Resource_Management.json";

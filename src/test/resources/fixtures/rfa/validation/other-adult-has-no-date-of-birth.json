@@ -1,0 +1,10 @@
+{
+  "issue_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Other adult with first name - [OaFn], last name - [OaLn] and name suffix - [Jr] has no date of birth",
+      "code": "BV000023",
+      "technical_message": "form-submission-validation"
+    }
+  ]
+}
