@@ -24,6 +24,12 @@ public class RFA1aFormsDao extends BaseDaoImpl<RFA1aForm> {
     super(sessionFactory);
   }
 
+  /**
+   * Find all RFA1a forms.
+   *
+   * @param maxResults  expected maximum results
+   * @return List of RFA1aForm
+   */
   public List<RFA1aForm> findAll(int maxResults) {
     Session session = this.getSessionFactory().getCurrentSession();
     Query<RFA1aForm> query =
