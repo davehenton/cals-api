@@ -4,6 +4,8 @@ import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.data.legacy.cms.entity.Client;
 
 /**
+ * Decorator for FacilityChild mapper class.
+ *
  * @author CWDS CALS API Team
  */
 public abstract class FacilityChildMapperDecorator implements FacilityChildMapper {

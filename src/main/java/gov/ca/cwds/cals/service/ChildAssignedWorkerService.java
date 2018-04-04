@@ -47,6 +47,9 @@ public class ChildAssignedWorkerService {
         .map(Referral::getPrimaryContactStaffPerson);
   }
 
+  /**
+   * Method that sorts List that contains referrals by Closure Data/Received Date/Received Time.
+   */
   public List<Referral> sortReferralList(List<Referral> referralList) {
     if (null == referralList) {
       return null;

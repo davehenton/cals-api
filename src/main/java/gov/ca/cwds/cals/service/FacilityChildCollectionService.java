@@ -48,14 +48,16 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   }
 
   private List<FacilityChildDTO> getChildrenFromLisFacility(String licenseNumber) {
-    return getChildrenFromFacilityStream(clientService.getClientsByLicenseNumber(licenseNumber).stream());
+    return getChildrenFromFacilityStream(
+        clientService.getClientsByLicenseNumber(licenseNumber).stream());
 
   }
 
-  private List<FacilityChildDTO> getChildrenFromFacilityStream(Stream<Client> stream){
-    return stream.map(facilityChildMapper::toFacilityChildDTO).map(facilityChildDTO -> facilityChildMapper
-        .toFacilityChildDTO(facilityChildDTO,
-            childAssignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId())
-                .orElse(null))).collect(Collectors.toList());
+  private List<FacilityChildDTO> getChildrenFromFacilityStream(Stream<Client> stream) {
+    return stream.map(facilityChildMapper::toFacilityChildDTO)
+        .map(facilityChildDTO -> facilityChildMapper
+            .toFacilityChildDTO(facilityChildDTO,
+                childAssignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId())
+                    .orElse(null))).collect(Collectors.toList());
   }
 }
