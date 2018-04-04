@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
  */
 @NamedQuery(
     name = LpaInformation.FIND_ASSIGNED_WORKER_BY_LPA_CODE,
-    query = "SELECT l FROM LpaInformation l WHERE SUBSTRING(l.lpaCode, 3) = :" +
-        LpaInformation.PARAM_LPA_CODE
+    query = "SELECT l FROM LpaInformation l WHERE SUBSTRING(l.lpaCode, 3) = :"
+        + LpaInformation.PARAM_LPA_CODE
 )
 @Entity
 @Table(name = "lpa_information")
