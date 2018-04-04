@@ -18,10 +18,10 @@ public abstract class FacilityChildMapperDecorator implements FacilityChildMappe
 
   @Override
   public FacilityChildDTO toFacilityChildDTO(Client client) {
-    FacilityChildDTO facilityChildDTO = null;
+    FacilityChildDTO facilityChildDto = null;
     if (null != client) {
-      facilityChildDTO = delegate.toFacilityChildDTO(client);
+      facilityChildDto = delegate.toFacilityChildDTO(client);
     }
-    return facilityChildDTO;
+    return facilityChildDto;
   }
 }

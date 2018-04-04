@@ -44,7 +44,7 @@ public interface FacilityChildMapper {
   @Mapping(target = "countyOfOrigin", ignore = true)
   @Mapping(target = "facilityId", ignore = true)
   @Mapping(target = "messages", ignore = true)
-  FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO,
+  FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDto,
       BaseStaffPerson staffPerson);
 
   @Mapping(target = "countyOfOrigin", source = "shortDescription")
@@ -54,7 +54,7 @@ public interface FacilityChildMapper {
   @Mapping(target = "assignedWorker", ignore = true)
   @Mapping(target = "facilityId", ignore = true)
   @Mapping(target = "messages", ignore = true)
-  FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO,
+  FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDto,
       County county);
 
   @Mapping(target = "dateOfPlacement", source = "startDt")
@@ -64,11 +64,11 @@ public interface FacilityChildMapper {
   @Mapping(target = "assignedWorker", ignore = true)
   @Mapping(target = "facilityId", ignore = true)
   @Mapping(target = "messages", ignore = true)
-  FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDTO,
+  FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDto,
       BaseOutOfHomePlacement outOfHomePlacement);
 
   @AfterMapping
-  default void after(@MappingTarget FacilityChildDTO facilityChildDTO, Client client) {
+  default void after(@MappingTarget FacilityChildDTO facilityChildDto, Client client) {
     Optional.ofNullable(client).ifPresent(c -> {
       Set<? extends BasePlacementEpisode> placementEpisodes = c.getPlacementEpisodes();
       if (!placementEpisodes.isEmpty()) {
@@ -77,14 +77,14 @@ public interface FacilityChildMapper {
 
         BasePlacementEpisode placementEpisode = placementEpisodes.iterator().next();
         County county = placementEpisode.getCounty();
-        facilityChildMapper.toFacilityChildDTO(facilityChildDTO, county);
+        facilityChildMapper.toFacilityChildDTO(facilityChildDto, county);
 
         Set<? extends BaseOutOfHomePlacement> outOfHomePlacements = placementEpisode
             .getOutOfHomePlacements();
         if (!outOfHomePlacements.isEmpty()) {
 
           BaseOutOfHomePlacement outOfHomePlacement = outOfHomePlacements.iterator().next();
-          facilityChildMapper.toFacilityChildDTO(facilityChildDTO, outOfHomePlacement);
+          facilityChildMapper.toFacilityChildDTO(facilityChildDto, outOfHomePlacement);
         }
       }
     });
