@@ -21,7 +21,8 @@ import org.mapstruct.factory.Mappers;
  * @author CWDS CALS API Team
  */
 @Mapper(uses = {PersonMapper.class,
-    TrailingSpacesRemovalPostMappingProcessor.class}, nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
+    TrailingSpacesRemovalPostMappingProcessor.class},
+    nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 @DecoratedWith(FacilityChildMapperDecorator.class)
 public interface FacilityChildMapper {
 

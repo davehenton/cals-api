@@ -73,7 +73,9 @@ public class CwsFacilityService {
     return clientDao.streamByLicenseNumber(licenseNumber)
         .map(facilityChildMapper::toFacilityChildDTO).map(facilityChildDTO -> facilityChildMapper
             .toFacilityChildDTO(facilityChildDTO,
-                childAssignedWorkerService.findAssignedWorkerForClient(facilityChildDTO.getId()).orElse(null)))
+                childAssignedWorkerService
+                    .findAssignedWorkerForClient(facilityChildDTO.getId())
+                    .orElse(null)))
         .collect(Collectors.toList());
   }
 
