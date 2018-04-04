@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.persistence.model.fas;
 
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.data.persistence.PersistentObject;
+import java.time.LocalDate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -114,16 +115,16 @@ public class FacilityInformation implements PersistentObject {
   private Long facAnnualVisitYear;
   private LocalDateTime facLastDeferVisitDate;
   private Long facLastDeferVisitReason;
-  private LocalDateTime facRenewalDeferDate;
-  private LocalDateTime facPostLicDeferDate;
-  private LocalDateTime facRenewalVisitDate;
-  private LocalDateTime facPostLicVisitDate;
+  private LocalDate facRenewalDeferDate;
+  private LocalDate facPostLicDeferDate;
+  private LocalDate facRenewalVisitDate;
+  private LocalDate facPostLicVisitDate;
   private String facRenewalVisitAppr;
   private String facPostLicVisitAppr;
-  private LocalDateTime facAnnual22MoDeferDate;
-  private LocalDateTime facAnnual10MoDeferDate;
-  private LocalDateTime facAnnual22MoVisitDate;
-  private LocalDateTime facAnnual10MoVisitDate;
+  private LocalDate facAnnual22MoDeferDate;
+  private LocalDate facAnnual10MoDeferDate;
+  private LocalDate facAnnual22MoVisitDate;
+  private LocalDate facAnnual10MoVisitDate;
   private String facAnnual22MoVisitAppr;
   private String facAnnual10MoVisitAppr;
   private Long facLastVisitReason;
@@ -1118,41 +1119,41 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_renewal_defer_date", nullable = true)
-  public LocalDateTime getFacRenewalDeferDate() {
+  public LocalDate getFacRenewalDeferDate() {
     return facRenewalDeferDate;
   }
 
-  public void setFacRenewalDeferDate(LocalDateTime facRenewalDeferDate) {
+  public void setFacRenewalDeferDate(LocalDate facRenewalDeferDate) {
     this.facRenewalDeferDate = facRenewalDeferDate;
   }
 
   @Basic
   @Column(name = "fac_post_lic_defer_date", nullable = true)
-  public LocalDateTime getFacPostLicDeferDate() {
+  public LocalDate getFacPostLicDeferDate() {
     return facPostLicDeferDate;
   }
 
-  public void setFacPostLicDeferDate(LocalDateTime facPostLicDeferDate) {
+  public void setFacPostLicDeferDate(LocalDate facPostLicDeferDate) {
     this.facPostLicDeferDate = facPostLicDeferDate;
   }
 
   @Basic
   @Column(name = "fac_renewal_visit_date", nullable = true)
-  public LocalDateTime getFacRenewalVisitDate() {
+  public LocalDate getFacRenewalVisitDate() {
     return facRenewalVisitDate;
   }
 
-  public void setFacRenewalVisitDate(LocalDateTime facRenewalVisitDate) {
+  public void setFacRenewalVisitDate(LocalDate facRenewalVisitDate) {
     this.facRenewalVisitDate = facRenewalVisitDate;
   }
 
   @Basic
   @Column(name = "fac_post_lic_visit_date", nullable = true)
-  public LocalDateTime getFacPostLicVisitDate() {
+  public LocalDate getFacPostLicVisitDate() {
     return facPostLicVisitDate;
   }
 
-  public void setFacPostLicVisitDate(LocalDateTime facPostLicVisitDate) {
+  public void setFacPostLicVisitDate(LocalDate facPostLicVisitDate) {
     this.facPostLicVisitDate = facPostLicVisitDate;
   }
 
@@ -1178,41 +1179,41 @@ public class FacilityInformation implements PersistentObject {
 
   @Basic
   @Column(name = "fac_annual_22_mo_defer_date", nullable = true)
-  public LocalDateTime getFacAnnual22MoDeferDate() {
+  public LocalDate getFacAnnual22MoDeferDate() {
     return facAnnual22MoDeferDate;
   }
 
-  public void setFacAnnual22MoDeferDate(LocalDateTime facAnnual22MoDeferDate) {
+  public void setFacAnnual22MoDeferDate(LocalDate facAnnual22MoDeferDate) {
     this.facAnnual22MoDeferDate = facAnnual22MoDeferDate;
   }
 
   @Basic
   @Column(name = "fac_annual_10_mo_defer_date", nullable = true)
-  public LocalDateTime getFacAnnual10MoDeferDate() {
+  public LocalDate getFacAnnual10MoDeferDate() {
     return facAnnual10MoDeferDate;
   }
 
-  public void setFacAnnual10MoDeferDate(LocalDateTime facAnnual10MoDeferDate) {
+  public void setFacAnnual10MoDeferDate(LocalDate facAnnual10MoDeferDate) {
     this.facAnnual10MoDeferDate = facAnnual10MoDeferDate;
   }
 
   @Basic
   @Column(name = "fac_annual_22_mo_visit_date", nullable = true)
-  public LocalDateTime getFacAnnual22MoVisitDate() {
+  public LocalDate getFacAnnual22MoVisitDate() {
     return facAnnual22MoVisitDate;
   }
 
-  public void setFacAnnual22MoVisitDate(LocalDateTime facAnnual22MoVisitDate) {
+  public void setFacAnnual22MoVisitDate(LocalDate facAnnual22MoVisitDate) {
     this.facAnnual22MoVisitDate = facAnnual22MoVisitDate;
   }
 
   @Basic
   @Column(name = "fac_annual_10_mo_visit_date", nullable = true)
-  public LocalDateTime getFacAnnual10MoVisitDate() {
+  public LocalDate getFacAnnual10MoVisitDate() {
     return facAnnual10MoVisitDate;
   }
 
-  public void setFacAnnual10MoVisitDate(LocalDateTime facAnnual10MoVisitDate) {
+  public void setFacAnnual10MoVisitDate(LocalDate facAnnual10MoVisitDate) {
     this.facAnnual10MoVisitDate = facAnnual10MoVisitDate;
   }
 

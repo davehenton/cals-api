@@ -19,7 +19,7 @@ public interface FacilityVisitMapper {
     @Mapping(target = "visitType", constant = ANNUAL_10_MONTH)
     @Mapping(target = "approval", source = "facAnnual10MoVisitAppr")
     @Mapping(target = "visitDate", source = "facAnnual10MoVisitDate")
-    @Mapping(target = "visitDeferredDate", source = "facAnnual10MoDeferDate")
+    @Mapping(target = "visitDeferredDate", source = "facAnnual10MoDeferDate.")
     FacilityVisitDTO toAnnual10MonthFacilityVisitDTO(FacilityInformation facilityInformation);
 
     @Mapping(target = "visitType", constant = ANNUAL_22_MONTH)
