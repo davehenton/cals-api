@@ -130,7 +130,7 @@ cmsDataSourceFactory:
   user: ${DB_CMS_USER:-db2inst1}
   password: ${DB_CMS_PASSWORD:-db2inst1-pwd}
   url: ${DB_CMS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/DB0TDEV}
-  validationQuery: "select count(*) from ${DB_CMS_SCHEMA:-CWSCMS}.PLC_HM_T"
+  validationQuery: "/* MyService Health Check */ SELECT 1 FROM sysibm.sysdummy1 for read only"
   logValidationErrors: true
   initialSize: 0
   minSize: 0
@@ -148,7 +148,7 @@ cmsRsDataSourceFactory:
   user: ${DB_CMS_RS_USER:-db2inst1}
   password: ${DB_CMS_RS_PASSWORD:-db2inst1-pwd}
   url: ${DB_CMS_RS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/DB0TDEV}
-  validationQuery: "select count(*) from ${DB_CMS_RS_SCHEMA:-CWSRS1}.CLIENT_CNTY"
+  validationQuery: "/* MyService Health Check */ SELECT 1 FROM sysibm.sysdummy1 for read only"
   logValidationErrors: true
   initialSize: 0
   minSize: 0
@@ -167,7 +167,7 @@ xaCmsDataSourceFactory:
   password: ${DB_CMS_PASSWORD:-db2inst1-pwd}
   xaDataSourceClassName: com.ibm.db2.jcc.DB2XADataSource
   url: ${DB_CMS_JDBC_URL:-jdbc:db2://192.168.99.100:50000/DB0TDEV}
-  validationQuery: "select count(*) from ${DB_CMS_SCHEMA:-CWSCMS}.PLC_HM_T"
+  validationQuery: "/* MyService Health Check */ SELECT 1 FROM sysibm.sysdummy1 for read only"
   logValidationErrors: true
   initialSize: 0
   minSize: 0
