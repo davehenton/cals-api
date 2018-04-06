@@ -1,9 +1,9 @@
 package gov.ca.cwds.cals.persistence.model.lisfas;
 
 import gov.ca.cwds.data.persistence.PersistentObject;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.time.LocalDate;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,16 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import java.io.Serializable;
-import java.time.LocalDate;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "lis_fac_file")
-@SuppressWarnings("squid:S3437") //LocalDate is serializable
 public class LisFacFile implements PersistentObject {
 
   private static final long serialVersionUID = 863872921154264534L;
-
   private Integer facNbr;
   private Integer isnLisFacFile;
   private String facName;
@@ -122,6 +120,10 @@ public class LisFacFile implements PersistentObject {
   private String facLocIndicator;
   private String facType999CaciIndicator;
   private Integer facBilingual;
+  private LisTableFile county;
+  private LisTableFile facilityStatus;
+  private LisTableFile facilityType;
+  private BigInteger timestamp;
 
   @Id
   @Column(name = "fac_nbr", nullable = false)
@@ -1129,12 +1131,6 @@ public class LisFacFile implements PersistentObject {
     return getIsnLisFacFile();
   }
 
-  private LisTableFile county;
-
-  private LisTableFile facilityStatus;
-
-  private LisTableFile facilityType;
-
   public void setCounty(LisTableFile county) {
     this.county = county;
   }
@@ -1161,4 +1157,18 @@ public class LisFacFile implements PersistentObject {
   public LisTableFile getFacilityType() {
     return facilityType;
   }
+
+  @Basic
+  @Column(
+      name = "system_datetime_1",
+      nullable = false
+  )
+  public BigInteger getTimestamp() {
+    return timestamp;
+  }
+
+  public void setTimestamp(BigInteger timestamp) {
+    this.timestamp = timestamp;
+  }
+
 }
