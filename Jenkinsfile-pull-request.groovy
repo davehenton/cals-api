@@ -70,41 +70,10 @@ node('tpt2-slave') {
         stage('Unit Tests') {
             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test jacocoTestReport', switches: '--stacktrace'
         }
-        stage('License Report') {
-            buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'downloadLicenses'
-        }
         stage('SonarQube analysis') {
             withSonarQubeEnv('Core-SonarQube') {
                 buildInfo = rtGradle.run buildFile: 'build.gradle', switches: '--info', tasks: 'sonarqube'
             }
-        }
-        stage('Build Docker') {
-            buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'createDockerImage'
-        }
-        stage('Clean Workspace') {
-            buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'dropDockerImage'
-            archiveArtifacts artifacts: '**/cals-api-*.jar,readme.txt', fingerprint: true
-            cleanWs()
-        }
-        stage('Deploy Application') {
-            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', url: 'git@github.com:ca-cwds/de-ansible.git']]]
-            sh 'ansible-playbook -e NEW_RELIC_AGENT=$USE_NEWRELIC  -e CALS_API_VERSION=$APP_VERSION -i $inventory deploy-calsapi.yml --vault-password-file ~/.ssh/vault.txt -vv'
-            cleanWs()
-            sleep(20)
-        }
-        stage('Smoke Tests') {
-            checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
-            buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'smokeTest --stacktrace'
-        }
-        stage('Integration Tests') {
-            checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
-            def gradlePropsText = """
-         cals.api.url=${APP_URL}
-	 perry.url=${PERRY_URL}
-	 login.form.target.url=${LOGIN_FORM_TARGET_URL}
-	 """
-            writeFile file: "gradle.properties", text: gradlePropsText
-            buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'integrationTest --stacktrace'
         }
     } catch (Exception e) {
         errorcode = e
