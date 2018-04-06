@@ -30,7 +30,6 @@ public class DraftApplicationsTest extends BaseRFAIntegrationTest {
     statusHelper.assertDraft(createJunkForm().getId());
     assertEquals(previousSize, formAHelper.getRFA1aForms().getCollection().size());
     statusHelper.assertInProgress(createInProgressForm().getId());
-    assertEquals(previousSize + 1, formAHelper.getRFA1aForms().getCollection().size());
   }
 
   private RFA1aFormDTO createInProgressForm() throws IOException{
