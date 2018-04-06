@@ -196,7 +196,6 @@ Changelog of Git Changelog Gradle plugin.
 [bb4aff011b54b3d](https://github.com/ca-cwds/cals-api/commit/bb4aff011b54b3d) Ievgenii Drozd *2018-04-03 11:21:27*
 
 
-## 0.6.2-SNAPSHOT
 ### GitHub [#345](https://github.com/ca-cwds/cals-api/pull/345) CALS-5654: Enforce IBM Security Guide requirements regarding Client Search in Get Facility Children API in CALS API
 
 **CALS-5654: Enforce IBM Security Guide requirements regarding Client Search in Get Facility Children API in CALS API (#345)**
