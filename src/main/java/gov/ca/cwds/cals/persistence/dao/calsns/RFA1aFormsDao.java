@@ -24,11 +24,17 @@ public class RFA1aFormsDao extends BaseDaoImpl<RFA1aForm> {
     super(sessionFactory);
   }
 
-  @Override
-  public List<RFA1aForm> findAll() {
+  /**
+   * Find all RFA1a forms.
+   *
+   * @param maxResults  expected maximum results
+   * @return List of RFA1aForm
+   */
+  public List<RFA1aForm> findAll(int maxResults) {
     Session session = this.getSessionFactory().getCurrentSession();
     Query<RFA1aForm> query =
         session.createNamedQuery(RFA1aForm.NAMED_QUERY_FIND_ALL, RFA1aForm.class);
+    query.setMaxResults(maxResults);
     ImmutableList.Builder<RFA1aForm> entities = new ImmutableList.Builder<>();
     entities.addAll(query.list());
     return entities.build();

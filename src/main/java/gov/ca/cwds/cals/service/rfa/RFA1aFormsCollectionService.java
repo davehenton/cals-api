@@ -28,7 +28,7 @@ public class RFA1aFormsCollectionService
 
   @Override
   public RFA1aFormCollectionDTO find(Boolean expanded) {
-    List<RFA1aForm> forms = dao.findAll();
+    List<RFA1aForm> forms = dao.findAll(100);
     List<RFA1aFormDTO> formDTOs;
     if (expanded) {
       formDTOs = rfa1aFormMapper.toExpandedRFA1aFormsDTO(forms);

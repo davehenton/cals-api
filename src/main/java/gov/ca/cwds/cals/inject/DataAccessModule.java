@@ -51,6 +51,11 @@ import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.data.legacy.cms.entity.AddressPhoneticName;
 import gov.ca.cwds.data.legacy.cms.entity.AddressPhoneticNamePK;
 import gov.ca.cwds.data.legacy.cms.entity.BackgroundCheck;
+import gov.ca.cwds.data.legacy.cms.entity.Case;
+import gov.ca.cwds.data.legacy.cms.entity.CaseAssignment;
+import gov.ca.cwds.data.legacy.cms.entity.CaseLoad;
+import gov.ca.cwds.data.legacy.cms.entity.CaseLoadWeighting;
+import gov.ca.cwds.data.legacy.cms.entity.ChildClient;
 import gov.ca.cwds.data.legacy.cms.entity.Client;
 import gov.ca.cwds.data.legacy.cms.entity.ClientOtherEthnicity;
 import gov.ca.cwds.data.legacy.cms.entity.CountyLicenseCase;
@@ -60,6 +65,7 @@ import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.ExternalInterface;
 import gov.ca.cwds.data.legacy.cms.entity.ExternalInterfacePK;
 import gov.ca.cwds.data.legacy.cms.entity.LicensingVisit;
+import gov.ca.cwds.data.legacy.cms.entity.LongText;
 import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherEthnicity;
@@ -77,8 +83,12 @@ import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeNotes;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeProfile;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeProfilePK;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHomeUc;
+import gov.ca.cwds.data.legacy.cms.entity.Referral;
+import gov.ca.cwds.data.legacy.cms.entity.ReferralAssignment;
+import gov.ca.cwds.data.legacy.cms.entity.ReferralClient;
 import gov.ca.cwds.data.legacy.cms.entity.ScpOtherEthnicity;
 import gov.ca.cwds.data.legacy.cms.entity.StaffPerson;
+import gov.ca.cwds.data.legacy.cms.entity.StaffPersonCaseLoad;
 import gov.ca.cwds.data.legacy.cms.entity.SubCareProviderPhoneticName;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProviderUc;
@@ -181,7 +191,18 @@ public class DataAccessModule extends AbstractModule {
       CaseClosureReasonType.class,
       DeathCircumstancesType.class,
       Religion.class,
-      SecondaryAssignmentRoleType.class
+
+      SecondaryAssignmentRoleType.class,
+      Case.class,
+      LongText.class,
+      ChildClient.class,
+      CaseAssignment.class,
+      CaseLoad.class,
+      StaffPersonCaseLoad.class,
+      ReferralAssignment.class,
+      Referral.class,
+      CaseLoadWeighting.class,
+      ReferralClient.class
 
   ).build();
 

@@ -53,6 +53,9 @@ public class CwsFacilityService {
   @Inject
   private FacilityChildMapper facilityChildMapper;
 
+  @Inject
+  private ChildAssignedWorkerService childAssignedWorkerService;
+
   /**
    * Load facility from CWS.
    */
@@ -66,13 +69,18 @@ public class CwsFacilityService {
   }
 
   @UnitOfWork(CMS)
-  protected List<FacilityChildDTO> findFacilityChildredByLicenseNumber(Integer licenseNumber) {
+  protected List<FacilityChildDTO> findFacilityChildrenByLicenseNumber(Integer licenseNumber) {
     return clientDao.streamByLicenseNumber(licenseNumber)
-        .map(facilityChildMapper::toFacilityChildDTO).collect(Collectors.toList());
+        .map(facilityChildMapper::toFacilityChildDTO).map(facilityChildDTO -> facilityChildMapper
+            .toFacilityChildDTO(facilityChildDTO,
+                childAssignedWorkerService
+                    .findAssignedWorkerForClient(facilityChildDTO.getId())
+                    .orElse(null)))
+        .collect(Collectors.toList());
   }
 
   @UnitOfWork(CMS)
-  protected List<FacilityChildDTO> findFacilityChildredByFacilityId(String facilityId) {
+  protected List<FacilityChildDTO> findFacilityChildrenByFacilityId(String facilityId) {
     return clientDao
         .streamByFacilityId(facilityId)
         .map(facilityChildMapper::toFacilityChildDTO)
