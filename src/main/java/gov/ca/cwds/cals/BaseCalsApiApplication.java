@@ -5,6 +5,7 @@ import com.codahale.metrics.health.HealthCheckRegistry;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.google.inject.Injector;
 import gov.ca.cwds.cals.web.rest.filters.RequestExecutionContextFilter;
+import gov.ca.cwds.cals.web.rest.filters.RequestResponseLoggingFilter;
 import gov.ca.cwds.rest.BaseApiApplication;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Environment;
@@ -47,6 +48,11 @@ public abstract class BaseCalsApiApplication<T extends CalsApiConfiguration> ext
     environment.servlets()
         .addFilter("RequestExecutionContextManagingFilter",
             injector.getInstance(RequestExecutionContextFilter.class))
+        .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+
+    environment.servlets()
+        .addFilter("AuditAndLoggingFilter",
+            injector.getInstance(RequestResponseLoggingFilter.class))
         .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
   }
 
