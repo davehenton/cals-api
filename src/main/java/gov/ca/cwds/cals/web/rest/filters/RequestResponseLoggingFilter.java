@@ -90,11 +90,6 @@ public class RequestResponseLoggingFilter implements Filter {
           new RequestResponseLoggingHttpServletResponseWrapper(httpServletResponse);
       try {
         chain.doFilter(wrappedRequest, wrappedResponse);
-        StringBuilder reponseStringBuilder = new StringBuilder();
-        reponseStringBuilder.append(wrappedResponse)
-            .append(wrappedResponse.getContent());
-        auditLogger
-            .audit(reponseStringBuilder.toString().replaceAll("\n", " ").replaceAll("\r", ""));
       } catch (Exception e) {
         LOGGER.error(e.getMessage(), e);
         throw new ApiException("Unable to handle request:" + uniqueId, e);
