@@ -57,6 +57,7 @@ node('tpt2-slave') {
     try {
         stage('Preparation') {
             checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
+            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ansible']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', url: 'git@github.com:ca-cwds/de-ansible.git']]]
             rtGradle.tool = "Gradle_35"
             rtGradle.resolver repo: 'repo', server: serverArti
             rtGradle.useWrapper = true
@@ -84,25 +85,21 @@ node('tpt2-slave') {
         stage('Clean Workspace') {
             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'dropDockerImage'
             archiveArtifacts artifacts: '**/cals-api-*.jar,readme.txt', fingerprint: true
-            cleanWs()
+//            cleanWs()
         }
         stage('Deploy Application') {
-            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', url: 'git@github.com:ca-cwds/de-ansible.git']]]
-            sh 'ansible-playbook -e NEW_RELIC_AGENT=$USE_NEWRELIC  -e CALS_API_VERSION=$APP_VERSION -i $inventory deploy-calsapi.yml --vault-password-file ~/.ssh/vault.txt -vv'
-            cleanWs()
+            sh 'cd ansible ; ansible-playbook -e NEW_RELIC_AGENT=$USE_NEWRELIC  -e CALS_API_VERSION=$APP_VERSION -i $inventory deploy-calsapi.yml --vault-password-file ~/.ssh/vault.txt -vv'
             sleep(20)
         }
         stage('Smoke Tests') {
-            checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'smokeTest --stacktrace'
         }
         stage('Integration Tests') {
-            checkout([$class: 'GitSCM', branches: [[name: '$branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '433ac100-b3c2-4519-b4d6-207c029a103b', refspec: '$refspec', url: 'git@github.com:ca-cwds/cals-api.git']]])
             def gradlePropsText = """
-         cals.api.url=${APP_URL}
-	 perry.url=${PERRY_URL}
-	 login.form.target.url=${LOGIN_FORM_TARGET_URL}
-	 """
+cals.api.url=${APP_URL}
+perry.url=${PERRY_URL}
+login.form.target.url=${LOGIN_FORM_TARGET_URL}
+"""
             writeFile file: "gradle.properties", text: gradlePropsText
             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'integrationTest --stacktrace'
         }
@@ -114,8 +111,6 @@ node('tpt2-slave') {
             // Docker Hub
             withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
                 buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'publishDocker -DRelease=$RELEASE_PROJECT -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
-            }
-            withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
                 buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: ':docker-tests:dockerTestsPublish -DRelease=$RELEASE_PROJECT -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
             }
         }
