@@ -100,6 +100,8 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
   @Valid
   private List<DisclosureDTO> arrestedForCrimeDisclosures;
 
+  private MetadataDTO metadata;
+
   public CountyType getApplicationCounty() {
     return applicationCounty;
   }
@@ -278,5 +280,13 @@ public class RFA1bFormDTO extends RFAExternalEntityDTO {
 
   public void setApplicantNameSuffix(NameSuffixType applicantNameSuffix) {
     this.applicantNameSuffix = applicantNameSuffix;
+  }
+
+  public MetadataDTO getMetadata() {
+    return metadata;
+  }
+
+  public void setMetadata(MetadataDTO metadata) {
+    this.metadata = metadata;
   }
 }

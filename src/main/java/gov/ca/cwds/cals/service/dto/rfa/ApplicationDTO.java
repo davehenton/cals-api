@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({"id", "is_initial_application", "is_other_type", "other_type_description",
-    "application_county"})
+    "application_county", "metadata"})
 @SuppressWarnings("squid:S2160")//Default reflection hashcode and equals resides in BaseDTO
 public class ApplicationDTO extends BaseDTO implements Request, Response {
 
@@ -36,6 +36,8 @@ public class ApplicationDTO extends BaseDTO implements Request, Response {
   @ApiModelProperty(value = "County Type")
   @CheckReferentialIntegrity(enrich = true)
   private CountyType applicationCounty;
+
+  private MetadataDTO metadata;
 
   public boolean isInitialApplication() {
     return initialApplication;
@@ -69,4 +71,11 @@ public class ApplicationDTO extends BaseDTO implements Request, Response {
     this.applicationCounty = applicationCounty;
   }
 
+  public MetadataDTO getMetadata() {
+    return metadata;
+  }
+
+  public void setMetadata(MetadataDTO metadata) {
+    this.metadata = metadata;
+  }
 }

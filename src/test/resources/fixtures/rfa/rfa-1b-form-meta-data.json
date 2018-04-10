@@ -1,0 +1,102 @@
+{
+  "application_county": {
+    "id": 34,
+    "value": "Sacramento"
+  },
+  "lived_in_other_state": true,
+  "other_states_of_living": [
+    {
+      "id": "TX",
+      "value": "Texas"
+    },
+    {
+      "id": "NV",
+      "value": "Nevada"
+    }
+  ],
+  "convicted_in_california": false,
+  "convicted_in_another_state": false,
+  "arrested_for_crime": false,
+  "resource_family_name": "Peterson",
+  "applicant_name_prefix": {
+    "id": 2,
+    "value": "Ms."
+  },
+  "applicant_first_name": "Anna",
+  "applicant_middle_name": "M.",
+  "applicant_last_name": "Peterson",
+  "applicant_name_suffix": {
+    "id": 5,
+    "value": "Jr"
+  },
+  "residence_address": {
+    "street_address": "1702 Redoak Ct.",
+    "zip": "98123",
+    "city": "Rocklin",
+    "state": {
+      "id": "CA",
+      "value": "California"
+    },
+    "type": {
+      "id": 1,
+      "value": "Residential"
+    }
+  },
+  "ssn": "464942323",
+  "date_of_birth": "1981-12-26",
+  "driver_license": "MD123-1234-585-121",
+  "driver_license_state": {
+    "id": "MD",
+    "value": "Maryland"
+  },
+  "signature": "Anna Peterson",
+  "application_date": "2017-07-02",
+  "convicted_in_california_disclosures": [
+    {
+      "offense": "Offense description Offense description Offense description Offense description Offense description Offense description Offense description Offense description Offense description ",
+      "offense_city": "Sacramento",
+      "offense_state": {
+        "id": "CA",
+        "value": "California"
+      },
+      "when_offense_happen": "free form text",
+      "offense_date": "2014-03-12",
+      "offense_details": "More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence ",
+      "signature": "Anna Peterson",
+      "application_date": "2017-07-02"
+    }
+  ],
+  "convicted_in_another_state_disclosures": [
+    {
+      "offense": "Offense description Offense description ",
+      "offense_city": "City",
+      "offense_state": {
+        "id": "AK",
+        "value": "Alaska"
+      },
+      "offense_date": "2014-03-12",
+      "when_offense_happen": "free form text",
+      "offense_details": "More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence More details about offence ",
+      "signature": "Signature",
+      "application_date": "2017-07-02"
+    }
+  ],
+  "arrested_for_crime_disclosures": [
+    {
+      "offense": "Offense description Offense description ",
+      "offense_city": "Sacramento",
+      "offense_state": {
+        "id": "AK",
+        "value": "Alaska"
+      },
+      "offense_date": "2011-03-12",
+      "when_offense_happen": "free form text",
+      "offense_details": "More details about offence ",
+      "signature": "Signature 2",
+      "application_date": "2017-07-02"
+    }
+  ],
+  "metadata": {
+    "submit_enabled": true
+  }
+}
