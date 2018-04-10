@@ -49,7 +49,7 @@ import org.junit.Test;
  */
 public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
-  public static final String RFA_1A_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-form.json");
+  public static final String RFA_1A_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1a-form-meta-data.json");
 
   @BeforeClass
   public static void beforeClass() throws Exception {

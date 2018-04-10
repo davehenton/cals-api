@@ -26,6 +26,8 @@ public class RFA1cFormDTO extends RFAExternalEntityDTO {
   @Valid
   private List<IdentifiedChildDTO> identifiedChildren;
 
+  private MetadataDTO metadata;
+
   public List<IdentifiedChildDTO> getIdentifiedChildren() {
     return identifiedChildren;
   }
@@ -52,4 +54,11 @@ public class RFA1cFormDTO extends RFAExternalEntityDTO {
     this.applicationCounty = applicationCounty;
   }
 
+  public MetadataDTO getMetadata() {
+    return metadata;
+  }
+
+  public void setMetadata(MetadataDTO metadata) {
+    this.metadata = metadata;
+  }
 }
