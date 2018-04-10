@@ -1,5 +1,9 @@
 package gov.ca.cwds.cals.service.dto;
 
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
+import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.Identifiable;
@@ -10,20 +14,15 @@ import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
 import gov.ca.cwds.rest.api.domain.DomainObject;
 import io.swagger.annotations.ApiModelProperty;
-import org.glassfish.jersey.linking.InjectLink;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
-import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
-import static org.glassfish.jersey.linking.InjectLink.Style.RELATIVE_PATH;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.glassfish.jersey.linking.InjectLink;
 
 /**
  * {@link DomainObject} representing a facility.
@@ -58,6 +57,10 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
   @NotNull
   @ApiModelProperty(required = true, value = "Facility Type")
   private FacilityTypeDTO type;
+
+  @JsonProperty("adoption_home_only_indicator")
+  @ApiModelProperty(value = "Adoption home only indicator")
+  private Boolean adoptionOnly;
 
   @RemoveTrailingSpaces
   @JsonProperty("name")
@@ -199,6 +202,14 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
 
   public void setType(FacilityTypeDTO type) {
     this.type = type;
+  }
+
+  public Boolean getAdoptionOnly() {
+    return adoptionOnly;
+  }
+
+  public void setAdoptionOnly(Boolean adoptionOnly) {
+    this.adoptionOnly = adoptionOnly;
   }
 
   public String getName() {
