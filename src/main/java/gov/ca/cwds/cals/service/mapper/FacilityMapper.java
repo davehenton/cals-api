@@ -83,8 +83,7 @@ public interface FacilityMapper {
   @Mapping(target = "lastDeferredVisitDate", ignore = true)
   @Mapping(target = "id", source = "placementHome.identifier")
   @Mapping(target = "adoptionOnly",
-      expression = "java(placementHome.getAdhmonly() != null "
-          + "&& placementHome.getAdhmonly().equalsIgnoreCase(\"Y\"))")
+      expression = "java(\"Y\".equalsIgnoreCase(placementHome.getAdhmonly()))")
   @Mapping(target = "name", source = "placementHome.facltyNm")
   @Mapping(target = "type", source = "dictionaryEntriesHolder.facilityType")
   @Mapping(target = "licenseeName", source = "placementHome.licnseeNm")
