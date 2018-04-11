@@ -32,7 +32,7 @@ def notifyBuild(String buildStatus, Exception e) {
             body: details,
             attachLog: true,
             recipientProviders: [[$class: 'DevelopersRecipientProvider']],
-            to: "Leonid.Marushevskiy@osi.ca.gov, Alex.Kuznetsov@osi.ca.gov, Oleg.Korniichuk@osi.ca.gov, alexander.serbin@engagepoint.com, vladimir.petrusha@engagepoint.com"
+            to: "Leonid.Marushevskiy@osi.ca.gov, Alex.Kuznetsov@osi.ca.gov, alexander.serbin@engagepoint.com, vladimir.petrusha@engagepoint.com"
     )
 }
 
@@ -45,7 +45,7 @@ node('tpt2-slave') {
                         string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
                         string(defaultValue: 'development', description: '', name: 'branch'),
                         string(defaultValue: '', description: 'Used for mergerequest default is empty', name: 'refspec'),
-                        booleanParam(defaultValue: false, description: 'Default release version template is: <majorVersion>_<buildNumber>-RC', name: 'RELEASE_PROJECT'),
+                        booleanParam(defaultValue: true, description: 'Default release version template is: <majorVersion>_<buildNumber>-RC', name: 'RELEASE_PROJECT'),
                         string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
                         booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
                         string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory'),
@@ -81,11 +81,13 @@ node('tpt2-slave') {
         }
         stage('Build Docker') {
             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'createDockerImage'
+            withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
+                buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'pushDockerLatest -DRelease=$RELEASE_PROJECT -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
+            }
         }
         stage('Clean Workspace') {
             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'dropDockerImage'
             archiveArtifacts artifacts: '**/cals-api-*.jar,readme.txt', fingerprint: true
-//            cleanWs()
         }
         stage('Deploy Application') {
             sh 'cd ansible ; ansible-playbook -e NEW_RELIC_AGENT=$USE_NEWRELIC  -e CALS_API_VERSION=$APP_VERSION -i $inventory deploy-calsapi.yml --vault-password-file ~/.ssh/vault.txt -vv'
