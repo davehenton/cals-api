@@ -35,7 +35,7 @@ project.ext {
     projectDockerAppName = 'cals-api'
     projectMajorVersion = '0.6.2'
     dropwizardVersion = '1.1.0'
-    coreApiVersion = '1.6.2_585-RC'
+    coreApiVersion = '1.6.2_679-RC'
     apiSecurityVersion = '1.6.2_418-RC'
     cwdsModelVersion = '0.6.2_496-RC'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
