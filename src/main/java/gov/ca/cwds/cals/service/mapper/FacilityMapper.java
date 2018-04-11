@@ -32,6 +32,7 @@ import org.mapstruct.factory.Mappers;
     uses = {FacilityPostMappingProcessor.class, FacilityTypeMapper.class, CountyMapper.class,
         DistrictOfficeMapper.class, DictionaryMapper.class,
         TrailingSpacesRemovalPostMappingProcessor.class})
+@SuppressWarnings("squid:S1214")
 public interface FacilityMapper {
 
   FacilityMapper INSTANCE = Mappers.getMapper(FacilityMapper.class);
@@ -81,6 +82,9 @@ public interface FacilityMapper {
   @Mapping(target = "lastDeferredVisitReason", ignore = true)
   @Mapping(target = "lastDeferredVisitDate", ignore = true)
   @Mapping(target = "id", source = "placementHome.identifier")
+  @Mapping(target = "adoptionOnly",
+      expression = "java(placementHome.getAdhmonly() != null "
+          + "&& placementHome.getAdhmonly().equalsIgnoreCase(\"Y\"))")
   @Mapping(target = "name", source = "placementHome.facltyNm")
   @Mapping(target = "type", source = "dictionaryEntriesHolder.facilityType")
   @Mapping(target = "licenseeName", source = "placementHome.licnseeNm")

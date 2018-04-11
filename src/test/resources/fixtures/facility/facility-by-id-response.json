@@ -5,6 +5,7 @@
     "id" : "793",
     "value" : "Relative/NREFM Home"
   },
+  "adoption_home_only_indicator" : false,
   "name" : "FST 510 Placements",
   "licensee_name" : "",
   "assigned_worker" : {
@@ -19,14 +20,14 @@
     "id" : "34",
     "value" : "Sacramento"
   },
-  "facility_source":"CWS/CMS",
   "phones" : [ ],
   "addresses" : [ {
-    "type": "Residential",
+    "type" : "Residential",
     "address" : {
       "street_address" : "10 Main St",
       "city" : "Sacramento",
       "state" : "CA"
     }
-  } ]
+  } ],
+  "facility_source" : "CWS/CMS"
 }
