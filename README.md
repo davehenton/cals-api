@@ -78,6 +78,7 @@ Set environment variable CALS_API_CONFIG to cals-api-lis-connx.yml to run docker
 
 #### Shiro Configuration Parameters
 - SHIRO_CONFIG_PATH -- path to Shiro configuration file
+- PERRY_VALIDATION_URL -- url of token validation endpoint of Perry  
  
 The Docker env-file option provides a convenient method to supply these variables. These instructions assume an env file called .env located in the current directory. The repository contains a sample env file called env.sample.
 

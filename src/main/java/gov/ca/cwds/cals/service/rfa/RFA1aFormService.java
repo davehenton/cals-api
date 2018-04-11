@@ -234,7 +234,7 @@ public class RFA1aFormService
     xaRfa1AFormsDao.update(fillFormUpdateAttributes(form));
   }
 
-  private void performSubmissionValidation(RFA1aFormDTO formDTO) throws DroolsException {
+  private void performSubmissionValidation(RFA1aFormDTO formDTO) {
     Validator validator = environment.getValidator();
     Optional.ofNullable(validator.validate(formDTO))
         .ifPresent(violations -> {
