@@ -2018,7 +2018,7 @@ public class FacilityInformation implements PersistentObject {
   }
 
   @Basic
-  @Column(name = "dt_modified", nullable = true)
+  @Column(name = "dt_lastmod", nullable = true)
   public LocalDateTime getDtModified() {
     return dtModified;
   }
