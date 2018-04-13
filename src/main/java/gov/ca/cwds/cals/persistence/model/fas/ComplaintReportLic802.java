@@ -2607,7 +2607,7 @@ public class ComplaintReportLic802 implements PersistentObject {
   }
 
   @Basic
-  @Column(name = "dt_modified")
+  @Column(name = "dt_lastmod")
   public LocalDateTime getDtModified() {
     return dtModified;
   }
