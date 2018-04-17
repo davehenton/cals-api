@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.web.rest.rfa;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
@@ -29,16 +30,12 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
         "fixtures/rfa/validation/rfa1b/fra1b-has-no-county-response.json");
   }
 
-  private interface RFA1BPatch {
-    void apply(RFA1bFormDTO rfa1bFormDTO);
-  }
-
-  private void test(RFA1BPatch patch, String fixture) throws Exception {
+  private void test(Consumer<RFA1bFormDTO> rfa1bFormDTO, String fixture) throws Exception {
     RFA1aFormDTO form = formAHelper.createRfa1aForm();
     RFA1aFormDTO persistentForm = formAHelper.postRfa1aForm(form);
 
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
-    patch.apply(applicant.getRfa1bForm());
+    rfa1bFormDTO.accept(applicant.getRfa1bForm());
     applicantHelper.postApplicant(persistentForm.getId(), applicant);
 
     ResidenceDTO residence = residenceHelper.getResidenceDTO();
