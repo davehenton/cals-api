@@ -59,6 +59,16 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
   }
 
   @Test
+  public void validateRFA1bConvictedCAWhere() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setConvictedInCalifornia(true);
+          rfa1bForm.setConvictedInCaliforniaDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setOffenseCity(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-conviction-CA-where-is-required-response.json");
+  }
+
+  @Test
   public void validateRFA1bConvictedCADetails() throws Exception {
     test(rfa1bForm -> {
           rfa1bForm.setConvictedInCalifornia(true);
@@ -98,6 +108,16 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
   }
 
   @Test
+  public void validateRFA1bConvictedOutsideCAWhere() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setConvictedInAnotherState(true);
+          rfa1bForm.setConvictedInAnotherStateDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setOffenseCity(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-conviction-outside-CA-where-is-required-response.json");
+  }
+
+  @Test
   public void validateRFA1bConvictedOutsideCADetails() throws Exception {
     test(rfa1bForm -> {
           rfa1bForm.setConvictedInAnotherState(true);
@@ -134,6 +154,16 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
               disclosure(disclosureDTO -> disclosureDTO.setWhenOffenseHappen(null)));
         },
         "fixtures/rfa/validation/rfa1b/fra1b-crime-when-is-required-response.json");
+  }
+
+  @Test
+  public void validateRFA1bCrimeWhere() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setArrestedForCrime(true);
+          rfa1bForm.setArrestedForCrimeDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setOffenseCity(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-crime-where-is-required-response.json");
   }
 
   @Test
@@ -188,7 +218,7 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
     disclosureDTO.setOffense("offense");
     disclosureDTO.setOffenseDetails("offenseDetails");
     disclosureDTO.setWhenOffenseHappen("whenOffenseHappen");
-    //TODO 'where'???
+    disclosureDTO.setOffenseCity("offenseCity");
     disclosureDTOConsumer.accept(disclosureDTO);
     return Collections.singletonList(disclosureDTO);
   }

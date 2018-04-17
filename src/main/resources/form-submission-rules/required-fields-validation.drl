@@ -712,7 +712,24 @@ rule "RFA1B Form Conviction CA empty disclosure"
     validationDetailsList.add(details);
 end
 
-//TODO: rule "RFA1B Form Conviction CA offense 'where' validation"
+rule "RFA1B Form Conviction CA 'where' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInCalifornia())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseCity)) from $fra1bForm.convictedInCaliforniaDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_CA_WHERE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_CA_WHERE_IS_REQUIRED_MESSAGE,
+        "convictedInCaliforniaDisclosures.offenseCity",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
 
 rule "RFA1B Form Conviction Outside of CA offense validation"
   agenda-group "form-submission-validation"
@@ -787,7 +804,23 @@ rule "RFA1B Form Conviction Outside of CA empty disclosure"
     validationDetailsList.add(details);
 end
 
-//TODO: rule "RFA1B Form Conviction outside CA offense 'where' validation"
+rule "RFA1B Form Conviction Outside of CA 'where' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseCity)) from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHERE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHERE_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures.offenseCity",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
 
 rule "RFA1B Form Arrested for crime offense validation"
   agenda-group "form-submission-validation"
@@ -862,8 +895,23 @@ rule "RFA1B Form Arrested from crime empty disclosure"
     validationDetailsList.add(details);
 end
 
-//TODO: rule "RFA1B Form CRIME offense 'where' validation"
-
+rule "RFA1B Form Arrested from crime 'where' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseCity)) from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_WHERE_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_WHERE_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures.offenseCity",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
 
 
 rule "RFA1B other states validation"
