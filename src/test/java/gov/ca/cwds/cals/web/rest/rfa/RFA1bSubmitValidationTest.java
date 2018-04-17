@@ -30,6 +30,18 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
         "fixtures/rfa/validation/rfa1b/fra1b-has-no-county-response.json");
   }
 
+  @Test
+  public void validateRFA1bFirstName() throws Exception {
+    test(rfa1bForm -> rfa1bForm.setApplicantFirstName(null),
+        "fixtures/rfa/validation/rfa1b/fra1b-has-no-first-name-response.json");
+  }
+
+  @Test
+  public void validateRFA1bLastName() throws Exception {
+    test(rfa1bForm -> rfa1bForm.setApplicantLastName(null),
+        "fixtures/rfa/validation/rfa1b/fra1b-has-no-last-name-response.json");
+  }
+
   private void test(Consumer<RFA1bFormDTO> rfa1bFormDTO, String fixture) throws Exception {
     RFA1aFormDTO form = formAHelper.createRfa1aForm();
     RFA1aFormDTO persistentForm = formAHelper.postRfa1aForm(form);

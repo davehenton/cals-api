@@ -598,9 +598,41 @@ rule "RFA1B Form County Validation"
     RFA1bFormDTO(applicationCounty == null) from $applicant.rfa1bForm
   then
     IssueDetails details = rfa1bIssueDetails(
-        Business.Code.APPLICANT_S_RFA1B_FORM_HAS_NO_COUNTY,
-        Business.APPLICANT_S_RFA1B_FORM_HAS_NO_COUNTY_MESSAGE,
+        Business.Code.RFA1B_FORM_HAS_NO_COUNTY,
+        Business.RFA1B_FORM_HAS_NO_COUNTY_MESSAGE,
         "applicationCounty",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form First Name Validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    RFA1bFormDTO(StringUtils.isBlank(applicantFirstName)) from $applicant.rfa1bForm
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_HAS_NO_FIRST_NAME,
+        Business.RFA1B_FORM_HAS_NO_FIRST_NAME_MESSAGE,
+        "applicantFirstName",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Last Name Validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    RFA1bFormDTO(StringUtils.isBlank(applicantLastName)) from $applicant.rfa1bForm
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_HAS_NO_LAST_NAME,
+        Business.RFA1B_FORM_HAS_NO_LAST_NAME_MESSAGE,
+        "applicantLastName",
         $applicant
     );
     validationDetailsList.add(details);

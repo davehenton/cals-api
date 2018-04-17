@@ -440,8 +440,21 @@ public final class Constants {
 
       public static final String REQUIRED_FIELD_MESSAGE= "Required field [%s] is not provided";
 
-      public static final String APPLICANT_S_RFA1B_FORM_HAS_NO_COUNTY_MESSAGE =
+      public static final String RFA1B_FORM_HAS_NO_COUNTY_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " has RFA1b form without county";
+      public static final String RFA1B_FORM_HAS_NO_FIRST_NAME_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b form without first name";
+      public static final String RFA1B_FORM_HAS_NO_LAST_NAME_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b form without last name";
+      public static final String RFA1B_FORM_CONVICTED_CA_OFFENSE_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with CA conviction but without 'offense title'";
+      public static final String RFA1B_FORM_CONVICTED_CA_WHERE_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with CA conviction but without 'where'";
+      public static final String RFA1B_FORM_CONVICTED_CA_WHEN_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with CA conviction but without 'when'";
+      public static final String RFA1B_FORM_CONVICTED_CA_DETAILS_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with CA conviction but without 'offense details'";
+
 
       public static class Code {
 
@@ -493,7 +506,17 @@ public final class Constants {
         public static final String REQUIRED_MINOR_CHILD_FINANCIALLY_SUPPORTED = "CV000022";
         public static final String REQUIRED_MINOR_CHILD_ADOPTED = "CV000023";
         public static final String REQUIRED_MINOR_CHILD_RELATIONSHIP_APPLICANT_ID = "CV000024";
-        public static final String APPLICANT_S_RFA1B_FORM_HAS_NO_COUNTY = "CV000025";
+        public static final String RFA1B_FORM_HAS_NO_COUNTY = "CV000025";
+        public static final String RFA1B_FORM_HAS_NO_FIRST_NAME = "CV000026";
+        public static final String RFA1B_FORM_HAS_NO_LAST_NAME = "CV000027";
+        public static final String RFA1B_FORM_HAS_NO_OTHER_STATES = "CV000028";
+        public static final String RFA1B_FORM_HAS_NO_CONVICTED_CA_OFFENSE = "CV000029";
+        public static final String RFA1B_FORM_HAS_NO_CONVICTED_CA_WHERE = "CV000030";
+        public static final String RFA1B_FORM_HAS_NO_CONVICTED_CA_WHEN = "CV000031";
+        public static final String RFA1B_FORM_HAS_NO_CONVICTED_CA_DETAILS = "CV000032";
+        public static final String RFA1B_FORM_HAS_NO_CONVICTED_CA_CITY = "CV000033";
+        public static final String RFA1B_FORM_HAS_NO_CONVICTED_CA_DATE = "CV000034";
+        public static final String RFA1B_FORM_HAS_NO_CONVICTED_CA_SIGNATURE = "CV000035";
 
 
         private Code() {
