@@ -25,7 +25,7 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void validateRFA1bCounty() throws Exception {
-    test((rfa1bForm) -> rfa1bForm.setApplicationCounty(null),
+    test(rfa1bForm -> rfa1bForm.setApplicationCounty(null),
         "fixtures/rfa/validation/rfa1b/fra1b-has-no-county-response.json");
   }
 
