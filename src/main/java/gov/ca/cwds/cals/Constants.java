@@ -457,6 +457,18 @@ public final class Constants {
       public static final String RFA1B_FORM_CONVICTED_CA_DISCLOSURE_IS_REQUIRED_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with CA conviction but without any disclosure";
 
+      public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_OFFENSE_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with outside of CA conviction but without 'offense title'";
+      public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHERE_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with outside of CA conviction but without 'where'";
+      public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHEN_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with outside of CA conviction but without 'when'";
+      public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_DETAILS_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with outside of CA conviction but without 'offense details'";
+      public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_DISCLOSURE_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with outside of CA conviction but without any disclosure";
+
+
 
       public static class Code {
 
@@ -520,6 +532,15 @@ public final class Constants {
         public static final String RFA1B_FORM_CONVICTED_CA_DATE_IS_REQUIRED = "CV000034";
         public static final String RFA1B_FORM_CONVICTED_CA_SIGNATURE_IS_REQUIRED = "CV000035";
         public static final String RFA1B_FORM_CONVICTED_CA_DISCLOSURE_IS_REQUIRED = "CV000036";
+
+        public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_OFFENSE_IS_REQUIRED = "CV000037";
+        public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHERE_IS_REQUIRED = "CV000038";
+        public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHEN_IS_REQUIRED = "CV000039";
+        public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_DETAILS_IS_REQUIRED = "CV000040";
+        public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_CITY_IS_REQUIRED = "CV000041";
+        public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_DATE_IS_REQUIRED = "CV000042";
+        public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_SIGNATURE_IS_REQUIRED = "CV000043";
+        public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_DISCLOSURE_IS_REQUIRED = "CV000044";
 
 
         private Code() {

@@ -77,6 +77,46 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
         "fixtures/rfa/validation/rfa1b/fra1b-conviction-CA-disclosure-is-required-response.json");
   }
 
+  @Test
+  public void validateRFA1bConvictedOutsideCAOffense() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setConvictedInAnotherState(true);
+          rfa1bForm.setConvictedInAnotherStateDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setOffense(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-conviction-outside-CA-offense-is-required-response.json");
+  }
+
+  @Test
+  public void validateRFA1bConvictedOutsideCAWhen() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setConvictedInAnotherState(true);
+          rfa1bForm.setConvictedInAnotherStateDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setWhenOffenseHappen(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-conviction-outside-CA-when-is-required-response.json");
+  }
+
+  @Test
+  public void validateRFA1bConvictedOutsideCADetails() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setConvictedInAnotherState(true);
+          rfa1bForm.setConvictedInAnotherStateDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setOffenseDetails(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-conviction-outside-CA-details-is-required-response.json");
+  }
+
+  @Test
+  public void validateRFA1bConvictedOutsideCADisclosure() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setConvictedInAnotherState(true);
+          rfa1bForm.setConvictedInAnotherStateDisclosures(null);
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-conviction-outside-CA-disclosure-is-required-response.json");
+  }
+
+
   private void test(Consumer<RFA1bFormDTO> rfa1bFormDTO, String fixture) throws Exception {
     RFA1aFormDTO form = formAHelper.createRfa1aForm();
     RFA1aFormDTO persistentForm = formAHelper.postRfa1aForm(form);

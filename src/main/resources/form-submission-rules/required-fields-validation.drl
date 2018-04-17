@@ -714,4 +714,80 @@ end
 
 //TODO: rule "RFA1B Form Conviction CA offense 'where' validation"
 
+rule "RFA1B Form Conviction Outside of CA offense validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offense)) from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_OFFENSE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_OFFENSE_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures.offense",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction Outside of CA 'when' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(whenOffenseHappen)) from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHEN_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHEN_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures.whenOffenseHappen",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction Outside of CA offense details validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseDetails)) from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_DETAILS_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_DETAILS_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures.offenseDetails",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+
+rule "RFA1B Form Conviction Outside of CA empty disclosure"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    not DisclosureDTO() from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_DISCLOSURE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_DISCLOSURE_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+//TODO: rule "RFA1B Form Conviction outside CA offense 'where' validation"
+
+
 
