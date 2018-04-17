@@ -200,12 +200,12 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
 
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     rfa1bFormDTO.accept(applicant.getRfa1bForm());
-    applicantHelper.postApplicant(persistentForm.getId(), applicant);
+    applicant = applicantHelper.postApplicant(persistentForm.getId(), applicant);
 
     ResidenceDTO residence = residenceHelper.getResidenceDTO();
     residenceHelper.putResidence(persistentForm.getId(), residence);
     Map<String, Object> params = new HashMap<>();
-    params.put("id", persistentForm.getId());
+    params.put("id", applicant.getId());
     String response = statusHelper.submitApplication(persistentForm.getId()).readEntity(String.class);
     assertResponseByFixtureTemplate(
         response,
