@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import gov.ca.cwds.cms.data.access.inject.AbstractDataAccessServicesModule;
+import gov.ca.cwds.inject.CmsSessionFactory;
 import org.hibernate.SessionFactory;
 
 /**
@@ -11,12 +12,12 @@ import org.hibernate.SessionFactory;
 
 public class DataAccessServicesModule extends AbstractDataAccessServicesModule {
 
-  private SessionFactory getXaCmsSessionFactory(Injector injector) {
-    return injector.getInstance(Key.get(SessionFactory.class, XaCmsSessionFactory.class));
+  private SessionFactory getCmsSessionFactory(Injector injector) {
+    return injector.getInstance(Key.get(SessionFactory.class, CmsSessionFactory.class));
   }
 
   @Override
   protected SessionFactory getDataAccessSercvicesSessionFactory(Injector injector) {
-    return getXaCmsSessionFactory(injector);
+    return getCmsSessionFactory(injector);
   }
 }
