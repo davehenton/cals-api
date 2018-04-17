@@ -82,6 +82,8 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   @ApiModelProperty(hidden = true)
   private String placementHomeId;
 
+  private MetadataDTO metadata;
+
   public Boolean isInitialApplication() {
     return initialApplication;
   }
@@ -216,4 +218,11 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
     return Utils.Applicant.getPrimary(this);
   }
 
+  public MetadataDTO getMetadata() {
+    return metadata;
+  }
+
+  public void setMetadata(MetadataDTO metadata) {
+    this.metadata = metadata;
+  }
 }

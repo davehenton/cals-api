@@ -18,7 +18,7 @@ import org.junit.Assert;
 @SuppressWarnings("squid:S2187")
 public class RFA1cResourceTest extends BaseExternalEntityApiTest<RFA1cFormDTO> {
 
-  public final String FRA1C_FORM_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1c-form.json");
+  public final String FRA1C_FORM_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1c-form-meta-data.json");
 
   @Override
   protected BaseExternalEntityApiHelper<RFA1cFormDTO> getExternalEntityApiHelper() {

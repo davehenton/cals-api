@@ -22,7 +22,7 @@ import org.junit.Test;
 @SuppressWarnings("squid:S2187")
 public class RFA1bResourceTest extends BaseExternalEntityApiTest<RFA1bFormDTO> {
 
-  public static final String RFA1B_FORM_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1b-form.json");
+  public static final String RFA1B_FORM_FIXTURE = FixtureHelpers.fixture("fixtures/rfa/rfa-1b-form-meta-data.json");
 
   @Override
   protected BaseExternalEntityApiHelper<RFA1bFormDTO> getExternalEntityApiHelper() {

@@ -1174,7 +1174,7 @@ public class Rr809Dn implements PersistentObject {
   }
 
   @Basic
-  @Column(name = "dt_modified")
+  @Column(name = "dt_lastmod")
   public LocalDateTime getDtModified() {
     return dtModified;
   }
