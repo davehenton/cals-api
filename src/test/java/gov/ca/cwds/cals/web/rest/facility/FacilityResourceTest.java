@@ -148,7 +148,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
         + PRINCIPAL_PRIV_ADOPTIONS_ONLY_JSON;
 
     JsonIdentityAuthParams params = new JsonIdentityAuthParams(
-        fixture(PRINCIPAL_PRIV_ADOPTIONS_JSON));
+        fixture(PRINCIPAL_PRIV_ADOPTIONS_ONLY_JSON));
     WebTarget target = clientTestRule.target(targetString, params);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     Response response = invocation.get();
