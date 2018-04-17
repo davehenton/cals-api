@@ -155,7 +155,14 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
         "fixtures/rfa/validation/rfa1b/fra1b-crime-disclosure-is-required-response.json");
   }
 
-
+  @Test
+  public void validateRFA1bOtherStates() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setLivedInOtherState(true);
+          rfa1bForm.setOtherStatesOfLiving(null);
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-other-states-is-required-response.json");
+  }
 
   private void test(Consumer<RFA1bFormDTO> rfa1bFormDTO, String fixture) throws Exception {
     RFA1aFormDTO form = formAHelper.createRfa1aForm();

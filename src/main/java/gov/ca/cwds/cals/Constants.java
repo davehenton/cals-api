@@ -479,7 +479,8 @@ public final class Constants {
       public static final String RFA1B_FORM_CRIME_DISCLOSURE_IS_REQUIRED_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with 'arrested for crime' but without any disclosure";
 
-
+      public static final String RFA1B_FORM_OTHER_STATES_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b without other states";
 
       public static class Code {
 
@@ -561,6 +562,8 @@ public final class Constants {
         public static final String RFA1B_FORM_CRIME_DATE_IS_REQUIRED = "CV000050";
         public static final String RFA1B_FORM_CRIME_SIGNATURE_IS_REQUIRED = "CV000051";
         public static final String RFA1B_FORM_CRIME_DISCLOSURE_IS_REQUIRED = "CV000052";
+
+        public static final String RFA1B_FORM_OTHER_STATES_IS_REQUIRED = "CV000053";
 
 
         private Code() {

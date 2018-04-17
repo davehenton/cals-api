@@ -866,5 +866,22 @@ end
 
 
 
+rule "RFA1B other states validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isLivedInOtherState())
+    not StateType() from $fra1bForm.otherStatesOfLiving
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_OTHER_STATES_IS_REQUIRED,
+        Business.RFA1B_FORM_OTHER_STATES_IS_REQUIRED_MESSAGE,
+        "otherStatesOfLiving",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
 
 
