@@ -1,12 +1,14 @@
 package gov.ca.cwds.cals;
 
 import static gov.ca.cwds.authorizer.ClientResultReadAuthorizer.CLIENT_RESULT_READ;
+import static gov.ca.cwds.authorizer.PlacementHomeResultReadAuthorizer.PLACEMENT_HOME_RESULT_READ;
 
 import com.google.inject.Module;
 import com.google.inject.Provides;
 import gov.ca.cwds.authorizer.ClientResultReadAuthorizer;
 import gov.ca.cwds.authorizer.FacilityReadStaticAuthorizer;
 import gov.ca.cwds.authorizer.PlacementHomeCreateAuthorizer;
+import gov.ca.cwds.authorizer.PlacementHomeResultReadAuthorizer;
 import gov.ca.cwds.authorizer.SubstituteCareProviderCreateAuthorizer;
 import gov.ca.cwds.cals.Constants.Authorize;
 import gov.ca.cwds.cals.inject.ApplicationModule;
@@ -42,15 +44,16 @@ public class CalsApiApplication extends BaseCalsApiApplication<CalsApiConfigurat
                 getFasHibernateBundle(),
                 getCmsHibernateBundle(),
                 getCalsnsHibernateBundle(),
-                getXaCmsHibernateBundle(),
                 getXaCalsnsHibernateBundle());
           }
 
         });
         install(new SecurityModule(BaseApiApplication::getInjector)
             .addAuthorizer(Authorize.PLACEMENT_HOME_CREATE, PlacementHomeCreateAuthorizer.class)
-            .addAuthorizer(Authorize.SUBSTITUTE_CARE_PROVIDER_CREATE, SubstituteCareProviderCreateAuthorizer.class)
+            .addAuthorizer(Authorize.SUBSTITUTE_CARE_PROVIDER_CREATE,
+                SubstituteCareProviderCreateAuthorizer.class)
             .addAuthorizer(CLIENT_RESULT_READ, ClientResultReadAuthorizer.class)
+            .addAuthorizer(PLACEMENT_HOME_RESULT_READ, PlacementHomeResultReadAuthorizer.class)
             .addStaticAuthorizer(FacilityReadStaticAuthorizer.class)
         );
       }

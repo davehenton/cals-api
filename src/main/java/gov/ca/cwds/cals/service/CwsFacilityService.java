@@ -8,11 +8,11 @@ import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
+import gov.ca.cwds.cms.data.access.service.impl.PlacementHomeCoreService;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
 import gov.ca.cwds.data.legacy.cms.dao.FacilityTypeDao;
 import gov.ca.cwds.data.legacy.cms.dao.LicenseStatusDao;
-import gov.ca.cwds.data.legacy.cms.dao.PlacementHomeDao;
 import gov.ca.cwds.data.legacy.cms.dao.StateDao;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
@@ -30,10 +30,10 @@ import java.util.stream.Collectors;
 public class CwsFacilityService {
 
   @Inject
-  private ClientDao clientDao;
+  private PlacementHomeCoreService placementHomeService;
 
   @Inject
-  private PlacementHomeDao placementHomeDao;
+  private ClientDao clientDao;
 
   @Inject
   private CountiesDao countiesDao;
@@ -61,7 +61,7 @@ public class CwsFacilityService {
    */
   public FacilityDTO loadFacilityFromCwsCms(FacilityParameterObject parameterObject) {
     AtomicReference<FacilityDTO> facilityDTO = new AtomicReference<>();
-    findFacilityById(parameterObject).ifPresent((p) -> {
+    findFacilityById(parameterObject).ifPresent(p -> {
       CwsDictionaryEntriesHolder dictionaryEntriesHolder = buildCwsDictionaryEntriesHolder(p);
       facilityDTO.set(facilityMapper.toFacilityDTO(p, dictionaryEntriesHolder));
     });
@@ -89,8 +89,9 @@ public class CwsFacilityService {
 
   @UnitOfWork(CMS)
   protected Optional<PlacementHome> findFacilityById(FacilityParameterObject parameterObject) {
-    Optional<PlacementHome> placementHome = Optional
-        .ofNullable(placementHomeDao.findByFacilityId(parameterObject.getFacilityId()));
+    PlacementHome placementHomeEntity = placementHomeService
+        .find(parameterObject.getFacilityId());
+    Optional<PlacementHome> placementHome = Optional.ofNullable(placementHomeEntity);
     Optional<BaseStaffPerson> staffPerson = placementHome
         .map(PlacementHome::getCountyLicenseCase)
         .map(BaseCountyLicenseCase::getStaffPerson);

@@ -6,7 +6,6 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS_RS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CALSNS;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CMS;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.AbstractModule;
@@ -275,7 +274,7 @@ public class DataAccessModule extends AbstractModule {
       new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
-          return configuration.getCmsDataSourceFactory();
+          return configuration.getXaCmsDataSourceFactory();
         }
 
         @Override
@@ -297,18 +296,6 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
-  private final HibernateBundle<CalsApiConfiguration> xaCmsHibernateBundle =
-      new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
-        @Override
-        public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
-          return configuration.getXaCmsDataSourceFactory();
-        }
-
-        @Override
-        public String name() {
-          return XA_CMS;
-        }
-      };
 
   private final HibernateBundle<CalsApiConfiguration> calsnsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(calsnsEntities, new SessionFactoryFactory()) {
@@ -353,7 +340,6 @@ public class DataAccessModule extends AbstractModule {
     bootstrap.addBundle(cmsRsHibernateBundle);
     bootstrap.addBundle(lisHibernateBundle);
     bootstrap.addBundle(calsnsHibernateBundle);
-    bootstrap.addBundle(xaCmsHibernateBundle);
     bootstrap.addBundle(xaCalsnsHibernateBundle);
   }
 
@@ -378,12 +364,6 @@ public class DataAccessModule extends AbstractModule {
   @CwsRsSessionFactory
   SessionFactory cmsRsSessionFactory() {
     return cmsRsHibernateBundle.getSessionFactory();
-  }
-
-  @Provides
-  @XaCmsSessionFactory
-  SessionFactory xaCmsSessionFactory() {
-    return xaCmsHibernateBundle.getSessionFactory();
   }
 
   @Provides
@@ -432,12 +412,6 @@ public class DataAccessModule extends AbstractModule {
   @CalsnsHibernateBundle
   public HibernateBundle<CalsApiConfiguration> getCalsnsHibernateBundle() {
     return calsnsHibernateBundle;
-  }
-
-  @Provides
-  @XaCmsHibernateBundle
-  public HibernateBundle<CalsApiConfiguration> getXaCmsHibernateBundle() {
-    return xaCmsHibernateBundle;
   }
 
   @Provides
