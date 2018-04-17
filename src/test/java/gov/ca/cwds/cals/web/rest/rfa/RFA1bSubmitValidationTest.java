@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,11 +25,20 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
 
   @Test
   public void validateRFA1bCounty() throws Exception {
+    test((rfa1bForm) -> rfa1bForm.setApplicationCounty(null),
+        "fixtures/rfa/validation/rfa1b/fra1b-has-no-county-response.json");
+  }
+
+  private interface RFA1BPatch {
+    void apply(RFA1bFormDTO rfa1bFormDTO);
+  }
+
+  private void test(RFA1BPatch patch, String fixture) throws Exception {
     RFA1aFormDTO form = formAHelper.createRfa1aForm();
     RFA1aFormDTO persistentForm = formAHelper.postRfa1aForm(form);
 
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
-    applicant.getRfa1bForm().setApplicationCounty(null);
+    patch.apply(applicant.getRfa1bForm());
     applicantHelper.postApplicant(persistentForm.getId(), applicant);
 
     ResidenceDTO residence = residenceHelper.getResidenceDTO();
@@ -38,7 +48,7 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
     String response = statusHelper.submitApplication(persistentForm.getId()).readEntity(String.class);
     assertResponseByFixtureTemplate(
         response,
-        "fixtures/rfa/validation/rfa1b/fra1b-has-no-county-response.json",
+        fixture,
         params, JSONCompareMode.LENIENT);
   }
 
