@@ -26,9 +26,8 @@ public final class AssertFixtureUtils {
     assertResponseByFixture(entity, fixture);
   }
 
-  public static void assertResponseByFixture(String entity, String fixture)
-      throws IOException, JSONException {
-    assertEquals(fixture, entity, JSONCompareMode.STRICT);
+  public static void assertResponseByFixture(String entity, String fixture) throws JSONException {
+    assertResponseByFixture(entity, fixture,JSONCompareMode.STRICT);
   }
 
   public static void assertResponseByFixturePath(Response response, String fixturePath)
@@ -37,11 +36,21 @@ public final class AssertFixtureUtils {
   }
 
   public static void assertResponseByFixtureTemplate(String entity, String fixtureTemplate,
-      Map templateParams)
-      throws IOException, JSONException {
+      Map templateParams) throws JSONException {
+    assertResponseByFixtureTemplate(entity, fixtureTemplate, templateParams, JSONCompareMode.STRICT);
+  }
+
+  public static void assertResponseByFixtureTemplate(String entity, String fixtureTemplate,
+                                                     Map templateParams, JSONCompareMode mode)
+      throws JSONException {
     VelocityHelper velocityHelper = new VelocityHelper();
     velocityHelper.setParameters(templateParams);
-    assertResponseByFixture(entity, velocityHelper.process(fixtureTemplate));
+    assertResponseByFixture(entity, velocityHelper.process(fixtureTemplate), mode);
+  }
+
+  public static void assertResponseByFixture(String entity, String fixture, JSONCompareMode mode)
+      throws JSONException {
+    assertEquals(fixture, entity, mode);
   }
 
 }

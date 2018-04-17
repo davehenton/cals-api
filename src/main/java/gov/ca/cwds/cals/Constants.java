@@ -440,6 +440,9 @@ public final class Constants {
 
       public static final String REQUIRED_FIELD_MESSAGE= "Required field [%s] is not provided";
 
+      public static final String APPLICANT_S_RFA1B_FORM_HAS_NO_COUNTY_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b form without county";
+
       public static class Code {
 
         public static final String APPLICANT_FIRST_NAME = "BV000001";
@@ -490,6 +493,7 @@ public final class Constants {
         public static final String REQUIRED_MINOR_CHILD_FINANCIALLY_SUPPORTED = "CV000022";
         public static final String REQUIRED_MINOR_CHILD_ADOPTED = "CV000023";
         public static final String REQUIRED_MINOR_CHILD_RELATIONSHIP_APPLICANT_ID = "CV000024";
+        public static final String APPLICANT_S_RFA1B_FORM_HAS_NO_COUNTY = "CV000025";
 
 
         private Code() {

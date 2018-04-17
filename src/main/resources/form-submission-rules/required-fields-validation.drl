@@ -31,6 +31,19 @@ import java.util.Random
 
 global java.util.Set validationDetailsList;
 
+
+function IssueDetails rfa1bIssueDetails(String code, String message, String propery, ApplicantDTO applicant) {
+    IssueDetails details = new IssueDetails();
+    details.setCode(code);
+    details.setUserMessage(String.format(message,
+            applicant.getFirstName() != null ? applicant.getFirstName() : "",
+            applicant.getLastName() != null ? applicant.getLastName() : "",
+            applicant.getNameSuffix() != null ? applicant.getNameSuffix().getValue() : ""));
+    details.setTechnicalMessage("RF1b form: " + applicant.getRfa1bForm());
+    details.setProperty("rfa1a.applicant[id=" + applicant.getId()+ "].rfa1bForm." + propery);
+    return details;
+}
+
 /*
 The following Cards and Fields must have values populated in order for submit to be allowed.
 
@@ -577,3 +590,18 @@ rule "Validate that childAdopted field is present in the Minor Child object"
     validationDetailsList.add(details);
 end
 
+rule "RFA1B Form County Validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    RFA1bFormDTO(applicationCounty == null) from $applicant.rfa1bForm
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Business.Code.APPLICANT_S_RFA1B_FORM_HAS_NO_COUNTY,
+        Business.APPLICANT_S_RFA1B_FORM_HAS_NO_COUNTY_MESSAGE,
+        "applicationCounty",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
