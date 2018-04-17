@@ -5,6 +5,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO
+import gov.ca.cwds.cals.service.dto.rfa.DisclosureDTO
 import gov.ca.cwds.cals.service.dto.rfa.TypedPersonNameDTO
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO
@@ -633,6 +634,24 @@ rule "RFA1B Form Last Name Validation"
         Code.RFA1B_FORM_HAS_NO_LAST_NAME,
         Business.RFA1B_FORM_HAS_NO_LAST_NAME_MESSAGE,
         "applicantLastName",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction CA offense validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInCalifornia())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offense)) from $fra1bForm.convictedInCaliforniaDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_CA_OFFENSE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_CA_OFFENSE_IS_REQUIRED_MESSAGE,
+        "convictedInCaliforniaDisclosures.offense",
         $applicant
     );
     validationDetailsList.add(details);

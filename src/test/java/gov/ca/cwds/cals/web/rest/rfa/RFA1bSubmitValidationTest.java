@@ -1,12 +1,8 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.dto.rfa.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -42,6 +38,16 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
         "fixtures/rfa/validation/rfa1b/fra1b-has-no-last-name-response.json");
   }
 
+  @Test
+  public void validateRFA1bConvictedCAOffense() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setConvictedInCalifornia(true);
+          rfa1bForm.setConvictedInCaliforniaDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setOffense(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-conviction-CA-offense-is-required-response.json");
+  }
+
   private void test(Consumer<RFA1bFormDTO> rfa1bFormDTO, String fixture) throws Exception {
     RFA1aFormDTO form = formAHelper.createRfa1aForm();
     RFA1aFormDTO persistentForm = formAHelper.postRfa1aForm(form);
@@ -59,6 +65,16 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
         response,
         fixture,
         params, JSONCompareMode.LENIENT);
+  }
+
+  private List<DisclosureDTO> disclosure(Consumer<DisclosureDTO> disclosureDTOConsumer) {
+    DisclosureDTO disclosureDTO = new DisclosureDTO();
+    disclosureDTO.setOffense("offense");
+    disclosureDTO.setOffenseDetails("offenseDetails");
+    disclosureDTO.setWhenOffenseHappen("whenOffenseHappen");
+    //TODO 'where'???
+    disclosureDTOConsumer.accept(disclosureDTO);
+    return Collections.singletonList(disclosureDTO);
   }
 
 }
