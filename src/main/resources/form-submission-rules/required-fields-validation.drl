@@ -692,3 +692,26 @@ rule "RFA1B Form Conviction CA offense details validation"
     );
     validationDetailsList.add(details);
 end
+
+
+rule "RFA1B Form Conviction CA empty disclosure"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInCalifornia())
+    not DisclosureDTO() from $fra1bForm.convictedInCaliforniaDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_CA_DISCLOSURE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_CA_DISCLOSURE_IS_REQUIRED_MESSAGE,
+        "convictedInCaliforniaDisclosures",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+//TODO: rule "RFA1B Form Conviction CA offense 'where' validation"
+
+

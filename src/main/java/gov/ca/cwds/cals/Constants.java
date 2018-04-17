@@ -454,6 +454,8 @@ public final class Constants {
           APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with CA conviction but without 'when'";
       public static final String RFA1B_FORM_CONVICTED_CA_DETAILS_IS_REQUIRED_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with CA conviction but without 'offense details'";
+      public static final String RFA1B_FORM_CONVICTED_CA_DISCLOSURE_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with CA conviction but without any disclosure";
 
 
       public static class Code {
@@ -517,6 +519,7 @@ public final class Constants {
         public static final String RFA1B_FORM_CONVICTED_CA_CITY_IS_REQUIRED = "CV000033";
         public static final String RFA1B_FORM_CONVICTED_CA_DATE_IS_REQUIRED = "CV000034";
         public static final String RFA1B_FORM_CONVICTED_CA_SIGNATURE_IS_REQUIRED = "CV000035";
+        public static final String RFA1B_FORM_CONVICTED_CA_DISCLOSURE_IS_REQUIRED = "CV000036";
 
 
         private Code() {
