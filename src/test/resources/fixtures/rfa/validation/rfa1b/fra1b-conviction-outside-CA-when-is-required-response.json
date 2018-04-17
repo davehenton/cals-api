@@ -1,0 +1,10 @@
+{
+  "issue_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Applicant with first name - [AFn], last name - [ALn] and name suffix - [Jr] has RFA1b with outside of CA conviction but without 'when'",
+      "code": "CV000039",
+      "property": "rfa1a.applicant[id=$id].rfa1bForm.convictedInAnotherStateDisclosures.whenOffenseHappen"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO
+import gov.ca.cwds.cals.service.dto.rfa.DisclosureDTO
 import gov.ca.cwds.cals.service.dto.rfa.TypedPersonNameDTO
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO
@@ -30,6 +31,19 @@ import java.util.List
 import java.util.Random
 
 global java.util.Set validationDetailsList;
+
+
+function IssueDetails rfa1bIssueDetails(String code, String message, String propery, ApplicantDTO applicant) {
+    IssueDetails details = new IssueDetails();
+    details.setCode(code);
+    details.setUserMessage(String.format(message,
+            applicant.getFirstName() != null ? applicant.getFirstName() : "",
+            applicant.getLastName() != null ? applicant.getLastName() : "",
+            applicant.getNameSuffix() != null ? applicant.getNameSuffix().getValue() : ""));
+    details.setTechnicalMessage("RF1b form: " + applicant.getRfa1bForm());
+    details.setProperty("rfa1a.applicant[id=" + applicant.getId()+ "].rfa1bForm." + propery);
+    return details;
+}
 
 /*
 The following Cards and Fields must have values populated in order for submit to be allowed.
@@ -576,4 +590,346 @@ rule "Validate that childAdopted field is present in the Minor Child object"
     details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
     validationDetailsList.add(details);
 end
+
+rule "RFA1B Form County Validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    RFA1bFormDTO(applicationCounty == null) from $applicant.rfa1bForm
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Business.Code.RFA1B_FORM_HAS_NO_COUNTY,
+        Business.RFA1B_FORM_HAS_NO_COUNTY_MESSAGE,
+        "applicationCounty",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form First Name Validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    RFA1bFormDTO(StringUtils.isBlank(applicantFirstName)) from $applicant.rfa1bForm
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_HAS_NO_FIRST_NAME,
+        Business.RFA1B_FORM_HAS_NO_FIRST_NAME_MESSAGE,
+        "applicantFirstName",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Last Name Validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    RFA1bFormDTO(StringUtils.isBlank(applicantLastName)) from $applicant.rfa1bForm
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_HAS_NO_LAST_NAME,
+        Business.RFA1B_FORM_HAS_NO_LAST_NAME_MESSAGE,
+        "applicantLastName",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction CA offense validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInCalifornia())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offense)) from $fra1bForm.convictedInCaliforniaDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_CA_OFFENSE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_CA_OFFENSE_IS_REQUIRED_MESSAGE,
+        "convictedInCaliforniaDisclosures.offense",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction CA 'when' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInCalifornia())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(whenOffenseHappen)) from $fra1bForm.convictedInCaliforniaDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_CA_WHEN_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_CA_WHEN_IS_REQUIRED_MESSAGE,
+        "convictedInCaliforniaDisclosures.whenOffenseHappen",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction CA offense details validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInCalifornia())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseDetails)) from $fra1bForm.convictedInCaliforniaDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_CA_DETAILS_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_CA_DETAILS_IS_REQUIRED_MESSAGE,
+        "convictedInCaliforniaDisclosures.offenseDetails",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+
+rule "RFA1B Form Conviction CA empty disclosure"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInCalifornia())
+    not DisclosureDTO() from $fra1bForm.convictedInCaliforniaDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_CA_DISCLOSURE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_CA_DISCLOSURE_IS_REQUIRED_MESSAGE,
+        "convictedInCaliforniaDisclosures",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction CA 'where' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInCalifornia())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseCity)) from $fra1bForm.convictedInCaliforniaDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_CA_WHERE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_CA_WHERE_IS_REQUIRED_MESSAGE,
+        "convictedInCaliforniaDisclosures.offenseCity",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+
+rule "RFA1B Form Conviction Outside of CA offense validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offense)) from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_OFFENSE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_OFFENSE_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures.offense",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction Outside of CA 'when' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(whenOffenseHappen)) from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHEN_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHEN_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures.whenOffenseHappen",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction Outside of CA offense details validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseDetails)) from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_DETAILS_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_DETAILS_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures.offenseDetails",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+
+rule "RFA1B Form Conviction Outside of CA empty disclosure"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    not DisclosureDTO() from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_DISCLOSURE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_DISCLOSURE_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Conviction Outside of CA 'where' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isConvictedInAnotherState())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseCity)) from $fra1bForm.convictedInAnotherStateDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHERE_IS_REQUIRED,
+        Business.RFA1B_FORM_CONVICTED_OUTSIDE_CA_WHERE_IS_REQUIRED_MESSAGE,
+        "convictedInAnotherStateDisclosures.offenseCity",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Arrested for crime offense validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offense)) from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_OFFENSE_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_OFFENSE_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures.offense",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Arrested from crime 'when' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(whenOffenseHappen)) from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_WHEN_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_WHEN_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures.whenOffenseHappen",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Arrested from crime offense details validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseDetails)) from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_DETAILS_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_DETAILS_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures.offenseDetails",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+
+rule "RFA1B Form Arrested from crime empty disclosure"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    not DisclosureDTO() from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_DISCLOSURE_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_DISCLOSURE_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Arrested from crime 'where' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseCity)) from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_WHERE_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_WHERE_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures.offenseCity",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+
+rule "RFA1B other states validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isLivedInOtherState())
+    not StateType() from $fra1bForm.otherStatesOfLiving
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_OTHER_STATES_IS_REQUIRED,
+        Business.RFA1B_FORM_OTHER_STATES_IS_REQUIRED_MESSAGE,
+        "otherStatesOfLiving",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
 
