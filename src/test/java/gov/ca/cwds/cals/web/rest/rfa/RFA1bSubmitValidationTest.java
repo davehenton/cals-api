@@ -116,6 +116,46 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
         "fixtures/rfa/validation/rfa1b/fra1b-conviction-outside-CA-disclosure-is-required-response.json");
   }
 
+  @Test
+  public void validateRFA1bCrimeOffense() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setArrestedForCrime(true);
+          rfa1bForm.setArrestedForCrimeDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setOffense(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-crime-offense-is-required-response.json");
+  }
+
+  @Test
+  public void validateRFA1bCrimeWhen() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setArrestedForCrime(true);
+          rfa1bForm.setArrestedForCrimeDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setWhenOffenseHappen(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-crime-when-is-required-response.json");
+  }
+
+  @Test
+  public void validateRFA1bCrimeDetails() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setArrestedForCrime(true);
+          rfa1bForm.setArrestedForCrimeDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setOffenseDetails(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-crime-details-is-required-response.json");
+  }
+
+  @Test
+  public void validateRFA1bCrimeDisclosure() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setArrestedForCrime(true);
+          rfa1bForm.setArrestedForCrimeDisclosures(null);
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-crime-disclosure-is-required-response.json");
+  }
+
+
 
   private void test(Consumer<RFA1bFormDTO> rfa1bFormDTO, String fixture) throws Exception {
     RFA1aFormDTO form = formAHelper.createRfa1aForm();

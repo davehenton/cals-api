@@ -468,6 +468,17 @@ public final class Constants {
       public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_DISCLOSURE_IS_REQUIRED_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with outside of CA conviction but without any disclosure";
 
+      public static final String RFA1B_FORM_CRIME_OFFENSE_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with 'arrested for crime' but without 'offense title'";
+      public static final String RFA1B_FORM_CRIME_WHERE_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with 'arrested for crime' but without 'where'";
+      public static final String RFA1B_FORM_CRIME_WHEN_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with 'arrested for crime' but without 'when'";
+      public static final String RFA1B_FORM_CRIME_DETAILS_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with 'arrested for crime' but without 'offense details'";
+      public static final String RFA1B_FORM_CRIME_DISCLOSURE_IS_REQUIRED_MESSAGE =
+          APPLICANT_WITH_NAME_MESSAGE + " has RFA1b with 'arrested for crime' but without any disclosure";
+
 
 
       public static class Code {
@@ -541,6 +552,15 @@ public final class Constants {
         public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_DATE_IS_REQUIRED = "CV000042";
         public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_SIGNATURE_IS_REQUIRED = "CV000043";
         public static final String RFA1B_FORM_CONVICTED_OUTSIDE_CA_DISCLOSURE_IS_REQUIRED = "CV000044";
+
+        public static final String RFA1B_FORM_CRIME_OFFENSE_IS_REQUIRED = "CV000045";
+        public static final String RFA1B_FORM_CRIME_WHERE_IS_REQUIRED = "CV000046";
+        public static final String RFA1B_FORM_CRIME_WHEN_IS_REQUIRED = "CV000047";
+        public static final String RFA1B_FORM_CRIME_DETAILS_IS_REQUIRED = "CV000048";
+        public static final String RFA1B_FORM_CRIME_CITY_IS_REQUIRED = "CV000049";
+        public static final String RFA1B_FORM_CRIME_DATE_IS_REQUIRED = "CV000050";
+        public static final String RFA1B_FORM_CRIME_SIGNATURE_IS_REQUIRED = "CV000051";
+        public static final String RFA1B_FORM_CRIME_DISCLOSURE_IS_REQUIRED = "CV000052";
 
 
         private Code() {

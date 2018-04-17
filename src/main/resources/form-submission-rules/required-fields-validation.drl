@@ -789,5 +789,82 @@ end
 
 //TODO: rule "RFA1B Form Conviction outside CA offense 'where' validation"
 
+rule "RFA1B Form Arrested for crime offense validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offense)) from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_OFFENSE_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_OFFENSE_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures.offense",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Arrested from crime 'when' validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(whenOffenseHappen)) from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_WHEN_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_WHEN_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures.whenOffenseHappen",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1B Form Arrested from crime offense details validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    $disclosure : DisclosureDTO(StringUtils.isBlank(offenseDetails)) from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_DETAILS_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_DETAILS_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures.offenseDetails",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+
+rule "RFA1B Form Arrested from crime empty disclosure"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO() from $form.applicants;
+    $fra1bForm : RFA1bFormDTO() from $applicant.rfa1bForm
+    eval($fra1bForm.isArrestedForCrime())
+    not DisclosureDTO() from $fra1bForm.arrestedForCrimeDisclosures
+  then
+    IssueDetails details = rfa1bIssueDetails(
+        Code.RFA1B_FORM_CRIME_DISCLOSURE_IS_REQUIRED,
+        Business.RFA1B_FORM_CRIME_DISCLOSURE_IS_REQUIRED_MESSAGE,
+        "arrestedForCrimeDisclosures",
+        $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+//TODO: rule "RFA1B Form CRIME offense 'where' validation"
+
+
+
 
 
