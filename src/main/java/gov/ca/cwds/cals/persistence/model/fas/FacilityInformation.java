@@ -29,7 +29,6 @@ public class FacilityInformation implements PersistentObject {
   private String auditHistory;
   private String originalunidkey;
   private LocalDateTime dtEdited;
-  private String editorName;
   private String editHistory;
   private LocalDateTime dtCreated;
   private String creatorName;
@@ -255,16 +254,6 @@ public class FacilityInformation implements PersistentObject {
 
   public void setDtEdited(LocalDateTime dtEdited) {
     this.dtEdited = dtEdited;
-  }
-
-  @Basic
-  @Column(name = "editor_name", nullable = true, length = 256)
-  public String getEditorName() {
-    return editorName;
-  }
-
-  public void setEditorName(String editorName) {
-    this.editorName = editorName;
   }
 
   @Basic
