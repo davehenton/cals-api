@@ -48,6 +48,26 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
         "fixtures/rfa/validation/rfa1b/fra1b-conviction-CA-offense-is-required-response.json");
   }
 
+  @Test
+  public void validateRFA1bConvictedCAWhen() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setConvictedInCalifornia(true);
+          rfa1bForm.setConvictedInCaliforniaDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setWhenOffenseHappen(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-conviction-CA-when-is-required-response.json");
+  }
+
+  @Test
+  public void validateRFA1bConvictedCADetails() throws Exception {
+    test(rfa1bForm -> {
+          rfa1bForm.setConvictedInCalifornia(true);
+          rfa1bForm.setConvictedInCaliforniaDisclosures(
+              disclosure(disclosureDTO -> disclosureDTO.setOffenseDetails(null)));
+        },
+        "fixtures/rfa/validation/rfa1b/fra1b-conviction-CA-details-is-required-response.json");
+  }
+
   private void test(Consumer<RFA1bFormDTO> rfa1bFormDTO, String fixture) throws Exception {
     RFA1aFormDTO form = formAHelper.createRfa1aForm();
     RFA1aFormDTO persistentForm = formAHelper.postRfa1aForm(form);
