@@ -1,0 +1,10 @@
+{
+  "issue_details": [
+    {
+      "type": "business_validation",
+      "user_message": "'Is the child currently in your home?' is required for Child with first name - [firstName], last name - [lastName] and name suffix - []",
+      "code": "CV000054",
+      "property": "rfa1a.rfa1cForms[id=$id].identifiedChildren.childInHome"
+    }
+  ]
+}

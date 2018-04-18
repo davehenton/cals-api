@@ -71,7 +71,7 @@ public class IdentifiedChildDTO extends BaseDTO {
   private RFAAddressDTO schoolAddress;
 
   @ApiModelProperty(example = "true")
-  private boolean childInHome;
+  private Boolean childInHome;
 
   public String getFirstName() {
     return firstName;
@@ -170,11 +170,11 @@ public class IdentifiedChildDTO extends BaseDTO {
     this.nameSuffix = nameSuffix;
   }
 
-  public boolean isChildInHome() {
+  public Boolean isChildInHome() {
     return childInHome;
   }
 
-  public void setChildInHome(boolean childInHome) {
+  public void setChildInHome(Boolean childInHome) {
     this.childInHome = childInHome;
   }
 }
