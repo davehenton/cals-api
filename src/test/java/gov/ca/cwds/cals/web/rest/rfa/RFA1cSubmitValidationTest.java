@@ -43,6 +43,12 @@ public class RFA1cSubmitValidationTest extends BaseRFAIntegrationTest {
         "fixtures/rfa/validation/rfa1c/fra1c-dob-is-required-response.json");
   }
 
+  @Test
+  public void validateRFA1cInHome() throws Exception {
+    test(child -> child.setChildInHome(null),
+        "fixtures/rfa/validation/rfa1c/fra1c-in-home-is-required-response.json");
+  }
+
 
 
   private void test(Consumer<IdentifiedChildDTO> childDTOConsumer, String fixture) throws Exception {
@@ -74,6 +80,7 @@ public class RFA1cSubmitValidationTest extends BaseRFAIntegrationTest {
     IdentifiedChildDTO identifiedChildDTO = new IdentifiedChildDTO();
     identifiedChildDTO.setFirstName("firstName");
     identifiedChildDTO.setLastName("lastName");
+    identifiedChildDTO.setChildInHome(false);
     identifiedChildDTO.setDateOfBirth(LocalDate.now().minusYears(5));
     childDTOConsumer.accept(identifiedChildDTO);
     RFA1cFormDTO rfa1cFormDTO = new RFA1cFormDTO();

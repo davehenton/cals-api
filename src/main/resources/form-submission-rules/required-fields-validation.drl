@@ -998,4 +998,22 @@ rule "RFA1C date of birth validation"
     validationDetailsList.add(details);
 end
 
+rule "RFA1C child in home validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $rfa1c : RFA1cFormDTO() from $form.rfa1cForms
+    $child : IdentifiedChildDTO() from $rfa1c.identifiedChildren
+    eval ($child.isChildInHome() == null)
+  then
+    IssueDetails details = rfa1cIssueDetails(
+        Code.RFA1C_FORM_IN_HOME_IS_REQUIRED,
+        Business.RFA1C_FORM_IN_HOME_IS_REQUIRED_MESSAGE,
+        "childInHome",
+        $child,
+        $rfa1c
+    );
+    validationDetailsList.add(details);
+end
+
 
