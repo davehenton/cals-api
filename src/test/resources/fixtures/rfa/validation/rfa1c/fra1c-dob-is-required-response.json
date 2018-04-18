@@ -1,0 +1,10 @@
+{
+  "issue_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Child with first name - [firstName], last name - [lastName] and name suffix - [] has no date of birth",
+      "code": "CV000057",
+      "property": "rfa1a.rfa1cForms[id=$id].identifiedChildren.dateOfBirth"
+    }
+  ]
+}

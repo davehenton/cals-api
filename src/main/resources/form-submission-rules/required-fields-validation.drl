@@ -6,9 +6,11 @@ import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO
 import gov.ca.cwds.cals.service.dto.rfa.DisclosureDTO
+import gov.ca.cwds.cals.service.dto.rfa.IdentifiedChildDTO
 import gov.ca.cwds.cals.service.dto.rfa.TypedPersonNameDTO
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO
+import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO
 import gov.ca.cwds.cals.service.dto.rfa.RelationshipToApplicantDTO
@@ -42,6 +44,18 @@ function IssueDetails rfa1bIssueDetails(String code, String message, String prop
             applicant.getNameSuffix() != null ? applicant.getNameSuffix().getValue() : ""));
     details.setTechnicalMessage("RF1b form: " + applicant.getRfa1bForm());
     details.setProperty("rfa1a.applicant[id=" + applicant.getId()+ "].rfa1bForm." + propery);
+    return details;
+}
+
+function IssueDetails rfa1cIssueDetails(String code, String message, String propery, IdentifiedChildDTO identifiedChild, RFA1cFormDTO rfa1cForm) {
+    IssueDetails details = new IssueDetails();
+    details.setCode(code);
+    details.setUserMessage(String.format(message,
+            identifiedChild.getFirstName() != null ? identifiedChild.getFirstName() : "",
+            identifiedChild.getLastName() != null ? identifiedChild.getLastName() : "",
+            identifiedChild.getNameSuffix() != null ? identifiedChild.getNameSuffix().getValue() : ""));
+    details.setTechnicalMessage("RF1c form: " + rfa1cForm);
+    details.setProperty("rfa1a.rfa1cForms[id=" + rfa1cForm.getId() + "].identifiedChildren." + propery);
     return details;
 }
 
@@ -928,6 +942,58 @@ rule "RFA1B other states validation"
         Business.RFA1B_FORM_OTHER_STATES_IS_REQUIRED_MESSAGE,
         "otherStatesOfLiving",
         $applicant
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1C first name validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $rfa1c : RFA1cFormDTO() from $form.rfa1cForms
+    $child : IdentifiedChildDTO(StringUtils.isBlank(firstName)) from $rfa1c.identifiedChildren
+  then
+    IssueDetails details = rfa1cIssueDetails(
+        Code.RFA1C_FORM_FIRST_NAME_IS_REQUIRED,
+        Business.RFA1C_FORM_FIRST_NAME_IS_REQUIRED_MESSAGE,
+        "firstName",
+        $child,
+        $rfa1c
+    );
+    validationDetailsList.add(details);
+end
+
+
+rule "RFA1C last name validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $rfa1c : RFA1cFormDTO() from $form.rfa1cForms
+    $child : IdentifiedChildDTO(StringUtils.isBlank(lastName)) from $rfa1c.identifiedChildren
+  then
+    IssueDetails details = rfa1cIssueDetails(
+        Code.RFA1C_FORM_LAST_NAME_IS_REQUIRED,
+        Business.RFA1C_FORM_LAST_NAME_IS_REQUIRED_MESSAGE,
+        "lastName",
+        $child,
+        $rfa1c
+    );
+    validationDetailsList.add(details);
+end
+
+rule "RFA1C date of birth validation"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $rfa1c : RFA1cFormDTO() from $form.rfa1cForms
+    $child : IdentifiedChildDTO(dateOfBirth == null) from $rfa1c.identifiedChildren
+  then
+    IssueDetails details = rfa1cIssueDetails(
+        Code.RFA1C_FORM_DOB_IS_REQUIRED,
+        Business.RFA1C_FORM_DOB_IS_REQUIRED_MESSAGE,
+        "dateOfBirth",
+        $child,
+        $rfa1c
     );
     validationDetailsList.add(details);
 end

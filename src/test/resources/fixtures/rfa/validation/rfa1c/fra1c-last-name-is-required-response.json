@@ -1,0 +1,10 @@
+{
+  "issue_details": [
+    {
+      "type": "business_validation",
+      "user_message": "Child with first name - [firstName], last name - [] and name suffix - [] has no last name",
+      "code": "CV000056",
+      "property": "rfa1a.rfa1cForms[id=$id].identifiedChildren.lastName"
+    }
+  ]
+}

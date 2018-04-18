@@ -363,6 +363,9 @@ public final class Constants {
       private static final String APPLICANT_WITH_NAME_MESSAGE =
           "Applicant with first name - [%s], last name - [%s] and name suffix - [%s]";
 
+      private static final String CHILD_WITH_NAME_MESSAGE =
+          "Child with first name - [%s], last name - [%s] and name suffix - [%s]";
+
       private static final String OTHER_ADULT_WITH_NAME =
           "Other adult with first name - [%s], last name - [%s] and name suffix - [%s]";
 
@@ -482,6 +485,15 @@ public final class Constants {
       public static final String RFA1B_FORM_OTHER_STATES_IS_REQUIRED_MESSAGE =
           APPLICANT_WITH_NAME_MESSAGE + " has RFA1b without other states";
 
+      public static final String RFA1C_FORM_IN_HOME_IS_REQUIRED_MESSAGE =
+           "'Is the child currently in your home?' is required for " + CHILD_WITH_NAME_MESSAGE;
+      public static final String RFA1C_FORM_FIRST_NAME_IS_REQUIRED_MESSAGE =
+          CHILD_WITH_NAME_MESSAGE + " has no first name";
+      public static final String RFA1C_FORM_LAST_NAME_IS_REQUIRED_MESSAGE =
+          CHILD_WITH_NAME_MESSAGE + " has no last name";
+      public static final String RFA1C_FORM_DOB_IS_REQUIRED_MESSAGE =
+          CHILD_WITH_NAME_MESSAGE + " has no date of birth";
+
       public static class Code {
 
         public static final String APPLICANT_FIRST_NAME = "BV000001";
@@ -564,6 +576,11 @@ public final class Constants {
         public static final String RFA1B_FORM_CRIME_DISCLOSURE_IS_REQUIRED = "CV000052";
 
         public static final String RFA1B_FORM_OTHER_STATES_IS_REQUIRED = "CV000053";
+
+        public static final String RFA1C_FORM_IN_HOME_IS_REQUIRED = "CV000054";
+        public static final String RFA1C_FORM_FIRST_NAME_IS_REQUIRED = "CV000055";
+        public static final String RFA1C_FORM_LAST_NAME_IS_REQUIRED = "CV000056";
+        public static final String RFA1C_FORM_DOB_IS_REQUIRED = "CV000057";
 
 
         private Code() {
