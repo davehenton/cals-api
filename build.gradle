@@ -247,7 +247,7 @@ task integrationTest(type: Test, dependsOn: testClasses) {
     systemProperty 'cals.api.url', project.property('cals.api.url')
     systemProperty 'perry.url', project.property('perry.url')
     systemProperty 'login.form.target.url', project.property('login.form.target.url')
-    exclude '**/ChangedRFA1aFormsResourceTest.class'
+    include '**/IntegrationTestSuite.class'
 }
 
 task smokeTest(type: Test) {
