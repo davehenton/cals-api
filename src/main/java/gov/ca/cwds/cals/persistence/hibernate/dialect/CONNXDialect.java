@@ -133,7 +133,7 @@ public class CONNXDialect extends Dialect {
   public String getLimitString(String querySelect, int offset, int limit) {
     return new StringBuffer(querySelect.length() + 22)
         .append(querySelect)
-        .append("limit ").append(limit).append(",").append(offset + 1)
+        .append(" limit ").append(limit)
         .toString();
   }
 
