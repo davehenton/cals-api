@@ -19,6 +19,7 @@ import org.hibernate.dialect.function.StandardSQLFunction;
 import org.hibernate.dialect.function.VarArgsSQLFunction;
 
 /**
+ * CONNX 12 version Hibernate dialect.
  * @author CWDS CALS API Team
  */
 public class CONNX12Dialect extends CONNXDialect {
