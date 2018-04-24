@@ -10,7 +10,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * @author CWDS CALS API Team
+ * Injection annotation.
+ *
+ * @author CWDS CALS API Team.
  */
 
 @BindingAnnotation

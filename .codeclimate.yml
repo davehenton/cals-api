@@ -18,7 +18,10 @@ checks:
   return-statements:
     enabled: false
   identical-code:
-    enabled: false    
+    enabled: false
+  com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck:
+    enabled: false
+    
 plugins:
   checkstyle:
     enabled: true
