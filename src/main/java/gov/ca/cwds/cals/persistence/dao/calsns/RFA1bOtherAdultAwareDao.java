@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.hibernate.SessionFactory;
 
 /**
+ * Other Adult aware DAO for RFA 1b form.
+ *
  * @author CWDS TPT-2 Team.
  */
 @SuppressWarnings("squid:MaximumInheritanceDepth")

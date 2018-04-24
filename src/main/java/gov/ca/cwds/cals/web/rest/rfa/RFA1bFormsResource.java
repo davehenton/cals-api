@@ -82,15 +82,18 @@ public class RFA1bFormsResource {
   public RFA1bFormsResource(
       @RFA1bApplicantAwareServiceBackedResource
           TypedResourceDelegate<
-              RFAExternalEntityGetParameterObject, RFAApplicantAwareEntityUpdateParams<RFA1bFormDTO>>
+              RFAExternalEntityGetParameterObject,
+              RFAApplicantAwareEntityUpdateParams<RFA1bFormDTO>>
           applicantAwareResourceDelegate,
       @RFA1bOtherAdultAwareServiceBackedResource
           TypedResourceDelegate<
-              RFAExternalEntityGetParameterObject, RFAOtherAdultAwareEntityUpdateParams<RFA1bFormDTO>>
+              RFAExternalEntityGetParameterObject,
+              RFAOtherAdultAwareEntityUpdateParams<RFA1bFormDTO>>
           otherAdultAwareResourceDelegate,
       @RFA1bBaseServiceBackedResource
           TypedResourceDelegate<
-              RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<RFA1bFormDTO>>
+              RFAExternalEntityGetParameterObject,
+              RFAExternalEntityUpdateParameterObject<RFA1bFormDTO>>
           baseResourceDelegate,
       @RFA1bCollectionServiceBackedResource
           TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
@@ -110,7 +113,9 @@ public class RFA1bFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1B form for Applicant", response = RFA1bFormDTO.class)
+  @ApiOperation(
+      value = "Creates and returns RFA 1B form for Applicant",
+      response = RFA1bFormDTO.class)
   public Response createRFA1bFormForApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
@@ -158,7 +163,9 @@ public class RFA1bFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1B form for OtherAdult", response = RFA1bFormDTO.class)
+  @ApiOperation(
+      value = "Creates and returns RFA 1B form for OtherAdult",
+      response = RFA1bFormDTO.class)
   public Response createRFA1bFormForOtherAdult(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
@@ -242,7 +249,9 @@ public class RFA1bFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1B Form by RFA 1A id and RFA 1B id", response = RFA1bFormDTO.class)
+  @ApiOperation(
+      value = "Returns RFA 1B Form by RFA 1A id and RFA 1B id",
+      response = RFA1bFormDTO.class)
   public Response getRFA1BFormById(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(

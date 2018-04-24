@@ -10,8 +10,9 @@ import java.util.Optional;
 
 /**
  * Base RFA1b form service with no awareness of external entities.
- *
- * There is no create functionality because RFA1b should be linked with Applicant or OtherAdult.
+ * <p>
+ *   There is no create functionality because RFA1b should be linked with Applicant or OtherAdult.
+ * </p>
  *
  * @author CWDS TPT-2 Team.
  */
