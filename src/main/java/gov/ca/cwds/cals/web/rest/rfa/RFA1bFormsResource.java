@@ -70,6 +70,14 @@ public class RFA1bFormsResource {
 
   private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
+  /**
+   * Constructor.
+   * 
+   * @param applicantAwareResourceDelegate Applicant aware service
+   * @param otherAdultAwareResourceDelegate Other Adult aware service
+   * @param baseResourceDelegate Base Service
+   * @param collectionResourceDelegate Collection service
+   */
   @Inject
   public RFA1bFormsResource(
       @RFA1bApplicantAwareServiceBackedResource
@@ -130,12 +138,12 @@ public class RFA1bFormsResource {
   )
   @ApiOperation(value = "Returns RFA 1B Form for Applicant", response = RFA1bFormDTO.class)
   public Response getRFA1bFormForApplicant(
-    @PathParam(RFA_1A_APPLICATION_ID)
-    @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
-    Long applicationId,
-    @PathParam(RFA_1A_APPLICANT_ID)
-    @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The Applicant Id")
-    Long applicantId) {
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long applicationId,
+      @PathParam(RFA_1A_APPLICANT_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The Applicant Id")
+          Long applicantId) {
     return applicantAwareResourceDelegate.get(
         new RFAApplicantAwareEntityGetParameterObject(applicationId, applicantId));
   }
@@ -180,10 +188,10 @@ public class RFA1bFormsResource {
   public Response getRFA1bFormForOtherAdult(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
-      Long applicationId,
+          Long applicationId,
       @PathParam(RFA_1A_OTHER_ADULT_ID)
       @ApiParam(required = true, name = RFA_1A_OTHER_ADULT_ID, value = "The Other Adult Id")
-      Long otherAdultId) {
+          Long otherAdultId) {
     return otherAdultAwareResourceDelegate.get(
         new RFAOtherAdultAwareEntityGetParameterObject(applicationId, otherAdultId));
   }
@@ -218,8 +226,9 @@ public class RFA1bFormsResource {
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
           RFA1bFormDTO rfa1bFormDTO) {
-    return baseResourceDelegate.update(new RFAExternalEntityGetParameterObject(applicationId, rfa1BId),
-        new RFAExternalEntityUpdateParameterObject<>(applicationId, rfa1bFormDTO));
+    return baseResourceDelegate
+        .update(new RFAExternalEntityGetParameterObject(applicationId, rfa1BId),
+            new RFAExternalEntityUpdateParameterObject<>(applicationId, rfa1bFormDTO));
   }
 
   @UnitOfWork(CALSNS)

@@ -7,6 +7,8 @@ import gov.ca.cwds.cals.service.rfa.factory.RFAExternalEntityFactory;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 
 /**
+ * Default version of RFAExternalEntityService.
+ *
  * @author CWDS TPT-2 Team.
  */
 public abstract class DefaultRFAExternalEntityService<T extends RFAExternalEntity<D>,

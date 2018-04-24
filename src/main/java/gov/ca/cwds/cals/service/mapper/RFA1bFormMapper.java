@@ -44,6 +44,13 @@ public interface RFA1bFormMapper {
   @Mapping(target = "dateOfBirth", source = "dateOfBirth")
   RFA1bFormDTO toRFA1bFormDTO(@MappingTarget RFA1bFormDTO target, OtherAdultDTO otherAdultDTO);
 
+  /**
+   * Maps data from RFA1aFormDTO to given RFA1bFormDTO.
+   *
+   * @param target RFA1bFormDTO
+   * @param rfa1a RFA1aFormDTO
+   * @return mapped RFA1bFormDTO
+   */
   default RFA1bFormDTO toRFA1bFormDTO(RFA1bFormDTO target, RFA1aFormDTO rfa1a) {
     // Residential Address
     Optional.ofNullable(rfa1a.getResidence()).ifPresent(residence -> {

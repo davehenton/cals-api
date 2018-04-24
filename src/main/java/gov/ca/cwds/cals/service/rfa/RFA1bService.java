@@ -38,17 +38,18 @@ public abstract class RFA1bService<D extends RFA1bDao,
   }
 
   @Override
-  public RFA1bFormDTO create(Q request){
+  public RFA1bFormDTO create(Q request) {
     Optional.ofNullable(find(request)).ifPresent(rfa1bFormDTO -> {
       throw new ExpectedException(
-        Constants.ExpectedExceptionMessages.RFA_1B_FORM_ALREADY_EXISTS, BAD_REQUEST);
+          Constants.ExpectedExceptionMessages.RFA_1B_FORM_ALREADY_EXISTS, BAD_REQUEST);
     });
 
     // Prepare RFA1bForm
     RFA1bForm rfa1bForm = beforeCreate(composeEntity(request), request);
 
     // Map data from RFA 1a Form
-    rfa1bForm.setEntityDTO(rfa1bFormMapper.toRFA1bFormDTO(rfa1bForm.getEntityDTO(), getRfa1aFormDTO(request)));
+    rfa1bForm.setEntityDTO(
+        rfa1bFormMapper.toRFA1bFormDTO(rfa1bForm.getEntityDTO(), getRfa1aFormDTO(request)));
 
     // Save to DB
     rfa1bForm = getDao().create(rfa1bForm);
@@ -75,7 +76,7 @@ public abstract class RFA1bService<D extends RFA1bDao,
    * @param request request's parameters
    * @return created entity
    */
-  protected RFA1bForm afterCreate(RFA1bForm createdEntity, Q request){
+  protected RFA1bForm afterCreate(RFA1bForm createdEntity, Q request) {
     // do nothing
     return createdEntity;
   }

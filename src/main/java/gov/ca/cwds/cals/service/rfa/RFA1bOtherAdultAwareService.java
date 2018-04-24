@@ -12,6 +12,8 @@ import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityUpdateParams;
 import java.util.Optional;
 
 /**
+ * Other Adult aware service for RFA1b form.
+ *
  * @author CWDS TPT-2 Team.
  */
 public class RFA1bOtherAdultAwareService extends
