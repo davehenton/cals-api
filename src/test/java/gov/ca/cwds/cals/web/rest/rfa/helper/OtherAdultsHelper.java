@@ -28,7 +28,7 @@ public class OtherAdultsHelper {
       throws Exception {
     List<OtherAdultDTO> otherAdultsDTOs = new ArrayList<>(2);
     for (int i = 0; i < 2; i++) {
-      OtherAdultDTO otherAdultDTO = getOtherAdultDTO(relativeApplicant);
+      OtherAdultDTO otherAdultDTO = buildOtherAdultDTO(relativeApplicant);
       otherAdultDTO.setFirstName(otherAdultDTO.getFirstName() + i);
       otherAdultDTO.setLastName(otherAdultDTO.getLastName() + i);
       otherAdultsDTOs.add(postOtherAdult(formId, otherAdultDTO));
@@ -36,11 +36,17 @@ public class OtherAdultsHelper {
     return otherAdultsDTOs;
   }
 
-  public OtherAdultDTO getOtherAdultDTO(ApplicantDTO relativeApplicant) throws IOException {
-    return getOtherAdultDTO(relativeApplicant, OTHER_ADULTS_FIXTURE);
+  public OtherAdultDTO createOtherAdult(Long formId, ApplicantDTO relativeApplicant)
+      throws Exception {
+    OtherAdultDTO otherAdultDTO = buildOtherAdultDTO(relativeApplicant);
+    return postOtherAdult(formId, otherAdultDTO);
   }
 
-  public OtherAdultDTO getOtherAdultDTO(ApplicantDTO relativeApplicant, String fixture)
+  public OtherAdultDTO buildOtherAdultDTO(ApplicantDTO relativeApplicant) throws IOException {
+    return buildOtherAdultDTO(relativeApplicant, OTHER_ADULTS_FIXTURE);
+  }
+
+  public OtherAdultDTO buildOtherAdultDTO(ApplicantDTO relativeApplicant, String fixture)
       throws IOException {
     OtherAdultDTO otherAdultDTO = clientTestRule.getMapper()
         .readValue(fixture, OtherAdultDTO.class);
@@ -53,6 +59,13 @@ public class OtherAdultsHelper {
     return clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_OTHER_ADULTS)
         .request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(otherAdult, MediaType.APPLICATION_JSON_TYPE), OtherAdultDTO.class);
+  }
+
+  public OtherAdultDTO findById(Long formId, Long otherAdultId) {
+    return clientTestRule.target(
+        API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_OTHER_ADULTS + "/" + otherAdultId)
+        .request(MediaType.APPLICATION_JSON)
+        .get(OtherAdultDTO.class);
   }
 
 }

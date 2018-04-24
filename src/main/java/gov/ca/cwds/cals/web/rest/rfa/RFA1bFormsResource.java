@@ -14,8 +14,10 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.inject.RFA1bApplicantAwareServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1bBaseServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1bCollectionServiceBackedResource;
-import gov.ca.cwds.cals.inject.RFA1bServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1bOtherAdultAwareServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1bFormCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAApplicantAwareEntityGetParameterObject;
@@ -55,18 +57,38 @@ public class RFA1bFormsResource {
 
   private TypedResourceDelegate<
       RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<RFA1bFormDTO>>
-      resourceDelegate;
+      baseResourceDelegate;
+
+  private TypedResourceDelegate<
+      RFAExternalEntityGetParameterObject, RFAApplicantAwareEntityUpdateParams<RFA1bFormDTO>>
+      applicantAwareResourceDelegate;
+
+  private TypedResourceDelegate<
+      RFAExternalEntityGetParameterObject, RFAOtherAdultAwareEntityUpdateParams<RFA1bFormDTO>>
+      otherAdultAwareResourceDelegate;
+
+
   private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
   @Inject
   public RFA1bFormsResource(
-      @RFA1bServiceBackedResource
+      @RFA1bApplicantAwareServiceBackedResource
+          TypedResourceDelegate<
+              RFAExternalEntityGetParameterObject, RFAApplicantAwareEntityUpdateParams<RFA1bFormDTO>>
+          applicantAwareResourceDelegate,
+      @RFA1bOtherAdultAwareServiceBackedResource
+          TypedResourceDelegate<
+              RFAExternalEntityGetParameterObject, RFAOtherAdultAwareEntityUpdateParams<RFA1bFormDTO>>
+          otherAdultAwareResourceDelegate,
+      @RFA1bBaseServiceBackedResource
           TypedResourceDelegate<
               RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<RFA1bFormDTO>>
-          resourceDelegate,
+          baseResourceDelegate,
       @RFA1bCollectionServiceBackedResource
           TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
-    this.resourceDelegate = resourceDelegate;
+    this.baseResourceDelegate = baseResourceDelegate;
+    this.applicantAwareResourceDelegate = applicantAwareResourceDelegate;
+    this.otherAdultAwareResourceDelegate = otherAdultAwareResourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
   }
 
@@ -91,7 +113,7 @@ public class RFA1bFormsResource {
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
           RFA1bFormDTO rfa1bForm) {
-    return resourceDelegate.create(
+    return applicantAwareResourceDelegate.create(
         new RFAApplicantAwareEntityUpdateParams<>(applicationId, applicantId, rfa1bForm));
   }
 
@@ -114,7 +136,7 @@ public class RFA1bFormsResource {
     @PathParam(RFA_1A_APPLICANT_ID)
     @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The Applicant Id")
     Long applicantId) {
-    return resourceDelegate.get(
+    return applicantAwareResourceDelegate.get(
         new RFAApplicantAwareEntityGetParameterObject(applicationId, applicantId));
   }
 
@@ -139,7 +161,7 @@ public class RFA1bFormsResource {
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
           RFA1bFormDTO rfa1bForm) {
-    return resourceDelegate.create(
+    return otherAdultAwareResourceDelegate.create(
         new RFAOtherAdultAwareEntityUpdateParams<>(applicationId, otherAdultId, rfa1bForm));
   }
 
@@ -162,7 +184,7 @@ public class RFA1bFormsResource {
       @PathParam(RFA_1A_OTHER_ADULT_ID)
       @ApiParam(required = true, name = RFA_1A_OTHER_ADULT_ID, value = "The Other Adult Id")
       Long otherAdultId) {
-    return resourceDelegate.get(
+    return otherAdultAwareResourceDelegate.get(
         new RFAOtherAdultAwareEntityGetParameterObject(applicationId, otherAdultId));
   }
 
@@ -196,7 +218,7 @@ public class RFA1bFormsResource {
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
           RFA1bFormDTO rfa1bFormDTO) {
-    return resourceDelegate.update(new RFAExternalEntityGetParameterObject(applicationId, rfa1BId),
+    return baseResourceDelegate.update(new RFAExternalEntityGetParameterObject(applicationId, rfa1BId),
         new RFAExternalEntityUpdateParameterObject<>(applicationId, rfa1bFormDTO));
   }
 
@@ -228,7 +250,7 @@ public class RFA1bFormsResource {
       )
           Long rfa1BFormId) {
 
-    return resourceDelegate
+    return baseResourceDelegate
         .get(new RFAExternalEntityGetParameterObject(applicationId, rfa1BFormId));
   }
 
@@ -279,7 +301,7 @@ public class RFA1bFormsResource {
           value = "The RFA 1B Form Id"
       )
           Long rfa1BFormId) {
-    return resourceDelegate
+    return baseResourceDelegate
         .delete(new RFAExternalEntityGetParameterObject(applicationId, rfa1BFormId));
   }
 }

@@ -54,7 +54,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     secondApplicant.getEthnicity().setValue("American Indian");
 
     secondApplicant = applicantHelper.postApplicant(form.getId(), secondApplicant);
-    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
+    residenceHelper.putResidence(form.getId(), residenceHelper.buildResidenceDTO());
 
     RFA1bFormDTO rfa1bForm = formBHelper.getRfa1bForm();
     formBHelper.postRfa1bForm(form.getId(), applicantDTO.getId(), rfa1bForm);

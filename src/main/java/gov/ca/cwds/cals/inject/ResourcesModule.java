@@ -45,8 +45,10 @@ import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultService;
 import gov.ca.cwds.cals.service.rfa.RFA1aOtherAdultsCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1aReferencesService;
 import gov.ca.cwds.cals.service.rfa.RFA1aResidenceService;
+import gov.ca.cwds.cals.service.rfa.RFA1bApplicantAwareService;
+import gov.ca.cwds.cals.service.rfa.RFA1bBaseService;
 import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
-import gov.ca.cwds.cals.service.rfa.RFA1bService;
+import gov.ca.cwds.cals.service.rfa.RFA1bOtherAdultAwareService;
 import gov.ca.cwds.cals.service.rfa.RFA1cCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1cService;
 import gov.ca.cwds.cals.service.rfa.RFAFormsPackageService;
@@ -56,8 +58,10 @@ import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAApplicantAwareEntityUpdateParams;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityUpdateParams;
 import gov.ca.cwds.cals.web.rest.rfa.LIC198bFormsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResource;
@@ -271,11 +275,30 @@ public class ResourcesModule extends AbstractModule {
   }
 
   @Provides
-  @RFA1bServiceBackedResource
+  @RFA1bBaseServiceBackedResource
   public TypedResourceDelegate<
       RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<RFA1bFormDTO>>
-  rfa1bServiceBackedResource(Injector injector) {
-    return new TypedServiceBackedResourceDelegate<>(injector.getInstance(RFA1bService.class));
+  rfa1bBaseServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(RFA1bBaseService.class));
+  }
+
+  @Provides
+  @RFA1bApplicantAwareServiceBackedResource
+  public TypedResourceDelegate<
+      RFAExternalEntityGetParameterObject, RFAApplicantAwareEntityUpdateParams<RFA1bFormDTO>>
+  rfa1bApplicantAwareServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(RFA1bApplicantAwareService.class));
+  }
+
+  @Provides
+  @RFA1bOtherAdultAwareServiceBackedResource
+  public TypedResourceDelegate<
+      RFAExternalEntityGetParameterObject, RFAOtherAdultAwareEntityUpdateParams<RFA1bFormDTO>>
+  rfa1bOtherAdultAwareServiceBackedResource(Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(
+        injector.getInstance(RFA1bOtherAdultAwareService.class));
   }
 
   @Provides

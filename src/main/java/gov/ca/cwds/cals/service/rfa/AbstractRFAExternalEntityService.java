@@ -1,5 +1,7 @@
 package gov.ca.cwds.cals.service.rfa;
 
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFAExternalEntityDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFAExternalEntity;
@@ -10,18 +12,14 @@ import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import gov.ca.cwds.security.utils.PrincipalUtils;
-
 import java.time.LocalDateTime;
-
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 /**
  * @author CWDS CALS API Team.
  */
-public abstract class AbstractRFAExternalEntityService<
-    T extends RFAExternalEntity<D>, D extends RFAExternalEntityDTO>
-    extends TypedCrudServiceAdapter<
-    RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<D>, D> {
+public abstract class AbstractRFAExternalEntityService<T extends RFAExternalEntity<D>,
+    Q extends RFAExternalEntityUpdateParameterObject<D>, D extends RFAExternalEntityDTO>
+    extends TypedCrudServiceAdapter<RFAExternalEntityGetParameterObject, Q, D> {
 
   private RFAExternalEntityDao<T> dao;
   private RFAExternalEntityFactory<T, D> configuration;
@@ -34,7 +32,7 @@ public abstract class AbstractRFAExternalEntityService<
   }
 
   @Override
-  public D create(RFAExternalEntityUpdateParameterObject<D> request) {
+  public D create(Q request) {
     T entity = composeEntity(request);
     entity = dao.create(entity);
     return extractDTO(entity);
@@ -49,7 +47,7 @@ public abstract class AbstractRFAExternalEntityService<
     return entityDTO;
   }
 
-  protected T composeEntity(RFAExternalEntityUpdateParameterObject<D> request) {
+  protected T composeEntity(Q request) {
     D entityDTO = request.getEntityDTO();
     if (entityDTO == null) {
       entityDTO = configuration.createEntityDTO();
@@ -86,8 +84,7 @@ public abstract class AbstractRFAExternalEntityService<
   }
 
   @Override
-  public D update(RFAExternalEntityGetParameterObject params,
-      RFAExternalEntityUpdateParameterObject<D> request) {
+  public D update(RFAExternalEntityGetParameterObject params, Q request) {
     T entity = dao.findEntityByFormIdAndEntityId(params.getFormId(), params.getEntityId());
     if (entity != null) {
       entity.setEntityDTO(request.getEntityDTO());
