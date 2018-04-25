@@ -57,7 +57,7 @@ public interface RFA1bFormMapper {
         addresses -> addresses.stream().filter(
             rfaAddressDTO -> Optional.ofNullable(rfaAddressDTO.getType())
                 .map(addressType -> addressType.getId().equals(RESIDENTIAL_ADDRESS_TYPE_ID))
-                .orElse(false)).findFirst().ifPresent(target::setResidenceAddress));
+                .orElse(Boolean.FALSE)).findFirst().ifPresent(target::setResidenceAddress));
 
     // County
     target.setApplicationCounty(rfa1a.getApplicationCounty());
