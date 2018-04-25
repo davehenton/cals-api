@@ -94,7 +94,7 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
       }
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
-    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
+    residenceHelper.putResidence(form.getId(), residenceHelper.buildResidenceDTO());
     Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     statusHelper.assertSubmitted(form.getId());
@@ -110,7 +110,7 @@ public class RFA1aCornerCasesSubmitApplicationTest extends BaseRFAIntegrationTes
       }
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     applicantHelper.postApplicant(form.getId(), applicantHelper.getValidApplicant());
-    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
+    residenceHelper.putResidence(form.getId(), residenceHelper.buildResidenceDTO());
     Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
     assertEquals(Status.OK.getStatusCode(), response.getStatus());
     statusHelper.assertSubmitted(form.getId());

@@ -35,7 +35,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   public void validateApplicationHasNoApplicant() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
 
-    residenceHelper.putResidence(form.getId(), residenceHelper.getResidenceDTO());
+    residenceHelper.putResidence(form.getId(), residenceHelper.buildResidenceDTO());
     ApplicantDTO applicantDto = applicantHelper.postApplicant(form.getId(), applicantHelper.getApplicant());
     applicantHelper.deleteApplicant(form.getId(), applicantDto.getId());
 
@@ -47,7 +47,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
   @Test
   public void validateApplicantHasNoRFA1bForm() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(form.getId(), residence);
     ApplicantDTO applicant = applicantHelper.getApplicant();
     applicantHelper.postApplicant(form.getId(), applicant);
@@ -75,13 +75,13 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
 
-    OtherAdultDTO otherAdult = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdult.getRelationshipToApplicants().iterator().next().setApplicantId(-1L);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult);
-    OtherAdultDTO otherAdult2 = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult2 = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult2);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(form.getId(), residence);
 
     Response response = statusHelper.submitApplication(form.getId());
@@ -96,15 +96,15 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
 
-    OtherAdultDTO otherAdult = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     RelationshipToApplicantDTO relationshipToApplicantDTO = otherAdult.getRelationshipToApplicants().get(0);
     relationshipToApplicantDTO.setApplicantId(-1L);
     relationshipToApplicantDTO.setRelationshipToApplicantType(null);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult);
-    OtherAdultDTO otherAdult2 = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult2 = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult2);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(form.getId(), residence);
 
     Response response = statusHelper.submitApplication(form.getId());
@@ -118,13 +118,13 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
 
-    OtherAdultDTO otherAdult = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdult.setFirstName(" ");
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult);
-    OtherAdultDTO otherAdult2 = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult2 = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult2);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(form.getId(), residence);
 
     Response response = statusHelper.submitApplication(form.getId());
@@ -139,16 +139,16 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
 
-    OtherAdultDTO otherAdult = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdult.getRelationshipToApplicants().clear();
     otherAdult.setFirstName(" ");
     otherAdult.setLastName(" ");
     otherAdult.setDateOfBirth(null);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult);
-    OtherAdultDTO otherAdult2 = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult2 = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult2);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(form.getId(), residence);
 
     Response response = statusHelper.submitApplication(form.getId());
@@ -162,13 +162,13 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
 
-    OtherAdultDTO otherAdult = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdult.setLastName(" ");
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult);
-    OtherAdultDTO otherAdult2 = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult2 = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult2);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(form.getId(), residence);
 
     Response response = statusHelper.submitApplication(form.getId());
@@ -183,14 +183,14 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     ApplicantDTO persistentApplicant = applicantHelper.postApplicant(form.getId(), applicant);
 
-    OtherAdultDTO otherAdult = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdult.setDateOfBirth(null);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult);
 
-    OtherAdultDTO otherAdult2 = otherAdultHelper.getOtherAdultDTO(persistentApplicant);
+    OtherAdultDTO otherAdult2 = otherAdultHelper.buildOtherAdultDTO(persistentApplicant);
     otherAdultHelper.postOtherAdult(form.getId(), otherAdult2);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(form.getId(), residence);
 
     Response response = statusHelper.submitApplication(form.getId());
@@ -211,7 +211,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     MinorChildDTO minorChild2 = minorChildHelper.buildNewMinorChildDTO(persistentApplicant);
     minorChildHelper.postMinorChild(form.getId(), minorChild2);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(form.getId(), residence);
 
     Response response = statusHelper.submitApplication(form.getId());
@@ -226,7 +226,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     applicantHelper.postApplicant(form.getId(), applicant);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
 
     residence.getAddresses().remove(getResidentialAddress(residence));
     residenceHelper.putResidence(form.getId(), residence);
@@ -245,7 +245,7 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     applicantHelper.postApplicant(persistentForm.getId(), applicant);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(persistentForm.getId(), residence);
 
     Response response = statusHelper.submitApplication(persistentForm.getId());
@@ -262,23 +262,23 @@ public class RFA1aSubmitValidationTest extends BaseRFAIntegrationTest {
     // and not all of them is added to Other Adults section
 
     Long formId = formAHelper.createRFA1aForm().getId();
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(formId, residence);
     ApplicantDTO applicantDTO = applicantHelper.postApplicant(formId);
     otherAdultHelper.postOtherAdult(formId,
-        otherAdultHelper.getOtherAdultDTO(applicantDTO,
+        otherAdultHelper.buildOtherAdultDTO(applicantDTO,
             FixtureHelpers.fixture(
                 "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults1.json")));
     otherAdultHelper.postOtherAdult(formId,
-        otherAdultHelper.getOtherAdultDTO(applicantDTO,
+        otherAdultHelper.buildOtherAdultDTO(applicantDTO,
             FixtureHelpers.fixture(
                 "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults2.json")));
     otherAdultHelper.postOtherAdult(formId,
-        otherAdultHelper.getOtherAdultDTO(applicantDTO,
+        otherAdultHelper.buildOtherAdultDTO(applicantDTO,
             FixtureHelpers.fixture(
                 "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults3.json")));
     otherAdultHelper.postOtherAdult(formId,
-        otherAdultHelper.getOtherAdultDTO(applicantDTO,
+        otherAdultHelper.buildOtherAdultDTO(applicantDTO,
             FixtureHelpers.fixture(
                 "fixtures/rfa/validation/adultchildren/rfa-1a-other-adults4.json")));
     formBHelper.postRfa1bForm(formId, applicantDTO.getId(), formBHelper.getRfa1bForm());

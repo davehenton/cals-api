@@ -20,7 +20,7 @@ import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityUpdateParams;
 /**
  * @author CWDS CALS API Team
  */
-public class LIC198bService extends AbstractRFAExternalEntityService<LIC198bForm, LIC198bFormDTO> {
+public class LIC198bService extends DefaultRFAExternalEntityService<LIC198bForm, LIC198bFormDTO> {
 
   @Inject
   private RFA1aApplicantDao applicantDao;

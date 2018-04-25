@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 /**
  * @author CWDS CALS API Team
  */
-public class RFA1cService extends AbstractRFAExternalEntityService<RFA1cForm, RFA1cFormDTO> {
+public class RFA1cService extends DefaultRFAExternalEntityService<RFA1cForm, RFA1cFormDTO> {
 
   @Inject
   public RFA1cService(RFA1cDao dao) {

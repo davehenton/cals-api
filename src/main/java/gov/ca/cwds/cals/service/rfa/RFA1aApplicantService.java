@@ -13,7 +13,7 @@ import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObjec
  * @author CWDS CALS API Team
  */
 public class RFA1aApplicantService
-    extends AbstractRFAExternalEntityService<RFA1aApplicant, ApplicantDTO> {
+    extends DefaultRFAExternalEntityService<RFA1aApplicant, ApplicantDTO> {
 
   private RFA1aFormsDao formsDao;
 
