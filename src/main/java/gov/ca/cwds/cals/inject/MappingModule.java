@@ -12,6 +12,7 @@ import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.cals.service.mapper.RFA1bFormMapper;
+import gov.ca.cwds.cals.service.mapper.RFA1cFormMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 
 /**
@@ -48,6 +49,8 @@ public class MappingModule extends AbstractModule {
         .to(OtherAdultsInPlacementHomeMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(RFA1bFormMapper.class).to(RFA1bFormMapper.INSTANCE.getClass())
+        .asEagerSingleton();
+    bind(RFA1cFormMapper.class).to(RFA1cFormMapper.INSTANCE.getClass())
         .asEagerSingleton();
 
   }
