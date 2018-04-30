@@ -5,9 +5,7 @@
         "id": 1,
         "value": "Child"
       },
-      "applicant_id": 1234567,
-      "child_financially_supported": true,
-      "child_adopted": false
+      "applicant_id": 1234567
     }
   ],
   "other_relative": true,
@@ -26,5 +24,7 @@
   "gender": {
     "id": 1,
     "value": "Male"
-  }
+  },
+  "child_financially_supported": true,
+  "child_adopted": false
 }
