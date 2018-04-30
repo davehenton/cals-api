@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.service;
 
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.County;
-import gov.ca.cwds.data.legacy.cms.entity.syscodes.FacilityType;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.LicenseStatus;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.State;
 

@@ -25,19 +25,18 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
   private static final String FACILITY_ID = "E6tloOO0Ql";
   private static final String ADOPTIONS_ONLY_FACILITY_ID = "BQcJtPm75C";
   private static final String FACILITY_FROM_LIS_ID = "100004582";
-  public static final String PRINCIPAL_NO_PRIVILAGES_JSON = "security/principal-no-privilages.json";
-  public static final String PRINCIPAL_PRIV_CWS_CASE_MANAGEMENT_SYSTEM_JSON = "security/principal-priv-CWS_Case_Management_System.json";
-  public static final String PRINCIPAL_PRIV_RESOURCE_MANAGEMENT_JSON = "security/principal-priv-Resource_Management.json";
-  public static final String PRINCIPAL_PRIV_ADOPTIONS_JSON = "security/principal-priv-Adoptions.json";
-  public static final String PRINCIPAL_PRIV_ADOPTIONS_ONLY_JSON = "security/principal-priv-Adoptions-only.json";
+  private static final String PRINCIPAL_NO_PRIVILAGES_JSON = "security/principal-no-privilages.json";
+  private static final String PRINCIPAL_PRIV_CWS_CASE_MANAGEMENT_SYSTEM_JSON = "security/principal-priv-CWS_Case_Management_System.json";
+  private static final String PRINCIPAL_PRIV_RESOURCE_MANAGEMENT_JSON = "security/principal-priv-Resource_Management.json";
+  private static final String PRINCIPAL_PRIV_ADOPTIONS_JSON = "security/principal-priv-Adoptions.json";
+  private static final String PRINCIPAL_PRIV_ADOPTIONS_ONLY_JSON = "security/principal-priv-Adoptions-only.json";
+
   @BeforeClass
   public static void beforeClass() throws Exception {
     setUpLis();
-
     setUpCms();
-
+    setUpCalsns();
     setUpCmsRs();
-
     setUpFas();
   }
 
@@ -178,7 +177,7 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
 
     JsonIdentityAuthParams params = new JsonIdentityAuthParams(
         fixture(PRINCIPAL_PRIV_RESOURCE_MANAGEMENT_JSON));
-    
+
     WebTarget target = clientTestRule.target(targetString, params);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     Response response = invocation.get();

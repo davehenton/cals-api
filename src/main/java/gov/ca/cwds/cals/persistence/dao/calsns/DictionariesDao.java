@@ -11,7 +11,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
-/** @author CWDS CALS API Team */
+/**
+ * Dictionary DAO.
+ *
+ * @author CWDS CALS API Team
+ */
 public class DictionariesDao extends BaseDaoImpl<BaseDictionary> {
 
   @Inject
@@ -31,4 +35,19 @@ public class DictionariesDao extends BaseDaoImpl<BaseDictionary> {
     return entities.build();
   }
 
+  /**
+   * Method which finds dictionaries by type.
+   *
+   * @param clazz dictionary class
+   * @param <T> dictionary type which extends BaseDictionary class
+   * @return List of dictionaries
+   */
+  public <T extends BaseDictionary> List<T> findDictionariesByType(Class<T> clazz) {
+    Session session = getSessionFactory().getCurrentSession();
+    Query<T> query = session.createNamedQuery(BaseDictionary.buildFindAllQueryName(clazz), clazz);
+    query.setCacheable(true).setCacheRegion("dictionaries");
+    ImmutableList.Builder<T> entities = new ImmutableList.Builder<>();
+    entities.addAll(query.list());
+    return entities.build();
+  }
 }

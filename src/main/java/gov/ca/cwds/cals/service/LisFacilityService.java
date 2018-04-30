@@ -35,6 +35,9 @@ public class LisFacilityService {
   @Inject
   private FasFacilityService fasFacilityService;
 
+  @Inject
+  private FacilityTypeService facilityTypeService;
+
   /**
    * Load facility from LIS.
    */
@@ -74,8 +77,8 @@ public class LisFacilityService {
 
     Integer facilityTypeCode = lisFacFile.getFacilityTypeCode();
     if (facilityTypeCode != null) {
-      LisTableFile facilityType = lisTableFileDao.findFacilityType(facilityTypeCode);
-      lisFacFile.setFacilityType(facilityType);
+      lisFacFile.setFacilityType(
+          facilityTypeService.getFacilityTypeByLisFacilityTypeId(facilityTypeCode));
     }
 
     return lisFacFile;

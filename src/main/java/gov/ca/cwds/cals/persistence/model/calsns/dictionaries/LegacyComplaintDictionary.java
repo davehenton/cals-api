@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.persistence.model.calsns.dictionaries;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import gov.ca.cwds.cms.data.access.CWSIdentifier;
+import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -15,7 +16,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class LegacyComplaintDictionary extends SimpleDictionary implements CWSIdentifier {
-    private static final long serialVersionUID = -8303234812509304380L;
+
+  private static final long serialVersionUID = -8303234812509304380L;
 
   @JsonIgnore
   @Column(name = "cws_id")
@@ -25,8 +27,11 @@ public class LegacyComplaintDictionary extends SimpleDictionary implements CWSId
   @Column(name = "lis_id", length = 4)
   private String lisId;
 
+  /**
+   * This method returns cws id code or -1 if code is not present
+   */
   public int getCwsId() {
-    return cwsId;
+    return Optional.ofNullable(cwsId).orElse(-1);
   }
 
   public void setCwsId(int cwsId) {

@@ -11,6 +11,7 @@ import gov.ca.cwds.cals.service.FacilityChildService;
 import gov.ca.cwds.cals.service.FacilityInspectionCollectionService;
 import gov.ca.cwds.cals.service.FacilityInspectionService;
 import gov.ca.cwds.cals.service.FacilityService;
+import gov.ca.cwds.cals.service.FacilityTypeService;
 import gov.ca.cwds.cals.service.FasFacilityService;
 import gov.ca.cwds.cals.service.LisFacilityService;
 import gov.ca.cwds.cals.service.builder.FacilityParameterObjectBuilder;
@@ -78,6 +79,7 @@ public class ServicesModule extends AbstractModule {
     bind(LisFacilityService.class).toProvider(LisFacilityServiceProvider.class);
     bind(FacilityParameterObjectBuilder.class);
     bind(ChildAssignedWorkerService.class);
+    bind(FacilityTypeService.class);
 
     // RFA
     bind(RFA1aFormService.class).toProvider(RFA1aFormServiceProvider.class);
