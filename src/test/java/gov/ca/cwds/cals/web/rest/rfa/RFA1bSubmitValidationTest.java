@@ -1,14 +1,20 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import java.util.*;
+import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixtureTemplate;
+
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.DisclosureDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
-import gov.ca.cwds.cals.service.dto.rfa.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-
-
-import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixtureTemplate;
 
 /**
  * @author CWDS CALS API Team
@@ -202,7 +208,7 @@ public class RFA1bSubmitValidationTest extends BaseRFAIntegrationTest {
     rfa1bFormDTO.accept(applicant.getRfa1bForm());
     applicant = applicantHelper.postApplicant(persistentForm.getId(), applicant);
 
-    ResidenceDTO residence = residenceHelper.getResidenceDTO();
+    ResidenceDTO residence = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(persistentForm.getId(), residence);
     Map<String, Object> params = new HashMap<>();
     params.put("id", applicant.getId());

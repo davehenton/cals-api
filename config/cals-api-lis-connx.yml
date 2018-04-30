@@ -49,7 +49,7 @@ lisDataSourceFactory:
   user: ${DB_LIS_USER:-CWDS_Admin}
   password: ${DB_LIS_PASSWORD:-x}
   url: ${DB_LIS_JDBC_URL:-jdbc:connx:DD=CX_All;Gateway=10.211.5.29;port=7502}
-  validationQuery: "select count(*) from ${DB_LIS_SCHEMA:-dbo}.lis_fac_file"
+  validationQuery: "SELECT ISN_LIS_TABLE_FILE FROM ${DB_LIS_SCHEMA:-dbo}.LIS_TABLE_FILE LIMIT 1"
   logValidationErrors: true
   initialSize: 0
   minSize: 0
@@ -67,7 +67,7 @@ fasDataSourceFactory:
   user: ${DB_FAS_USER:-postgres_data}
   password: ${DB_FAS_PASSWORD:-postgres_data}
   url: ${DB_FAS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
-  validationQuery: "select count(*) from ${DB_FAS_DEFAULT_SCHEMA:-public}.facility_information"
+  validationQuery: "SELECT 1"
   logValidationErrors: true
   initialSize: 0
   minSize: 0
@@ -84,7 +84,7 @@ calsnsDataSourceFactory:
   user: ${DB_NS_USER:-postgres_data}
   password: ${DB_NS_PASSWORD:-postgres_data}
   url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
-  validationQuery: "select count(*) from ${DB_NS_DEFAULT_SCHEMA:-calsns}.rfa_1a"
+  validationQuery: "SELECT 1"
   logValidationErrors: true
   initialSize: 0
   minSize: 0
@@ -105,7 +105,7 @@ xaCalsnsDataSourceFactory:
   password: ${DB_NS_PASSWORD:-postgres_data}
   xaDataSourceClassName: org.postgresql.xa.PGXADataSource
   url: ${DB_NS_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
-  validationQuery: "select count(*) from ${DB_NS_DEFAULT_SCHEMA:-calsns}.rfa_1a"
+  validationQuery: "SELECT 1"
   logValidationErrors: true
   initialSize: 0
   minSize: 0

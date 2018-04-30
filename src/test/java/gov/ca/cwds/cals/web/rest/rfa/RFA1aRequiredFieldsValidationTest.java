@@ -144,7 +144,7 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
     applicantHelper.postApplicant(form.getId(), applicant);
-    ResidenceDTO residenceDTO = residenceHelper.getResidenceDTO();
+    ResidenceDTO residenceDTO = residenceHelper.buildResidenceDTO();
     residenceHelper.putResidence(form.getId(), residenceDTO);
     return formAHelper.getRFA1aForm(form.getId());
   }
@@ -172,7 +172,7 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
     applicant.setPhones(Arrays.asList(phoneDTO, secondaryPhoneDTO));
     applicantHelper.postApplicant(form.getId(), applicant);
 
-    ResidenceDTO residenceDTO = residenceHelper.getResidenceDTO();
+    ResidenceDTO residenceDTO = residenceHelper.buildResidenceDTO();
     residenceDTO.setResidenceOwnership(null);
     residenceDTO.setBodyOfWaterExist(null);
     residenceDTO.setOthersUsingResidenceAsMailing(null);

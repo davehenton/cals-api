@@ -14,8 +14,10 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.inject.RFA1bApplicantAwareServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1bBaseServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1bCollectionServiceBackedResource;
-import gov.ca.cwds.cals.inject.RFA1bServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1bOtherAdultAwareServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1bFormCollectionDTO;
 import gov.ca.cwds.cals.web.rest.parameter.RFAApplicantAwareEntityGetParameterObject;
@@ -55,18 +57,49 @@ public class RFA1bFormsResource {
 
   private TypedResourceDelegate<
       RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<RFA1bFormDTO>>
-      resourceDelegate;
+      baseResourceDelegate;
+
+  private TypedResourceDelegate<
+      RFAExternalEntityGetParameterObject, RFAApplicantAwareEntityUpdateParams<RFA1bFormDTO>>
+      applicantAwareResourceDelegate;
+
+  private TypedResourceDelegate<
+      RFAExternalEntityGetParameterObject, RFAOtherAdultAwareEntityUpdateParams<RFA1bFormDTO>>
+      otherAdultAwareResourceDelegate;
+
+
   private TypedResourceDelegate<Long, Request> collectionResourceDelegate;
 
+  /**
+   * Constructor.
+   * 
+   * @param applicantAwareResourceDelegate Applicant aware service
+   * @param otherAdultAwareResourceDelegate Other Adult aware service
+   * @param baseResourceDelegate Base Service
+   * @param collectionResourceDelegate Collection service
+   */
   @Inject
   public RFA1bFormsResource(
-      @RFA1bServiceBackedResource
+      @RFA1bApplicantAwareServiceBackedResource
           TypedResourceDelegate<
-              RFAExternalEntityGetParameterObject, RFAExternalEntityUpdateParameterObject<RFA1bFormDTO>>
-          resourceDelegate,
+              RFAExternalEntityGetParameterObject,
+              RFAApplicantAwareEntityUpdateParams<RFA1bFormDTO>>
+          applicantAwareResourceDelegate,
+      @RFA1bOtherAdultAwareServiceBackedResource
+          TypedResourceDelegate<
+              RFAExternalEntityGetParameterObject,
+              RFAOtherAdultAwareEntityUpdateParams<RFA1bFormDTO>>
+          otherAdultAwareResourceDelegate,
+      @RFA1bBaseServiceBackedResource
+          TypedResourceDelegate<
+              RFAExternalEntityGetParameterObject,
+              RFAExternalEntityUpdateParameterObject<RFA1bFormDTO>>
+          baseResourceDelegate,
       @RFA1bCollectionServiceBackedResource
           TypedResourceDelegate<Long, Request> collectionResourceDelegate) {
-    this.resourceDelegate = resourceDelegate;
+    this.baseResourceDelegate = baseResourceDelegate;
+    this.applicantAwareResourceDelegate = applicantAwareResourceDelegate;
+    this.otherAdultAwareResourceDelegate = otherAdultAwareResourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
   }
 
@@ -80,7 +113,9 @@ public class RFA1bFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1B form for Applicant", response = RFA1bFormDTO.class)
+  @ApiOperation(
+      value = "Creates and returns RFA 1B form for Applicant",
+      response = RFA1bFormDTO.class)
   public Response createRFA1bFormForApplicant(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
@@ -91,7 +126,7 @@ public class RFA1bFormsResource {
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
           RFA1bFormDTO rfa1bForm) {
-    return resourceDelegate.create(
+    return applicantAwareResourceDelegate.create(
         new RFAApplicantAwareEntityUpdateParams<>(applicationId, applicantId, rfa1bForm));
   }
 
@@ -108,13 +143,13 @@ public class RFA1bFormsResource {
   )
   @ApiOperation(value = "Returns RFA 1B Form for Applicant", response = RFA1bFormDTO.class)
   public Response getRFA1bFormForApplicant(
-    @PathParam(RFA_1A_APPLICATION_ID)
-    @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
-    Long applicationId,
-    @PathParam(RFA_1A_APPLICANT_ID)
-    @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The Applicant Id")
-    Long applicantId) {
-    return resourceDelegate.get(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long applicationId,
+      @PathParam(RFA_1A_APPLICANT_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICANT_ID, value = "The Applicant Id")
+          Long applicantId) {
+    return applicantAwareResourceDelegate.get(
         new RFAApplicantAwareEntityGetParameterObject(applicationId, applicantId));
   }
 
@@ -128,7 +163,9 @@ public class RFA1bFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates and returns RFA 1B form for OtherAdult", response = RFA1bFormDTO.class)
+  @ApiOperation(
+      value = "Creates and returns RFA 1B form for OtherAdult",
+      response = RFA1bFormDTO.class)
   public Response createRFA1bFormForOtherAdult(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
@@ -139,7 +176,7 @@ public class RFA1bFormsResource {
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
           RFA1bFormDTO rfa1bForm) {
-    return resourceDelegate.create(
+    return otherAdultAwareResourceDelegate.create(
         new RFAOtherAdultAwareEntityUpdateParams<>(applicationId, otherAdultId, rfa1bForm));
   }
 
@@ -158,11 +195,11 @@ public class RFA1bFormsResource {
   public Response getRFA1bFormForOtherAdult(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
-      Long applicationId,
+          Long applicationId,
       @PathParam(RFA_1A_OTHER_ADULT_ID)
       @ApiParam(required = true, name = RFA_1A_OTHER_ADULT_ID, value = "The Other Adult Id")
-      Long otherAdultId) {
-    return resourceDelegate.get(
+          Long otherAdultId) {
+    return otherAdultAwareResourceDelegate.get(
         new RFAOtherAdultAwareEntityGetParameterObject(applicationId, otherAdultId));
   }
 
@@ -196,8 +233,9 @@ public class RFA1bFormsResource {
       @ApiParam(required = true, name = RFA_1B_FORM, value = "The RFA-1B Form object")
       @Valid
           RFA1bFormDTO rfa1bFormDTO) {
-    return resourceDelegate.update(new RFAExternalEntityGetParameterObject(applicationId, rfa1BId),
-        new RFAExternalEntityUpdateParameterObject<>(applicationId, rfa1bFormDTO));
+    return baseResourceDelegate
+        .update(new RFAExternalEntityGetParameterObject(applicationId, rfa1BId),
+            new RFAExternalEntityUpdateParameterObject<>(applicationId, rfa1bFormDTO));
   }
 
   @UnitOfWork(CALSNS)
@@ -211,7 +249,9 @@ public class RFA1bFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1B Form by RFA 1A id and RFA 1B id", response = RFA1bFormDTO.class)
+  @ApiOperation(
+      value = "Returns RFA 1B Form by RFA 1A id and RFA 1B id",
+      response = RFA1bFormDTO.class)
   public Response getRFA1BFormById(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(
@@ -228,7 +268,7 @@ public class RFA1bFormsResource {
       )
           Long rfa1BFormId) {
 
-    return resourceDelegate
+    return baseResourceDelegate
         .get(new RFAExternalEntityGetParameterObject(applicationId, rfa1BFormId));
   }
 
@@ -279,7 +319,7 @@ public class RFA1bFormsResource {
           value = "The RFA 1B Form Id"
       )
           Long rfa1BFormId) {
-    return resourceDelegate
+    return baseResourceDelegate
         .delete(new RFAExternalEntityGetParameterObject(applicationId, rfa1BFormId));
   }
 }

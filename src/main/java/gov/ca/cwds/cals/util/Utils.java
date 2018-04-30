@@ -21,18 +21,14 @@ import java.util.Optional;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * @author CALS API Team
- */
+/** @author CALS API Team */
 public final class Utils {
 
-  private Utils() {
-  }
+  private Utils() {}
 
   public static class Phone {
 
-    private Phone() {
-    }
+    private Phone() {}
 
     public static String formatNumber(PhoneDTO phone) {
       String number = phone.getNumber();
@@ -43,8 +39,9 @@ public final class Utils {
     }
 
     public static boolean checkIfPhoneDTOIsValid(PersonPhoneDTO phone) {
-      return (null != phone && StringUtils.isNotBlank(phone.getNumber()) && !phone.getNumber()
-          .equalsIgnoreCase("null"));
+      return (null != phone
+          && StringUtils.isNotBlank(phone.getNumber())
+          && !phone.getNumber().equalsIgnoreCase("null"));
     }
   }
 
@@ -53,8 +50,7 @@ public final class Utils {
     public static final String WATER_BODY = "water body";
     public static final String WEAPON_IN_HOME_BODY = "weapon in home";
 
-    private PlacementHome() {
-    }
+    private PlacementHome() {}
 
     public static String getHazardsDescription(ResidenceDTO residence) {
       if (residence.getWeaponInHome() && residence.getBodyOfWaterExist()) {
@@ -68,20 +64,18 @@ public final class Utils {
       }
       return " ";
     }
-
   }
 
   public static class Applicant {
 
-    private Applicant() {
-    }
+    private Applicant() {}
 
     public static BigDecimal getAnnualIncome(ApplicantDTO applicant) {
       if (applicant.getEmployment() != null) {
         EmploymentDTO employmentDTO = applicant.getEmployment();
         return employmentDTO.getIncome() != null
-            && employmentDTO.getIncomeType() != null
-            && "monthly".equals(employmentDTO.getIncomeType().getValue())
+                && employmentDTO.getIncomeType() != null
+                && "monthly".equals(employmentDTO.getIncomeType().getValue())
             ? employmentDTO.getIncome().multiply(new BigDecimal(12))
             : employmentDTO.getIncome() != null ? employmentDTO.getIncome() : new BigDecimal(0);
       }
@@ -99,8 +93,8 @@ public final class Utils {
     }
 
     public static String getFirstLastName(ApplicantDTO applicant) {
-      return StringUtils
-          .joinWith(Constants.SPACE, applicant.getFirstName(), applicant.getLastName());
+      return StringUtils.joinWith(
+          Constants.SPACE, applicant.getFirstName(), applicant.getLastName());
     }
 
     public static ApplicantDTO getPrimary(RFA1aFormDTO form) {
@@ -131,8 +125,7 @@ public final class Utils {
 
   public static class Address {
 
-    private Address() {
-    }
+    private Address() {}
 
     public static RFAAddressDTO getByType(RFA1aFormDTO rfa1aFormDTO, String type) {
       ResidenceDTO residence = rfa1aFormDTO.getResidence();
@@ -140,7 +133,8 @@ public final class Utils {
         return null;
       }
       Optional<RFAAddressDTO> address =
-          residence.getAddresses()
+          residence
+              .getAddresses()
               .stream()
               .filter(a -> type.equals(a.getType().getValue()))
               .findAny();
@@ -166,56 +160,67 @@ public final class Utils {
     private static String getStreetAddressByPartIndex(RFAAddressDTO address, int partIndex) {
       String[] numberAndName = StringUtils.split(address.getStreetAddress(), null, 2);
       if (numberAndName.length != 2) {
-        throw new ExpectedException(ExpectedExceptionMessages.CANNOT_PARSE_STREET_ADDRESS,
-            Response.Status.BAD_REQUEST);
+        throw new ExpectedException(
+            ExpectedExceptionMessages.CANNOT_PARSE_STREET_ADDRESS, Response.Status.BAD_REQUEST);
       }
       return numberAndName[partIndex];
     }
 
     public static boolean checkIfLisResidentialAddressIsValid(final LisFacFile lisFacFile) {
-      return checkIfLisResidentialAddressIsNotBlank(lisFacFile) &&
-          checkIfLisResidentialAddressIsNotNullString(lisFacFile);
+      return checkIfLisResidentialAddressIsNotBlank(lisFacFile)
+          && checkIfLisResidentialAddressIsNotNullString(lisFacFile);
     }
 
     public static boolean checkIfLisMailAddressIsValid(final LisFacFile lisFacFile) {
-      return checkIfLisMailAddressIsNotBlank(lisFacFile) &&
-          checkIfLisMailAddressIsNotNullString(lisFacFile);
+      return checkIfLisMailAddressIsNotBlank(lisFacFile)
+          && checkIfLisMailAddressIsNotNullString(lisFacFile);
     }
 
     private static boolean checkIfLisResidentialAddressIsNotBlank(final LisFacFile lisFacFile) {
-      return !StringUtils
-          .isAllBlank(lisFacFile.getFacResStreetAddr(), lisFacFile.getFacResCity(),
-              lisFacFile.getFacResState(), lisFacFile.getFacResZipCode());
+      return !StringUtils.isAllBlank(
+          lisFacFile.getFacResStreetAddr(),
+          lisFacFile.getFacResCity(),
+          lisFacFile.getFacResState(),
+          lisFacFile.getFacResZipCode());
     }
 
     private static boolean checkIfLisResidentialAddressIsNotNullString(
         final LisFacFile lisFacFile) {
-      return !lisFacFile.getFacResStreetAddr().equalsIgnoreCase(NULL_STRING) ||
-          !lisFacFile.getFacResCity().equalsIgnoreCase(NULL_STRING) ||
-          !lisFacFile.getFacResState().equalsIgnoreCase(NULL_STRING) ||
-          !lisFacFile.getFacResZipCode().equalsIgnoreCase(NULL_STRING);
+      return (StringUtils.isNotBlank(lisFacFile.getFacResStreetAddr())
+              && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResStreetAddr()))
+          || (StringUtils.isNotBlank(lisFacFile.getFacResCity())
+              && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResCity()))
+          || (StringUtils.isNotBlank(lisFacFile.getFacResState())
+              && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResState()))
+          || (StringUtils.isNotBlank(lisFacFile.getFacResZipCode())
+              && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResZipCode()));
     }
 
     private static boolean checkIfLisMailAddressIsNotBlank(final LisFacFile lisFacFile) {
-      return !StringUtils
-          .isAllBlank(lisFacFile.getFacMailStreetAddr(), lisFacFile.getFacMailCity(),
-              lisFacFile.getFacMailState(), lisFacFile.getFacMailZipCode());
+      return !StringUtils.isAllBlank(
+          lisFacFile.getFacMailStreetAddr(),
+          lisFacFile.getFacMailCity(),
+          lisFacFile.getFacMailState(),
+          lisFacFile.getFacMailZipCode());
     }
 
-    private static boolean checkIfLisMailAddressIsNotNullString(
-        final LisFacFile lisFacFile) {
-      return (StringUtils.isNotBlank(lisFacFile.getFacMailStreetAddr()) && !lisFacFile.getFacMailStreetAddr().equalsIgnoreCase(NULL_STRING)) ||
-             (StringUtils.isNotBlank(lisFacFile.getFacMailCity()) && !lisFacFile.getFacMailCity().equalsIgnoreCase(NULL_STRING)) ||
-             (StringUtils.isNotBlank(lisFacFile.getFacMailState()) && !lisFacFile.getFacMailState().equalsIgnoreCase(NULL_STRING)) ||
-             (StringUtils.isNotBlank(lisFacFile.getFacMailState()) && !lisFacFile.getFacMailZipCode().equalsIgnoreCase(NULL_STRING));
+    private static boolean checkIfLisMailAddressIsNotNullString(final LisFacFile lisFacFile) {
+      return (StringUtils.isNotBlank(lisFacFile.getFacMailStreetAddr())
+              && !lisFacFile.getFacMailStreetAddr().equalsIgnoreCase(NULL_STRING))
+          || (StringUtils.isNotBlank(lisFacFile.getFacMailCity())
+              && !lisFacFile.getFacMailCity().equalsIgnoreCase(NULL_STRING))
+          || (StringUtils.isNotBlank(lisFacFile.getFacMailState())
+              && !lisFacFile.getFacMailState().equalsIgnoreCase(NULL_STRING))
+          || (StringUtils.isNotBlank(lisFacFile.getFacMailState())
+              && !lisFacFile.getFacMailZipCode().equalsIgnoreCase(NULL_STRING));
     }
   }
 
   public static class County {
-    private County() {
-    }
+    private County() {}
 
-    public static String getFlag(List<CountyType> counties, int expectedId, String selectedValue, String rejectedValue) {
+    public static String getFlag(
+        List<CountyType> counties, int expectedId, String selectedValue, String rejectedValue) {
       for (CountyType county : counties) {
         if (county.getCwsId() == expectedId) {
           return selectedValue;
@@ -227,8 +232,7 @@ public final class Utils {
 
   public static class BooleanToString {
 
-    private BooleanToString() {
-    }
+    private BooleanToString() {}
 
     public static String resolve(Boolean flag, String selectedValue, String rejectedValue) {
       if (flag == null) {
@@ -239,7 +243,5 @@ public final class Utils {
       }
       return rejectedValue;
     }
-
   }
-
 }

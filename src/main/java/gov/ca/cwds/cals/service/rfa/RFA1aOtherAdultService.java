@@ -10,7 +10,7 @@ import gov.ca.cwds.cals.service.rfa.factory.OtherAdultFactory;
  * @author CWDS CALS API Team
  */
 public class RFA1aOtherAdultService
-    extends AbstractRFAExternalEntityService<RFA1aOtherAdult, OtherAdultDTO> {
+    extends DefaultRFAExternalEntityService<RFA1aOtherAdult, OtherAdultDTO> {
 
   @Inject
   public RFA1aOtherAdultService(RFA1aOtherAdultDao dao) {

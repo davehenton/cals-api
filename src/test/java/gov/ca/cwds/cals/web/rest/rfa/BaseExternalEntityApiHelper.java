@@ -152,4 +152,8 @@ public class BaseExternalEntityApiHelper<T extends RFAExternalEntityDTO> impleme
   public TestExternalEntityConfiguration<T> getConfiguration() {
     return configuration;
   }
+
+  public RestClientTestRule getClientTestRule() {
+    return clientTestRule;
+  }
 }

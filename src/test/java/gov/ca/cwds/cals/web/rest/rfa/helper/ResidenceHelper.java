@@ -30,7 +30,7 @@ public class ResidenceHelper {
 
   }
 
-  public ResidenceDTO getResidenceDTO() throws IOException {
+  public ResidenceDTO buildResidenceDTO() throws IOException {
     return clientTestRule.getMapper()
         .readValue(RFA1aResidenceResourceTest.RESIDENCE_FIXTURE, ResidenceDTO.class);
   }

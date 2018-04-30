@@ -10,7 +10,7 @@ import gov.ca.cwds.cals.service.rfa.factory.MinorChildFactory;
  * @author CWDS CALS API Team
  */
 public class RFA1aMinorChildService
-    extends AbstractRFAExternalEntityService<RFA1aMinorChild, MinorChildDTO> {
+    extends DefaultRFAExternalEntityService<RFA1aMinorChild, MinorChildDTO> {
 
   @Inject
   public RFA1aMinorChildService(RFA1aMinorChildDao dao) {

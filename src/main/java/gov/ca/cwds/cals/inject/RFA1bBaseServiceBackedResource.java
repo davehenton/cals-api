@@ -10,12 +10,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
+ * Injection annotation.
+ *
  * @author CWDS CALS API Team
  */
 
 @BindingAnnotation
 @Target({FIELD, PARAMETER, METHOD})
 @Retention(RUNTIME)
-public @interface RFA1bServiceBackedResource {
+public @interface RFA1bBaseServiceBackedResource {
 
 }
