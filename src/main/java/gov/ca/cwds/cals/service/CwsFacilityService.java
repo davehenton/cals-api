@@ -102,7 +102,7 @@ public class CwsFacilityService {
 
   protected CwsDictionaryEntriesHolder buildCwsDictionaryEntriesHolder(
       BasePlacementHome placementHome) {
-    return buildCALSNSDictionaryHolder(placementHome, buildCwsDictionaryHolder(placementHome));
+    return buildCalsNsDictionaryHolder(placementHome, buildCwsDictionaryHolder(placementHome));
   }
 
   @UnitOfWork(CMS)
@@ -121,10 +121,10 @@ public class CwsFacilityService {
   }
 
   @UnitOfWork(CALSNS)
-  protected CwsDictionaryEntriesHolder buildCALSNSDictionaryHolder(BasePlacementHome placementHome,
+  protected CwsDictionaryEntriesHolder buildCalsNsDictionaryHolder(BasePlacementHome placementHome,
       CwsDictionaryEntriesHolder dictionaryEntriesHolder) {
-    dictionaryEntriesHolder.setFacilityType(placementHome.getFacilityType() != 0 ?
-        facilityTypeService.getFacilityTypeByCMSFacilityTypeId(placementHome.getFacilityType())
+    dictionaryEntriesHolder.setFacilityType(placementHome.getFacilityType() != 0
+        ? facilityTypeService.getFacilityTypeByCmsFacilityTypeId(placementHome.getFacilityType())
         : null);
     return dictionaryEntriesHolder;
   }

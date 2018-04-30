@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
+ * Service for FacilityType related operations.
+ *
  * @author CWDS CALS-1 Team
  */
 public class FacilityTypeService {
@@ -17,14 +19,14 @@ public class FacilityTypeService {
   @Inject
   private DictionariesDao dictionariesDao;
 
-  FacilityType getFacilityTypeByCMSFacilityTypeId(int CMSId) {
+  FacilityType getFacilityTypeByCmsFacilityTypeId(int cwsId) {
     return getFacilityTypeByPredicates(ft -> ft.getCwsId() != -1,
-        fT -> fT.getCwsId() == CMSId);
+        fT -> fT.getCwsId() == cwsId);
   }
 
-  FacilityType getFacilityTypeByLISFacilityTypeId(Integer LISId) {
+  FacilityType getFacilityTypeByLisFacilityTypeId(Integer lisId) {
     return getFacilityTypeByPredicates(ft -> ft.getLisId() != null,
-        fT -> Integer.valueOf(fT.getLisId()).equals(LISId));
+        fT -> Integer.valueOf(fT.getLisId()).equals(lisId));
   }
 
   private FacilityType getFacilityTypeByPredicates(Predicate<FacilityType> notNullTypePredicate,

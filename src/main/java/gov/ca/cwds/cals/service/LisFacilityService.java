@@ -78,7 +78,7 @@ public class LisFacilityService {
     Integer facilityTypeCode = lisFacFile.getFacilityTypeCode();
     if (facilityTypeCode != null) {
       lisFacFile.setFacilityType(
-          facilityTypeService.getFacilityTypeByLISFacilityTypeId(facilityTypeCode));
+          facilityTypeService.getFacilityTypeByLisFacilityTypeId(facilityTypeCode));
     }
 
     return lisFacFile;

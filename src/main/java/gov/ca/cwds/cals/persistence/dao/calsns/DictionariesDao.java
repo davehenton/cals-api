@@ -12,6 +12,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 /**
+ * Dictionary DAO.
+ *
  * @author CWDS CALS API Team
  */
 public class DictionariesDao extends BaseDaoImpl<BaseDictionary> {
@@ -33,6 +35,13 @@ public class DictionariesDao extends BaseDaoImpl<BaseDictionary> {
     return entities.build();
   }
 
+  /**
+   * Method which finds dictionaries by type.
+   *
+   * @param clazz dictionary class
+   * @param <T> dictionary type which extends BaseDictionary class
+   * @return List of dictionaries
+   */
   public <T extends BaseDictionary> List<T> findDictionariesByType(Class<T> clazz) {
     Session session = getSessionFactory().getCurrentSession();
     Query<T> query = session.createNamedQuery(BaseDictionary.buildFindAllQueryName(clazz), clazz);
