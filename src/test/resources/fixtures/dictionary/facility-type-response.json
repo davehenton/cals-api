@@ -1,100 +1,100 @@
 {
   "items": [
     {
-      "id": 9,
-      "value": "Foster Family Agency Certified Home"
-    },
-    {
-      "id": 400,
+      "id": 1,
       "value": "Adoption Agency"
     },
     {
-      "id": 403,
+      "id": 2,
       "value": "Resource Family Home"
     },
     {
-      "id": 430,
+      "id": 3,
       "value": "Foster Family Agency"
     },
     {
-      "id": 431,
+      "id": 4,
       "value": "Foster Family AG-Sub"
     },
     {
-      "id": 710,
+      "id": 5,
       "value": "Small Family Home"
     },
     {
-      "id": 711,
+      "id": 6,
       "value": "Foster Family Home"
     },
     {
-      "id": 720,
+      "id": 7,
       "value": "Crisis Nursery"
     },
     {
-      "id": 721,
+      "id": 8,
       "value": "Temporary Shelter Care Facility"
     },
     {
-      "id": 722,
+      "id": 9,
       "value": "Transitional Shelter Care"
     },
     {
-      "id": 726,
+      "id": 10,
       "value": "Transitional Housing Placement Program"
     },
     {
-      "id": 728,
+      "id": 11,
       "value": "Community Treatment Facility"
     },
     {
-      "id": 729,
+      "id": 12,
       "value": "GH-Enhanced Behavioral Supports Home"
     },
     {
-      "id": 730,
+      "id": 13,
       "value": "Group Home"
     },
     {
-      "id": 731,
+      "id": 14,
       "value": "Out Of State GH"
     },
     {
-      "id": 732,
-      "value": "Runaway And Homeless Youth Shelter-GH"
-    },
-    {
-      "id": 733,
+      "id": 15,
       "value": "Short Term Residential Therapeutic Program"
     },
     {
-      "id": 790,
+      "id": 16,
       "value": "County Shelter/Receiving Home(Non EA/AFDC)"
     },
     {
-      "id": 791,
+      "id": 17,
       "value": "Court Specified Home"
     },
     {
-      "id": 793,
-      "value": "Relative/NREFM Home"
-    },
-    {
-      "id": 795,
+      "id": 18,
       "value": "Tribe Specified Home"
     },
     {
-      "id": 796,
+      "id": 19,
       "value": "Guardian Home"
     },
     {
-      "id": 800,
+      "id": 20,
+      "value": "Relative/NREFM Home"
+    },
+    {
+      "id": 21,
       "value": "Supervised Independent Living Placement"
     },
     {
-      "id": 808,
+      "id": 22,
+      "value": "Foster Family Agency Certified Home"
+    },
+    {
+      "id": 23,
       "value": "Foster Fam Agency Cert Resource Fam Home"
+    },
+    {
+      "id": 24,
+      "value": "Runaway And Homeless Youth Shelter-GH"
     }
   ]
 }

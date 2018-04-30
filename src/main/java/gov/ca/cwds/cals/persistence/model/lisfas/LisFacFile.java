@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.lisfas;
 
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -122,7 +123,7 @@ public class LisFacFile implements PersistentObject {
   private Integer facBilingual;
   private LisTableFile county;
   private LisTableFile facilityStatus;
-  private LisTableFile facilityType;
+  private FacilityType facilityType;
   private BigInteger timestamp;
 
   @Id
@@ -1149,12 +1150,12 @@ public class LisFacFile implements PersistentObject {
     return facilityStatus;
   }
 
-  public void setFacilityType(LisTableFile facilityType) {
+  public void setFacilityType(FacilityType facilityType) {
     this.facilityType = facilityType;
   }
 
   @Transient
-  public LisTableFile getFacilityType() {
+  public FacilityType getFacilityType() {
     return facilityType;
   }
 

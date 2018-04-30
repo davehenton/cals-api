@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 
 import com.google.inject.Inject;
@@ -11,7 +12,6 @@ import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.cms.data.access.service.impl.PlacementHomeCoreService;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
 import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
-import gov.ca.cwds.data.legacy.cms.dao.FacilityTypeDao;
 import gov.ca.cwds.data.legacy.cms.dao.LicenseStatusDao;
 import gov.ca.cwds.data.legacy.cms.dao.StateDao;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
@@ -45,9 +45,6 @@ public class CwsFacilityService {
   private StateDao stateDao;
 
   @Inject
-  private FacilityTypeDao facilityTypeDao;
-
-  @Inject
   private FacilityMapper facilityMapper;
 
   @Inject
@@ -55,6 +52,9 @@ public class CwsFacilityService {
 
   @Inject
   private ChildAssignedWorkerService childAssignedWorkerService;
+
+  @Inject
+  private FacilityTypeService facilityTypeService;
 
   /**
    * Load facility from CWS.
@@ -100,9 +100,13 @@ public class CwsFacilityService {
     return placementHome;
   }
 
-  @UnitOfWork(CMS)
   protected CwsDictionaryEntriesHolder buildCwsDictionaryEntriesHolder(
       BasePlacementHome placementHome) {
+    return buildCALSNSDictionaryHolder(placementHome, buildCwsDictionaryHolder(placementHome));
+  }
+
+  @UnitOfWork(CMS)
+  protected CwsDictionaryEntriesHolder buildCwsDictionaryHolder(BasePlacementHome placementHome) {
     CwsDictionaryEntriesHolder dictionaryEntriesHolder = new CwsDictionaryEntriesHolder();
     dictionaryEntriesHolder.setApplicationCounty(
         placementHome.getGvrEntc() != 0 ? countiesDao.find(placementHome.getGvrEntc()) : null);
@@ -113,10 +117,15 @@ public class CwsFacilityService {
     dictionaryEntriesHolder.setPayeeStateCode(
         placementHome.getPayeeStateCode() != 0 ? stateDao.find(placementHome.getPayeeStateCode())
             : null);
-    dictionaryEntriesHolder.setFacilityType(
-        placementHome.getFacilityType() != 0 ? facilityTypeDao.find(placementHome.getFacilityType())
-            : null);
     return dictionaryEntriesHolder;
   }
 
+  @UnitOfWork(CALSNS)
+  protected CwsDictionaryEntriesHolder buildCALSNSDictionaryHolder(BasePlacementHome placementHome,
+      CwsDictionaryEntriesHolder dictionaryEntriesHolder) {
+    dictionaryEntriesHolder.setFacilityType(placementHome.getFacilityType() != 0 ?
+        facilityTypeService.getFacilityTypeByCMSFacilityTypeId(placementHome.getFacilityType())
+        : null);
+    return dictionaryEntriesHolder;
+  }
 }

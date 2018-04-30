@@ -34,7 +34,7 @@ public class DictionariesDao extends BaseDaoImpl<BaseDictionary> {
   }
 
   public <T extends BaseDictionary> List<T> findDictionariesByType(Class<T> clazz) {
-    Session session = this.getSessionFactory().getCurrentSession();
+    Session session = getSessionFactory().getCurrentSession();
     Query<T> query = session.createNamedQuery(BaseDictionary.buildFindAllQueryName(clazz), clazz);
     query.setCacheable(true).setCacheRegion("dictionaries");
     ImmutableList.Builder<T> entities = new ImmutableList.Builder<>();

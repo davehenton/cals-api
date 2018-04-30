@@ -1,144 +1,100 @@
 {
   "facility_types": [
     {
-      "id": "400",
-      "value": "ADOPTION AGENCY"
+      "id": 1,
+      "value": "Adoption Agency"
     },
     {
-      "id": "775",
-      "value": "ADULT DAY CARE"
+      "id": 2,
+      "value": "Resource Family Home"
     },
     {
-      "id": "735",
-      "value": "ADULT RESIDENTIAL"
+      "id": 3,
+      "value": "Foster Family Agency"
     },
     {
-      "id": "737",
-      "value": "ARF-ENHANCED BEHAVIORAL SUPPORTS HOME"
+      "id": 4,
+      "value": "Foster Family AG-Sub"
     },
     {
-      "id": "734",
-      "value": "ARFPSHN"
+      "id": 5,
+      "value": "Small Family Home"
     },
     {
-      "id": "738",
-      "value": "COMMUNITY CRISIS HOME-ARF"
+      "id": 6,
+      "value": "Foster Family Home"
     },
     {
-      "id": "728",
-      "value": "COMMUNITY TREATMENT FACILITY"
+      "id": 7,
+      "value": "Crisis Nursery"
     },
     {
-      "id": "720",
-      "value": "CRISIS NURSERY"
+      "id": 8,
+      "value": "Temporary Shelter Care Facility"
     },
     {
-      "id": "850",
-      "value": "DAY CARE CENTER"
+      "id": 9,
+      "value": "Transitional Shelter Care"
     },
     {
-      "id": "845",
-      "value": "DC CENTER - ILL CHILD"
+      "id": 10,
+      "value": "Transitional Housing Placement Program"
     },
     {
-      "id": "999",
-      "value": "DUMMY FACILITY"
+      "id": 11,
+      "value": "Community Treatment Facility"
     },
     {
-      "id": "810",
-      "value": "FAMILY DAY CARE"
+      "id": 12,
+      "value": "GH-Enhanced Behavioral Supports Home"
     },
     {
-      "id": "433",
-      "value": "FFA CERTIFIED HOME"
+      "id": 13,
+      "value": "Group Home"
     },
     {
-      "id": "431",
-      "value": "FOSTER FAMILY AG-SUB"
+      "id": 14,
+      "value": "Out Of State GH"
     },
     {
-      "id": "430",
-      "value": "FOSTER FAMILY AGENCY"
+      "id": 15,
+      "value": "Short Term Residential Therapeutic Program"
     },
     {
-      "id": "711",
-      "value": "FOSTER FAMILY HOME"
+      "id": 16,
+      "value": "County Shelter/Receiving Home(Non EA/AFDC)"
     },
     {
-      "id": "729",
-      "value": "GH-ENHANCED BEHAVIORAL SUPPORTS HOME"
+      "id": 17,
+      "value": "Court Specified Home"
     },
     {
-      "id": "730",
-      "value": "GROUP HOME"
+      "id": 18,
+      "value": "Tribe Specified Home"
     },
     {
-      "id": "300",
-      "value": "HOME CARE ORGANIZATION"
+      "id": 19,
+      "value": "Guardian Home"
     },
     {
-      "id": "830",
-      "value": "INFANT CENTER"
+      "id": 20,
+      "value": "Relative/NREFM Home"
     },
     {
-      "id": "731",
-      "value": "OUT OF STATE GH"
+      "id": 21,
+      "value": "Supervised Independent Living Placement"
     },
     {
-      "id": "771",
-      "value": "REHAB FACILITY"
+      "id": 22,
+      "value": "Foster Family Agency Certified Home"
     },
     {
-      "id": "736",
-      "value": "RESID FAC CHRON ILL"
+      "id": 23,
+      "value": "Foster Fam Agency Cert Resource Fam Home"
     },
     {
-      "id": "741",
-      "value": "RESIDENTIAL ELDERLY-CONTINUING CARE"
-    },
-    {
-      "id": "740",
-      "value": "RESIDENTIAL-ELDERLY"
-    },
-    {
-      "id": "403",
-      "value": "RESOURCE FAMILY HOME"
-    },
-    {
-      "id": "732",
-      "value": "RUNAWAY AND HOMELESS YOUTH SHELTER-GH"
-    },
-    {
-      "id": "840",
-      "value": "SCHOOL-AGE DC CENTER"
-    },
-    {
-      "id": "733",
-      "value": "SHORT TERM RESIDENTIAL THERAPEUTIC PROGRAM"
-    },
-    {
-      "id": "710",
-      "value": "SMALL FAMILY HOME"
-    },
-    {
-      "id": "772",
-      "value": "SOCIAL REHABILITATION FACILITY"
-    },
-    {
-      "id": "432",
-      "value": "SUB EMPLOYMENT REG"
-    },
-    {
-      "id": "721",
-      "value": "TEMPORARY SHELTER CARE FACILITY"
-    },
-    {
-      "id": "726",
-      "value": "TRANSITIONAL HOUSING PLACEMENT PROGRAM"
-    },
-    {
-      "id": "722",
-      "value": "TRANSITIONAL SHELTER CARE"
+      "id": 24,
+      "value": "Runaway And Homeless Youth Shelter-GH"
     }
   ]
 }

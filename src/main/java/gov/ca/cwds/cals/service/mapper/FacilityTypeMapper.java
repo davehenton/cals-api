@@ -1,8 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
 import gov.ca.cwds.cals.service.dto.FacilityTypeDTO;
-import gov.ca.cwds.data.legacy.cms.entity.syscodes.FacilityType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -12,14 +11,10 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(uses = TrailingSpacesRemovalPostMappingProcessor.class)
 public interface FacilityTypeMapper {
-    FacilityTypeMapper INSTANCE = Mappers.getMapper(FacilityTypeMapper.class);
 
-    @Mapping(target = "code", source = "tblFacTypeCode")
-    @Mapping(target = "description", source = "tblFacTypeDesc")
-    FacilityTypeDTO toFacilityTypeDTO(LisTableFile lisTableFile);
+  FacilityTypeMapper INSTANCE = Mappers.getMapper(FacilityTypeMapper.class);
 
-    @Mapping(target = "code", source = "logicalId")
-    @Mapping(target = "description", source = "shortDescription")
-    FacilityTypeDTO toFacilityTypeDTO(FacilityType facilityType);
-
+  @Mapping(target = "code", source = "id")
+  @Mapping(target = "description", source = "value")
+  FacilityTypeDTO toFacilityTypeDTO(FacilityType facilityType);
 }
