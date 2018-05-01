@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by Alexander Serbin on 3/26/2018.
  */
+@SuppressWarnings("WeakerAccess")
 public class LisFacilityService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LisFacilityService.class);
