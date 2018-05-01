@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Alexander Serbin on 3/26/2018.
  */
+@SuppressWarnings("WeakerAccess")
 public class CwsFacilityService {
 
   @Inject
