@@ -60,7 +60,7 @@ public class LisFacilityService {
   LisFacFile findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
     LisFacFile lisFacFile = findLisFacilityByLicenseNumberLis(parameterObject);
     if (null != lisFacFile) {
-      lisFacFile = addFacilityTypeToLisFacilityAndReturn(lisFacFile);
+      lisFacFile = addFacilityTypeToLisFacility(lisFacFile);
     }
     return lisFacFile;
   }
@@ -88,7 +88,7 @@ public class LisFacilityService {
   }
 
   @UnitOfWork(CALSNS)
-  LisFacFile addFacilityTypeToLisFacilityAndReturn(LisFacFile lisFacFile) {
+  LisFacFile addFacilityTypeToLisFacility(LisFacFile lisFacFile) {
     Integer facilityTypeCode = lisFacFile.getFacilityTypeCode();
     if (facilityTypeCode != null) {
       lisFacFile.setFacilityType(
