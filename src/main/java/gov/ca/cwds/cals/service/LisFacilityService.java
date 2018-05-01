@@ -43,7 +43,7 @@ public class LisFacilityService {
   /**
    * Load facility from LIS.
    */
-  FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
+  public FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
     LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
     if (lisDsLisFacFile == null) {
       LOGGER.warn(
