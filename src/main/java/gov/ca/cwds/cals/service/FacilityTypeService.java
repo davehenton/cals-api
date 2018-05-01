@@ -26,7 +26,7 @@ public class FacilityTypeService {
 
   FacilityType getFacilityTypeByLisFacilityTypeId(Integer lisId) {
     return getFacilityTypeByPredicates(ft -> ft.getLisId() != null,
-        fT -> Integer.valueOf(fT.getLisId()).equals(lisId));
+        fT -> Integer.valueOf(fT.getLisId().trim()).equals(lisId));
   }
 
   private FacilityType getFacilityTypeByPredicates(Predicate<FacilityType> notNullTypePredicate,

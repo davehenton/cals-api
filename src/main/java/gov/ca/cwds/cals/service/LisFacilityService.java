@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.service;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 import com.google.inject.Inject;
@@ -41,7 +42,7 @@ public class LisFacilityService {
   /**
    * Load facility from LIS.
    */
-  public FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
+  FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
     LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
     if (lisDsLisFacFile == null) {
       LOGGER.warn(
@@ -55,8 +56,16 @@ public class LisFacilityService {
     return facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
   }
 
-  @UnitOfWork(LIS)
   LisFacFile findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
+    LisFacFile lisFacFile = findLisFacilityByLicenseNumberLis(parameterObject);
+    if (null != lisFacFile) {
+      lisFacFile = addFacilityTypeToLisFacilityAndReturn(lisFacFile);
+    }
+    return lisFacFile;
+  }
+
+  @UnitOfWork(LIS)
+  LisFacFile findLisFacilityByLicenseNumberLis(FacilityParameterObject parameterObject) {
     LisFacFile lisFacFile = lisFacFileLisDao
         .find(Integer.valueOf(parameterObject.getFacilityId()));
     if (lisFacFile == null) {
@@ -74,13 +83,16 @@ public class LisFacilityService {
       LisTableFile facilityStatus = lisTableFileDao.findFacilityStatus(facilityStatusCode);
       lisFacFile.setFacilityStatus(facilityStatus);
     }
+    return lisFacFile;
+  }
 
+  @UnitOfWork(CALSNS)
+  LisFacFile addFacilityTypeToLisFacilityAndReturn(LisFacFile lisFacFile) {
     Integer facilityTypeCode = lisFacFile.getFacilityTypeCode();
     if (facilityTypeCode != null) {
       lisFacFile.setFacilityType(
           facilityTypeService.getFacilityTypeByLisFacilityTypeId(facilityTypeCode));
     }
-
     return lisFacFile;
   }
 
@@ -100,5 +112,4 @@ public class LisFacilityService {
       facilityInformation.setFacilityLastDeferredVisitReason(facilityLastDeferredVisitReason);
     }
   }
-
 }
