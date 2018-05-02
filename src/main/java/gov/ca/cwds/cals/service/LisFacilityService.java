@@ -98,7 +98,7 @@ public class LisFacilityService {
         facilityType = facilityTypeService.getFacilityTypeByLisFacilityTypeId(facilityTypeCode);
       } catch (DictionaryEntryNotFoundException e) {
         facilityType = null;
-        LOGGER.warn("!!!Can't find facility type for code {}", facilityTypeCode);
+        LOGGER.warn("Can't find facility type for code {}", facilityTypeCode);
       }
       lisFacFile.setFacilityType(facilityType);
     }
