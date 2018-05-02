@@ -4,8 +4,10 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.exceptions.DictionaryEntryNotFoundException;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
 import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
 import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
@@ -91,8 +93,14 @@ public class LisFacilityService {
   LisFacFile addFacilityTypeToLisFacility(LisFacFile lisFacFile) {
     Integer facilityTypeCode = lisFacFile.getFacilityTypeCode();
     if (facilityTypeCode != null) {
-      lisFacFile.setFacilityType(
-          facilityTypeService.getFacilityTypeByLisFacilityTypeId(facilityTypeCode));
+      FacilityType facilityType;
+      try {
+        facilityType = facilityTypeService.getFacilityTypeByLisFacilityTypeId(facilityTypeCode);
+      } catch (DictionaryEntryNotFoundException e) {
+        facilityType = null;
+        LOGGER.warn("Can't find facility type for code {}", facilityTypeCode);
+      }
+      lisFacFile.setFacilityType(facilityType);
     }
     return lisFacFile;
   }
