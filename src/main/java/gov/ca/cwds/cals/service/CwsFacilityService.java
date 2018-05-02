@@ -137,7 +137,7 @@ public class CwsFacilityService {
             .getFacilityTypeByCmsFacilityTypeId(placementHome.getFacilityType());
       } catch (DictionaryEntryNotFoundException e) {
         facilityType = null;
-        LOGGER.warn("!!!Can't find facility type for code {}", placementHome.getFacilityType());
+        LOGGER.warn("Can't find facility type for code {}", placementHome.getFacilityType());
       }
       dictionaryEntriesHolder.setFacilityType(facilityType);
     }
