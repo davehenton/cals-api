@@ -4,6 +4,8 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.exceptions.DictionaryEntryNotFoundException;
+import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
@@ -23,12 +25,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Alexander Serbin on 3/26/2018.
  */
 @SuppressWarnings("WeakerAccess")
 public class CwsFacilityService {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(CwsFacilityService.class);
 
   @Inject
   private PlacementHomeCoreService placementHomeService;
@@ -124,9 +130,17 @@ public class CwsFacilityService {
   @UnitOfWork(CALSNS)
   protected CwsDictionaryEntriesHolder buildCalsNsDictionaryHolder(BasePlacementHome placementHome,
       CwsDictionaryEntriesHolder dictionaryEntriesHolder) {
-    dictionaryEntriesHolder.setFacilityType(placementHome.getFacilityType() != 0
-        ? facilityTypeService.getFacilityTypeByCmsFacilityTypeId(placementHome.getFacilityType())
-        : null);
+    if (placementHome.getFacilityType() != null) {
+      FacilityType facilityType;
+      try {
+        facilityType = facilityTypeService
+            .getFacilityTypeByCmsFacilityTypeId(placementHome.getFacilityType());
+      } catch (DictionaryEntryNotFoundException e) {
+        facilityType = null;
+        LOGGER.warn("!!!Can't find facility type for code {}", placementHome.getFacilityType());
+      }
+      dictionaryEntriesHolder.setFacilityType(facilityType);
+    }
     return dictionaryEntriesHolder;
   }
 }
