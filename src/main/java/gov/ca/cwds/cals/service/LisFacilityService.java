@@ -49,7 +49,7 @@ public class LisFacilityService {
     LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
     if (lisDsLisFacFile == null) {
       LOGGER.warn(
-          "!!!Facility was not found in LIS by license number {}",
+          "Facility was not found in LIS by license number {}",
           parameterObject.getFacilityId());
       return null;
     }
