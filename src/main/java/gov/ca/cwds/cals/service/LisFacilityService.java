@@ -16,6 +16,9 @@ import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import io.dropwizard.hibernate.UnitOfWork;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +29,14 @@ import org.slf4j.LoggerFactory;
 public class LisFacilityService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LisFacilityService.class);
+
+  private static final Integer[] acceptableFacilityTypes =
+      new Integer[] {
+          400, 403, 430, 431, 433, 710, 711, 720, 721, 722, 726, 728, 729, 730, 731, 732, 733
+      };
+  private static final Set<Integer> acceptableFacilityTypesSet =
+      new HashSet<>(Arrays.asList(acceptableFacilityTypes));
+
 
   @Inject
   private LisTableFileDao lisTableFileDao;
@@ -71,7 +82,7 @@ public class LisFacilityService {
   LisFacFile findLisFacilityByLicenseNumberLis(FacilityParameterObject parameterObject) {
     LisFacFile lisFacFile = lisFacFileLisDao
         .find(Integer.valueOf(parameterObject.getFacilityId()));
-    if (lisFacFile == null) {
+    if (lisFacFile == null || !acceptableFacilityTypesSet.contains(lisFacFile.getFacilityTypeCode())) {
       return null;
     }
 

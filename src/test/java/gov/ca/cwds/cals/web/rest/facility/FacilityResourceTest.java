@@ -77,6 +77,14 @@ public class FacilityResourceTest extends BaseCalsApiIntegrationTest {
   }
 
   @Test
+  public void testGetFacilityByFacilityIdWithProhibitedFacilityType() throws Exception {
+    WebTarget target = clientTestRule.target(Constants.API.FACILITIES + "/" + "193600001");
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    Response response = invocation.get();
+    assertEquals(404, response.getStatus());
+  }
+
+  @Test
   public void testGetFacilityWithLastCapacityChanged() throws Exception {
     WebTarget target = clientTestRule.target(Constants.API.FACILITIES + "/" + FACILITY_FROM_LIS_ID);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
