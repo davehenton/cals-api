@@ -82,7 +82,8 @@ public class LisFacilityService {
   LisFacFile findLisFacilityByLicenseNumberLis(FacilityParameterObject parameterObject) {
     LisFacFile lisFacFile = lisFacFileLisDao
         .find(Integer.valueOf(parameterObject.getFacilityId()));
-    if (lisFacFile == null || !acceptableFacilityTypesSet.contains(lisFacFile.getFacilityTypeCode())) {
+    if (lisFacFile == null
+        || !acceptableFacilityTypesSet.contains(lisFacFile.getFacilityTypeCode())) {
       return null;
     }
 
