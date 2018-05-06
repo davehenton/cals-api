@@ -72,27 +72,23 @@ public class LisFacilityService {
 
   @UnitOfWork(LIS)
   Optional<LisFacFile> findLisFacilityByLicenseNumberLis(FacilityParameterObject parameterObject) {
-    Optional<LisFacFile> lisFacFile =
-        Optional.ofNullable(
-            lisFacFileLisDao.find(Integer.valueOf(parameterObject.getFacilityId())));
-    if (lisFacFile.isPresent()
-        && facilityHasAcceptableType(lisFacFile.get())) {
-      Integer countyCode = lisFacFile.get().getCountyCode();
+    LisFacFile lisFacFile = lisFacFileLisDao.find(Integer.valueOf(parameterObject.getFacilityId()));
+    if (lisFacFile != null && facilityHasAcceptableType(lisFacFile)) {
+      Integer countyCode = lisFacFile.getCountyCode();
       if (countyCode != null) {
         LisTableFile county = lisTableFileDao.findCounty(countyCode);
-        lisFacFile.get().setCounty(county);
+        lisFacFile.setCounty(county);
       }
 
-      Integer facilityStatusCode = lisFacFile.get().getFacilityStatusCode();
+      Integer facilityStatusCode = lisFacFile.getFacilityStatusCode();
       if (facilityStatusCode != null) {
         LisTableFile facilityStatus = lisTableFileDao.findFacilityStatus(facilityStatusCode);
-        lisFacFile.get().setFacilityStatus(facilityStatus);
+        lisFacFile.setFacilityStatus(facilityStatus);
       }
     } else {
-      lisFacFile = Optional.ofNullable(null);
+      lisFacFile = null;
     }
-
-    return lisFacFile;
+    return Optional.ofNullable(lisFacFile);
   }
 
   private boolean facilityHasAcceptableType(LisFacFile lisFacFile) {
