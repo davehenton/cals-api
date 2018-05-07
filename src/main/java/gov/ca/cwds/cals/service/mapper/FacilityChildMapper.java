@@ -30,7 +30,8 @@ public interface FacilityChildMapper {
   FacilityChildMapper INSTANCE = Mappers.getMapper(FacilityChildMapper.class);
 
   @Mapping(target = "id", source = "client.identifier")
-  @Mapping(target = "displayClientId", expression = "java(CmsKeyIdGenerator.getUIIdentifierFromKey(client.getIdentifier()))")
+  @Mapping(target = "displayClientId",
+      expression = "java(CmsKeyIdGenerator.getUIIdentifierFromKey(client.getIdentifier()))")
   @Mapping(target = "person", source = "client")
   @Mapping(target = "dateOfPlacement", ignore = true)
   @Mapping(target = "countyOfOrigin", ignore = true)
