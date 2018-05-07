@@ -90,12 +90,14 @@ public class LisFacilityService {
     return Optional.ofNullable(lisFacFile);
   }
 
-  private boolean facilityHasAcceptableType(LisFacFile lisFacFile) {
+  @UnitOfWork(CALSNS)
+  boolean facilityHasAcceptableType(LisFacFile lisFacFile) {
     return facilityTypeService.getFacilityTypeByLisFacilityTypeId(
             lisFacFile.getFacilityTypeCode())
         != null;
   }
 
+  @UnitOfWork(CALSNS)
   LisFacFile addFacilityTypeToLisFacility(LisFacFile lisFacFile) {
     Integer facilityTypeCode = lisFacFile.getFacilityTypeCode();
     if (facilityTypeCode != null) {

@@ -1,12 +1,9 @@
 package gov.ca.cwds.cals.service;
 
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.exceptions.DictionaryEntryNotFoundException;
 import gov.ca.cwds.cals.persistence.dao.calsns.DictionariesDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
-import io.dropwizard.hibernate.UnitOfWork;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -27,7 +24,6 @@ public class FacilityTypeService {
         fT -> fT.getCwsId() == cwsId);
   }
 
-  @UnitOfWork(CALSNS)
   FacilityType getFacilityTypeByLisFacilityTypeId(Integer lisId) {
     return getFacilityTypeByPredicates(ft -> ft.getLisId() != null,
         fT -> Integer.valueOf(fT.getLisId().trim()).equals(lisId));
