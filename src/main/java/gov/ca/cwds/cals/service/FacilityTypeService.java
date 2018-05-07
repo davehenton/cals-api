@@ -41,7 +41,7 @@ public class FacilityTypeService {
     return facilityType;
   }
 
-  private synchronized void checkDictionaryListAndCreateIfNeeded() {
+  private void checkDictionaryListAndCreateIfNeeded() {
     if (null == dictionaryList) {
       dictionaryList = dictionariesDao.findDictionariesByType(FacilityType.class);
     }
