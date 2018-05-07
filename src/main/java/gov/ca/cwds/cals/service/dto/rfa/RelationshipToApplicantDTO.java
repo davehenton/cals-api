@@ -29,6 +29,10 @@ public class RelationshipToApplicantDTO extends BaseDTO {
   @ApiModelProperty(value = "Applicant Id", example = "1234567")
   private Long applicantId;
 
+  private Boolean childFinanciallySupported;
+
+  private Boolean childAdopted;
+
   public RelationshipToApplicantType getRelationshipToApplicantType() {
     return relationshipToApplicantType;
   }
@@ -55,5 +59,20 @@ public class RelationshipToApplicantDTO extends BaseDTO {
     this.applicantId = applicantId;
   }
 
+  public Boolean getChildFinanciallySupported() {
+    return childFinanciallySupported;
+  }
+
+  public void setChildFinanciallySupported(Boolean childFinanciallySupported) {
+    this.childFinanciallySupported = childFinanciallySupported;
+  }
+
+  public Boolean getChildAdopted() {
+    return childAdopted;
+  }
+
+  public void setChildAdopted(Boolean childAdopted) {
+    this.childAdopted = childAdopted;
+  }
 }
 

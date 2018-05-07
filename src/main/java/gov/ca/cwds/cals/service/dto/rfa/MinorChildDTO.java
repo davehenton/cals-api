@@ -50,10 +50,6 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
   @CheckReferentialIntegrity(enrich = true)
   private GenderType gender;
 
-  private Boolean childFinanciallySupported;
-
-  private Boolean childAdopted;
-
   public List<RelationshipToApplicantDTO> getRelationshipToApplicants() {
     return relationshipToApplicants;
   }
@@ -129,19 +125,4 @@ public class MinorChildDTO extends RFAExternalEntityDTO {
     this.otherRelative = otherRelative;
   }
 
-  public Boolean getChildFinanciallySupported() {
-    return childFinanciallySupported;
-  }
-
-  public void setChildFinanciallySupported(Boolean childFinanciallySupported) {
-    this.childFinanciallySupported = childFinanciallySupported;
-  }
-
-  public Boolean getChildAdopted() {
-    return childAdopted;
-  }
-
-  public void setChildAdopted(Boolean childAdopted) {
-    this.childAdopted = childAdopted;
-  }
 }
