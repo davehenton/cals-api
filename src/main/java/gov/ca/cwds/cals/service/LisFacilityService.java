@@ -46,7 +46,7 @@ public class LisFacilityService {
   /**
    * Load facility from LIS.
    */
-  public FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
+  public Optional<FacilityDTO> loadFacilityFromLis(FacilityParameterObject parameterObject) {
     Optional<LisFacFile> lisFacFile = findLisFacilityByLicenseNumber(parameterObject);
     FacilityDTO facilityDTO = null;
     if (lisFacFile.isPresent()) {
@@ -59,7 +59,7 @@ public class LisFacilityService {
           "Facility was not found in LIS by license number {}",
           parameterObject.getFacilityId());
     }
-    return facilityDTO;
+    return Optional.ofNullable(facilityDTO);
   }
 
   Optional<LisFacFile> findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
