@@ -74,8 +74,7 @@ public class FacilityService implements CrudsService {
 
   private FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
     Optional<FacilityDTO> facilityDto = lisFacilityService.loadFacilityFromLis(parameterObject);
-    facilityDto.ifPresent(facility -> enrichFacilityWithFasData(parameterObject, facility));
-    return facilityDto.get();
+    return facilityDto.map(facility -> enrichFacilityWithFasData(parameterObject, facility)).orElse(null);
   }
 
   private FacilityDTO enrichFacilityWithFasData(FacilityParameterObject parameterObject,
