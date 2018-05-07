@@ -259,8 +259,8 @@ public class RFA1aRequiredFieldsValidationTest extends BaseRFAIntegrationTest {
     MinorChildDTO minorChild = minorChildHelper.buildNewMinorChildDTO(firstApplicant);
     minorChild.setDateOfBirth(null);
     minorChild.setGender(null);
-    minorChild.setChildFinanciallySupported(null);
-    minorChild.setChildAdopted(null);
+    minorChild.getRelationshipToApplicants().get(0).setChildFinanciallySupported(null);
+    minorChild.getRelationshipToApplicants().get(0).setChildAdopted(null);
     return minorChild;
   }
 
