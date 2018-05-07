@@ -63,34 +63,39 @@ public class LisFacilityService {
   }
 
   Optional<LisFacFile> findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
-    Optional<LisFacFile> lisFacFile = findLisFacilityByLicenseNumberLis(parameterObject);
-    if (lisFacFile.isPresent()) {
-      FacilityType facilityType = getFacilityType(lisFacFile.get().getFacilityTypeCode());
-      if (facilityType != null) {
-        lisFacFile.get().setFacilityType(facilityType);
-      } else {
-        lisFacFile = Optional.empty();
-      }
-    }
-    return lisFacFile;
+    return findLisFacilityByLicenseNumberLis(parameterObject)
+        .map(
+            lisFacFile ->
+                Optional.ofNullable(getFacilityType(lisFacFile.getFacilityTypeCode()))
+                    .map(
+                        facilityType -> {
+                          lisFacFile.setFacilityType(facilityType);
+                          return lisFacFile;
+                        })
+                    .orElse(null));
   }
 
   @UnitOfWork(LIS)
   Optional<LisFacFile> findLisFacilityByLicenseNumberLis(FacilityParameterObject parameterObject) {
-    LisFacFile lisFacFile = lisFacFileLisDao.find(Integer.valueOf(parameterObject.getFacilityId()));
-    if (lisFacFile != null) {
-      Integer countyCode = lisFacFile.getCountyCode();
-      if (countyCode != null) {
-        LisTableFile county = lisTableFileDao.findCounty(countyCode);
-        lisFacFile.setCounty(county);
-      }
-      Integer facilityStatusCode = lisFacFile.getFacilityStatusCode();
-      if (facilityStatusCode != null) {
-        LisTableFile facilityStatus = lisTableFileDao.findFacilityStatus(facilityStatusCode);
-        lisFacFile.setFacilityStatus(facilityStatus);
-      }
-    }
-    return Optional.ofNullable(lisFacFile);
+    return Optional.ofNullable(
+            lisFacFileLisDao.find(Integer.valueOf(parameterObject.getFacilityId())))
+        .map(
+            lisFacFile -> {
+              Optional.ofNullable(lisFacFile.getCountyCode())
+                  .ifPresent(
+                      countyCode -> {
+                        LisTableFile county = lisTableFileDao.findCounty(countyCode);
+                        lisFacFile.setCounty(county);
+                      });
+              Optional.ofNullable(lisFacFile.getFacilityStatusCode())
+                  .ifPresent(
+                      facilityStatusCode -> {
+                        LisTableFile facilityStatus =
+                            lisTableFileDao.findFacilityStatus(facilityStatusCode);
+                        lisFacFile.setFacilityStatus(facilityStatus);
+                      });
+              return lisFacFile;
+            });
   }
 
   @UnitOfWork(CALSNS)
