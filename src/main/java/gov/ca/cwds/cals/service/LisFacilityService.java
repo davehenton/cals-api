@@ -64,10 +64,13 @@ public class LisFacilityService {
 
   Optional<LisFacFile> findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
     Optional<LisFacFile> lisFacFile = findLisFacilityByLicenseNumberLis(parameterObject);
-    if (lisFacFile.isPresent() && facilityHasAcceptableType(lisFacFile.get())) {
-      lisFacFile = Optional.of(addFacilityTypeToLisFacility(lisFacFile.get()));
-    } else {
-      lisFacFile = Optional.empty();
+    if (lisFacFile.isPresent()) {
+      FacilityType facilityType = getFacilityType(lisFacFile.get().getFacilityTypeCode());
+      if (facilityType != null) {
+        lisFacFile.get().setFacilityType(facilityType);
+      } else {
+        lisFacFile = Optional.empty();
+      }
     }
     return lisFacFile;
   }
@@ -91,26 +94,16 @@ public class LisFacilityService {
   }
 
   @UnitOfWork(CALSNS)
-  boolean facilityHasAcceptableType(LisFacFile lisFacFile) {
-    return facilityTypeService.getFacilityTypeByLisFacilityTypeId(
-            lisFacFile.getFacilityTypeCode())
-        != null;
-  }
-
-  @UnitOfWork(CALSNS)
-  LisFacFile addFacilityTypeToLisFacility(LisFacFile lisFacFile) {
-    Integer facilityTypeCode = lisFacFile.getFacilityTypeCode();
+  FacilityType getFacilityType(Integer facilityTypeCode) {
+    FacilityType facilityType = null;
     if (facilityTypeCode != null) {
-      FacilityType facilityType;
       try {
         facilityType = facilityTypeService.getFacilityTypeByLisFacilityTypeId(facilityTypeCode);
       } catch (DictionaryEntryNotFoundException e) {
-        facilityType = null;
         LOGGER.warn("Can't find facility type for code {}", facilityTypeCode);
       }
-      lisFacFile.setFacilityType(facilityType);
     }
-    return lisFacFile;
+    return facilityType;
   }
 
   @UnitOfWork(LIS)
