@@ -22,6 +22,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(uses = {PersonMapper.class,
     TrailingSpacesRemovalPostMappingProcessor.class},
+    imports = {gov.ca.cwds.data.persistence.cms.CmsKeyIdGenerator.class},
     nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 @DecoratedWith(FacilityChildMapperDecorator.class)
 public interface FacilityChildMapper {
@@ -29,6 +30,8 @@ public interface FacilityChildMapper {
   FacilityChildMapper INSTANCE = Mappers.getMapper(FacilityChildMapper.class);
 
   @Mapping(target = "id", source = "client.identifier")
+  @Mapping(target = "displayClientId",
+      expression = "java(CmsKeyIdGenerator.getUIIdentifierFromKey(client.getIdentifier()))")
   @Mapping(target = "person", source = "client")
   @Mapping(target = "dateOfPlacement", ignore = true)
   @Mapping(target = "countyOfOrigin", ignore = true)
