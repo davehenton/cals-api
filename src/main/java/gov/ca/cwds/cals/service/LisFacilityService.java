@@ -16,6 +16,7 @@ import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import io.dropwizard.hibernate.UnitOfWork;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,64 +46,69 @@ public class LisFacilityService {
   /**
    * Load facility from LIS.
    */
-  public FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
-    LisFacFile lisDsLisFacFile = findLisFacilityByLicenseNumber(parameterObject);
-    if (lisDsLisFacFile == null) {
+  public Optional<FacilityDTO> loadFacilityFromLis(FacilityParameterObject parameterObject) {
+    Optional<LisFacFile> lisFacFile = findLisFacilityByLicenseNumber(parameterObject);
+    FacilityDTO facilityDTO = null;
+    if (lisFacFile.isPresent()) {
+      LpaInformation lpaInformation = lisFacFile.get().getFacDoEvalCode() != null
+          ? fasFacilityService.findAssignedWorkerInformation(lisFacFile.get())
+          : null;
+      facilityDTO = facilityMapper.toFacilityDTO(lisFacFile.get(), lpaInformation);
+    } else {
       LOGGER.warn(
           "Facility was not found in LIS by license number {}",
           parameterObject.getFacilityId());
-      return null;
     }
-    LpaInformation lpaInformation = lisDsLisFacFile.getFacDoEvalCode() != null
-        ? fasFacilityService.findAssignedWorkerInformation(lisDsLisFacFile)
-        : null;
-    return facilityMapper.toFacilityDTO(lisDsLisFacFile, lpaInformation);
+    return Optional.ofNullable(facilityDTO);
   }
 
-  LisFacFile findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
-    LisFacFile lisFacFile = findLisFacilityByLicenseNumberLis(parameterObject);
-    if (null != lisFacFile) {
-      lisFacFile = addFacilityTypeToLisFacility(lisFacFile);
-    }
-    return lisFacFile;
+  Optional<LisFacFile> findLisFacilityByLicenseNumber(FacilityParameterObject parameterObject) {
+    return findLisFacilityByLicenseNumberLis(parameterObject)
+        .map(
+            lisFacFile ->
+                Optional.ofNullable(getFacilityType(lisFacFile.getFacilityTypeCode()))
+                    .map(
+                        facilityType -> {
+                          lisFacFile.setFacilityType(facilityType);
+                          return lisFacFile;
+                        })
+                    .orElse(null));
   }
 
   @UnitOfWork(LIS)
-  LisFacFile findLisFacilityByLicenseNumberLis(FacilityParameterObject parameterObject) {
-    LisFacFile lisFacFile = lisFacFileLisDao
-        .find(Integer.valueOf(parameterObject.getFacilityId()));
-    if (lisFacFile == null) {
-      return null;
-    }
-
-    Integer countyCode = lisFacFile.getCountyCode();
-    if (countyCode != null) {
-      LisTableFile county = lisTableFileDao.findCounty(countyCode);
-      lisFacFile.setCounty(county);
-    }
-
-    Integer facilityStatusCode = lisFacFile.getFacilityStatusCode();
-    if (facilityStatusCode != null) {
-      LisTableFile facilityStatus = lisTableFileDao.findFacilityStatus(facilityStatusCode);
-      lisFacFile.setFacilityStatus(facilityStatus);
-    }
-    return lisFacFile;
+  Optional<LisFacFile> findLisFacilityByLicenseNumberLis(FacilityParameterObject parameterObject) {
+    return Optional.ofNullable(
+            lisFacFileLisDao.find(Integer.valueOf(parameterObject.getFacilityId())))
+        .map(
+            lisFacFile -> {
+              Optional.ofNullable(lisFacFile.getCountyCode())
+                  .ifPresent(
+                      countyCode -> {
+                        LisTableFile county = lisTableFileDao.findCounty(countyCode);
+                        lisFacFile.setCounty(county);
+                      });
+              Optional.ofNullable(lisFacFile.getFacilityStatusCode())
+                  .ifPresent(
+                      facilityStatusCode -> {
+                        LisTableFile facilityStatus =
+                            lisTableFileDao.findFacilityStatus(facilityStatusCode);
+                        lisFacFile.setFacilityStatus(facilityStatus);
+                      });
+              return lisFacFile;
+            });
   }
 
   @UnitOfWork(CALSNS)
-  LisFacFile addFacilityTypeToLisFacility(LisFacFile lisFacFile) {
-    Integer facilityTypeCode = lisFacFile.getFacilityTypeCode();
+  FacilityType getFacilityType(Integer facilityTypeCode) {
+    FacilityType facilityType = null;
     if (facilityTypeCode != null) {
-      FacilityType facilityType;
       try {
         facilityType = facilityTypeService.getFacilityTypeByLisFacilityTypeId(facilityTypeCode);
       } catch (DictionaryEntryNotFoundException e) {
-        facilityType = null;
         LOGGER.warn("Can't find facility type for code {}", facilityTypeCode);
       }
-      lisFacFile.setFacilityType(facilityType);
     }
-    return lisFacFile;
+    return facilityType;
   }
 
   @UnitOfWork(LIS)
