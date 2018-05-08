@@ -1,17 +1,16 @@
 package gov.ca.cwds.cals.service.dto;
 
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.dto.BaseDTO;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.api.Response;
-
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
-
-import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the FacilityChild entity.
@@ -39,6 +38,10 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
     private Long facilityId;
 
     private PersonDTO person;
+
+  @NotNull
+  @JsonProperty("display_client_id")
+  private String displayClientId;
 
     public String getId() {
         return id;
@@ -86,6 +89,14 @@ public class FacilityChildDTO extends BaseDTO implements Request, Response {
     public void setPerson(PersonDTO person) {
         this.person = person;
     }
+
+  public String getDisplayClientId() {
+    return displayClientId;
+  }
+
+  public void setDisplayClientId(String displayClientId) {
+    this.displayClientId = displayClientId;
+  }
 
     @Override
     public boolean equals(Object o) {
