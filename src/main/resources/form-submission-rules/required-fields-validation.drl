@@ -563,20 +563,18 @@ rule "Validate that childFinanciallySupported field is present in the Minor Chil
   when
     $form : RFA1aFormDTO();
     $minorChild: MinorChildDTO(
-          childFinanciallySupported == null,
           relationshipToApplicants != null && relationshipToApplicants.size() > 0
         ) from $form.minorChildren;
 
-        RelationshipToApplicantDTO(
-          relationshipToApplicantType != null || StringUtils.isNotBlank(relationshipToApplicantFreeform)
-        ) from $minorChild.relationshipToApplicants
+    $invalidRelationship : RelationshipToApplicantDTO(childFinanciallySupported == null)
+        from $minorChild.relationshipToApplicants;
   then
     IssueDetails details = new IssueDetails();
     details.setProperty(
-        "rfa1a.minorChildren[id=" + $minorChild.getId() + "].childFinanciallySupported");
+        "rfa1a.minorChildren[id=" + $minorChild.getId() + "].relationshipToApplicants[?].childFinanciallySupported");
     details.setCode(Code.REQUIRED_MINOR_CHILD_FINANCIALLY_SUPPORTED);
     details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE,
-                                              "childFinanciallySupported for Minor Child"));
+                                              "childFinanciallySupported for relationship of Minor Child"));
     details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
     validationDetailsList.add(details);
 end
@@ -587,20 +585,19 @@ rule "Validate that childAdopted field is present in the Minor Child object"
   when
     $form : RFA1aFormDTO();
     $minorChild: MinorChildDTO(
-          childAdopted == null,
           relationshipToApplicants != null && relationshipToApplicants.size() > 0
         ) from $form.minorChildren;
 
-        RelationshipToApplicantDTO(
-          relationshipToApplicantType != null || StringUtils.isNotBlank(relationshipToApplicantFreeform)
-        ) from $minorChild.relationshipToApplicants
+        $invalidRelationship : RelationshipToApplicantDTO(childAdopted == null)
+          from $minorChild.relationshipToApplicants;
+
   then
     IssueDetails details = new IssueDetails();
     details.setProperty(
-        "rfa1a.minorChildren[id=" + $minorChild.getId() + "].childAdopted");
+        "rfa1a.minorChildren[id=" + $minorChild.getId() + "].relationshipToApplicants[?].childAdopted");
     details.setCode(Code.REQUIRED_MINOR_CHILD_ADOPTED);
     details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE,
-                                              "childAdopted for Minor Child"));
+                                              "childAdopted for relationship of Minor Child"));
     details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
     validationDetailsList.add(details);
 end

@@ -8,6 +8,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import gov.ca.cwds.authorizer.FacilityReadStaticAuthorizer;
 import gov.ca.cwds.cals.inject.FacilityInspectionCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.FacilityInspectionServiceBackedResource;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
@@ -26,6 +27,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 /**
  * @author CWDS CALS API Team
@@ -51,9 +53,11 @@ public class FacilityInspectionsResource {
     @Timed
     @ApiResponses(value = {
             @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not found")})
     @ApiOperation(value = "Returns collection of Inspections by Facility Id",
             response = FacilityInspectionsDTO.class)
+    @RequiresPermissions(FacilityReadStaticAuthorizer.FACILITY_READ_PERMISSION)
     public Response getFacilityInspections(
                         @PathParam(FACILITY_ID)
                         @ApiParam(required = true, name = FACILITY_ID, value = "The id of the Facility")
@@ -68,9 +72,11 @@ public class FacilityInspectionsResource {
     @Path("/{" + INSPECTION_ID + "}")
     @ApiResponses(value = {
             @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not found")})
     @ApiOperation(value = "Returns Inspection by Facility Id and Inspection Id",
             response = FacilityInspectionDTO.class)
+    @RequiresPermissions(FacilityReadStaticAuthorizer.FACILITY_READ_PERMISSION)
     public Response getFacilityInspectionById(
                         @PathParam(FACILITY_ID)
                         @ApiParam(required = true, name = FACILITY_ID, value = "The id of the Facility")
