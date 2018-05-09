@@ -91,3 +91,31 @@ To run Integration tests set property cals.api.url to point to environment host.
 
 ### Smoke Testing
 Smoke test suite is part of integration tests. Set cals.api.url, use gradle smokeTestSuite task. Smoke test endpoint is not protected by Perry.
+
+### Performance/Load testing (JMeter)
+JMeter tests are part of the CALS-API project as jmx files  
+
+To run the tests use gradle command: 
+`gradlew jmRun -DJM_PROPERTY_1=VALUE_1 -DJM_PROPERTY_2=VALUE_2 ...` 
+
+List of supported properties:
+- JM_IDP -- Type of identity provider may be `perryDevMode` or `cognito`
+
+#### Perry properties
+- JM_PERRY_PROTOCOL -- Perry protocol, default - _https_ 
+- JM_PERRY_HOST -- Perry host, no default value
+- JM_PERRY_PORT -- Perry port, default - _443_
+
+#### Credentials for IDP (do not use for perryDevMode)
+- JM_USER_NAME -- User name
+- JM_USER_PASSWORD -- User password
+
+#### Cals-API properties
+- JM_CALS_API_PROTOCOL -- Cals-API protocol, default - _https_
+- JM_CALS_API_HOST -- Cals-API host, no default value 
+- JM_CALS_API_PORT -- Cals-API port, default - _443_ 
+
+#### Path to file which contains list of IDs for the test  
+- JM_IDS_FILE -- default value - _facilities_ids.csv_
+
+jmeter/config.properties can be used for configuration.
