@@ -72,6 +72,113 @@
         <boolProp name="CookieManager.clearEachIteration">false</boolProp>
       </CookieManager>
       <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="PerryDevModeProperties (Preint)" enabled="false">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="idp" elementType="Argument">
+            <stringProp name="Argument.name">idp</stringProp>
+            <stringProp name="Argument.value">perryDevMode</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryProtocol" elementType="Argument">
+            <stringProp name="Argument.name">perryProtocol</stringProp>
+            <stringProp name="Argument.value">https</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryHost" elementType="Argument">
+            <stringProp name="Argument.name">perryHost</stringProp>
+            <stringProp name="Argument.value">web.preint.cwds.io</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryPort" elementType="Argument">
+            <stringProp name="Argument.name">perryPort</stringProp>
+            <stringProp name="Argument.value">443</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryAuthJson" elementType="Argument">
+            <stringProp name="Argument.name">perryAuthJson</stringProp>
+            <stringProp name="Argument.value">{&quot;user&quot;:&quot;RACFID&quot;,&quot;staffId&quot;:&quot;0X5&quot;,&quot;roles&quot;:[&quot;Supervisor&quot;],&quot;county_code&quot;:&quot;56&quot;,&quot;county_name&quot;:&quot;Ventura&quot;,&quot;privileges&quot;:[&quot;Resource Management&quot;,&quot;Adoptions&quot;,&quot;Countywide Read&quot;,&quot;Sensitive Persons&quot;,&quot;Resource Mgmt Placement Facility Maint&quot;]}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="calsApiProtocol" elementType="Argument">
+            <stringProp name="Argument.name">calsApiProtocol</stringProp>
+            <stringProp name="Argument.value">https</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="calsApiHost" elementType="Argument">
+            <stringProp name="Argument.name">calsApiHost</stringProp>
+            <stringProp name="Argument.value">calsapi.preint.cwds.io</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="calsApiPort" elementType="Argument">
+            <stringProp name="Argument.name">calsApiPort</stringProp>
+            <stringProp name="Argument.value">443</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="facilityIdsFile" elementType="Argument">
+            <stringProp name="Argument.name">facilityIdsFile</stringProp>
+            <stringProp name="Argument.value">facilities_ids.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="CognitoProperties (Integration)" enabled="false">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="idp" elementType="Argument">
+            <stringProp name="Argument.name">idp</stringProp>
+            <stringProp name="Argument.value">cognito</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="userName" elementType="Argument">
+            <stringProp name="Argument.name">userName</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">user name</stringProp>
+          </elementProp>
+          <elementProp name="userPassword" elementType="Argument">
+            <stringProp name="Argument.name">userPassword</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">password</stringProp>
+          </elementProp>
+          <elementProp name="perryProtocol" elementType="Argument">
+            <stringProp name="Argument.name">perryProtocol</stringProp>
+            <stringProp name="Argument.value">https</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryHost" elementType="Argument">
+            <stringProp name="Argument.name">perryHost</stringProp>
+            <stringProp name="Argument.value">web.integration.cwds.io</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryPort" elementType="Argument">
+            <stringProp name="Argument.name">perryPort</stringProp>
+            <stringProp name="Argument.value">443</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="calsApiProtocol" elementType="Argument">
+            <stringProp name="Argument.name">calsApiProtocol</stringProp>
+            <stringProp name="Argument.value">https</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="calsApiHost" elementType="Argument">
+            <stringProp name="Argument.name">calsApiHost</stringProp>
+            <stringProp name="Argument.value">calsapi.integration.cwds.io</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="calsApiPort" elementType="Argument">
+            <stringProp name="Argument.name">calsApiPort</stringProp>
+            <stringProp name="Argument.value">443</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="facilityIdsFile" elementType="Argument">
+            <stringProp name="Argument.name">facilityIdsFile</stringProp>
+            <stringProp name="Argument.value">facilities_ids.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="SetUp Login DEV mode" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -397,14 +504,14 @@
           </RegexExtractor>
           <hashTree/>
         </hashTree>
-        <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="BeanShell Assertion" enabled="false">
+        <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="BeanShell Assertion" enabled="true">
           <stringProp name="BeanShellAssertion.query">${__setProperty(token,${token})};</stringProp>
           <stringProp name="BeanShellAssertion.filename"></stringProp>
           <stringProp name="BeanShellAssertion.parameters"></stringProp>
           <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
         </BeanShellAssertion>
         <hashTree/>
-        <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+        <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="false">
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
           <boolProp name="resetInterpreter">false</boolProp>
