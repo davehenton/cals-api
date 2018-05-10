@@ -80,7 +80,7 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
   private static final String FIXTURES_FACILITY_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "facility-type-response.json";
   private static final String FIXTURES_FACILITY_TYPE_RESPONSE_JSON_PG =
-      "facility-type-response-pg.json";
+      BASE_DICTIONARY_PATH + "facility-type-response-pg.json";
   private static final String FIXTURES_RACE_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "race-type-response.json";
   private static final String FIXTURES_RELATIONSHIP_TO_APPLICANT_TYPE_RESPONSE_JSON =
