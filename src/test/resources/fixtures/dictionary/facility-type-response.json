@@ -1,100 +1,100 @@
 {
   "items": [
     {
-      "id": 1,
-      "value": "Adoption Agency"
+      "value": "Adoption Agency",
+      "id": 1
     },
     {
-      "id": 2,
-      "value": "Resource Family Home"
+      "value": "Community Treatment Facility",
+      "id": 11
     },
     {
-      "id": 3,
-      "value": "Foster Family Agency"
+      "value": "County Shelter/Receiving Home(Non EA/AFDC)",
+      "id": 16
     },
     {
-      "id": 4,
-      "value": "Foster Family AG-Sub"
+      "value": "Court Specified Home",
+      "id": 17
     },
     {
-      "id": 5,
-      "value": "Small Family Home"
+      "value": "Crisis Nursery",
+      "id": 7
     },
     {
-      "id": 6,
-      "value": "Foster Family Home"
+      "value": "Foster Fam Agency Cert Resource Fam Home",
+      "id": 23
     },
     {
-      "id": 7,
-      "value": "Crisis Nursery"
+      "value": "Foster Family AG-Sub",
+      "id": 4
     },
     {
-      "id": 8,
-      "value": "Temporary Shelter Care Facility"
+      "value": "Foster Family Agency",
+      "id": 3
     },
     {
-      "id": 9,
-      "value": "Transitional Shelter Care"
+      "value": "Foster Family Agency Certified Home",
+      "id": 22
     },
     {
-      "id": 10,
-      "value": "Transitional Housing Placement Program"
+      "value": "Foster Family Home",
+      "id": 6
     },
     {
-      "id": 11,
-      "value": "Community Treatment Facility"
+      "value": "GH-Enhanced Behavioral Supports Home",
+      "id": 12
     },
     {
-      "id": 12,
-      "value": "GH-Enhanced Behavioral Supports Home"
+      "value": "Group Home",
+      "id": 13
     },
     {
-      "id": 13,
-      "value": "Group Home"
+      "value": "Guardian Home",
+      "id": 19
     },
     {
-      "id": 14,
-      "value": "Out Of State GH"
+      "value": "Out Of State GH",
+      "id": 14
     },
     {
-      "id": 15,
-      "value": "Short Term Residential Therapeutic Program"
+      "value": "Relative/NREFM Home",
+      "id": 20
     },
     {
-      "id": 16,
-      "value": "County Shelter/Receiving Home(Non EA/AFDC)"
+      "value": "Resource Family Home",
+      "id": 2
     },
     {
-      "id": 17,
-      "value": "Court Specified Home"
+      "value": "Runaway And Homeless Youth Shelter-GH",
+      "id": 24
     },
     {
-      "id": 18,
-      "value": "Tribe Specified Home"
+      "value": "Short Term Residential Therapeutic Program",
+      "id": 15
     },
     {
-      "id": 19,
-      "value": "Guardian Home"
+      "value": "Small Family Home",
+      "id": 5
     },
     {
-      "id": 20,
-      "value": "Relative/NREFM Home"
+      "value": "Supervised Independent Living Placement",
+      "id": 21
     },
     {
-      "id": 21,
-      "value": "Supervised Independent Living Placement"
+      "value": "Temporary Shelter Care Facility",
+      "id": 8
     },
     {
-      "id": 22,
-      "value": "Foster Family Agency Certified Home"
+      "value": "Transitional Housing Placement Program",
+      "id": 10
     },
     {
-      "id": 23,
-      "value": "Foster Fam Agency Cert Resource Fam Home"
+      "value": "Transitional Shelter Care",
+      "id": 9
     },
     {
-      "id": 24,
-      "value": "Runaway And Homeless Youth Shelter-GH"
+      "value": "Tribe Specified Home",
+      "id": 18
     }
   ]
 }
