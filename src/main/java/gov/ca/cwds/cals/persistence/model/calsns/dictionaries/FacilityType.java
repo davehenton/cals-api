@@ -9,7 +9,7 @@ import org.hibernate.annotations.NamedQuery;
  * @author CWDS CALS API Team
  */
 @NamedQuery(name = FacilityType.NAMED_QUERY_FIND_ALL,
-    query = "FROM FacilityType ORDER BY lower(value) ASC")
+    query = "FROM FacilityType ORDER BY value ASC")
 @Entity
 @Cacheable
 @Table(name = "facility_type")
