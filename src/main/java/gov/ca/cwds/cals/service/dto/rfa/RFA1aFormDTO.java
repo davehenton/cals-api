@@ -25,6 +25,7 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   @ApiModelProperty(hidden = true)
   private Long id;
 
+  @JsonProperty("resource_family_name")
   @ApiModelProperty(value = "Facility Name", example = "Smith, John & Anna")
   private String facilityName;
 

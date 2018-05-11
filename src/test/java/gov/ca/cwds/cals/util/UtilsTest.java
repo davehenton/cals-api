@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.util;
 
 import static org.junit.Assert.assertEquals;
 
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.util.Utils.PlacementHome;
 import java.util.ArrayList;
@@ -36,6 +37,24 @@ public class UtilsTest {
 
     applicants = new ArrayList<>();
   }
+
+  @Test
+  public void composeFacilityNameByRFA1aApplicantsList_FullDifferentNames() {
+    // Different Last names 3 applicants
+    List<RFA1aApplicant> list = new ArrayList<>();
+    RFA1aApplicant rfa1aApplicant1 = new RFA1aApplicant();
+    rfa1aApplicant1.setApplicant(applicant1);
+
+    RFA1aApplicant rfa1aApplicant2 = new RFA1aApplicant();
+    rfa1aApplicant2.setApplicant(applicant2);
+
+    list.add(rfa1aApplicant1);
+    list.add(rfa1aApplicant2);
+
+    assertEquals("Smith, John & Dow, Anna",
+        PlacementHome.composeFacilityNameByApplicantsList(list));
+  }
+
 
 
   @Test

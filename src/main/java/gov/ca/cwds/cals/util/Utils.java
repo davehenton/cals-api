@@ -6,6 +6,7 @@ import com.google.common.base.Objects;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -14,10 +15,12 @@ import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 
@@ -70,6 +73,12 @@ public final class Utils {
       return " ";
     }
 
+    public static String composeFacilityNameByApplicantsList(List<RFA1aApplicant> applicantsList) {
+      return composeFacilityName(
+          applicantsList.stream().map(RFA1aFormMapper.INSTANCE::toApplicantDTO)
+              .collect(Collectors.toList()));
+    }
+
     public static String composeFacilityName(List<ApplicantDTO> applicantsList) {
       // Assume that Facility/Family name composed from the first 2 applicants
       return Optional.ofNullable(applicantsList).map(applicants -> {
@@ -81,7 +90,7 @@ public final class Utils {
             .orElse(new StringBuilder());
 
         StringBuilder secondPartSb = secondApplicant.map(applicantDTO ->
-          composeSecondPartOfFacilityName(firstApplicant, applicantDTO)
+            composeSecondPartOfFacilityName(firstApplicant, applicantDTO)
         ).orElse(new StringBuilder());
 
         if (firstPartSb.length() > 0 && secondPartSb.length() > 0) {
