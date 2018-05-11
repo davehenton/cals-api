@@ -223,8 +223,8 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
     assertTrue(rfaForms.getCollection().size() >= 3);
 
     List<RFA1aFormDTO> list = new ArrayList<>(rfaForms.getCollection());
-    assertEquals(rfaFormCreate3, list.get(0));
-    assertEquals(rfaFormCreate2, list.get(1));
-    assertEquals(rfaFormCreate1, list.get(2));
+    assertTrue(list.contains(rfaFormCreate3));
+    assertTrue(list.contains(rfaFormCreate2));
+    assertTrue(list.contains(rfaFormCreate1));
   }
 }

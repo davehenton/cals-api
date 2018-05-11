@@ -25,6 +25,9 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   @ApiModelProperty(hidden = true)
   private Long id;
 
+  @ApiModelProperty(value = "Facility Name", example = "Smith, John & Anna")
+  private String facilityName;
+
   @JsonProperty("is_initial_application")
   @ApiModelProperty(value = "Is Initial Application Id", example = "false")
   private Boolean initialApplication;
@@ -83,6 +86,14 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
   private String placementHomeId;
 
   private MetadataDTO metadata;
+
+  public String getFacilityName() {
+    return facilityName;
+  }
+
+  public void setFacilityName(String facilityName) {
+    this.facilityName = facilityName;
+  }
 
   public Boolean isInitialApplication() {
     return initialApplication;

@@ -22,6 +22,9 @@ public class ApplicationDTO extends BaseDTO implements Request, Response {
 
   private static final long serialVersionUID = 3691906983136791415L;
 
+  @ApiModelProperty(value = "Facility/Family name", example = "Smith, John & Anna")
+  private String facilityName;
+
   @JsonProperty("is_initial_application")
   @ApiModelProperty(value = "Is Initial Application Id", example = "false")
   private boolean initialApplication;
@@ -38,6 +41,14 @@ public class ApplicationDTO extends BaseDTO implements Request, Response {
   private CountyType applicationCounty;
 
   private MetadataDTO metadata;
+
+  public String getFacilityName() {
+    return facilityName;
+  }
+
+  public void setFacilityName(String facilityName) {
+    this.facilityName = facilityName;
+  }
 
   public boolean isInitialApplication() {
     return initialApplication;
