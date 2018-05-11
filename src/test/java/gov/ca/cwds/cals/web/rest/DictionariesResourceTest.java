@@ -79,6 +79,8 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "ethnicity-type-response.json";
   private static final String FIXTURES_FACILITY_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "facility-type-response.json";
+  private static final String FIXTURES_FACILITY_TYPE_RESPONSE_JSON_PG =
+      BASE_DICTIONARY_PATH + "facility-type-response-pg.json";
   private static final String FIXTURES_RACE_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "race-type-response.json";
   private static final String FIXTURES_RELATIONSHIP_TO_APPLICANT_TYPE_RESPONSE_JSON =
@@ -111,9 +113,6 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
       BASE_DICTIONARY_PATH + "suffix-type-response.json";
   private static final String FIXTURES_NAME_PREFIX_TYPE_RESPONSE_JSON =
       BASE_DICTIONARY_PATH + "name-prefix-type-response.json";
-
-
-
 
 
   @BeforeClass
@@ -215,7 +214,7 @@ public class DictionariesResourceTest extends BaseCalsApiIntegrationTest {
   public void getDictionaryFacilityTypeTest() throws Exception {
     baseDictionaryTest(
         FACILITY_TYPE_PATH,
-        FIXTURES_FACILITY_TYPE_RESPONSE_JSON,
+        FIXTURES_FACILITY_TYPE_RESPONSE_JSON, FIXTURES_FACILITY_TYPE_RESPONSE_JSON_PG,
         new GenericType<CollectionDTO<FacilityType>>() {
         });
   }
