@@ -35,9 +35,7 @@ import gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils;
 import io.dropwizard.testing.FixtureHelpers;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -52,6 +50,8 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author CWDS CALS API Team
  */
 public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
+
+  private static final String PRINCIPAL_STAFF_ID_0X6_JSON = "security/principal-staffId-0X6.json";
 
   public static final String RFA_1A_FIXTURE = FixtureHelpers
       .fixture("fixtures/rfa/rfa-1a-form-meta-data.json");
@@ -239,29 +239,53 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @Test
   public void getAllApplicationFormsTest() throws Exception {
-    RFA1aFormDTO rfaFormCreate1 = formAHelper.createRFA1aForm();
-    applicantHelper.postApplicant(rfaFormCreate1.getId(), applicantHelper.getApplicant());
-    RFA1aFormDTO rfaFormCreate2 = formAHelper.createRFA1aForm();
-    applicantHelper.postApplicant(rfaFormCreate2.getId(), applicantHelper.getApplicant());
-    RFA1aFormDTO rfaFormCreate3 = formAHelper.createRFA1aForm();
-    applicantHelper.postApplicant(rfaFormCreate3.getId(), applicantHelper.getApplicant());
+    ApplicantDTO applicant = applicantHelper.getApplicant();
+
+    RFA1aFormDTO rfaFormCreate1 = formAHelper.createRFA1aForm(PRINCIPAL_STAFF_ID_0X6_JSON);
+    applicant.setLastName("Ggg");
+    applicant.setFirstName("Hhh");
+    applicantHelper.postApplicant(rfaFormCreate1.getId(), applicant);
+    applicant.setLastName("Ggg");
+    applicant.setFirstName("Iii");
+    applicantHelper.postApplicant(rfaFormCreate1.getId(), applicant);
+
+    RFA1aFormDTO rfaFormCreate2 = formAHelper.createRFA1aForm(PRINCIPAL_STAFF_ID_0X6_JSON);
+    applicant.setLastName("Ddd");
+    applicant.setFirstName("Eee");
+    applicantHelper.postApplicant(rfaFormCreate2.getId(), applicant);
+    applicant.setLastName("Ddd");
+    applicant.setFirstName("Fff");
+    applicantHelper.postApplicant(rfaFormCreate2.getId(), applicant);
+
+    RFA1aFormDTO rfaFormCreate3 = formAHelper.createRFA1aForm(PRINCIPAL_STAFF_ID_0X6_JSON);
+    applicant.setLastName("Aaa");
+    applicant.setFirstName("Bbb");
+    applicantHelper.postApplicant(rfaFormCreate3.getId(), applicant);
+    applicant.setLastName("Aaa");
+    applicant.setFirstName("Ccc");
+    applicantHelper.postApplicant(rfaFormCreate3.getId(), applicant);
 
     assertNotEquals(rfaFormCreate1, rfaFormCreate2);
     assertNotEquals(rfaFormCreate2, rfaFormCreate3);
     assertNotEquals(rfaFormCreate3, rfaFormCreate1);
 
-    CollectionDTO<RFA1aFormDTO> rfaForms = formAHelper.getRFA1aForms();
-
+    CollectionDTO<RFA1aFormDTO> rfaForms = formAHelper.getRFA1aForms(PRINCIPAL_STAFF_ID_0X6_JSON);
     assertTrue(rfaForms.getCollection().size() >= 3);
 
-    Set<RFA1aFormDTO> set = new HashSet<>(rfaForms.getCollection());
+    List<RFA1aFormDTO> list = new ArrayList<>(rfaForms.getCollection());
 
-    assertEquals(rfaForms.getCollection().size(), set.size());
-    assertTrue(set.stream()
-        .anyMatch(rfa1aFormDTO -> rfa1aFormDTO.getId().equals(rfaFormCreate1.getId())));
-    assertTrue(set.stream()
-        .anyMatch(rfa1aFormDTO -> rfa1aFormDTO.getId().equals(rfaFormCreate2.getId())));
-    assertTrue(set.stream()
-        .anyMatch(rfa1aFormDTO -> rfa1aFormDTO.getId().equals(rfaFormCreate3.getId())));
+    list = list.stream().filter(
+        rfa1aFormDTO -> rfa1aFormDTO.getId().equals(rfaFormCreate1.getId()) || rfa1aFormDTO.getId()
+            .equals(rfaFormCreate2.getId()) || rfa1aFormDTO.getId().equals(rfaFormCreate3.getId()))
+        .collect(Collectors.toList());
+
+    assertEquals("Aaa, Bbb & Ccc", list.get(0).getFacilityName());
+    assertEquals("Ddd, Eee & Fff", list.get(1).getFacilityName());
+    assertEquals("Ggg, Hhh & Iii", list.get(2).getFacilityName());
+
+    assertEquals(list.get(0).getId(), rfaFormCreate3.getId());
+    assertEquals(list.get(1).getId(), rfaFormCreate2.getId());
+    assertEquals(list.get(2).getId(), rfaFormCreate1.getId());
   }
+
 }

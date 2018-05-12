@@ -8,7 +8,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.rest.api.Request;
-
+import gov.ca.cwds.security.utils.PrincipalUtils;
 import java.util.List;
 
 /**
@@ -28,7 +28,8 @@ public class RFA1aFormsCollectionService
 
   @Override
   public RFA1aFormCollectionDTO find(Boolean expanded) {
-    List<RFA1aForm> forms = dao.findAll(100);
+    String staffPersonId = PrincipalUtils.getStaffPersonId();
+    List<RFA1aForm> forms = dao.findAllByUser(100, staffPersonId);
     List<RFA1aFormDTO> formDTOs;
     if (expanded) {
       formDTOs = rfa1aFormMapper.toExpandedRFA1aFormsDTO(forms);
