@@ -25,6 +25,8 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 
 /**
+ * Cals-API utils class.
+ *
  * @author CALS API Team
  */
 public final class Utils {
@@ -73,12 +75,37 @@ public final class Utils {
       return " ";
     }
 
+    /**
+     * Overloaded method for composing facility name according to applicants list.
+     *
+     * @param applicantsList applicants list
+     * @return facility name
+     */
     public static String composeFacilityNameByApplicantsList(List<RFA1aApplicant> applicantsList) {
       return composeFacilityName(
           applicantsList.stream().map(RFA1aFormMapper.INSTANCE::toApplicantDTO)
               .collect(Collectors.toList()));
     }
 
+
+    /**
+     * Composes facility name according to applicantDTOs list.
+     *
+     * <p>
+     * <b>Rules for Facility / Family name</b>
+     *
+     * Reads Applicant Name(s) as Last Name, First Name of Applicant #1 and Last Name,
+     * First Name of Applicant #2. (ex. Smith, John & Jones, Jane)
+     * Last Name is separated from First Name by a comma.
+     * Applicant Names are separated from each other by "and" or "&".
+     * When the Last Name is the same for Applicant #1 and Applicant #2,
+     * name reads "Common Last Name, First Name Applicant #1 & First Name Applicant #2"
+     * (ex. Smith, John & Jane).
+     * </p>
+     *
+     * @param applicantsList applicantsDTOs list
+     * @return facility name
+     */
     public static String composeFacilityName(List<ApplicantDTO> applicantsList) {
       // Assume that Facility/Family name composed from the first 2 applicants
       return Optional.ofNullable(applicantsList).map(applicants -> {

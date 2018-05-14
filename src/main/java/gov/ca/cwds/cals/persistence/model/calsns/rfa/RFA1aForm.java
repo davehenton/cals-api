@@ -140,6 +140,11 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject {
     return facilityName;
   }
 
+  /**
+   * Sets facility name to entity and DTO.
+   *
+   * @param facilityName facility name
+   */
   public void setFacilityName(String facilityName) {
     this.facilityName = facilityName;
     Optional.ofNullable(application)

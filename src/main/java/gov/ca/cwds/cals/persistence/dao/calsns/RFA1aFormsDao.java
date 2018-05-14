@@ -40,6 +40,13 @@ public class RFA1aFormsDao extends BaseDaoImpl<RFA1aForm> {
     return entities.build();
   }
 
+  /**
+   * Find RFA1a forms for particular staffId.
+   *
+   * @param maxResults maximum results
+   * @param userId staff person id
+   * @return list of RFA1a forms
+   */
   public List<RFA1aForm> findAllByUser(int maxResults, String userId) {
     Session session = this.getSessionFactory().getCurrentSession();
     Query<RFA1aForm> query =

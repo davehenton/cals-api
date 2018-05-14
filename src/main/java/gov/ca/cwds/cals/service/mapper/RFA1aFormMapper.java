@@ -28,7 +28,8 @@ import org.mapstruct.factory.Mappers;
  * @author CWDS CALS API Team.
  */
 @SuppressWarnings({"squid:S1168", "squid:S1214"})
-// "Empty arrays and collections should be returned instead of null", it was designed to return null for empty list
+// "Empty arrays and collections should be returned instead of null",
+// it was designed to return null for empty list
 @Mapper
 public interface RFA1aFormMapper {
 

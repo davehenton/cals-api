@@ -21,7 +21,6 @@ import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.cms.data.access.service.DataAccessServicesException;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.drools.DroolsConfiguration;
-import gov.ca.cwds.drools.DroolsException;
 import gov.ca.cwds.drools.DroolsService;
 import gov.ca.cwds.rest.exception.BusinessValidationException;
 import gov.ca.cwds.rest.exception.ExpectedException;
@@ -133,8 +132,7 @@ public class RFA1aFormService
     return new RFAApplicationStatusDTO(form.getStatus());
   }
 
-  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO)
-      throws DroolsException {
+  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO) {
     RFAApplicationStatus newStatus = statusDTO.getStatus();
     if (!changeStatusIfNotSubmitted(formId, newStatus)) {
       try {
@@ -263,6 +261,11 @@ public class RFA1aFormService
     return form;
   }
 
+  /**
+   * Updates facility name for particular form application.
+   *
+   * @param formId form id
+   */
   public void updateFacilityName(Long formId) {
     RFA1aForm form = rfa1AFormsDao.find(formId);
     String facilityName = Utils.PlacementHome
