@@ -30,8 +30,9 @@ public class RFA1aApplicantService
   @Override
   public ApplicantDTO create(RFAExternalEntityUpdateParameterObject<ApplicantDTO> request) {
     ApplicantDTO applicant = super.create(request);
-    rfa1aFormService.updateFacilityName(request.getFormId());
-    RFA1aForm form = formsDao.find(request.getFormId());
+    Long formId = request.getFormId();
+    rfa1aFormService.updateFacilityName(formId);
+    RFA1aForm form = formsDao.find(formId);
     if (form.getStatus() != RFAApplicationStatus.IN_PROGRESS) {
       form.setStatus(RFAApplicationStatus.IN_PROGRESS);
     }
