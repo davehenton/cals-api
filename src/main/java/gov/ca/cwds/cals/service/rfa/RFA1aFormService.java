@@ -132,6 +132,12 @@ public class RFA1aFormService
     return new RFAApplicationStatusDTO(form.getStatus());
   }
 
+  /**
+   * Sets Application status.
+   *
+   * @param formId form Id
+   * @param statusDTO status DTO
+   */
   public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO) {
     RFAApplicationStatus newStatus = statusDTO.getStatus();
     if (!changeStatusIfNotSubmitted(formId, newStatus)) {
