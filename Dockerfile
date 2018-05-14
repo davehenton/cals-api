@@ -7,6 +7,7 @@ ADD config/testKeyStore.jks /opt/cals-api/config/testKeyStore.jks
 ADD config/enc.jceks /opt/cals-api/config/enc.jceks
 ADD build/libs/cals-api-dist.jar /opt/cals-api/cals-api.jar
 ADD build/entrypoint.sh /opt/cals-api/
+LABEL Release=$Release Build.number=$Build.number Version=$Version Revision=$Revision Buildtime=$Buildtime
 ADD version.txt /opt/cals-api/version.txt
 EXPOSE 8080 8443
 RUN chmod +x /opt/cals-api/entrypoint.sh
