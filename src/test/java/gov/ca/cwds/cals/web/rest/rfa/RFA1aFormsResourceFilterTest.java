@@ -69,11 +69,6 @@ public class RFA1aFormsResourceFilterTest extends BaseRFAIntegrationTest {
 
     List<RFA1aFormDTO> list = new ArrayList<>(formsDTOs);
 
-//    list = list.stream().filter(
-//        rfa1aFormDTO -> rfa1aFormDTO.getId().equals(rfaFormCreate1.getId()) || rfa1aFormDTO.getId()
-//            .equals(rfaFormCreate2.getId()) || rfa1aFormDTO.getId().equals(rfaFormCreate3.getId()))
-//        .collect(Collectors.toList());
-
     assertEquals("Aaa, Bbb & Ccc", list.get(0).getFacilityName());
     assertEquals("Ddd, Eee & Fff", list.get(1).getFacilityName());
     assertEquals("Ggg, Hhh & Iii", list.get(2).getFacilityName());
@@ -81,6 +76,41 @@ public class RFA1aFormsResourceFilterTest extends BaseRFAIntegrationTest {
     assertEquals(list.get(0).getId(), rfaFormCreate3.getId());
     assertEquals(list.get(1).getId(), rfaFormCreate2.getId());
     assertEquals(list.get(2).getId(), rfaFormCreate1.getId());
+  }
+
+
+  @Test
+  public void checkFacilityNameAfterApplicantNameUpdateAndApplicantDeletedFormsTest()
+      throws Exception {
+    
+    ApplicantDTO applicant = applicantHelper.getApplicant();
+
+    // Create form for 0X6 staffID
+    RFA1aFormDTO rfaFormCreate = formAHelper.createRFA1aForm(PRINCIPAL_STAFF_ID_0X5_JSON);
+    applicant.setLastName("Aaa");
+    applicant.setFirstName("Bbb");
+    applicantHelper.postApplicant(rfaFormCreate.getId(), applicant);
+    applicant.setLastName("Aaa");
+    applicant.setFirstName("Ccc");
+    applicantHelper.postApplicant(rfaFormCreate.getId(), applicant);
+
+    RFA1aFormDTO rfaForm = formAHelper.getRFA1aForm(rfaFormCreate.getId());
+
+    assertEquals("Aaa, Bbb & Ccc", rfaForm.getFacilityName());
+
+    ApplicantDTO applicantDTO = rfaForm.getApplicants().get(0);
+    applicantDTO.setFirstName("Vvv");
+
+    applicantHelper.updateApplicant(rfaForm.getId(), applicantDTO);
+
+    rfaForm = formAHelper.getRFA1aForm(rfaFormCreate.getId());
+    assertEquals("Aaa, Vvv & Ccc", rfaForm.getFacilityName());
+
+    ApplicantDTO applicantDTO2 = rfaForm.getApplicants().get(1);
+    applicantHelper.deleteApplicant(rfaForm.getId(), applicantDTO2.getId());
+
+    rfaForm = formAHelper.getRFA1aForm(rfaFormCreate.getId());
+    assertEquals("Aaa, Vvv", rfaForm.getFacilityName());
   }
 
 }

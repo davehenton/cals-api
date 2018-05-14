@@ -83,4 +83,17 @@ public class ApplicantHelper {
     return applicantDTO;
   }
 
+  /**
+   * Updates Applicant.
+   *
+   * @param formId RFA1a form id
+   * @param applicantDTO applicantDTO for update
+   * @return updated applicantDTO
+   */
+  public ApplicantDTO updateApplicant(long formId, ApplicantDTO applicantDTO) {
+    return clientTestRule.target(API.RFA_1A_FORMS + "/" + formId + "/" + API.RFA_1A_APPLICANTS + "/" + applicantDTO.getId())
+        .request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(applicantDTO, MediaType.APPLICATION_JSON_TYPE), ApplicantDTO.class);
+  }
+
 }
