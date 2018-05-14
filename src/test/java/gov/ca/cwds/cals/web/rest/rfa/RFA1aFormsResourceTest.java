@@ -13,9 +13,7 @@ import static gov.ca.cwds.cals.web.rest.rfa.RFA1aReferencesResourceTest.REFERENC
 import static gov.ca.cwds.cals.web.rest.rfa.RFA1aResidenceResourceTest.RESIDENCE_FIXTURE;
 import static gov.ca.cwds.cals.web.rest.utils.AssertResponseHelper.assertEqualsResponse;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import gov.ca.cwds.cals.Constants.API;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
@@ -235,57 +233,6 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
     assertNotNull(rfaFormGet);
     assertEquals(rfaFormCreate, rfaFormGet);
-  }
-
-  @Test
-  public void getAllApplicationFormsTest() throws Exception {
-    ApplicantDTO applicant = applicantHelper.getApplicant();
-
-    RFA1aFormDTO rfaFormCreate1 = formAHelper.createRFA1aForm(PRINCIPAL_STAFF_ID_0X6_JSON);
-    applicant.setLastName("Ggg");
-    applicant.setFirstName("Hhh");
-    applicantHelper.postApplicant(rfaFormCreate1.getId(), applicant);
-    applicant.setLastName("Ggg");
-    applicant.setFirstName("Iii");
-    applicantHelper.postApplicant(rfaFormCreate1.getId(), applicant);
-
-    RFA1aFormDTO rfaFormCreate2 = formAHelper.createRFA1aForm(PRINCIPAL_STAFF_ID_0X6_JSON);
-    applicant.setLastName("Ddd");
-    applicant.setFirstName("Eee");
-    applicantHelper.postApplicant(rfaFormCreate2.getId(), applicant);
-    applicant.setLastName("Ddd");
-    applicant.setFirstName("Fff");
-    applicantHelper.postApplicant(rfaFormCreate2.getId(), applicant);
-
-    RFA1aFormDTO rfaFormCreate3 = formAHelper.createRFA1aForm(PRINCIPAL_STAFF_ID_0X6_JSON);
-    applicant.setLastName("Aaa");
-    applicant.setFirstName("Bbb");
-    applicantHelper.postApplicant(rfaFormCreate3.getId(), applicant);
-    applicant.setLastName("Aaa");
-    applicant.setFirstName("Ccc");
-    applicantHelper.postApplicant(rfaFormCreate3.getId(), applicant);
-
-    assertNotEquals(rfaFormCreate1, rfaFormCreate2);
-    assertNotEquals(rfaFormCreate2, rfaFormCreate3);
-    assertNotEquals(rfaFormCreate3, rfaFormCreate1);
-
-    CollectionDTO<RFA1aFormDTO> rfaForms = formAHelper.getRFA1aForms(PRINCIPAL_STAFF_ID_0X6_JSON);
-    assertTrue(rfaForms.getCollection().size() >= 3);
-
-    List<RFA1aFormDTO> list = new ArrayList<>(rfaForms.getCollection());
-
-    list = list.stream().filter(
-        rfa1aFormDTO -> rfa1aFormDTO.getId().equals(rfaFormCreate1.getId()) || rfa1aFormDTO.getId()
-            .equals(rfaFormCreate2.getId()) || rfa1aFormDTO.getId().equals(rfaFormCreate3.getId()))
-        .collect(Collectors.toList());
-
-    assertEquals("Aaa, Bbb & Ccc", list.get(0).getFacilityName());
-    assertEquals("Ddd, Eee & Fff", list.get(1).getFacilityName());
-    assertEquals("Ggg, Hhh & Iii", list.get(2).getFacilityName());
-
-    assertEquals(list.get(0).getId(), rfaFormCreate3.getId());
-    assertEquals(list.get(1).getId(), rfaFormCreate2.getId());
-    assertEquals(list.get(2).getId(), rfaFormCreate1.getId());
   }
 
 }
