@@ -61,6 +61,7 @@ public abstract class RFAExternalEntityDao<T extends RFAExternalEntity> extends 
     T entity = findEntityByFormIdAndEntityId(formId, entityId);
     if (entity != null) {
       entity = delete(entity.getId());
+      currentSession().flush();
     }
     return entity;
   }

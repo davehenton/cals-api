@@ -10,9 +10,11 @@ import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
+import gov.ca.cwds.cals.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -25,13 +27,16 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author CWDS CALS API Team.
  */
-@SuppressWarnings("squid:S1168") // "Empty arrays and collections should be returned instead of null", it was designed to return null for empty list
+@SuppressWarnings({"squid:S1168", "squid:S1214"})
+// "Empty arrays and collections should be returned instead of null",
+// it was designed to return null for empty list
 @Mapper
 public interface RFA1aFormMapper {
 
   RFA1aFormMapper INSTANCE = Mappers.getMapper(RFA1aFormMapper.class);
 
   @Named("toRFA1aFormDTO")
+  @Mapping(target = "facilityName", source = "application.facilityName")
   @Mapping(target = "initialApplication", source = "application.initialApplication")
   @Mapping(target = "otherTypeDescription", source = "application.otherTypeDescription")
   @Mapping(target = "applicationCounty", source = "application.applicationCounty")
@@ -93,6 +98,12 @@ public interface RFA1aFormMapper {
   @Mapping(target = "createUserId", ignore = true)
   @Mapping(target = "status", ignore = true)
   void toRFA1aForm(@MappingTarget RFA1aForm rfa1aForm, RFA1aFormDTO formDTO);
+
+  @AfterMapping
+  default void toRFA1aFormAfterMapping(@MappingTarget RFA1aForm rfa1aForm, RFA1aFormDTO formDTO) {
+    String facilityName = Utils.PlacementHome.composeFacilityName(formDTO.getApplicants());
+    rfa1aForm.setFacilityName(facilityName);
+  }
 
   default ApplicantDTO toApplicantDTO(RFA1aApplicant entity) {
     ApplicantDTO applicantDTO = entity.getApplicant();

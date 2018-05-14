@@ -11,7 +11,15 @@ import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.util.List;
-import javax.persistence.*;
+import java.util.Optional;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -23,6 +31,10 @@ import org.hibernate.annotations.Type;
  */
 @SuppressWarnings("squid:S3437") //LocalDateTime is serializable
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL, query = "FROM RFA1aForm WHERE status <> 'DRAFT' ORDER BY id DESC")
+@NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_ALL_BY_USER, query =
+    "FROM RFA1aForm WHERE status <> 'DRAFT' AND "
+        + "(createUserId = :userId OR updateUserId = :userId)  ORDER BY facilityName")
+
 @NamedQuery(name = RFA1aForm.NAMED_QUERY_FIND_UPDATED_AFTER,
     query = "SELECT form FROM RFA1aForm form"
         + " LEFT JOIN RFA1aApplicant applicant ON applicant.formId = form.id"
@@ -44,15 +56,22 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject {
   private static final long serialVersionUID = -6201382973500280112L;
   public static final String NAMED_QUERY_FIND_ALL =
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.all";
+  public static final String NAMED_QUERY_FIND_ALL_BY_USER =
+      "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.all.by.user";
   public static final String NAMED_QUERY_FIND_UPDATED_AFTER =
       "gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm.find.updated.after";
+
 
   @NotNull
   @Enumerated(EnumType.STRING)
   private RFAApplicationStatus status;
 
+
   @Column(name = "placement_home_id", length = 10)
   private String placementHomeId;
+
+  @Column(name = "facility_name")
+  private String facilityName;
 
   @Type(type = "ApplicationJsonType")
   private ApplicationDTO application;
@@ -115,6 +134,21 @@ public class RFA1aForm extends RFABaseEntity implements PersistentObject {
 
   public void setPlacementHomeId(String placementHomeId) {
     this.placementHomeId = placementHomeId;
+  }
+
+  public String getFacilityName() {
+    return facilityName;
+  }
+
+  /**
+   * Sets facility name to entity and DTO.
+   *
+   * @param facilityName facility name
+   */
+  public void setFacilityName(String facilityName) {
+    this.facilityName = facilityName;
+    Optional.ofNullable(application)
+        .ifPresent(applicationDTO -> applicationDTO.setFacilityName(facilityName));
   }
 
   public RFAApplicationStatus getStatus() {

@@ -6,6 +6,7 @@ import com.google.common.base.Objects;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
@@ -14,21 +15,29 @@ import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.rest.exception.ExpectedException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 
-/** @author CALS API Team */
+/**
+ * Cals-API utils class.
+ *
+ * @author CALS API Team
+ */
 public final class Utils {
 
-  private Utils() {}
+  private Utils() {
+  }
 
   public static class Phone {
 
-    private Phone() {}
+    private Phone() {
+    }
 
     public static String formatNumber(PhoneDTO phone) {
       String number = phone.getNumber();
@@ -41,7 +50,7 @@ public final class Utils {
     public static boolean checkIfPhoneDTOIsValid(PersonPhoneDTO phone) {
       return (null != phone
           && StringUtils.isNotBlank(phone.getNumber())
-          && !phone.getNumber().equalsIgnoreCase("null"));
+          && !"null".equalsIgnoreCase(phone.getNumber()));
     }
   }
 
@@ -50,7 +59,8 @@ public final class Utils {
     public static final String WATER_BODY = "water body";
     public static final String WEAPON_IN_HOME_BODY = "weapon in home";
 
-    private PlacementHome() {}
+    private PlacementHome() {
+    }
 
     public static String getHazardsDescription(ResidenceDTO residence) {
       if (residence.getWeaponInHome() && residence.getBodyOfWaterExist()) {
@@ -64,18 +74,112 @@ public final class Utils {
       }
       return " ";
     }
+
+    /**
+     * Overloaded method for composing facility name according to applicants list.
+     *
+     * @param applicantsList applicants list
+     * @return facility name
+     */
+    public static String composeFacilityNameByApplicantsList(List<RFA1aApplicant> applicantsList) {
+      return composeFacilityName(
+          applicantsList.stream().map(RFA1aFormMapper.INSTANCE::toApplicantDTO)
+              .collect(Collectors.toList()));
+    }
+
+
+    /**
+     * Composes facility name according to applicantDTOs list.
+     *
+     * <p>
+     * <b>Rules for Facility / Family name</b>
+     *
+     * Reads Applicant Name(s) as Last Name, First Name of Applicant #1 and Last Name,
+     * First Name of Applicant #2. (ex. Smith, John & Jones, Jane)
+     * Last Name is separated from First Name by a comma.
+     * Applicant Names are separated from each other by "and" or "&".
+     * When the Last Name is the same for Applicant #1 and Applicant #2,
+     * name reads "Common Last Name, First Name Applicant #1 & First Name Applicant #2"
+     * (ex. Smith, John & Jane).
+     * </p>
+     *
+     * @param applicantsList applicantsDTOs list
+     * @return facility name
+     */
+    public static String composeFacilityName(List<ApplicantDTO> applicantsList) {
+      // Assume that Facility/Family name composed from the first 2 applicants
+      return Optional.ofNullable(applicantsList).map(applicants -> {
+        Optional<ApplicantDTO> firstApplicant = getApplicantBuIndex(applicants, 0);
+        Optional<ApplicantDTO> secondApplicant = getApplicantBuIndex(applicants, 1);
+
+        StringBuilder firstPartSb = firstApplicant
+            .map(PlacementHome::composeFirstPartOfFacilityName)
+            .orElse(new StringBuilder());
+
+        StringBuilder secondPartSb = secondApplicant.map(applicantDTO ->
+            composeSecondPartOfFacilityName(firstApplicant, applicantDTO)
+        ).orElse(new StringBuilder());
+
+        if (firstPartSb.length() > 0 && secondPartSb.length() > 0) {
+          firstPartSb.append(" & ");
+        }
+        firstPartSb.append(secondPartSb);
+
+        return firstPartSb.toString();
+      }).orElse(null);
+    }
+
+    private static StringBuilder composeSecondPartOfFacilityName(
+        Optional<ApplicantDTO> firstApplicant,
+        ApplicantDTO secondApplicant) {
+      StringBuilder sbForSecondApplicant = new StringBuilder();
+      Optional<String> secondLastName = Optional.ofNullable(secondApplicant.getLastName());
+      Optional<String> secondFirstName = Optional.ofNullable(secondApplicant.getFirstName());
+      if (firstApplicant.isPresent()
+          && secondLastName.isPresent()
+          && !secondLastName.get().equals(firstApplicant.get().getLastName())) {
+        sbForSecondApplicant.append(secondLastName.get());
+        if (secondFirstName.isPresent()) {
+          sbForSecondApplicant.append(", ");
+        }
+      }
+      secondFirstName.ifPresent(sbForSecondApplicant::append);
+      return sbForSecondApplicant;
+    }
+
+    private static StringBuilder composeFirstPartOfFacilityName(ApplicantDTO applicantDTO) {
+      StringBuilder sb = new StringBuilder();
+      Optional<String> lastName = Optional.ofNullable(applicantDTO.getLastName());
+      Optional<String> firstName = Optional.ofNullable(applicantDTO.getFirstName());
+      lastName.ifPresent(ln -> {
+        sb.append(ln);
+        if (firstName.isPresent()) {
+          sb.append(", ");
+        }
+      });
+      firstName.ifPresent(sb::append);
+      return sb;
+    }
+
+    private static Optional<ApplicantDTO> getApplicantBuIndex(List<ApplicantDTO> applicants,
+        int index) {
+      return applicants.size() > index ? Optional.ofNullable(applicants.get(index))
+          : Optional.empty();
+    }
+
   }
 
   public static class Applicant {
 
-    private Applicant() {}
+    private Applicant() {
+    }
 
     public static BigDecimal getAnnualIncome(ApplicantDTO applicant) {
       if (applicant.getEmployment() != null) {
         EmploymentDTO employmentDTO = applicant.getEmployment();
         return employmentDTO.getIncome() != null
-                && employmentDTO.getIncomeType() != null
-                && "monthly".equals(employmentDTO.getIncomeType().getValue())
+            && employmentDTO.getIncomeType() != null
+            && "monthly".equals(employmentDTO.getIncomeType().getValue())
             ? employmentDTO.getIncome().multiply(new BigDecimal(12))
             : employmentDTO.getIncome() != null ? employmentDTO.getIncome() : new BigDecimal(0);
       }
@@ -125,7 +229,8 @@ public final class Utils {
 
   public static class Address {
 
-    private Address() {}
+    private Address() {
+    }
 
     public static RFAAddressDTO getByType(RFA1aFormDTO rfa1aFormDTO, String type) {
       ResidenceDTO residence = rfa1aFormDTO.getResidence();
@@ -187,13 +292,13 @@ public final class Utils {
     private static boolean checkIfLisResidentialAddressIsNotNullString(
         final LisFacFile lisFacFile) {
       return (StringUtils.isNotBlank(lisFacFile.getFacResStreetAddr())
-              && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResStreetAddr()))
+          && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResStreetAddr()))
           || (StringUtils.isNotBlank(lisFacFile.getFacResCity())
-              && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResCity()))
+          && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResCity()))
           || (StringUtils.isNotBlank(lisFacFile.getFacResState())
-              && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResState()))
+          && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResState()))
           || (StringUtils.isNotBlank(lisFacFile.getFacResZipCode())
-              && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResZipCode()));
+          && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResZipCode()));
     }
 
     private static boolean checkIfLisMailAddressIsNotBlank(final LisFacFile lisFacFile) {
@@ -206,18 +311,20 @@ public final class Utils {
 
     private static boolean checkIfLisMailAddressIsNotNullString(final LisFacFile lisFacFile) {
       return (StringUtils.isNotBlank(lisFacFile.getFacMailStreetAddr())
-              && !lisFacFile.getFacMailStreetAddr().equalsIgnoreCase(NULL_STRING))
+          && !lisFacFile.getFacMailStreetAddr().equalsIgnoreCase(NULL_STRING))
           || (StringUtils.isNotBlank(lisFacFile.getFacMailCity())
-              && !lisFacFile.getFacMailCity().equalsIgnoreCase(NULL_STRING))
+          && !lisFacFile.getFacMailCity().equalsIgnoreCase(NULL_STRING))
           || (StringUtils.isNotBlank(lisFacFile.getFacMailState())
-              && !lisFacFile.getFacMailState().equalsIgnoreCase(NULL_STRING))
+          && !lisFacFile.getFacMailState().equalsIgnoreCase(NULL_STRING))
           || (StringUtils.isNotBlank(lisFacFile.getFacMailState())
-              && !lisFacFile.getFacMailZipCode().equalsIgnoreCase(NULL_STRING));
+          && !lisFacFile.getFacMailZipCode().equalsIgnoreCase(NULL_STRING));
     }
   }
 
   public static class County {
-    private County() {}
+
+    private County() {
+    }
 
     public static String getFlag(
         List<CountyType> counties, int expectedId, String selectedValue, String rejectedValue) {
@@ -232,7 +339,8 @@ public final class Utils {
 
   public static class BooleanToString {
 
-    private BooleanToString() {}
+    private BooleanToString() {
+    }
 
     public static String resolve(Boolean flag, String selectedValue, String rejectedValue) {
       if (flag == null) {

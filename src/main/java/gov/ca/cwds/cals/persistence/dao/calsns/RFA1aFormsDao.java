@@ -40,6 +40,24 @@ public class RFA1aFormsDao extends BaseDaoImpl<RFA1aForm> {
     return entities.build();
   }
 
+  /**
+   * Find RFA1a forms for particular staffId.
+   *
+   * @param maxResults maximum results
+   * @param userId staff person id
+   * @return list of RFA1a forms
+   */
+  public List<RFA1aForm> findAllByUser(int maxResults, String userId) {
+    Session session = this.getSessionFactory().getCurrentSession();
+    Query<RFA1aForm> query =
+        session.createNamedQuery(RFA1aForm.NAMED_QUERY_FIND_ALL_BY_USER, RFA1aForm.class);
+    query.setParameter("userId", userId);
+    query.setMaxResults(maxResults);
+    ImmutableList.Builder<RFA1aForm> entities = new ImmutableList.Builder<>();
+    entities.addAll(query.list());
+    return entities.build();
+  }
+
   public Stream<RFA1aForm> streamChangedRFA1aForms(final LocalDateTime after) {
     QueryCreator<RFA1aForm> queryCreator = (session, entityClass) -> session
         .createNamedQuery(RFA1aForm.NAMED_QUERY_FIND_UPDATED_AFTER, entityClass)
