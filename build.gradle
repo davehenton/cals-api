@@ -37,7 +37,7 @@ project.ext {
     dropwizardVersion = '1.1.0'
     coreApiVersion = '1.6.3_721-RC'
     apiSecurityVersion = '1.6.2_418-RC'
-    cwdsModelVersion = '0.6.4_531-RC'
+    cwdsModelVersion = '0.7.1_545-RC'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     dbunitVersion = '2.5.0'
@@ -229,6 +229,7 @@ run {
 
 test {
     systemProperty 'java.net.preferIPv4Stack', 'true'
+    exclude '**/*IntegrationTestSuite*'
 }
 
 jmeter {

@@ -16,11 +16,11 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAApplicationStatusDTO;
 import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.cals.service.rfa.rules.submission.RFASubmissionDroolsConfiguration;
+import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.cms.data.access.service.DataAccessServicesException;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
 import gov.ca.cwds.drools.DroolsConfiguration;
-import gov.ca.cwds.drools.DroolsException;
 import gov.ca.cwds.drools.DroolsService;
 import gov.ca.cwds.rest.exception.BusinessValidationException;
 import gov.ca.cwds.rest.exception.ExpectedException;
@@ -132,8 +132,13 @@ public class RFA1aFormService
     return new RFAApplicationStatusDTO(form.getStatus());
   }
 
-  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO)
-      throws DroolsException {
+  /**
+   * Sets Application status.
+   *
+   * @param formId form Id
+   * @param statusDTO status DTO
+   */
+  public void setApplicationStatus(Long formId, RFAApplicationStatusDTO statusDTO) {
     RFAApplicationStatus newStatus = statusDTO.getStatus();
     if (!changeStatusIfNotSubmitted(formId, newStatus)) {
       try {
@@ -165,7 +170,7 @@ public class RFA1aFormService
    * There is using XA Transaction
    */
   private void submitApplication(Long formId, RFAApplicationStatus newStatus)
-      throws NotSupportedException, SystemException, DroolsException {
+      throws NotSupportedException, SystemException {
 
     RFA1aFormDTO expandedFormDTO = getExpandedFormDTO(formId);
     performSubmissionValidation(expandedFormDTO);
@@ -190,8 +195,7 @@ public class RFA1aFormService
       userTransaction.rollback();
       LOG.error("Can not create Placement Home because of UnauthorizedException", e);
       throw e;
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       try {
         userTransaction.rollback();
       } catch (Exception re) {
@@ -244,7 +248,7 @@ public class RFA1aFormService
         });
 
     Set<IssueDetails> detailsList = droolsService
-            .performBusinessRules(createConfiguration(), formDTO);
+        .performBusinessRules(createConfiguration(), formDTO);
     if (!detailsList.isEmpty()) {
       throw new BusinessValidationException(detailsList);
     }
@@ -263,4 +267,16 @@ public class RFA1aFormService
     return form;
   }
 
+  /**
+   * Updates facility name for particular form application.
+   *
+   * @param formId form id
+   */
+  public void updateFacilityName(Long formId) {
+    RFA1aForm form = rfa1AFormsDao.find(formId);
+    String facilityName = Utils.PlacementHome
+        .composeFacilityNameByApplicantsList(form.getApplicants());
+    form.setFacilityName(facilityName);
+    rfa1AFormsDao.update(fillFormUpdateAttributes(form));
+  }
 }

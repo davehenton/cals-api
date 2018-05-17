@@ -15,6 +15,7 @@ import io.dropwizard.testing.junit.DropwizardAppRule;
 import java.net.URI;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.Optional;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
@@ -45,11 +46,14 @@ public class RestClientTestRule<T extends CalsApiConfiguration> implements TestR
 
 
   private static class EmptyTokenProvider implements TokenProvider {
+
     @Override
     public String doGetToken(AuthParams params) {
       return "";
     }
-  };
+  }
+
+  ;
 
   public RestClientTestRule(DropwizardAppRule<T> dropWizardApplication) {
     this.dropWizardApplication = dropWizardApplication;
@@ -60,9 +64,9 @@ public class RestClientTestRule<T extends CalsApiConfiguration> implements TestR
   }
 
   public WebTarget target(String pathInfo, AuthParams authParams) {
-    assert (authParams != null);
     String restUrl = getUriString() + pathInfo;
-    return client.target(restUrl).queryParam("token", tokenProvider.doGetToken(authParams))
+    return client.target(restUrl).queryParam("token",
+        tokenProvider.doGetToken(Optional.ofNullable(authParams).orElse(defaultAuthParams)))
         .register(new LoggingFilter());
   }
 
