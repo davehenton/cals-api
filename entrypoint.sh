@@ -2,6 +2,10 @@
 
 #The file should have UNIX-style EOL
 
+if [ -x "/paramfolder/parameters.sh" ]; then
+    /paramfolder/parameters.sh
+fi
+
 JAVA_OPTS="-Xms128m -Xmx256m ${JAVA_OPTS}"
 
 
