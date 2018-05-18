@@ -178,14 +178,6 @@ public interface FacilityMapper {
       facilityAddressDTOs.add(residentialAddress);
     }
 
-    if (!StringUtils.isAllBlank(placementHome.getPstreetNo(), placementHome.getPstreetNm(),
-        placementHome.getpCityNm(), placementHome.getpZipNo(), placementHome.getPyZipSfx())) {
-      FacilityAddressDTO mailingAddress = facilityAddressMapper
-          .toMailAddress(placementHome, dictionaryEntriesHolder);
-      facilityAddressMapper.afterMapping(mailingAddress, placementHome, dictionaryEntriesHolder);
-      facilityAddressDTOs.add(mailingAddress);
-    }
-
     facilityDTO.setAddress(facilityAddressDTOs);
   }
 
