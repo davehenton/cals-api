@@ -25,12 +25,6 @@ public interface FacilityAddressMapper {
     FacilityAddressDTO toResidentialAddress(BasePlacementHome placementHome,
         CwsDictionaryEntriesHolder dictionaryEntriesHolder);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "type", constant = MAIL)
-    @Mapping(target = "address", ignore = true)
-    FacilityAddressDTO toMailAddress(BasePlacementHome placementHome,
-        CwsDictionaryEntriesHolder dictionaryEntriesHolder);
-
     @AfterMapping
     default void afterMapping(
         @TargetType FacilityAddressDTO facilityAddressDTO,
@@ -42,9 +36,6 @@ public interface FacilityAddressMapper {
         if (RESIDENTIAL.equals(facilityAddressDTO.getType())) {
             addressDTO = addressMapper
                 .toResidentialAddressDTO(placementHome, dictionaryEntriesHolder);
-        }
-        if (MAIL.equals(facilityAddressDTO.getType())) {
-            addressDTO = addressMapper.toMailAddressDTO(placementHome, dictionaryEntriesHolder);
         }
         facilityAddressDTO.setAddress(addressDTO);
     }
