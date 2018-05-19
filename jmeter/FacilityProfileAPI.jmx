@@ -122,7 +122,7 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="CognitoProperties (Integration)" enabled="false">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="CognitoProperties (Integration)" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="idp" elementType="Argument">
             <stringProp name="Argument.name">idp</stringProp>
@@ -398,7 +398,7 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">/login?client_id=obg988rnns51m2cik5l9rqeou&amp;redirect_uri=https://web.integration.cwds.io/perry/login&amp;response_type=code</stringProp>
+            <stringProp name="HTTPSampler.path">/login?client_id=4julq2o6653fden3cph5oq90kc&amp;redirect_uri=https://web.integration.cwds.io/perry/login&amp;response_type=code</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

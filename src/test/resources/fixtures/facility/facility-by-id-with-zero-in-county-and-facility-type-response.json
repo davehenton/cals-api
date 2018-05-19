@@ -34,14 +34,6 @@
       "state" : "CA",
       "zip_code" : "95814"
     }
-  }, {
-    "type" : "Mailing",
-    "address" : {
-      "street_address" : "2114 H St.",
-      "city" : "Sacramento",
-      "state" : "CA",
-      "zip_code" : "95814"
-    }
   } ],
   "facility_source" : "CWS/CMS"
 }
