@@ -137,6 +137,14 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
   @ApiModelProperty(value = "Email Address", example = "name@mail.com")
   private String emailAddress;
 
+  @JsonProperty("full_residential_address")
+  @ApiModelProperty(required = true, readOnly = true, value = "Full address")
+  private String fullResidentialAddress;
+
+  @JsonProperty("full_mailing_address")
+  @ApiModelProperty(required = true, readOnly = true, value = "Full address")
+  private String fullMailingAddress;
+
   @JsonProperty("last_visit_reason")
   @ApiModelProperty(value = "Last Visit Reason")
   private DictionaryDTO lastVisitReason;
@@ -394,6 +402,22 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
 
   public void setCapacityLastChanged(LocalDate capacityLastChanged) {
     this.capacityLastChanged = capacityLastChanged;
+  }
+
+  public String getFullResidentialAddress() {
+    return fullResidentialAddress;
+  }
+
+  public void setFullResidentialAddress(String fullResidentialAddress) {
+    this.fullResidentialAddress = fullResidentialAddress;
+  }
+
+  public String getFullMailingAddress() {
+    return fullMailingAddress;
+  }
+
+  public void setFullMailingAddress(String fullMailingAddress) {
+    this.fullMailingAddress = fullMailingAddress;
   }
 
   @Override

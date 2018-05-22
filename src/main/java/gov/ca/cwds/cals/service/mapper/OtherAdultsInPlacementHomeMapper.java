@@ -21,9 +21,7 @@ public interface OtherAdultsInPlacementHomeMapper {
   OtherAdultsInPlacementHomeMapper INSTANCE = Mappers.getMapper(OtherAdultsInPlacementHomeMapper.class);
 
   @Mapping(target = "birthDt", source = "dateOfBirth")
-  @Mapping(target = "endDt", ignore = true)
   @Mapping(target = "genderCd", constant = "M")
-  @Mapping(target = "othAdltnm", ignore = true)
   @Mapping(target = "startDt", expression = "java(LocalDate.now())")
 
   /**
@@ -32,8 +30,6 @@ public interface OtherAdultsInPlacementHomeMapper {
    *  with significant contact not residing in the PLACEMENT HOME)
    */
   @Mapping(target = "othAdlCd", constant = "O")
-
-  @Mapping(target = "resostInd", ignore = true)
   @Mapping(target = "passbcCd", constant = "U")
   @Mapping(target = "comntDsc", constant = "")
   OtherAdultsInPlacementHome toOtherAdult(OtherAdultDTO otherAdultDTO);
