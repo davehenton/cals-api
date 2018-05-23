@@ -1,17 +1,18 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
+import gov.ca.cwds.cals.service.dto.AddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
+import gov.ca.cwds.cals.util.LisFacilityAddressUtil;
 import gov.ca.cwds.cals.util.Utils;
+import java.util.ArrayList;
+import java.util.List;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author CWDS CALS API Team
@@ -46,15 +47,19 @@ public abstract class FacilityPostMappingProcessor {
   private void mapAddresses(LisFacFile lisFacFile, FacilityDTO facilityDTO) {
     List<FacilityAddressDTO> addresses = new ArrayList<>(2);
 
-    if (Utils.Address.checkIfLisResidentialAddressIsValid(lisFacFile)) {
+    if (LisFacilityAddressUtil.checkIfLisResidentialAddressIsValid(lisFacFile)) {
       FacilityAddressDTO residentialAddress = RESIDENTIAL_ADDRESS_MAPPER
           .lisFacilityToFacilityAddressDTO(lisFacFile);
+      facilityDTO.setFullResidentialAddress(
+          AddressDTO.buildFullAddressText(residentialAddress.getAddress()));
       addresses.add(residentialAddress);
     }
 
-    if (Utils.Address.checkIfLisMailAddressIsValid(lisFacFile)) {
+    if (LisFacilityAddressUtil.checkIfLisMailAddressIsValid(lisFacFile)) {
       FacilityAddressDTO mailAddress = MAIL_ADDRESS_MAPPER
           .lisFacilityToFacilityAddressDTO(lisFacFile);
+      facilityDTO.setFullMailingAddress(
+          AddressDTO.buildFullAddressText(mailAddress.getAddress()));
       addresses.add(mailAddress);
     }
 

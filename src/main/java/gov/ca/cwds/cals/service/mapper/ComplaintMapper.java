@@ -3,15 +3,14 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.service.dto.AllegationDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -34,7 +33,6 @@ public interface ComplaintMapper {
     @Mapping(source = "crp2Postcomments", target = "postInvestigationComments")
     @Mapping(source = "crp2Contactsummary", target = "contactSummary")
     @Mapping(source = "crp2Followup", target = "followupComments")
-    @Mapping(target = "allegations", ignore = true)
     ComplaintDTO entityToDTO(ComplaintReportLic802 complaint);
 
     @Mapping(target = "messages", ignore = true)

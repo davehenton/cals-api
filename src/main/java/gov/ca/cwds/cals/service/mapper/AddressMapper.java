@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import static gov.ca.cwds.cals.Constants.AddressTypes.MAIL;
 import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 
 import gov.ca.cwds.cals.service.CwsDictionaryEntriesHolder;
@@ -26,10 +25,6 @@ public interface AddressMapper {
     @Mapping(target = "state", source = "dictionaryEntriesHolder.stateCode.logicalId")
     @Mapping(target = "zipCode", source = "placementHome.zipNo")
     @Mapping(target = "zipSuffixCode", source = "placementHome.zipSfxNo")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "longitude", ignore = true)
-    @Mapping(target = "lattitude", ignore = true)
-    @Mapping(target = "deliverable", ignore = true)
     AddressDTO toResidentialAddressDTO(BasePlacementHome placementHome,
         CwsDictionaryEntriesHolder dictionaryEntriesHolder);
 

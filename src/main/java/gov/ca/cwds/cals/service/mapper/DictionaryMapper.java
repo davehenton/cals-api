@@ -19,7 +19,6 @@ import org.mapstruct.Named;
 public interface DictionaryMapper {
 
   @Mapping(target = "description", expression = "java(StringUtils.trimToEmpty(staffPerson.getFirstName()) + ' ' + staffPerson.getLastName())")
-  @Mapping(target = "code", ignore = true)
   DictionaryDTO toDictionary(BaseStaffPerson staffPerson);
 
   @Mapping(target = "code", source = "logicalId")

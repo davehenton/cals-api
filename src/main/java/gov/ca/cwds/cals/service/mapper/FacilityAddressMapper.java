@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import static gov.ca.cwds.cals.Constants.AddressTypes.MAIL;
 import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 
 import gov.ca.cwds.cals.service.CwsDictionaryEntriesHolder;
@@ -19,9 +18,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityAddressMapper {
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "type", constant = RESIDENTIAL)
-    @Mapping(target = "address", ignore = true)
     FacilityAddressDTO toResidentialAddress(BasePlacementHome placementHome,
         CwsDictionaryEntriesHolder dictionaryEntriesHolder);
 
