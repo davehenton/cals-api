@@ -21,6 +21,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(imports = {LocalDateTime.class, Utils.class, RfaAddressUtil.class, StringUtils.class})
 public interface PlacementHomeMapper {
+
   PlacementHomeMapper INSTANCE = Mappers.getMapper(PlacementHomeMapper.class);
 
   @Mapping(target = "ageFrmNo", constant = "0")
@@ -62,15 +63,18 @@ public interface PlacementHomeMapper {
   @Mapping(target = "pvdTrnscd", constant = "U")
   @Mapping(target = "pubTrnscd", constant = "U")
   @Mapping(target = "stateCode", source = "residentialAddress.state.cwsId")
-  @Mapping(target = "streetNm", expression = "java(RfaAddressUtil.getStreetName(residentialAddress))")
-  @Mapping(target = "streetNo", expression = "java(RfaAddressUtil.getStreetNumber(residentialAddress))")
+  @Mapping(target = "streetNm",
+      expression = "java(RfaAddressUtil.getStreetName(residentialAddress))")
+  @Mapping(target = "streetNo",
+      expression = "java(RfaAddressUtil.getStreetNumber(residentialAddress))")
   @Mapping(target = "zipNo", source = "residentialAddress.zip")
   @Mapping(target = "addrDsc", source = "form.residence.directionsToHome")
   @Mapping(target = "spcharDsc", constant = " ")
   @Mapping(target = "ctyprfDsc", constant = " ")
   @Mapping(target = "edPvrDsc", constant = " ")
   @Mapping(target = "envFctdsc", constant = " ")
-  @Mapping(target = "hazrdsDsc", expression = "java(Utils.PlacementHome.getHazardsDescription(form.getResidence()))")
+  @Mapping(target = "hazrdsDsc",
+      expression = "java(Utils.PlacementHome.getHazardsDescription(form.getResidence()))")
   @Mapping(target = "lisPrfdsc", constant = " ")
   @Mapping(target = "petsDsc", constant = " ")
   @Mapping(target = "rlgActdsc", constant = " ")

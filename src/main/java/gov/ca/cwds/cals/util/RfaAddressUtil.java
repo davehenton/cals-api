@@ -17,6 +17,9 @@ public final class RfaAddressUtil {
   private RfaAddressUtil() {
   }
 
+  /**
+   * Get address by type
+   */
   public static RFAAddressDTO getByType(RFA1aFormDTO rfa1aFormDTO, String type) {
     ResidenceDTO residence = rfa1aFormDTO.getResidence();
     if (residence == null) {
