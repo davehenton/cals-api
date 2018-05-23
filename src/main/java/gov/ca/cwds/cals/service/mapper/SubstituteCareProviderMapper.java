@@ -74,7 +74,8 @@ public interface SubstituteCareProviderMapper {
       @MappingTarget SubstituteCareProvider substituteCareProvider,
       RFAAddressDTO addressDTO);
 
-  @Mapping(target = "ssNo", expression = "java(StringUtils.defaultString(rfa1bFormDTO.getSsn(), Constants.SPACE))")
+  @Mapping(target = "ssNo",
+      expression = "java(StringUtils.defaultString(rfa1bFormDTO.getSsn(), Constants.SPACE))")
   @Mapping(target = "resostInd", expression = "java(Utils.BooleanToString.resolve(" +
       "rfa1bFormDTO.isLivedInOtherState(), Constants.Y, Constants.N))")
   SubstituteCareProvider toSubstituteCareProvider(

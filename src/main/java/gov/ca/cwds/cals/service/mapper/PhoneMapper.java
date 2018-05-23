@@ -18,17 +18,17 @@ import org.mapstruct.Mapping;
 @DecoratedWith(PhoneMapperDecorator.class)
 public interface PhoneMapper {
 
-    @Mapping(target = "relation", constant = PRIMARY)
-    @Mapping(target = "type", constant = "Cell")
-    @Mapping(target = "number", source = "facPhoneNbr")
-    PersonPhoneDTO lisFacilityToPhoneDTO(LisFacFile lisFacFile);
+  @Mapping(target = "relation", constant = PRIMARY)
+  @Mapping(target = "type", constant = "Cell")
+  @Mapping(target = "number", source = "facPhoneNbr")
+  PersonPhoneDTO lisFacilityToPhoneDTO(LisFacFile lisFacFile);
 
-    @Mapping(target = "relation", constant = PRIMARY)
-    @Mapping(target = "number", source = "prmTelNo")
-    PersonPhoneDTO toPrimaryPhoneDTO(BasePlacementHome placementHome);
+  @Mapping(target = "relation", constant = PRIMARY)
+  @Mapping(target = "number", source = "prmTelNo")
+  PersonPhoneDTO toPrimaryPhoneDTO(BasePlacementHome placementHome);
 
-    @Mapping(target = "relation", constant = ALTERNATE)
-    @Mapping(target = "number", source = "bckTelNo")
-    PersonPhoneDTO toAlternatePhoneDTO(BasePlacementHome placementHome);
+  @Mapping(target = "relation", constant = ALTERNATE)
+  @Mapping(target = "number", source = "bckTelNo")
+  PersonPhoneDTO toAlternatePhoneDTO(BasePlacementHome placementHome);
 
 }

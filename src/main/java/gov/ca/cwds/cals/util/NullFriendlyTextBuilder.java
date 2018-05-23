@@ -11,6 +11,10 @@ public class NullFriendlyTextBuilder {
 
   private List<String> notEmptyFields = new ArrayList<>(4);
 
+  /**
+   * Join fields using space(' ') as split character.
+   * Null and empty fields are ignored
+   */
   public String buildText(String... fields) {
     for (String field : fields) {
       addFileds(field);
