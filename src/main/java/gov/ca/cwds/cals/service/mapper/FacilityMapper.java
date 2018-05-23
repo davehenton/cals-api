@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.CwsDictionaryEntriesHolder;
+import gov.ca.cwds.cals.service.dto.AddressDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
@@ -127,6 +128,8 @@ public interface FacilityMapper {
           .toResidentialAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper
           .afterMapping(residentialAddress, placementHome, dictionaryEntriesHolder);
+      facilityDTO.setFullResidentialAddress(
+          AddressDTO.buildFullAddressText(residentialAddress.getAddress()));
       facilityAddressDTOs.add(residentialAddress);
     }
 

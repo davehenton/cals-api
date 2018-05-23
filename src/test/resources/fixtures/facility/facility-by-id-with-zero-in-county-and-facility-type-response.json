@@ -35,5 +35,6 @@
       "zip_code" : "95814"
     }
   } ],
-  "facility_source" : "CWS/CMS"
+  "facility_source": "CWS/CMS",
+  "full_residential_address": "2114 H St. Sacramento CA 95814"
 }

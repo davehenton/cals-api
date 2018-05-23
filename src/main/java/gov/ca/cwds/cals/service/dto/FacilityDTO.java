@@ -138,11 +138,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
   private String emailAddress;
 
   @JsonProperty("full_residential_address")
-  @ApiModelProperty(required = true, readOnly = true, value = "Full address")
+  @ApiModelProperty(required = true, readOnly = true, value = "Full residential address")
   private String fullResidentialAddress;
 
   @JsonProperty("full_mailing_address")
-  @ApiModelProperty(required = true, readOnly = true, value = "Full address")
+  @ApiModelProperty(required = true, readOnly = true, value = "Full mailing address")
   private String fullMailingAddress;
 
   @JsonProperty("last_visit_reason")

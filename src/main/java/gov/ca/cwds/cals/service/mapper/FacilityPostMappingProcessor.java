@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.mapper;
 
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
+import gov.ca.cwds.cals.service.dto.AddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
 import gov.ca.cwds.cals.service.dto.FacilityDTO;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
@@ -49,12 +50,16 @@ public abstract class FacilityPostMappingProcessor {
     if (LisFacilityAddressUtil.checkIfLisResidentialAddressIsValid(lisFacFile)) {
       FacilityAddressDTO residentialAddress = RESIDENTIAL_ADDRESS_MAPPER
           .lisFacilityToFacilityAddressDTO(lisFacFile);
+      facilityDTO.setFullResidentialAddress(
+          AddressDTO.buildFullAddressText(residentialAddress.getAddress()));
       addresses.add(residentialAddress);
     }
 
     if (LisFacilityAddressUtil.checkIfLisMailAddressIsValid(lisFacFile)) {
       FacilityAddressDTO mailAddress = MAIL_ADDRESS_MAPPER
           .lisFacilityToFacilityAddressDTO(lisFacFile);
+      facilityDTO.setFullMailingAddress(
+          AddressDTO.buildFullAddressText(mailAddress.getAddress()));
       addresses.add(mailAddress);
     }
 
