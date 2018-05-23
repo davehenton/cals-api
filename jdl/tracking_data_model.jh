@@ -1,38 +1,39 @@
-
 entity RFA1A{
 	id Long
 }
 
 entity Tracking {
 	id Long,
-    family_documents String,
-    create_user_id String,
-    create_datetime LocalDateTime,
-    update_user_id String,
-    update_datetime LocalDateTime
+	family_name String,
+	license_number String,
+	family_documents String,
+  create_user_id String,
+  create_datetime LocalDateTime,
+  update_user_id String,
+  update_datetime LocalDateTime
 }
 
 entity TrackingPersonDocuments {
 	id Long,
-    person_id Long,
-    person_type String,
-    documents String,
-    create_user_id String,
-    create_datetime LocalDateTime,
-    update_user_id String,
-    update_datetime LocalDateTime
+  person_id Long,
+  person_type String,
+  documents String,
+  create_user_id String,
+  create_datetime LocalDateTime,
+  update_user_id String,
+  update_datetime LocalDateTime
 }
 
 entity TrackingTemplate {
 	id Long,
-    user String,
-    county_code Integer,
-    template_type String,
-    tracking_template String,
-    create_user_id String,
-    create_datetime LocalDateTime,
-    update_user_id String,
-    update_datetime LocalDateTime
+  user String,
+  county_code Integer,
+  template_type String,
+  tracking_template String,
+  create_user_id String,
+  create_datetime LocalDateTime,
+  update_user_id String,
+  update_datetime LocalDateTime
 }
 
 relationship OneToMany {
@@ -43,6 +44,6 @@ relationship ManyToOne {
 	Tracking{template_id} to TrackingTemplate
 }
 
-relationship ManyToOne {
-	RFA1A{tracking_id} to Tracking
+relationship OneToOne {
+	RFA1A{tracking_id} to Tracking{rfa_1a_id}
 }
