@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.mapper;
 
-import static gov.ca.cwds.cals.Constants.AddressTypes.MAIL;
 import static gov.ca.cwds.cals.Constants.AddressTypes.RESIDENTIAL;
 
 import gov.ca.cwds.cals.service.CwsDictionaryEntriesHolder;
@@ -19,25 +18,23 @@ import org.mapstruct.factory.Mappers;
 @Mapper(uses = {TrailingSpacesRemovalPostMappingProcessor.class})
 public interface FacilityAddressMapper {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "type", constant = RESIDENTIAL)
-    @Mapping(target = "address", ignore = true)
-    FacilityAddressDTO toResidentialAddress(BasePlacementHome placementHome,
-        CwsDictionaryEntriesHolder dictionaryEntriesHolder);
+  @Mapping(target = "type", constant = RESIDENTIAL)
+  FacilityAddressDTO toResidentialAddress(BasePlacementHome placementHome,
+      CwsDictionaryEntriesHolder dictionaryEntriesHolder);
 
-    @AfterMapping
-    default void afterMapping(
-        @TargetType FacilityAddressDTO facilityAddressDTO,
-        BasePlacementHome placementHome,
-        CwsDictionaryEntriesHolder dictionaryEntriesHolder) {
-        AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
+  @AfterMapping
+  default void afterMapping(
+      @TargetType FacilityAddressDTO facilityAddressDTO,
+      BasePlacementHome placementHome,
+      CwsDictionaryEntriesHolder dictionaryEntriesHolder) {
+    AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
 
-        AddressDTO addressDTO = null;
-        if (RESIDENTIAL.equals(facilityAddressDTO.getType())) {
-            addressDTO = addressMapper
-                .toResidentialAddressDTO(placementHome, dictionaryEntriesHolder);
-        }
-        facilityAddressDTO.setAddress(addressDTO);
+    AddressDTO addressDTO = null;
+    if (RESIDENTIAL.equals(facilityAddressDTO.getType())) {
+      addressDTO = addressMapper
+          .toResidentialAddressDTO(placementHome, dictionaryEntriesHolder);
     }
+    facilityAddressDTO.setAddress(addressDTO);
+  }
 
 }

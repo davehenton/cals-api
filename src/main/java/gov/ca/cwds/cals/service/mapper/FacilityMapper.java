@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.mapper;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.CwsDictionaryEntriesHolder;
+import gov.ca.cwds.cals.service.dto.AddressDTO;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
@@ -45,17 +46,6 @@ public interface FacilityMapper {
    * @return converted data
    */
 
-  @Mapping(target = "lastVisitDate", ignore = true)
-  @Mapping(target = "lastDeferredVisitDate", ignore = true)
-  @Mapping(target = "lastVisitReason", ignore = true)
-  @Mapping(target = "lastDeferredVisitReason", ignore = true)
-  @Mapping(target = "visits", ignore = true)
-  @Mapping(target = "annualVisitYear", ignore = true)
-  @Mapping(target = "prelicensingVisitDate", ignore = true)
-  @Mapping(target = "messages", ignore = true)
-  @Mapping(target = "href", ignore = true)
-  @Mapping(target = "address", ignore = true)
-  @Mapping(target = "phone", ignore = true)
   @Mapping(source = "lisFacFile.facNbr", target = "id")
   @Mapping(source = "lisFacFile.facilityType", target = "type")
   @Mapping(source = "lisFacFile.facName", target = "name")
@@ -76,11 +66,6 @@ public interface FacilityMapper {
   @Mapping(source = "lisFacFile.facIncCapEffDate", target = "capacityLastChanged")
   FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
-  @Mapping(target = "prelicensingVisitDate", ignore = true)
-  @Mapping(target = "annualVisitYear", ignore = true)
-  @Mapping(target = "visits", ignore = true)
-  @Mapping(target = "lastDeferredVisitReason", ignore = true)
-  @Mapping(target = "lastDeferredVisitDate", ignore = true)
   @Mapping(target = "id", source = "placementHome.identifier")
   @Mapping(target = "adoptionOnly",
       expression = "java(\"Y\".equalsIgnoreCase(placementHome.getAdhmonly()))")
@@ -95,42 +80,10 @@ public interface FacilityMapper {
   @Mapping(target = "licenseEffectiveDate", source = "placementHome.licEfctdt")
   @Mapping(target = "originalApplicationRecievedDate", source = "placementHome.licAplDt")
   @Mapping(target = "county", source = "dictionaryEntriesHolder.applicationCounty")
-  @Mapping(target = "lastVisitDate", ignore = true)
-  @Mapping(target = "lastVisitReason", ignore = true)
-  @Mapping(target = "phone", ignore = true)
-  @Mapping(target = "address", ignore = true)
-  @Mapping(target = "href", ignore = true)
-  @Mapping(target = "licenseeType", ignore = true)
-  @Mapping(target = "messages", ignore = true)
-  @Mapping(target = "emailAddress", ignore = true)
   @Mapping(target = "facilitySource", constant = "CWS/CMS")
-  @Mapping(target = "capacityLastChanged", ignore = true)
   FacilityDTO toFacilityDTO(BasePlacementHome placementHome,
       CwsDictionaryEntriesHolder dictionaryEntriesHolder);
 
-  @Mapping(target = "messages", ignore = true)
-  @Mapping(target = "phone", ignore = true)
-  @Mapping(target = "prelicensingVisitDate", ignore = true)
-  @Mapping(target = "annualVisitYear", ignore = true)
-  @Mapping(target = "visits", ignore = true)
-  @Mapping(target = "address", ignore = true)
-  @Mapping(target = "county", ignore = true)
-  @Mapping(target = "lastDeferredVisitReason", ignore = true)
-  @Mapping(target = "emailAddress", ignore = true)
-  @Mapping(target = "lastDeferredVisitDate", ignore = true)
-  @Mapping(target = "originalApplicationRecievedDate", ignore = true)
-  @Mapping(target = "licenseEffectiveDate", ignore = true)
-  @Mapping(target = "capacity", ignore = true)
-  @Mapping(target = "licenseNumber", ignore = true)
-  @Mapping(target = "status", ignore = true)
-  @Mapping(target = "districtOffice", ignore = true)
-  @Mapping(target = "assignedWorker", ignore = true)
-  @Mapping(target = "licenseeType", ignore = true)
-  @Mapping(target = "licenseeName", ignore = true)
-  @Mapping(target = "name", ignore = true)
-  @Mapping(target = "type", ignore = true)
-  @Mapping(target = "id", ignore = true)
-  @Mapping(target = "href", ignore = true)
   @Mapping(target = "lastVisitDate",
       expression = "java(licensingVisit.getVisitDate() == null? " +
           "null : LocalDateTime.of(licensingVisit.getVisitDate(), java.time.LocalTime.MIN))")
@@ -175,6 +128,8 @@ public interface FacilityMapper {
           .toResidentialAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper
           .afterMapping(residentialAddress, placementHome, dictionaryEntriesHolder);
+      facilityDTO.setFullResidentialAddress(
+          AddressDTO.buildFullAddressText(residentialAddress.getAddress()));
       facilityAddressDTOs.add(residentialAddress);
     }
 

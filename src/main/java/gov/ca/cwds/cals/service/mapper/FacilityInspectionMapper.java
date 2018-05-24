@@ -22,10 +22,7 @@ public interface FacilityInspectionMapper {
 
   FacilityInspectionMapper INSTANCE = Mappers.getMapper(FacilityInspectionMapper.class);
 
-  @Mapping(target = "messages", ignore = true)
-  @Mapping(target = "deficiencies", ignore = true)
   @Mapping(target = "id", source = "originalunidkey")
-  @Mapping(target = "href", ignore = true)
   @Mapping(target = "representativeSignatureDate", source = "dateSigned")
   FacilityInspectionDTO toFacilityInspectionDto(Rr809Dn rr809Dn);
 
