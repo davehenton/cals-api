@@ -15,25 +15,49 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
+ * Legacy Dictionaries Cache Holder.
+ *
  * @author CWDS TPT-2 Team
  */
 public class LegacyDictionariesCache {
 
+  /**
+   * Cache holder Builder.
+   *
+   */
   public static class LegacyDictionariesCacheBuilder {
 
     private Map<Class<? extends SystemCodeTable>, BaseDaoImpl<? extends SystemCodeTable>> daos
         = new ConcurrentHashMap<>();
 
+    /**
+     * Adds mapping Dictionary class dao, and returns self.
+     *
+     * @param clazz Class expected as result of Dao find call.
+     * @param dao Dao for a Dictionary.
+     * @param <T> Type of dictionary.
+     * @return Self.
+     */
     public <T extends SystemCodeTable> LegacyDictionariesCacheBuilder add(Class<T> clazz,
         BaseDaoImpl<T> dao) {
       daos.put(clazz, dao);
       return this;
     }
 
+    /**
+     * Build and return LegacyDictionariesCache.
+     *
+     * @return LegacyDictionariesCache.
+     */
     public LegacyDictionariesCache build() {
       return new LegacyDictionariesCache(daos);
     }
 
+    /**
+     * Build, return LegacyDictionariesCache and preload cache.
+     *
+     * @return LegacyDictionariesCache.
+     */
     public LegacyDictionariesCache buildAndLoad() {
       return new LegacyDictionariesCache(daos, true);
     }
@@ -59,11 +83,22 @@ public class LegacyDictionariesCache {
             }
           });
 
-  public LegacyDictionariesCache(
+  /**
+   * Private constructor.
+   *
+   * @param daos map of Dao to class.
+   */
+  private LegacyDictionariesCache(
       Map<Class<? extends SystemCodeTable>, BaseDaoImpl<? extends SystemCodeTable>> daos) {
     this(daos, false);
   }
 
+  /**
+   * Private constructor used by builder.
+   *
+   * @param daos map of Dao to class.
+   * @param initialize flag.
+   */
   private LegacyDictionariesCache(
       Map<Class<? extends SystemCodeTable>, BaseDaoImpl<? extends SystemCodeTable>> daos,
       boolean initialize) {
@@ -79,6 +114,14 @@ public class LegacyDictionariesCache {
     }
   }
 
+  /**
+   * Finds dictionary entity by primaryKey.
+   *
+   * @param clazz Class of entity
+   * @param key Primary Key.
+   * @param <T> Generic entity type, entity must be extended from SystemCodeTable
+   * @return Entity.
+   */
   public <T extends SystemCodeTable> T findByPrimaryKey(Class<T> clazz, Serializable key) {
     try {
       return (T) cache.get(clazz).get(key);
@@ -87,6 +130,15 @@ public class LegacyDictionariesCache {
     }
   }
 
+
+  /**
+   * Finds dictionary entity by defined predicate.
+   *
+   * @param clazz Class of entity.
+   * @param filter Predicate
+   * @param <T> Generic entity type, entity must be extended from SystemCodeTable
+   * @return Entity.
+   */
   public <T extends SystemCodeTable> T find(Class<T> clazz, Predicate<SystemCodeTable> filter) {
     try {
       return (T) cache.get(clazz).values().stream().filter(filter).findFirst().orElse(null);
