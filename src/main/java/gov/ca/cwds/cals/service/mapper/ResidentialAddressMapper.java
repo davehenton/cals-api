@@ -19,7 +19,6 @@ public interface ResidentialAddressMapper {
     @Mapping(source = "facResState", target = "address.state")
     @Mapping(source = "facResZipCode", target = "address.zipCode")
     @Mapping(constant = Constants.AddressTypes.RESIDENTIAL, target = "type")
-    @Mapping(target = "id", ignore = true)
     FacilityAddressDTO lisFacilityToFacilityAddressDTO(LisFacFile lisFacFile);
 
 }

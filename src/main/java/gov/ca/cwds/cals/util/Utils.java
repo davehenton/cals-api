@@ -1,27 +1,20 @@
 package gov.ca.cwds.cals.util;
 
-import static gov.ca.cwds.cals.Constants.NULL_STRING;
-
 import com.google.common.base.Objects;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.Constants.ExpectedExceptionMessages;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aApplicant;
-import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.PersonPhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.EmploymentDTO;
 import gov.ca.cwds.cals.service.dto.rfa.PhoneDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
-import gov.ca.cwds.rest.exception.ExpectedException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -224,100 +217,6 @@ public final class Utils {
       }
 
       return Objects.equal(applicant.getId(), primaryId);
-    }
-  }
-
-  public static class Address {
-
-    private Address() {
-    }
-
-    public static RFAAddressDTO getByType(RFA1aFormDTO rfa1aFormDTO, String type) {
-      ResidenceDTO residence = rfa1aFormDTO.getResidence();
-      if (residence == null) {
-        return null;
-      }
-      Optional<RFAAddressDTO> address =
-          residence
-              .getAddresses()
-              .stream()
-              .filter(a -> type.equals(a.getType().getValue()))
-              .findAny();
-      return address.orElse(null);
-    }
-
-    public static String getStreetNumber(RFAAddressDTO addressDTO) {
-      return getStreetAddressByPartIndex(addressDTO, 0);
-    }
-
-    public static String getStreetName(RFAAddressDTO addressDTO) {
-      return getStreetAddressByPartIndex(addressDTO, 1);
-    }
-
-    public static String getSilentStreetName(RFAAddressDTO addressDTO) {
-      try {
-        return getStreetAddressByPartIndex(addressDTO, 1);
-      } catch (Exception e) {
-        return null;
-      }
-    }
-
-    private static String getStreetAddressByPartIndex(RFAAddressDTO address, int partIndex) {
-      String[] numberAndName = StringUtils.split(address.getStreetAddress(), null, 2);
-      if (numberAndName.length != 2) {
-        throw new ExpectedException(
-            ExpectedExceptionMessages.CANNOT_PARSE_STREET_ADDRESS, Response.Status.BAD_REQUEST);
-      }
-      return numberAndName[partIndex];
-    }
-
-    public static boolean checkIfLisResidentialAddressIsValid(final LisFacFile lisFacFile) {
-      return checkIfLisResidentialAddressIsNotBlank(lisFacFile)
-          && checkIfLisResidentialAddressIsNotNullString(lisFacFile);
-    }
-
-    public static boolean checkIfLisMailAddressIsValid(final LisFacFile lisFacFile) {
-      return checkIfLisMailAddressIsNotBlank(lisFacFile)
-          && checkIfLisMailAddressIsNotNullString(lisFacFile);
-    }
-
-    private static boolean checkIfLisResidentialAddressIsNotBlank(final LisFacFile lisFacFile) {
-      return !StringUtils.isAllBlank(
-          lisFacFile.getFacResStreetAddr(),
-          lisFacFile.getFacResCity(),
-          lisFacFile.getFacResState(),
-          lisFacFile.getFacResZipCode());
-    }
-
-    private static boolean checkIfLisResidentialAddressIsNotNullString(
-        final LisFacFile lisFacFile) {
-      return (StringUtils.isNotBlank(lisFacFile.getFacResStreetAddr())
-          && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResStreetAddr()))
-          || (StringUtils.isNotBlank(lisFacFile.getFacResCity())
-          && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResCity()))
-          || (StringUtils.isNotBlank(lisFacFile.getFacResState())
-          && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResState()))
-          || (StringUtils.isNotBlank(lisFacFile.getFacResZipCode())
-          && !NULL_STRING.equalsIgnoreCase(lisFacFile.getFacResZipCode()));
-    }
-
-    private static boolean checkIfLisMailAddressIsNotBlank(final LisFacFile lisFacFile) {
-      return !StringUtils.isAllBlank(
-          lisFacFile.getFacMailStreetAddr(),
-          lisFacFile.getFacMailCity(),
-          lisFacFile.getFacMailState(),
-          lisFacFile.getFacMailZipCode());
-    }
-
-    private static boolean checkIfLisMailAddressIsNotNullString(final LisFacFile lisFacFile) {
-      return (StringUtils.isNotBlank(lisFacFile.getFacMailStreetAddr())
-          && !lisFacFile.getFacMailStreetAddr().equalsIgnoreCase(NULL_STRING))
-          || (StringUtils.isNotBlank(lisFacFile.getFacMailCity())
-          && !lisFacFile.getFacMailCity().equalsIgnoreCase(NULL_STRING))
-          || (StringUtils.isNotBlank(lisFacFile.getFacMailState())
-          && !lisFacFile.getFacMailState().equalsIgnoreCase(NULL_STRING))
-          || (StringUtils.isNotBlank(lisFacFile.getFacMailState())
-          && !lisFacFile.getFacMailZipCode().equalsIgnoreCase(NULL_STRING));
     }
   }
 

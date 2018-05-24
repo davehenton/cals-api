@@ -86,5 +86,7 @@
   ],
   "annual_visit_year": 15,
   "email_address":"",
-  "facility_source": "LIS"
+  "facility_source": "LIS",
+  "full_mailing_address": "P.O. BOX 570 CABAZON CA 92230",
+  "full_residential_address": "123 Main St. BANNING CA 92220"
 }
