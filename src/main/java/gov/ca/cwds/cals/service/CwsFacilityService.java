@@ -13,13 +13,13 @@ import gov.ca.cwds.cals.service.mapper.FacilityMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import gov.ca.cwds.cms.data.access.service.impl.PlacementHomeCoreService;
 import gov.ca.cwds.data.legacy.cms.dao.ClientDao;
-import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
-import gov.ca.cwds.data.legacy.cms.dao.LicenseStatusDao;
-import gov.ca.cwds.data.legacy.cms.dao.StateDao;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.County;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.LicenseStatus;
+import gov.ca.cwds.data.legacy.cms.entity.syscodes.State;
 import io.dropwizard.hibernate.UnitOfWork;
 import java.util.List;
 import java.util.Optional;
@@ -43,15 +43,6 @@ public class CwsFacilityService {
   private ClientDao clientDao;
 
   @Inject
-  private CountiesDao countiesDao;
-
-  @Inject
-  private LicenseStatusDao licenseStatusDao;
-
-  @Inject
-  private StateDao stateDao;
-
-  @Inject
   private FacilityMapper facilityMapper;
 
   @Inject
@@ -62,6 +53,9 @@ public class CwsFacilityService {
 
   @Inject
   private FacilityTypeService facilityTypeService;
+
+  @Inject
+  private LegacyDictionariesCache legacyDicCache;
 
   /**
    * Load facility from CWS.
@@ -103,33 +97,36 @@ public class CwsFacilityService {
         .map(PlacementHome::getCountyLicenseCase)
         .map(BaseCountyLicenseCase::getStaffPerson);
     staffPerson.ifPresent(
-        person -> person.setCounty(countiesDao.findByLogicalId(person.getCntySpfcd())));
+        person -> person.setCounty(legacyDicCache
+            .find(County.class, county -> person.getCntySpfcd().equals(county.getLogicalId()))));
     return placementHome;
   }
 
   protected CwsDictionaryEntriesHolder buildCwsDictionaryEntriesHolder(
       BasePlacementHome placementHome) {
-    return buildCalsNsDictionaryHolder(placementHome, buildCwsDictionaryHolder(placementHome));
+
+    CwsDictionaryEntriesHolder dictionaryEntriesHolder = buildCwsDictionaryHolder(placementHome);
+
+    return enrichDictionaryHolderWithCalsNsData(dictionaryEntriesHolder, placementHome);
   }
 
   @UnitOfWork(CMS)
   protected CwsDictionaryEntriesHolder buildCwsDictionaryHolder(BasePlacementHome placementHome) {
     CwsDictionaryEntriesHolder dictionaryEntriesHolder = new CwsDictionaryEntriesHolder();
     dictionaryEntriesHolder.setApplicationCounty(
-        placementHome.getGvrEntc() != 0 ? countiesDao.find(placementHome.getGvrEntc()) : null);
+        legacyDicCache.findByPrimaryKey(County.class, placementHome.getGvrEntc()));
     dictionaryEntriesHolder.setLicenseStatus(
-        placementHome.getLicStc() != 0 ? licenseStatusDao.find(placementHome.getLicStc()) : null);
+        legacyDicCache.findByPrimaryKey(LicenseStatus.class, placementHome.getLicStc()));
     dictionaryEntriesHolder.setStateCode(
-        placementHome.getStateCode() != 0 ? stateDao.find(placementHome.getStateCode()) : null);
+        legacyDicCache.findByPrimaryKey(State.class, placementHome.getStateCode()));
     dictionaryEntriesHolder.setPayeeStateCode(
-        placementHome.getPayeeStateCode() != 0 ? stateDao.find(placementHome.getPayeeStateCode())
-            : null);
+        legacyDicCache.findByPrimaryKey(State.class, placementHome.getPayeeStateCode()));
     return dictionaryEntriesHolder;
   }
 
   @UnitOfWork(CALSNS)
-  protected CwsDictionaryEntriesHolder buildCalsNsDictionaryHolder(BasePlacementHome placementHome,
-      CwsDictionaryEntriesHolder dictionaryEntriesHolder) {
+  protected CwsDictionaryEntriesHolder enrichDictionaryHolderWithCalsNsData(
+      CwsDictionaryEntriesHolder dictionaryEntriesHolder, BasePlacementHome placementHome) {
     if (placementHome.getFacilityType() != null) {
       FacilityType facilityType;
       try {
@@ -137,7 +134,9 @@ public class CwsFacilityService {
             .getFacilityTypeByCmsFacilityTypeId(placementHome.getFacilityType());
       } catch (DictionaryEntryNotFoundException e) {
         facilityType = null;
-        LOGGER.warn("Can't find facility type for code {}", placementHome.getFacilityType());
+        StringBuilder  sb = new StringBuilder("Can't find facility type for code ")
+            .append(placementHome.getFacilityType());
+        LOGGER.warn(sb.toString(), e);
       }
       dictionaryEntriesHolder.setFacilityType(facilityType);
     }
