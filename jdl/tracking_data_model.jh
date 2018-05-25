@@ -6,18 +6,7 @@ entity Tracking {
 	id Long,
 	family_name String,
 	license_number String,
-	family_documents String,
-  create_user_id String,
-  create_datetime LocalDateTime,
-  update_user_id String,
-  update_datetime LocalDateTime
-}
-
-entity TrackingPersonDocuments {
-	id Long,
-  person_id Long,
-  person_type String,
-  documents String,
+	tracking_documents String,
   create_user_id String,
   create_datetime LocalDateTime,
   update_user_id String,
@@ -36,14 +25,10 @@ entity TrackingTemplate {
   update_datetime LocalDateTime
 }
 
-relationship OneToMany {
-	Tracking to TrackingPersonDocuments{tracking_id}
-}
-
 relationship ManyToOne {
-	Tracking{template_id} to TrackingTemplate
+	Tracking to TrackingTemplate
 }
 
 relationship OneToOne {
-	RFA1A{tracking_id} to Tracking{rfa_1a_id}
+	RFA1A to Tracking{rfa_1a_id}
 }
