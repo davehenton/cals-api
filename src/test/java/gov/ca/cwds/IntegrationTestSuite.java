@@ -2,11 +2,6 @@ package gov.ca.cwds;
 
 import gov.ca.cwds.cals.web.rest.DictionariesResourceTest;
 import gov.ca.cwds.cals.web.rest.ExceptionHandlingResponseTest;
-import gov.ca.cwds.cals.web.rest.facility.FacilityChildAuthorizationTest;
-import gov.ca.cwds.cals.web.rest.facility.FacilityChildResourceTest;
-import gov.ca.cwds.cals.web.rest.facility.FacilityComplaintResourceTest;
-import gov.ca.cwds.cals.web.rest.facility.FacilityInspectionsTest;
-import gov.ca.cwds.cals.web.rest.facility.FacilityResourceTest;
 import gov.ca.cwds.cals.web.rest.packet.RFAPacketResourceTest;
 import gov.ca.cwds.cals.web.rest.rfa.DraftApplicationsTest;
 import gov.ca.cwds.cals.web.rest.rfa.LIC198bResourceTest;
@@ -48,36 +43,34 @@ import org.junit.runners.Suite.SuiteClasses;
     //FacilityResourceTest.class,
 
     //Packet
-//    RFAPacketResourceTest.class,
+    RFAPacketResourceTest.class,
 
     //RFA
-//    DraftApplicationsTest.class,
-//    LIC198bResourceTest.class,
-//    RFA1aAdoptionHistoryResourceTest.class,
-//    RFA1aApplicantResourceTest.class,
-//    RFA1aApplicantsDeclarationResourceTest.class,
-//    RFA1aApplicantsHistoryResourceTest.class,
-//    RFA1aApplicantsRelationshipResourceTest.class,
-//    RFA1aChildDesiredResourceTest.class,
-//    RFA1aCoreSubmitApplicationTest.class,
-//    RFA1aCornerCasesSubmitApplicationTest.class,
-    RFA1aFormsResourceTest.class
-//    RFA1aMinorChildrenResourceTest.class,
-//    RFA1aOtherAdultsResourceTest.class,
-//    RFA1aPrintPDFTest.class,
-//    RFA1aReferencesResourceTest.class,
-//    RFA1aRequiredFieldsValidationTest.class,
-//    RFA1aResidenceResourceTest.class,
-//    RFA1aSubmitValidationTest.class,
-//    RFA1bResourceTest.class,
-//    RFA1cResourceTest.class,
-//
-//    //System
-//    SystemInformationResourceTest.class,
-//
-//
-//    DictionariesResourceTest.class,
-//    ExceptionHandlingResponseTest.class
+    DraftApplicationsTest.class,
+    LIC198bResourceTest.class,
+    RFA1aAdoptionHistoryResourceTest.class,
+    RFA1aApplicantResourceTest.class,
+    RFA1aApplicantsDeclarationResourceTest.class,
+    RFA1aApplicantsHistoryResourceTest.class,
+    RFA1aApplicantsRelationshipResourceTest.class,
+    RFA1aChildDesiredResourceTest.class,
+    RFA1aCoreSubmitApplicationTest.class,
+    RFA1aCornerCasesSubmitApplicationTest.class,
+    RFA1aFormsResourceTest.class,
+    RFA1aMinorChildrenResourceTest.class,
+    RFA1aOtherAdultsResourceTest.class,
+    RFA1aPrintPDFTest.class,
+    RFA1aReferencesResourceTest.class,
+    RFA1aRequiredFieldsValidationTest.class,
+    RFA1aResidenceResourceTest.class,
+    RFA1aSubmitValidationTest.class,
+    RFA1bResourceTest.class,
+    RFA1cResourceTest.class,
+
+    //System
+    SystemInformationResourceTest.class,
+    DictionariesResourceTest.class,
+    ExceptionHandlingResponseTest.class
 
 })
 public class IntegrationTestSuite {
