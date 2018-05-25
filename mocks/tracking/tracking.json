@@ -1,0 +1,311 @@
+{
+  "id": 1234,
+  "family_name": "Cambell",
+  "license_number": "",
+  "rfa_1a_id": 1235,
+  "family_tracking_documents": {
+    "family_documents": {
+      "items": [
+        {
+          "title": "RFA Application (RFA 01A)",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": true
+        },
+        {
+          "title": "Verification of Income",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": false
+        },
+        {
+          "title": "Disclosure of Expenses",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": false
+        },
+        {
+          "title": "Verification of Property",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": false
+        },
+        {
+          "title": "Home Environment Checklist (RFA-03)",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": true
+        },
+        {
+          "title": "Reference Letter #1",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": false
+        },
+        {
+          "title": "Reference Letter #2",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": false
+        },
+        {
+          "title": "Reference Letter #3 (if applicable)",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": false
+        }
+      ]
+    },
+    "additional_tasks": {
+      "items": [
+        {
+          "title": "Attended Orientation Meeting",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": false
+        },
+        {
+          "title": "Risk Assessment",
+          "start_date": "",
+          "completion_date": "",
+          "notes": "",
+          "checked": false
+        }
+      ]
+    },
+    "trainings": {
+      "items": [
+        {
+          "title": "Pre-Service Training",
+          "date": "",
+          "topic": "",
+          "source": "",
+          "hours": "",
+          "checked": false
+        }
+      ]
+    },
+    "assessments": {
+      "items": [
+        {
+          "title": "Family Evaluation",
+          "completion_date": "",
+          "decision_date": "",
+          "decision": "",
+          "checked": false
+        }
+      ]
+    },
+    "written_reports": {
+      "items": [
+        {
+          "title": "Family Evaluation",
+          "completion_date": "",
+          "notes": "",
+          "checked": false
+        }
+      ]
+    },
+    "acknowledgements": {
+      "items": [
+        {
+          "title": "Acknowledgement",
+          "sent_date": "",
+          "received_date": "",
+          "notes": "",
+          "checked": false
+        }
+      ]
+    }
+  },
+  "person_tracking_documents": [
+    {
+      "person_id": 123,
+      "person_name": "",
+      "person_type": "Applicant | Other Adult",
+      "individual_documents": {
+        "items": [
+          {
+            "title": "Criminal Record Statement (RFA-01B)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "DMV Reports",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Health Questionnaire (RFA-07)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "TB Questionnaire (RFA-08)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Employment Verification",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Proof of Identity",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "CPR/First Aid Training",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          }
+        ]
+      },
+      "trainings": {
+        "items": [
+          {
+            "title": "CPR Training",
+            "expiration_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "First Aid Training",
+            "expiration_date": "",
+            "notes": "",
+            "checked": false
+          }
+        ]
+      },
+      "clearances": {
+        "items": [
+          {
+            "title": "Criminal Background Checklist (RFA-02)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Exemption Needed (if applicable)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Previous Associations (if applicable)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Legal Consult Needed (if applicable)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Criminal Background Checklist (RFA-02)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          }
+        ]
+      }
+    },
+    {
+      "person_id": 123,
+      "person_name": "",
+      "person_type": "Applicant | Other Adult",
+      "individual_documents": {
+        "items": [
+          {
+            "title": "Criminal Record Statement (RFA-01B)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "TB Questionnaire (RFA-08)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "DMV Reports",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          }
+        ]
+      },
+      "clearances": {
+        "items": [
+          {
+            "title": "Criminal Background Checklist (RFA-02)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Previous Associations",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Exemption Needed (if applicable)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
+            "title": "Legal Consult Needed (if applicable)",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          }
+        ]
+      }
+    }
+  ],
+  "create_datetime": "",
+  "create_user_id": "",
+  "update_datetime": "",
+  "update_user_id": ""
+}
