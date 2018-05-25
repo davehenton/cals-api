@@ -16,11 +16,9 @@ public interface CountyMapper {
 
     @Mapping(target = "code", source = "logicalId")
     @Mapping(target = "description", source = "shortDescription")
-    @Mapping(target = "lisCode", ignore = true)
     CountyDTO toCountyDTO(County county);
 
     @Mapping(target = "code", source = "tblCoNbr")
     @Mapping(target = "description", source = "tblCoDesc")
-    @Mapping(target = "lisCode", ignore = true)
     CountyDTO toCountyDTO(LisTableFile lisTableFile);
 }

@@ -29,5 +29,6 @@
       "state" : "CA"
     }
   } ],
-  "facility_source" : "CWS/CMS"
+  "facility_source": "CWS/CMS",
+  "full_residential_address": "10 Main St Sacramento CA"
 }

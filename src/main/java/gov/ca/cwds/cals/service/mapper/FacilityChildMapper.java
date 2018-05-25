@@ -33,40 +33,17 @@ public interface FacilityChildMapper {
   @Mapping(target = "displayClientId",
       expression = "java(CmsKeyIdGenerator.getUIIdentifierFromKey(client.getIdentifier()))")
   @Mapping(target = "person", source = "client")
-  @Mapping(target = "dateOfPlacement", ignore = true)
-  @Mapping(target = "countyOfOrigin", ignore = true)
-  @Mapping(target = "assignedWorker", ignore = true)
-  @Mapping(target = "facilityId", ignore = true)
-  @Mapping(target = "messages", ignore = true)
   FacilityChildDTO toFacilityChildDTO(Client client);
 
   @Mapping(target = "assignedWorker", source = "staffPerson")
-  @Mapping(target = "id", ignore = true)
-  @Mapping(target = "person", ignore = true)
-  @Mapping(target = "dateOfPlacement", ignore = true)
-  @Mapping(target = "countyOfOrigin", ignore = true)
-  @Mapping(target = "facilityId", ignore = true)
-  @Mapping(target = "messages", ignore = true)
   FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDto,
       BaseStaffPerson staffPerson);
 
   @Mapping(target = "countyOfOrigin", source = "shortDescription")
-  @Mapping(target = "id", ignore = true)
-  @Mapping(target = "person", ignore = true)
-  @Mapping(target = "dateOfPlacement", ignore = true)
-  @Mapping(target = "assignedWorker", ignore = true)
-  @Mapping(target = "facilityId", ignore = true)
-  @Mapping(target = "messages", ignore = true)
   FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDto,
       County county);
 
   @Mapping(target = "dateOfPlacement", source = "startDt")
-  @Mapping(target = "id", ignore = true)
-  @Mapping(target = "person", ignore = true)
-  @Mapping(target = "countyOfOrigin", ignore = true)
-  @Mapping(target = "assignedWorker", ignore = true)
-  @Mapping(target = "facilityId", ignore = true)
-  @Mapping(target = "messages", ignore = true)
   FacilityChildDTO toFacilityChildDTO(@MappingTarget FacilityChildDTO facilityChildDto,
       BaseOutOfHomePlacement outOfHomePlacement);
 
