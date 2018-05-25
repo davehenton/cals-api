@@ -27,11 +27,11 @@ CREATE TABLE PLC_HM_T
     LIC_CAP_NO smallint DEFAULT 0 NOT NULL,
     LIC_EFCTDT date DEFAULT NULL,
     LIC_EXP_DT date DEFAULT NULL,
-    LIC_STATDT date DEFAULT NULL,
-    LIC_STC smallint DEFAULT 0 NOT NULL,
+    LIC_STATDT date DEFAULT NULL, -- NEW Current Date
+    LIC_STC smallint DEFAULT 0 NOT NULL, -- NEW we need to default to 1286	0002	06		  Pending
     LIC_BSNC smallint DEFAULT 0 NOT NULL,
-    LICNSEE_NM char(50) DEFAULT ' ' NOT NULL,
-    LICENSR_CD char(2) NOT NULL, -- NA
+    LICNSEE_NM char(50) DEFAULT ' ' NOT NULL,  -- NEW !!! need new field in RFA to capture license
+    LICENSR_CD char(2) NOT NULL, -- NEW 'CT"
     FACLTY_NM char(50) DEFAULT ' ' NOT NULL, -- applicants.applicant1.last_name + ", " + applicants.applicant1.first_name + " & " + applicants.applicant2.first_name + " RFH". A good naming convention is: Last Name, First Names followed by type of facility (e.g., J, Mary & Thomas FFH).
     OPRTD_BYID char(10) DEFAULT 'NULL',
     OPRTD_BYCD char(1) DEFAULT 'NULL',
