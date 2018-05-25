@@ -58,9 +58,6 @@ public class Rr809Dn implements PersistentObject {
   private String pageTotal;
   private String pageNr;
   private String formNumber;
-  private BigInteger pageTotal1;
-  private BigInteger pageNr1;
-  private String formNumber1;
   private LocalDateTime date2;
   private String pLicensing;
   private LocalDateTime date1;
@@ -293,37 +290,7 @@ public class Rr809Dn implements PersistentObject {
     this.formNumber = formNumber;
   }
 
-  @Basic
-  @Column(name = "page_total_1")
-  public BigInteger getPageTotal1() {
-    return pageTotal1;
-  }
-
-  public void setPageTotal1(BigInteger pageTotal1) {
-    this.pageTotal1 = pageTotal1;
-  }
-
-  @Basic
-  @Column(name = "page_nr_1")
-  public BigInteger getPageNr1() {
-    return pageNr1;
-  }
-
-  public void setPageNr1(BigInteger pageNr1) {
-    this.pageNr1 = pageNr1;
-  }
-
-  @Basic
-  @Column(name = "form_number_1")
-  public String getFormNumber1() {
-    return formNumber1;
-  }
-
-  public void setFormNumber1(String formNumber1) {
-    this.formNumber1 = formNumber1;
-  }
-
-  @Basic
+   @Basic
   @Column(name = "date2")
   public LocalDateTime getDate2() {
     return date2;
