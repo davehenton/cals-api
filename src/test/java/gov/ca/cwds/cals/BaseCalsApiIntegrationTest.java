@@ -53,7 +53,7 @@ public abstract class BaseCalsApiIntegrationTest {
   }
 
   protected static DatabaseHelper getCmsDatabaseHelper() {
-    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCmsDataSourceFactory();
+    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getXaCmsDataSourceFactory();
     return new DatabaseHelper(
         dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
   }
