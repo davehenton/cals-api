@@ -114,6 +114,7 @@ import gov.ca.cwds.inject.CwsRsSessionFactory;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.SessionFactoryFactory;
+import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
@@ -346,6 +347,16 @@ public class DataAccessModule extends AbstractModule {
   @Override
   protected void configure() {
     //do nothing
+  }
+
+  @Provides
+  UnitOfWorkAwareProxyFactory provideUnitOfWorkAwareProxyFactory() {
+    return new UnitOfWorkAwareProxyFactory(
+        getLisHibernateBundle(),
+        getFasHibernateBundle(),
+        getCmsHibernateBundle(),
+        getCalsnsHibernateBundle(),
+        getXaCalsnsHibernateBundle());
   }
 
   @Provides

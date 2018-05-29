@@ -6,7 +6,6 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.exceptions.DictionaryEntryNotFoundException;
 import gov.ca.cwds.cals.persistence.dao.lis.LisFacFileLisDao;
-import gov.ca.cwds.cals.persistence.dao.lis.LisTableFileDao;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.FacilityType;
 import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
@@ -29,7 +28,7 @@ public class LisFacilityService {
   private static final Logger LOGGER = LoggerFactory.getLogger(LisFacilityService.class);
 
   @Inject
-  private LisTableFileDao lisTableFileDao;
+  private LisDictionariesCache lisDictionariesCache;
 
   @Inject
   private LisFacFileLisDao lisFacFileLisDao;
@@ -84,14 +83,14 @@ public class LisFacilityService {
               Optional.ofNullable(lisFacFile.getCountyCode())
                   .ifPresent(
                       countyCode -> {
-                        LisTableFile county = lisTableFileDao.findCounty(countyCode);
+                        LisTableFile county = lisDictionariesCache.findCounty(countyCode);
                         lisFacFile.setCounty(county);
                       });
               Optional.ofNullable(lisFacFile.getFacilityStatusCode())
                   .ifPresent(
                       facilityStatusCode -> {
                         LisTableFile facilityStatus =
-                            lisTableFileDao.findFacilityStatus(facilityStatusCode);
+                            lisDictionariesCache.findFacilityStatus(facilityStatusCode);
                         lisFacFile.setFacilityStatus(facilityStatus);
                       });
               return lisFacFile;
@@ -116,14 +115,14 @@ public class LisFacilityService {
     Long facilityLastVisitReasonCode = facilityInformation.getFacLastVisitReason();
     if (facilityLastVisitReasonCode != null) {
       LisTableFile facilityLastVisitReason =
-          lisTableFileDao.findVisitReasonType(facilityLastVisitReasonCode.intValue());
+          lisDictionariesCache.findVisitReasonType(facilityLastVisitReasonCode.intValue());
       facilityInformation.setFacilityLastVisitReason(facilityLastVisitReason);
     }
 
     Long facilityLastDeferredVisitReasonCode = facilityInformation.getFacLastDeferVisitReason();
     if (facilityLastDeferredVisitReasonCode != null) {
       LisTableFile facilityLastDeferredVisitReason =
-          lisTableFileDao.findVisitReasonType(facilityLastDeferredVisitReasonCode.intValue());
+          lisDictionariesCache.findVisitReasonType(facilityLastDeferredVisitReasonCode.intValue());
       facilityInformation.setFacilityLastDeferredVisitReason(facilityLastDeferredVisitReason);
     }
   }
