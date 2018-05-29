@@ -122,9 +122,9 @@ public class LisDictionariesCache {
     return getLisTableFileFromCache(fascilityTypeCode, LisDictionary.FACILITY_TYPE);
   }
 
-  private LisTableFile getLisTableFileFromCache(Integer code, LisDictionary visitReasonType) {
+  private LisTableFile getLisTableFileFromCache(Integer code, LisDictionary dictionaryType) {
     try {
-      return cache.get(visitReasonType, getCacheLoader(visitReasonType)).get(code);
+      return cache.get(dictionaryType, getCacheLoader(dictionaryType)).get(code);
     } catch (ExecutionException e) {
       throw new IllegalArgumentException(e.getMessage(), e);
     }
