@@ -1,0 +1,34 @@
+entity RFA1A{
+	id Long
+}
+
+entity Tracking {
+	id Long,
+	family_name String,
+	license_number String,
+	tracking_documents String,
+  create_user_id String,
+  create_datetime LocalDateTime,
+  update_user_id String,
+  update_datetime LocalDateTime
+}
+
+entity TrackingTemplate {
+	id Long,
+  user String,
+  county_code Integer,
+  template_type String,
+  tracking_template String,
+  create_user_id String,
+  create_datetime LocalDateTime,
+  update_user_id String,
+  update_datetime LocalDateTime
+}
+
+relationship ManyToOne {
+	Tracking to TrackingTemplate
+}
+
+relationship OneToOne {
+	RFA1A to Tracking{rfa_1a_id}
+}

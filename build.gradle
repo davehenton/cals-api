@@ -37,7 +37,7 @@ project.ext {
     dropwizardVersion = '1.1.0'
     coreApiVersion = '1.6.4_790-RC'
     apiSecurityVersion = '1.6.2_418-RC'
-    cwdsModelVersion = '0.7.2_558-RC'
+    cwdsModelVersion = '0.7.2_561-RC'
     pdfGenerationVersion = '0.4.4-SNAPSHOT'
     mapstructVersion = '1.1.0.Final'
     dbunitVersion = '2.5.0'

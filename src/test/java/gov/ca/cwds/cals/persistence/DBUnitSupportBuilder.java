@@ -40,7 +40,7 @@ public class DBUnitSupportBuilder {
   }
 
   public DBUnitSupport buildForCMS(CalsApiConfiguration configuration) {
-    this.dataSourceFactory(configuration.getCmsDataSourceFactory());
+    this.dataSourceFactory(configuration.getXaCmsDataSourceFactory());
     this.schema("CWSCMS");
     return build();
   }
