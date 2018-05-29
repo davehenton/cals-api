@@ -89,13 +89,7 @@ public class LisDictionariesCache {
    * @return LisTableFile
    */
   public LisTableFile findCounty(Integer countyCode) {
-    try {
-      return cache
-          .get(LisDictionary.COUNTY, getCacheLoader(LisDictionary.COUNTY))
-          .get(countyCode);
-    } catch (ExecutionException e) {
-      throw new IllegalArgumentException(e.getMessage(), e);
-    }
+    return getLisTableFileFromCache(countyCode, LisDictionary.COUNTY);
   }
 
   /**
@@ -105,13 +99,7 @@ public class LisDictionariesCache {
    * @return LisTableFile
    */
   public LisTableFile findFacilityStatus(Integer facilityStatusCode) {
-    try {
-      return cache.get(LisDictionary.FACILITY_STATUS,
-          getCacheLoader(LisDictionary.FACILITY_STATUS))
-          .get(facilityStatusCode);
-    } catch (ExecutionException e) {
-      throw new IllegalArgumentException(e.getMessage(), e);
-    }
+    return getLisTableFileFromCache(facilityStatusCode, LisDictionary.FACILITY_STATUS);
   }
 
   /**
@@ -121,13 +109,7 @@ public class LisDictionariesCache {
    * @return LisTableFile
    */
   public LisTableFile findVisitReasonType(Integer visitReasonCode) {
-    try {
-      return cache.get(LisDictionary.VISIT_REASON_TYPE,
-          getCacheLoader(LisDictionary.VISIT_REASON_TYPE))
-          .get(visitReasonCode);
-    } catch (ExecutionException e) {
-      throw new IllegalArgumentException(e.getMessage(), e);
-    }
+    return getLisTableFileFromCache(visitReasonCode, LisDictionary.VISIT_REASON_TYPE);
   }
 
   /**
@@ -137,10 +119,12 @@ public class LisDictionariesCache {
    * @return LisTableFile
    */
   public LisTableFile findFacilityType(Integer fascilityTypeCode) {
+    return getLisTableFileFromCache(fascilityTypeCode, LisDictionary.FACILITY_TYPE);
+  }
+
+  private LisTableFile getLisTableFileFromCache(Integer code, LisDictionary visitReasonType) {
     try {
-      return cache.get(LisDictionary.FACILITY_TYPE,
-          getCacheLoader(LisDictionary.FACILITY_TYPE))
-          .get(fascilityTypeCode);
+      return cache.get(visitReasonType, getCacheLoader(visitReasonType)).get(code);
     } catch (ExecutionException e) {
       throw new IllegalArgumentException(e.getMessage(), e);
     }

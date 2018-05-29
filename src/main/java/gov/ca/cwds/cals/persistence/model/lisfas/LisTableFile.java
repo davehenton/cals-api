@@ -47,7 +47,7 @@ public class LisTableFile implements PersistentObject {
 
   private static final long serialVersionUID = 3362198377330883827L;
 
-  public static final String FIND_ALL_QUERY ="LisTableFile.findAll";
+  public static final String FIND_ALL_QUERY = "LisTableFile.findAll";
   public static final String FIND_ALL_COUNTIES_QUERY = "LisTableFile.findAllCounties";
   public static final String FIND_ALL_FAC_STATUSES_QUERY = "LisTableFile.findAllFacilityStatuses";
   public static final String FIND_ALL_VISIT_REASONS_QUERY = "LisTableFile.findAllVisitReasons";
