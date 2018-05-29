@@ -47,6 +47,7 @@ import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
+import gov.ca.cwds.cals.service.dto.ChildPlacementInformation;
 import gov.ca.cwds.data.legacy.cms.entity.AddressPhoneticName;
 import gov.ca.cwds.data.legacy.cms.entity.AddressPhoneticNamePK;
 import gov.ca.cwds.data.legacy.cms.entity.BackgroundCheck;
@@ -139,6 +140,8 @@ public class DataAccessModule extends AbstractModule {
 
 
   private final ImmutableList<Class<?>> cmsEntities = ImmutableList.<Class<?>>builder().add(
+      ChildPlacementInformation.class,
+
       Client.class,
       OutOfHomePlacement.class,
       PlacementEpisode.class,

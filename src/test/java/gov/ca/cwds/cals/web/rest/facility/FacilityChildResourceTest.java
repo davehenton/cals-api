@@ -35,6 +35,20 @@ public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
     setUpCmsRs();
   }
 
+/*
+  @Test
+  public void test() throws Exception {
+    //PRE-INT  AyT7r860AB //many many children
+    //"Ab0xcyy0FT" //1 child
+    //"BVvXm9D0AB" //5 cildren
+    //many cildren "AyT7r860AB"
+      FacilityChildrenDto dto = getChildrenByFacilityId("AyT7r860AB");
+    //String fixture = fixture("fixtures/facility/5_children.json");
+    String fixture = fixture("fixtures/facility/many_children.json");
+    assertEqualsResponse(fixture, transformDTOtoJSON(dto));
+  }
+*/
+
   private FacilityChildrenDto getChildrenByFacilityId(String facilityId) {
     String pathInfo = FACILITIES + "/{" + FACILITY_ID + "}/" + CHILDREN;
     pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", facilityId);
