@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FacilityChildCollectionService extends CrudServiceAdapter {
 
-  private static final Logger LOG = LoggerFactory.getLogger(FacilityChildDao.class);
+  private static final Logger LOG = LoggerFactory.getLogger(FacilityChildCollectionService.class);
 
   @Inject
   private ClientCoreService clientService;
