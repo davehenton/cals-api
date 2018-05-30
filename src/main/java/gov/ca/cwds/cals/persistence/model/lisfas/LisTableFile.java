@@ -18,16 +18,41 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQuery(name = LisTableFile.FIND_COUNTY_QUERY,
     query = "FROM LisTableFile WHERE tblCoNbr = :" + LisTableFile.FIND_COUNTY_QUERY_PARAM_NAME)
 @NamedQuery(name = LisTableFile.FIND_FACILITY_STATUS_QUERY,
-    query = "FROM LisTableFile WHERE tblFacStatusCode = :" + LisTableFile.FIND_FACILITY_STATUS_QUERY_PARAM_NAME)
+    query = "FROM LisTableFile WHERE tblFacStatusCode = :"
+        + LisTableFile.FIND_FACILITY_STATUS_QUERY_PARAM_NAME)
 @NamedQuery(name = LisTableFile.FIND_FACILITY_TYPE_QUERY,
-    query = "FROM LisTableFile WHERE tblFacTypeCode = :" + LisTableFile.FIND_FACILITY_TYPE_QUERY_PARAM_NAME)
+    query = "FROM LisTableFile WHERE tblFacTypeCode = :"
+        + LisTableFile.FIND_FACILITY_TYPE_QUERY_PARAM_NAME)
 @NamedQuery(name = LisTableFile.FIND_VISIT_REASON_QUERY,
-    query = "FROM LisTableFile WHERE tblVisitReasonCode = :" + LisTableFile.FIND_VISIT_REASON_QUERY_PARAM_NAME)
+    query = "FROM LisTableFile WHERE tblVisitReasonCode = :"
+        + LisTableFile.FIND_VISIT_REASON_QUERY_PARAM_NAME)
+@NamedQuery(name = LisTableFile.FIND_ALL_QUERY,
+    query = "FROM LisTableFile "
+        + "WHERE tblCoNbr IS NOT NULL "
+        + "OR tblFacStatusCode IS NOT NULL "
+        + "OR tblFacTypeCode IS NOT NULL "
+        + "OR tblVisitReasonCode IS NOT NULL")
+@NamedQuery(name = LisTableFile.FIND_ALL_COUNTIES_QUERY,
+    query = "FROM LisTableFile WHERE tblCoNbr IS NOT NULL")
+@NamedQuery(name = LisTableFile.FIND_ALL_FAC_STATUSES_QUERY,
+    query = "FROM LisTableFile WHERE tblFacStatusCode IS NOT NULL ")
+@NamedQuery(name = LisTableFile.FIND_ALL_VISIT_REASONS_QUERY,
+    query = "FROM LisTableFile WHERE tblVisitReasonCode IS NOT NULL ")
+@NamedQuery(name = LisTableFile.FIND_ALL_FAC_TYPES_QUERY,
+    query = "FROM LisTableFile WHERE tblFacTypeCode IS NOT NULL ")
+
 @Entity
 @Table(name = "lis_table_file")
 public class LisTableFile implements PersistentObject {
 
   private static final long serialVersionUID = 3362198377330883827L;
+
+  public static final String FIND_ALL_QUERY = "LisTableFile.findAll";
+  public static final String FIND_ALL_COUNTIES_QUERY = "LisTableFile.findAllCounties";
+  public static final String FIND_ALL_FAC_STATUSES_QUERY = "LisTableFile.findAllFacilityStatuses";
+  public static final String FIND_ALL_VISIT_REASONS_QUERY = "LisTableFile.findAllVisitReasons";
+  public static final String FIND_ALL_FAC_TYPES_QUERY = "LisTableFile.findAllFacilityTypes";
+
   public static final String FIND_COUNTY_QUERY_PARAM_NAME = "countyCode";
   public static final String FIND_COUNTY_QUERY_SUFFIX = ".findCounty";
   public static final String LIS_TABLE_FILE = "LisTableFile";

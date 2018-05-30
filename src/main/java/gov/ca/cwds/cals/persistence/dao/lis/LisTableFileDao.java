@@ -4,13 +4,13 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.LisSessionFactory;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
 import gov.ca.cwds.data.BaseDaoImpl;
+import java.util.List;
+import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.NoResultException;
 
 /**
  * @author CWDS CALS API Team
@@ -21,6 +21,27 @@ public class LisTableFileDao extends BaseDaoImpl<LisTableFile> {
   @Inject
   public LisTableFileDao(@LisSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
+  }
+
+  @Override
+  public List<LisTableFile> findAll() {
+    return queryImmutableList(LisTableFile.FIND_ALL_QUERY);
+  }
+
+  public List<LisTableFile> findAllCounties() {
+    return queryImmutableList(LisTableFile.FIND_ALL_COUNTIES_QUERY);
+  }
+
+  public List<LisTableFile> findAllFacilityStatuses() {
+    return queryImmutableList(LisTableFile.FIND_ALL_FAC_STATUSES_QUERY);
+  }
+
+  public List<LisTableFile> findAllFacilityTypes() {
+    return queryImmutableList(LisTableFile.FIND_ALL_FAC_TYPES_QUERY);
+  }
+
+  public List<LisTableFile> findAllVisitReasons() {
+    return queryImmutableList(LisTableFile.FIND_ALL_VISIT_REASONS_QUERY);
   }
 
   public LisTableFile findCounty(Integer countyCode) {
@@ -69,4 +90,5 @@ public class LisTableFileDao extends BaseDaoImpl<LisTableFile> {
 
     return lisTableFile;
   }
+
 }

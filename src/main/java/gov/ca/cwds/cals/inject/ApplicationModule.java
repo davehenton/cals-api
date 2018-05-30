@@ -31,6 +31,7 @@ public class ApplicationModule<T extends CalsApiConfiguration> extends AbstractM
    */
   @Override
   protected void configure() {
+    install(new DataAccessModule(bootstrap));
     install(new ServicesModule());
     install(new ResourcesModule());
     install(new AuditingModule());

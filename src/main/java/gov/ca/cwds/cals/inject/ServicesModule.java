@@ -14,6 +14,7 @@ import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.FasFacilityService;
 import gov.ca.cwds.cals.service.LegacyDictionariesCache;
 import gov.ca.cwds.cals.service.LegacyDictionariesCache.LegacyDictionariesCacheBuilder;
+import gov.ca.cwds.cals.service.LisDictionariesCache;
 import gov.ca.cwds.cals.service.LisFacilityService;
 import gov.ca.cwds.cals.service.builder.FacilityParameterObjectBuilder;
 import gov.ca.cwds.cals.service.rfa.LIC198bCollectionService;
@@ -57,6 +58,7 @@ import javax.ws.rs.client.Client;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 
+
 /**
  * Identifies all CALS API business layer (services) classes available for dependency injection by
  * Guice.
@@ -64,8 +66,6 @@ import org.glassfish.jersey.client.JerseyClientBuilder;
  * @author CALS API Team
  */
 public class ServicesModule extends AbstractModule {
-
-  public static final String CWS_FACILITY_SERVICE_INTERNAL = "CwsFacilityServiceInternal";
 
   /**
    * Default constructor
@@ -85,6 +85,7 @@ public class ServicesModule extends AbstractModule {
     bind(FacilityService.class);
     bind(FasFacilityService.class).toProvider(FasFacilityServiceProvider.class);
     bind(CwsFacilityService.class).toProvider(CwsFacilityServiceProvider.class);
+    bind(LisDictionariesCache.class);
     bind(LisFacilityService.class).toProvider(LisFacilityServiceProvider.class);
     bind(FacilityParameterObjectBuilder.class);
     bind(ChildAssignedWorkerService.class);
