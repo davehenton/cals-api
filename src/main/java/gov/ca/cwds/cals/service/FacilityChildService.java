@@ -42,11 +42,11 @@ public class FacilityChildService extends CrudServiceAdapter {
       client = clientService.getClientByLicNumAndChildId(parameterObject.getFacilityId(),
           parameterObject.getChildId());
     }
-    FacilityChildDTO facilityChildDTO = facilityChildMapper.toFacilityChildDTO(client);
-    if (facilityChildDTO != null) {
-      enrichWithPlacementInformation(facilityChildDTO);
+    FacilityChildDTO facilityChildDto = facilityChildMapper.toFacilityChildDTO(client);
+    if (facilityChildDto != null) {
+      enrichWithPlacementInformation(facilityChildDto);
     }
-    return facilityChildDTO;
+    return facilityChildDto;
   }
 
   private void enrichWithPlacementInformation(FacilityChildDTO facilityChildDto) {
