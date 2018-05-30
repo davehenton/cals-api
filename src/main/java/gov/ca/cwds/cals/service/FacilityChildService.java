@@ -2,6 +2,9 @@ package gov.ca.cwds.cals.service;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants.UnitOfWork;
+import gov.ca.cwds.cals.service.dao.FacilityChildDao;
+import gov.ca.cwds.cals.service.dto.ChildPlacementInformation;
+import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityChildParameterObject;
 import gov.ca.cwds.cms.data.access.service.impl.ClientCoreService;
@@ -17,6 +20,9 @@ public class FacilityChildService extends CrudServiceAdapter {
   private ClientCoreService clientService;
 
   private FacilityChildMapper facilityChildMapper;
+
+  @Inject
+  private FacilityChildDao facilityChildDao;
 
   @Inject
   public FacilityChildService(ClientCoreService clientService,
@@ -36,6 +42,19 @@ public class FacilityChildService extends CrudServiceAdapter {
       client = clientService.getClientByLicNumAndChildId(parameterObject.getFacilityId(),
           parameterObject.getChildId());
     }
-    return facilityChildMapper.toFacilityChildDTO(client);
+    FacilityChildDTO facilityChildDto = facilityChildMapper.toFacilityChildDTO(client);
+    if (facilityChildDto != null) {
+      enrichWithPlacementInformation(facilityChildDto);
+    }
+    return facilityChildDto;
+  }
+
+  private void enrichWithPlacementInformation(FacilityChildDTO facilityChildDto) {
+    ChildPlacementInformation childPlacementInformation =
+        facilityChildDao.retrieveChildPlacementInformation(facilityChildDto.getId());
+    if (childPlacementInformation != null) {
+      facilityChildDto.setCountyOfOrigin(childPlacementInformation.getCounty());
+      facilityChildDto.setDateOfPlacement(childPlacementInformation.getDateOfPlacement());
+    }
   }
 }
