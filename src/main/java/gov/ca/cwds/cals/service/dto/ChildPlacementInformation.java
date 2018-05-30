@@ -22,6 +22,7 @@ import org.hibernate.annotations.NamedQuery;
         + " WHERE ohp.endDt is null"
         + " AND pe.plepsEndt is null"
         + " AND c.identifier in (:" + CHILDREN_IDS_PARAMETER_NAME + ")"
+        + " ORDER BY ohp.startDt DESC"
 )
 @Entity
 public class ChildPlacementInformation {
@@ -33,6 +34,13 @@ public class ChildPlacementInformation {
 
   public static final String CHILDREN_IDS_PARAMETER_NAME = "children_ids";
 
+  @Id
+  private String childIdentifier;
+
+  private String county;
+
+  private LocalDate dateOfPlacement;
+
   public ChildPlacementInformation() {
   }
 
@@ -42,13 +50,6 @@ public class ChildPlacementInformation {
     this.county = county;
     this.dateOfPlacement = dateOfPlacement;
   }
-
-  @Id
-  private String childIdentifier;
-
-  private String county;
-
-  private LocalDate dateOfPlacement;
 
   public String getCounty() {
     return county;

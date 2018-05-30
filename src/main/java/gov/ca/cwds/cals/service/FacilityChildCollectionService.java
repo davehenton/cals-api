@@ -15,11 +15,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author CWDS CALS API Team
  */
 public class FacilityChildCollectionService extends CrudServiceAdapter {
+
+  private static final Logger LOG = LoggerFactory.getLogger(FacilityChildDao.class);
 
   @Inject
   private ClientCoreService clientService;
@@ -61,10 +65,17 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
       List<Client> clients) {
     String[] clientIds = clients.stream().map(Client::getIdentifier).toArray(String[]::new);
     List<ChildPlacementInformation> childrenPlacementInfo =
-        facilityChildDao.retireveChildPlacementInformation(clientIds);
+        facilityChildDao.retrieveChildPlacementInformationList(clientIds);
     return childrenPlacementInfo
         .stream()
-        .collect(Collectors.toMap(ChildPlacementInformation::getChildIdentifier, x -> x));
+        .collect(Collectors.toMap(ChildPlacementInformation::getChildIdentifier, x -> x,
+            (placementInformtion1, placementInformation2) -> {
+              LOG.warn("Child with identifier {} has more than one open placement",
+                  placementInformtion1.getChildIdentifier());
+              return placementInformation2.getDateOfPlacement()
+                  .isAfter(placementInformtion1.getDateOfPlacement()) ? placementInformation2
+                  : placementInformtion1;
+            }));
   }
 
   private FacilityChildDTO enrichClientWithPlacementInformation(
