@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Custom Dao for implementing dao logic for facility children.
+ *
  * @author CWDS CALS API Team
  */
 public class FacilityChildDao extends CustomDao {
@@ -25,9 +27,12 @@ public class FacilityChildDao extends CustomDao {
     super(sessionFactory);
   }
 
+  /**
+   * Get Placement Information for children.
+   */
   public List<ChildPlacementInformation> retrieveChildPlacementInformationList(String[] clientIds) {
-    List<ChildPlacementInformation> childPlacementInformationList = prepareChildPlacementInformationQuery(
-        clientIds).list();
+    List<ChildPlacementInformation> childPlacementInformationList =
+        prepareChildPlacementInformationQuery(clientIds).list();
     if (LOG.isWarnEnabled() && childPlacementInformationList.size() > clientIds.length) {
       LOG.warn("One or more than one child {} in the home has more than one open placement",
           Arrays.toString(clientIds));
@@ -35,9 +40,12 @@ public class FacilityChildDao extends CustomDao {
     return childPlacementInformationList;
   }
 
+  /**
+   * Get Placement Information for child.
+   */
   public ChildPlacementInformation retrieveChildPlacementInformation(String clientId) {
-    List<ChildPlacementInformation> childPlacementInformation = prepareChildPlacementInformationQuery(
-        new String[]{clientId}).list();
+    List<ChildPlacementInformation> childPlacementInformation
+        = prepareChildPlacementInformationQuery(new String[]{clientId}).list();
     if (childPlacementInformation.size() > 1) {
       LOG.warn("Child with identifier {} has more than one open placement", clientId);
     }

@@ -49,12 +49,12 @@ public class FacilityChildService extends CrudServiceAdapter {
     return facilityChildDTO;
   }
 
-  private void enrichWithPlacementInformation(FacilityChildDTO facilityChildDTO) {
+  private void enrichWithPlacementInformation(FacilityChildDTO facilityChildDto) {
     ChildPlacementInformation childPlacementInformation =
-        facilityChildDao.retrieveChildPlacementInformation(facilityChildDTO.getId());
+        facilityChildDao.retrieveChildPlacementInformation(facilityChildDto.getId());
     if (childPlacementInformation != null) {
-      facilityChildDTO.setCountyOfOrigin(childPlacementInformation.getCounty());
-      facilityChildDTO.setDateOfPlacement(childPlacementInformation.getDateOfPlacement());
+      facilityChildDto.setCountyOfOrigin(childPlacementInformation.getCounty());
+      facilityChildDto.setDateOfPlacement(childPlacementInformation.getDateOfPlacement());
     }
   }
 }

@@ -8,9 +8,9 @@ import javax.persistence.Id;
 import org.hibernate.annotations.NamedQuery;
 
 /**
+ * Dto for Child Placement Information.
  * @author Alex Serbin
  */
-
 @NamedQuery(
     name = ChildPlacementInformation.RETRIEVE_CHILDREN_PLACEMENT_INFORMATION_QUERY,
     query = "SELECT NEW gov.ca.cwds.cals.service.dto.ChildPlacementInformation(c.identifier,"
@@ -44,6 +44,9 @@ public class ChildPlacementInformation {
   public ChildPlacementInformation() {
   }
 
+  /**
+   * Constucs Child Placement Information by child, county of origin and date of placement.
+   */
   public ChildPlacementInformation(String childIdentifier, String county,
       LocalDate dateOfPlacement) {
     this.childIdentifier = childIdentifier;

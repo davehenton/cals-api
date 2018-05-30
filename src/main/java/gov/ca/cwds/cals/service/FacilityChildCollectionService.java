@@ -79,15 +79,15 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   }
 
   private FacilityChildDTO enrichClientWithPlacementInformation(
-      FacilityChildDTO facilityChildDTO,
+      FacilityChildDTO facilityChildDto,
       Map<String, ChildPlacementInformation> placementInformationMap) {
     ChildPlacementInformation childPlacementInformation =
-        placementInformationMap.get(facilityChildDTO.getId());
+        placementInformationMap.get(facilityChildDto.getId());
     if (childPlacementInformation != null) {
-      facilityChildDTO.setCountyOfOrigin(childPlacementInformation.getCounty());
-      facilityChildDTO.setDateOfPlacement(childPlacementInformation.getDateOfPlacement());
+      facilityChildDto.setCountyOfOrigin(childPlacementInformation.getCounty());
+      facilityChildDto.setDateOfPlacement(childPlacementInformation.getDateOfPlacement());
     }
-    return facilityChildDTO;
+    return facilityChildDto;
   }
 
   private List<FacilityChildDTO> getChildrenFromFacilityStream(List<Client> clients) {
@@ -100,11 +100,11 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
             facilityChildDto ->
                 enrichClientWithPlacementInformation(facilityChildDto, placementInformationMap))
         .map(
-            facilityChildDTO ->
+            facilityChildDto ->
                 facilityChildMapper.toFacilityChildDTO(
-                    facilityChildDTO,
+                    facilityChildDto,
                     childAssignedWorkerService
-                        .findAssignedWorkerForClient(facilityChildDTO.getId())
+                        .findAssignedWorkerForClient(facilityChildDto.getId())
                         .orElse(null)))
         .collect(Collectors.toList());
   }
