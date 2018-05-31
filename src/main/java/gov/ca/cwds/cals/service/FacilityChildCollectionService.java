@@ -12,7 +12,6 @@ import gov.ca.cwds.cms.data.access.service.impl.ClientCoreService;
 import gov.ca.cwds.data.legacy.cms.entity.Client;
 import gov.ca.cwds.rest.api.Response;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -92,9 +91,6 @@ public class FacilityChildCollectionService extends CrudServiceAdapter {
   }
 
   private List<FacilityChildDTO> getChildrenFromFacilityStream(List<Client> clients) {
-    if (clients.isEmpty()) {
-      return Collections.emptyList();
-    }
     Map<String, ChildPlacementInformation> placementInformationMap =
         buildChildPlacementInformation(clients);
     return clients

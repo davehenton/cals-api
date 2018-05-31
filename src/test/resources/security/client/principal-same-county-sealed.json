@@ -6,6 +6,8 @@
   "county_name": "San Diego",
   "privileges": [
     "CWS Case Management System",
-    "Sealed"
+    "Sealed",
+    "Resource Mgmt Placement Facility Maint",
+    "SOC158 Application"
   ]
 }
