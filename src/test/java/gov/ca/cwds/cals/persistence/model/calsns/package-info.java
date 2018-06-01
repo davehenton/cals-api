@@ -157,10 +157,21 @@
                     value = "gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO"
                 )
             }
+        ),
+        @TypeDef(
+            name = "JsonNode",
+            typeClass = JsonType.class,
+            parameters = {
+                @Parameter(name = SQL_TYPE, value = SQLTypes.CLOB_TYPE_NAME),
+                @Parameter(
+                    name = RETURNED_CLASS_NAME_PARAM,
+                    value = "com.fasterxml.jackson.databind.JsonNode"
+                )
+            }
         )
     }
 )
-package gov.ca.cwds.cals.persistence.model.calsns.rfa;
+package gov.ca.cwds.cals.persistence.model.calsns;
 
 import static gov.ca.cwds.cals.Constants.RETURNED_CLASS_NAME_PARAM;
 import static gov.ca.cwds.cals.Constants.SQL_TYPE;
