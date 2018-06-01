@@ -1,6 +1,6 @@
 package gov.ca.cwds.cals.service.rfa.factory;
 
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFABaseEntity;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.CalsBaseEntity;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.dto.BaseDTO;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author CWDS CALS API Team
  */
 public interface RFAExternalEntityFactory<
-    T extends RFABaseEntity,
+    T extends CalsBaseEntity,
     D extends BaseDTO> {
 
   D createEntityDTO();

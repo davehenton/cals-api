@@ -1,16 +1,20 @@
 package gov.ca.cwds.cals.persistence.model.calsns.tracking;
 
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_COUNTY_AND_TYPE;
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_TYPE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
-import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFABaseEntity;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.CalsBaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.Type;
 
 /**
@@ -19,12 +23,25 @@ import org.hibernate.annotations.Type;
  * @author CWDS TPT-2 Team
  */
 @SuppressWarnings({"squid:S1948", "squid:S2160"}) //JsonNode is serializable, Equals in parent
+
+@NamedQuery(
+    name = NAMED_QUERY_FIND_BY_TYPE,
+    query = "FROM TrackingTemplate WHERE templateType = :type"
+)
+@NamedQuery(
+    name = NAMED_QUERY_FIND_BY_COUNTY_AND_TYPE,
+    query = "FROM TrackingTemplate WHERE templateType = :type AND county = :county"
+)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Entity
 @Table(name = "tracking_template")
-public class TrackingTemplate extends RFABaseEntity {
+public class TrackingTemplate extends CalsBaseEntity {
 
   private static final long serialVersionUID = -5126230421420049092L;
+
+  public static final String NAMED_QUERY_FIND_BY_TYPE = "tracking.template.find.by.type";
+  public static final String NAMED_QUERY_FIND_BY_COUNTY_AND_TYPE
+      = "tracking.template.find.by.county.type";
 
   @ManyToOne
   @JoinColumn(name = "county_code")
