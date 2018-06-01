@@ -28,6 +28,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.dto.rfa.lic198b.LIC198bFormDTO;
+import gov.ca.cwds.cals.service.dto.tracking.Tracking;
 import gov.ca.cwds.cals.service.rfa.LIC198bCollectionService;
 import gov.ca.cwds.cals.service.rfa.LIC198bService;
 import gov.ca.cwds.cals.service.rfa.RFA1aAdoptionHistoryService;
@@ -52,6 +53,7 @@ import gov.ca.cwds.cals.service.rfa.RFA1bOtherAdultAwareService;
 import gov.ca.cwds.cals.service.rfa.RFA1cCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1cService;
 import gov.ca.cwds.cals.service.rfa.RFAFormsPackageService;
+import gov.ca.cwds.cals.service.tracking.RFA1ATrackingService;
 import gov.ca.cwds.cals.web.rest.DictionariesResource;
 import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
@@ -221,6 +223,13 @@ public class ResourcesModule extends AbstractModule {
       Injector injector) {
     return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aFormsCollectionService.class));
+  }
+
+  @Provides
+  @RFA1aTrackingServiceBackedResource
+  public TypedResourceDelegate<Long, Tracking> trackingServiceBackedResource(
+      Injector injector) {
+    return new TypedServiceBackedResourceDelegate<>(injector.getInstance(RFA1ATrackingService.class));
   }
 
   @Provides

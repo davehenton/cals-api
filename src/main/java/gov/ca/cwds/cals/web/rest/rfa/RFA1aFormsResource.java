@@ -1,43 +1,35 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
-import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
-import static gov.ca.cwds.cals.Constants.API.QueryParams.EXPANDED;
-import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
-import static gov.ca.cwds.cals.Constants.RFA;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
-
-import com.codahale.metrics.annotation.Timed;
-import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
-import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
-import gov.ca.cwds.cals.service.rfa.RFA1aPDFGenerationService;
-import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.resources.TypedResourceDelegate;
-import io.dropwizard.hibernate.UnitOfWork;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import com.codahale.metrics.annotation.Timed;
+import com.google.inject.Inject;
+import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
+import gov.ca.cwds.cals.inject.RFA1aTrackingServiceBackedResource;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
+import gov.ca.cwds.cals.service.dto.tracking.Tracking;
+import gov.ca.cwds.cals.service.rfa.RFA1aPDFGenerationService;
+import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
+import gov.ca.cwds.rest.api.Request;
+import gov.ca.cwds.rest.resources.TypedResourceDelegate;
+import io.dropwizard.hibernate.UnitOfWork;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
+import static gov.ca.cwds.cals.Constants.API.QueryParams.EXPANDED;
+import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
+import static gov.ca.cwds.cals.Constants.RFA;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 /**
  * @author CWDS CALS API Team
@@ -53,6 +45,7 @@ public class RFA1aFormsResource {
   private static final String APPLICATION_PDF = "application/pdf";
   private TypedResourceDelegate<RFA1aFormsParameterObject, RFA1aFormDTO> resourceDelegate;
   private TypedResourceDelegate<Boolean, Request> collectionResourceDelegate;
+  private TypedResourceDelegate<Long, Tracking> rfa1aTrackingResourceDelegate;
 
   @Inject
   private RFA1aPDFGenerationService pdfGenerationService;
@@ -62,9 +55,13 @@ public class RFA1aFormsResource {
       @RFA1aFormServiceBackedResource
           TypedResourceDelegate<RFA1aFormsParameterObject, RFA1aFormDTO> resourceDelegate,
       @RFA1aFormCollectionServiceBackedResource
-          TypedResourceDelegate<Boolean, Request> collectionResourceDelegate) {
+          TypedResourceDelegate<Boolean, Request> collectionResourceDelegate,
+      @RFA1aTrackingServiceBackedResource
+          TypedResourceDelegate<Long, Tracking> rfa1aTrackingResourceDelegate
+      ) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
+    this.rfa1aTrackingResourceDelegate = rfa1aTrackingResourceDelegate;
   }
 
   //@UnitOfWork(CALSNS)
@@ -193,5 +190,26 @@ public class RFA1aFormsResource {
       @ApiParam(name = EXPANDED, value = "Use 'true' to get forms with all parts of form included")
           boolean expanded) {
     return collectionResourceDelegate.get(expanded);
+  }
+
+  @POST
+  @Timed
+  @Path("{" + RFA_1A_APPLICATION_ID + "}/tracking")
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 201, message = "Created"),
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Creates tracking for RFA 1A Form", response = Tracking.class)
+  @UnitOfWork(CALSNS)
+  public Response createTracking(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long formId) {
+      Tracking tracking = new Tracking();
+      tracking.setApplicationId(formId);
+      return rfa1aTrackingResourceDelegate.create(tracking);
   }
 }
