@@ -3,25 +3,42 @@ package gov.ca.cwds.cals.service.builder;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.service.dto.rfa.*;
+import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
+import gov.ca.cwds.cals.service.dto.rfa.MinorChildDTO;
+import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
+import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
-import gov.ca.cwds.cals.util.Utils;
+import gov.ca.cwds.cals.util.RfaAddressUtil;
 import gov.ca.cwds.cals.util.Utils.Applicant;
 import gov.ca.cwds.cms.data.access.CWSIdentifier;
 import gov.ca.cwds.cms.data.access.dto.OtherAdultInHomeEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.OtherChildInHomeEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.PlacementHomeEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.SCPEntityAwareDTO;
-import gov.ca.cwds.data.legacy.cms.entity.*;
+import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
+import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
+import gov.ca.cwds.data.legacy.cms.entity.OutOfStateCheck;
+import gov.ca.cwds.data.legacy.cms.entity.PhoneContactDetail;
+import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import gov.ca.cwds.security.utils.PrincipalUtils;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author CWDS CALS API Team
@@ -58,7 +75,7 @@ public class PlacementHomeEntityAwareDTOBuilder {
 
   private PlacementHome mapRfaFormToPlacementHome(RFA1aFormDTO form) {
     return placementHomeMapper.toPlacementHome(
-        form, Utils.Address.getByType(form, Constants.AddressTypes.RESIDENTIAL));
+        form, RfaAddressUtil.getByType(form, Constants.AddressTypes.RESIDENTIAL));
   }
 
   public PlacementHomeEntityAwareDTOBuilder appendEntity() {
@@ -121,12 +138,12 @@ public class PlacementHomeEntityAwareDTOBuilder {
     substituteCareProviderMapper
         .toSubstituteCareProvider(substituteCareProvider, applicant.getRfa1bForm());
 
-    RFAAddressDTO residentialAddress = Utils.Address
+    RFAAddressDTO residentialAddress = RfaAddressUtil
         .getByType(form, Constants.AddressTypes.RESIDENTIAL);
     substituteCareProviderMapper.toSubstituteCareProviderFromResidentialAddress(
         substituteCareProvider, residentialAddress);
 
-    RFAAddressDTO mailingAddress = Utils.Address.getByType(form, Constants.AddressTypes.MAIL);
+    RFAAddressDTO mailingAddress = RfaAddressUtil.getByType(form, Constants.AddressTypes.MAIL);
     substituteCareProviderMapper.toSubstituteCareProviderFromMailingAddress(
         substituteCareProvider, mailingAddress);
 

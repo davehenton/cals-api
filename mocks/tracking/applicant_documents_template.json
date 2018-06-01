@@ -1,0 +1,91 @@
+{
+  "individual_documents": {
+    "items": [
+      {
+        "title": "Criminal Record Statement (RFA-01B)",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Health Questionnaire (RFA-07)",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "TB Questionnaire (RFA-08)",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Employment Verification",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Proof of Identity",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      }
+    ]
+  },
+  "trainings": {
+    "items": [
+      {
+        "title": "CPR Training",
+        "expiration_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "First Aid Training",
+        "expiration_date": "",
+        "notes": "",
+        "checked": false
+      }
+    ]
+  },
+  "clearances": {
+    "items": [
+      {
+        "title": "Criminal Background Checklist (RFA-02)",
+        "start_date": "",
+        "completion_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "DMV Reports",
+        "start_date": "",
+        "completion_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Exemption Needed (if applicable)",
+        "start_date": "",
+        "completion_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Previous Associations (if applicable)",
+        "start_date": "",
+        "completion_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Legal Consult Needed (if applicable)",
+        "start_date": "",
+        "completion_date": "",
+        "notes": "",
+        "checked": false
+      }
+    ]
+  }
+}

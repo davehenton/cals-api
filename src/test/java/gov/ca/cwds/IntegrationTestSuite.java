@@ -69,8 +69,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
     //System
     SystemInformationResourceTest.class,
-
-
     DictionariesResourceTest.class,
     ExceptionHandlingResponseTest.class
 

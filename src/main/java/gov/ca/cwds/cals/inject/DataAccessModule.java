@@ -49,6 +49,7 @@ import gov.ca.cwds.cals.persistence.model.fas.Rrcpoc;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisDoFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisTableFile;
+import gov.ca.cwds.cals.service.dto.ChildPlacementInformation;
 import gov.ca.cwds.data.legacy.cms.entity.AddressPhoneticName;
 import gov.ca.cwds.data.legacy.cms.entity.AddressPhoneticNamePK;
 import gov.ca.cwds.data.legacy.cms.entity.BackgroundCheck;
@@ -116,6 +117,7 @@ import gov.ca.cwds.inject.CwsRsSessionFactory;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.SessionFactoryFactory;
+import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.hibernate.SessionFactory;
 
@@ -141,6 +143,8 @@ public class DataAccessModule extends AbstractModule {
 
 
   private final ImmutableList<Class<?>> cmsEntities = ImmutableList.<Class<?>>builder().add(
+      ChildPlacementInformation.class,
+
       Client.class,
       OutOfHomePlacement.class,
       PlacementEpisode.class,
@@ -352,6 +356,16 @@ public class DataAccessModule extends AbstractModule {
   @Override
   protected void configure() {
     //do nothing
+  }
+
+  @Provides
+  UnitOfWorkAwareProxyFactory provideUnitOfWorkAwareProxyFactory() {
+    return new UnitOfWorkAwareProxyFactory(
+        getLisHibernateBundle(),
+        getFasHibernateBundle(),
+        getCmsHibernateBundle(),
+        getCalsnsHibernateBundle(),
+        getXaCalsnsHibernateBundle());
   }
 
   @Provides

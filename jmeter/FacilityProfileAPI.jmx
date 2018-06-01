@@ -122,7 +122,57 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="CognitoProperties (Integration)" enabled="false">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="PerryDevModeProperties (local)" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="idp" elementType="Argument">
+            <stringProp name="Argument.name">idp</stringProp>
+            <stringProp name="Argument.value">perryDevMode</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryProtocol" elementType="Argument">
+            <stringProp name="Argument.name">perryProtocol</stringProp>
+            <stringProp name="Argument.value">http</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryHost" elementType="Argument">
+            <stringProp name="Argument.name">perryHost</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryPort" elementType="Argument">
+            <stringProp name="Argument.name">perryPort</stringProp>
+            <stringProp name="Argument.value">18080</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="perryAuthJson" elementType="Argument">
+            <stringProp name="Argument.name">perryAuthJson</stringProp>
+            <stringProp name="Argument.value">{&quot;user&quot;:&quot;RACFID&quot;,&quot;staffId&quot;:&quot;0X5&quot;,&quot;roles&quot;:[&quot;Supervisor&quot;],&quot;county_code&quot;:&quot;56&quot;,&quot;county_name&quot;:&quot;Ventura&quot;,&quot;privileges&quot;:[&quot;Resource Management&quot;,&quot;Adoptions&quot;,&quot;Countywide Read&quot;,&quot;Sensitive Persons&quot;,&quot;Resource Mgmt Placement Facility Maint&quot;]}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="calsApiProtocol" elementType="Argument">
+            <stringProp name="Argument.name">calsApiProtocol</stringProp>
+            <stringProp name="Argument.value">http</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="calsApiHost" elementType="Argument">
+            <stringProp name="Argument.name">calsApiHost</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="calsApiPort" elementType="Argument">
+            <stringProp name="Argument.name">calsApiPort</stringProp>
+            <stringProp name="Argument.value">8080</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="facilityIdsFile" elementType="Argument">
+            <stringProp name="Argument.name">facilityIdsFile</stringProp>
+            <stringProp name="Argument.value">facilities_cws_ids.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="CognitoProperties (Integration)" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="idp" elementType="Argument">
             <stringProp name="Argument.name">idp</stringProp>
@@ -398,7 +448,7 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">/login?client_id=obg988rnns51m2cik5l9rqeou&amp;redirect_uri=https://web.integration.cwds.io/perry/login&amp;response_type=code</stringProp>
+            <stringProp name="HTTPSampler.path">/login?client_id=4julq2o6653fden3cph5oq90kc&amp;redirect_uri=https://web.integration.cwds.io/perry/login&amp;response_type=code</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

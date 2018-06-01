@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gov.ca.cwds.cals.persistence.XADataSourceFactory;
+import gov.ca.cwds.data.persistence.XADataSourceFactory;
 import gov.ca.cwds.rest.BaseApiConfiguration;
 import io.dropwizard.db.DataSourceFactory;
 
@@ -58,10 +58,12 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
   }
 
   @JsonProperty
+  @Override
   public XADataSourceFactory getXaCmsDataSourceFactory() {
     return xaCmsDataSourceFactory;
   }
 
+  @Override
   public void setXaCmsDataSourceFactory(
       XADataSourceFactory xaCmsDataSourceFactory) {
     this.xaCmsDataSourceFactory = xaCmsDataSourceFactory;

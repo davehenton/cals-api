@@ -1,0 +1,107 @@
+{
+  "family_documents": {
+    "items": [
+      {
+        "title": "RFA Application (RFA 01A)",
+        "received_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Verification of Income",
+        "received_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Disclosure of Expenses",
+        "received_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Verification of Property",
+        "received_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Home Environment Checklist (RFA-03)",
+        "received_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Reference Letter #1",
+        "received_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Reference Letter #2",
+        "received_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Reference Letter #3 (if applicable)",
+        "received_date": "",
+        "notes": "",
+        "checked": false
+      }
+    ]
+  },
+  "tasks_and_trainings": {
+    "items": [
+      {
+        "title": "Attended Orientation Meeting",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Risk Assessment",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Home Environment Checklist (RFA-03)",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Pre-Service Training",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      }
+    ]
+  },
+  "assessments": {
+    "items": [
+      {
+        "title": "Family Evaluation",
+        "submitted_date": "",
+        "approved_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Written Report",
+        "submitted_date": "",
+        "approved_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Acknowledgement of Written Report",
+        "submitted_date": "",
+        "approved_date": "",
+        "notes": "",
+        "checked": false
+      }
+    ]
+  }
+}
