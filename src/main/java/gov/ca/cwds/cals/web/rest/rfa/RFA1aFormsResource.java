@@ -12,9 +12,9 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.RFA1aFormCollectionServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aFormServiceBackedResource;
 import gov.ca.cwds.cals.inject.RFA1aTrackingServiceBackedResource;
+import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
-import gov.ca.cwds.cals.service.dto.tracking.Tracking;
 import gov.ca.cwds.cals.service.rfa.RFA1aPDFGenerationService;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.rest.api.Request;
@@ -209,7 +209,7 @@ public class RFA1aFormsResource {
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
       Tracking tracking = new Tracking();
-      tracking.setApplicationId(formId);
+      tracking.setRfa1aId(formId);
       return rfa1aTrackingResourceDelegate.create(tracking);
   }
 }
