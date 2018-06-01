@@ -2,36 +2,46 @@ package gov.ca.cwds.cals.persistence.dao.calsns;
 
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
-import gov.ca.cwds.data.BaseDaoImpl;
-import gov.ca.cwds.security.utils.PrincipalUtils;
-import java.time.LocalDateTime;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 /**
  * Tracking Data Access Object.
  *
  * @author CWDS TPT-2 Team
  */
-public class TrackingDao extends BaseDaoImpl<Tracking> {
+public class TrackingDao extends CalsBaseEntityDao<Tracking> {
   public TrackingDao(@CalsnsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 
-  @Override
-  public Tracking create(Tracking tracking) {
-    LocalDateTime now = LocalDateTime.now();
-    tracking.setCreateDateTime(now);
-    tracking.setUpdateDateTime(now);
-    tracking.setCreateUserId(PrincipalUtils.getStaffPersonId());
-    tracking.setUpdateUserId(PrincipalUtils.getStaffPersonId());
-    return super.create(tracking);
+  /**
+   * Finds Tracking by RFA_1a Form Id.
+   *
+   * @param rfa1aId Rfa1a Id
+   * @return Tracking
+   */
+  public Tracking findByRfa1aId(Long rfa1aId) {
+    Session session = this.getSessionFactory().getCurrentSession();
+    Query<Tracking> query =
+        session.createNamedQuery(Tracking.NAMED_QUERY_FIND_BY_RFA_1A_ID, Tracking.class);
+    query.setParameter("rfa1aId", rfa1aId);
+    return query.uniqueResult();
   }
 
-  @Override
-  public Tracking update(Tracking tracking) {
-    LocalDateTime now = LocalDateTime.now();
-    tracking.setUpdateDateTime(now);
-    tracking.setUpdateUserId(PrincipalUtils.getStaffPersonId());
-    return super.update(tracking);
+  /**
+   * Finds Tracking by License number.
+   *
+   * @param licenseNumber License number
+   * @return Tracking
+   */
+  public Tracking findByLicenseNumber(String licenseNumber) {
+    Session session = this.getSessionFactory().getCurrentSession();
+    Query<Tracking> query =
+        session.createNamedQuery(Tracking.NAMED_QUERY_FIND_BY_LICENSE_NUMBER, Tracking.class);
+    query.setParameter("licenseNumber", licenseNumber);
+    return query.uniqueResult();
   }
+
 }

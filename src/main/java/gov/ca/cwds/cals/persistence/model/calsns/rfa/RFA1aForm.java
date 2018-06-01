@@ -51,7 +51,7 @@ import org.hibernate.annotations.Type;
 )
 @Entity
 @Table(name = "rfa_1a")
-public class RFA1aForm extends RFABaseEntity implements PersistentObject {
+public class RFA1aForm extends CalsBaseEntity implements PersistentObject {
 
   private static final long serialVersionUID = -6201382973500280112L;
   public static final String NAMED_QUERY_FIND_ALL =
