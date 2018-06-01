@@ -3,10 +3,10 @@ package gov.ca.cwds.cals.service.tracking;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.tracking.Tracking;
 import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
 import gov.ca.cwds.cals.service.tracking.model.PersonTrackingDocumentsHeader;
 import gov.ca.cwds.cals.service.tracking.model.PersonType;
@@ -20,10 +20,10 @@ public class RFA1ATrackingService extends TypedCrudServiceAdapter<Long, Tracking
 
 
   public Tracking create(Tracking tracking) {
-    RFA1aFormsParameterObject rfa1aFormsParameterObject = new RFA1aFormsParameterObject(tracking.getApplicationId());
+    RFA1aFormsParameterObject rfa1aFormsParameterObject = new RFA1aFormsParameterObject(tracking.getRfa1aId());
     RFA1aFormDTO rfa1aFormDTO = rfa1aFormService.find(rfa1aFormsParameterObject);
     JsonNode trackingDocuments = buildTrackingDocuments(rfa1aFormDTO);
-    tracking.setTrackingDocuments(trackingDocuments);
+    tracking.setTrackingJson(trackingDocuments);
     //TODO : dao create
     //TODO: headers
     return tracking;
