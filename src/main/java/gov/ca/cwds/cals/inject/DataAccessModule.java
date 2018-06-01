@@ -39,6 +39,8 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aMinorChild;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aOtherAdult;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1bForm;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1cForm;
+import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
+import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.cals.persistence.model.fas.FacilityInformation;
 import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
@@ -241,7 +243,11 @@ public class DataAccessModule extends AbstractModule {
       RFA1aOtherAdult.class,
       RFA1bForm.class,
       LIC198bForm.class,
-      RFA1cForm.class
+      RFA1cForm.class,
+      // Tracking
+      Tracking.class,
+      TrackingTemplate.class
+
   ).build();
 
   private final HibernateBundle<CalsApiConfiguration> lisHibernateBundle =
@@ -311,7 +317,7 @@ public class DataAccessModule extends AbstractModule {
 
         @Override
         public void configure(org.hibernate.cfg.Configuration configuration) {
-          configuration.addPackage("gov.ca.cwds.cals.persistence.model.calsns.rfa");
+          configuration.addPackage("gov.ca.cwds.cals.persistence.model.calsns");
         }
       };
 
