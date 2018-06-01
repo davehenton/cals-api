@@ -13,12 +13,16 @@ import static org.junit.Assert.assertTrue;
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.service.dto.FacilityChildDTO;
 import gov.ca.cwds.cals.service.dto.FacilityChildrenDto;
+import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.web.rest.rfa.helper.RfaHelpersHolder;
+import gov.ca.cwds.cals.web.rest.rfa.helper.RfaSubmitHelper;
 import gov.ca.cwds.security.test.TestSecurityFilter;
 import gov.ca.cwds.test.support.JsonIdentityAuthParams;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -27,20 +31,29 @@ import org.junit.Test;
  */
 public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
 
-  public static final String SECURITY_CLIENT_PRINCIPAL_SAME_COUNTY_SEALED_JSON = "security/client/principal-same-county-sealed.json";
+  public static final String SECURITY_CLIENT_PRINCIPAL_SAME_COUNTY_SEALED_JSON =
+      "security/client/principal-same-county-sealed.json";
 
   @BeforeClass
   public static void beforeClass() throws Exception {
     setUpCms();
     setUpCmsRs();
+    setUpCalsns();
   }
 
-  private FacilityChildrenDto getChildrenByFacilityId(String facilityId) {
+  private Invocation.Builder prepareInvocation(String facilityId) {
     String pathInfo = FACILITIES + "/{" + FACILITY_ID + "}/" + CHILDREN;
     pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", facilityId);
     WebTarget target = clientTestRule.target(pathInfo);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    return invocation.get(FacilityChildrenDto.class);
+    return target.request(MediaType.APPLICATION_JSON);
+  }
+
+  private FacilityChildrenDto getChildrenByFacilityId(String facilityId) {
+    return prepareInvocation(facilityId).get(FacilityChildrenDto.class);
+  }
+
+  private Response getChildrenByFacilityIdResponse(String facilityId) {
+    return prepareInvocation(facilityId).get();
   }
 
   @Test
@@ -81,7 +94,8 @@ public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
         + TestSecurityFilter.PATH_TO_PRINCIPAL_FIXTURE + '='
         + SECURITY_CLIENT_PRINCIPAL_SAME_COUNTY_SEALED_JSON;
     pathInfo = pathInfo.replace("{" + FACILITY_ID + "}", "412252222");
-    JsonIdentityAuthParams params = new JsonIdentityAuthParams(fixture(SECURITY_CLIENT_PRINCIPAL_SAME_COUNTY_SEALED_JSON));
+    JsonIdentityAuthParams params = new JsonIdentityAuthParams(
+        fixture(SECURITY_CLIENT_PRINCIPAL_SAME_COUNTY_SEALED_JSON));
     WebTarget target = clientTestRule.target(pathInfo, params);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     FacilityChildrenDto facilityChildDTO = invocation.get(FacilityChildrenDto.class);
@@ -135,5 +149,15 @@ public class FacilityChildResourceTest extends BaseCalsApiIntegrationTest {
       assertThat("HTTP 404 Not Found").isEqualTo(e.getMessage());
     }
   }
+
+  @Test
+  public void testFacilityWithNoChildren() throws Exception {
+    RfaSubmitHelper rfaSubmitHelper = new RfaSubmitHelper(new RfaHelpersHolder(clientTestRule));
+    RFA1aFormDTO form = rfaSubmitHelper
+        .submitApplication(SECURITY_CLIENT_PRINCIPAL_SAME_COUNTY_SEALED_JSON);
+    assertEquals(404,
+        getChildrenByFacilityIdResponse(form.getPlacementHomeId()).getStatus());
+  }
+
 }
 

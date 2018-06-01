@@ -7,7 +7,9 @@ import com.google.inject.Inject;
 import gov.ca.cwds.cals.service.dto.ChildPlacementInformation;
 import gov.ca.cwds.inject.CmsSessionFactory;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -31,6 +33,9 @@ public class FacilityChildDao extends CustomDao {
    * Get Placement Information for children.
    */
   public List<ChildPlacementInformation> retrieveChildPlacementInformationList(String[] clientIds) {
+    if (ArrayUtils.isEmpty(clientIds)) {
+      return Collections.emptyList();
+    }
     List<ChildPlacementInformation> childPlacementInformationList =
         prepareChildPlacementInformationQuery(clientIds).list();
     if (LOG.isWarnEnabled() && childPlacementInformationList.size() > clientIds.length) {

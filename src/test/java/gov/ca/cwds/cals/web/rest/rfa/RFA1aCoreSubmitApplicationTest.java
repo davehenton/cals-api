@@ -7,14 +7,10 @@ import static org.junit.Assert.assertNotNull;
 import gov.ca.cwds.cals.persistence.DBUnitAssertHelper;
 import gov.ca.cwds.cals.persistence.DBUnitSupport;
 import gov.ca.cwds.cals.persistence.DBUnitSupportBuilder;
-import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.StateType;
-import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1bFormDTO;
+import gov.ca.cwds.cals.web.rest.rfa.helper.RfaSubmitHelper;
 import gov.ca.cwds.cals.web.rest.utils.TestModeUtils;
 import java.time.format.DateTimeFormatter;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.SortedTable;
@@ -30,6 +26,8 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 
   private static final String FIXTURE_PATH_TO_PRINCIPAL = "security/cals-api-principal.json";
 
+  RfaSubmitHelper rfaSubmitHelper = new RfaSubmitHelper(rfaHelpersHolder);
+
   DBUnitSupport dbUnitSupport =
       new DBUnitSupportBuilder().buildForCMS(appRule.getConfiguration());
 
@@ -40,36 +38,6 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     setUpCmsRs();
   }
 
-  private RFA1aFormDTO submitApplication() throws Exception {
-    RFA1aFormDTO form = formAHelper.createRFA1aForm();
-    ApplicantDTO applicantDTO = applicantHelper
-        .postApplicant(form.getId(), applicantHelper.getValidApplicant());
-    ApplicantDTO secondApplicant = applicantHelper.getValidApplicant();
-    secondApplicant.setFirstName("John");
-    StateType driverLicenseState = new StateType();
-    driverLicenseState.setId("MD");
-    driverLicenseState.setValue("Maryland");
-    secondApplicant.setDriverLicenseState(driverLicenseState);
-    secondApplicant.getEthnicity().setId(2L);
-    secondApplicant.getEthnicity().setValue("American Indian");
-
-    secondApplicant = applicantHelper.postApplicant(form.getId(), secondApplicant);
-    residenceHelper.putResidence(form.getId(), residenceHelper.buildResidenceDTO());
-
-    RFA1bFormDTO rfa1bForm = formBHelper.getRfa1bForm();
-    formBHelper.postRfa1bForm(form.getId(), applicantDTO.getId(), rfa1bForm);
-
-    otherAdultHelper.createOtherAdults(form.getId(), secondApplicant);
-    minorChildHelper.createMinorChildren(form.getId(), applicantDTO);
-
-    Response response = statusHelper.submitApplication(form.getId(), FIXTURE_PATH_TO_PRINCIPAL);
-    assertEquals(Status.OK.getStatusCode(), response.getStatus());
-
-    form = formAHelper.getRFA1aForm(form.getId());
-
-    return form;
-  }
-
   @Test
   @Ignore
   public void submitApplicationTest() throws Exception {
@@ -78,8 +46,8 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
       return;
     }
 
-    RFA1aFormDTO form = submitApplication();
-    statusHelper.assertSubmitted(form.getId());
+    RFA1aFormDTO form = rfaSubmitHelper.submitApplication(FIXTURE_PATH_TO_PRINCIPAL);
+    rfaHelpersHolder.getStatusHelper().assertSubmitted(form.getId());
   }
 
   @Test
@@ -88,9 +56,9 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
       return;
     }
 
-    RFA1aFormDTO form = submitApplication();
+    RFA1aFormDTO form = rfaSubmitHelper.submitApplication(FIXTURE_PATH_TO_PRINCIPAL);
 
-    statusHelper.assertSubmitted(form.getId());
+    rfaHelpersHolder.getStatusHelper().assertSubmitted(form.getId());
 
     String placementHomeId = form.getPlacementHomeId();
     assertNotNull(placementHomeId);
@@ -350,7 +318,8 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
         new String[]{"OTH_ADLTNM"});
   }
 
-  private void testIfOtherChildrenWasCreatedProperly(String placementHomeId, RFA1aFormDTO form) throws Exception {
+  private void testIfOtherChildrenWasCreatedProperly(String placementHomeId, RFA1aFormDTO form)
+      throws Exception {
     DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/MinorChildrenInPlacementHome.xml")
         .appendTemplateParameter("birthDate", form.getMinorChildren().get(0)
