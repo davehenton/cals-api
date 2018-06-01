@@ -1,91 +1,80 @@
 {
-  "title": "${family_name} Family RFA Documents",
   "family_documents": {
     "items": [
       {
         "title": "RFA Application (RFA 01A)",
-        "start_date": "",
-        "completion_date": "",
+        "received_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Verification of Income",
-        "start_date": "",
-        "completion_date": "",
+        "received_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Disclosure of Expenses",
-        "start_date": "",
-        "completion_date": "",
+        "received_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Verification of Property",
-        "start_date": "",
-        "completion_date": "",
+        "received_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Home Environment Checklist (RFA-03)",
-        "start_date": "",
-        "completion_date": "",
+        "received_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Reference Letter #1",
-        "start_date": "",
-        "completion_date": "",
+        "received_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Reference Letter #2",
-        "start_date": "",
-        "completion_date": "",
+        "received_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Reference Letter #3 (if applicable)",
-        "start_date": "",
-        "completion_date": "",
+        "received_date": "",
         "notes": "",
         "checked": false
       }
     ]
   },
-  "additional_tasks": {
+  "tasks_and_trainings": {
     "items": [
       {
         "title": "Attended Orientation Meeting",
-        "start_date": "",
-        "completion_date": "",
+        "completed_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Risk Assessment",
-        "start_date": "",
-        "completion_date": "",
+        "completed_date": "",
         "notes": "",
         "checked": false
-      }
-    ]
-  },
-  "trainings": {
-    "items": [
+      },
+      {
+        "title": "Home Environment Checklist (RFA-03)",
+        "completed_date": "",
+        "notes": "",
+        "checked": false
+      },
       {
         "title": "Pre-Service Training",
-        "date": "",
-        "topic": "",
-        "source": "",
-        "hours": "",
+        "completed_date": "",
+        "notes": "",
         "checked": false
       }
     ]
@@ -94,29 +83,22 @@
     "items": [
       {
         "title": "Family Evaluation",
-        "completion_date": "",
-        "decision_date": "",
-        "decision": "",
-        "checked": false
-      }
-    ]
-  },
-  "written_reports": {
-    "items": [
-      {
-        "title": "Family Evaluation",
-        "completion_date": "",
+        "submitted_date": "",
+        "approved_date": "",
         "notes": "",
         "checked": false
-      }
-    ]
-  },
-  "acknowledgements": {
-    "items": [
+      },
       {
-        "title": "Acknowledgement",
-        "sent_date": "",
-        "received_date": "",
+        "title": "Written Report",
+        "submitted_date": "",
+        "approved_date": "",
+        "notes": "",
+        "checked": false
+      },
+      {
+        "title": "Acknowledgement of Written Report",
+        "submitted_date": "",
+        "approved_date": "",
         "notes": "",
         "checked": false
       }
