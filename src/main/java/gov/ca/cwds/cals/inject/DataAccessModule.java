@@ -339,7 +339,7 @@ public class DataAccessModule extends AbstractModule {
 
         @Override
         public void configure(org.hibernate.cfg.Configuration configuration) {
-          configuration.addPackage("gov.ca.cwds.cals.persistence.model.calsns.rfa");
+          configuration.addPackage("gov.ca.cwds.cals.persistence.model.calsns");
         }
       };
 
