@@ -8,88 +8,78 @@
       "items": [
         {
           "title": "RFA Application (RFA 01A)",
-          "start_date": "",
-          "completion_date": "",
+          "received_date": "",
           "notes": "",
-          "checked": true
+          "checked": false
         },
         {
           "title": "Verification of Income",
-          "start_date": "",
-          "completion_date": "",
+          "received_date": "",
           "notes": "",
           "checked": false
         },
         {
           "title": "Disclosure of Expenses",
-          "start_date": "",
-          "completion_date": "",
+          "received_date": "",
           "notes": "",
           "checked": false
         },
         {
           "title": "Verification of Property",
-          "start_date": "",
-          "completion_date": "",
+          "received_date": "",
           "notes": "",
           "checked": false
         },
         {
           "title": "Home Environment Checklist (RFA-03)",
-          "start_date": "",
-          "completion_date": "",
+          "received_date": "",
           "notes": "",
-          "checked": true
+          "checked": false
         },
         {
           "title": "Reference Letter #1",
-          "start_date": "",
-          "completion_date": "",
+          "received_date": "",
           "notes": "",
           "checked": false
         },
         {
           "title": "Reference Letter #2",
-          "start_date": "",
-          "completion_date": "",
+          "received_date": "",
           "notes": "",
           "checked": false
         },
         {
           "title": "Reference Letter #3 (if applicable)",
-          "start_date": "",
-          "completion_date": "",
+          "received_date": "",
           "notes": "",
           "checked": false
         }
       ]
     },
-    "additional_tasks": {
+    "tasks_and_trainings": {
       "items": [
         {
           "title": "Attended Orientation Meeting",
-          "start_date": "",
-          "completion_date": "",
+          "completed_date": "",
           "notes": "",
           "checked": false
         },
         {
           "title": "Risk Assessment",
-          "start_date": "",
-          "completion_date": "",
+          "completed_date": "",
           "notes": "",
           "checked": false
-        }
-      ]
-    },
-    "trainings": {
-      "items": [
+        },
+        {
+          "title": "Home Environment Checklist (RFA-03)",
+          "completed_date": "",
+          "notes": "",
+          "checked": false
+        },
         {
           "title": "Pre-Service Training",
-          "date": "",
-          "topic": "",
-          "source": "",
-          "hours": "",
+          "completed_date": "",
+          "notes": "",
           "checked": false
         }
       ]
@@ -98,29 +88,22 @@
       "items": [
         {
           "title": "Family Evaluation",
-          "completion_date": "",
-          "decision_date": "",
-          "decision": "",
-          "checked": false
-        }
-      ]
-    },
-    "written_reports": {
-      "items": [
-        {
-          "title": "Family Evaluation",
-          "completion_date": "",
+          "submitted_date": "",
+          "approved_date": "",
           "notes": "",
           "checked": false
-        }
-      ]
-    },
-    "acknowledgements": {
-      "items": [
+        },
         {
-          "title": "Acknowledgement",
-          "sent_date": "",
-          "received_date": "",
+          "title": "Written Report",
+          "submitted_date": "",
+          "approved_date": "",
+          "notes": "",
+          "checked": false
+        },
+        {
+          "title": "Acknowledgement of Written Report",
+          "submitted_date": "",
+          "approved_date": "",
           "notes": "",
           "checked": false
         }
@@ -131,55 +114,36 @@
     {
       "person_id": 123,
       "person_name": "",
-      "person_type": "Applicant | Other Adult",
+      "person_type": "Applicant",
       "individual_documents": {
         "items": [
           {
             "title": "Criminal Record Statement (RFA-01B)",
-            "start_date": "",
-            "completion_date": "",
-            "notes": "",
-            "checked": false
-          },
-          {
-            "title": "DMV Reports",
-            "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           },
           {
             "title": "Health Questionnaire (RFA-07)",
-            "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           },
           {
             "title": "TB Questionnaire (RFA-08)",
-            "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           },
           {
             "title": "Employment Verification",
-            "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           },
           {
             "title": "Proof of Identity",
-            "start_date": "",
-            "completion_date": "",
-            "notes": "",
-            "checked": false
-          },
-          {
-            "title": "CPR/First Aid Training",
-            "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           }
@@ -211,6 +175,13 @@
             "checked": false
           },
           {
+            "title": "DMV Reports",
+            "start_date": "",
+            "completion_date": "",
+            "notes": "",
+            "checked": false
+          },
+          {
             "title": "Exemption Needed (if applicable)",
             "start_date": "",
             "completion_date": "",
@@ -230,13 +201,6 @@
             "completion_date": "",
             "notes": "",
             "checked": false
-          },
-          {
-            "title": "Criminal Background Checklist (RFA-02)",
-            "start_date": "",
-            "completion_date": "",
-            "notes": "",
-            "checked": false
           }
         ]
       }
@@ -244,27 +208,27 @@
     {
       "person_id": 123,
       "person_name": "",
-      "person_type": "Applicant | Other Adult",
+      "person_type": "Other Adult",
       "individual_documents": {
         "items": [
           {
             "title": "Criminal Record Statement (RFA-01B)",
             "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           },
           {
             "title": "TB Questionnaire (RFA-08)",
             "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           },
           {
             "title": "DMV Reports",
             "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           }
@@ -275,28 +239,28 @@
           {
             "title": "Criminal Background Checklist (RFA-02)",
             "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           },
           {
             "title": "Previous Associations",
             "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           },
           {
             "title": "Exemption Needed (if applicable)",
             "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           },
           {
             "title": "Legal Consult Needed (if applicable)",
             "start_date": "",
-            "completion_date": "",
+            "completed_date": "",
             "notes": "",
             "checked": false
           }

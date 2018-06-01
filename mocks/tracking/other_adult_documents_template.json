@@ -1,25 +1,24 @@
 {
-  "title": "Residing Adult: [${applicant_name}] RFA Documents",
   "individual_documents": {
     "items": [
       {
         "title": "Criminal Record Statement (RFA-01B)",
         "start_date": "",
-        "completion_date": "",
+        "completed_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "TB Questionnaire (RFA-08)",
         "start_date": "",
-        "completion_date": "",
+        "completed_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "DMV Reports",
         "start_date": "",
-        "completion_date": "",
+        "completed_date": "",
         "notes": "",
         "checked": false
       }
@@ -30,28 +29,28 @@
       {
         "title": "Criminal Background Checklist (RFA-02)",
         "start_date": "",
-        "completion_date": "",
+        "completed_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Previous Associations",
         "start_date": "",
-        "completion_date": "",
+        "completed_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Exemption Needed (if applicable)",
         "start_date": "",
-        "completion_date": "",
+        "completed_date": "",
         "notes": "",
         "checked": false
       },
       {
         "title": "Legal Consult Needed (if applicable)",
         "start_date": "",
-        "completion_date": "",
+        "completed_date": "",
         "notes": "",
         "checked": false
       }
