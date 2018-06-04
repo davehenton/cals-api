@@ -9,6 +9,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_COUNTY_CWS_ID;
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_NULL_COUNTY;
+
 /**
  * TrackingTemplate Data Access Object.
  *
@@ -53,8 +57,18 @@ public class TrackingTemplateDao extends CalsBaseEntityDao<TrackingTemplate> {
   }
 
   public List<TrackingTemplate> findByCounty(Integer cwsCounty) {
-    //TODO replace logic
-    return findAll();
+    Session session = this.getSessionFactory().getCurrentSession();
+    if(cwsCounty == null) {
+      return session
+          .createNamedQuery(NAMED_QUERY_FIND_BY_NULL_COUNTY, TrackingTemplate.class)
+          .list();
+    }
+    else {
+      return session
+          .createNamedQuery(NAMED_QUERY_FIND_BY_COUNTY_CWS_ID, TrackingTemplate.class)
+          .setParameter(0, cwsCounty)
+          .list();
+    }
   }
 
 
