@@ -239,7 +239,8 @@ public class ResourcesModule extends AbstractModule {
   @RFA1aTrackingServiceBackedResource
   public TypedResourceDelegate<Long, Tracking> trackingServiceBackedResource(
       Injector injector) {
-    return new TypedServiceBackedResourceDelegate<>(injector.getInstance(RFA1ATrackingService.class));
+    RFA1ATrackingService trackingService = injector.getInstance(RFA1ATrackingService.class);
+    return new TypedServiceBackedResourceDelegate<>(trackingService);
   }
 
   @Provides
