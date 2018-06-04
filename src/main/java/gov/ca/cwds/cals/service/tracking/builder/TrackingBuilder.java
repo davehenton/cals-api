@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.rest.api.ApiException;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
@@ -22,7 +23,7 @@ public class TrackingBuilder {
         return (JsonNode) groovyShell.evaluate(new InputStreamReader(is));
       }
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new ApiException(e);
     }
   }
 
