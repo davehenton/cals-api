@@ -1,6 +1,7 @@
 package gov.ca.cwds.cals.service.dto.rfa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -24,6 +25,11 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
 
   @ApiModelProperty(hidden = true)
   private Long id;
+
+  @JsonProperty("tracking_id")
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  @ApiModelProperty(value = "Tracking id")
+  private Long trackingId;
 
   @JsonProperty("resource_family_name")
   @ApiModelProperty(value = "Facility Name", example = "Smith, John & Anna")
@@ -216,6 +222,13 @@ public class RFA1aFormDTO extends BaseDTO implements RequestResponse {
     this.id = id;
   }
 
+  public Long getTrackingId() {
+    return trackingId;
+  }
+
+  public void setTrackingId(Long trackingId) {
+    this.trackingId = trackingId;
+  }
 
   public String getPlacementHomeId() {
     return placementHomeId;

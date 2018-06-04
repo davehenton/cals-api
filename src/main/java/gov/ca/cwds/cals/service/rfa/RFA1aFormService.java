@@ -8,8 +8,10 @@ import com.atomikos.icatch.jta.UserTransactionImp;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.TrackingDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.XaRFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
+import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.service.FacilityService;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
@@ -55,6 +57,9 @@ public class RFA1aFormService
 
   @Inject
   private XaRFA1aFormsDao xaRfa1AFormsDao;
+
+  @Inject
+  private TrackingDao trackingDao;
 
   @Inject
   private RFA1aFormMapper rfa1aFomMapper;
@@ -103,7 +108,7 @@ public class RFA1aFormService
       formDTO = rfa1aFomMapper.toRFA1aFormDTO(form);
     }
 
-    return formDTO;
+    return setTrackingId(formDTO);
   }
 
   @UnitOfWork(CALSNS)
@@ -222,7 +227,7 @@ public class RFA1aFormService
   @UnitOfWork(CALSNS)
   protected RFA1aFormDTO getExpandedFormDTO(Long formId) {
     RFA1aForm form = rfa1AFormsDao.find(formId);
-    return rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
+    return setTrackingId(rfa1aFomMapper.toExpandedRFA1aFormDTO(form));
   }
 
   private PlacementHome storePlaceMentHome(RFA1aFormDTO expandedFormDTO)
@@ -278,5 +283,14 @@ public class RFA1aFormService
         .composeFacilityNameByApplicantsList(form.getApplicants());
     form.setFacilityName(facilityName);
     rfa1AFormsDao.update(fillFormUpdateAttributes(form));
+  }
+
+  private RFA1aFormDTO setTrackingId(RFA1aFormDTO rfa1aFormDTO) {
+    Long formId = rfa1aFormDTO.getId();
+    Tracking tracking = trackingDao.findByRfa1aId(formId);
+    if(tracking != null) {
+      rfa1aFormDTO.setTrackingId(tracking.getId());
+    }
+    return rfa1aFormDTO;
   }
 }

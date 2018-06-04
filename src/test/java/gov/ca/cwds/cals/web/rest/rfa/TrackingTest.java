@@ -7,6 +7,7 @@ import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -51,5 +52,23 @@ public class TrackingTest extends BaseRFAIntegrationTest {
 
     assertResponseByFixturePath(
         response, "fixtures/rfa/tracking/created-tracking.json", JSONCompareMode.LENIENT);
+  }
+
+
+  @Test
+  public void testGetTrackingId() throws Exception {
+    RFA1aFormDTO form = formAHelper.createRFA1aForm();
+    ApplicantDTO applicant = applicantHelper.getValidApplicant();
+    applicantHelper.postApplicant(form.getId(), applicant);
+    statusHelper.submitApplication(form.getId());
+
+    WebTarget target = clientTestRule.target(Constants.API.RFA_1A_FORMS + "/" + form.getId() + "/tracking");
+    Tracking tracking = target.request(MediaType.APPLICATION_JSON).post(null).readEntity(Tracking.class);
+
+    RFA1aFormDTO response = clientTestRule
+        .target(Constants.API.RFA_1A_FORMS + "/" + form.getId())
+        .request().get().readEntity(RFA1aFormDTO.class);
+
+    Assert.assertEquals(response.getTrackingId(), tracking.getId());
   }
 }
