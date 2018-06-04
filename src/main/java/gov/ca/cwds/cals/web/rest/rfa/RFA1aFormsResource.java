@@ -17,6 +17,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aPDFGenerationService;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
+import gov.ca.cwds.cals.web.rest.parameter.TrackingParameterObject;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -26,9 +27,11 @@ import org.slf4j.LoggerFactory;
 
 
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.TRACKING_ID;
 import static gov.ca.cwds.cals.Constants.API.QueryParams.EXPANDED;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
+import static gov.ca.cwds.cals.Constants.TRACKING;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 /**
@@ -45,7 +48,7 @@ public class RFA1aFormsResource {
   private static final String APPLICATION_PDF = "application/pdf";
   private TypedResourceDelegate<RFA1aFormsParameterObject, RFA1aFormDTO> resourceDelegate;
   private TypedResourceDelegate<Boolean, Request> collectionResourceDelegate;
-  private TypedResourceDelegate<Long, Tracking> rfa1aTrackingResourceDelegate;
+  private TypedResourceDelegate<TrackingParameterObject, Tracking> rfa1aTrackingResourceDelegate;
 
   @Inject
   private RFA1aPDFGenerationService pdfGenerationService;
@@ -57,8 +60,8 @@ public class RFA1aFormsResource {
       @RFA1aFormCollectionServiceBackedResource
           TypedResourceDelegate<Boolean, Request> collectionResourceDelegate,
       @RFA1aTrackingServiceBackedResource
-          TypedResourceDelegate<Long, Tracking> rfa1aTrackingResourceDelegate
-      ) {
+          TypedResourceDelegate<TrackingParameterObject, Tracking> rfa1aTrackingResourceDelegate
+  ) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
     this.rfa1aTrackingResourceDelegate = rfa1aTrackingResourceDelegate;
@@ -208,8 +211,32 @@ public class RFA1aFormsResource {
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
-      Tracking tracking = new Tracking();
-      tracking.setRfa1aId(formId);
-      return rfa1aTrackingResourceDelegate.create(tracking);
+    Tracking tracking = new Tracking();
+    tracking.setRfa1aId(formId);
+    return rfa1aTrackingResourceDelegate.create(tracking);
+  }
+
+  @GET
+  @Path("/{" + RFA_1A_APPLICATION_ID + "}/" + TRACKING + "/{" + TRACKING_ID + "}")
+  @Produces({MediaType.APPLICATION_JSON})
+  @Timed
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Returns tracking for RFA 1A Form", response = Tracking.class)
+  @UnitOfWork(CALSNS)
+  public Response getTracking(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long formId,
+      @PathParam(TRACKING_ID)
+      @ApiParam(name = TRACKING_ID, value = "Tracking id")
+          Long trackingId) {
+    TrackingParameterObject searchParams = new TrackingParameterObject(formId, trackingId);
+    return rfa1aTrackingResourceDelegate.get(searchParams);
   }
 }

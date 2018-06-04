@@ -2,6 +2,8 @@ package gov.ca.cwds.cals.persistence.model.calsns.tracking;
 
 import static gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking.NAMED_QUERY_FIND_BY_LICENSE_NUMBER;
 import static gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking.NAMED_QUERY_FIND_BY_RFA_1A_ID;
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking.NAMED_QUERY_FIND_BY_RFA_1A_ID_AND_TRACKING_ID;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -26,6 +28,11 @@ import org.hibernate.annotations.Type;
     name = NAMED_QUERY_FIND_BY_RFA_1A_ID,
     query = "FROM Tracking WHERE rfa1aId = :rfa1aId"
 )
+
+@NamedQuery(
+    name = NAMED_QUERY_FIND_BY_RFA_1A_ID_AND_TRACKING_ID,
+    query = "FROM Tracking WHERE rfa1aId = :rfa1aId AND id = :id"
+)
 @NamedQuery(
     name = NAMED_QUERY_FIND_BY_LICENSE_NUMBER,
     query = "FROM Tracking WHERE licenseNumber = :licenseNumber"
@@ -41,6 +48,8 @@ public class Tracking extends CalsBaseEntity implements RequestResponse {
 
   public static final String NAMED_QUERY_FIND_BY_RFA_1A_ID = "tracking.find.by.rfa1a.id";
   public static final String NAMED_QUERY_FIND_BY_LICENSE_NUMBER = "tracking.find.by.license.number";
+  public static final String NAMED_QUERY_FIND_BY_RFA_1A_ID_AND_TRACKING_ID = "tracking.find.by.rfa1a.id.and.tracking.id";
+
 
   @Column(name = "facility_name")
   private String facilityName;
