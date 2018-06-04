@@ -20,6 +20,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 /**
+ * BaseEntity Class.
+ *
  * @author CWDS CALS API Team
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
