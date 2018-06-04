@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.tracking;
 
-import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
@@ -13,6 +12,8 @@ import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.tracking.builder.TrackingBuilder;
 import gov.ca.cwds.rest.api.ApiException;
 import gov.ca.cwds.security.utils.PrincipalUtils;
+
+import java.util.List;
 
 public class RFA1ATrackingService extends TypedCrudServiceAdapter<Long, Tracking, Tracking> {
   @Inject
