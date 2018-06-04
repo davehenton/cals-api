@@ -110,15 +110,11 @@ public class JsonType implements UserType, ParameterizedType {
   @SuppressFBWarnings("OBJECT_DESERIALIZATION") // There is no external objects
   public Object deepCopy(Object value) {
     try {
-      ByteArrayOutputStream bos = new ByteArrayOutputStream();
-      ObjectOutputStream oos = new ObjectOutputStream(bos);
-      oos.writeObject(value);
-      oos.flush();
-      oos.close();
-      bos.close();
-      ByteArrayInputStream bais = new ByteArrayInputStream(bos.toByteArray());
-      return new ObjectInputStream(bais).readObject();
-    } catch (ClassNotFoundException | IOException ex) {
+      final StringWriter stringWriter = new StringWriter();
+      mapper.writeValue(stringWriter, value);
+      stringWriter.flush();
+      return mapper.readValue(stringWriter.toString(), returnedClass());
+    } catch (Exception ex) {
       throw new HibernateException(ex);
     }
   }

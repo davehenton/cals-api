@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.dao.calsns;
 
+import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import org.hibernate.Session;
@@ -12,6 +13,7 @@ import org.hibernate.query.Query;
  * @author CWDS TPT-2 Team
  */
 public class TrackingDao extends CalsBaseEntityDao<Tracking> {
+  @Inject
   public TrackingDao(@CalsnsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
   }

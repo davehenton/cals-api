@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns.tracking;
 
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_ALL;
 import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_COUNTY_AND_TYPE;
 import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_TYPE;
 
@@ -32,6 +33,11 @@ import org.hibernate.annotations.Type;
     name = NAMED_QUERY_FIND_BY_COUNTY_AND_TYPE,
     query = "FROM TrackingTemplate WHERE templateType = :type AND county = :county"
 )
+
+@NamedQuery(
+    name = NAMED_QUERY_FIND_ALL,
+    query = "FROM TrackingTemplate"
+)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Entity
 @Table(name = "tracking_template")
@@ -42,6 +48,7 @@ public class TrackingTemplate extends CalsBaseEntity {
   public static final String NAMED_QUERY_FIND_BY_TYPE = "tracking.template.find.by.type";
   public static final String NAMED_QUERY_FIND_BY_COUNTY_AND_TYPE
       = "tracking.template.find.by.county.type";
+  public static final String NAMED_QUERY_FIND_ALL = "gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.findAll";
 
   @ManyToOne
   @JoinColumn(name = "county_code")

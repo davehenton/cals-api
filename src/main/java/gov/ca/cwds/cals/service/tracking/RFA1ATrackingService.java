@@ -3,45 +3,45 @@ package gov.ca.cwds.cals.service.tracking;
 import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.TrackingDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.TrackingTemplateDao;
+import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
-import gov.ca.cwds.cals.service.rfa.RFA1aFormService;
 import gov.ca.cwds.cals.service.tracking.builder.TrackingBuilder;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.rest.api.ApiException;
 
 public class RFA1ATrackingService extends TypedCrudServiceAdapter<Long, Tracking, Tracking> {
   @Inject
-  private RFA1aFormService rfa1aFormService;
+  private RFA1aFormsDao rfa1aFormsDao;
   @Inject
   private TrackingDao trackingDao;
   @Inject
   private TrackingTemplateDao trackingTemplateDao;
 
   public Tracking create(Tracking tracking) {
-    RFA1aFormDTO rfa1aFormDTO = findRfa1a(tracking);
+    RFA1aForm rfa1aForm = findRfa1a(tracking);
     List<TrackingTemplate> templates = findTrackingTemplates();
-    JsonNode trackingDocuments = new TrackingBuilder().build(rfa1aFormDTO, templates);
+    JsonNode trackingDocuments = new TrackingBuilder().build(rfa1aForm, templates);
     tracking.setTrackingJson(trackingDocuments);
-    tracking.setFacilityName(rfa1aFormDTO.getFacilityName());
+    tracking.setFacilityName(rfa1aForm.getFacilityName());
     return trackingDao.create(tracking);
   }
 
-  private RFA1aFormDTO findRfa1a(Tracking tracking) throws ApiException {
-    RFA1aFormsParameterObject rfa1aFormsParameterObject = new RFA1aFormsParameterObject(tracking.getRfa1aId());
-    RFA1aFormDTO rfa1aFormDTO = rfa1aFormService.find(rfa1aFormsParameterObject);
-    if (rfa1aFormDTO == null) {
+  private RFA1aForm findRfa1a(Tracking tracking) throws ApiException {
+    RFA1aForm rfa1aForm = rfa1aFormsDao.find(tracking.getRfa1aId());
+    if (rfa1aForm == null) {
       throw new ApiException("RFA1A form [ " + tracking.getRfa1aId() + "] is not found");
     }
-    return rfa1aFormDTO;
+    return rfa1aForm;
   }
 
   private List<TrackingTemplate> findTrackingTemplates() throws ApiException {
-    //TODO
-    return null;
+    //TODO: add county lg
+    return trackingTemplateDao.findAll();
   }
 }
