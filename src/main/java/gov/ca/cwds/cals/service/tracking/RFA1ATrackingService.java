@@ -10,10 +10,9 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
-import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.tracking.builder.TrackingBuilder;
-import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.rest.api.ApiException;
+import gov.ca.cwds.security.utils.PrincipalUtils;
 
 public class RFA1ATrackingService extends TypedCrudServiceAdapter<Long, Tracking, Tracking> {
   @Inject
@@ -26,7 +25,8 @@ public class RFA1ATrackingService extends TypedCrudServiceAdapter<Long, Tracking
   public Tracking create(Tracking tracking) {
     RFA1aForm rfa1aForm = findRfa1a(tracking);
     List<TrackingTemplate> templates = findTrackingTemplates();
-    JsonNode trackingDocuments = new TrackingBuilder().build(rfa1aForm, templates);
+    List<TrackingTemplate> defaultTemplates = findDefaultTrackingTemplates();
+    JsonNode trackingDocuments = new TrackingBuilder().build(rfa1aForm, templates, defaultTemplates);
     tracking.setTrackingJson(trackingDocuments);
     tracking.setFacilityName(rfa1aForm.getFacilityName());
     return trackingDao.create(tracking);
@@ -41,7 +41,11 @@ public class RFA1ATrackingService extends TypedCrudServiceAdapter<Long, Tracking
   }
 
   private List<TrackingTemplate> findTrackingTemplates() throws ApiException {
-    //TODO: add county lg
-    return trackingTemplateDao.findAll();
+    return trackingTemplateDao.findByCounty(Integer.valueOf(PrincipalUtils.getPrincipal().getCountyCwsCode()));
   }
+
+  private List<TrackingTemplate> findDefaultTrackingTemplates() {
+    return trackingTemplateDao.findByCounty(null);
+  }
+
 }

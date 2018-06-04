@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.dao.calsns;
 
+import java.util.List;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
@@ -50,5 +51,11 @@ public class TrackingTemplateDao extends CalsBaseEntityDao<TrackingTemplate> {
     query.setParameter("type", type);
     return query.uniqueResult();
   }
+
+  public List<TrackingTemplate> findByCounty(Integer cwsCounty) {
+    //TODO replace logic
+    return findAll();
+  }
+
 
 }
