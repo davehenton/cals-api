@@ -1,7 +1,7 @@
 package gov.ca.cwds.cals.persistence.dao.calsns;
 
-import java.util.List;
 import com.google.inject.Inject;
+import java.util.List;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;

@@ -13,6 +13,7 @@ import org.hibernate.query.Query;
  * @author CWDS TPT-2 Team
  */
 public class TrackingDao extends CalsBaseEntityDao<Tracking> {
+
   @Inject
   public TrackingDao(@CalsnsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
