@@ -25,8 +25,9 @@ public abstract class CalsBaseEntityDao<T extends CalsBaseEntity> extends BaseDa
     LocalDateTime now = LocalDateTime.now();
     entity.setCreateDateTime(now);
     entity.setUpdateDateTime(now);
-    entity.setCreateUserId(PrincipalUtils.getStaffPersonId());
-    entity.setUpdateUserId(PrincipalUtils.getStaffPersonId());
+    String staffPersonId = PrincipalUtils.getStaffPersonId();
+    entity.setCreateUserId(staffPersonId);
+    entity.setUpdateUserId(staffPersonId);
     return super.create(entity);
   }
 
