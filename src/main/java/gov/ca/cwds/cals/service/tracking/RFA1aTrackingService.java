@@ -15,7 +15,7 @@ import gov.ca.cwds.security.utils.PrincipalUtils;
 
 import java.util.List;
 
-public class RFA1ATrackingService extends TypedCrudServiceAdapter<Long, Tracking, Tracking> {
+public class RFA1aTrackingService extends TypedCrudServiceAdapter<Long, Tracking, Tracking> {
   @Inject
   private RFA1aFormsDao rfa1aFormsDao;
   @Inject
@@ -27,7 +27,8 @@ public class RFA1ATrackingService extends TypedCrudServiceAdapter<Long, Tracking
     RFA1aForm rfa1aForm = findRfa1a(tracking);
     List<TrackingTemplate> templates = findTrackingTemplates();
     List<TrackingTemplate> defaultTemplates = findDefaultTrackingTemplates();
-    JsonNode trackingDocuments = new TrackingBuilder().build(rfa1aForm, templates, defaultTemplates);
+    JsonNode trackingDocuments = new TrackingBuilder()
+        .build(rfa1aForm, templates, defaultTemplates);
     tracking.setTrackingJson(trackingDocuments);
     tracking.setFacilityName(rfa1aForm.getFacilityName());
     return trackingDao.create(tracking);
@@ -42,7 +43,8 @@ public class RFA1ATrackingService extends TypedCrudServiceAdapter<Long, Tracking
   }
 
   private List<TrackingTemplate> findTrackingTemplates() throws ApiException {
-    return trackingTemplateDao.findByCounty(Integer.valueOf(PrincipalUtils.getPrincipal().getCountyCwsCode()));
+    Integer county = Integer.valueOf(PrincipalUtils.getPrincipal().getCountyCwsCode());
+    return trackingTemplateDao.findByCounty(county);
   }
 
   private List<TrackingTemplate> findDefaultTrackingTemplates() {
