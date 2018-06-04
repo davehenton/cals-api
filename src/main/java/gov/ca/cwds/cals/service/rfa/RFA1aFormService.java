@@ -286,6 +286,9 @@ public class RFA1aFormService
   }
 
   private RFA1aFormDTO setTrackingId(RFA1aFormDTO rfa1aFormDTO) {
+    if(rfa1aFormDTO == null) {
+      return null;
+    }
     Long formId = rfa1aFormDTO.getId();
     Tracking tracking = trackingDao.findByRfa1aId(formId);
     if(tracking != null) {
