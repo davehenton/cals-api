@@ -22,7 +22,7 @@ public class TrackingBuilder {
       try (InputStream is = getClass().getResourceAsStream("/tracking/tracking.groovy")) {
         return (JsonNode) groovyShell.evaluate(new InputStreamReader(is));
       }
-    } catch (IOException e) {
+    } catch (Exception e) {
       throw new ApiException(e);
     }
   }
