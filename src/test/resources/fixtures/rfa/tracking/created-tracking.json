@@ -1,140 +1,98 @@
 {
-  "id" : 1,
   "create_user_id" : "0X5",
   "update_user_id" : "0X5",
   "facility_name" : "ALn, AFn",
-  "rfa_1a_id" : 3,
   "tracking_documents" : {
     "facility_documents" : {
-      "id" : 2,
-      "create_user_id" : "System",
-      "create_date_time" : {
-        "dayOfMonth" : 4,
-        "dayOfWeek" : "MONDAY",
-        "dayOfYear" : 155,
-        "hour" : 11,
-        "minute" : 35,
-        "month" : "JUNE",
-        "monthValue" : 6,
-        "nano" : 948000000,
-        "second" : 12,
-        "year" : 2018,
-        "chronology" : {
-          "id" : "ISO",
-          "calendarType" : "iso8601"
-        }
+      "family_documents" : {
+        "items" : [ {
+          "title" : "RFA Application (RFA 01A)",
+          "received_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Verification of Income",
+          "received_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Disclosure of Expenses",
+          "received_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Verification of Property",
+          "received_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Home Environment Checklist (RFA-03)",
+          "received_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Reference Letter #1",
+          "received_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Reference Letter #2",
+          "received_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Reference Letter #3 (if applicable)",
+          "received_date" : "",
+          "notes" : "",
+          "checked" : false
+        } ]
       },
-      "update_user_id" : "System",
-      "update_date_time" : {
-        "dayOfMonth" : 4,
-        "dayOfWeek" : "MONDAY",
-        "dayOfYear" : 155,
-        "hour" : 11,
-        "minute" : 35,
-        "month" : "JUNE",
-        "monthValue" : 6,
-        "nano" : 948000000,
-        "second" : 12,
-        "year" : 2018,
-        "chronology" : {
-          "id" : "ISO",
-          "calendarType" : "iso8601"
-        }
+      "tasks_and_trainings" : {
+        "items" : [ {
+          "title" : "Attended Orientation Meeting",
+          "completed_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Risk Assessment",
+          "completed_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Home Environment Checklist (RFA-03)",
+          "completed_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Pre-Service Training",
+          "completed_date" : "",
+          "notes" : "",
+          "checked" : false
+        } ]
       },
-      "county" : null,
-      "template_type" : "family_documents",
-      "template_json" : {
-        "family_documents" : {
-          "items" : [ {
-            "title" : "RFA Application (RFA 01A)",
-            "received_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Verification of Income",
-            "received_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Disclosure of Expenses",
-            "received_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Verification of Property",
-            "received_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Home Environment Checklist (RFA-03)",
-            "received_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Reference Letter #1",
-            "received_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Reference Letter #2",
-            "received_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Reference Letter #3 (if applicable)",
-            "received_date" : "",
-            "notes" : "",
-            "checked" : false
-          } ]
-        },
-        "tasks_and_trainings" : {
-          "items" : [ {
-            "title" : "Attended Orientation Meeting",
-            "completed_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Risk Assessment",
-            "completed_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Home Environment Checklist (RFA-03)",
-            "completed_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Pre-Service Training",
-            "completed_date" : "",
-            "notes" : "",
-            "checked" : false
-          } ]
-        },
-        "assessments" : {
-          "items" : [ {
-            "title" : "Family Evaluation",
-            "submitted_date" : "",
-            "approved_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Written Report",
-            "submitted_date" : "",
-            "approved_date" : "",
-            "notes" : "",
-            "checked" : false
-          }, {
-            "title" : "Acknowledgement of Written Report",
-            "submitted_date" : "",
-            "approved_date" : "",
-            "notes" : "",
-            "checked" : false
-          } ]
-        }
+      "assessments" : {
+        "items" : [ {
+          "title" : "Family Evaluation",
+          "submitted_date" : "",
+          "approved_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Written Report",
+          "submitted_date" : "",
+          "approved_date" : "",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Acknowledgement of Written Report",
+          "submitted_date" : "",
+          "approved_date" : "",
+          "notes" : "",
+          "checked" : false
+        } ]
       }
     },
     "people_documents" : [ {
-      "person_id" : 3,
       "person_name" : "AFn ALn",
       "person_type" : "Applicant",
       "person_documents" : {

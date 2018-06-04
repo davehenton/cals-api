@@ -43,7 +43,7 @@ public final class AssertFixtureUtils {
 
   public static void assertResponseByFixturePath(Response response, String fixturePath, JSONCompareMode mode)
       throws IOException, JSONException {
-    assertResponseByFixture(response, fixture(fixturePath));
+    assertResponseByFixture(response, fixture(fixturePath), mode);
   }
 
   public static void assertResponseByFixtureTemplate(String entity, String fixtureTemplate,

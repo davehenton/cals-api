@@ -5,7 +5,7 @@ import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate
 Map<String, TrackingTemplate> templatesMap = templates.collectEntries { [it.templateType, it] }
 
 def trackingDocuments = [
-        facility_documents: templatesMap["family_documents"],
+        facility_documents: templatesMap["family_documents"].templateJson,
         people_documents  : rfa1a.applicants.collect {
             ["person_id"       : it.id,
              "person_name"     : "$it.applicant.firstName $it.applicant.lastName" as String,
