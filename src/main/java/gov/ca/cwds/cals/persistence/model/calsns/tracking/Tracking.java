@@ -7,9 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.CalsBaseEntity;
-import gov.ca.cwds.rest.api.Request;
-import gov.ca.cwds.rest.api.Response;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -36,7 +35,7 @@ import org.hibernate.annotations.Type;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Entity
 @Table(name = "tracking")
-public class Tracking extends CalsBaseEntity implements Request, Response {
+public class Tracking extends CalsBaseEntity implements RequestResponse {
 
   private static final long serialVersionUID = -3834894061508509293L;
 

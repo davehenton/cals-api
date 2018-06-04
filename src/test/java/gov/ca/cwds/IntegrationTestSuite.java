@@ -24,6 +24,8 @@ import gov.ca.cwds.cals.web.rest.rfa.RFA1aSubmitValidationTest;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1bResourceTest;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1cResourceTest;
 import gov.ca.cwds.cals.web.rest.system.SystemInformationResourceTest;
+import gov.ca.cwds.cals.web.rest.tracking.TrackingResourceTest;
+import gov.ca.cwds.cals.web.rest.tracking.TrackingTemplateResourceTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -66,6 +68,10 @@ import org.junit.runners.Suite.SuiteClasses;
     RFA1aSubmitValidationTest.class,
     RFA1bResourceTest.class,
     RFA1cResourceTest.class,
+
+    //Tracking
+    TrackingTemplateResourceTest.class,
+    TrackingResourceTest.class,
 
     //System
     SystemInformationResourceTest.class,

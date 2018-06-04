@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.dao.calsns;
 
+import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
@@ -14,6 +15,7 @@ import org.hibernate.query.Query;
  */
 public class TrackingTemplateDao extends CalsBaseEntityDao<TrackingTemplate> {
 
+  @Inject
   public TrackingTemplateDao(@CalsnsSessionFactory SessionFactory sessionFactory) {
     super(sessionFactory);
   }

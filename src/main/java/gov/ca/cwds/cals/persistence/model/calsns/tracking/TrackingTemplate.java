@@ -6,6 +6,7 @@ import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplat
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.CalsBaseEntity;
 import javax.persistence.Column;
@@ -35,7 +36,7 @@ import org.hibernate.annotations.Type;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Entity
 @Table(name = "tracking_template")
-public class TrackingTemplate extends CalsBaseEntity {
+public class TrackingTemplate extends CalsBaseEntity implements RequestResponse {
 
   private static final long serialVersionUID = -5126230421420049092L;
 

@@ -40,6 +40,8 @@ import gov.ca.cwds.cals.service.rfa.RFA1bCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1bOtherAdultAwareService;
 import gov.ca.cwds.cals.service.rfa.RFA1cCollectionService;
 import gov.ca.cwds.cals.service.rfa.RFA1cService;
+import gov.ca.cwds.cals.service.tracking.TrackingService;
+import gov.ca.cwds.cals.service.tracking.TrackingTemplateService;
 import gov.ca.cwds.cals.service.validation.business.configuration.ValidationConfigurationRegistryImpl;
 import gov.ca.cwds.data.cms.SystemCodeDao;
 import gov.ca.cwds.data.cms.SystemMetaDao;
@@ -117,6 +119,10 @@ public class ServicesModule extends AbstractModule {
     bind(DroolsService.class);
     bind(ValidationConfigurationRegistry.class).to(ValidationConfigurationRegistryImpl.class)
         .asEagerSingleton();
+
+    //Tracking
+    bind(TrackingService.class);
+    bind(TrackingTemplateService.class);
   }
 
   @Provides
