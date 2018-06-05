@@ -255,6 +255,15 @@ public class RFA1aFormsResource {
     return rfa1aTrackingResourceDelegate.get(searchParams);
   }
 
+
+  /**
+   * Update Tracking REST API endpoint.
+   *
+   * @param formId Form Id
+   * @param trackingId Tracking Id
+   * @param tracking Tracking Object
+   * @return Result of update
+   */
   @PUT
   @Timed
   @Path("{" + RFA_1A_APPLICATION_ID + "}/tracking/" + "{" + TRACKING_ID + "}")
