@@ -63,7 +63,7 @@ public class RFA1aTrackingService extends
     return rfa1aForm;
   }
 
-  private List<TrackingTemplate> findTrackingTemplates() throws ApiException {
+  private List<TrackingTemplate> findTrackingTemplates() {
     String county = PrincipalUtils.getPrincipal().getCountyCode();
     return trackingTemplateDao.findByCounty(Long.valueOf(county));
   }
