@@ -11,6 +11,14 @@ public class RFAServiceHelper {
   private RFAServiceHelper() {
   }
 
+  /**
+   * Fills base fields
+   *
+   * @param entity Entity
+   * @param userId User Id
+   * @param <T> Type
+   * @return Entity whith filled fields
+   */
   public static <T extends CalsBaseEntity> T fillCreateBaseFields(T entity, String userId) {
     LocalDateTime now = LocalDateTime.now();
     entity.setCreateDateTime(now);
