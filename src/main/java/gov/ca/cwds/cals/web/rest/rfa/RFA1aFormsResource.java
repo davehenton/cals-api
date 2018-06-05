@@ -267,12 +267,11 @@ public class RFA1aFormsResource {
    */
   @PUT
   @Timed
-  @Path("{" + RFA_1A_APPLICATION_ID + "}/tracking/" + "{" + TRACKING_ID + "}")
+  @Path("{" + RFA_1A_APPLICATION_ID + "}/"+ TRACKING +"/" + "{" + TRACKING_ID + "}")
   @ApiResponses(
       value = {
           @ApiResponse(code = 200, message = "Updated successfully"),
           @ApiResponse(code = 400, message = "Bad request"),
-          @ApiResponse(code = 404, message = "Not Found"),
           @ApiResponse(code = 401, message = "Not Authorized"),
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
@@ -300,9 +299,16 @@ public class RFA1aFormsResource {
     return response;
   }
 
+  /**
+   * Delete Tracking REST API endpoint.
+   *
+   * @param formId Form Id
+   * @param trackingId Tracking Id
+   * @return Deleted Tracking
+   */
   @DELETE
   @Timed
-  @Path("{" + RFA_1A_APPLICATION_ID + "}/tracking/" + "{" + TRACKING_ID + "}")
+  @Path("{" + RFA_1A_APPLICATION_ID + "}/"+ TRACKING +"/" + "{" + TRACKING_ID + "}")
   @ApiResponses(
       value = {
           @ApiResponse(code = 200, message = "Deleted successfully"),
@@ -320,6 +326,6 @@ public class RFA1aFormsResource {
       @PathParam(TRACKING_ID)
       @ApiParam(required = true, name = TRACKING_ID, value = "The Tracking Id")
           Long trackingId) {
-    return rfa1aTrackingResourceDelegate.delete(trackingId);
+    return rfa1aTrackingResourceDelegate.delete(new TrackingParameterObject(formId, trackingId));
   }
 }
