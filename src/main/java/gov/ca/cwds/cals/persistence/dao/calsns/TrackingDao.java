@@ -26,9 +26,7 @@ public class TrackingDao extends CalsBaseEntityDao<Tracking> {
    * @return Tracking
    */
   public Tracking findByRfa1aId(Long rfa1aId) {
-    Session session = this.getSessionFactory().getCurrentSession();
-    Query<Tracking> query =
-        session.createNamedQuery(Tracking.NAMED_QUERY_FIND_BY_RFA_1A_ID, Tracking.class);
+    Query<Tracking> query = getTrackingQuery(Tracking.NAMED_QUERY_FIND_BY_RFA_1A_ID);
     query.setParameter("rfa1aId", rfa1aId);
     return query.uniqueResult();
   }
@@ -40,11 +38,14 @@ public class TrackingDao extends CalsBaseEntityDao<Tracking> {
    * @return Tracking
    */
   public Tracking findByLicenseNumber(String licenseNumber) {
-    Session session = this.getSessionFactory().getCurrentSession();
-    Query<Tracking> query =
-        session.createNamedQuery(Tracking.NAMED_QUERY_FIND_BY_LICENSE_NUMBER, Tracking.class);
+    Query<Tracking> query = getTrackingQuery(Tracking.NAMED_QUERY_FIND_BY_LICENSE_NUMBER);
     query.setParameter("licenseNumber", licenseNumber);
     return query.uniqueResult();
+  }
+
+  private Query<Tracking> getTrackingQuery(String queryName) {
+    Session session = this.getSessionFactory().getCurrentSession();
+    return session.createNamedQuery(queryName, Tracking.class);
   }
 
 }

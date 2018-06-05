@@ -10,6 +10,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
+ * TrackingTemplateServiceBackedResource.
+ *
  * @author CWDS CALS API Team
  */
 @BindingAnnotation
