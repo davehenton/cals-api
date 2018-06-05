@@ -10,6 +10,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,8 +43,24 @@ public class TrackingTest extends BaseRFAIntegrationTest {
         .put(Entity.entity(tracking, MediaType.APPLICATION_JSON_TYPE), Tracking.class);
 
     Assert.assertEquals(newFacilityName, putResponse.getFacilityName());
+  }
 
-    
+  @Test
+  public void deleteTest() throws Exception {
+    Response response = createTracking();
+    Tracking tracking = response.readEntity(Tracking.class);
+
+    WebTarget target = clientTestRule.target(
+        Constants.API.RFA_1A_FORMS + "/" + tracking.getRfa1aId() + "/tracking/" + tracking.getId());
+    Response deleteResponse = target.request(MediaType.APPLICATION_JSON).delete();
+
+    Assert.assertEquals(HttpStatus.SC_OK, deleteResponse.getStatus()); ;
+
+    target = clientTestRule.target(
+        Constants.API.RFA_1A_FORMS + "/" + tracking.getRfa1aId() + "/tracking/" + -1);
+    deleteResponse = target.request(MediaType.APPLICATION_JSON).delete();
+
+    Assert.assertEquals(HttpStatus.SC_NOT_FOUND, deleteResponse.getStatus()); ;
   }
 
   private Response createTracking() throws Exception {
