@@ -63,9 +63,9 @@ public class RFA1aTrackingService extends
     return rfa1aForm;
   }
 
-  private List<TrackingTemplate> findTrackingTemplates() {
-    Integer county = Integer.valueOf(PrincipalUtils.getPrincipal().getCountyCwsCode());
-    return trackingTemplateDao.findByCounty(county);
+  private List<TrackingTemplate> findTrackingTemplates() throws ApiException {
+    String county = PrincipalUtils.getPrincipal().getCountyCode();
+    return trackingTemplateDao.findByCounty(Long.valueOf(county));
   }
 
   private List<TrackingTemplate> findDefaultTrackingTemplates() {

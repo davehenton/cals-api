@@ -170,7 +170,9 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1A generated document (PDF) Id by application Id", response = String.class)
+  @ApiOperation(
+      value = "Returns RFA 1A generated document (PDF) Id by application Id",
+      response = String.class)
   public Response getGeneratedDocumentId(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
@@ -201,7 +203,9 @@ public class RFA1aFormsResource {
   )
   public Response getAllApplicationForms(
       @QueryParam(EXPANDED)
-      @ApiParam(name = EXPANDED, value = "Use 'true' to get forms with all parts of form included")
+      @ApiParam(
+          name = EXPANDED,
+          value = "Use 'true' to get forms with all parts of form included")
           boolean expanded) {
     return collectionResourceDelegate.get(expanded);
   }
