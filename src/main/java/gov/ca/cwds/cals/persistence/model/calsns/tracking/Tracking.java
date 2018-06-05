@@ -4,7 +4,6 @@ import static gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking.NAMED_
 import static gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking.NAMED_QUERY_FIND_BY_RFA_1A_ID;
 import static gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking.NAMED_QUERY_FIND_BY_RFA_1A_ID_AND_TRACKING_ID;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,9 +11,13 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import gov.ca.cwds.cals.RequestResponse;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.CalsBaseEntity;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.Type;
 

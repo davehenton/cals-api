@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -40,6 +41,17 @@ public class TrackingTest extends BaseRFAIntegrationTest {
 
     assertResponseByFixturePath(
         response, "fixtures/rfa/tracking/created-tracking.json", JSONCompareMode.LENIENT);
+  }
+
+  @Test
+  public void testGetTrackingId() throws Exception {
+    RFA1aFormDTO form = createRfa1a();
+    Tracking tracking = createTracking(form).readEntity(Tracking.class);
+    form = clientTestRule
+        .target(Constants.API.RFA_1A_FORMS + "/" + form.getId())
+        .request().get().readEntity(RFA1aFormDTO.class);
+
+    Assert.assertEquals(form.getTrackingId(), tracking.getId());
   }
 
   private RFA1aFormDTO createRfa1a() throws Exception {
