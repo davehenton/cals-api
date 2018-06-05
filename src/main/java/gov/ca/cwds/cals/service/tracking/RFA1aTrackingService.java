@@ -15,7 +15,9 @@ import gov.ca.cwds.rest.api.ApiException;
 import gov.ca.cwds.security.utils.PrincipalUtils;
 import java.util.List;
 
-public class RFA1aTrackingService extends TypedCrudServiceAdapter<TrackingParameterObject, Tracking, Tracking> {
+public class RFA1aTrackingService extends
+    TypedCrudServiceAdapter<TrackingParameterObject, Tracking, Tracking> {
+
   @Inject
   private RFA1aFormsDao rfa1aFormsDao;
   @Inject
