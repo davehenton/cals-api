@@ -21,7 +21,7 @@ def trackingDocuments = [
         } + rfa1a.otherAdults.collect {
             ["person_id"       : it.id,
              "person_name"     : "$it.otherAdult.firstName $it.otherAdult.lastName" as String,
-             "person_type"     : "Applicant",
+             "person_type"     : "Other_Adult",
              "person_documents": getTemplateJson("other_adult_documents")
             ]
         }
