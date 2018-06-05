@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.persistence.model.calsns.rfa;
 
+import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.service.dto.rfa.AdoptionHistoryDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsDeclarationDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantsHistoryDTO;
@@ -18,6 +19,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -66,6 +68,8 @@ public class RFA1aForm extends CalsBaseEntity implements PersistentObject {
   @Enumerated(EnumType.STRING)
   private RFAApplicationStatus status;
 
+  @OneToOne(mappedBy = "rfa1aForm")
+  private Tracking tracking;
 
   @Column(name = "placement_home_id", length = 10)
   private String placementHomeId;
@@ -265,6 +269,14 @@ public class RFA1aForm extends CalsBaseEntity implements PersistentObject {
 
   public void setApplicantsDeclaration(ApplicantsDeclarationDTO applicantsDeclaration) {
     this.applicantsDeclaration = applicantsDeclaration;
+  }
+
+  public Tracking getTracking() {
+    return tracking;
+  }
+
+  public void setTracking(Tracking tracking) {
+    this.tracking = tracking;
   }
 
   @Override
