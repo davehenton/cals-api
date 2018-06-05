@@ -64,8 +64,10 @@ public class TrackingTemplate extends CalsBaseEntity implements RequestResponse 
   public static final String NAMED_QUERY_FIND_ALL
       = "gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.findAll";
 
-  public static final String NAMED_QUERY_FIND_BY_NULL_COUNTY = "tracking.template.find.by.null.county";
-  public static final String NAMED_QUERY_FIND_BY_COUNTY_CODE = "tracking.template.find.by.county.lis_id";
+  public static final String NAMED_QUERY_FIND_BY_NULL_COUNTY
+      = "tracking.template.find.by.null.county";
+  public static final String NAMED_QUERY_FIND_BY_COUNTY_CODE
+      = "tracking.template.find.by.county.lis_id";
   @ManyToOne
   @JoinColumn(name = "county_code")
   private CountyType county;
