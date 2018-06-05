@@ -1,5 +1,11 @@
 package gov.ca.cwds.cals.persistence.model.calsns.tracking;
 
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_ALL;
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_COUNTY_AND_TYPE;
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_COUNTY_CODE;
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_NULL_COUNTY;
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_TYPE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -14,9 +20,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.Type;
-
-
-import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.*;
 
 /**
  * Tracking Template entity.
@@ -45,8 +48,8 @@ import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplat
 )
 
 @NamedQuery(
-    name = NAMED_QUERY_FIND_BY_COUNTY_CWS_ID,
-    query = "FROM TrackingTemplate WHERE county.cwsId = ?"
+    name = NAMED_QUERY_FIND_BY_COUNTY_CODE,
+    query = "FROM TrackingTemplate WHERE county.id = ?"
 )
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Entity
@@ -61,8 +64,10 @@ public class TrackingTemplate extends CalsBaseEntity implements RequestResponse 
   public static final String NAMED_QUERY_FIND_ALL
       = "gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.findAll";
 
-  public static final String NAMED_QUERY_FIND_BY_NULL_COUNTY = "tracking.template.find.by.null.county";
-  public static final String NAMED_QUERY_FIND_BY_COUNTY_CWS_ID = "tracking.template.find.by.county.cwsId";
+  public static final String NAMED_QUERY_FIND_BY_NULL_COUNTY
+      = "tracking.template.find.by.null.county";
+  public static final String NAMED_QUERY_FIND_BY_COUNTY_CODE
+      = "tracking.template.find.by.county.id";
   @ManyToOne
   @JoinColumn(name = "county_code")
   private CountyType county;
