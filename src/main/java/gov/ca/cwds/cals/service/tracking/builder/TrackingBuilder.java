@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.tracking.builder;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
