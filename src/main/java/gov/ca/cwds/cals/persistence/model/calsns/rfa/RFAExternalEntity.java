@@ -15,7 +15,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class RFAExternalEntity<T extends RFAExternalEntityDTO> extends
-    RFABaseEntity {
+    CalsBaseEntity {
 
   public static final String PARAM_FORM_ID = "formId";
   public static final String PARAM_ENTITY_ID = "entityId";
