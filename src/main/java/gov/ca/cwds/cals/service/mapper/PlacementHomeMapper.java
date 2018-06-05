@@ -6,6 +6,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.util.RfaAddressUtil;
 import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = {LocalDateTime.class, Utils.class, RfaAddressUtil.class, StringUtils.class})
+@Mapper(imports = {LocalDateTime.class, LocalDate.class, Utils.class, RfaAddressUtil.class, StringUtils.class})
 public interface PlacementHomeMapper {
 
   PlacementHomeMapper INSTANCE = Mappers.getMapper(PlacementHomeMapper.class);
@@ -43,10 +44,7 @@ public interface PlacementHomeMapper {
   @Mapping(target = "laVndrId", constant = " ")
   @Mapping(target = "licenseNo", constant = " ")
   @Mapping(target = "licCapNo", constant = "0")
-  @Mapping(target = "licStc", constant = "0")
   @Mapping(target = "licBsnc", constant = "0")
-  @Mapping(target = "licnseeNm", constant = " ")
-  @Mapping(target = "licensrCd", constant = "CT")
   @Mapping(target = "pCityNm", constant = " ")
   @Mapping(target = "pyeFstnm", constant = " ")
   @Mapping(target = "pyeLstnm", constant = " ")
@@ -99,6 +97,11 @@ public interface PlacementHomeMapper {
   @Mapping(target = "trnhsgFac", constant = "N")
   @Mapping(target = "newlicUpd", constant = "N")
   @Mapping(target = "emCntB", constant = "N")
+  @Mapping(target = "licStc", constant = "1286")
+  @Mapping(target = "licnseeNm", source = "form.id")
+  @Mapping(target = "licensrCd", constant = "CT")
+  @Mapping(target = "licStatdt", expression = "java(LocalDate.now())")
+
   PlacementHome toPlacementHome(RFA1aFormDTO form, RFAAddressDTO residentialAddress);
 
   @AfterMapping

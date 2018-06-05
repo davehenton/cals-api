@@ -9,6 +9,7 @@ import gov.ca.cwds.cals.service.dto.rfa.OtherAdultDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFAAddressDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
+import gov.ca.cwds.cals.service.mapper.CountyLicenseCaseMapper;
 import gov.ca.cwds.cals.service.mapper.OtherAdultsInPlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.PlacementHomeMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
@@ -19,6 +20,7 @@ import gov.ca.cwds.cms.data.access.dto.OtherAdultInHomeEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.OtherChildInHomeEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.PlacementHomeEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.SCPEntityAwareDTO;
+import gov.ca.cwds.data.legacy.cms.entity.CountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
 import gov.ca.cwds.data.legacy.cms.entity.OtherChildrenInPlacementHome;
@@ -58,6 +60,9 @@ public class PlacementHomeEntityAwareDTOBuilder {
 
   @Inject
   private OtherAdultsInPlacementHomeMapper otherAdultsInPlacementHomeMapper;
+
+  @Inject
+  private CountyLicenseCaseMapper countyLicenseCaseMapper;
 
   public PlacementHomeEntityAwareDTOBuilder() {
     placementHomeEntityAwareDTO = new PlacementHomeEntityAwareDTO();
@@ -238,6 +243,12 @@ public class PlacementHomeEntityAwareDTOBuilder {
     emergencyContactDetail.setFrgAdrtB(Constants.N);
 
     placementHomeEntityAwareDTO.setEmergencyContactDetail(emergencyContactDetail);
+    return this;
+  }
+
+  public PlacementHomeEntityAwareDTOBuilder appendCountyLicenseCase() {
+    CountyLicenseCase countyLicenseCase = countyLicenseCaseMapper.toCountyLicenseCase(form);
+    placementHomeEntityAwareDTO.setCountyLicenseCase(countyLicenseCase);
     return this;
   }
 }
