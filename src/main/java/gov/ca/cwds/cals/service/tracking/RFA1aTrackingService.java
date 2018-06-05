@@ -13,7 +13,6 @@ import gov.ca.cwds.cals.service.tracking.builder.TrackingBuilder;
 import gov.ca.cwds.cals.web.rest.parameter.TrackingParameterObject;
 import gov.ca.cwds.rest.api.ApiException;
 import gov.ca.cwds.security.utils.PrincipalUtils;
-
 import java.util.List;
 
 public class RFA1aTrackingService extends TypedCrudServiceAdapter<TrackingParameterObject, Tracking, Tracking> {
@@ -50,8 +49,8 @@ public class RFA1aTrackingService extends TypedCrudServiceAdapter<TrackingParame
   }
 
   private List<TrackingTemplate> findTrackingTemplates() throws ApiException {
-    Integer county = Integer.valueOf(PrincipalUtils.getPrincipal().getCountyCwsCode());
-    return trackingTemplateDao.findByCounty(county);
+    String county = PrincipalUtils.getPrincipal().getCountyCode();
+    return trackingTemplateDao.findByCounty(Long.valueOf(county));
   }
 
   private List<TrackingTemplate> findDefaultTrackingTemplates() {
