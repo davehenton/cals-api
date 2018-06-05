@@ -14,8 +14,11 @@ import gov.ca.cwds.cals.web.rest.parameter.TrackingParameterObject;
 import gov.ca.cwds.rest.api.ApiException;
 import gov.ca.cwds.security.utils.PrincipalUtils;
 import java.util.List;
+import java.util.Optional;
 
-public class RFA1aTrackingService extends TypedCrudServiceAdapter<TrackingParameterObject, Tracking, Tracking> {
+public class RFA1aTrackingService extends
+    TypedCrudServiceAdapter<TrackingParameterObject, Tracking, Tracking> {
+
   @Inject
   private RFA1aFormsDao rfa1aFormsDao;
   @Inject
@@ -23,6 +26,7 @@ public class RFA1aTrackingService extends TypedCrudServiceAdapter<TrackingParame
   @Inject
   private TrackingTemplateDao trackingTemplateDao;
 
+  @Override
   public Tracking create(Tracking tracking) {
     RFA1aForm rfa1aForm = findRfa1a(tracking);
     List<TrackingTemplate> templates = findTrackingTemplates();
@@ -38,6 +42,17 @@ public class RFA1aTrackingService extends TypedCrudServiceAdapter<TrackingParame
   public Tracking find(TrackingParameterObject params) {
     return trackingDao
         .findByRfa1aIdAndTrackingId(params.getFormId(), params.getTrackingId());
+  }
+
+  @Override
+  public Tracking update(TrackingParameterObject params, Tracking request) {
+    return Optional.ofNullable(find(params)).map(tracking -> {
+      request.setId(params.getTrackingId());
+      request.setRfa1aId(params.getFormId());
+      return trackingDao.update(request);
+    }).orElseThrow(() -> new ApiException(
+        "There is no tracking with Id = " + params.getTrackingId() + " and rfa1aId = " + params
+            .getFormId()));
   }
 
   private RFA1aForm findRfa1a(Tracking tracking) {

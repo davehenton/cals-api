@@ -5,6 +5,7 @@ import static gov.ca.cwds.cals.Constants.API.PathParams.TRACKING_ID;
 import static gov.ca.cwds.cals.Constants.API.QueryParams.EXPANDED;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
+import static gov.ca.cwds.cals.Constants.TRACKING;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
@@ -18,6 +19,7 @@ import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aPDFGenerationService;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.TrackingParameterObject;
+import gov.ca.cwds.rest.api.ApiException;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -271,6 +273,14 @@ public class RFA1aFormsResource {
       @ApiParam(name = "tracking", value = "The Tracking object")
       @Valid
           Tracking tracking) {
-    return rfa1aTrackingResourceDelegate.update(trackingId, tracking);
+    Response response = null;
+    try {
+      response =  rfa1aTrackingResourceDelegate
+          .update(new TrackingParameterObject(formId, trackingId), tracking);
+    } catch (ApiException e) {
+      LOG.warn(e.getMessage(), e);
+      response = Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+    }
+    return response;
   }
 }

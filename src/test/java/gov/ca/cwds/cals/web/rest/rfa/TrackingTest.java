@@ -1,5 +1,6 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
+import static gov.ca.cwds.cals.Constants.TRACKING;
 import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixturePath;
 
 import gov.ca.cwds.cals.Constants;
@@ -10,6 +11,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,19 +33,25 @@ public class TrackingTest extends BaseRFAIntegrationTest {
 
   @Test
   public void updateTest() throws Exception {
-    Response response = createTracking();
-    Tracking tracking = response.readEntity(Tracking.class);
+    Response trackingResponse = createTracking();
+    Tracking tracking = trackingResponse.readEntity(Tracking.class);
 
     String newFacilityName = "New Facility Name";
     tracking.setFacilityName(newFacilityName);
     WebTarget target = clientTestRule.target(
-        Constants.API.RFA_1A_FORMS + "/" + tracking.getRfa1aId() + "/tracking/" + tracking.getId());
-    Tracking putResponse = target.request(MediaType.APPLICATION_JSON)
+        Constants.API.RFA_1A_FORMS + "/" + tracking.getRfa1aId() + "/" + TRACKING + "/" + tracking
+            .getId());
+    Tracking putTrackingResponse = target.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(tracking, MediaType.APPLICATION_JSON_TYPE), Tracking.class);
+    Assert.assertEquals(newFacilityName, putTrackingResponse.getFacilityName());
 
-    Assert.assertEquals(newFacilityName, putResponse.getFacilityName());
+    target = clientTestRule.target(
+        Constants.API.RFA_1A_FORMS + "/" + -1 + "/" + TRACKING + "/" + tracking
+            .getId());
 
-    
+    Response response = target.request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(tracking, MediaType.APPLICATION_JSON_TYPE));
+    Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
   }
 
   private Response createTracking() throws Exception {
@@ -64,8 +72,10 @@ public class TrackingTest extends BaseRFAIntegrationTest {
     applicantHelper.postApplicant(form.getId(), applicant);
     statusHelper.submitApplication(form.getId());
 
-    WebTarget target = clientTestRule.target(Constants.API.RFA_1A_FORMS + "/" + form.getId() + "/tracking");
-    Tracking tracking = target.request(MediaType.APPLICATION_JSON).post(null).readEntity(Tracking.class);
+    WebTarget target = clientTestRule
+        .target(Constants.API.RFA_1A_FORMS + "/" + form.getId() + "/tracking");
+    Tracking tracking = target.request(MediaType.APPLICATION_JSON).post(null)
+        .readEntity(Tracking.class);
 
     Response response = clientTestRule
         .target(Constants.API.RFA_1A_FORMS + "/" + form.getId() + "/tracking/" + tracking.getId())
