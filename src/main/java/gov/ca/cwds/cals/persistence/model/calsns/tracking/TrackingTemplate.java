@@ -49,7 +49,7 @@ import org.hibernate.annotations.Type;
 
 @NamedQuery(
     name = NAMED_QUERY_FIND_BY_COUNTY_CODE,
-    query = "FROM TrackingTemplate WHERE county.lisId = ?"
+    query = "FROM TrackingTemplate WHERE county.id = ?"
 )
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Entity
