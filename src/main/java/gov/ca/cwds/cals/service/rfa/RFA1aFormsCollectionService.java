@@ -28,7 +28,7 @@ public class RFA1aFormsCollectionService
 
   @Override
   public RFA1aFormCollectionDTO find(Boolean expanded) {
-    String staffPersonId = PrincipalUtils.getStaffPersonId();
+    String staffPersonId = PrincipalUtils.getPrincipal().getUser();
     List<RFA1aForm> forms = dao.findAllByUser(100, staffPersonId);
     List<RFA1aFormDTO> formDTOs;
     if (expanded) {

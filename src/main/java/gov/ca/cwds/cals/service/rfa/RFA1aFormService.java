@@ -79,12 +79,12 @@ public class RFA1aFormService
     RFA1aForm form = new RFA1aForm();
     rfa1aFomMapper.toRFA1aForm(form, formDTO);
 
-    String staffPersonId = PrincipalUtils.getStaffPersonId();
+    String userName = PrincipalUtils.getPrincipal().getUser();
     LocalDateTime now = LocalDateTime.now();
     form.setCreateDateTime(now);
-    form.setCreateUserId(staffPersonId);
+    form.setCreateUserId(userName);
     form.setUpdateDateTime(now);
-    form.setUpdateUserId(staffPersonId);
+    form.setUpdateUserId(userName);
     form.setStatus(RFAApplicationStatus.DRAFT);
     form = rfa1AFormsDao.create(form);
 
@@ -122,7 +122,7 @@ public class RFA1aFormService
 
   private RFA1aForm fillFormUpdateAttributes(RFA1aForm form) {
     form.setUpdateDateTime(LocalDateTime.now());
-    form.setUpdateUserId(PrincipalUtils.getStaffPersonId());
+    form.setUpdateUserId(PrincipalUtils.getPrincipal().getUser());
     return form;
   }
 
