@@ -41,6 +41,7 @@ public interface RFA1aFormMapper {
   @Mapping(target = "otherTypeDescription", source = "application.otherTypeDescription")
   @Mapping(target = "applicationCounty", source = "application.applicationCounty")
   @Mapping(target = "metadata", source = "application.metadata")
+  @Mapping(target = "trackingId", source = "tracking.id")
   RFA1aFormDTO toRFA1aFormDTO(RFA1aForm form);
 
   @Named("toExpandedRFA1aFormDTO")

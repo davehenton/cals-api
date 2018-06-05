@@ -59,9 +59,6 @@ public class RFA1aFormService
   private XaRFA1aFormsDao xaRfa1AFormsDao;
 
   @Inject
-  private TrackingDao trackingDao;
-
-  @Inject
   private RFA1aFormMapper rfa1aFomMapper;
 
   @Inject
@@ -108,7 +105,7 @@ public class RFA1aFormService
       formDTO = rfa1aFomMapper.toRFA1aFormDTO(form);
     }
 
-    return setTrackingId(formDTO);
+    return formDTO;
   }
 
   @UnitOfWork(CALSNS)
@@ -227,7 +224,7 @@ public class RFA1aFormService
   @UnitOfWork(CALSNS)
   protected RFA1aFormDTO getExpandedFormDTO(Long formId) {
     RFA1aForm form = rfa1AFormsDao.find(formId);
-    return setTrackingId(rfa1aFomMapper.toExpandedRFA1aFormDTO(form));
+    return rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
   }
 
   private PlacementHome storePlaceMentHome(RFA1aFormDTO expandedFormDTO)
@@ -283,17 +280,5 @@ public class RFA1aFormService
         .composeFacilityNameByApplicantsList(form.getApplicants());
     form.setFacilityName(facilityName);
     rfa1AFormsDao.update(fillFormUpdateAttributes(form));
-  }
-
-  private RFA1aFormDTO setTrackingId(RFA1aFormDTO rfa1aFormDTO) {
-    if(rfa1aFormDTO == null) {
-      return null;
-    }
-    Long formId = rfa1aFormDTO.getId();
-    Tracking tracking = trackingDao.findByRfa1aId(formId);
-    if(tracking != null) {
-      rfa1aFormDTO.setTrackingId(tracking.getId());
-    }
-    return rfa1aFormDTO;
   }
 }
