@@ -30,6 +30,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -266,10 +267,11 @@ public class RFA1aFormsResource {
    */
   @PUT
   @Timed
-  @Path("{" + RFA_1A_APPLICATION_ID + "}/tracking/" + "{" + TRACKING_ID + "}")
+  @Path("{" + RFA_1A_APPLICATION_ID + "}/" + TRACKING + "/" + "{" + TRACKING_ID + "}")
   @ApiResponses(
       value = {
-          @ApiResponse(code = 201, message = "Created"),
+          @ApiResponse(code = 200, message = "Updated successfully"),
+          @ApiResponse(code = 400, message = "Bad request"),
           @ApiResponse(code = 401, message = "Not Authorized"),
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
@@ -288,12 +290,42 @@ public class RFA1aFormsResource {
           Tracking tracking) {
     Response response = null;
     try {
-      response =  rfa1aTrackingResourceDelegate
+      response = rfa1aTrackingResourceDelegate
           .update(new TrackingParameterObject(formId, trackingId), tracking);
     } catch (ApiException e) {
       LOG.warn(e.getMessage(), e);
       response = Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
     }
     return response;
+  }
+
+  /**
+   * Delete Tracking REST API endpoint.
+   *
+   * @param formId Form Id
+   * @param trackingId Tracking Id
+   * @return Deleted Tracking
+   */
+  @DELETE
+  @Timed
+  @Path("{" + RFA_1A_APPLICATION_ID + "}/" + TRACKING + "/" + "{" + TRACKING_ID + "}")
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 200, message = "Deleted successfully"),
+          @ApiResponse(code = 404, message = "Not Found"),
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Delete tracking for RFA 1A Form", response = Tracking.class)
+  @UnitOfWork(CALSNS)
+  public Response deleteTracking(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long formId,
+      @PathParam(TRACKING_ID)
+      @ApiParam(required = true, name = TRACKING_ID, value = "The Tracking Id")
+          Long trackingId) {
+    return rfa1aTrackingResourceDelegate.delete(new TrackingParameterObject(formId, trackingId));
   }
 }

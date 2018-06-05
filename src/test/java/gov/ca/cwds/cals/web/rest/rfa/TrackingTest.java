@@ -63,11 +63,33 @@ public class TrackingTest extends BaseRFAIntegrationTest {
     Tracking tracking = response.readEntity(Tracking.class);
 
     response = clientTestRule
-        .target(Constants.API.RFA_1A_FORMS + "/" + form.getId() + "/tracking/" + tracking.getId())
+        .target(Constants.API.RFA_1A_FORMS + "/" + form.getId() + "/" + TRACKING + "/" + tracking
+            .getId())
         .request().get();
 
     assertResponseByFixturePath(
         response, "fixtures/rfa/tracking/created-tracking.json", JSONCompareMode.LENIENT);
+  }
+
+  @Test
+  public void deleteTest() throws Exception {
+    RFA1aFormDTO form = createRfa1a();
+    Response response = createTracking(form);
+    Tracking tracking = response.readEntity(Tracking.class);
+
+    WebTarget target = clientTestRule.target(
+        Constants.API.RFA_1A_FORMS + "/" + tracking.getRfa1aId() + "/" + TRACKING + "/" + tracking
+            .getId());
+    Response deleteResponse = target.request(MediaType.APPLICATION_JSON).delete();
+
+    Assert.assertEquals(HttpStatus.SC_OK, deleteResponse.getStatus());
+
+    target = clientTestRule.target(
+        Constants.API.RFA_1A_FORMS + "/" + tracking.getRfa1aId() + "/" + TRACKING + "/" + -1);
+    deleteResponse = target.request(MediaType.APPLICATION_JSON).delete();
+
+    Assert.assertEquals(HttpStatus.SC_NOT_FOUND, deleteResponse.getStatus());
+    ;
   }
 
   @Test
@@ -91,7 +113,7 @@ public class TrackingTest extends BaseRFAIntegrationTest {
 
   private Response createTracking(RFA1aFormDTO form) throws Exception {
     WebTarget target = clientTestRule
-        .target(Constants.API.RFA_1A_FORMS + "/" + form.getId() + "/tracking");
+        .target(Constants.API.RFA_1A_FORMS + "/" + form.getId() + "/" + TRACKING);
     return target.request(MediaType.APPLICATION_JSON).post(null);
   }
 }
