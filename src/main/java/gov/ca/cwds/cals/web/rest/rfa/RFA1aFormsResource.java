@@ -19,6 +19,7 @@ import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aPDFGenerationService;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.TrackingParameterObject;
+import gov.ca.cwds.rest.api.ApiException;
 import gov.ca.cwds.rest.api.Request;
 import gov.ca.cwds.rest.resources.TypedResourceDelegate;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -252,5 +253,47 @@ public class RFA1aFormsResource {
           Long trackingId) {
     TrackingParameterObject searchParams = new TrackingParameterObject(formId, trackingId);
     return rfa1aTrackingResourceDelegate.get(searchParams);
+  }
+
+
+  /**
+   * Update Tracking REST API endpoint.
+   *
+   * @param formId Form Id
+   * @param trackingId Tracking Id
+   * @param tracking Tracking Object
+   * @return Result of update
+   */
+  @PUT
+  @Timed
+  @Path("{" + RFA_1A_APPLICATION_ID + "}/tracking/" + "{" + TRACKING_ID + "}")
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 201, message = "Created"),
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 406, message = "Accept Header not supported")
+      }
+  )
+  @ApiOperation(value = "Update tracking for RFA 1A Form", response = Tracking.class)
+  @UnitOfWork(CALSNS)
+  public Response updateTracking(
+      @PathParam(RFA_1A_APPLICATION_ID)
+      @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+          Long formId,
+      @PathParam(TRACKING_ID)
+      @ApiParam(required = true, name = TRACKING_ID, value = "The Tracking Id")
+          Long trackingId,
+      @ApiParam(name = "tracking", value = "The Tracking object")
+      @Valid
+          Tracking tracking) {
+    Response response = null;
+    try {
+      response =  rfa1aTrackingResourceDelegate
+          .update(new TrackingParameterObject(formId, trackingId), tracking);
+    } catch (ApiException e) {
+      LOG.warn(e.getMessage(), e);
+      response = Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+    }
+    return response;
   }
 }
