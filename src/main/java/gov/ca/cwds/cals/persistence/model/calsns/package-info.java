@@ -158,17 +158,6 @@
             }
         ),
         @TypeDef(
-            name = "TrackingDTO",
-            typeClass = JsonType.class,
-            parameters = {
-                @Parameter(name = SQL_TYPE, value = SQLTypes.OTHER_TYPE_NAME),
-                @Parameter(
-                    name = RETURNED_CLASS_NAME_PARAM,
-                    value = "gov.ca.cwds.cals.service.dto.tracking.TrackingDTO"
-                )
-            }
-        ),
-        @TypeDef(
             name = "JsonNode",
             typeClass = JsonType.class,
             parameters = {
