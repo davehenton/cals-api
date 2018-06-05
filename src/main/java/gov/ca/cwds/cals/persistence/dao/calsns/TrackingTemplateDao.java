@@ -55,7 +55,7 @@ public class TrackingTemplateDao extends CalsBaseEntityDao<TrackingTemplate> {
     return query.uniqueResult();
   }
 
-  public List<TrackingTemplate> findByCounty(Integer countyCode) {
+  public List<TrackingTemplate> findByCounty(String countyCode) {
     Session session = this.getSessionFactory().getCurrentSession();
     if (countyCode == null) {
       return session

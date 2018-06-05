@@ -43,7 +43,7 @@ public class RFA1aTrackingService extends TypedCrudServiceAdapter<Long, Tracking
   }
 
   private List<TrackingTemplate> findTrackingTemplates() throws ApiException {
-    Integer county = Integer.valueOf(PrincipalUtils.getPrincipal().getCountyCode());
+    String county = PrincipalUtils.getPrincipal().getCountyCode();
     return trackingTemplateDao.findByCounty(county);
   }
 
