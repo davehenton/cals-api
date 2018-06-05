@@ -56,6 +56,7 @@ import gov.ca.cwds.cals.service.rfa.RFA1cService;
 import gov.ca.cwds.cals.service.rfa.RFAFormsPackageService;
 import gov.ca.cwds.cals.service.tracking.TrackingService;
 import gov.ca.cwds.cals.service.tracking.TrackingTemplateService;
+import gov.ca.cwds.cals.service.tracking.RFA1aTrackingService;
 import gov.ca.cwds.cals.web.rest.DictionariesResource;
 import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
@@ -231,6 +232,14 @@ public class ResourcesModule extends AbstractModule {
       Injector injector) {
     return new TypedServiceBackedResourceDelegate<>(
         injector.getInstance(RFA1aFormsCollectionService.class));
+  }
+
+  @Provides
+  @RFA1aTrackingServiceBackedResource
+  public TypedResourceDelegate<Long, Tracking> trackingServiceBackedResource(
+      Injector injector) {
+    RFA1aTrackingService trackingService = injector.getInstance(RFA1aTrackingService.class);
+    return new TypedServiceBackedResourceDelegate<>(trackingService);
   }
 
   @Provides

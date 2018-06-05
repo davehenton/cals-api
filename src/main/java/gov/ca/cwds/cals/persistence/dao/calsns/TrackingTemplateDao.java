@@ -1,9 +1,13 @@
 package gov.ca.cwds.cals.persistence.dao.calsns;
 
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_COUNTY_CODE;
+import static gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate.NAMED_QUERY_FIND_BY_NULL_COUNTY;
+
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.inject.CalsnsSessionFactory;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.CountyType;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -50,5 +54,20 @@ public class TrackingTemplateDao extends CalsBaseEntityDao<TrackingTemplate> {
     query.setParameter("type", type);
     return query.uniqueResult();
   }
+
+  public List<TrackingTemplate> findByCounty(Long countyCode) {
+    Session session = this.getSessionFactory().getCurrentSession();
+    if (countyCode == null) {
+      return session
+          .createNamedQuery(NAMED_QUERY_FIND_BY_NULL_COUNTY, TrackingTemplate.class)
+          .list();
+    } else {
+      return session
+          .createNamedQuery(NAMED_QUERY_FIND_BY_COUNTY_CODE, TrackingTemplate.class)
+          .setParameter(0, countyCode)
+          .list();
+    }
+  }
+
 
 }
