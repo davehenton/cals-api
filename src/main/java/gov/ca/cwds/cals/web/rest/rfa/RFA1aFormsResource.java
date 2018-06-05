@@ -1,12 +1,12 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.API.PathParams.RFA_1A_APPLICATION_ID;
+import static gov.ca.cwds.cals.Constants.API.PathParams.TRACKING_ID;
 import static gov.ca.cwds.cals.Constants.API.QueryParams.EXPANDED;
 import static gov.ca.cwds.cals.Constants.API.RFA_1A_FORMS;
 import static gov.ca.cwds.cals.Constants.RFA;
-import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.TRACKING;
-import static gov.ca.cwds.cals.Constants.API.PathParams.TRACKING_ID;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
@@ -169,7 +169,9 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns RFA 1A generated document (PDF) Id by application Id", response = String.class)
+  @ApiOperation(
+      value = "Returns RFA 1A generated document (PDF) Id by application Id",
+      response = String.class)
   public Response getGeneratedDocumentId(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
@@ -200,7 +202,9 @@ public class RFA1aFormsResource {
   )
   public Response getAllApplicationForms(
       @QueryParam(EXPANDED)
-      @ApiParam(name = EXPANDED, value = "Use 'true' to get forms with all parts of form included")
+      @ApiParam(
+          name = EXPANDED,
+          value = "Use 'true' to get forms with all parts of form included")
           boolean expanded) {
     return collectionResourceDelegate.get(expanded);
   }

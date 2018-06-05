@@ -47,8 +47,10 @@ public class Tracking extends CalsBaseEntity implements RequestResponse {
   private static final long serialVersionUID = -3834894061508509293L;
 
   public static final String NAMED_QUERY_FIND_BY_RFA_1A_ID = "tracking.find.by.rfa1a.id";
-  public static final String NAMED_QUERY_FIND_BY_LICENSE_NUMBER = "tracking.find.by.license.number";
-  public static final String NAMED_QUERY_FIND_BY_RFA_1A_ID_AND_TRACKING_ID = "tracking.find.by.rfa1a.id.and.tracking.id";
+  public static final String NAMED_QUERY_FIND_BY_LICENSE_NUMBER
+      = "tracking.find.by.license.number";
+  public static final String NAMED_QUERY_FIND_BY_RFA_1A_ID_AND_TRACKING_ID
+      = "tracking.find.by.rfa1a.id.and.tracking.id";
 
 
   @Column(name = "facility_name")
