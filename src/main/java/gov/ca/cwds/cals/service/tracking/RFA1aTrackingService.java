@@ -16,9 +16,13 @@ import gov.ca.cwds.security.utils.PrincipalUtils;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RFA1aTrackingService extends
     TypedCrudServiceAdapter<TrackingParameterObject, Tracking, Tracking> {
+
+  private static final Logger LOG = LoggerFactory.getLogger(RFA1aTrackingService.class);
 
   @Inject
   private RFA1aFormsDao rfa1aFormsDao;
@@ -56,10 +60,18 @@ public class RFA1aTrackingService extends
 
   @Override
   public Tracking delete(TrackingParameterObject params) {
-    return proceedTrackingAction(params, tracking -> trackingDao.delete(params.getTrackingId()));
+    Tracking result = null;
+    try {
+       result = proceedTrackingAction(params,
+          tracking -> trackingDao.delete(params.getTrackingId()));
+    } catch (ApiException e) {
+      LOG.info(e.getMessage(), e);
+    }
+    return result;
   }
 
-  private Tracking proceedTrackingAction(TrackingParameterObject params, Function<Tracking, Tracking> function) {
+  private Tracking proceedTrackingAction(TrackingParameterObject params,
+      Function<Tracking, Tracking> function) {
     return Optional.ofNullable(find(params))
         .map(function).orElseThrow(() -> new ApiException(
             "There is no tracking with Id = " + params.getTrackingId() + " and rfa1aId = " + params

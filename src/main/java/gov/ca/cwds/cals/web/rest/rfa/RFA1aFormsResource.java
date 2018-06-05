@@ -267,7 +267,7 @@ public class RFA1aFormsResource {
    */
   @PUT
   @Timed
-  @Path("{" + RFA_1A_APPLICATION_ID + "}/"+ TRACKING +"/" + "{" + TRACKING_ID + "}")
+  @Path("{" + RFA_1A_APPLICATION_ID + "}/" + TRACKING + "/" + "{" + TRACKING_ID + "}")
   @ApiResponses(
       value = {
           @ApiResponse(code = 200, message = "Updated successfully"),
@@ -290,7 +290,7 @@ public class RFA1aFormsResource {
           Tracking tracking) {
     Response response = null;
     try {
-      response =  rfa1aTrackingResourceDelegate
+      response = rfa1aTrackingResourceDelegate
           .update(new TrackingParameterObject(formId, trackingId), tracking);
     } catch (ApiException e) {
       LOG.warn(e.getMessage(), e);
@@ -308,7 +308,7 @@ public class RFA1aFormsResource {
    */
   @DELETE
   @Timed
-  @Path("{" + RFA_1A_APPLICATION_ID + "}/"+ TRACKING +"/" + "{" + TRACKING_ID + "}")
+  @Path("{" + RFA_1A_APPLICATION_ID + "}/" + TRACKING + "/" + "{" + TRACKING_ID + "}")
   @ApiResponses(
       value = {
           @ApiResponse(code = 200, message = "Deleted successfully"),
