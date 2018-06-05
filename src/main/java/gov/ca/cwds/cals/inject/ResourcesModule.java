@@ -62,11 +62,7 @@ import gov.ca.cwds.cals.web.rest.FacilityChildResource;
 import gov.ca.cwds.cals.web.rest.FacilityComplaintResource;
 import gov.ca.cwds.cals.web.rest.FacilityInspectionsResource;
 import gov.ca.cwds.cals.web.rest.FacilityResource;
-import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
-import gov.ca.cwds.cals.web.rest.parameter.RFAApplicantAwareEntityUpdateParams;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityGetParameterObject;
-import gov.ca.cwds.cals.web.rest.parameter.RFAExternalEntityUpdateParameterObject;
-import gov.ca.cwds.cals.web.rest.parameter.RFAOtherAdultAwareEntityUpdateParams;
+import gov.ca.cwds.cals.web.rest.parameter.*;
 import gov.ca.cwds.cals.web.rest.rfa.LIC198bFormsResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aAdoptionHistoryResource;
 import gov.ca.cwds.cals.web.rest.rfa.RFA1aApplicantsDeclarationResource;
@@ -236,7 +232,7 @@ public class ResourcesModule extends AbstractModule {
 
   @Provides
   @RFA1aTrackingServiceBackedResource
-  public TypedResourceDelegate<Long, Tracking> trackingServiceBackedResource(
+  public TypedResourceDelegate<TrackingParameterObject, Tracking> trackingServiceBackedResource(
       Injector injector) {
     RFA1aTrackingService trackingService = injector.getInstance(RFA1aTrackingService.class);
     return new TypedServiceBackedResourceDelegate<>(trackingService);

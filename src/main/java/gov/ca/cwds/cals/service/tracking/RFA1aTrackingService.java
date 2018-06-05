@@ -3,22 +3,26 @@ package gov.ca.cwds.cals.service.tracking;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
+import gov.ca.cwds.cals.persistence.dao.calsns.TrackingDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.TrackingTemplateDao;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
+import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
 import gov.ca.cwds.cals.service.tracking.builder.TrackingBuilder;
+import gov.ca.cwds.cals.web.rest.parameter.TrackingParameterObject;
 import gov.ca.cwds.rest.api.ApiException;
 import gov.ca.cwds.security.utils.PrincipalUtils;
 import java.util.List;
 
-public class RFA1aTrackingService extends TrackingService {
+public class RFA1aTrackingService extends TypedCrudServiceAdapter<TrackingParameterObject, Tracking, Tracking> {
   @Inject
   private RFA1aFormsDao rfa1aFormsDao;
   @Inject
+  private TrackingDao trackingDao;
+  @Inject
   private TrackingTemplateDao trackingTemplateDao;
 
-  @Override
   public Tracking create(Tracking tracking) {
     RFA1aForm rfa1aForm = findRfa1a(tracking);
     List<TrackingTemplate> templates = findTrackingTemplates();
@@ -27,7 +31,13 @@ public class RFA1aTrackingService extends TrackingService {
         .build(rfa1aForm, templates, defaultTemplates);
     tracking.setTrackingJson(trackingDocuments);
     tracking.setFacilityName(rfa1aForm.getFacilityName());
-    return super.create(tracking);
+    return trackingDao.create(tracking);
+  }
+
+  @Override
+  public Tracking find(TrackingParameterObject params) {
+    return trackingDao
+        .findByRfa1aIdAndTrackingId(params.getFormId(), params.getTrackingId());
   }
 
   private RFA1aForm findRfa1a(Tracking tracking) {

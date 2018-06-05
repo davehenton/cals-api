@@ -31,6 +31,15 @@ public class TrackingDao extends CalsBaseEntityDao<Tracking> {
     return query.uniqueResult();
   }
 
+  public Tracking findByRfa1aIdAndTrackingId(Long rfa1aId, Long trackingId) {
+    return
+        currentSession()
+            .createNamedQuery(Tracking.NAMED_QUERY_FIND_BY_RFA_1A_ID_AND_TRACKING_ID, Tracking.class)
+            .setParameter("rfa1aId", rfa1aId)
+            .setParameter("id", trackingId)
+            .uniqueResult();
+  }
+
   /**
    * Finds Tracking by License number.
    *
