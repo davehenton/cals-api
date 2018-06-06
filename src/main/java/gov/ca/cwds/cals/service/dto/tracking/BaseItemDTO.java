@@ -3,8 +3,7 @@ package gov.ca.cwds.cals.service.dto.tracking;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
-public class BaseItemDTO implements Serializable {
-
+public abstract class BaseItemDTO implements Serializable {
   @JsonProperty("title")
   private String title;
   @JsonProperty("notes")
