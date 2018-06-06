@@ -42,7 +42,6 @@ public class TrackingDTO implements Serializable, RequestResponse {
 
   @JsonProperty("create_datetime")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
-  @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
   @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
   private LocalDateTime createDateTime;
 
@@ -51,7 +50,6 @@ public class TrackingDTO implements Serializable, RequestResponse {
 
   @JsonProperty("update_datetime")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
-  @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
   @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
   private LocalDateTime updateDatetime;
 
