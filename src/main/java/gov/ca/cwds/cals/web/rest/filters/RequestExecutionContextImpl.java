@@ -16,7 +16,7 @@ import org.apache.shiro.subject.Subject;
 /**
  * Common information carrier for all requests. Includes the request start time stamp and user
  * information. Each request is separated by thread local.
- * 
+ *
  * @author CWDS API Team
  */
 class RequestExecutionContextImpl implements RequestExecutionContext {
@@ -30,7 +30,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
   /**
    * Private constructor
-   * 
+   *
    * @param userIdentity User identity
    */
   private RequestExecutionContextImpl(PerryUserIdentity userIdentity) {
@@ -41,7 +41,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
   /**
    * Store request execution parameter
-   * 
+   *
    * @param parameter Parameter
    * @param value Parameter value
    */
@@ -52,7 +52,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
   /**
    * Retrieve request execution parameter
-   * 
+   *
    * @param parameter Parameter
    * @return The parameter value
    */
@@ -63,7 +63,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
   /**
    * Get user id if stored.
-   * 
+   *
    * @return The user id
    */
   @Override
@@ -78,7 +78,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
   /**
    * Get request start time if stored
-   * 
+   *
    * @return The request start time
    */
   @Override
@@ -89,7 +89,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
   /**
    * Servlet filter marks the start of a web request. This method is only accessible by the filters
    * package.
-   * 
+   *
    */
   static void startRequest() {
     PerryUserIdentity userIdentity = new PerryUserIdentity();
