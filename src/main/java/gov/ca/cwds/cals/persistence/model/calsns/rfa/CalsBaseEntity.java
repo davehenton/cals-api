@@ -20,12 +20,14 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 /**
+ * BaseEntity Class.
+ *
  * @author CWDS CALS API Team
  */
 @SuppressWarnings("squid:S3437") // Dates should be serialized
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class RFABaseEntity extends BaseDTO implements PersistentObject {
+public class CalsBaseEntity extends BaseDTO implements PersistentObject {
 
   private static final long serialVersionUID = -1765556534051721429L;
 
@@ -113,7 +115,7 @@ public class RFABaseEntity extends BaseDTO implements PersistentObject {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RFABaseEntity base = (RFABaseEntity) o;
+    CalsBaseEntity base = (CalsBaseEntity) o;
     if (base.getId() == null || getId() == null) {
       return false;
     }

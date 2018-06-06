@@ -20,6 +20,12 @@ public final class AssertFixtureUtils {
   private AssertFixtureUtils() {
   }
 
+  public static void assertResponseByFixture(Response response, String fixture, JSONCompareMode mode)
+      throws IOException, JSONException {
+    String entity = IOUtils.toString((InputStream) response.getEntity(), "UTF-8");
+    assertResponseByFixture(entity, fixture, mode);
+  }
+
   public static void assertResponseByFixture(Response response, String fixture)
       throws IOException, JSONException {
     String entity = IOUtils.toString((InputStream) response.getEntity(), "UTF-8");
@@ -33,6 +39,11 @@ public final class AssertFixtureUtils {
   public static void assertResponseByFixturePath(Response response, String fixturePath)
       throws IOException, JSONException {
     assertResponseByFixture(response, fixture(fixturePath));
+  }
+
+  public static void assertResponseByFixturePath(Response response, String fixturePath, JSONCompareMode mode)
+      throws IOException, JSONException {
+    assertResponseByFixture(response, fixture(fixturePath), mode);
   }
 
   public static void assertResponseByFixtureTemplate(String entity, String fixtureTemplate,
