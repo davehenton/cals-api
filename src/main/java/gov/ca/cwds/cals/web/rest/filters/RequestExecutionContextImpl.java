@@ -2,7 +2,6 @@ package gov.ca.cwds.cals.web.rest.filters;
 
 
 import gov.ca.cwds.cals.auth.PerryUserIdentity;
-import gov.ca.cwds.security.utils.PrincipalUtils;
 import java.util.Date;
 import java.util.EnumMap;
 import java.util.List;
@@ -21,6 +20,8 @@ import org.apache.shiro.subject.Subject;
  * @author CWDS API Team
  */
 class RequestExecutionContextImpl implements RequestExecutionContext {
+
+  private static final String DEFAULT_USER_ID = "0X5";
 
   /**
    * Context parameters
@@ -92,7 +93,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
    */
   static void startRequest() {
     PerryUserIdentity userIdentity = new PerryUserIdentity();
-    userIdentity.setUser(PrincipalUtils.getPrincipal().getUser());
+    userIdentity.setUser(DEFAULT_USER_ID);
 
     Subject currentUser = SecurityUtils.getSubject();
     if (currentUser.getPrincipals() != null) {
@@ -101,8 +102,8 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
       if (principals.size() > 1 && principals.get(1) instanceof PerryUserIdentity) {
         PerryUserIdentity currentUserInfo = (PerryUserIdentity) principals.get(1);
-        String userId = currentUserInfo.getUser();
-        if (!StringUtils.isBlank(userId)) {
+        String staffPersonId = currentUserInfo.getStaffId();
+        if (!StringUtils.isBlank(staffPersonId)) {
           userIdentity = currentUserInfo;
         }
       }
