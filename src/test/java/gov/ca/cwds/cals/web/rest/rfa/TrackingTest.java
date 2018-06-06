@@ -1,12 +1,15 @@
 package gov.ca.cwds.cals.web.rest.rfa;
 
 import static gov.ca.cwds.cals.Constants.TRACKING;
-import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixturePath;
+import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseByFixtureTemplate;
 
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.tracking.TrackingDTO;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -28,8 +31,7 @@ public class TrackingTest extends BaseRFAIntegrationTest {
   public void testCreate() throws Exception {
     RFA1aFormDTO form = createRfa1a();
     Response response = createTracking(form);
-    assertResponseByFixturePath(
-        response, "fixtures/rfa/tracking/created-tracking.json", JSONCompareMode.LENIENT);
+    validate(response, form);
   }
 
   @Test
@@ -66,9 +68,7 @@ public class TrackingTest extends BaseRFAIntegrationTest {
         .target(Constants.API.RFA_1A_FORMS + "/" + form.getId() + "/" + TRACKING + "/" + tracking
             .getId())
         .request().get();
-
-    assertResponseByFixturePath(
-        response, "fixtures/rfa/tracking/created-tracking.json", JSONCompareMode.LENIENT);
+    validate(response, form);
   }
 
   @Test
@@ -89,7 +89,6 @@ public class TrackingTest extends BaseRFAIntegrationTest {
     deleteResponse = target.request(MediaType.APPLICATION_JSON).delete();
 
     Assert.assertEquals(HttpStatus.SC_NOT_FOUND, deleteResponse.getStatus());
-    ;
   }
 
   @Test
@@ -106,9 +105,19 @@ public class TrackingTest extends BaseRFAIntegrationTest {
   private RFA1aFormDTO createRfa1a() throws Exception {
     RFA1aFormDTO form = formAHelper.createRFA1aForm();
     ApplicantDTO applicant = applicantHelper.getValidApplicant();
-    applicantHelper.postApplicant(form.getId(), applicant);
+    applicant = applicantHelper.postApplicant(form.getId(), applicant);
     statusHelper.submitApplication(form.getId());
+    form.setApplicants(Collections.singletonList(applicant));
     return form;
+  }
+
+  private void validate(Response response, RFA1aFormDTO form) throws Exception {
+    Map<String, Object> params = new HashMap<>();
+    params.put("formId", form.getId());
+    params.put("personId", form.getApplicants().get(0).getId());
+    assertResponseByFixtureTemplate(
+        response.readEntity(String.class), "fixtures/rfa/tracking/created-tracking.json", params,
+        JSONCompareMode.LENIENT);
   }
 
   private Response createTracking(RFA1aFormDTO form) throws Exception {

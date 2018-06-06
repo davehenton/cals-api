@@ -1,7 +1,6 @@
 {
-  "id" : 1,
   "facility_name" : "ALn, AFn",
-  "rfa_1a_id" : 3,
+  "rfa_1a_id" : $formId,
   "tracking_documents" : {
     "facility_documents" : {
       "family_documents" : {
@@ -75,7 +74,7 @@
       }
     },
     "people_documents" : [ {
-      "person_id" : 3,
+      "person_id" : $personId,
       "person_name" : "AFn ALn",
       "person_type" : "Applicant",
       "person_documents" : {
