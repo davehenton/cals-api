@@ -44,7 +44,7 @@ public class TrackingDTO implements Serializable, RequestResponse {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
   @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
   @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
-  private LocalDateTime createDatetime;
+  private LocalDateTime createDateTime;
 
   @JsonProperty("create_user_id")
   private String createUserId;
@@ -99,12 +99,12 @@ public class TrackingDTO implements Serializable, RequestResponse {
     this.trackingDocuments = trackingDocuments;
   }
 
-  public LocalDateTime getCreateDatetime() {
-    return createDatetime;
+  public LocalDateTime getCreateDateTime() {
+    return createDateTime;
   }
 
-  public void setCreateDatetime(LocalDateTime createDatetime) {
-    this.createDatetime = createDatetime;
+  public void setCreateDateTime(LocalDateTime createDateTime) {
+    this.createDateTime = createDateTime;
   }
 
   public String getCreateUserId() {
