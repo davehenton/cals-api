@@ -53,7 +53,7 @@ public abstract class AbstractRFAExternalEntityService<T extends RFAExternalEnti
       entityDTO = configuration.createEntityDTO();
     }
     T entity = configuration.createEntity();
-    RFAServiceHelper.fillCreateBaseFields(entity, PrincipalUtils.getStaffPersonId());
+    RFAServiceHelper.fillCreateBaseFields(entity, PrincipalUtils.getPrincipal().getUser());
     entity.setEntityDTO(entityDTO);
     entity.setFormId(request.getFormId());
     return entity;
@@ -89,7 +89,7 @@ public abstract class AbstractRFAExternalEntityService<T extends RFAExternalEnti
     if (entity != null) {
       entity.setEntityDTO(request.getEntityDTO());
       entity.setUpdateDateTime(LocalDateTime.now());
-      entity.setUpdateUserId(PrincipalUtils.getStaffPersonId());
+      entity.setUpdateUserId(PrincipalUtils.getPrincipal().getUser());
     }
     T updated = dao.update(entity);
     D entityDTO = null;

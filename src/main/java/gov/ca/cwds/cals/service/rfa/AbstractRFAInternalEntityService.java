@@ -46,7 +46,7 @@ public abstract class AbstractRFAInternalEntityService<T extends RequestResponse
           Constants.ExpectedExceptionMessages.RFA_1A_APPLICATION_NOT_FOUND_BY_ID, NOT_FOUND);
     }
     form.setUpdateDateTime(LocalDateTime.now());
-    form.setUpdateUserId(PrincipalUtils.getStaffPersonId());
+    form.setUpdateUserId(PrincipalUtils.getPrincipal().getUser());
 
     configuration.putEntityToTheForm(form, request);
 
