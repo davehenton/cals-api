@@ -5,18 +5,27 @@ import gov.ca.cwds.cals.auth.PerryUserIdentity;
 import gov.ca.cwds.security.utils.PrincipalUtils;
 import java.util.Date;
 import java.util.EnumMap;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 /**
  * Common information carrier for all requests. Includes the request start time stamp and user
  * information. Each request is separated by thread local.
- * 
+ *
  * @author CWDS API Team
  */
 class RequestExecutionContextImpl implements RequestExecutionContext {
+
+  /**
+   * Context parameters
+   */
+  private EnumMap<Parameter, Object> contextParameters = new EnumMap<>(Parameter.class);
 
   /**
    * Private constructor
@@ -42,7 +51,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
   /**
    * Retrieve request execution parameter
-   * 
+   *
    * @param parameter Parameter
    * @return The parameter value
    */
@@ -53,7 +62,7 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
   /**
    * Get user id if stored.
-   * 
+   *
    * @return The user id
    */
   @Override
@@ -68,12 +77,45 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
 
   /**
    * Get request start time if stored
-   * 
+   *
    * @return The request start time
    */
   @Override
   public Date getRequestStartTime() {
     return (Date) get(Parameter.REQUEST_START_TIME);
+  }
+
+  /**
+   * Servlet filter marks the start of a web request. This method is only accessible by the filters
+   * package.
+   *
+   */
+  static void startRequest() {
+    PerryUserIdentity userIdentity = new PerryUserIdentity();
+    userIdentity.setUser(PrincipalUtils.getPrincipal().getUser());
+
+    Subject currentUser = SecurityUtils.getSubject();
+    if (currentUser.getPrincipals() != null) {
+      @SuppressWarnings("rawtypes")
+      List principals = currentUser.getPrincipals().asList();
+
+      if (principals.size() > 1 && principals.get(1) instanceof PerryUserIdentity) {
+        PerryUserIdentity currentUserInfo = (PerryUserIdentity) principals.get(1);
+        String userId = currentUserInfo.getUser();
+        if (!StringUtils.isBlank(userId)) {
+          userIdentity = currentUserInfo;
+        }
+      }
+    }
+
+    RequestExecutionContextRegistry.register(new RequestExecutionContextImpl(userIdentity));
+  }
+
+  /**
+   * Perform cleanup after request completion
+   */
+  static void stopRequest() {
+    RequestExecutionContextRegistry.remove();
   }
 
   @Override
@@ -90,28 +132,4 @@ class RequestExecutionContextImpl implements RequestExecutionContext {
   public boolean equals(Object obj) {
     return EqualsBuilder.reflectionEquals(this, obj, false);
   }
-
-  /**
-   * Context parameters
-   */
-  private EnumMap<Parameter, Object> contextParameters = new EnumMap<>(Parameter.class);
-
-  /**
-   * Servlet filter marks the start of a web request. This method is only accessible by the filters
-   * package.
-   * 
-   */
-  static void startRequest() {
-    PerryUserIdentity userIdentity = new PerryUserIdentity();
-    userIdentity.setUser(PrincipalUtils.getPrincipal().getUser());
-    RequestExecutionContextRegistry.register(new RequestExecutionContextImpl(userIdentity));
-  }
-
-  /**
-   * Perform cleanup after request completion
-   */
-  static void stopRequest() {
-    RequestExecutionContextRegistry.remove();
-  }
-
 }
