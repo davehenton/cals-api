@@ -16,6 +16,7 @@ import gov.ca.cwds.cals.inject.RFA1aTrackingServiceBackedResource;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
+import gov.ca.cwds.cals.service.dto.tracking.TrackingDTO;
 import gov.ca.cwds.cals.service.rfa.RFA1aPDFGenerationService;
 import gov.ca.cwds.cals.web.rest.parameter.RFA1aFormsParameterObject;
 import gov.ca.cwds.cals.web.rest.parameter.TrackingParameterObject;
@@ -60,7 +61,7 @@ public class RFA1aFormsResource {
   private static final String APPLICATION_PDF = "application/pdf";
   private TypedResourceDelegate<RFA1aFormsParameterObject, RFA1aFormDTO> resourceDelegate;
   private TypedResourceDelegate<Boolean, Request> collectionResourceDelegate;
-  private TypedResourceDelegate<TrackingParameterObject, Tracking> rfa1aTrackingResourceDelegate;
+  private TypedResourceDelegate<TrackingParameterObject, TrackingDTO> rfa1aTrackingResourceDelegate;
 
   @Inject
   private RFA1aPDFGenerationService pdfGenerationService;
@@ -72,7 +73,7 @@ public class RFA1aFormsResource {
       @RFA1aFormCollectionServiceBackedResource
           TypedResourceDelegate<Boolean, Request> collectionResourceDelegate,
       @RFA1aTrackingServiceBackedResource
-          TypedResourceDelegate<TrackingParameterObject, Tracking> rfa1aTrackingResourceDelegate
+          TypedResourceDelegate<TrackingParameterObject, TrackingDTO> rfa1aTrackingResourceDelegate
   ) {
     this.resourceDelegate = resourceDelegate;
     this.collectionResourceDelegate = collectionResourceDelegate;
@@ -221,13 +222,13 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Creates tracking for RFA 1A Form", response = Tracking.class)
+  @ApiOperation(value = "Creates tracking for RFA 1A Form", response = TrackingDTO.class)
   @UnitOfWork(CALSNS)
   public Response createTracking(
       @PathParam(RFA_1A_APPLICATION_ID)
       @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
           Long formId) {
-    Tracking tracking = new Tracking();
+    TrackingDTO tracking = new TrackingDTO();
     tracking.setRfa1aId(formId);
     return rfa1aTrackingResourceDelegate.create(tracking);
   }
@@ -243,7 +244,7 @@ public class RFA1aFormsResource {
           @ApiResponse(code = 406, message = "Accept Header not supported")
       }
   )
-  @ApiOperation(value = "Returns tracking for RFA 1A Form", response = Tracking.class)
+  @ApiOperation(value = "Returns tracking for RFA 1A Form", response = TrackingDTO.class)
   @UnitOfWork(CALSNS)
   public Response getTracking(
       @PathParam(RFA_1A_APPLICATION_ID)
@@ -287,8 +288,8 @@ public class RFA1aFormsResource {
           Long trackingId,
       @ApiParam(name = "tracking", value = "The Tracking object")
       @Valid
-          Tracking tracking) {
-    Response response = null;
+          TrackingDTO tracking) {
+    Response response;
     try {
       response = rfa1aTrackingResourceDelegate
           .update(new TrackingParameterObject(formId, trackingId), tracking);

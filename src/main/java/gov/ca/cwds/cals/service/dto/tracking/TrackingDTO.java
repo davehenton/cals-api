@@ -1,8 +1,15 @@
 package gov.ca.cwds.cals.service.dto.tracking;
 
+import static gov.ca.cwds.rest.api.domain.DomainObject.DATE_FORMAT;
+import static gov.ca.cwds.rest.api.domain.DomainObject.TIME_FORMAT;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import gov.ca.cwds.cals.RequestResponse;
+import gov.ca.cwds.rest.validation.Date;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -18,35 +25,45 @@ import java.time.LocalDateTime;
     "update_datetime",
     "update_user_id"
 })
-public class TrackingDTO implements Serializable {
+public class TrackingDTO implements Serializable, RequestResponse {
 
   private final static long serialVersionUID = 860713739682155937L;
 
   @JsonProperty("id")
-  private Integer id;
+  private Long id;
   @JsonProperty("facility_name")
   private String facilityName;
   @JsonProperty("license_number")
   private String licenseNumber;
   @JsonProperty("rfa_1a_id")
-  private Integer rfa1aId;
+  private Long rfa1aId;
   @JsonProperty("tracking_documents")
   private TrackingDocumentsDTO trackingDocuments;
+
   @JsonProperty("create_datetime")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
+  @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
+  @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
   private LocalDateTime createDatetime;
+
   @JsonProperty("create_user_id")
   private String createUserId;
+
   @JsonProperty("update_datetime")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
+  @Date(format = DATE_FORMAT + " " + TIME_FORMAT)
+  @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
   private LocalDateTime updateDatetime;
+
   @JsonProperty("update_user_id")
   private String updateUserId;
 
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -66,11 +83,11 @@ public class TrackingDTO implements Serializable {
     this.licenseNumber = licenseNumber;
   }
 
-  public Integer getRfa1aId() {
+  public Long getRfa1aId() {
     return rfa1aId;
   }
 
-  public void setRfa1aId(Integer rfa1aId) {
+  public void setRfa1aId(Long rfa1aId) {
     this.rfa1aId = rfa1aId;
   }
 

@@ -1,6 +1,5 @@
 package gov.ca.cwds.cals.service.tracking;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.dao.calsns.RFA1aFormsDao;
 import gov.ca.cwds.cals.persistence.dao.calsns.TrackingDao;
@@ -9,7 +8,10 @@ import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
 import gov.ca.cwds.cals.service.TypedCrudServiceAdapter;
-import gov.ca.cwds.cals.service.tracking.builder.TrackingBuilder;
+import gov.ca.cwds.cals.service.dto.tracking.TrackingDTO;
+import gov.ca.cwds.cals.service.dto.tracking.TrackingDocumentsDTO;
+import gov.ca.cwds.cals.service.mapper.TrackingMapper;
+import gov.ca.cwds.cals.service.tracking.builder.TrackingDocumentsBuilder;
 import gov.ca.cwds.cals.web.rest.parameter.TrackingParameterObject;
 import gov.ca.cwds.rest.api.ApiException;
 import gov.ca.cwds.security.utils.PrincipalUtils;
@@ -20,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RFA1aTrackingService extends
-    TypedCrudServiceAdapter<TrackingParameterObject, Tracking, Tracking> {
+    TypedCrudServiceAdapter<TrackingParameterObject, TrackingDTO, TrackingDTO> {
 
   private static final Logger LOG = LoggerFactory.getLogger(RFA1aTrackingService.class);
 
@@ -30,55 +32,67 @@ public class RFA1aTrackingService extends
   private TrackingDao trackingDao;
   @Inject
   private TrackingTemplateDao trackingTemplateDao;
+  @Inject
+  private TrackingMapper trackingMapper;
 
   @Override
-  public Tracking create(Tracking tracking) {
-    RFA1aForm rfa1aForm = findRfa1a(tracking);
+  public TrackingDTO create(TrackingDTO trackingDTO) {
+    RFA1aForm rfa1aForm = findRfa1a(trackingDTO);
     List<TrackingTemplate> templates = findTrackingTemplates();
     List<TrackingTemplate> defaultTemplates = findDefaultTrackingTemplates();
-    JsonNode trackingDocuments = new TrackingBuilder()
+    TrackingDocumentsDTO trackingDocuments = new TrackingDocumentsBuilder()
         .build(rfa1aForm, templates, defaultTemplates);
-    tracking.setTrackingJson(trackingDocuments);
-    tracking.setFacilityName(rfa1aForm.getFacilityName());
-    return trackingDao.create(tracking);
+
+    trackingDTO.setFacilityName(rfa1aForm.getFacilityName());
+    trackingDTO.setTrackingDocuments(trackingDocuments);
+
+    Tracking tracking = trackingMapper.toTracking(trackingDTO);
+    return trackingMapper.toTrackingDTO(trackingDao.create(tracking));
   }
 
   @Override
-  public Tracking find(TrackingParameterObject params) {
-    return trackingDao
-        .findByRfa1aIdAndTrackingId(params.getFormId(), params.getTrackingId());
+  public TrackingDTO find(TrackingParameterObject params) {
+    return trackingMapper.toTrackingDTO(trackingDao
+        .findByRfa1aIdAndTrackingId(params.getFormId(), params.getTrackingId()));
   }
 
   @Override
-  public Tracking update(TrackingParameterObject params, Tracking request) {
+  public TrackingDTO update(TrackingParameterObject params, TrackingDTO trackingDTO) {
     return proceedTrackingAction(params, tracking -> {
-      request.setId(params.getTrackingId());
-      request.setRfa1aId(params.getFormId());
-      return trackingDao.update(request);
+      trackingDTO.setId(params.getTrackingId());
+      trackingDTO.setRfa1aId(params.getFormId());
+
+      return trackingMapper.toTrackingDTO(
+          trackingDao.update(
+              trackingMapper.toTracking(trackingDTO)
+          )
+      );
     });
   }
 
   @Override
-  public Tracking delete(TrackingParameterObject params) {
-    Tracking result = null;
+  public TrackingDTO delete(TrackingParameterObject params) {
+    TrackingDTO result = null;
     try {
-       result = proceedTrackingAction(params,
-          tracking -> trackingDao.delete(params.getTrackingId()));
+      result = proceedTrackingAction(params,
+          tracking -> trackingMapper.toTrackingDTO(
+              trackingDao.delete(params.getTrackingId())
+          ));
     } catch (ApiException e) {
       LOG.info(e.getMessage(), e);
     }
     return result;
   }
 
-  private Tracking proceedTrackingAction(TrackingParameterObject params,
-      Function<Tracking, Tracking> function) {
+  private TrackingDTO proceedTrackingAction(TrackingParameterObject params,
+      Function<TrackingDTO, TrackingDTO> function) {
     return Optional.ofNullable(find(params))
         .map(function).orElseThrow(() -> new ApiException(
             "There is no tracking with Id = " + params.getTrackingId() + " and rfa1aId = " + params
                 .getFormId()));
   }
 
-  private RFA1aForm findRfa1a(Tracking tracking) {
+  private RFA1aForm findRfa1a(TrackingDTO tracking) {
     RFA1aForm rfa1aForm = rfa1aFormsDao.find(tracking.getRfa1aId());
     if (rfa1aForm == null) {
       throw new ApiException("RFA1A form [ " + tracking.getRfa1aId() + "] is not found");
