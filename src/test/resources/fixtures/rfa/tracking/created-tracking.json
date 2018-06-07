@@ -1,48 +1,39 @@
 {
-  "create_user_id" : "Onotole",
-  "update_user_id" : "Onotole",
   "facility_name" : "ALn, AFn",
+  "rfa_1a_id" : $formId,
   "tracking_documents" : {
     "facility_documents" : {
       "family_documents" : {
         "items" : [ {
           "title" : "RFA Application (RFA 01A)",
-          "received_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Verification of Income",
-          "received_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Disclosure of Expenses",
-          "received_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Verification of Property",
-          "received_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Home Environment Checklist (RFA-03)",
-          "received_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Reference Letter #1",
-          "received_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Reference Letter #2",
-          "received_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Reference Letter #3 (if applicable)",
-          "received_date" : "",
           "notes" : "",
           "checked" : false
         } ]
@@ -50,22 +41,18 @@
       "tasks_and_trainings" : {
         "items" : [ {
           "title" : "Attended Orientation Meeting",
-          "completed_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Risk Assessment",
-          "completed_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Home Environment Checklist (RFA-03)",
-          "completed_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Pre-Service Training",
-          "completed_date" : "",
           "notes" : "",
           "checked" : false
         } ]
@@ -73,53 +60,43 @@
       "assessments" : {
         "items" : [ {
           "title" : "Family Evaluation",
-          "submitted_date" : "",
-          "approved_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Written Report",
-          "submitted_date" : "",
-          "approved_date" : "",
           "notes" : "",
           "checked" : false
         }, {
           "title" : "Acknowledgement of Written Report",
-          "submitted_date" : "",
-          "approved_date" : "",
           "notes" : "",
           "checked" : false
         } ]
       }
     },
     "people_documents" : [ {
+      "person_id" : $personId,
       "person_name" : "AFn ALn",
       "person_type" : "Applicant",
       "person_documents" : {
         "individual_documents" : {
           "items" : [ {
             "title" : "Criminal Record Statement (RFA-01B)",
-            "completed_date" : "",
             "notes" : "",
             "checked" : false
           }, {
             "title" : "Health Questionnaire (RFA-07)",
-            "completed_date" : "",
             "notes" : "",
             "checked" : false
           }, {
             "title" : "TB Questionnaire (RFA-08)",
-            "completed_date" : "",
             "notes" : "",
             "checked" : false
           }, {
             "title" : "Employment Verification",
-            "completed_date" : "",
             "notes" : "",
             "checked" : false
           }, {
             "title" : "Proof of Identity",
-            "completed_date" : "",
             "notes" : "",
             "checked" : false
           } ]
@@ -127,12 +104,10 @@
         "trainings" : {
           "items" : [ {
             "title" : "CPR Training",
-            "expiration_date" : "",
             "notes" : "",
             "checked" : false
           }, {
             "title" : "First Aid Training",
-            "expiration_date" : "",
             "notes" : "",
             "checked" : false
           } ]
@@ -140,37 +115,29 @@
         "clearances" : {
           "items" : [ {
             "title" : "Criminal Background Checklist (RFA-02)",
-            "start_date" : "",
-            "completion_date" : "",
             "notes" : "",
             "checked" : false
           }, {
             "title" : "DMV Reports",
-            "start_date" : "",
-            "completion_date" : "",
             "notes" : "",
             "checked" : false
           }, {
             "title" : "Exemption Needed (if applicable)",
-            "start_date" : "",
-            "completion_date" : "",
             "notes" : "",
             "checked" : false
           }, {
             "title" : "Previous Associations (if applicable)",
-            "start_date" : "",
-            "completion_date" : "",
             "notes" : "",
             "checked" : false
           }, {
             "title" : "Legal Consult Needed (if applicable)",
-            "start_date" : "",
-            "completion_date" : "",
             "notes" : "",
             "checked" : false
           } ]
         }
       }
     } ]
-  }
-} 
+  },
+  "create_user_id" : "Onotole",
+  "update_user_id" : "Onotole"
+}

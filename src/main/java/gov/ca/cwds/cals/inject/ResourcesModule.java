@@ -30,6 +30,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.dto.rfa.lic198b.LIC198bFormDTO;
+import gov.ca.cwds.cals.service.dto.tracking.TrackingDTO;
 import gov.ca.cwds.cals.service.rfa.LIC198bCollectionService;
 import gov.ca.cwds.cals.service.rfa.LIC198bService;
 import gov.ca.cwds.cals.service.rfa.RFA1aAdoptionHistoryService;
@@ -237,7 +238,7 @@ public class ResourcesModule extends AbstractModule {
 
   @Provides
   @RFA1aTrackingServiceBackedResource
-  public TypedResourceDelegate<TrackingParameterObject, Tracking> trackingServiceBackedResource(
+  public TypedResourceDelegate<TrackingParameterObject, TrackingDTO> trackingServiceBackedResource(
       Injector injector) {
     RFA1aTrackingService trackingService = injector.getInstance(RFA1aTrackingService.class);
     return new TypedServiceBackedResourceDelegate<>(trackingService);
