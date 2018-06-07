@@ -21,6 +21,7 @@ public interface TrackingMapper {
   @Mapping(target = "licenseNumber")
   @Mapping(target = "rfa1aId")
   @Mapping(target = "createDateTime")
+  @Mapping(target = "updateDatetime")
   @Mapping(target = "createUserId")
   @Mapping(target = "updateUserId")
   TrackingDTO toTrackingDTO(Tracking tracking);
@@ -30,6 +31,7 @@ public interface TrackingMapper {
   @Mapping(target = "licenseNumber")
   @Mapping(target = "rfa1aId")
   @Mapping(target = "createDateTime")
+  @Mapping(target = "updateDatetime")
   @Mapping(target = "createUserId")
   @Mapping(target = "updateUserId")
   Tracking toTracking(TrackingDTO trackingDTO);
