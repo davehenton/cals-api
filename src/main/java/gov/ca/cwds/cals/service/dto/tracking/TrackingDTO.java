@@ -12,6 +12,7 @@ import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.validation.constraints.Size;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -31,12 +32,17 @@ public class TrackingDTO extends BaseDTO implements Serializable, RequestRespons
 
   @JsonProperty("id")
   private Long id;
+
   @JsonProperty("facility_name")
   private String facilityName;
+
+  @Size(max = 10)
   @JsonProperty("license_number")
   private String licenseNumber;
+
   @JsonProperty("rfa_1a_id")
   private Long rfa1aId;
+
   @JsonProperty("tracking_documents")
   private TrackingDocumentsDTO trackingDocuments;
 
@@ -51,7 +57,7 @@ public class TrackingDTO extends BaseDTO implements Serializable, RequestRespons
   @JsonProperty("update_datetime")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
   @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
-  private LocalDateTime updateDatetime;
+  private LocalDateTime updateDateTime;
 
   @JsonProperty("update_user_id")
   private String updateUserId;
@@ -113,12 +119,12 @@ public class TrackingDTO extends BaseDTO implements Serializable, RequestRespons
     this.createUserId = createUserId;
   }
 
-  public LocalDateTime getUpdateDatetime() {
-    return updateDatetime;
+  public LocalDateTime getUpdateDateTime() {
+    return updateDateTime;
   }
 
-  public void setUpdateDatetime(LocalDateTime updateDatetime) {
-    this.updateDatetime = updateDatetime;
+  public void setUpdateDateTime(LocalDateTime updateDateTime) {
+    this.updateDateTime = updateDateTime;
   }
 
   public String getUpdateUserId() {

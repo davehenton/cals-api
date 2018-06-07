@@ -6,7 +6,9 @@ import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseB
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.tracking.FamilyDocumentsItemDTO;
 import gov.ca.cwds.cals.service.dto.tracking.TrackingDTO;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,20 +44,58 @@ public class TrackingTest extends BaseRFAIntegrationTest {
 
     String newFacilityName = "New Facility Name";
     tracking.setFacilityName(newFacilityName);
-    WebTarget target = clientTestRule.target(
-        Constants.API.RFA_1A_FORMS + "/" + tracking.getRfa1aId() + "/" + TRACKING + "/" + tracking
-            .getId());
-    TrackingDTO putTrackingResponse = target.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(tracking, MediaType.APPLICATION_JSON_TYPE), TrackingDTO.class);
+    LocalDate now = LocalDate.now();
+    getFirstFamilyDocumentsItem(tracking).setReceivedDate(now);
+    TrackingDTO putTrackingResponse = updateTracking(tracking)
+        .readEntity(TrackingDTO.class);
+
     Assert.assertEquals(newFacilityName, putTrackingResponse.getFacilityName());
+    Assert.assertEquals(now, getFirstFamilyDocumentsItem(putTrackingResponse).getReceivedDate());
+    Assert.assertNotNull(putTrackingResponse.getCreateUserId());
+    Assert.assertNotNull(putTrackingResponse.getUpdateUserId());
+    Assert.assertNotNull(putTrackingResponse.getCreateDateTime());
+    Assert.assertNotNull(putTrackingResponse.getUpdateDateTime());
 
-    target = clientTestRule.target(
-        Constants.API.RFA_1A_FORMS + "/" + -1 + "/" + TRACKING + "/" + tracking
-            .getId());
-
-    Response response = target.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(tracking, MediaType.APPLICATION_JSON_TYPE));
+    Response response =  updateTracking(-1L, tracking);
     Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
+  }
+
+  @Test
+  public void checkLicenseNumberLengthTest() throws Exception {
+    RFA1aFormDTO form = createRfa1a();
+    Response trackingResponse = createTracking(form);
+    TrackingDTO tracking = trackingResponse.readEntity(TrackingDTO.class);
+    // LicenseNumber 10 characters
+    tracking.setLicenseNumber("1234567890");
+    Response response =  updateTracking(tracking);
+    Assert.assertEquals(HttpStatus.SC_OK, response.getStatus());
+
+    // LicenseNumber more then 10 characters
+    tracking.setLicenseNumber("12345678901");
+    response =  updateTracking(tracking);
+    Assert.assertEquals(HttpStatus.SC_UNPROCESSABLE_ENTITY, response.getStatus());
+  }
+
+  private Response updateTracking(TrackingDTO tracking) {
+    return updateTracking(tracking.getRfa1aId(), tracking);
+  }
+
+  private Response updateTracking(Long formId, TrackingDTO tracking) {
+    WebTarget target = clientTestRule.target(
+        Constants.API.RFA_1A_FORMS + "/" + formId + "/" + TRACKING + "/" + tracking
+            .getId());
+    return target.request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(tracking, MediaType.APPLICATION_JSON_TYPE));
+  }
+
+
+
+  private FamilyDocumentsItemDTO getFirstFamilyDocumentsItem(TrackingDTO tracking) {
+    return tracking
+        .getTrackingDocuments()
+        .getFacilityDocuments()
+        .getFamilyDocuments()
+        .getCollection().iterator().next();
   }
 
   @Test
