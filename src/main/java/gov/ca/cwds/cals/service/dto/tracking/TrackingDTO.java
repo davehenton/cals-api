@@ -12,7 +12,7 @@ import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -32,13 +32,17 @@ public class TrackingDTO extends BaseDTO implements Serializable, RequestRespons
 
   @JsonProperty("id")
   private Long id;
+
   @JsonProperty("facility_name")
   private String facilityName;
+
+  @Size(max=10)
   @JsonProperty("license_number")
-  @Max(10)
   private String licenseNumber;
+
   @JsonProperty("rfa_1a_id")
   private Long rfa1aId;
+
   @JsonProperty("tracking_documents")
   private TrackingDocumentsDTO trackingDocuments;
 

@@ -68,7 +68,7 @@ public class Tracking extends CalsBaseEntity implements RequestResponse {
   @Column(name = "rfa_1a_id", unique = true)
   private Long rfa1aId;
 
-  @Column(name = "license_number", unique = true)
+  @Column(name = "license_number", unique = true, length = 10)
   private String licenseNumber;
 
   @JsonProperty("tracking_documents")
