@@ -36,7 +36,7 @@ public class TrackingDTO extends BaseDTO implements Serializable, RequestRespons
   @JsonProperty("facility_name")
   private String facilityName;
 
-  @Size(max=10)
+  @Size(max = 10)
   @JsonProperty("license_number")
   private String licenseNumber;
 
