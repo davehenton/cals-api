@@ -57,7 +57,7 @@ public class TrackingDTO extends BaseDTO implements Serializable, RequestRespons
   @JsonProperty("update_datetime")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT + " " + TIME_FORMAT)
   @ApiModelProperty(value = "yyyy-MM-dd HH:mm:ss", example = "2000-01-01 00:00:00")
-  private LocalDateTime updateDatetime;
+  private LocalDateTime updateDateTime;
 
   @JsonProperty("update_user_id")
   private String updateUserId;
@@ -119,12 +119,12 @@ public class TrackingDTO extends BaseDTO implements Serializable, RequestRespons
     this.createUserId = createUserId;
   }
 
-  public LocalDateTime getUpdateDatetime() {
-    return updateDatetime;
+  public LocalDateTime getUpdateDateTime() {
+    return updateDateTime;
   }
 
-  public void setUpdateDatetime(LocalDateTime updateDatetime) {
-    this.updateDatetime = updateDatetime;
+  public void setUpdateDateTime(LocalDateTime updateDateTime) {
+    this.updateDateTime = updateDateTime;
   }
 
   public String getUpdateUserId() {

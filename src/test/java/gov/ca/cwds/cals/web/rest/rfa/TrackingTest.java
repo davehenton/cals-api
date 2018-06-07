@@ -51,6 +51,10 @@ public class TrackingTest extends BaseRFAIntegrationTest {
 
     Assert.assertEquals(newFacilityName, putTrackingResponse.getFacilityName());
     Assert.assertEquals(now, getFirstFamilyDocumentsItem(putTrackingResponse).getReceivedDate());
+    Assert.assertNotNull(putTrackingResponse.getCreateUserId());
+    Assert.assertNotNull(putTrackingResponse.getUpdateUserId());
+    Assert.assertNotNull(putTrackingResponse.getCreateDateTime());
+    Assert.assertNotNull(putTrackingResponse.getUpdateDateTime());
 
     Response response =  updateTracking(-1L, tracking);
     Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
