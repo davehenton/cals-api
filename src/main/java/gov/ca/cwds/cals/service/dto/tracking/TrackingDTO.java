@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import gov.ca.cwds.cals.RequestResponse;
+import gov.ca.cwds.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
     "update_datetime",
     "update_user_id"
 })
-public class TrackingDTO implements Serializable, RequestResponse {
+public class TrackingDTO extends BaseDTO implements Serializable, RequestResponse {
 
   private final static long serialVersionUID = 860713739682155937L;
 

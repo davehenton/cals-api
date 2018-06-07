@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto.tracking;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import gov.ca.cwds.dto.BaseDTO;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -12,7 +13,7 @@ import java.io.Serializable;
     "person_type",
     "person_documents"
 })
-public class PeopleDocumentsDTO implements Serializable {
+public class PeopleDocumentsDTO extends BaseDTO implements Serializable {
 
   private final static long serialVersionUID = -6461564888712154125L;
 

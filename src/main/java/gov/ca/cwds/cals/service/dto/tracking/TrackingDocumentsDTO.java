@@ -3,6 +3,8 @@ package gov.ca.cwds.cals.service.dto.tracking;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
+import gov.ca.cwds.dto.BaseDTO;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
     "facility_documents",
     "people_documents"
 })
-public class TrackingDocumentsDTO implements Serializable {
+public class TrackingDocumentsDTO extends BaseDTO implements Serializable {
 
   private final static long serialVersionUID = -3746547320709433539L;
 

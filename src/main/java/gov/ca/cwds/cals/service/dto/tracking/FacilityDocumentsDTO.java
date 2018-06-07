@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.dto.tracking;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -16,34 +17,36 @@ public class FacilityDocumentsDTO implements Serializable {
   private final static long serialVersionUID = -7322876444705030639L;
 
   @JsonProperty("family_documents")
-  private FamilyDocumentsDTO familyDocuments;
+  private CollectionDTO<FamilyDocumentsItemDTO> familyDocuments;
   @JsonProperty("tasks_and_trainings")
-  private TasksAndTrainingsDTO tasksAndTrainings;
+  private CollectionDTO<TasksAndTrainingsItemDTO> tasksAndTrainings;
   @JsonProperty("assessments")
-  private AssessmentsDTO assessments;
+  private CollectionDTO<AssessmentItemDTO> assessments;
 
-  public FamilyDocumentsDTO getFamilyDocuments() {
+  public CollectionDTO<FamilyDocumentsItemDTO> getFamilyDocuments() {
     return familyDocuments;
   }
 
-  public void setFamilyDocuments(FamilyDocumentsDTO familyDocuments) {
+  public void setFamilyDocuments(
+      CollectionDTO<FamilyDocumentsItemDTO> familyDocuments) {
     this.familyDocuments = familyDocuments;
   }
 
-  public TasksAndTrainingsDTO getTasksAndTrainings() {
+  public CollectionDTO<TasksAndTrainingsItemDTO> getTasksAndTrainings() {
     return tasksAndTrainings;
   }
 
-  public void setTasksAndTrainings(TasksAndTrainingsDTO tasksAndTrainings) {
+  public void setTasksAndTrainings(
+      CollectionDTO<TasksAndTrainingsItemDTO> tasksAndTrainings) {
     this.tasksAndTrainings = tasksAndTrainings;
   }
 
-  public AssessmentsDTO getAssessments() {
+  public CollectionDTO<AssessmentItemDTO> getAssessments() {
     return assessments;
   }
 
-  public void setAssessments(AssessmentsDTO assessments) {
+  public void setAssessments(
+      CollectionDTO<AssessmentItemDTO> assessments) {
     this.assessments = assessments;
   }
-
 }
