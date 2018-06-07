@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.service.tracking.builder;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import gov.ca.cwds.cals.persistence.model.calsns.rfa.RFA1aForm;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
 import gov.ca.cwds.cals.service.dto.tracking.TrackingDocumentsDTO;
@@ -20,6 +21,7 @@ public class TrackingDocumentsBuilder {
   public TrackingDocumentsBuilder() {
     objectMapper = new ObjectMapper();
     objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+    objectMapper.registerModule(new JavaTimeModule());
   }
 
   /**
