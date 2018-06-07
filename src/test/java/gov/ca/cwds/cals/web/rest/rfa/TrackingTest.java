@@ -6,7 +6,9 @@ import static gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils.assertResponseB
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.rfa.ApplicantDTO;
 import gov.ca.cwds.cals.service.dto.rfa.RFA1aFormDTO;
+import gov.ca.cwds.cals.service.dto.tracking.FamilyDocumentsItemDTO;
 import gov.ca.cwds.cals.service.dto.tracking.TrackingDTO;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,12 +44,15 @@ public class TrackingTest extends BaseRFAIntegrationTest {
 
     String newFacilityName = "New Facility Name";
     tracking.setFacilityName(newFacilityName);
+    LocalDate now = LocalDate.now();
+    getFirstFamilyDocumentsItem(tracking).setReceivedDate(now);
     WebTarget target = clientTestRule.target(
         Constants.API.RFA_1A_FORMS + "/" + tracking.getRfa1aId() + "/" + TRACKING + "/" + tracking
             .getId());
     TrackingDTO putTrackingResponse = target.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(tracking, MediaType.APPLICATION_JSON_TYPE), TrackingDTO.class);
     Assert.assertEquals(newFacilityName, putTrackingResponse.getFacilityName());
+    Assert.assertEquals(now, getFirstFamilyDocumentsItem(putTrackingResponse).getReceivedDate());
 
     target = clientTestRule.target(
         Constants.API.RFA_1A_FORMS + "/" + -1 + "/" + TRACKING + "/" + tracking
@@ -56,6 +61,14 @@ public class TrackingTest extends BaseRFAIntegrationTest {
     Response response = target.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(tracking, MediaType.APPLICATION_JSON_TYPE));
     Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
+  }
+
+  private FamilyDocumentsItemDTO getFirstFamilyDocumentsItem(TrackingDTO tracking) {
+    return tracking
+        .getTrackingDocuments()
+        .getFacilityDocuments()
+        .getFamilyDocuments()
+        .getCollection().iterator().next();
   }
 
   @Test
