@@ -43,6 +43,8 @@ public final class Constants {
 
   public static final String RFA = "rfa-1abc";
 
+  public static final String TRACKING = "tracking";
+
   public static class API {
 
     public static final String SYSTEM_INFORMATION = "system-information";
@@ -95,6 +97,10 @@ public final class Constants {
 
     public static final String STATUS = "status";
 
+    public static final String TRACKINGS = "trackings";
+
+    public static final String TRACKING_TEMPLATES = "tracking-templates";
+
     public static class PathParams {
 
       public static final String FACILITY_ID = "facilityId";
@@ -130,6 +136,10 @@ public final class Constants {
       public static final String RFA_1C_FORM_ID = "rfa1cFormId";
 
       public static final String RFA_1A_APPLICANT = "applicant";
+
+      public static final String TRACKING_ID = "trackingId";
+
+      public static final String TRACKING_TEMPLATE_ID = "trackingTemplateId";
 
       private PathParams() {
       }

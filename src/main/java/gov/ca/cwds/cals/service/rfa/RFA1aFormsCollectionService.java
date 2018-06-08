@@ -28,8 +28,8 @@ public class RFA1aFormsCollectionService
 
   @Override
   public RFA1aFormCollectionDTO find(Boolean expanded) {
-    String staffPersonId = PrincipalUtils.getStaffPersonId();
-    List<RFA1aForm> forms = dao.findAllByUser(100, staffPersonId);
+    String userId = PrincipalUtils.getPrincipal().getUser();
+    List<RFA1aForm> forms = dao.findAllByUser(100, userId);
     List<RFA1aFormDTO> formDTOs;
     if (expanded) {
       formDTOs = rfa1aFormMapper.toExpandedRFA1aFormsDTO(forms);

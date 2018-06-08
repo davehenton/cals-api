@@ -1,0 +1,143 @@
+{
+  "facility_name" : "ALn, AFn",
+  "rfa_1a_id" : $formId,
+  "tracking_documents" : {
+    "facility_documents" : {
+      "family_documents" : {
+        "items" : [ {
+          "title" : "RFA Application (RFA 01A)",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Verification of Income",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Disclosure of Expenses",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Verification of Property",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Home Environment Checklist (RFA-03)",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Reference Letter #1",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Reference Letter #2",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Reference Letter #3 (if applicable)",
+          "notes" : "",
+          "checked" : false
+        } ]
+      },
+      "tasks_and_trainings" : {
+        "items" : [ {
+          "title" : "Attended Orientation Meeting",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Risk Assessment",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Home Environment Checklist (RFA-03)",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Pre-Service Training",
+          "notes" : "",
+          "checked" : false
+        } ]
+      },
+      "assessments" : {
+        "items" : [ {
+          "title" : "Family Evaluation",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Written Report",
+          "notes" : "",
+          "checked" : false
+        }, {
+          "title" : "Acknowledgement of Written Report",
+          "notes" : "",
+          "checked" : false
+        } ]
+      }
+    },
+    "people_documents" : [ {
+      "person_id" : $personId,
+      "person_name" : "AFn ALn",
+      "person_type" : "Applicant",
+      "person_documents" : {
+        "individual_documents" : {
+          "items" : [ {
+            "title" : "Criminal Record Statement (RFA-01B)",
+            "notes" : "",
+            "checked" : false
+          }, {
+            "title" : "Health Questionnaire (RFA-07)",
+            "notes" : "",
+            "checked" : false
+          }, {
+            "title" : "TB Questionnaire (RFA-08)",
+            "notes" : "",
+            "checked" : false
+          }, {
+            "title" : "Employment Verification",
+            "notes" : "",
+            "checked" : false
+          }, {
+            "title" : "Proof of Identity",
+            "notes" : "",
+            "checked" : false
+          } ]
+        },
+        "trainings" : {
+          "items" : [ {
+            "title" : "CPR Training",
+            "notes" : "",
+            "checked" : false
+          }, {
+            "title" : "First Aid Training",
+            "notes" : "",
+            "checked" : false
+          } ]
+        },
+        "clearances" : {
+          "items" : [ {
+            "title" : "Criminal Background Checklist (RFA-02)",
+            "notes" : "",
+            "checked" : false
+          }, {
+            "title" : "DMV Reports",
+            "notes" : "",
+            "checked" : false
+          }, {
+            "title" : "Exemption Needed (if applicable)",
+            "notes" : "",
+            "checked" : false
+          }, {
+            "title" : "Previous Associations (if applicable)",
+            "notes" : "",
+            "checked" : false
+          }, {
+            "title" : "Legal Consult Needed (if applicable)",
+            "notes" : "",
+            "checked" : false
+          } ]
+        }
+      }
+    } ]
+  },
+  "create_user_id" : "Onotole",
+  "update_user_id" : "Onotole"
+}
