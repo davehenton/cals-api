@@ -3,6 +3,7 @@ package gov.ca.cwds.cals.web.rest.parameter;
 import java.io.Serializable;
 
 public class TrackingParameterObject implements Serializable {
+
   private Long formId;
   private Long trackingId;
 

@@ -1,1 +1,10 @@
-{ "user": "Onotole2",  "staffId": "0X6",  "county_code": "99",  "county_cws_code": "1126",  "county_name": "State of California",  "privileges": ["Resource Management"]}
+{
+  "user": "Onotole2",
+  "staffId": "0X6",
+  "county_code": "99",
+  "county_cws_code": "1126",
+  "county_name": "State of California",
+  "privileges": [
+    "Resource Management"
+  ]
+}

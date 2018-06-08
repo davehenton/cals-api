@@ -1,0 +1,33 @@
+{
+  "complaints": [
+    {
+      "id": "32-CR-RPET-747MHV-20070615093707",
+      "complaint_date": "2007-06-15 00:00:00",
+      "assigned_worker": "Mullah Mahaboob",
+      "control_number": "32-CR-20070615093707",
+      "priority_level": "3",
+      "status": "Approved",
+      "approval_date": "2007-10-22 09:47:34",
+      "pre_investigation_comments": "",
+      "post_investigation_comments": "",
+      "contact_summary": "",
+      "followup_comments": "",
+      "allegations": [
+        {
+          "complaint_code": "3",
+          "allegation": "",
+          "resolution_code_sub": "",
+          "resolution_code_insub": "",
+          "resolution_code_unsub": "U"
+        },
+        {
+          "complaint_code": "3",
+          "allegation": "",
+          "resolution_code_sub": "",
+          "resolution_code_insub": "",
+          "resolution_code_unsub": "U"
+        }
+      ]
+    }
+  ]
+}

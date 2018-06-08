@@ -1,7 +1,8 @@
 package gov.ca.cwds.cals.persistence.dao.fas;
 
+import static gov.ca.cwds.cals.util.CrlfInjectionUtil.sanitizeParameter;
+
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.FasSessionFactory;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.data.BaseDaoImpl;
 import java.util.List;
@@ -17,15 +18,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author CWDS CALS API Team
  */
-public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802> {
+public abstract class BaseComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ComplaintReportLic802Dao.class);
+  private static final Logger LOG = LoggerFactory.getLogger(BaseComplaintReportLic802Dao.class);
 
   @Inject
-  public ComplaintReportLic802Dao(@FasSessionFactory SessionFactory sessionFactory) {
+  public BaseComplaintReportLic802Dao(SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 
+  /**
+   * Finds complaints by facility number.
+   */
   public List<ComplaintReportLic802> findComplaintsByFacilityNumber(String facilityNumber) {
     Session session = getSessionFactory().getCurrentSession();
     Class<ComplaintReportLic802> entityClass = getEntityClass();
@@ -35,6 +39,9 @@ public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802>
     return query.getResultList();
   }
 
+  /**
+   * Finds complaint by facility number and complaint id.
+   */
   public ComplaintReportLic802 findComplaintByFacilityIdAndComplaintId(
       String facilityId, String complaintId) {
     Session session = getSessionFactory().getCurrentSession();
@@ -49,7 +56,8 @@ public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802>
       res = query.getSingleResult();
     } catch (NoResultException e) {
       LOG.warn(
-          "There is no result for facilityNumber: {} and complaintId: {}", facilityId, complaintId);
+          "There is no result for facilityNumber: {} and complaintId: {}",
+          sanitizeParameter(facilityId), sanitizeParameter(complaintId));
       LOG.debug(e.getMessage(), e);
     }
     return res;

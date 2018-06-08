@@ -3,7 +3,7 @@ package gov.ca.cwds.cals.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.service.ChildAssignedWorkerService;
-import gov.ca.cwds.cals.service.ComplaintService;
+import gov.ca.cwds.cals.service.ComplaintsService;
 import gov.ca.cwds.cals.service.CountiesService;
 import gov.ca.cwds.cals.service.CwsFacilityService;
 import gov.ca.cwds.cals.service.DictionariesService;
@@ -78,7 +78,7 @@ public class ServicesModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    bind(ComplaintService.class);
+    bind(ComplaintsService.class).toProvider(ComplaintsServiceProvider.class);
     bind(FacilityInspectionCollectionService.class);
     bind(FacilityInspectionService.class);
     bind(CountiesService.class);

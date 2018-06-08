@@ -24,6 +24,7 @@ import gov.ca.cwds.rest.services.CrudsService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * CRUD service for {@link gov.ca.cwds.cals.service.dto.FacilityDTO}.
@@ -74,7 +75,8 @@ public class FacilityService implements CrudsService {
 
   private FacilityDTO loadFacilityFromLis(FacilityParameterObject parameterObject) {
     Optional<FacilityDTO> facilityDto = lisFacilityService.loadFacilityFromLis(parameterObject);
-    return facilityDto.map(facility -> enrichFacilityWithFasData(parameterObject, facility)).orElse(null);
+    return facilityDto.map(facility -> enrichFacilityWithFasData(parameterObject, facility))
+        .orElse(null);
   }
 
   private FacilityDTO enrichFacilityWithFasData(FacilityParameterObject parameterObject,
@@ -91,7 +93,7 @@ public class FacilityService implements CrudsService {
               Integer.valueOf(parameterObject.getFacilityId()));
       List<FacilityInspectionDTO> inspections =
           fasFacilityService.findInspectionsByFacilityId(parameterObject.getFacilityId());
-      List<ComplaintDTO> complaints =
+      Set<ComplaintDTO> complaints =
           fasFacilityService.findComplaintsByFacilityId(parameterObject.getFacilityId());
       facilityDto =
           facilityMapper.toExpandedFacilityDTO(
@@ -108,7 +110,7 @@ public class FacilityService implements CrudsService {
           parameterObject.getFacilityId());
       List<FacilityInspectionDTO> inspections = fasFacilityService.findInspectionsByFacilityId(
           facilityDto.getLicenseNumber());
-      List<ComplaintDTO> complaints = fasFacilityService.findComplaintsByFacilityId(
+      Set<ComplaintDTO> complaints = fasFacilityService.findComplaintsByFacilityId(
           facilityDto.getLicenseNumber());
       facilityDto = facilityMapper
           .toExpandedFacilityDTO(facilityDto, facilityChildren, inspections, complaints);

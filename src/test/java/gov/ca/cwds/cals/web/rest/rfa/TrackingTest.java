@@ -56,7 +56,7 @@ public class TrackingTest extends BaseRFAIntegrationTest {
     Assert.assertNotNull(putTrackingResponse.getCreateDateTime());
     Assert.assertNotNull(putTrackingResponse.getUpdateDateTime());
 
-    Response response =  updateTracking(-1L, tracking);
+    Response response = updateTracking(-1L, tracking);
     Assert.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
   }
 
@@ -67,12 +67,12 @@ public class TrackingTest extends BaseRFAIntegrationTest {
     TrackingDTO tracking = trackingResponse.readEntity(TrackingDTO.class);
     // LicenseNumber 10 characters
     tracking.setLicenseNumber("1234567890");
-    Response response =  updateTracking(tracking);
+    Response response = updateTracking(tracking);
     Assert.assertEquals(HttpStatus.SC_OK, response.getStatus());
 
     // LicenseNumber more then 10 characters
     tracking.setLicenseNumber("12345678901");
-    response =  updateTracking(tracking);
+    response = updateTracking(tracking);
     Assert.assertEquals(HttpStatus.SC_UNPROCESSABLE_ENTITY, response.getStatus());
   }
 
@@ -87,7 +87,6 @@ public class TrackingTest extends BaseRFAIntegrationTest {
     return target.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(tracking, MediaType.APPLICATION_JSON_TYPE));
   }
-
 
 
   private FamilyDocumentsItemDTO getFirstFamilyDocumentsItem(TrackingDTO tracking) {

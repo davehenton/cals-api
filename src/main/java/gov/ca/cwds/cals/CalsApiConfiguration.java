@@ -8,6 +8,7 @@ import io.dropwizard.db.DataSourceFactory;
 public class CalsApiConfiguration extends BaseApiConfiguration {
 
   private DataSourceFactory fasDataSourceFactory;
+  private DataSourceFactory fasFfaDataSourceFactory;
   private DataSourceFactory lisDataSourceFactory;
   private DataSourceFactory calsnsDataSourceFactory;
   private DataSourceFactory cmsRsDataSourceFactory;
@@ -18,7 +19,6 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
   private boolean upgardeDbOnStart = false;
 
   private String dmsURI;
-
 
   @JsonProperty
   public DataSourceFactory getFasDataSourceFactory() {
@@ -95,5 +95,16 @@ public class CalsApiConfiguration extends BaseApiConfiguration {
   @JsonProperty
   public void setCmsRsDataSourceFactory(DataSourceFactory dataSourceFactory) {
     this.cmsRsDataSourceFactory = dataSourceFactory;
+  }
+
+  @JsonProperty
+  public DataSourceFactory getFasFfaDataSourceFactory() {
+    return fasFfaDataSourceFactory;
+  }
+
+  @JsonProperty
+  public void setFasFfaDataSourceFactory(
+      DataSourceFactory fasFfaDataSourceFactory) {
+    this.fasFfaDataSourceFactory = fasFfaDataSourceFactory;
   }
 }

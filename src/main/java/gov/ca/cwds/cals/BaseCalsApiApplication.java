@@ -1,5 +1,11 @@
 package gov.ca.cwds.cals;
 
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS_FFA;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
+
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -58,10 +64,11 @@ public abstract class BaseCalsApiApplication<T extends CalsApiConfiguration> ext
 
   private void runDataSourceHealthChecks(Environment environment) {
     HealthCheckRegistry healthCheckRegistry = environment.healthChecks();
-    doHealthCheck(healthCheckRegistry, Constants.UnitOfWork.CALSNS);
-    doHealthCheck(healthCheckRegistry, Constants.UnitOfWork.FAS);
-    doHealthCheck(healthCheckRegistry, Constants.UnitOfWork.LIS);
-    doHealthCheck(healthCheckRegistry, Constants.UnitOfWork.CMS);
+    doHealthCheck(healthCheckRegistry, CALSNS);
+    doHealthCheck(healthCheckRegistry, FAS);
+    doHealthCheck(healthCheckRegistry, FAS_FFA);
+    doHealthCheck(healthCheckRegistry, LIS);
+    doHealthCheck(healthCheckRegistry, CMS);
   }
 
   private void doHealthCheck(HealthCheckRegistry healthCheckRegistry, String key) {

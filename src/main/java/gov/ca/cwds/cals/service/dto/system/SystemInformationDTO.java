@@ -18,6 +18,7 @@ public class SystemInformationDTO extends BaseDTO {
   private HealthCheckResultDTO fas;
   private HealthCheckResultDTO lis;
   private HealthCheckResultDTO deadlocks;
+  private HealthCheckResultDTO fasFfa;
 
   public String getApplication() {
     return application;
@@ -81,5 +82,13 @@ public class SystemInformationDTO extends BaseDTO {
 
   public void setDeadlocks(HealthCheckResultDTO deadlocks) {
     this.deadlocks = deadlocks;
+  }
+
+  public void setFasFfa(HealthCheckResultDTO fasFfa) {
+    this.fasFfa = fasFfa;
+  }
+
+  public HealthCheckResultDTO getFasFfa() {
+    return fasFfa;
   }
 }

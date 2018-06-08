@@ -4,6 +4,7 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.CALSNS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.CMS_RS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
+import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS_FFA;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.LIS;
 import static gov.ca.cwds.cals.Constants.UnitOfWork.XA_CALSNS;
 
@@ -110,9 +111,7 @@ import gov.ca.cwds.data.legacy.cms.entity.syscodes.Religion;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.SecondaryAssignmentRoleType;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.State;
 import gov.ca.cwds.data.legacy.cms.entity.syscodes.VisitType;
-import gov.ca.cwds.inject.CmsHibernateBundle;
 import gov.ca.cwds.inject.CmsSessionFactory;
-import gov.ca.cwds.inject.CwsRsHibernateBundle;
 import gov.ca.cwds.inject.CwsRsSessionFactory;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
@@ -141,6 +140,9 @@ public class DataAccessModule extends AbstractModule {
       Rr809Dn.class
   ).build();
 
+  private final ImmutableList<Class<?>> fasFfaEntities = ImmutableList.<Class<?>>builder().add(
+      ComplaintReportLic802.class
+  ).build();
 
   private final ImmutableList<Class<?>> cmsEntities = ImmutableList.<Class<?>>builder().add(
       ChildPlacementInformation.class,
@@ -280,6 +282,19 @@ public class DataAccessModule extends AbstractModule {
         }
       };
 
+  private final HibernateBundle<CalsApiConfiguration> fasFfaHibernateBundle =
+      new HibernateBundle<CalsApiConfiguration>(fasFfaEntities, new SessionFactoryFactory()) {
+        @Override
+        public PooledDataSourceFactory getDataSourceFactory(CalsApiConfiguration configuration) {
+          return configuration.getFasFfaDataSourceFactory();
+        }
+
+        @Override
+        public String name() {
+          return FAS_FFA;
+        }
+      };
+
   private final HibernateBundle<CalsApiConfiguration> cmsHibernateBundle =
       new HibernateBundle<CalsApiConfiguration>(cmsEntities, new SessionFactoryFactory()) {
         @Override
@@ -346,6 +361,7 @@ public class DataAccessModule extends AbstractModule {
 
   public DataAccessModule(Bootstrap<? extends CalsApiConfiguration> bootstrap) {
     bootstrap.addBundle(fasHibernateBundle);
+    bootstrap.addBundle(fasFfaHibernateBundle);
     bootstrap.addBundle(cmsHibernateBundle);
     bootstrap.addBundle(cmsRsHibernateBundle);
     bootstrap.addBundle(lisHibernateBundle);
@@ -361,11 +377,12 @@ public class DataAccessModule extends AbstractModule {
   @Provides
   UnitOfWorkAwareProxyFactory provideUnitOfWorkAwareProxyFactory() {
     return new UnitOfWorkAwareProxyFactory(
-        getLisHibernateBundle(),
-        getFasHibernateBundle(),
-        getCmsHibernateBundle(),
-        getCalsnsHibernateBundle(),
-        getXaCalsnsHibernateBundle());
+        lisHibernateBundle,
+        fasHibernateBundle,
+        fasFfaHibernateBundle,
+        cmsHibernateBundle,
+        calsnsHibernateBundle,
+        xaCalsnsHibernateBundle);
   }
 
   @Provides
@@ -405,39 +422,9 @@ public class DataAccessModule extends AbstractModule {
   }
 
   @Provides
-  @FasHibernateBundle
-  public HibernateBundle<CalsApiConfiguration> getFasHibernateBundle() {
-    return fasHibernateBundle;
-  }
-
-  @Provides
-  @CmsHibernateBundle
-  public HibernateBundle<CalsApiConfiguration> getCmsHibernateBundle() {
-    return cmsHibernateBundle;
-  }
-
-  @Provides
-  @CwsRsHibernateBundle
-  public HibernateBundle<CalsApiConfiguration> getCmsRsHibernateBundle() {
-    return cmsRsHibernateBundle;
-  }
-
-  @Provides
-  @LisHibernateBundle
-  public HibernateBundle<CalsApiConfiguration> getLisHibernateBundle() {
-    return lisHibernateBundle;
-  }
-
-  @Provides
-  @CalsnsHibernateBundle
-  public HibernateBundle<CalsApiConfiguration> getCalsnsHibernateBundle() {
-    return calsnsHibernateBundle;
-  }
-
-  @Provides
-  @XaCalsnsHibernateBundle
-  public HibernateBundle<CalsApiConfiguration> getXaCalsnsHibernateBundle() {
-    return xaCalsnsHibernateBundle;
+  @FasFfaSessionFactory
+  SessionFactory fasFfaSessionFactory() {
+    return fasFfaHibernateBundle.getSessionFactory();
   }
 
 }

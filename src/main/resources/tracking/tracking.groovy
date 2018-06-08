@@ -3,11 +3,13 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate
 
 Map<String, TrackingTemplate> templatesMap = templates.collectEntries { [it.templateType, it] }
-Map<String, TrackingTemplate> defaultTemplatesMap = defaultTemplates.collectEntries { [it.templateType, it] }
+Map<String, TrackingTemplate> defaultTemplatesMap = defaultTemplates.collectEntries {
+    [it.templateType, it]
+}
 
 def getTemplateJson = { name ->
     def template = templatesMap[name]
-    return template ? template.templateJson :  defaultTemplatesMap[name].templateJson
+    return template ? template.templateJson : defaultTemplatesMap[name].templateJson
 }
 
 def trackingDocuments = [

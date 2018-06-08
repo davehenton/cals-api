@@ -18,6 +18,7 @@ import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
@@ -92,7 +93,7 @@ public interface FacilityMapper {
 
   ExpandedFacilityDTO toExpandedFacilityDTO(FacilityDTO facilityDTO,
       List<FacilityChildDTO> children, List<FacilityInspectionDTO> inspections,
-      List<ComplaintDTO> complaints);
+      Set<ComplaintDTO> complaints);
 
   @AfterMapping
   default void after(
