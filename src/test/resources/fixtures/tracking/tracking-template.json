@@ -1,8 +1,8 @@
 {
-  "county" : {
-    "value" : "Sacramento",
-    "id" : 34
+  "county": {
+    "value": "Sacramento",
+    "id": 34
   },
-  "template_type" : "TestType",
-  "template_json" : { }
+  "template_type": "TestType",
+  "template_json": {}
 }
