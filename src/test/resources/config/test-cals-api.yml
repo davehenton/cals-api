@@ -39,14 +39,32 @@ fasDataSourceFactory:
   url: jdbc:h2:mem:fas;INIT=create schema if not exists fas\;set schema fas
   validationQuery: "/* MyService Health Check */ SELECT 1"
   logValidationErrors: true
-  initialSize: ${DB_NS_CP_INITIAL_SIZE:-2}
-  minSize: ${DB_NS_CP_MIN_SIZE:-2}
-  maxSize: ${DB_NS_CP_MAX_SIZE:-8}
+  initialSize: 2
+  minSize: 2
+  maxSize: 8
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
+      hibernate.default_schema: fas
+
+fasFfaDataSourceFactory:
+  driverClass: org.h2.Driver
+  user: sa
+  password:
+  url: jdbc:h2:mem:fas;INIT=create schema if not exists fas_ffa\;set schema fas_ffa
+  validationQuery: "SELECT 1"
+  logValidationErrors: true
+  initialSize: 0
+  minSize: 0
+  maxSize: 8
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
+      hibernate.id.new_generator_mappings: false
+      hibernate.show_sql: false
+      hibernate.default_schema: fas_ffa
 
 cmsRsDataSourceFactory:
   driverClass: org.h2.Driver

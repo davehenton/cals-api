@@ -4,7 +4,6 @@ import static gov.ca.cwds.cals.Constants.UnitOfWork.FAS;
 
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.Constants;
-import gov.ca.cwds.cals.persistence.dao.fas.ComplaintReportLic802Dao;
 import gov.ca.cwds.cals.persistence.dao.fas.FacilityInformationDao;
 import gov.ca.cwds.cals.persistence.dao.fas.InspectionDao;
 import gov.ca.cwds.cals.persistence.dao.fas.LpaInformationDao;
@@ -19,6 +18,7 @@ import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import io.dropwizard.hibernate.UnitOfWork;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class FasFacilityService {
   private InspectionDao inspectionDao;
 
   @Inject
-  private ComplaintReportLic802Dao complaintReportLic802Dao;
+  private ComplaintsService complaintsService;
 
   @Inject
   private FacilityInspectionMapper facilityInspectionMapper;
@@ -75,14 +75,11 @@ public class FasFacilityService {
     return Collections.emptyList();
   }
 
-  @UnitOfWork(FAS)
-  List<ComplaintDTO> findComplaintsByFacilityId(String licenseNumber) {
+  Set<ComplaintDTO> findComplaintsByFacilityId(String licenseNumber) {
     if (StringUtils.isNotBlank(licenseNumber)) {
-      return complaintReportLic802Dao
-          .findComplaintsByFacilityNumber(licenseNumber).stream()
-          .map(complaintMapper::entityToDTO).collect(Collectors.toList());
+      return complaintsService.getComplaintsByFacilityId(licenseNumber);
     }
-    return Collections.emptyList();
+    return Collections.emptySet();
   }
 
 }

@@ -1,7 +1,6 @@
 package gov.ca.cwds.cals.persistence.dao.fas;
 
 import com.google.inject.Inject;
-import gov.ca.cwds.cals.inject.FasSessionFactory;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.data.BaseDaoImpl;
 import java.util.List;
@@ -17,12 +16,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author CWDS CALS API Team
  */
-public class ComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802> {
+public abstract class BaseComplaintReportLic802Dao extends BaseDaoImpl<ComplaintReportLic802> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ComplaintReportLic802Dao.class);
+  private static final Logger LOG = LoggerFactory.getLogger(BaseComplaintReportLic802Dao.class);
 
   @Inject
-  public ComplaintReportLic802Dao(@FasSessionFactory SessionFactory sessionFactory) {
+  public BaseComplaintReportLic802Dao(SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 

@@ -5,8 +5,6 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import gov.ca.cwds.cals.Constants.DictionaryType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
-import gov.ca.cwds.cals.service.ComplaintService;
-import gov.ca.cwds.cals.service.ComplaintsCollectionService;
 import gov.ca.cwds.cals.service.DictionariesService;
 import gov.ca.cwds.cals.service.FacilityChildCollectionService;
 import gov.ca.cwds.cals.service.FacilityChildService;
@@ -140,19 +138,6 @@ public class ResourcesModule extends AbstractModule {
   public ResourceDelegate facilityChildServiceCollectionBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
         injector.getInstance(FacilityChildCollectionService.class));
-  }
-
-  @Provides
-  @ComplaintsCollectionServiceBackedResource
-  public ResourceDelegate complaintsCollectionServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
-        injector.getInstance(ComplaintsCollectionService.class));
-  }
-
-  @Provides
-  @ComplaintServiceBackedResource
-  public ResourceDelegate complaintServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(ComplaintService.class));
   }
 
   @Provides

@@ -262,6 +262,8 @@ public final class Constants {
 
     public static final String FAS = "fas";
 
+    public static final String FAS_FFA = "fas_ffa";
+
     public static final String LIS = "lis";
 
     public static final String CMS = "cwscms";

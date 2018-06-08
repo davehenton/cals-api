@@ -1,17 +1,16 @@
 package gov.ca.cwds.cals.web.rest.system;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import gov.ca.cwds.cals.BaseCalsApiIntegrationTest;
 import gov.ca.cwds.cals.Constants;
 import gov.ca.cwds.cals.service.dto.system.HealthCheckResultDTO;
 import gov.ca.cwds.cals.service.dto.system.SystemInformationDTO;
-import org.junit.Test;
-
-import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import javax.ws.rs.core.MediaType;
+import org.junit.Test;
 
 public class SystemInformationResourceTest extends BaseCalsApiIntegrationTest {
 
@@ -26,6 +25,7 @@ public class SystemInformationResourceTest extends BaseCalsApiIntegrationTest {
     assertDataSource(systemInformationDTO.getCalsns());
     assertDataSource(systemInformationDTO.getCwscms());
     assertDataSource(systemInformationDTO.getFas());
+    assertDataSource(systemInformationDTO.getFasFfa());
     assertDataSource(systemInformationDTO.getLis());
   }
 
