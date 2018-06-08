@@ -12,7 +12,6 @@ import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.FacilityInspectionDTO;
-import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
 import gov.ca.cwds.cals.web.rest.parameter.FacilityParameterObject;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -45,9 +44,6 @@ public class FasFacilityService {
 
   @Inject
   private FacilityInspectionMapper facilityInspectionMapper;
-
-  @Inject
-  private ComplaintMapper complaintMapper;
 
   @UnitOfWork(FAS)
   FacilityInformation findFacilityInfoByLicenseNumber(

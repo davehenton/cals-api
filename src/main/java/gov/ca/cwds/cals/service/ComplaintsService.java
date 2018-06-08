@@ -98,8 +98,10 @@ public class ComplaintsService {
       }
       if (complaint2.getComplaintDate().isAfter(complaint1.getComplaintDate())) {
         return 1;
-      } else {
+      } else if (complaint2.getComplaintDate().isBefore(complaint1.getComplaintDate())) {
         return -1;
+      } else {
+        return 0;
       }
     }
   }

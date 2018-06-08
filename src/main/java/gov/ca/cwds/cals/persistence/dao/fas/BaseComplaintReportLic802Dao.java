@@ -1,5 +1,7 @@
 package gov.ca.cwds.cals.persistence.dao.fas;
 
+import static gov.ca.cwds.cals.util.CrlfInjectionUtil.sanitizeParameter;
+
 import com.google.inject.Inject;
 import gov.ca.cwds.cals.persistence.model.fas.ComplaintReportLic802;
 import gov.ca.cwds.data.BaseDaoImpl;
@@ -54,7 +56,8 @@ public abstract class BaseComplaintReportLic802Dao extends BaseDaoImpl<Complaint
       res = query.getSingleResult();
     } catch (NoResultException e) {
       LOG.warn(
-          "There is no result for facilityNumber: {} and complaintId: {}", facilityId, complaintId);
+          "There is no result for facilityNumber: {} and complaintId: {}",
+          sanitizeParameter(facilityId), sanitizeParameter(complaintId));
       LOG.debug(e.getMessage(), e);
     }
     return res;
