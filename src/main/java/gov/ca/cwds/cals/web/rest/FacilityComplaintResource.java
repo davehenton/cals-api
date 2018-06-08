@@ -28,6 +28,7 @@ import javax.ws.rs.core.Response;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 /**
+ * Resource for handling facility complaints functionality.
  * @author CWDS CALS API Team
  */
 
@@ -50,10 +51,10 @@ public class FacilityComplaintResource {
   public Response getFacilityComplaintsByFacilityId(
       @PathParam(FACILITY_ID) @ApiParam(required = true, name = FACILITY_ID,
           value = "The id of the Facility") String facilityId) {
-    ComplaintsDTO complaintsDTO = new ComplaintsDTO();
+    ComplaintsDTO complaintsDto = new ComplaintsDTO();
     Set<ComplaintDTO> complaints = complaintService.getComplaintsByFacilityId(facilityId);
-    complaintsDTO.setComplaints(complaints);
-    return DefaultResponseHandler.get(complaintsDTO);
+    complaintsDto.setComplaints(complaints);
+    return DefaultResponseHandler.get(complaintsDto);
   }
 
   @UnitOfWork(FAS)

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Source code is copy-pasted from gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate
+ * Source code is copy-pasted from gov.ca.cwds.rest.resources.ServiceBackedResourceDelegate.
  * Created by Alexander Serbin on 6/6/2018.
  */
 public final class DefaultResponseHandler {
@@ -19,6 +19,9 @@ public final class DefaultResponseHandler {
   private DefaultResponseHandler() {
   }
 
+  /**
+   * Provides default REST GET handling for domain object.
+   */
   public static Response get(gov.ca.cwds.rest.api.Response response) {
     if (response != null) {
       return Response.ok(response).build();
@@ -27,6 +30,9 @@ public final class DefaultResponseHandler {
     }
   }
 
+  /**
+   * Provides default REST DELETE handling for domain object.
+   */
   public static Response delete(gov.ca.cwds.rest.api.Response response) {
     if (response != null) {
       return Response.status(Response.Status.OK).build();
@@ -35,6 +41,9 @@ public final class DefaultResponseHandler {
     }
   }
 
+  /**
+   * Provides default REST CREATE handling for domain object.
+   */
   public static Response create(gov.ca.cwds.rest.api.Response response) {
     Object entity;
     Response.Status responseStatus;
@@ -48,6 +57,9 @@ public final class DefaultResponseHandler {
     return Response.status(responseStatus).entity(entity).build();
   }
 
+  /**
+   *  Provides default REST UPDATE handling for domain object.
+   */
   public static Response update(gov.ca.cwds.rest.api.Response serviceResponse) {
     Response response;
     try {

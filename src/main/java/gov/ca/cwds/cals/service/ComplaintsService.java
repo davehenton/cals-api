@@ -22,6 +22,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
+ * Service to cover facility complaints functionality.
  * @author CWDS CALS API Team
  */
 
@@ -36,6 +37,9 @@ public class ComplaintsService {
   @Inject
   private ComplaintMapper complaintMapper;
 
+  /**
+   * Get complaints by facility id.
+   */
   public Set<ComplaintDTO> getComplaintsByFacilityId(String facilityNumber) {
     List<ComplaintReportLic802> facilityComplaints =
         aggregateComplaintsFromDifferentSources(facilityNumber);
@@ -47,6 +51,9 @@ public class ComplaintsService {
     return sortedSet;
   }
 
+  /**
+   * Get complaint by facility id and complaint id.
+   */
   public ComplaintDTO getComplaintByFacilityIdAndComplaintId(String facilityId,
       String complaintId) {
     ComplaintReportLic802 complaintReportLic802 = null;

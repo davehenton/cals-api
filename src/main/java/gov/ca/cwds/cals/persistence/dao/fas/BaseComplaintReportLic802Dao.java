@@ -25,6 +25,9 @@ public abstract class BaseComplaintReportLic802Dao extends BaseDaoImpl<Complaint
     super(sessionFactory);
   }
 
+  /**
+   * Finds complaints by facility number.
+   */
   public List<ComplaintReportLic802> findComplaintsByFacilityNumber(String facilityNumber) {
     Session session = getSessionFactory().getCurrentSession();
     Class<ComplaintReportLic802> entityClass = getEntityClass();
@@ -34,6 +37,9 @@ public abstract class BaseComplaintReportLic802Dao extends BaseDaoImpl<Complaint
     return query.getResultList();
   }
 
+  /**
+   * Finds complaint by facility number and complaint id.
+   */
   public ComplaintReportLic802 findComplaintByFacilityIdAndComplaintId(
       String facilityId, String complaintId) {
     Session session = getSessionFactory().getCurrentSession();
