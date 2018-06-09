@@ -19,9 +19,6 @@ checks:
     enabled: true
   identical-code:
     enabled: true
-  com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck:
-    enabled: false
-
 plugins:
   sonar-java:
     enabled: true
