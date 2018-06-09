@@ -43,6 +43,7 @@ import gov.ca.cwds.cals.service.rfa.RFA1cService;
 import gov.ca.cwds.cals.service.tracking.TrackingService;
 import gov.ca.cwds.cals.service.tracking.TrackingTemplateService;
 import gov.ca.cwds.cals.service.validation.business.configuration.ValidationConfigurationRegistryImpl;
+import gov.ca.cwds.cms.data.access.service.impl.StaffPersonService;
 import gov.ca.cwds.data.cms.SystemCodeDao;
 import gov.ca.cwds.data.cms.SystemMetaDao;
 import gov.ca.cwds.data.legacy.cms.dao.CountiesDao;
@@ -91,6 +92,7 @@ public class ServicesModule extends AbstractModule {
     bind(LisFacilityService.class).toProvider(LisFacilityServiceProvider.class);
     bind(FacilityParameterObjectBuilder.class);
     bind(ChildAssignedWorkerService.class);
+    bind(StaffPersonService.class);
 
     // RFA
     bind(RFA1aFormService.class).toProvider(RFA1aFormServiceProvider.class);

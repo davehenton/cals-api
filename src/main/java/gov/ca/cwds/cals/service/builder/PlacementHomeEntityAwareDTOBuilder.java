@@ -16,10 +16,12 @@ import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
 import gov.ca.cwds.cals.util.RfaAddressUtil;
 import gov.ca.cwds.cals.util.Utils.Applicant;
 import gov.ca.cwds.cms.data.access.CWSIdentifier;
+import gov.ca.cwds.cms.data.access.dto.CLCEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.OtherAdultInHomeEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.OtherChildInHomeEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.PlacementHomeEntityAwareDTO;
 import gov.ca.cwds.cms.data.access.dto.SCPEntityAwareDTO;
+import gov.ca.cwds.cms.data.access.service.impl.StaffPersonService;
 import gov.ca.cwds.data.legacy.cms.entity.CountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.EmergencyContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.OtherAdultsInPlacementHome;
@@ -28,6 +30,7 @@ import gov.ca.cwds.data.legacy.cms.entity.OtherPeopleScpRelationship;
 import gov.ca.cwds.data.legacy.cms.entity.OutOfStateCheck;
 import gov.ca.cwds.data.legacy.cms.entity.PhoneContactDetail;
 import gov.ca.cwds.data.legacy.cms.entity.PlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.StaffPerson;
 import gov.ca.cwds.data.legacy.cms.entity.SubstituteCareProvider;
 import gov.ca.cwds.security.utils.PrincipalUtils;
 import java.time.LocalDateTime;
@@ -63,6 +66,9 @@ public class PlacementHomeEntityAwareDTOBuilder {
 
   @Inject
   private CountyLicenseCaseMapper countyLicenseCaseMapper;
+
+  @Inject
+  private StaffPersonService staffPersonService;
 
   public PlacementHomeEntityAwareDTOBuilder() {
     placementHomeEntityAwareDTO = new PlacementHomeEntityAwareDTO();
@@ -247,8 +253,12 @@ public class PlacementHomeEntityAwareDTOBuilder {
   }
 
   public PlacementHomeEntityAwareDTOBuilder appendCountyLicenseCase() {
+    CLCEntityAwareDTO clcEntityAwareDTO = new CLCEntityAwareDTO();
+    Optional<StaffPerson> staffPerson = Optional.ofNullable(staffPersonService.find(PrincipalUtils.getStaffPersonId()));
     CountyLicenseCase countyLicenseCase = countyLicenseCaseMapper.toCountyLicenseCase(form);
-    placementHomeEntityAwareDTO.setCountyLicenseCase(countyLicenseCase);
+    staffPerson.ifPresent(staffPersonEntity -> countyLicenseCase.setStaffPerson(staffPersonEntity));
+    clcEntityAwareDTO.setEntity(countyLicenseCase);
+    placementHomeEntityAwareDTO.setCountyLicenseCase(clcEntityAwareDTO);
     return this;
   }
 }

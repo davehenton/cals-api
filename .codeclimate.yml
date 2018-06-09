@@ -4,25 +4,27 @@ prepare:
     - "https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml"
 checks:
   argument-count:
-    enabled: false
+    enabled: true
   complex-logic:
-    enabled: false
+    enabled: ture
   file-lines:
-    enabled: false
+    enabled: true
   method-complexity:
-    enabled: false
+    enabled: true
   method-count:
-    enabled: false
+    enabled: true
   method-lines:
-    enabled: false
+    enabled: true
   return-statements:
-    enabled: false
+    enabled: true
   identical-code:
-    enabled: false
+    enabled: true
   com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck:
-    enabled: false
+    enabled: true
     
 plugins:
+  sonar-java:
+    enabled: true
   checkstyle:
     enabled: true
     config:

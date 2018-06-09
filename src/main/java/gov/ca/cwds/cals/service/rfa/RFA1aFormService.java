@@ -183,7 +183,7 @@ public class RFA1aFormService
     PlacementHome storedPlacementHome = null;
 
     try {
-      storedPlacementHome = storePlaceMentHome(expandedFormDTO);
+      storedPlacementHome = storePlacementHome(expandedFormDTO);
       updateFormAfterPlacementHomeCreation(formId, storedPlacementHome.getIdentifier(),
           newStatus);
       userTransaction.commit();
@@ -225,7 +225,7 @@ public class RFA1aFormService
     return rfa1aFomMapper.toExpandedRFA1aFormDTO(form);
   }
 
-  private PlacementHome storePlaceMentHome(RFA1aFormDTO expandedFormDTO)
+  private PlacementHome storePlacementHome(RFA1aFormDTO expandedFormDTO)
       throws DataAccessServicesException {
     return facilityService.createPlacementHomeByRfaApplication(expandedFormDTO);
   }

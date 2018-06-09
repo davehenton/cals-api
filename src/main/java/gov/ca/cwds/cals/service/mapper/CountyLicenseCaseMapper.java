@@ -29,7 +29,8 @@ public interface CountyLicenseCaseMapper {
     @Mapping(target = "prtyInfo", constant = "")
     @Mapping(target = "trngCmplt", constant = "")
     @Mapping(target = "ffhType", constant = "3179")
-//    @Mapping(target = "staffPerson", expression = "java(PrincipalUtils.getStaffPersonId())")
-//    @Mapping(target = "cntySpfcd", expression = "java(new StaffPerson())")
+    @Mapping(target = "lstUpdId", expression = "java(PrincipalUtils.getStaffPersonId())")
+    @Mapping(target = "lstUpdTs", expression = "java(LocalDateTime.now())")
+    @Mapping(target = "cntySpfcd", expression = "java(PrincipalUtils.getPrincipal().getCountyCode())")
     CountyLicenseCase toCountyLicenseCase(RFA1aFormDTO form);
 }

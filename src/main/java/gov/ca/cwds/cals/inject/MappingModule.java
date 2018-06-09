@@ -2,6 +2,7 @@ package gov.ca.cwds.cals.inject;
 
 import com.google.inject.AbstractModule;
 import gov.ca.cwds.cals.service.mapper.ComplaintMapper;
+import gov.ca.cwds.cals.service.mapper.CountyLicenseCaseMapper;
 import gov.ca.cwds.cals.service.mapper.CountyMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityChildMapper;
 import gov.ca.cwds.cals.service.mapper.FacilityInspectionMapper;
@@ -51,6 +52,8 @@ public class MappingModule extends AbstractModule {
     bind(RFA1bFormMapper.class).to(RFA1bFormMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(RFA1cFormMapper.class).to(RFA1cFormMapper.INSTANCE.getClass())
+        .asEagerSingleton();
+    bind(CountyLicenseCaseMapper.class).to(CountyLicenseCaseMapper.INSTANCE.getClass())
         .asEagerSingleton();
 
   }
