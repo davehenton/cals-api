@@ -46,32 +46,31 @@ public abstract class BaseCalsApiIntegrationTest {
   public RestClientTestRule<CalsApiConfiguration> clientTestRule
       = new RestClientTestRule<>(appRule);
 
+  protected static DatabaseHelper getFasFfaDatabaseHelper() {
+    return createDatabaseHelper(appRule.getConfiguration().getFasFfaDataSourceFactory());
+  }
+
   protected static DatabaseHelper getFasDatabaseHelper() {
-    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getFasDataSourceFactory();
-    return new DatabaseHelper(
-        dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+    return createDatabaseHelper(appRule.getConfiguration().getFasDataSourceFactory());
   }
 
   protected static DatabaseHelper getCmsDatabaseHelper() {
-    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getXaCmsDataSourceFactory();
-    return new DatabaseHelper(
-        dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+    return createDatabaseHelper(appRule.getConfiguration().getXaCmsDataSourceFactory());
   }
 
   protected static DatabaseHelper getCmsRsDatabaseHelper() {
-    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCmsRsDataSourceFactory();
-    return new DatabaseHelper(
-        dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+    return createDatabaseHelper(appRule.getConfiguration().getCmsRsDataSourceFactory());
   }
 
   protected static DatabaseHelper getCalsnsDatabaseHelper() {
-    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getCalsnsDataSourceFactory();
-    return new DatabaseHelper(
-        dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
+    return createDatabaseHelper(appRule.getConfiguration().getCalsnsDataSourceFactory());
   }
 
   protected static DatabaseHelper getLisDatabaseHelper() {
-    DataSourceFactory dataSourceFactory = appRule.getConfiguration().getLisDataSourceFactory();
+    return createDatabaseHelper(appRule.getConfiguration().getLisDataSourceFactory());
+  }
+
+  private static DatabaseHelper createDatabaseHelper(DataSourceFactory dataSourceFactory) {
     return new DatabaseHelper(
         dataSourceFactory.getUrl(), dataSourceFactory.getUser(), dataSourceFactory.getPassword());
   }
@@ -79,6 +78,13 @@ public abstract class BaseCalsApiIntegrationTest {
   public static void setUpFas() throws Exception {
     if (!TestModeUtils.isIntegrationTestsMode()) {
       getFasDatabaseHelper().runScript("liquibase/fas_database_master.xml");
+    }
+  }
+
+  public static void setUpFasFfa() throws Exception {
+    if (!TestModeUtils.isIntegrationTestsMode()) {
+      getFasFfaDatabaseHelper().runScript(
+          "liquibase/fas_ffa_database_master.xml");
     }
   }
 

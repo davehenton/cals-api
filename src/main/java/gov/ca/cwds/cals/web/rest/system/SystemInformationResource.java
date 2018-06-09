@@ -6,6 +6,7 @@ import com.codahale.metrics.health.HealthCheck;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import gov.ca.cwds.cals.Constants;
+import gov.ca.cwds.cals.Constants.UnitOfWork;
 import gov.ca.cwds.cals.service.dto.system.HealthCheckResultDTO;
 import gov.ca.cwds.cals.service.dto.system.SystemInformationDTO;
 import io.dropwizard.setup.Environment;
@@ -46,7 +47,8 @@ public class SystemInformationResource {
    * @param applicationName The name of the application
    */
   @Inject
-  public SystemInformationResource(@Named("app.name") String applicationName, Environment environment) {
+  public SystemInformationResource(@Named("app.name") String applicationName,
+      Environment environment) {
     this.applicationName = applicationName;
     this.environment = environment;
     Properties versionProperties = getVersionProperties();
@@ -78,11 +80,19 @@ public class SystemInformationResource {
     systemInformationDTO.setVersion(version);
     systemInformationDTO.setBuildNumber(buildNumber);
 
-    SortedMap<String, HealthCheck.Result> healthChecks = environment.healthChecks().runHealthChecks();
-    systemInformationDTO.setCalsns(getHealthCheckResultDTO(healthChecks.get(Constants.UnitOfWork.CALSNS)));
-    systemInformationDTO.setCwscms(getHealthCheckResultDTO(healthChecks.get(Constants.UnitOfWork.CMS)));
-    systemInformationDTO.setFas(getHealthCheckResultDTO(healthChecks.get(Constants.UnitOfWork.FAS)));
-    systemInformationDTO.setLis(getHealthCheckResultDTO(healthChecks.get(Constants.UnitOfWork.LIS)));
+    SortedMap<String, HealthCheck.Result> healthChecks = environment.healthChecks()
+        .runHealthChecks();
+    systemInformationDTO
+        .setCalsns(getHealthCheckResultDTO(healthChecks.get(Constants.UnitOfWork.CALSNS)));
+    systemInformationDTO
+        .setCwscms(getHealthCheckResultDTO(healthChecks.get(Constants.UnitOfWork.CMS)));
+    systemInformationDTO
+        .setFas(getHealthCheckResultDTO(healthChecks.get(Constants.UnitOfWork.FAS)));
+
+    systemInformationDTO.setFasFfa(
+        getHealthCheckResultDTO(healthChecks.get(UnitOfWork.FAS_FFA)));
+    systemInformationDTO
+        .setLis(getHealthCheckResultDTO(healthChecks.get(Constants.UnitOfWork.LIS)));
     systemInformationDTO.setDeadlocks(getHealthCheckResultDTO(healthChecks.get("deadlocks")));
 
     return systemInformationDTO;

@@ -24,6 +24,7 @@ import org.junit.Test;
 public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
 
   private static final String FACILITY_ID = "100001317";
+  private static final String FFA_FACILITY_ID = "111111111";
   private static final String ALPHANUMERICAL_FACILITY_ID = "EEwv7B3197";
   private static final String WRONG_FACILITY_ID = "-1";
   private static final String COMPLAINT_ID = "24-CR-241214-20050106141240";
@@ -37,17 +38,19 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
   @BeforeClass
   public static void beforeClass() throws Exception {
     setUpFas();
+    setUpFasFfa();
   }
 
   @Test
   public void getAllFacilityComplaintsTest() throws Exception {
-    WebTarget target = clientTestRule
-        .target(FACILITIES + "/" + FACILITY_ID + "/" + Constants.API.COMPLAINTS);
-    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
-    ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
+    checkComplaintsByFacilityId(FACILITY_ID,
+        "fixtures/facility/complaints-response.json");
+  }
 
-    String fixture = fixture("fixtures/facility/complaints-response.json");
-    assertEqualsResponse(fixture, transformDTOtoJSON(complaintsDTO));
+  @Test
+  public void getFfaFacilityComplaintsTest() throws Exception {
+    checkComplaintsByFacilityId(FFA_FACILITY_ID,
+        "fixtures/facility/complaints-ffa-response.json");
   }
 
   @Test
@@ -56,7 +59,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
         .target(FACILITIES + "/" + ALPHANUMERICAL_FACILITY_ID + "/" + Constants.API.COMPLAINTS);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     Response response = invocation.get();
-    assertEquals(404, response.getStatus());
+    assertEquals(200, response.getStatus());
   }
 
   @Test
@@ -65,7 +68,7 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
         .target(FACILITIES + "/" + WRONG_FACILITY_ID + "/" + Constants.API.COMPLAINTS);
     Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
     Response response = invocation.get();
-    assertEquals(404, response.getStatus());
+    assertEquals(200, response.getStatus());
   }
 
   @Test
@@ -143,6 +146,16 @@ public class FacilityComplaintResourceTest extends BaseCalsApiIntegrationTest {
     JsonIdentityAuthParams params = new JsonIdentityAuthParams(fixture(principalJsonPath));
     WebTarget target = clientTestRule.target(pathInfo, params);
     return target.request(MediaType.APPLICATION_JSON).get();
+  }
+
+  private void checkComplaintsByFacilityId(String facilityId, String fixturePath) throws Exception {
+    WebTarget target = clientTestRule
+        .target(FACILITIES + "/" + facilityId + "/" + Constants.API.COMPLAINTS);
+    Invocation.Builder invocation = target.request(MediaType.APPLICATION_JSON);
+    ComplaintsDTO complaintsDTO = invocation.get(ComplaintsDTO.class);
+
+    String fixture = fixture(fixturePath);
+    assertEqualsResponse(fixture, transformDTOtoJSON(complaintsDTO));
   }
 
 }

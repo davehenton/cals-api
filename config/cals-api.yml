@@ -76,7 +76,24 @@ fasDataSourceFactory:
       hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
       hibernate.id.new_generator_mappings: false
       hibernate.show_sql: false
-      hibernate.default_schema: ${DB_FAS_DEFAULT_SCHEMA:-fas}
+      hibernate.default_schema: fas
+
+fasFfaDataSourceFactory:
+  driverClass: org.postgresql.Driver
+  user: ${DB_FAS_USER:-postgres_data}
+  password: ${DB_FAS_PASSWORD:-postgres_data}
+  url: ${DB_FAS_FFA_JDBC_URL:-jdbc:postgresql://192.168.99.100:5432/postgres_data}
+  validationQuery: "SELECT 1"
+  logValidationErrors: true
+  initialSize: 0
+  minSize: 0
+  maxSize: ${DB_FAS_CP_MAX_SIZE:-8}
+  minIdleTime: 1 minute
+  properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
+      hibernate.id.new_generator_mappings: false
+      hibernate.show_sql: false
+      hibernate.default_schema: fas_ffa
 
 calsnsDataSourceFactory:
   driverClass: org.postgresql.Driver

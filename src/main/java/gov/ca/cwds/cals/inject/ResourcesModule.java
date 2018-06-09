@@ -7,8 +7,6 @@ import gov.ca.cwds.cals.Constants.DictionaryType;
 import gov.ca.cwds.cals.persistence.model.calsns.dictionaries.BaseDictionary;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.Tracking;
 import gov.ca.cwds.cals.persistence.model.calsns.tracking.TrackingTemplate;
-import gov.ca.cwds.cals.service.ComplaintService;
-import gov.ca.cwds.cals.service.ComplaintsCollectionService;
 import gov.ca.cwds.cals.service.DictionariesService;
 import gov.ca.cwds.cals.service.FacilityChildCollectionService;
 import gov.ca.cwds.cals.service.FacilityChildService;
@@ -30,6 +28,7 @@ import gov.ca.cwds.cals.service.dto.rfa.RFA1cFormDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.dto.rfa.lic198b.LIC198bFormDTO;
+import gov.ca.cwds.cals.service.dto.tracking.TrackingDTO;
 import gov.ca.cwds.cals.service.rfa.LIC198bCollectionService;
 import gov.ca.cwds.cals.service.rfa.LIC198bService;
 import gov.ca.cwds.cals.service.rfa.RFA1aAdoptionHistoryService;
@@ -155,19 +154,6 @@ public class ResourcesModule extends AbstractModule {
   }
 
   @Provides
-  @ComplaintsCollectionServiceBackedResource
-  public ResourceDelegate complaintsCollectionServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(
-        injector.getInstance(ComplaintsCollectionService.class));
-  }
-
-  @Provides
-  @ComplaintServiceBackedResource
-  public ResourceDelegate complaintServiceBackedResource(Injector injector) {
-    return new ServiceBackedResourceDelegate(injector.getInstance(ComplaintService.class));
-  }
-
-  @Provides
   @FacilityInspectionCollectionServiceBackedResource
   public ResourceDelegate facilityInspectionCollectionServiceBackedResource(Injector injector) {
     return new ServiceBackedResourceDelegate(
@@ -237,7 +223,7 @@ public class ResourcesModule extends AbstractModule {
 
   @Provides
   @RFA1aTrackingServiceBackedResource
-  public TypedResourceDelegate<TrackingParameterObject, Tracking> trackingServiceBackedResource(
+  public TypedResourceDelegate<TrackingParameterObject, TrackingDTO> trackingServiceBackedResource(
       Injector injector) {
     RFA1aTrackingService trackingService = injector.getInstance(RFA1aTrackingService.class);
     return new TypedServiceBackedResourceDelegate<>(trackingService);

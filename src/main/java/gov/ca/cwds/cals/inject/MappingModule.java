@@ -15,6 +15,7 @@ import gov.ca.cwds.cals.service.mapper.RFA1aFormMapper;
 import gov.ca.cwds.cals.service.mapper.RFA1bFormMapper;
 import gov.ca.cwds.cals.service.mapper.RFA1cFormMapper;
 import gov.ca.cwds.cals.service.mapper.SubstituteCareProviderMapper;
+import gov.ca.cwds.cals.service.mapper.TrackingMapper;
 
 /**
  * DI (dependency injection) setup for mapping classes.
@@ -52,6 +53,8 @@ public class MappingModule extends AbstractModule {
     bind(RFA1bFormMapper.class).to(RFA1bFormMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(RFA1cFormMapper.class).to(RFA1cFormMapper.INSTANCE.getClass())
+        .asEagerSingleton();
+    bind(TrackingMapper.class).to(TrackingMapper.INSTANCE.getClass())
         .asEagerSingleton();
     bind(CountyLicenseCaseMapper.class).to(CountyLicenseCaseMapper.INSTANCE.getClass())
         .asEagerSingleton();
