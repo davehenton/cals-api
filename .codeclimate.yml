@@ -6,7 +6,7 @@ checks:
   argument-count:
     enabled: true
   complex-logic:
-    enabled: ture
+    enabled: true
   file-lines:
     enabled: true
   method-complexity:
