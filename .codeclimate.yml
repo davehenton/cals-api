@@ -20,8 +20,6 @@ checks:
   identical-code:
     enabled: false
 plugins:
-  sonar-java:
-    enabled: true
   checkstyle:
     enabled: true
     config:
