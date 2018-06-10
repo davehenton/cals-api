@@ -183,6 +183,25 @@ end
 
 /*
 _More About Applicant Card_
+- Date of Birth
+*/
+rule "Validate that Gender is present"
+      dialect "mvel"
+  agenda-group "form-submission-validation"
+  when
+    $form : RFA1aFormDTO();
+    $applicant : ApplicantDTO(gender == null) from $form.applicants;
+  then
+    IssueDetails details = new IssueDetails();
+    details.setProperty("rfa1a.applicant[id="+$applicant.getId()+"].gender");
+    details.setCode(Code.REQUIRED_APPLICANT_GENDER);
+    details.setUserMessage(String.format(Business.REQUIRED_FIELD_MESSAGE, "Applicant's Gender"));
+    details.setTechnicalMessage("RFA_1a Form: " + $form.toString());
+    validationDetailsList.add(details);
+end
+
+/*
+_More About Applicant Card_
 - Drivers License State (Note: The Drivers License Number and Drivers License State have already been coded to show conditional required for State when Licence Number is entered)
 */
 rule "Validate that Drivers License State is present"
