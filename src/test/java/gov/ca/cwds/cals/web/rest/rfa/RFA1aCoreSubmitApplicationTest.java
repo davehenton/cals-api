@@ -83,8 +83,8 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId());
     testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId(), form);
 
-    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[0]);
-    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[1]);
+//    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[0]);
+//    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[1]);
     testIfPlacementFacilityTypeHistoryWasCreatedProperly(form.getPlacementHomeId());
   }
 
