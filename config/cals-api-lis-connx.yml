@@ -161,6 +161,7 @@ cmsRsDataSourceFactory:
       hibernate.show_sql: false
       hibernate.default_schema: ${DB_CMS_RS_SCHEMA:-CWSRS1}
       hibernate.connection.autocommit: false
+      hibernate.connection.isolation: 1
 
 xaCmsDataSourceFactory:
   autoCommitByDefault: false
@@ -185,6 +186,7 @@ xaCmsDataSourceFactory:
       hibernate.transaction.jta.platform: com.atomikos.icatch.jta.hibernate4.AtomikosPlatform
       hibernate.transaction.factory_class: org.hibernate.resource.transaction.backend.jta.internal.JtaTransactionCoordinatorBuilderImpl
       connection.release_mode: auto
+      hibernate.connection.isolation: 1
   xaProperties:
       # Properties for DB2XADataSource
       serverName: ${DB_CMS_DB2_HOST:-192.168.99.100}
