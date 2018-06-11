@@ -149,6 +149,7 @@ def getNewTag(List tags, VersionIncrement increment) {
     def newTagMajor = mostRecentTagParts[0].toInteger()
     def newTagMinor = mostRecentTagParts[1].toInteger()
     def newTagPatch = mostRecentTagParts[2].toInteger()
+    def OVERRIDE_VERSION = "${newTag}"
 
     switch(increment) {
         case VersionIncrement.MAJOR:
@@ -337,7 +338,6 @@ login.form.target.url=${LOGIN_FORM_TARGET_URL}
             }
         }
         stage('Tag GitHub') {
-         def OVERRIDE_VERSION = "${newTag}"
          sh("git tag ${newTag}")
          sh("git push --tags")
 }
