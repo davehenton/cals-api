@@ -29,6 +29,7 @@ import gov.ca.cwds.cals.service.dto.rfa.ReferencesDTO;
 import gov.ca.cwds.cals.service.dto.rfa.ResidenceDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.CollectionDTO;
 import gov.ca.cwds.cals.service.dto.rfa.collection.RFA1aFormCollectionDTO;
+import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.cals.web.rest.utils.AssertFixtureUtils;
 import io.dropwizard.testing.FixtureHelpers;
 import java.util.ArrayList;
@@ -37,7 +38,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.junit.BeforeClass;
@@ -61,11 +61,15 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
 
   @Test()
   public void testApplicationWithParts() throws Exception {
+
+    formAHelper.deleteAllRFA1aFormsForPrincipal(PRINCIPAL_STAFF_ID_0X6_JSON);
+
     RFA1aFormDTO postFormRequest = clientTestRule.getMapper()
         .readValue(RFA_1A_FIXTURE, RFA1aFormDTO.class);
-    RFA1aFormDTO postFormResponse = clientTestRule.target(API.RFA_1A_FORMS)
-        .request(MediaType.APPLICATION_JSON)
-        .post(Entity.entity(postFormRequest, MediaType.APPLICATION_JSON_TYPE), RFA1aFormDTO.class);
+
+    RFA1aFormDTO postFormResponse = rfaHelpersHolder.getFormAHelper()
+        .createRFA1aForm(postFormRequest, PRINCIPAL_STAFF_ID_0X6_JSON);
+
     Long formId = postFormResponse.getId();
     postFormRequest.setId(formId);
     assertEqualsResponse(transformDTOtoJSON(postFormRequest), transformDTOtoJSON(postFormResponse));
@@ -135,9 +139,8 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
         .put(Entity.entity(APPLICANTS_DECLARATION_FIXTURE, MediaType.APPLICATION_JSON_TYPE),
             ApplicantsDeclarationDTO.class);
 
-    RFA1aFormDTO getFormResponse = clientTestRule.target(API.RFA_1A_FORMS + "/" + formId)
-        .request(MediaType.APPLICATION_JSON)
-        .get(RFA1aFormDTO.class);
+    RFA1aFormDTO getFormResponse = rfaHelpersHolder.getFormAHelper()
+        .getRFA1aForm(formId, PRINCIPAL_STAFF_ID_0X6_JSON);
 
     AssertFixtureUtils.assertResponseByFixture(transformDTOtoJSON(getFormResponse),
         transformDTOtoJSON(postFormResponse),
@@ -169,6 +172,11 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
     expectedRfa1aFormDTO.setReferences(referencesDTO);
     expectedRfa1aFormDTO.setApplicantsDeclaration(applicantsDeclarationDTO);
 
+    //Compose facilityName
+    String facilityName = Utils.PlacementHome.composeFacilityName(
+        expectedRfa1aFormDTO.getApplicants());
+    expectedRfa1aFormDTO.setFacilityName(facilityName);
+
     RFA1aFormDTO getExpandedFormResponse =
         clientTestRule
             .target(API.RFA_1A_FORMS + "/" + formId + "?" + API.QueryParams.EXPANDED + "=true")
@@ -178,12 +186,8 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
     AssertFixtureUtils.assertResponseByFixture(transformDTOtoJSON(getExpandedFormResponse),
         transformDTOtoJSON(expectedRfa1aFormDTO), JSONCompareMode.LENIENT);
 
-    WebTarget getExpandedCollectionTarget =
-        clientTestRule.target(API.RFA_1A_FORMS + "?" + API.QueryParams.EXPANDED + "=true");
-    CollectionDTO<RFA1aFormDTO> getExpandedCollectionResponseForm =
-        getExpandedCollectionTarget.request(MediaType.APPLICATION_JSON)
-            .get(new GenericType<CollectionDTO<RFA1aFormDTO>>() {
-            });
+    CollectionDTO<RFA1aFormDTO> getExpandedCollectionResponseForm = formAHelper
+        .getRFA1aForms(PRINCIPAL_STAFF_ID_0X6_JSON);
 
     Collection<RFA1aFormDTO> filtered = getExpandedCollectionResponseForm.getCollection().stream()
         .filter(b -> b.getId().equals(formId))
@@ -196,11 +200,13 @@ public class RFA1aFormsResourceTest extends BaseRFAIntegrationTest {
     RFA1aFormCollectionDTO expectedExpandedRfa1aFormCollectionResponse = new RFA1aFormCollectionDTO(
         items);
 
-    // TODO: figure out why this assertion failing
-//    AssertFixtureUtils
-//        .assertResponseByFixture(transformDTOtoJSON(getExpandedCollectionResponseForm),
-//            transformDTOtoJSON(expectedExpandedRfa1aFormCollectionResponse),
-//            JSONCompareMode.LENIENT);
+    AssertFixtureUtils
+        .assertResponseByFixture(transformDTOtoJSON(getExpandedCollectionResponseForm),
+            transformDTOtoJSON(expectedExpandedRfa1aFormCollectionResponse),
+            JSONCompareMode.LENIENT);
+
+    // CleanUp
+    formAHelper.deleteAllRFA1aFormsForPrincipal(PRINCIPAL_STAFF_ID_0X6_JSON);
   }
 
   @Test

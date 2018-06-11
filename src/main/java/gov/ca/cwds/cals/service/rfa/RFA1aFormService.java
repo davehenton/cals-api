@@ -120,6 +120,13 @@ public class RFA1aFormService
     return updated.get();
   }
 
+  @UnitOfWork(CALSNS)
+  @Override
+  public RFA1aFormDTO delete(RFA1aFormsParameterObject params) {
+    return Optional.ofNullable(rfa1AFormsDao.delete(params.getFormId()))
+        .map(rfa1aFomMapper::toRFA1aFormDTO).orElse(null);
+  }
+
   private RFA1aForm fillFormUpdateAttributes(RFA1aForm form) {
     form.setUpdateDateTime(LocalDateTime.now());
     form.setUpdateUserId(PrincipalUtils.getPrincipal().getUser());
