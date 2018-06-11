@@ -2,6 +2,7 @@
 <dataset>
   <PLC_HM_T IDENTIFIER="$placementHomeId"
     PRM_SUBSID="$primarySubstituteCareProviderId"
+    FKCNTY_CST="$countyLicenseCaseId"
     AGE_FRM_NO="0"
     AGE_TO_NO="0"
     AT_CAP_IND="N"

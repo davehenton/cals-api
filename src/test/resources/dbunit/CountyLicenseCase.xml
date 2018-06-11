@@ -1,0 +1,22 @@
+<dataset>
+  <CNTY_CST IDENTIFIER="$countyLicenseCaseId"
+    ANN_CMP_DT="[NULL]"
+    ANN_DUE_DT="[NULL]"
+    CLC_APVC="[NULL]"
+    CNTY_SPFCD="99"
+    FFH_TYPE="3179"
+    FIRE_IND="N"
+    FIRE_R_DT="[NULL]"
+    FKSTFPERST="0X5"
+    LIC_AGE_FR="0"
+    LIC_AGE_TO="18"
+    LIC_GNDR="B"
+    LST_UPD_ID="0X5"
+    LST_UPD_TS="$LST_UPD_TS"
+    PRTY_INFO=""
+    TRNG_CMPLT=""
+    TRNG_DT="[NULL]"
+    TRNG_PLAN=""
+  />
+
+</dataset>

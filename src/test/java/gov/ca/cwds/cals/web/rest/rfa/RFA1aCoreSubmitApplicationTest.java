@@ -86,6 +86,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
 //    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[0]);
 //    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[1]);
     testIfPlacementFacilityTypeHistoryWasCreatedProperly(form.getPlacementHomeId());
+    testIfCountyLicenseCaseWasCreatedProperly("");
   }
 
   private void testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(
@@ -149,6 +150,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
         .setExpectedResultTemplatePath("/dbunit/PlacementHome.xml")
         .appendTemplateParameter("placementHomeId", placementHomeId)
         .appendTemplateParameter("primarySubstituteCareProviderId", primarySubstituteCareProviderId)
+        .appendTemplateParameter("countyLicenseCaseId", primarySubstituteCareProviderId)
         .setTestedTableName("PLC_HM_T")
         .appendTableFilter("IDENTIFIER", placementHomeId)
         .build()
@@ -363,6 +365,20 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
         "LST_UPD_ID",
         "LST_UPD_TS",
         "START_TS"});
+  }
+
+  private void testIfCountyLicenseCaseWasCreatedProperly(String countyLicenseCaseId)
+      throws Exception {
+    DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
+        .setExpectedResultTemplatePath("/dbunit/CountyLicenseCase.xml")
+        .setTestedTableName("CNTY_CST")
+        .appendTemplateParameter("countyLicenseCaseId", countyLicenseCaseId)
+        .build();
+
+    ITable actualTable = helper.getActualTable();
+    assertEquals(1, actualTable.getRowCount());
+    helper.assertEquals(
+        new String[]{"IDENTIFIER", "LST_UPD_TS"}, new String[]{"IDENTIFIER"});
   }
 
   private Object getFacilityType(String placementHomeId) throws Exception {
