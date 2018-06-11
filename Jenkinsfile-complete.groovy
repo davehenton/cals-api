@@ -287,9 +287,9 @@ node('tpt2-slave') {
         stage('Build') {
             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'jar'
         }
-        stage('Unit Tests') {
+       /*  stage('Unit Tests') {
             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'test jacocoTestReport', switches: '--stacktrace'
-        }
+        } */
         stage('SonarQube analysis') {
             withSonarQubeEnv('Core-SonarQube') {
                 buildInfo = rtGradle.run buildFile: 'build.gradle', switches: '--info', tasks: 'sonarqube'
