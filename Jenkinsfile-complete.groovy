@@ -221,6 +221,20 @@ def tagRepo(String newTag) {
 node('tpt2-slave') {
     def serverArti = Artifactory.server 'CWDS_DEV'
     def rtGradle = Artifactory.newGradleBuild()
+    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5')), disableConcurrentBuilds(), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
+                parameters([
+                        string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
+                        string(defaultValue: 'master', description: '', name: 'branch'),
+                        string(defaultValue: '', description: 'Used for mergerequest default is empty', name: 'refspec'),
+                        booleanParam(defaultValue: true, description: 'Default release version template is: <majorVersion>_<buildNumber>-RC', name: 'RELEASE_PROJECT'),
+                        string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
+                        booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
+                        string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory'),
+                        string(defaultValue: 'https://cals-api.dev.cwds.io/', description: '', name: 'APP_URL'),
+                        string(defaultValue: 'https://web.dev.cwds.io/', description: 'Perry base URL', name: 'PERRY_URL'),
+                        string(defaultValue: 'https://web.dev.cwds.io/perry/login', description: 'The URL where the login form posts a login information', name: 'LOGIN_FORM_TARGET_URL')
+                ])
+    ])
    
     newTag = '';
     def errorcode = null;
@@ -322,6 +336,11 @@ login.form.target.url=${LOGIN_FORM_TARGET_URL}
                 buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: ':docker-tests:dockerTestsPublish -DRelease=$RELEASE_PROJECT -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
             }
         }
+        stage('Tag GitHub') {
+         def OVERRIDE_VERSION = "${newTag}"
+         sh("git tag ${newTag}")
+         sh("git push --tags")
+}
     } catch (Exception e) {
         errorcode = e
         currentBuild.result = "FAIL"
