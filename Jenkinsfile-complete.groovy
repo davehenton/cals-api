@@ -226,8 +226,8 @@ node('tpt2-slave') {
                         string(defaultValue: 'latest', description: '', name: 'APP_VERSION'),
                         string(defaultValue: 'master', description: '', name: 'branch'),
                         string(defaultValue: '', description: 'Used for mergerequest default is empty', name: 'refspec'),
-                        booleanParam(defaultValue: true, description: 'Default release version template is: <majorVersion>_<buildNumber>-RC', name: 'RELEASE_PROJECT'),
-                        string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'),
+                        /* booleanParam(defaultValue: true, description: 'Default release version template is: <majorVersion>_<buildNumber>-RC', name: 'RELEASE_PROJECT'),
+                        string(defaultValue: "", description: 'Fill this field if need to specify custom version ', name: 'OVERRIDE_VERSION'), */
                         booleanParam(defaultValue: true, description: '', name: 'USE_NEWRELIC'),
                         string(defaultValue: 'inventories/tpt2dev/hosts.yml', description: '', name: 'inventory'),
                         string(defaultValue: 'https://cals-api.dev.cwds.io/', description: '', name: 'APP_URL'),
