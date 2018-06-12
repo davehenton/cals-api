@@ -302,8 +302,8 @@ node('tpt2-slave') {
         stage('Build Docker') {
             buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'createDockerImage'
             withDockerRegistry([credentialsId: '6ba8d05c-ca13-4818-8329-15d41a089ec0']) {
-                buildInfo = rtGradle.run buildFile: './Cals-api-autotag/docker-cals-api/build.gradle', tasks: 'dockerCreateImage'
-                buildInfo = rtGradle.run buildFile: './Cals-api-autotag/docker-cals-api/build.gradle', tasks: 'dockercalsapiPublish'
+                buildInfo = rtGradle.run buildFile: './docker-cals-api/build.gradle', tasks: 'dockerCreateImage'
+                buildInfo = rtGradle.run buildFile: 'build.gradle', tasks: 'pushDockerLatest -DRelease=$RELEASE_PROJECT -DBuildNumber=$BUILD_NUMBER -DCustomVersion=$OVERRIDE_VERSION'
             }
         }
         stage('Clean Workspace') {
