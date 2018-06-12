@@ -63,8 +63,9 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     String placementHomeId = form.getPlacementHomeId();
     assertNotNull(placementHomeId);
     String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
+    String countyLicenseCase = getCountyLicenseCaseId(placementHomeId);
 
-    testIfPlacementHomeWasCreatedProperly(placementHomeId);
+    testIfPlacementHomeWasCreatedProperly(placementHomeId, countyLicenseCase);
     testIfPlacementHomeUCWasCreatedProperly();
 
     testIfPlacementHomeProfileWasCreatedProperly(placementHomeId);
@@ -83,10 +84,8 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     testIfOtherAdultsWasCreatedProperly(form.getPlacementHomeId());
     testIfOtherChildrenWasCreatedProperly(form.getPlacementHomeId(), form);
 
-//    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[0]);
-//    testIfOtherPeopleScpRelationshipWasCreatedProperly(substituteCareProviderIds[1]);
     testIfPlacementFacilityTypeHistoryWasCreatedProperly(form.getPlacementHomeId());
-    testIfCountyLicenseCaseWasCreatedProperly("");
+    testIfCountyLicenseCaseWasCreatedProperly(countyLicenseCase);
   }
 
   private void testIfSubstituteCareProviderRelatedEntitiesWasCreatedProperly(
@@ -133,6 +132,15 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     return ids;
   }
 
+  private String getCountyLicenseCaseId(String placementHomeId) throws Exception {
+    ITable placementHomeInformation =
+        new SortedTable(dbUnitSupport.getTableFromDB("PLC_HM_T"), new String[]{"FKCNTY_CST"});
+    ITable placementHomeRow = dbUnitSupport
+        .filterByColumnAndValue(placementHomeInformation, "IDENTIFIER", placementHomeId);
+    String id = (String) placementHomeRow.getValue(0, "FKCNTY_CST");
+    return id;
+  }
+
   private String getPrimarySubstituteCareProviderIdByApplicantFirstName(String applicantFirstName)
       throws Exception {
     ITable substituteCareProvider = dbUnitSupport.getTableFromDB("SB_PVDRT");
@@ -142,7 +150,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
   }
 
 
-  private void testIfPlacementHomeWasCreatedProperly(String placementHomeId) throws Exception {
+  private void testIfPlacementHomeWasCreatedProperly(String placementHomeId, String countyLicenseCase) throws Exception {
     String primarySubstituteCareProviderId = getPrimarySubstituteCareProviderIdByApplicantFirstName(
         "AFn");
 
@@ -150,7 +158,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
         .setExpectedResultTemplatePath("/dbunit/PlacementHome.xml")
         .appendTemplateParameter("placementHomeId", placementHomeId)
         .appendTemplateParameter("primarySubstituteCareProviderId", primarySubstituteCareProviderId)
-        .appendTemplateParameter("countyLicenseCaseId", primarySubstituteCareProviderId)
+        .appendTemplateParameter("countyLicenseCaseId", countyLicenseCase)
         .setTestedTableName("PLC_HM_T")
         .appendTableFilter("IDENTIFIER", placementHomeId)
         .build()
@@ -163,7 +171,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
                 "PETS_DSC", "RLG_ACTDSC", "CERT_CMPLT", "LA_P_CTYNM", "LA_P_FSTNM", "LA_P_LSTNM",
                 "LA_P_MIDNM", "LA_P_STNM", "LA_P_STNO", "LA_P_BSNSS", "ADHMONLY", "END_COMDSC",
                 "END_DT", "FKCNTY_CST", "LIC_APL_DT", "LIC_EFCTDT", "LIC_EXP_DT", "LIC_STATDT",
-                "NEWLIC_NO", "LICENSR_CD"
+                "NEWLIC_NO", "LICENSR_CD", "FKCNTY_CST"
             });
   }
 
@@ -372,13 +380,14 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     DBUnitAssertHelper helper = DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/CountyLicenseCase.xml")
         .setTestedTableName("CNTY_CST")
+        .appendTableFilter("IDENTIFIER", countyLicenseCaseId)
         .appendTemplateParameter("countyLicenseCaseId", countyLicenseCaseId)
         .build();
 
     ITable actualTable = helper.getActualTable();
     assertEquals(1, actualTable.getRowCount());
     helper.assertEquals(
-        new String[]{"IDENTIFIER", "LST_UPD_TS"}, new String[]{"IDENTIFIER"});
+        new String[]{"LST_UPD_TS"}, new String[]{"IDENTIFIER"});
   }
 
   private Object getFacilityType(String placementHomeId) throws Exception {
