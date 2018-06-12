@@ -22,3 +22,6 @@ checks:
 plugins:
   checkstyle:
     enabled: true
+    config:
+      file: "google_checks.xml"
+
