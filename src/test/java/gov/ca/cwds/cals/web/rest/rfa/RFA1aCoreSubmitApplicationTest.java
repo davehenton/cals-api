@@ -65,7 +65,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
     String countyLicenseCase = getCountyLicenseCaseId(placementHomeId);
 
-    testIfPlacementHomeWasCreatedProperly(placementHomeId, countyLicenseCase);
+    testIfPlacementHomeWasCreatedProperly(placementHomeId, countyLicenseCase, String.valueOf(form.getId()));
     testIfPlacementHomeUCWasCreatedProperly();
 
     testIfPlacementHomeProfileWasCreatedProperly(placementHomeId);
@@ -150,7 +150,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
   }
 
 
-  private void testIfPlacementHomeWasCreatedProperly(String placementHomeId, String countyLicenseCase) throws Exception {
+  private void testIfPlacementHomeWasCreatedProperly(String placementHomeId, String countyLicenseCase, String formId) throws Exception {
     String primarySubstituteCareProviderId = getPrimarySubstituteCareProviderIdByApplicantFirstName(
         "AFn");
 
@@ -159,6 +159,7 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
         .appendTemplateParameter("placementHomeId", placementHomeId)
         .appendTemplateParameter("primarySubstituteCareProviderId", primarySubstituteCareProviderId)
         .appendTemplateParameter("countyLicenseCaseId", countyLicenseCase)
+        .appendTemplateParameter("rfaId", formId)
         .setTestedTableName("PLC_HM_T")
         .appendTableFilter("IDENTIFIER", placementHomeId)
         .build()
