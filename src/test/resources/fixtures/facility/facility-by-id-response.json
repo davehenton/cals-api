@@ -9,13 +9,21 @@
   "name" : "FST 510 Placements",
   "licensee_name" : "",
   "assigned_worker" : {
-    "value" : "Shelby Released"
+    "phones": [
+      {
+        "relation": "primary",
+        "number": "4353543554"
+      }
+    ],
+    "email": "",
+    "full_name": "Shelby Released"
   },
   "district_office" : {
     "number" : "19",
     "name" : "Los Angeles"
   },
   "capacity" : 600,
+  "full_residential_address": "10 Main St Sacramento CA",
   "county" : {
     "id" : "34",
     "value" : "Sacramento"
@@ -29,6 +37,5 @@
       "state" : "CA"
     }
   } ],
-  "facility_source": "CWS/CMS",
-  "full_residential_address": "10 Main St Sacramento CA"
+  "facility_source": "CWS/CMS"
 }

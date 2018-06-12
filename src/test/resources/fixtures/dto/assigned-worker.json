@@ -1,0 +1,15 @@
+{
+  "id": "some id",
+  "phones": [
+    {
+      "relation": "primary",
+      "number": "1111111111"
+    },
+    {
+      "relation": "alternate",
+      "number": "2222222222"
+    }
+  ],
+  "email": "email@gmail.com",
+  "full_name": "Mo Nasir"
+}
