@@ -19,9 +19,10 @@ checks:
     enabled: false
   identical-code:
     enabled: false
+  com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck:
+    enabled: false
 plugins:
   checkstyle:
     enabled: true
     config:
       file: "google_checks.xml"
-
