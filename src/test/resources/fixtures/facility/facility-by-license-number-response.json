@@ -9,8 +9,15 @@
   "licensee_name": "Ananya Nandi",
   "license_type": "C",
   "assigned_worker": {
-    "id": "19Ana4",
-    "value": "Gretchen Guillen"
+    "phones": [
+      {
+        "relation": "primary",
+        "number": "(951) 782-4207"
+      }
+    ],
+    "email": "Gretchen.Guillen@dss.ca.gov",
+    "full_name": "Gretchen Guillen",
+    "id": "19Ana4"
   },
   "district_office": {
     "number": "19",
@@ -24,6 +31,9 @@
   "capacity": 6,
   "last_visit_date": "2016-11-30 00:00:00",
   "last_deferred_visit_date": "2001-11-07 00:00:00",
+  "email_address": "",
+  "full_residential_address": "123 Main St. BANNING CA 92220",
+  "full_mailing_address": "P.O. BOX 570 CABAZON CA 92230",
   "last_visit_reason": {
     "id": "10",
     "value": "CASELOAD MANAGEMENT"
@@ -85,8 +95,5 @@
     }
   ],
   "annual_visit_year": 15,
-  "email_address":"",
-  "facility_source": "LIS",
-  "full_mailing_address": "P.O. BOX 570 CABAZON CA 92230",
-  "full_residential_address": "123 Main St. BANNING CA 92220"
+  "facility_source": "LIS"
 }

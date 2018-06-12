@@ -4,6 +4,7 @@ import gov.ca.cwds.cals.persistence.model.fas.LpaInformation;
 import gov.ca.cwds.cals.persistence.model.lisfas.LisFacFile;
 import gov.ca.cwds.cals.service.CwsDictionaryEntriesHolder;
 import gov.ca.cwds.cals.service.dto.AddressDTO;
+import gov.ca.cwds.cals.service.dto.AssignedWorkerDto;
 import gov.ca.cwds.cals.service.dto.ComplaintDTO;
 import gov.ca.cwds.cals.service.dto.ExpandedFacilityDTO;
 import gov.ca.cwds.cals.service.dto.FacilityAddressDTO;
@@ -15,6 +16,7 @@ import gov.ca.cwds.cals.util.Utils;
 import gov.ca.cwds.data.legacy.cms.entity.BaseCountyLicenseCase;
 import gov.ca.cwds.data.legacy.cms.entity.BaseLicensingVisit;
 import gov.ca.cwds.data.legacy.cms.entity.BasePlacementHome;
+import gov.ca.cwds.data.legacy.cms.entity.BaseStaffPerson;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author CWDS CALS API Team
  */
-@Mapper(imports = LocalDateTime.class,
+@Mapper(imports = {LocalDateTime.class, StringUtils.class},
     uses = {FacilityPostMappingProcessor.class, FacilityTypeMapper.class, CountyMapper.class,
         DistrictOfficeMapper.class, DictionaryMapper.class,
         TrailingSpacesRemovalPostMappingProcessor.class})
@@ -52,12 +54,14 @@ public interface FacilityMapper {
   @Mapping(source = "lisFacFile.facName", target = "name")
   @Mapping(source = "lisFacFile.facLicenseeName", target = "licenseeName")
   @Mapping(source = "lisFacFile.facLicenseeType", target = "licenseeType")
-  @Mapping(source = "lpaInformation.lpaCode", target = "assignedWorker.code")
-  @Mapping(source = "lpaInformation.fullLpaName", target = "assignedWorker.description")
+  @Mapping(source = "lpaInformation.lpaCode", target = "assignedWorker.id")
+  @Mapping(source = "lpaInformation.fullLpaName", target = "assignedWorker.fullName")
+  @Mapping(source = "lpaInformation.lpaEmailAddress", target = "assignedWorker.email")
   @Mapping(source = "lisFacFile.facDoNbr.doNbr", target = "districtOffice.number")
   @Mapping(source = "lisFacFile.facDoNbr.doName", target = "districtOffice.name")
   @Mapping(source = "lisFacFile.facNbr", target = "licenseNumber")
-  @Mapping(source = "lisFacFile.facilityStatus", target = "status", qualifiedByName = "facilityStatus")
+  @Mapping(source = "lisFacFile.facilityStatus", target = "status",
+      qualifiedByName = "facilityStatus")
   @Mapping(source = "lisFacFile.facCapacity", target = "capacity")
   @Mapping(source = "lisFacFile.facLicEffDate", target = "licenseEffectiveDate")
   @Mapping(source = "lisFacFile.facOrigApplRecDate", target = "originalApplicationRecievedDate")
@@ -67,13 +71,30 @@ public interface FacilityMapper {
   @Mapping(source = "lisFacFile.facIncCapEffDate", target = "capacityLastChanged")
   FacilityDTO toFacilityDTO(LisFacFile lisFacFile, LpaInformation lpaInformation);
 
+  @AfterMapping
+  default void afterLisFacilityMapping(
+      @MappingTarget FacilityDTO facilityDto,
+      LpaInformation lpaInformation) {
+    if (lpaInformation != null) {
+      PersonPhoneDTO phone = new PersonPhoneDTO();
+      phone.setRelation("primary");
+      phone.setNumber(lpaInformation.getLpaDoPhone());
+      facilityDto.getAssignedWorker().addPhone(phone);
+    }
+  }
+
   @Mapping(target = "id", source = "placementHome.identifier")
   @Mapping(target = "adoptionOnly",
       expression = "java(\"Y\".equalsIgnoreCase(placementHome.getAdhmonly()))")
   @Mapping(target = "name", source = "placementHome.facltyNm")
   @Mapping(target = "type", source = "dictionaryEntriesHolder.facilityType")
   @Mapping(target = "licenseeName", source = "placementHome.licnseeNm")
-  @Mapping(target = "assignedWorker", source = "placementHome.countyLicenseCase.staffPerson")
+  @Mapping(target = "assignedWorker.email",
+      source = "placementHome.countyLicenseCase.staffPerson.emailAddr")
+  @Mapping(target = "assignedWorker.fullName",
+      expression = "java(StringUtils.trimToEmpty("
+          + "placementHome.getCountyLicenseCase().getStaffPerson().getFirstName()) + ' '"
+          + " + placementHome.getCountyLicenseCase().getStaffPerson().getLastName())")
   @Mapping(target = "districtOffice", source = "placementHome.countyLicenseCase.staffPerson.county")
   @Mapping(target = "licenseNumber", source = "placementHome.licenseNo")
   @Mapping(target = "status", source = "dictionaryEntriesHolder.licenseStatus")
@@ -89,33 +110,35 @@ public interface FacilityMapper {
       expression = "java(licensingVisit.getVisitDate() == null? " +
           "null : LocalDateTime.of(licensingVisit.getVisitDate(), java.time.LocalTime.MIN))")
   @Mapping(target = "lastVisitReason.description", source = "visitType.shortDescription")
-  void toFacilityDTO(@MappingTarget FacilityDTO facilityDTO, BaseLicensingVisit licensingVisit);
+  void toFacilityDTO(@MappingTarget FacilityDTO facilityDto, BaseLicensingVisit licensingVisit);
 
-  ExpandedFacilityDTO toExpandedFacilityDTO(FacilityDTO facilityDTO,
+  ExpandedFacilityDTO toExpandedFacilityDTO(FacilityDTO facilityDto,
       List<FacilityChildDTO> children, List<FacilityInspectionDTO> inspections,
       Set<ComplaintDTO> complaints);
 
   @AfterMapping
   default void after(
-      @MappingTarget FacilityDTO facilityDTO,
+      @MappingTarget FacilityDTO facilityDto,
       BasePlacementHome placementHome,
       CwsDictionaryEntriesHolder dictionaryEntriesHolder) {
-    afterAddresses(facilityDTO, placementHome, dictionaryEntriesHolder);
-    afterPhones(facilityDTO, placementHome);
-    afterLastVisit(facilityDTO, placementHome.getCountyLicenseCase());
+    mapAssignedWorkerPhones(facilityDto.getAssignedWorker(),
+        placementHome.getCountyLicenseCase().getStaffPerson());
+    afterAddresses(facilityDto, placementHome, dictionaryEntriesHolder);
+    afterPhones(facilityDto, placementHome);
+    afterLastVisit(facilityDto, placementHome.getCountyLicenseCase());
   }
 
-  default void afterLastVisit(@MappingTarget FacilityDTO facilityDTO,
+  default void afterLastVisit(FacilityDTO facilityDto,
       BaseCountyLicenseCase countyLicenseCase) {
     if (countyLicenseCase != null && CollectionUtils
         .isNotEmpty(countyLicenseCase.getLicensingVisits())) {
       List<? extends BaseLicensingVisit> licensingVisits = countyLicenseCase.getLicensingVisits();
       Mappers.getMapper(FacilityMapper.class).toFacilityDTO(
-          facilityDTO, licensingVisits.get(0));
+          facilityDto, licensingVisits.get(0));
     }
   }
 
-  default void afterAddresses(@MappingTarget FacilityDTO facilityDTO,
+  default void afterAddresses(FacilityDTO facilityDto,
       BasePlacementHome placementHome,
       CwsDictionaryEntriesHolder dictionaryEntriesHolder) {
     List<FacilityAddressDTO> facilityAddressDTOs = new ArrayList<>(2);
@@ -129,30 +152,39 @@ public interface FacilityMapper {
           .toResidentialAddress(placementHome, dictionaryEntriesHolder);
       facilityAddressMapper
           .afterMapping(residentialAddress, placementHome, dictionaryEntriesHolder);
-      facilityDTO.setFullResidentialAddress(
+      facilityDto.setFullResidentialAddress(
           AddressDTO.buildFullAddressText(residentialAddress.getAddress()));
       facilityAddressDTOs.add(residentialAddress);
     }
 
-    facilityDTO.setAddress(facilityAddressDTOs);
+    facilityDto.setAddress(facilityAddressDTOs);
   }
 
-  default void afterPhones(@MappingTarget FacilityDTO facilityDTO,
+  default void afterPhones(FacilityDTO facilityDto,
       BasePlacementHome placementHome) {
-    List<PersonPhoneDTO> personPhoneDTOS = new ArrayList<>(2);
+    List<PersonPhoneDTO> personPhoneDtos = new ArrayList<>(2);
 
     PhoneMapper phoneMapper = Mappers.getMapper(PhoneMapper.class);
 
     PersonPhoneDTO primaryPhone = phoneMapper.toPrimaryPhoneDTO(placementHome);
     if (Utils.Phone.checkIfPhoneDTOIsValid(primaryPhone)) {
-      personPhoneDTOS.add(primaryPhone);
+      personPhoneDtos.add(primaryPhone);
     }
 
     PersonPhoneDTO alternativePhone = phoneMapper.toAlternatePhoneDTO(placementHome);
     if (Utils.Phone.checkIfPhoneDTOIsValid(alternativePhone)) {
-      personPhoneDTOS.add(alternativePhone);
+      personPhoneDtos.add(alternativePhone);
     }
 
-    facilityDTO.setPhone(personPhoneDTOS);
+    facilityDto.setPhone(personPhoneDtos);
   }
+
+  default void mapAssignedWorkerPhones(AssignedWorkerDto assignedWorkerDto,
+      BaseStaffPerson assignedWorker) {
+    PersonPhoneDTO phone = new PersonPhoneDTO();
+    phone.setRelation("primary");
+    phone.setNumber(String.valueOf(assignedWorker.getPhoneNo()));
+    assignedWorkerDto.addPhone(phone);
+  }
+
 }
