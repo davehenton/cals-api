@@ -1,5 +1,7 @@
 package gov.ca.cwds.cals.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gov.ca.cwds.cals.service.mapper.RemoveTrailingSpaces;
 import gov.ca.cwds.dto.BaseDTO;
@@ -16,6 +18,7 @@ public class PersonPhoneDTO extends BaseDTO {
 
     private static final long serialVersionUID = 845164274506455774L;
 
+    @JsonInclude(Include.NON_NULL)
     private Long id;
 
     @RemoveTrailingSpaces
@@ -25,6 +28,7 @@ public class PersonPhoneDTO extends BaseDTO {
 
     @RemoveTrailingSpaces
     @JsonProperty("type")
+    @JsonInclude(Include.NON_NULL)
     @ApiModelProperty(required = false, value = "Phone type", example = "Cell")
     private String type;
 
