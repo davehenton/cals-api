@@ -82,8 +82,8 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
   private String licenseeType;
 
   @JsonProperty("assigned_worker")
-  @ApiModelProperty(value = "Assigned Worker")
-  private DictionaryDTO assignedWorker;
+  @ApiModelProperty("Assigned Worker")
+  private AssignedWorkerDto assignedWorker;
 
   @JsonProperty("district_office")
   @ApiModelProperty(value = "District Office", example = "MISSION VALLEY")
@@ -244,11 +244,11 @@ public class FacilityDTO extends BaseDTO implements Request, Response, Identifia
     this.licenseeType = licenseeType;
   }
 
-  public DictionaryDTO getAssignedWorker() {
+  public AssignedWorkerDto getAssignedWorker() {
     return assignedWorker;
   }
 
-  public void setAssignedWorker(DictionaryDTO assignedWorker) {
+  public void setAssignedWorker(AssignedWorkerDto assignedWorker) {
     this.assignedWorker = assignedWorker;
   }
 
