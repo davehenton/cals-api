@@ -64,9 +64,10 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
     assertNotNull(placementHomeId);
     String[] substituteCareProviderIds = getSubstituteCareProviderIds(placementHomeId);
     String countyLicenseCase = getCountyLicenseCaseId(placementHomeId);
+    String formId = String.valueOf(form.getId());
 
-    testIfPlacementHomeWasCreatedProperly(placementHomeId, countyLicenseCase, String.valueOf(form.getId()));
-    testIfPlacementHomeUCWasCreatedProperly();
+    testIfPlacementHomeWasCreatedProperly(placementHomeId, countyLicenseCase, formId);
+    testIfPlacementHomeUCWasCreatedProperly(formId);
 
     testIfPlacementHomeProfileWasCreatedProperly(placementHomeId);
 
@@ -176,9 +177,10 @@ public class RFA1aCoreSubmitApplicationTest extends BaseRFAIntegrationTest {
             });
   }
 
-  private void testIfPlacementHomeUCWasCreatedProperly() throws Exception {
+  private void testIfPlacementHomeUCWasCreatedProperly(String formId) throws Exception {
     DBUnitAssertHelper.builder(dbUnitSupport)
         .setExpectedResultTemplatePath("/dbunit/PlacementHomeUC.xml")
+        .appendTemplateParameter("rfaId", formId)
         .setTestedTableName("PLCHM_UC")
         .build()
         .assertEquals(new String[]{"PKPLC_HMT", "LST_UPD_TS"});
