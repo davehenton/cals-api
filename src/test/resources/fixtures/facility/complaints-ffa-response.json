@@ -1,31 +1,31 @@
 {
   "complaints": [
     {
-      "id": "32-CR-RPET-747MHV-20070615093707",
-      "complaint_date": "2007-06-15 00:00:00",
-      "assigned_worker": "Mullah Mahaboob",
-      "control_number": "32-CR-20070615093707",
+      "id": "24-CR-241211-20041216145818",
+      "complaint_date": "2004-12-16 00:00:00",
+      "assigned_worker": "Xxxxx K",
+      "control_number": "244679",
       "priority_level": "3",
       "status": "Approved",
-      "approval_date": "2007-10-22 09:47:34",
+      "approval_date": "2008-01-23 16:18:46",
       "pre_investigation_comments": "",
-      "post_investigation_comments": "",
-      "contact_summary": "",
-      "followup_comments": "",
+      "post_investigation_comments": "Left voice mail message as complainant is out until February 9, 2005.\r\n\r\nInvestigation has been completed and allegations are SUBSTANTIATED.",
+      "contact_summary": "10 day visit was conducted by LPA, Llll Ssssss on 12/27/04.\r\nStatements:\r\nBbbb Sccccccc (Administrator)\r\nMmmm Ttttt (Tulare County)",
+      "followup_comments": "Based on witness statements and correspondence rec'd by the LPA during the investigation, complaint is SUBSTANTIATED.",
       "allegations": [
         {
           "complaint_code": "3",
-          "allegation": "",
-          "resolution_code_sub": "",
+          "allegation": "Female staff member manhandled minor, Ccccc, out of the door of Ttttt County because minor was acting up.",
+          "resolution_code_sub": "S",
           "resolution_code_insub": "",
-          "resolution_code_unsub": "U"
+          "resolution_code_unsub": ""
         },
         {
-          "complaint_code": "3",
-          "allegation": "",
-          "resolution_code_sub": "",
+          "complaint_code": "16",
+          "allegation": "Female staff member had to ask group home what to do with minor, XXXXXX, because he was acting out.",
+          "resolution_code_sub": "S",
           "resolution_code_insub": "",
-          "resolution_code_unsub": "U"
+          "resolution_code_unsub": ""
         }
       ]
     }

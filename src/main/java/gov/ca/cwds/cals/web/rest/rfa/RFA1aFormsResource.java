@@ -212,6 +212,22 @@ public class RFA1aFormsResource {
     return collectionResourceDelegate.get(expanded);
   }
 
+  @DELETE
+  @Timed
+  @Path("/{" + RFA_1A_APPLICATION_ID + "}")
+  @ApiResponses(
+      value = {
+          @ApiResponse(code = 401, message = "Not Authorized"),
+          @ApiResponse(code = 404, message = "Not found")
+      }
+  )
+  @ApiOperation(value = "Delete RFA 1A Form by Id")
+  public Response deleteForm(@PathParam(RFA_1A_APPLICATION_ID)
+  @ApiParam(required = true, name = RFA_1A_APPLICATION_ID, value = "The RFA-1A Form Id")
+      Long formId){
+    return resourceDelegate.delete(new RFA1aFormsParameterObject(formId));
+  }
+
   @POST
   @Timed
   @Path("{" + RFA_1A_APPLICATION_ID + "}/tracking")

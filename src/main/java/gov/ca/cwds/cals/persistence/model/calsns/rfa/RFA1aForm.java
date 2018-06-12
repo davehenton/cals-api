@@ -13,6 +13,7 @@ import gov.ca.cwds.cals.service.rfa.RFAApplicationStatus;
 import gov.ca.cwds.data.persistence.PersistentObject;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -68,7 +69,7 @@ public class RFA1aForm extends CalsBaseEntity implements PersistentObject {
   @Enumerated(EnumType.STRING)
   private RFAApplicationStatus status;
 
-  @OneToOne(mappedBy = "rfa1aForm")
+  @OneToOne(mappedBy = "rfa1aForm", cascade = CascadeType.REMOVE)
   private Tracking tracking;
 
   @Column(name = "placement_home_id", length = 10)
@@ -91,17 +92,17 @@ public class RFA1aForm extends CalsBaseEntity implements PersistentObject {
   @Column(name = "applicants_history")
   private ApplicantsHistoryDTO applicantsHistory;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
   @JoinColumn(name = "application_id")
   @OrderBy("id")
   private List<RFA1aApplicant> applicants;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
   @JoinColumn(name = "application_id")
   @OrderBy("id")
   private List<RFA1aMinorChild> minorChildren;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
   @JoinColumn(name = "application_id")
   @OrderBy("id")
   private List<RFA1aOtherAdult> otherAdults;

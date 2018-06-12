@@ -56,17 +56,37 @@ public class FormAHelper {
     return createRFA1aForm(null);
   }
 
-
   public RFA1aFormDTO createRFA1aForm(String pathToPrincipalJson) throws Exception {
     RFA1aFormDTO rfaFormDTOBefore = createRfa1aForm();
-    RFA1aFormDTO rfaFormDTOAfter = postRfa1aForm(rfaFormDTOBefore, pathToPrincipalJson);
+    return createRFA1aForm(rfaFormDTOBefore, pathToPrincipalJson);
+  }
 
+  public RFA1aFormDTO createRFA1aForm(RFA1aFormDTO dto, String pathToPrincipalJson) {
+    RFA1aFormDTO rfaFormDTOAfter = postRfa1aForm(dto, pathToPrincipalJson);
     assertNotNull(rfaFormDTOAfter);
     assertNotNull(rfaFormDTOAfter.getId());
     assertFalse(rfaFormDTOAfter.isInitialApplication());
-    assertEquals("otherDescription", rfaFormDTOAfter.getOtherTypeDescription());
-    assertEquals(rfaFormDTOBefore.getApplicationCounty(), rfaFormDTOAfter.getApplicationCounty());
+    assertEquals(dto.getOtherTypeDescription(), rfaFormDTOAfter.getOtherTypeDescription());
+    assertEquals(dto.getApplicationCounty(), rfaFormDTOAfter.getApplicationCounty());
     return rfaFormDTOAfter;
+  }
+
+  public void deleteAllRFA1aFormsForPrincipal(String pathToPrincipalJson) {
+    CollectionDTO<RFA1aFormDTO> rfa1aForms = getRFA1aForms(pathToPrincipalJson);
+    while (rfa1aForms != null && rfa1aForms.getCollection().size() > 0) {
+      rfa1aForms.getCollection()
+          .forEach(rfa1aFormDTO -> deleteRFA1aForm(rfa1aFormDTO.getId(), pathToPrincipalJson));
+      rfa1aForms = getRFA1aForms(pathToPrincipalJson);
+    }
+  }
+
+  public RFA1aFormDTO deleteRFA1aForm(Long formId) {
+    return deleteRFA1aForm(formId, null);
+  }
+
+  public RFA1aFormDTO deleteRFA1aForm(Long formId, String pathToPrincipalJson) {
+    WebTarget target = getWebTarget(API.RFA_1A_FORMS + "/" + formId, pathToPrincipalJson);
+    return target.request(MediaType.APPLICATION_JSON).delete(RFA1aFormDTO.class);
   }
 
   public RFA1aFormDTO postRfa1aForm(RFA1aFormDTO rfa1aForm, String pathToPrincipalJson) {
