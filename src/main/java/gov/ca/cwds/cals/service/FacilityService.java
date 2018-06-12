@@ -149,7 +149,8 @@ public class FacilityService implements CrudsService {
         .appendHomeLanguages()
         .appendSubstituteCareProviders()
         .appendOtherChildrenInHome()
-        .appendOtherAdultsInPlacementHome();
+        .appendOtherAdultsInPlacementHome()
+        .appendCountyLicenseCase();
     return placementHomeService.create(builder.getPlacementHomeEntityAwareDTO());
   }
 

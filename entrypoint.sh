@@ -7,7 +7,8 @@ if [ -x /paramfolder/parameters.sh ]; then
 fi
 
 
-JAVA_OPTS="-Xms128m -Xmx256m ${JAVA_OPTS}"
+JAVA_OPTS="-Xms128m -Xmx512m ${JAVA_OPTS}"
+echo  "Java parameters: $JAVA_OPTS"
 
 
 if [ -z "$CALS_API_CONFIG" ]

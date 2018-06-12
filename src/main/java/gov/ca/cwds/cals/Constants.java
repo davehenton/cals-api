@@ -593,6 +593,7 @@ public final class Constants {
         public static final String RFA1C_FORM_FIRST_NAME_IS_REQUIRED = "CV000055";
         public static final String RFA1C_FORM_LAST_NAME_IS_REQUIRED = "CV000056";
         public static final String RFA1C_FORM_DOB_IS_REQUIRED = "CV000057";
+        public static final String REQUIRED_APPLICANT_GENDER = "CV000058";
 
 
         private Code() {

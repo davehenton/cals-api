@@ -17,7 +17,7 @@ public class DataAccessServicesModule extends AbstractDataAccessServicesModule {
   }
 
   @Override
-  protected SessionFactory getDataAccessSercvicesSessionFactory(Injector injector) {
+  protected SessionFactory getDataAccessServicesSessionFactory(Injector injector) {
     return getCmsSessionFactory(injector);
   }
 }
