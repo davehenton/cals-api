@@ -177,7 +177,7 @@ xaCmsDataSourceFactory:
   minIdleTime: 1 minute
   properties:
       hibernate.dialect: org.hibernate.dialect.DB2Dialect
-      hibernate.show_sql: true
+      hibernate.show_sql: false
       hibernate.default_schema: ${DB_CMS_SCHEMA:-CWSCMS}
       hibernate.connection.autocommit: false
 
